@@ -1,0 +1,29 @@
+{
+ "tag": "tip-docks18",
+ "mode": "docks",
+ "port": 5444,
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+ "fine": {
+  "cell": "fine",
+  "reasonsInTrace": true,
+  "docks": 18,
+  "mountReads": 18,
+  "readReasons": [
+   [
+    "mount",
+    18
+   ]
+  ],
+  "firstFrameLayouts": 1,
+  "firstFrameForcedUnderDock": 1,
+  "firstFrameSpanMs": 11,
+  "byStack": [
+   {
+    "n": 1,
+    "stack": "bcr@src/components/dock/composables/useDockBody.ts:61 < rectOf@src/components/dock/composables/useDockBody.ts:73 < sync@src/components/dock/composables/useDockBody.ts:779 < (anon)@src/components/dock/composables/useDockBody.ts:1375 < (anon)@node_modules/.vite/deps/vue.runtime.esm-bundler-ZABrFIbg.js:3848"
+   }
+  ],
+  "allForcedAfterLoad": 1,
+  "pass": true
+ }
+}

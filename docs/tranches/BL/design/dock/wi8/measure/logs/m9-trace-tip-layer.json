@@ -1,0 +1,34 @@
+{
+ "tag": "tip-layer",
+ "mode": "layer",
+ "port": 5444,
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+ "fine": {
+  "cell": "fine",
+  "layouts": 105,
+  "forced": 7,
+  "dockLayer": [],
+  "byStack": [
+   {
+    "n": 2,
+    "stack": "bcr@src/components/dock/composables/useDockBody.ts:61 < rectOf@src/components/dock/composables/useDockBody.ts:73 < sync@src/components/dock/composables/useDockBody.ts:779 < watch.flush@src/components/dock/GlassDock.vue:262"
+   },
+   {
+    "n": 2,
+    "stack": "resolveBackdropRgba@src/composables/glass/backdropLuminanceSample.ts:165 < resolveUnderlayRgb@src/composables/glass/backdropLuminanceSample.ts:201 < measure@src/composables/glass/useGlassBackdropLuminance.ts:202 < (anon)@src/composables/glass/useGlassBackdropLuminance.ts:29"
+   },
+   {
+    "n": 1,
+    "stack": "fitRun@src/components/dock/composables/useDockBody.ts:530 < sync@src/components/dock/composables/useDockBody.ts:745 < watch.flush@src/components/dock/GlassDock.vue:262 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-ZABrFIbg.js:1910"
+   },
+   {
+    "n": 1,
+    "stack": "fitRun@src/components/dock/composables/useDockBody.ts:571 < sync@src/components/dock/composables/useDockBody.ts:745 < watch.flush@src/components/dock/GlassDock.vue:262 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-ZABrFIbg.js:1910"
+   },
+   {
+    "n": 1,
+    "stack": "measurePeak@src/components/dock/DockCrossfade.vue:88 < (anon)@src/components/dock/DockCrossfade.vue:97 < flush@src/composables/dom/useResizeObserver.ts:41"
+   }
+  ]
+ }
+}

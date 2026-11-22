@@ -1,0 +1,1595 @@
+{
+ "tag": "v1110-idle",
+ "mode": "idle",
+ "port": 5446,
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+ "fine": {
+  "cell": "fine",
+  "spec": {
+   "frames": 331,
+   "morphFrames": 72,
+   "collapsed": true,
+   "hoverNone": false
+  },
+  "layouts": 78,
+  "forced": 77,
+  "byStack": [
+   {
+    "n": 70,
+    "stack": "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < capture@src/components/dock/composables/dockMorphMeasure.ts:209 < measure@src/components/dock/composables/dockMorphMeasure.ts:725 < watch.flush@src/components/dock/composables/useDockMorph.ts:70 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411 < job@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1691"
+   },
+   {
+    "n": 1,
+    "stack": "span@src/components/dock/composables/dockMorphMeasure.ts:116 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:611 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+   },
+   {
+    "n": 1,
+    "stack": "span@src/components/dock/composables/dockMorphMeasure.ts:116 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:626 < read@src/components/dock/composables/dockMorphMeasure.ts:626 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:641 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:693 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+   },
+   {
+    "n": 1,
+    "stack": "(no script: the frame's own layout)"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:103 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < restSize@src/components/dock/composables/dockMorphMeasure.ts:81 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:225 < keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45 < capture@src/components/dock/composables/dockMorphMeasure.ts:225 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:112 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:108 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < restSize@src/components/dock/composables/dockMorphMeasure.ts:81 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:225 < keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45"
+   },
+   {
+    "n": 1,
+    "stack": "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:47 < capture@src/components/dock/composables/dockMorphMeasure.ts:225 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+   }
+  ],
+  "list": [
+   {
+    "at": 545.8,
+    "ms": 0.1,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:209",
+     "measure@src/components/dock/composables/dockMorphMeasure.ts:725",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:70",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411",
+     "job@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1691"
+    ]
+   },
+   {
+    "at": 546.7,
+    "ms": 0.05,
+    "stack": [
+     "span@src/components/dock/composables/dockMorphMeasure.ts:116",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:611",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+    ]
+   },
+   {
+    "at": 547.7,
+    "ms": 0.05,
+    "stack": [
+     "span@src/components/dock/composables/dockMorphMeasure.ts:116",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:626",
+     "read@src/components/dock/composables/dockMorphMeasure.ts:626",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:641",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71"
+    ]
+   },
+   {
+    "at": 548,
+    "ms": 0.03,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:693",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+    ]
+   },
+   {
+    "at": 549.1,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 555.1,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 563.7,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 573.5,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 578,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 586.3,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 594.4,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 602.6,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 608.2,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 615.8,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 623.6,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 631.1,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 640.1,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 645.2,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 653.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 661.1,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 669.3,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 677.4,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 685.8,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 694.1,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 702.4,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 709.5,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 719.4,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 727.3,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 735.7,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 741.3,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 749.2,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 757,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 765.2,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 773.4,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 781.7,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 790.1,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 798.3,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 806.6,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 812.2,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 820.1,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 828,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 836,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 844.2,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 852.6,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 860.9,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 869,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 874.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 882.6,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 890.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 897.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 907,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 915,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 923.4,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 931.7,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 940.2,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 945.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 953.5,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 961.3,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 969.4,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 975,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 982.6,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 990.5,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 998.6,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1006.8,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1015.1,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1023.4,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1031.8,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1040,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1048.5,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1056,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1065.3,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1073.5,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1079.2,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1086.8,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1095.3,
+    "ms": 0.08,
+    "stack": []
+   },
+   {
+    "at": 1096.3,
+    "ms": 0.05,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:103",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "restSize@src/components/dock/composables/dockMorphMeasure.ts:81",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+    ]
+   },
+   {
+    "at": 1096.5,
+    "ms": 0.03,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:112",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:108",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "restSize@src/components/dock/composables/dockMorphMeasure.ts:81",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45"
+    ]
+   },
+   {
+    "at": 1096.7,
+    "ms": 0.02,
+    "stack": [
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:47",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+    ]
+   }
+  ],
+  "classes": [
+   [
+    717,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    1218,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    1721,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    2222,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    2725,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    3226,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    3728,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    4231,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    4733,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    5235,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    5736,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    6239,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    true
+   ],
+   [
+    6741,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ],
+   [
+    7241,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ],
+   [
+    7743,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ],
+   [
+    8245,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ]
+  ],
+  "bound": 84,
+  "pass": true
+ },
+ "coarse": {
+  "cell": "coarse",
+  "spec": {
+   "frames": 333,
+   "morphFrames": 73,
+   "collapsed": true,
+   "hoverNone": true
+  },
+  "layouts": 79,
+  "forced": 78,
+  "byStack": [
+   {
+    "n": 71,
+    "stack": "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < capture@src/components/dock/composables/dockMorphMeasure.ts:209 < measure@src/components/dock/composables/dockMorphMeasure.ts:725 < watch.flush@src/components/dock/composables/useDockMorph.ts:70 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411 < job@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1691"
+   },
+   {
+    "n": 1,
+    "stack": "span@src/components/dock/composables/dockMorphMeasure.ts:116 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:611 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+   },
+   {
+    "n": 1,
+    "stack": "span@src/components/dock/composables/dockMorphMeasure.ts:116 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:626 < read@src/components/dock/composables/dockMorphMeasure.ts:626 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:641 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:693 < anchor@src/components/dock/composables/dockMorphMeasure.ts:587 < play@src/components/dock/composables/useDockMorph.ts:48 < watch.flush@src/components/dock/composables/useDockMorph.ts:71 < callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910 < callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917 < baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+   },
+   {
+    "n": 1,
+    "stack": "(no script: the frame's own layout)"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:103 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < restSize@src/components/dock/composables/dockMorphMeasure.ts:81 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:225 < keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45 < capture@src/components/dock/composables/dockMorphMeasure.ts:225 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+   },
+   {
+    "n": 1,
+    "stack": "getSize@src/components/dock/composables/dockMorphMeasure.ts:7 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:112 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:108 < withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28 < restSize@src/components/dock/composables/dockMorphMeasure.ts:81 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:225 < keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45"
+   },
+   {
+    "n": 1,
+    "stack": "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:47 < capture@src/components/dock/composables/dockMorphMeasure.ts:225 < (anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+   }
+  ],
+  "list": [
+   {
+    "at": 560.2,
+    "ms": 0.07,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:209",
+     "measure@src/components/dock/composables/dockMorphMeasure.ts:725",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:70",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411",
+     "job@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1691"
+    ]
+   },
+   {
+    "at": 561.1,
+    "ms": 0.04,
+    "stack": [
+     "span@src/components/dock/composables/dockMorphMeasure.ts:116",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:611",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+    ]
+   },
+   {
+    "at": 562,
+    "ms": 0.03,
+    "stack": [
+     "span@src/components/dock/composables/dockMorphMeasure.ts:116",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:626",
+     "read@src/components/dock/composables/dockMorphMeasure.ts:626",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:641",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71"
+    ]
+   },
+   {
+    "at": 562.3,
+    "ms": 0.02,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "anchorPanes@src/components/dock/composables/dockMorphMeasure.ts:693",
+     "anchor@src/components/dock/composables/dockMorphMeasure.ts:587",
+     "play@src/components/dock/composables/useDockMorph.ts:48",
+     "watch.flush@src/components/dock/composables/useDockMorph.ts:71",
+     "callWithErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1910",
+     "callWithAsyncErrorHandling@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:1917",
+     "baseWatchOptions.call@node_modules/.vite/deps/vue.runtime.esm-bundler-C_Sv5yPv.js:2411"
+    ]
+   },
+   {
+    "at": 564,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 569.6,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 577.4,
+    "ms": 0.08,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 584.6,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 593.3,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 598.5,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 606.3,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 614.3,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 622.3,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 629.1,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 635.9,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 644.1,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 651.6,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 658.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 665.6,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 673.1,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 680.9,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 687.9,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 697.6,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 702.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 710.5,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 717,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 726.8,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 731.8,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 738.1,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 747.4,
+    "ms": 0.07,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 755.7,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 763.6,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 769.1,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 777,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 784.7,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 791.4,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 801.2,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 808.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 818.2,
+    "ms": 0.06,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 826.1,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 831.8,
+    "ms": 0.02,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 839.6,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 845.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 855.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 863.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 872.1,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 880.1,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 888.8,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 897.1,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 902.6,
+    "ms": 0.02,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 910.4,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 918.1,
+    "ms": 0.02,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 926.4,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 932,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 939.6,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 947.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 955.6,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 963.8,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 972.2,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 980.6,
+    "ms": 0.05,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 988.1,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 997.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1005.4,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1013.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1020.6,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1030.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1036,
+    "ms": 0.03,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1043.9,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1050.7,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1059.5,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1065.5,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1072.5,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1080.1,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1089.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1097.3,
+    "ms": 0.04,
+    "stack": [
+     "constraintOf@src/components/dock/composables/dockMorphMeasure.ts:143",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:462"
+    ]
+   },
+   {
+    "at": 1106.1,
+    "ms": 0.07,
+    "stack": []
+   },
+   {
+    "at": 1107,
+    "ms": 0.04,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:103",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "restSize@src/components/dock/composables/dockMorphMeasure.ts:81",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+    ]
+   },
+   {
+    "at": 1107.1,
+    "ms": 0.03,
+    "stack": [
+     "getSize@src/components/dock/composables/dockMorphMeasure.ts:7",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:112",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:108",
+     "withOverrides@src/components/dock/composables/dockMorphMeasure.ts:28",
+     "restSize@src/components/dock/composables/dockMorphMeasure.ts:81",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:45"
+    ]
+   },
+   {
+    "at": 1107.3,
+    "ms": 0.02,
+    "stack": [
+     "keepScroll@src/components/dock/composables/dockMorphMeasure.ts:47",
+     "capture@src/components/dock/composables/dockMorphMeasure.ts:225",
+     "(anon)@src/components/dock/composables/dockMorphMeasure.ts:415"
+    ]
+   }
+  ],
+  "classes": [
+   [
+    626,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    1128,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    1628,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    2130,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    2630,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    3133,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    3635,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    4136,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    4638,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    5140,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    5641,
+    "fold-dock glass-dock horizontal shape-pill expanded",
+    false
+   ],
+   [
+    6144,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    true
+   ],
+   [
+    6646,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ],
+   [
+    7148,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ],
+   [
+    7650,
+    "fold-dock glass-dock horizontal shape-pill collapsed",
+    false
+   ]
+  ],
+  "bound": 85,
+  "pass": true
+ }
+}
