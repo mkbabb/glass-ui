@@ -1,0 +1,78 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.2s)
+  ✘  2 [chromium-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween (1.5s)
+  ✘  3 [chromium-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming (2.1s)
+  ✓  4 [chromium-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.1s)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":122,"scale":0.0834,"box":3.06,"filters":[],"first":[[33,0,"1.0282 0.91665","none",57.4,33.6],[41,0.029,"1.02156 0.936273","none",57,34.4],[46,0.048,"1.01827 0.946008","none",56.8,34.7],[53,0.078,"1.01421 0.958011","none",56.6,35.2],[61,0.116,"1.01052 0.968908","none",56.4,35.6],[65,0.135,"1.00906 0.973235","none",56.3,35.7]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1384:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ────
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":119,"scale":0.0834,"box":3.06,"filters":[],"first":[[38,0,"1.0282 0.91665","none",57.4,33.6],[49,0.039,"1.01975 0.941617","none",56.9,34.6],[57,0.074,"1.01469 0.956568","none",56.6,35.1],[58,0.079,"1.01403 0.958537","none",56.6,35.2],[66,0.115,"1.01057 0.968744","none",56.4,35.6],[75,0.159,"1.00762 0.977473","none",56.2,35.9]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1401:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":125,"scale":0.0834,"box":3.06,"filters":[],"first":[[40,0,"1.0282 0.91665","none",70.3,33.6],[46,0.023,"1.02277 0.932691","none",69.9,34.2],[54,0.054,"1.0174 0.948562","none",69.6,34.8],[63,0.091,"1.01282 0.96212","none",69.3,35.3],[72,0.132,"1.00926 0.972639","none",69,35.7],[74,0.142,"1.00865 0.974428","none",69,35.8]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1430:9
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-chromium-desktop/error-context.md
+
+  3 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+    [chromium-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ─────
+    [chromium-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+  1 passed (10.9s)

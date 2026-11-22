@@ -1,0 +1,387 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "tooltip · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-12/logs/tt-ce5-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tooltip · a hint keeps its size as it comes and goes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2555,
+                  "error": {
+                    "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":89,\"scale\":0.0834,\"box\":2.82,\"filters\":[],\"first\":[[14,0,\"1.0282 0.91665\",\"none\",50.9,31],[20,0.021,\"1.023222 0.931364\",\"none\",50.6,31.5],[28,0.056,\"1.017029 0.949669\",\"none\",50.3,32.1],[38,0.095,\"1.012358 0.963474\",\"none\",50.1,32.6],[50,0.151,\"1.008053 0.976196\",\"none\",49.9,33],[59,0.196,\"1.005861 0.982677\",\"none\",49.8,33.2]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m",
+                    "stack": "Error: in: its scale and transform scale nothing on every frame {\"frames\":89,\"scale\":0.0834,\"box\":2.82,\"filters\":[],\"first\":[[14,0,\"1.0282 0.91665\",\"none\",50.9,31],[20,0.021,\"1.023222 0.931364\",\"none\",50.6,31.5],[28,0.056,\"1.017029 0.949669\",\"none\",50.3,32.1],[38,0.095,\"1.012358 0.963474\",\"none\",50.1,32.6],[50,0.151,\"1.008053 0.976196\",\"none\",49.9,33],[59,0.196,\"1.005861 0.982677\",\"none\",49.8,33.2]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1384:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 1351
+                    },
+                    "snippet": "  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 1351
+                      },
+                      "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":89,\"scale\":0.0834,\"box\":2.82,\"filters\":[],\"first\":[[14,0,\"1.0282 0.91665\",\"none\",50.9,31],[20,0.021,\"1.023222 0.931364\",\"none\",50.6,31.5],[28,0.056,\"1.017029 0.949669\",\"none\",50.3,32.1],[38,0.095,\"1.012358 0.963474\",\"none\",50.1,32.6],[50,0.151,\"1.008053 0.976196\",\"none\",49.9,33],[59,0.196,\"1.005861 0.982677\",\"none\",49.8,33.2]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n\n  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1384:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:26.136Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjg5LCJzY2FsZSI6MC4wODM0LCJib3giOjIuODIsImZpbHRlcnMiOltdLCJmaXJzdCI6W1sxNCwwLCIxLjAyODIgMC45MTY2NSIsIm5vbmUiLDUwLjksMzFdLFsyMCwwLjAyMSwiMS4wMjMyMjIgMC45MzEzNjQiLCJub25lIiw1MC42LDMxLjVdLFsyOCwwLjA1NiwiMS4wMTcwMjkgMC45NDk2NjkiLCJub25lIiw1MC4zLDMyLjFdLFszOCwwLjA5NSwiMS4wMTIzNTggMC45NjM0NzQiLCJub25lIiw1MC4xLDMyLjZdLFs1MCwwLjE1MSwiMS4wMDgwNTMgMC45NzYxOTYiLCJub25lIiw0OS45LDMzXSxbNTksMC4xOTYsIjEuMDA1ODYxIDAuOTgyNjc3Iiwibm9uZSIsNDkuOCwzMy4yXV19LCJleGl0Ijp7ImZyYW1lcyI6MTIsInNjYWxlIjowLCJib3giOjAsImZpbHRlcnMiOltdLCJmaXJzdCI6W1sxMCwxLCIxIiwibm9uZSIsNDkuNSwzMy44XSxbMjAsMC45MzcsIjEiLCJub25lIiw0OS41LDMzLjhdLFszMCwwLjg2MiwiMSIsIm5vbmUiLDQ5LjUsMzMuOF0sWzQwLDAuNzY5LCIxIiwibm9uZSIsNDkuNSwzMy44XSxbNDksMC42OTcsIjEiLCJub25lIiw0OS41LDMzLjhdLFs2MCwwLjU5NSwiMSIsIm5vbmUiLDQ5LjUsMzMuOF1dfSwiZmlyc3RPcCI6MCwiYmV0d2VlbiI6MTksImdvbmUiOnRydWV9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 1351
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a5fae258b56e8615d5c8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1356,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1390,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:29.193Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1390,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-731fbf0be8062ae58d70",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1389,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1406,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 204,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:29.668Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1406,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9f92f05f39612fb37b89",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1406,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 197,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:29.878Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1406,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-46e6cfecf1f8d1bcf741",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T11:33:24.504Z",
+    "duration": 5613.853,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

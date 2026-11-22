@@ -1,0 +1,33 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.2s)
+  -  2 [chromium-phone] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween
+  -  3 [chromium-phone] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  4 [chromium-phone] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing
+
+
+  1) [chromium-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: it arrives from gone: its first frame is a fade's first {"enter":{"frames":118,"scale":0,"box":0,"filters":[],"first":[[5,1,"none","none",50,33.8],[13,1,"none","none",50,33.8],[23,1,"none","none",50,33.8],[30,1,"none","none",50,33.8],[38,1,"none","none",50,33.8],[48,1,"none","none",50,33.8]]},"exit":{"frames":16,"scale":0.0833,"box":2.82,"filters":[],"first":[[5,1,"1","none",50,33.8],[14,0.65,"1.00667 0.980297","none",50.3,33.1],[22,0.451,"1.01091 0.967756","none",50.5,32.7],[27,0.345,"1.01338 0.960455","none",50.7,32.5],[35,0.232,"1.01622 0.952059","none",50.8,32.2],[43,0.145,"1.01865 0.944866","none",50.9,31.9]]},"firstOp":1,"between":0,"gone":true}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.1
+    Received:    1
+
+      1380 |     await info.attach("size", { body: JSON.stringify(read), contentType: "application/json" });
+      1381 |     const at = JSON.stringify(read);
+    > 1382 |     expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);
+           |                                                                                           ^
+      1383 |     expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+      1384 |     expectWhole(read.enter, "in");
+      1385 |     expect(read.gone, `it is gone ${at}`).toBe(true);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1382:91
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+  3 skipped

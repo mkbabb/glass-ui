@@ -1,0 +1,34 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.6s)
+  -  2 [webkit-phone] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween
+  -  3 [webkit-phone] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  4 [webkit-phone] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":89,"scale":0.0834,"box":2.82,"filters":[],"first":[[14,0,"1.0282 0.91665","none",50.9,31],[20,0.021,"1.023222 0.931364","none",50.6,31.5],[28,0.056,"1.017029 0.949669","none",50.3,32.1],[38,0.095,"1.012358 0.963474","none",50.1,32.6],[50,0.151,"1.008053 0.976196","none",49.9,33],[59,0.196,"1.005861 0.982677","none",49.8,33.2]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1384:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+  3 skipped

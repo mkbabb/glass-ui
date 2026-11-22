@@ -1,0 +1,26 @@
+START 06:28:18 head 3cfb53222 src=ce5f320b7 (uncommitted spec) load { 9.38 8.17 7.77 }
+06:28:34 tt-pre-cd tip chromium-desktop [tooltip · ] exit 1 16s load-at-start={ 9.38 8.17 7.77 } load-end={ 9.21 8.19 7.79 }  3 failed  1 passed (10.9s) 
+06:28:47 tt-pre-cp tip chromium-phone [tooltip · ] exit 1 10s load-at-start={ 8.95 8.15 7.78 } load-end={ 8.96 8.18 7.79 }  1 failed  3 skipped 
+06:29:10 tt-pre-wd tip webkit-desktop [tooltip · ] exit 1 20s load-at-start={ 8.96 8.18 7.79 } load-end={ 9.57 8.38 7.87 }  3 failed  1 passed (14.6s) 
+06:29:21 tt-pre-wp tip webkit-phone [tooltip · ] exit 1 11s load-at-start={ 9.57 8.38 7.87 } load-end={ 10.64 8.64 7.97 }  1 failed  3 skipped 
+CURED 06:29:40 reveal.css edited (uncommitted) load { 10.72 8.79 8.04 }
+06:29:56 tt-fix-cd tip chromium-desktop [tooltip · ] exit 0 16s load-at-start={ 10.72 8.79 8.04 } load-end={ 10.63 8.87 8.08 }  4 passed (9.5s) 
+06:30:04 tt-fix-cp tip chromium-phone [tooltip · ] exit 0 8s load-at-start={ 10.63 8.87 8.08 } load-end={ 10.65 8.94 8.11 }  3 skipped  1 passed (4.0s) 
+06:30:21 tt-fix-wd tip webkit-desktop [tooltip · ] exit 0 17s load-at-start={ 10.65 8.94 8.11 } load-end={ 10.61 9.01 8.15 }  4 passed (12.0s) 
+06:30:30 tt-fix-wp tip webkit-phone [tooltip · ] exit 0 9s load-at-start={ 10.61 9.01 8.15 } load-end={ 10.60 9.06 8.18 }  3 skipped  1 passed (5.0s) 
+tree ce5f320b7 built 06:31:48 head 10c8e23c9 ce5f320b7 ce5f320b7 src+demo blobs      866
+tree v11.1.0 built 06:32:34 head 10c8e23c9 v11.1.0 e73f09f10 src+demo blobs      863
+CHAIN-START 06:32:41 head 10c8e23c9 load { 10.52 9.46 8.45 }
+06:32:56 tt-ce5-cd ce5 chromium-desktop [tooltip · ] exit 1 15s load-at-start={ 10.52 9.46 8.45 } load-end={ 11.71 9.76 8.58 }  3 failed  1 passed (11.6s) 
+06:33:05 tt-ce5-cp ce5 chromium-phone [tooltip · ] exit 1 8s load-at-start={ 11.71 9.76 8.58 } load-end={ 12.21 9.90 8.64 }  1 failed  3 skipped 
+06:33:23 tt-ce5-wd ce5 webkit-desktop [tooltip · ] exit 1 18s load-at-start={ 12.21 9.90 8.64 } load-end={ 11.19 9.82 8.64 }  3 failed  1 passed (13.1s) 
+06:33:33 tt-ce5-wp ce5 webkit-phone [tooltip · ] exit 1 10s load-at-start={ 11.19 9.82 8.64 } load-end={ 10.93 9.81 8.65 }  1 failed  3 skipped 
+06:33:49 tt-red-cd red chromium-desktop [tooltip · ] exit 1 16s load-at-start={ 10.93 9.81 8.65 } load-end={ 14.42 10.58 8.94 }  4 failed 
+06:33:58 tt-red-cp red chromium-phone [tooltip · ] exit 1 9s load-at-start={ 14.42 10.58 8.94 } load-end={ 14.15 10.66 8.99 }  1 failed  3 skipped 
+06:34:17 tt-red-wd red webkit-desktop [tooltip · ] exit 1 19s load-at-start={ 14.15 10.66 8.99 } load-end={ 13.10 10.66 9.03 }  4 failed 
+06:34:26 tt-red-wp red webkit-phone [tooltip · ] exit 1 9s load-at-start={ 13.10 10.66 9.03 } load-end={ 12.77 10.63 9.03 }  1 failed  3 skipped 
+06:34:58 tt-tip-cd tip chromium-desktop [tooltip · ] exit 0 32s load-at-start={ 12.77 10.63 9.03 } load-end={ 10.89 10.40 9.01 }  12 passed (25.5s) 
+06:34:58 tt-tip-cp tip chromium-phone [tooltip · ] exit 75 0s load-at-start={ 10.89 10.40 9.01 } load-end={ 10.89 10.40 9.01 } 
+06:34:58 tt-tip-wd tip webkit-desktop [tooltip · ] exit 75 0s load-at-start={ 10.89 10.40 9.01 } load-end={ 10.89 10.40 9.01 } 
+06:34:58 tt-tip-wp tip webkit-phone [tooltip · ] exit 75 0s load-at-start={ 10.89 10.40 9.01 } load-end={ 10.89 10.40 9.01 } 
+CHAIN-DONE 06:34:58

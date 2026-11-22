@@ -1,0 +1,403 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "tooltip · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-12/logs/tt-pre-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tooltip · a hint keeps its size as it comes and goes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2214,
+                  "error": {
+                    "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":122,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[33,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[41,0.029,\"1.02156 0.936273\",\"none\",57,34.4],[46,0.048,\"1.01827 0.946008\",\"none\",56.8,34.7],[53,0.078,\"1.01421 0.958011\",\"none\",56.6,35.2],[61,0.116,\"1.01052 0.968908\",\"none\",56.4,35.6],[65,0.135,\"1.00906 0.973235\",\"none\",56.3,35.7]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m",
+                    "stack": "Error: in: its scale and transform scale nothing on every frame {\"frames\":122,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[33,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[41,0.029,\"1.02156 0.936273\",\"none\",57,34.4],[46,0.048,\"1.01827 0.946008\",\"none\",56.8,34.7],[53,0.078,\"1.01421 0.958011\",\"none\",56.6,35.2],[61,0.116,\"1.01052 0.968908\",\"none\",56.4,35.6],[65,0.135,\"1.00906 0.973235\",\"none\",56.3,35.7]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1384:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 1351
+                    },
+                    "snippet": "  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 1351
+                      },
+                      "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":122,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[33,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[41,0.029,\"1.02156 0.936273\",\"none\",57,34.4],[46,0.048,\"1.01827 0.946008\",\"none\",56.8,34.7],[53,0.078,\"1.01421 0.958011\",\"none\",56.6,35.2],[61,0.116,\"1.01052 0.968908\",\"none\",56.4,35.6],[65,0.135,\"1.00906 0.973235\",\"none\",56.3,35.7]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n\n  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1384:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:28:20.905Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMiwic2NhbGUiOjAuMDgzNCwiYm94IjozLjA2LCJmaWx0ZXJzIjpbXSwiZmlyc3QiOltbMzMsMCwiMS4wMjgyIDAuOTE2NjUiLCJub25lIiw1Ny40LDMzLjZdLFs0MSwwLjAyOSwiMS4wMjE1NiAwLjkzNjI3MyIsIm5vbmUiLDU3LDM0LjRdLFs0NiwwLjA0OCwiMS4wMTgyNyAwLjk0NjAwOCIsIm5vbmUiLDU2LjgsMzQuN10sWzUzLDAuMDc4LCIxLjAxNDIxIDAuOTU4MDExIiwibm9uZSIsNTYuNiwzNS4yXSxbNjEsMC4xMTYsIjEuMDEwNTIgMC45Njg5MDgiLCJub25lIiw1Ni40LDM1LjZdLFs2NSwwLjEzNSwiMS4wMDkwNiAwLjk3MzIzNSIsIm5vbmUiLDU2LjMsMzUuN11dfSwiZXhpdCI6eyJmcmFtZXMiOjE3LCJzY2FsZSI6MCwiYm94IjowLCJmaWx0ZXJzIjpbXSwiZmlyc3QiOltbMiwxLCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMTAsMC45NTEsIjEiLCJub25lIiw1NS44LDM2LjddLFsxOSwwLjg4NywiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzI0LDAuODQyLCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMzIsMC43NzcsIjEiLCJub25lIiw1NS44LDM2LjddLFs0MSwwLjY5NSwiMSIsIm5vbmUiLDU1LjgsMzYuN11dfSwiZmlyc3RPcCI6MCwiYmV0d2VlbiI6MjUsImdvbmUiOnRydWV9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 1351
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e7a5598c497d9d90ccca",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1356,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1486,
+                  "error": {
+                    "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":119,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[38,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[49,0.039,\"1.01975 0.941617\",\"none\",56.9,34.6],[57,0.074,\"1.01469 0.956568\",\"none\",56.6,35.1],[58,0.079,\"1.01403 0.958537\",\"none\",56.6,35.2],[66,0.115,\"1.01057 0.968744\",\"none\",56.4,35.6],[75,0.159,\"1.00762 0.977473\",\"none\",56.2,35.9]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m",
+                    "stack": "Error: in: its scale and transform scale nothing on every frame {\"frames\":119,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[38,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[49,0.039,\"1.01975 0.941617\",\"none\",56.9,34.6],[57,0.074,\"1.01469 0.956568\",\"none\",56.6,35.1],[58,0.079,\"1.01403 0.958537\",\"none\",56.6,35.2],[66,0.115,\"1.01057 0.968744\",\"none\",56.4,35.6],[75,0.159,\"1.00762 0.977473\",\"none\",56.2,35.9]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1401:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 1351
+                    },
+                    "snippet": "  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 1351
+                      },
+                      "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":119,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[38,0,\"1.0282 0.91665\",\"none\",57.4,33.6],[49,0.039,\"1.01975 0.941617\",\"none\",56.9,34.6],[57,0.074,\"1.01469 0.956568\",\"none\",56.6,35.1],[58,0.079,\"1.01403 0.958537\",\"none\",56.6,35.2],[66,0.115,\"1.01057 0.968744\",\"none\",56.4,35.6],[75,0.159,\"1.00762 0.977473\",\"none\",56.2,35.9]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n\n  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1401:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:28:23.514Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1szLDBdLFsxMSwwXSxbMTksMF0sWzI5LDBdLFszOCwwXSxbNDksMC4wMzldLFs1NywwLjA3NF0sWzU4LDAuMDc5XSxbNjYsMC4xMTVdLFs3NSwwLjE1OV0sWzg0LDAuMl0sWzg5LDAuMjNdLFs5NywwLjI3M10sWzEwNCwwLjMxMV0sWzExMywwLjM1Nl0sWzEyMSwwLjQwNl0sWzEyNywwLjQzOV0sWzEzNSwwLjQ4NF0sWzE0MiwwLjUyM10sWzE1MSwwLjU3NF0sWzE2MCwwLjYyNV0sWzE2NywwLjY2NF0sWzE3NSwwLjcwOV0sWzE4NSwwLjc2XSxbMTkwLDAuNzg2XSxbMTk5LDAuODMyXSxbMjA1LDAuODY2XSxbMjE0LDAuOTA3XSxbMjIyLDAuOTQyXSxbMjI4LDAuOTY0XSxbMjM1LDAuOTg5XSxbMjQyLDFdLFsyNTEsMV0sWzI1OCwxXSxbMjY0LDFdLFsyNzMsMV0sWzI4MCwxXSxbMjg4LDFdLFsyOTUsMV0sWzMwMywxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 1351
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-89cc16caeab738e3d2b4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1389,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2058,
+                  "error": {
+                    "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":125,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[40,0,\"1.0282 0.91665\",\"none\",70.3,33.6],[46,0.023,\"1.02277 0.932691\",\"none\",69.9,34.2],[54,0.054,\"1.0174 0.948562\",\"none\",69.6,34.8],[63,0.091,\"1.01282 0.96212\",\"none\",69.3,35.3],[72,0.132,\"1.00926 0.972639\",\"none\",69,35.7],[74,0.142,\"1.00865 0.974428\",\"none\",69,35.8]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m",
+                    "stack": "Error: in: its scale and transform scale nothing on every frame {\"frames\":125,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[40,0,\"1.0282 0.91665\",\"none\",70.3,33.6],[46,0.023,\"1.02277 0.932691\",\"none\",69.9,34.2],[54,0.054,\"1.0174 0.948562\",\"none\",69.6,34.8],[63,0.091,\"1.01282 0.96212\",\"none\",69.3,35.3],[72,0.132,\"1.00926 0.972639\",\"none\",69,35.7],[74,0.142,\"1.00865 0.974428\",\"none\",69,35.8]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1430:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 1351
+                    },
+                    "snippet": "  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 1351
+                      },
+                      "message": "Error: in: its scale and transform scale nothing on every frame {\"frames\":125,\"scale\":0.0834,\"box\":3.06,\"filters\":[],\"first\":[[40,0,\"1.0282 0.91665\",\"none\",70.3,33.6],[46,0.023,\"1.02277 0.932691\",\"none\",69.9,34.2],[54,0.054,\"1.0174 0.948562\",\"none\",69.6,34.8],[63,0.091,\"1.01282 0.96212\",\"none\",69.3,35.3],[72,0.132,\"1.00926 0.972639\",\"none\",69,35.7],[74,0.142,\"1.00865 0.974428\",\"none\",69,35.8]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.001\u001b[39m\nReceived:    \u001b[31m0.0834\u001b[39m\n\n  1349 |     const at = JSON.stringify(size);\n  1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);\n> 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);\n       |                                                                                              ^\n  1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);\n  1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);\n  1354 | }\n    at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1351:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1430:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:28:25.356Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNiwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1sxMSwwXSxbMTksMF0sWzI2LDBdLFszMSwwXSxbNDAsMF0sWzQ2LDAuMDIzXSxbNTQsMC4wNTRdLFs2MywwLjA5MV0sWzcyLDAuMTMyXSxbNzQsMC4xNDJdLFs4MywwLjE4N10sWzkwLDAuMjIyXSxbOTksMC4yNzJdLFsxMDQsMC4zMDFdLFsxMTIsMC4zNDFdLFsxMjAsMC4zODddLFsxMjcsMC40M10sWzEzNiwwLjQ3OV0sWzE0MiwwLjUxNV0sWzE0OSwwLjU1Ml0sWzE1OSwwLjYwOF0sWzE2NiwwLjY0OF0sWzE3MiwwLjY4Ml0sWzE3OCwwLjcxN10sWzE4NiwwLjc1N10sWzE5NSwwLjgwNF0sWzIwMiwwLjg0Ml0sWzIwOCwwLjg3MV0sWzIxNywwLjkwOV0sWzIyNCwwLjk0Ml0sWzIzMSwwLjk3MV0sWzIzOSwwLjk5OF0sWzI0NiwxXSxbMjUzLDFdLFsyNjIsMV0sWzI2OSwxXSxbMjc2LDFdLFsyODMsMV0sWzI5MCwxXSxbMjk5LDFdXSwic3RhdGVzIjpbIngtdG9vbHRpcDItY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 1351
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e8dd1eecb4dea66579b1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:28:27.893Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxNSwic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1s2LDFdLFsxNCwxXSxbMjQsMV0sWzMxLDFdLFszOSwwLjk0OF0sWzQ4LDAuODgyXSxbNTYsMC44MTZdLFs2MSwwLjc3Ml0sWzY5LDAuNjk5XSxbNzcsMC42M10sWzg1LDAuNTQ5XSxbOTMsMC40NzRdLFsxMDIsMC4zOV0sWzEwNywwLjM0MV0sWzExNSwwLjI2OF0sWzEyMywwLjIwNV0sWzEzMSwwLjEzM10sWzEzNywwLjA4OF0sWzE0NCwwLjAzN10sWzE1MywwXSxbMTYwLDBdLFsxNjYsMF0sWzE3NCwwXSxbMTgwLDBdLFsxODgsMF0sWzE5NywwXSxbMjAzLDBdLFsyMTAsMF0sWzIxNywwXSxbMjI2LDBdLFsyMzQsMF0sWzI0MywwXSxbMjUwLDBdLFsyNjAsMF0sWzI2OCwwXSxbMjc0LDBdLFsyODEsMF0sWzI4NywwXSxbMjk1LDBdLFszMDMsMF1dLCJzdGF0ZXMiOlsieC10b29sdGlwLWNvbnRlbnQ6aW5zdGFudC1vcGVuIl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-db893afc6d39cac6f9a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T11:28:19.158Z",
+    "duration": 10945.926,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

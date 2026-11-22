@@ -1,0 +1,549 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "tooltip · ",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-12/logs/tt-tip-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tooltip · a hint keeps its size as it comes and goes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2212,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:29.235Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMywic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzI0LDAsIjEiLCJub25lIiw1NS44LDM2LjddLFszMywwLjAzNCwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzM1LDAuMDM5LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDIsMC4wNywiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzUyLDAuMTEyLCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNjEsMC4xNTUsIjEiLCJub25lIiw1NS44LDM2LjddXX0sImV4aXQiOnsiZnJhbWVzIjoxNywic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzUsMSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzE1LDAuOTM2LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMjAsMC44OTksIjEiLCJub25lIiw1NS44LDM2LjddLFsyNywwLjg0NSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzM2LDAuNzY3LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDQsMC42OTcsIjEiLCJub25lIiw1NS44LDM2LjddXX0sImZpcnN0T3AiOjAsImJldHdlZW4iOjI2LCJnb25lIjp0cnVlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2105,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:37.365Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMiwic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzMwLDAsIjEiLCJub25lIiw1NS44LDM2LjddLFs0MCwwLjAzNiwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzQzLDAuMDQ3LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNTAsMC4wNzcsIjEiLCJub25lIiw1NS44LDM2LjddLFs1OCwwLjExMywiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzY3LDAuMTU0LCIxIiwibm9uZSIsNTUuOCwzNi43XV19LCJleGl0Ijp7ImZyYW1lcyI6MTcsInNjYWxlIjowLCJib3giOjAsImZpbHRlcnMiOltdLCJmaXJzdCI6W1s1LDEsIjEiLCJub25lIiw1NS44LDM2LjddLFsxNSwwLjkzOCwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzIwLDAuOTA0LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMjYsMC44NTIsIjEiLCJub25lIiw1NS44LDM2LjddLFszNCwwLjc4NywiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzQ0LDAuNjk3LCIxIiwibm9uZSIsNTUuOCwzNi43XV19LCJmaXJzdE9wIjowLCJiZXR3ZWVuIjoyNiwiZ29uZSI6dHJ1ZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2116,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:45.388Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMiwic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzMyLDAsIjEiLCJub25lIiw1NS44LDM2LjddLFs0MCwwLCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDgsMC4wMjYsIjEiLCJub25lIiw1NS44LDM2LjddLFs1NCwwLjA1MSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzY0LDAuMDkzLCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNjgsMC4xMTEsIjEiLCJub25lIiw1NS44LDM2LjddXX0sImV4aXQiOnsiZnJhbWVzIjoxNywic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzUsMSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzE1LDAuOTM5LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMjAsMC45LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMjcsMC44NSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzM1LDAuNzc5LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDMsMC43MDksIjEiLCJub25lIiw1NS44LDM2LjddXX0sImZpcnN0T3AiOjAsImJldHdlZW4iOjI1LCJnb25lIjp0cnVlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e7a5598c497d9d90ccca",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1356,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1466,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:31.531Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s1LDBdLFsxMywwXSxbMjAsMF0sWzMwLDBdLFszNywwLjAyNF0sWzQ2LDAuMDYxXSxbNTQsMC4wOTddLFs2MywwLjEzN10sWzY2LDAuMTU0XSxbNzUsMC4yXSxbODIsMC4yMzNdLFs4OSwwLjI3Ml0sWzk4LDAuMzIzXSxbMTA1LDAuMzU3XSxbMTEwLDAuMzldLFsxMTgsMC40MzRdLFsxMjgsMC40OTJdLFsxMzUsMC41M10sWzE0MywwLjU3NV0sWzE1MiwwLjYyNl0sWzE2MCwwLjY3MV0sWzE2OSwwLjcyMl0sWzE3NSwwLjc1XSxbMTgyLDAuNzkxXSxbMTg5LDAuODI3XSxbMTk4LDAuODY3XSxbMjA3LDAuOTA5XSxbMjE1LDAuOTQ1XSxbMjIzLDAuOTc2XSxbMjMxLDFdLFsyMzgsMV0sWzI0NSwxXSxbMjUyLDFdLFsyNjIsMV0sWzI2OCwxXSxbMjc1LDFdLFsyODIsMV0sWzI4OSwxXSxbMjk4LDFdLFszMDQsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1452,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:39.569Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s3LDBdLFsxNCwwXSxbMjIsMF0sWzMwLDBdLFs0MCwwLjAzNV0sWzQ3LDAuMDYzXSxbNTcsMC4xMDZdLFs2NCwwLjEzOF0sWzcyLDAuMThdLFs4MSwwLjIyNV0sWzg5LDAuMjY3XSxbOTQsMC4yOThdLFsxMDMsMC4zNDRdLFsxMDksMC4zOF0sWzExOCwwLjQzMV0sWzEyMywwLjQ2XSxbMTMwLDAuNV0sWzEzOSwwLjU1Ml0sWzE0NiwwLjU5Ml0sWzE1NSwwLjY0MV0sWzE2MywwLjY4M10sWzE3MSwwLjczXSxbMTc5LDAuNzcyXSxbMTg4LDAuODE5XSxbMTk1LDAuODUyXSxbMjAxLDAuODgyXSxbMjA5LDAuOTE1XSxbMjE3LDAuOTUxXSxbMjI0LDAuOTc3XSxbMjMwLDAuOTk3XSxbMjM5LDFdLFsyNDYsMV0sWzI1NCwxXSxbMjYwLDFdLFsyNjksMV0sWzI3NSwxXSxbMjgyLDFdLFsyODksMV0sWzI5NiwxXSxbMzA1LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:47.581Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNiwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s5LDBdLFsxNiwwXSxbMjQsMF0sWzMyLDBdLFs0MSwwLjAyOV0sWzQzLDAuMDM5XSxbNTEsMC4wNzFdLFs2MCwwLjExMV0sWzY5LDAuMTUzXSxbNzUsMC4xODJdLFs4NCwwLjIyOV0sWzkwLDAuMjY0XSxbOTksMC4zMTJdLFsxMDgsMC4zNl0sWzExMywwLjM5XSxbMTIwLDAuNDI4XSxbMTI3LDAuNDY5XSxbMTM3LDAuNTI1XSxbMTQxLDAuNTQ3XSxbMTQ4LDAuNTg4XSxbMTU2LDAuNjMyXSxbMTY0LDAuNjc4XSxbMTcxLDAuNzJdLFsxNzgsMC43NTJdLFsxODUsMC43OV0sWzE5MywwLjgzM10sWzIwMSwwLjg3Ml0sWzIwNywwLjg5N10sWzIxNCwwLjkyOF0sWzIyMywwLjk2OF0sWzIzMCwwLjk5MV0sWzIzOCwxXSxbMjQ1LDFdLFsyNTMsMV0sWzI1OSwxXSxbMjY5LDFdLFsyNzMsMV0sWzI4MSwxXSxbMjg4LDFdLFsyOTcsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-89cc16caeab738e3d2b4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1389,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2018,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:33.003Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s2LDBdLFsxNCwwXSxbMjMsMF0sWzMxLDBdLFs0MSwwXSxbNDMsMC4wMDldLFs1MSwwLjAzNl0sWzU5LDAuMDY5XSxbNjksMC4xMTZdLFs3NywwLjE1M10sWzgyLDAuMTc2XSxbODksMC4yMTNdLFs5NSwwLjI0M10sWzEwMiwwLjI4NF0sWzEwOCwwLjMxMl0sWzExNSwwLjM1M10sWzEyMiwwLjM5NF0sWzEyOSwwLjQzNF0sWzEzOSwwLjQ4OF0sWzE0NiwwLjUyOF0sWzE1MiwwLjU2NF0sWzE2MiwwLjYyMV0sWzE3MCwwLjY2NV0sWzE3NiwwLjY5N10sWzE4MywwLjczOF0sWzE5MCwwLjc3NF0sWzE5OSwwLjgxOF0sWzIwOCwwLjg2M10sWzIxMywwLjg4Nl0sWzIyMCwwLjkxOV0sWzIyOCwwLjk1MV0sWzIzNiwwLjk4NF0sWzI0MiwxXSxbMjUwLDFdLFsyNTcsMV0sWzI2NSwxXSxbMjczLDFdLFsyODAsMV0sWzI4NywxXSxbMjk0LDFdXSwic3RhdGVzIjpbIngtdG9vbHRpcDItY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:41.027Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s2LDBdLFsxNCwwXSxbMjQsMF0sWzMxLDBdLFszOSwwXSxbNDQsMC4wMTddLFs1MSwwLjA0NF0sWzU5LDAuMDc1XSxbNjMsMC4wOTVdLFs3MSwwLjEzMV0sWzgwLDAuMTc2XSxbOTAsMC4yMjRdLFs5OCwwLjI2OF0sWzEwNCwwLjMwMV0sWzExMCwwLjMzNl0sWzExOSwwLjM4OF0sWzEyNCwwLjQxM10sWzEzMiwwLjQ1Nl0sWzEzOSwwLjQ5OV0sWzE0OCwwLjU1Ml0sWzE1NSwwLjU4OF0sWzE2NCwwLjY0M10sWzE2OSwwLjY2OV0sWzE3NiwwLjcwN10sWzE4NCwwLjc1Ml0sWzE5MywwLjc5OF0sWzE5OCwwLjgyMl0sWzIwNSwwLjg1OV0sWzIxMywwLjg5N10sWzIyMSwwLjkzXSxbMjI5LDAuOTYzXSxbMjM1LDAuOTg3XSxbMjQzLDFdLFsyNTAsMV0sWzI1OSwxXSxbMjY0LDFdLFsyNzMsMV0sWzI3OSwxXSxbMjg3LDFdLFsyOTUsMV1dLCJzdGF0ZXMiOlsieC10b29sdGlwMi1jb250ZW50Omluc3RhbnQtb3BlbiJdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2025,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:49.051Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s1LDBdLFsxNCwwXSxbMjIsMF0sWzMwLDBdLFszNCwwXSxbNDIsMC4wMjldLFs1MSwwLjA2NV0sWzYwLDAuMTAyXSxbNjQsMC4xMTldLFs3MSwwLjE1NV0sWzgwLDAuMl0sWzg3LDAuMjM4XSxbOTcsMC4yODldLFsxMDYsMC4zMzldLFsxMTEsMC4zNjddLFsxMTgsMC40MDldLFsxMjcsMC40NThdLFsxMzIsMC40ODVdLFsxNDAsMC41MzVdLFsxNDcsMC41NzNdLFsxNTQsMC42MTFdLFsxNjIsMC42NTZdLFsxNzAsMC43MDJdLFsxNzcsMC43MzldLFsxODQsMC43NzddLFsxOTIsMC44MTddLFsyMDAsMC44NTddLFsyMDcsMC44ODhdLFsyMTUsMC45MjhdLFsyMjUsMC45NjhdLFsyMzIsMC45OTJdLFsyMzgsMV0sWzI0NSwxXSxbMjU1LDFdLFsyNjEsMV0sWzI3MSwxXSxbMjc2LDFdLFsyODQsMV0sWzI5MiwxXSxbMjk5LDFdXSwic3RhdGVzIjpbIngtdG9vbHRpcDItY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e8dd1eecb4dea66579b1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2021,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:35.026Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxNiwic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1sxMCwxXSxbMjAsMV0sWzI3LDFdLFszNiwxXSxbNDMsMC45NTddLFs1MiwwLjg5XSxbNTYsMC44NjNdLFs2MywwLjgwM10sWzcxLDAuNzMxXSxbODAsMC42NTNdLFs4MiwwLjYzMl0sWzkwLDAuNTU2XSxbOTksMC40NzZdLFsxMDksMC4zNzddLFsxMTMsMC4zMzhdLFsxMjAsMC4yNzJdLFsxMjksMC4xOThdLFsxMzcsMC4xM10sWzE0NiwwLjA2Ml0sWzE1MSwwLjAyOF0sWzE1OCwwXSxbMTY2LDBdLFsxNzQsMF0sWzE4MSwwXSxbMTg4LDBdLFsxOTUsMF0sWzIwMywwXSxbMjEyLDBdLFsyMjAsMF0sWzIyOCwwXSxbMjM3LDBdLFsyNDUsMF0sWzI1MiwwXSxbMjU5LDBdLFsyNjcsMF0sWzI3NSwwXSxbMjgxLDBdLFsyODgsMF0sWzI5NywwXSxbMzA1LDBdXSwic3RhdGVzIjpbIngtdG9vbHRpcC1jb250ZW50Omluc3RhbnQtb3BlbiJdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2007,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:43.046Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxNSwic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1s2LDFdLFsxNCwxXSxbMjEsMV0sWzMxLDFdLFszOCwwLjk1OV0sWzQ4LDAuODg4XSxbNTEsMC44NjZdLFs1OSwwLjhdLFs2NiwwLjczOF0sWzc1LDAuNjU4XSxbNzcsMC42MzldLFs4NiwwLjU0OF0sWzkzLDAuNDg0XSxbMTA0LDAuMzgyXSxbMTEyLDAuMzA1XSxbMTE5LDAuMjQxXSxbMTI4LDAuMTY5XSxbMTM4LDAuMDg4XSxbMTQ1LDAuMDM3XSxbMTUxLDAuMDAxXSxbMTU5LDBdLFsxNjcsMF0sWzE3NCwwXSxbMTgyLDBdLFsxOTAsMF0sWzE5OSwwXSxbMjA3LDBdLFsyMTMsMF0sWzIyMSwwXSxbMjI5LDBdLFsyMzYsMF0sWzI0NCwwXSxbMjUyLDBdLFsyNTksMF0sWzI2NywwXSxbMjc0LDBdLFsyODIsMF0sWzI5MiwwXSxbMjk5LDBdLFszMDcsMF1dLCJzdGF0ZXMiOlsieC10b29sdGlwLWNvbnRlbnQ6aW5zdGFudC1vcGVuIl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:34:51.080Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxNSwic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1sxMCwxXSxbMTcsMV0sWzI4LDFdLFszNCwxXSxbNDQsMC45MzZdLFs0NywwLjkxNV0sWzU1LDAuODU4XSxbNjIsMC43OTVdLFs3MywwLjcwNF0sWzgxLDAuNjI2XSxbOTAsMC41NDRdLFs5OCwwLjQ2NF0sWzEwNCwwLjQxXSxbMTEzLDAuMzI4XSxbMTE4LDAuMjc2XSxbMTI3LDAuMTk3XSxbMTMzLDAuMTUxXSxbMTQyLDAuMDgzXSxbMTQ4LDAuMDM3XSxbMTU2LDBdLFsxNjQsMF0sWzE3MCwwXSxbMTc4LDBdLFsxODUsMF0sWzE5MywwXSxbMTk5LDBdLFsyMDcsMF0sWzIxNCwwXSxbMjIyLDBdLFsyMzEsMF0sWzIzOCwwXSxbMjQ0LDBdLFsyNTIsMF0sWzI2MCwwXSxbMjY2LDBdLFsyNzQsMF0sWzI4MSwwXSxbMjg5LDBdLFsyOTcsMF0sWzMwNSwwXV0sInN0YXRlcyI6WyJ4LXRvb2x0aXAtY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-db893afc6d39cac6f9a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T11:34:27.601Z",
+    "duration": 25518.026,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

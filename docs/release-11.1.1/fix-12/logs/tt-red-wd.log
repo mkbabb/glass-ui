@@ -1,0 +1,95 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.6s)
+  ✘  2 [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween (1.8s)
+  ✘  3 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming (2.4s)
+  ✘  4 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.4s)
+
+
+  1) [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: it arrives from gone: its first frame is a fade's first {"enter":{"frames":89,"scale":0,"box":0,"filters":[],"first":[[29,1,"none","none",55.2,36.7],[39,1,"none","none",55.2,36.7],[49,1,"none","none",55.2,36.7],[59,1,"none","none",55.2,36.7],[69,1,"none","none",55.2,36.7],[78,1,"none","none",55.2,36.7]]},"exit":{"frames":12,"scale":0.0832,"box":3.05,"filters":[],"first":[[9,1,"1","none",55.2,36.7],[18,0.612,"1.007441 0.978006","none",55.6,35.9],[29,0.384,"1.012452 0.963196","none",55.9,35.3],[39,0.229,"1.016288 0.951859","none",56.1,34.9],[49,0.123,"1.01932 0.942897","none",56.3,34.6],[59,0.055,"1.02174 0.935744","none",56.4,34.3]]},"firstOp":1,"between":0,"gone":true}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.1
+    Received:    1
+
+      1380 |     await info.attach("size", { body: JSON.stringify(read), contentType: "application/json" });
+      1381 |     const at = JSON.stringify(read);
+    > 1382 |     expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);
+           |                                                                                           ^
+      1383 |     expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+      1384 |     expectWhole(read.enter, "in");
+      1385 |     expect(read.gone, `it is gone ${at}`).toBe(true);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1382:91
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ──────
+
+    Error: more than two frames between gone and whole {"between":0,"share":1,"end":1,"frames":[[3,0],[13,0],[14,0],[15,0],[26,1],[34,1],[42,1],[52,1],[63,1],[75,1],[85,1],[95,1],[104,1],[114,1],[125,1],[137,1],[146,1],[155,1],[167,1],[176,1],[188,1],[197,1],[207,1],[218,1],[227,1],[238,1],[250,1],[258,1],[269,1],[278,1],[290,1],[299,1],[309,1],[319,1],[329,1],[341,1],[350,1],[360,1],[371,1],[381,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1397 |     await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+      1398 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
+    > 1399 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
+           |                                                                                                 ^
+      1400 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+      1401 |     expectWhole(judgeSize(film, film.mark), "in");
+      1402 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1399:97
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: more than two frames between gone and whole {"between":0,"share":1,"end":1,"frames":[[9,0],[19,0],[29,0],[39,0],[49,1],[62,1],[70,1],[80,1],[91,1],[101,1],[110,1],[121,1],[129,1],[142,1],[152,1],[161,1],[173,1],[182,1],[193,1],[203,1],[213,1],[223,1],[233,1],[244,1],[252,1],[264,1],[274,1],[284,1],[293,1],[305,1],[315,1],[323,1],[335,1],[345,1],[357,1],[364,1],[376,1],[386,1],[397,1],[407,1]],"states":["x-tooltip2-content:instant-open"]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1426 |         if (dir === "incoming") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);
+      1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+    > 1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+           |                                                                                   ^
+      1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1430 |         expectWhole(judgeSize(film, film.mark), dir === "incoming" ? "in" : "out");
+      1431 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1428:83
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-webkit-desktop/error-context.md
+
+  4) [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing 
+
+    Error: no frame carries more than a fifth {"between":5,"share":0.503,"end":0,"frames":[[7,1],[16,1],[27,1],[37,1],[46,0.612],[58,0.366],[68,0.217],[77,0.123],[89,0.045],[98,0.011],[109,0],[118,0],[127,0],[139,0],[149,0],[160,0],[170,0],[180,0],[190,0],[200,0],[210,0],[222,0],[230,0],[242,0],[250,0],[262,0],[272,0],[282,0],[292,0],[302,0],[311,0],[323,0],[333,0],[343,0],[352,0],[363,0],[375,0],[384,0],[394,0],[404,0]],"states":["x-tooltip-content:instant-open"]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.503
+
+      1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+      1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    > 1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                        ^
+      1430 |         expectWhole(judgeSize(film, film.mark), dir === "incoming" ? "in" : "out");
+      1431 |     });
+      1432 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1429:72
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-d62c6-ts-neighbour-fades-outgoing-webkit-desktop/error-context.md
+
+  4 failed
+    [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+    [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ───────
+    [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+    [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing 

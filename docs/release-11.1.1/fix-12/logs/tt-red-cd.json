@@ -1,0 +1,432 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "tooltip · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-12/logs/tt-red-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tooltip · a hint keeps its size as it comes and goes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2456,
+                  "error": {
+                    "message": "Error: it arrives from gone: its first frame is a fade's first {\"enter\":{\"frames\":122,\"scale\":0,\"box\":0,\"filters\":[],\"first\":[[25,1,\"none\",\"none\",55.8,36.7],[32,1,\"none\",\"none\",55.8,36.7],[42,1,\"none\",\"none\",55.8,36.7],[50,1,\"none\",\"none\",55.8,36.7],[60,1,\"none\",\"none\",55.8,36.7],[63,1,\"none\",\"none\",55.8,36.7]]},\"exit\":{\"frames\":17,\"scale\":0.0833,\"box\":3.06,\"filters\":[],\"first\":[[7,1,\"1\",\"none\",55.8,36.7],[14,0.708,\"1.00548 0.983813\",\"none\",56.1,36.1],[20,0.533,\"1.00912 0.973052\",\"none\",56.3,35.7],[29,0.351,\"1.01322 0.960915\",\"none\",56.5,35.3],[35,0.253,\"1.01567 0.953679\",\"none\",56.7,35],[43,0.161,\"1.0182 0.94622\",\"none\",56.8,34.7]]},\"firstOp\":1,\"between\":0,\"gone\":true}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: it arrives from gone: its first frame is a fade's first {\"enter\":{\"frames\":122,\"scale\":0,\"box\":0,\"filters\":[],\"first\":[[25,1,\"none\",\"none\",55.8,36.7],[32,1,\"none\",\"none\",55.8,36.7],[42,1,\"none\",\"none\",55.8,36.7],[50,1,\"none\",\"none\",55.8,36.7],[60,1,\"none\",\"none\",55.8,36.7],[63,1,\"none\",\"none\",55.8,36.7]]},\"exit\":{\"frames\":17,\"scale\":0.0833,\"box\":3.06,\"filters\":[],\"first\":[[7,1,\"1\",\"none\",55.8,36.7],[14,0.708,\"1.00548 0.983813\",\"none\",56.1,36.1],[20,0.533,\"1.00912 0.973052\",\"none\",56.3,35.7],[29,0.351,\"1.01322 0.960915\",\"none\",56.5,35.3],[35,0.253,\"1.01567 0.953679\",\"none\",56.7,35],[43,0.161,\"1.0182 0.94622\",\"none\",56.8,34.7]]},\"firstOp\":1,\"between\":0,\"gone\":true}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1382:91",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 91,
+                      "line": 1382
+                    },
+                    "snippet": "  1380 |     await info.attach(\"size\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1381 |     const at = JSON.stringify(read);\n> 1382 |     expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);\n       |                                                                                           ^\n  1383 |     expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n  1384 |     expectWhole(read.enter, \"in\");\n  1385 |     expect(read.gone, `it is gone ${at}`).toBe(true);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 91,
+                        "line": 1382
+                      },
+                      "message": "Error: it arrives from gone: its first frame is a fade's first {\"enter\":{\"frames\":122,\"scale\":0,\"box\":0,\"filters\":[],\"first\":[[25,1,\"none\",\"none\",55.8,36.7],[32,1,\"none\",\"none\",55.8,36.7],[42,1,\"none\",\"none\",55.8,36.7],[50,1,\"none\",\"none\",55.8,36.7],[60,1,\"none\",\"none\",55.8,36.7],[63,1,\"none\",\"none\",55.8,36.7]]},\"exit\":{\"frames\":17,\"scale\":0.0833,\"box\":3.06,\"filters\":[],\"first\":[[7,1,\"1\",\"none\",55.8,36.7],[14,0.708,\"1.00548 0.983813\",\"none\",56.1,36.1],[20,0.533,\"1.00912 0.973052\",\"none\",56.3,35.7],[29,0.351,\"1.01322 0.960915\",\"none\",56.5,35.3],[35,0.253,\"1.01567 0.953679\",\"none\",56.7,35],[43,0.161,\"1.0182 0.94622\",\"none\",56.8,34.7]]},\"firstOp\":1,\"between\":0,\"gone\":true}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  1380 |     await info.attach(\"size\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1381 |     const at = JSON.stringify(read);\n> 1382 |     expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);\n       |                                                                                           ^\n  1383 |     expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n  1384 |     expectWhole(read.enter, \"in\");\n  1385 |     expect(read.gone, `it is gone ${at}`).toBe(true);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1382:91"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:36.617Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMiwic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzI1LDEsIm5vbmUiLCJub25lIiw1NS44LDM2LjddLFszMiwxLCJub25lIiwibm9uZSIsNTUuOCwzNi43XSxbNDIsMSwibm9uZSIsIm5vbmUiLDU1LjgsMzYuN10sWzUwLDEsIm5vbmUiLCJub25lIiw1NS44LDM2LjddLFs2MCwxLCJub25lIiwibm9uZSIsNTUuOCwzNi43XSxbNjMsMSwibm9uZSIsIm5vbmUiLDU1LjgsMzYuN11dfSwiZXhpdCI6eyJmcmFtZXMiOjE3LCJzY2FsZSI6MC4wODMzLCJib3giOjMuMDYsImZpbHRlcnMiOltdLCJmaXJzdCI6W1s3LDEsIjEiLCJub25lIiw1NS44LDM2LjddLFsxNCwwLjcwOCwiMS4wMDU0OCAwLjk4MzgxMyIsIm5vbmUiLDU2LjEsMzYuMV0sWzIwLDAuNTMzLCIxLjAwOTEyIDAuOTczMDUyIiwibm9uZSIsNTYuMywzNS43XSxbMjksMC4zNTEsIjEuMDEzMjIgMC45NjA5MTUiLCJub25lIiw1Ni41LDM1LjNdLFszNSwwLjI1MywiMS4wMTU2NyAwLjk1MzY3OSIsIm5vbmUiLDU2LjcsMzVdLFs0MywwLjE2MSwiMS4wMTgyIDAuOTQ2MjIiLCJub25lIiw1Ni44LDM0LjddXX0sImZpcnN0T3AiOjEsImJldHdlZW4iOjAsImdvbmUiOnRydWV9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 91,
+                    "line": 1382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e7a5598c497d9d90ccca",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1356,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1504,
+                  "error": {
+                    "message": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[7,0],[14,0],[23,0],[27,1],[34,1],[43,1],[52,1],[60,1],[68,1],[77,1],[81,1],[89,1],[96,1],[105,1],[114,1],[119,1],[127,1],[134,1],[141,1],[148,1],[156,1],[164,1],[170,1],[179,1],[186,1],[193,1],[200,1],[209,1],[215,1],[222,1],[230,1],[237,1],[247,1],[255,1],[264,1],[272,1],[280,1],[285,1],[293,1],[301,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[7,0],[14,0],[23,0],[27,1],[34,1],[43,1],[52,1],[60,1],[68,1],[77,1],[81,1],[89,1],[96,1],[105,1],[114,1],[119,1],[127,1],[134,1],[141,1],[148,1],[156,1],[164,1],[170,1],[179,1],[186,1],[193,1],[200,1],[209,1],[215,1],[222,1],[230,1],[237,1],[247,1],[255,1],[264,1],[272,1],[280,1],[285,1],[293,1],[301,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1399:97",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 97,
+                      "line": 1399
+                    },
+                    "snippet": "  1397 |     await info.attach(\"enter\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1398 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);\n> 1399 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);\n       |                                                                                                 ^\n  1400 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);\n  1401 |     expectWhole(judgeSize(film, film.mark), \"in\");\n  1402 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 97,
+                        "line": 1399
+                      },
+                      "message": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[7,0],[14,0],[23,0],[27,1],[34,1],[43,1],[52,1],[60,1],[68,1],[77,1],[81,1],[89,1],[96,1],[105,1],[114,1],[119,1],[127,1],[134,1],[141,1],[148,1],[156,1],[164,1],[170,1],[179,1],[186,1],[193,1],[200,1],[209,1],[215,1],[222,1],[230,1],[237,1],[247,1],[255,1],[264,1],[272,1],[280,1],[285,1],[293,1],[301,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1397 |     await info.attach(\"enter\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1398 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);\n> 1399 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);\n       |                                                                                                 ^\n  1400 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);\n  1401 |     expectWhole(judgeSize(film, film.mark), \"in\");\n  1402 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1399:97"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:39.531Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjowLCJzaGFyZSI6MSwiZW5kIjoxLCJmcmFtZXMiOltbNywwXSxbMTQsMF0sWzIzLDBdLFsyNywxXSxbMzQsMV0sWzQzLDFdLFs1MiwxXSxbNjAsMV0sWzY4LDFdLFs3NywxXSxbODEsMV0sWzg5LDFdLFs5NiwxXSxbMTA1LDFdLFsxMTQsMV0sWzExOSwxXSxbMTI3LDFdLFsxMzQsMV0sWzE0MSwxXSxbMTQ4LDFdLFsxNTYsMV0sWzE2NCwxXSxbMTcwLDFdLFsxNzksMV0sWzE4NiwxXSxbMTkzLDFdLFsyMDAsMV0sWzIwOSwxXSxbMjE1LDFdLFsyMjIsMV0sWzIzMCwxXSxbMjM3LDFdLFsyNDcsMV0sWzI1NSwxXSxbMjY0LDFdLFsyNzIsMV0sWzI4MCwxXSxbMjg1LDFdLFsyOTMsMV0sWzMwMSwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 97,
+                    "line": 1399
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-89cc16caeab738e3d2b4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1389,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2058,
+                  "error": {
+                    "message": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[10,0],[18,0],[26,0],[30,0],[39,1],[46,1],[54,1],[63,1],[78,1],[86,1],[95,1],[100,1],[109,1],[115,1],[124,1],[130,1],[136,1],[144,1],[151,1],[159,1],[165,1],[173,1],[179,1],[188,1],[196,1],[202,1],[210,1],[217,1],[225,1],[231,1],[239,1],[246,1],[254,1],[262,1],[270,1],[275,1],[284,1],[292,1],[297,1],[306,1]],\"states\":[\"x-tooltip2-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[10,0],[18,0],[26,0],[30,0],[39,1],[46,1],[54,1],[63,1],[78,1],[86,1],[95,1],[100,1],[109,1],[115,1],[124,1],[130,1],[136,1],[144,1],[151,1],[159,1],[165,1],[173,1],[179,1],[188,1],[196,1],[202,1],[210,1],[217,1],[225,1],[231,1],[239,1],[246,1],[254,1],[262,1],[270,1],[275,1],[284,1],[292,1],[297,1],[306,1]],\"states\":[\"x-tooltip2-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1428:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 1428
+                    },
+                    "snippet": "  1426 |         if (dir === \"incoming\") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);\n  1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);\n> 1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n       |                                                                                   ^\n  1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1430 |         expectWhole(judgeSize(film, film.mark), dir === \"incoming\" ? \"in\" : \"out\");\n  1431 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 1428
+                      },
+                      "message": "Error: more than two frames between gone and whole {\"between\":0,\"share\":1,\"end\":1,\"frames\":[[10,0],[18,0],[26,0],[30,0],[39,1],[46,1],[54,1],[63,1],[78,1],[86,1],[95,1],[100,1],[109,1],[115,1],[124,1],[130,1],[136,1],[144,1],[151,1],[159,1],[165,1],[173,1],[179,1],[188,1],[196,1],[202,1],[210,1],[217,1],[225,1],[231,1],[239,1],[246,1],[254,1],[262,1],[270,1],[275,1],[284,1],[292,1],[297,1],[306,1]],\"states\":[\"x-tooltip2-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1426 |         if (dir === \"incoming\") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);\n  1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);\n> 1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n       |                                                                                   ^\n  1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1430 |         expectWhole(judgeSize(film, film.mark), dir === \"incoming\" ? \"in\" : \"out\");\n  1431 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1428:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:41.399Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjowLCJzaGFyZSI6MSwiZW5kIjoxLCJmcmFtZXMiOltbMTAsMF0sWzE4LDBdLFsyNiwwXSxbMzAsMF0sWzM5LDFdLFs0NiwxXSxbNTQsMV0sWzYzLDFdLFs3OCwxXSxbODYsMV0sWzk1LDFdLFsxMDAsMV0sWzEwOSwxXSxbMTE1LDFdLFsxMjQsMV0sWzEzMCwxXSxbMTM2LDFdLFsxNDQsMV0sWzE1MSwxXSxbMTU5LDFdLFsxNjUsMV0sWzE3MywxXSxbMTc5LDFdLFsxODgsMV0sWzE5NiwxXSxbMjAyLDFdLFsyMTAsMV0sWzIxNywxXSxbMjI1LDFdLFsyMzEsMV0sWzIzOSwxXSxbMjQ2LDFdLFsyNTQsMV0sWzI2MiwxXSxbMjcwLDFdLFsyNzUsMV0sWzI4NCwxXSxbMjkyLDFdLFsyOTcsMV0sWzMwNiwxXV0sInN0YXRlcyI6WyJ4LXRvb2x0aXAyLWNvbnRlbnQ6aW5zdGFudC1vcGVuIl19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 1428
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e8dd1eecb4dea66579b1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2064,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"between\":6,\"share\":0.549,\"end\":0,\"frames\":[[7,1],[15,1],[23,1],[31,1],[39,0.668],[48,0.447],[63,0.209],[71,0.124],[79,0.067],[87,0.03],[91,0.016],[100,0.001],[107,0],[115,0],[126,0],[134,0],[144,0],[153,0],[158,0],[167,0],[174,0],[182,0],[187,0],[196,0],[203,0],[211,0],[218,0],[226,0],[236,0],[244,0],[252,0],[263,0],[272,0],[281,0],[287,0],[295,0],[303,0],[311,0],[319,0],[327,0]],\"states\":[\"x-tooltip-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.549\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"between\":6,\"share\":0.549,\"end\":0,\"frames\":[[7,1],[15,1],[23,1],[31,1],[39,0.668],[48,0.447],[63,0.209],[71,0.124],[79,0.067],[87,0.03],[91,0.016],[100,0.001],[107,0],[115,0],[126,0],[134,0],[144,0],[153,0],[158,0],[167,0],[174,0],[182,0],[187,0],[196,0],[203,0],[211,0],[218,0],[226,0],[236,0],[244,0],[252,0],[263,0],[272,0],[281,0],[287,0],[295,0],[303,0],[311,0],[319,0],[327,0]],\"states\":[\"x-tooltip-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.549\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1429:72",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 72,
+                      "line": 1429
+                    },
+                    "snippet": "  1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);\n  1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n> 1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                        ^\n  1430 |         expectWhole(judgeSize(film, film.mark), dir === \"incoming\" ? \"in\" : \"out\");\n  1431 |     });\n  1432 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 72,
+                        "line": 1429
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"between\":6,\"share\":0.549,\"end\":0,\"frames\":[[7,1],[15,1],[23,1],[31,1],[39,0.668],[48,0.447],[63,0.209],[71,0.124],[79,0.067],[87,0.03],[91,0.016],[100,0.001],[107,0],[115,0],[126,0],[134,0],[144,0],[153,0],[158,0],[167,0],[174,0],[182,0],[187,0],[196,0],[203,0],[211,0],[218,0],[226,0],[236,0],[244,0],[252,0],[263,0],[272,0],[281,0],[287,0],[295,0],[303,0],[311,0],[319,0],[327,0]],\"states\":[\"x-tooltip-content:instant-open\"]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.549\u001b[39m\n\n  1427 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);\n  1428 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);\n> 1429 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                        ^\n  1430 |         expectWhole(judgeSize(film, film.mark), dir === \"incoming\" ? \"in\" : \"out\");\n  1431 |     });\n  1432 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1429:72"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:33:43.871Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjo2LCJzaGFyZSI6MC41NDksImVuZCI6MCwiZnJhbWVzIjpbWzcsMV0sWzE1LDFdLFsyMywxXSxbMzEsMV0sWzM5LDAuNjY4XSxbNDgsMC40NDddLFs2MywwLjIwOV0sWzcxLDAuMTI0XSxbNzksMC4wNjddLFs4NywwLjAzXSxbOTEsMC4wMTZdLFsxMDAsMC4wMDFdLFsxMDcsMF0sWzExNSwwXSxbMTI2LDBdLFsxMzQsMF0sWzE0NCwwXSxbMTUzLDBdLFsxNTgsMF0sWzE2NywwXSxbMTc0LDBdLFsxODIsMF0sWzE4NywwXSxbMTk2LDBdLFsyMDMsMF0sWzIxMSwwXSxbMjE4LDBdLFsyMjYsMF0sWzIzNiwwXSxbMjQ0LDBdLFsyNTIsMF0sWzI2MywwXSxbMjcyLDBdLFsyODEsMF0sWzI4NywwXSxbMjk1LDBdLFszMDMsMF0sWzMxMSwwXSxbMzE5LDBdLFszMjcsMF1dLCJzdGF0ZXMiOlsieC10b29sdGlwLWNvbnRlbnQ6aW5zdGFudC1vcGVuIl19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/test-results/release-11-1-1-tooltip-·-a-d62c6-ts-neighbour-fades-outgoing-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 72,
+                    "line": 1429
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-db893afc6d39cac6f9a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T11:33:34.832Z",
+    "duration": 11232.544,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

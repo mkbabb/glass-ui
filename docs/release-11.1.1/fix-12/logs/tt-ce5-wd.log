@@ -1,0 +1,78 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.7s)
+  ✘  2 [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween (1.9s)
+  ✘  3 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming (2.4s)
+  ✓  4 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.4s)
+
+
+  1) [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":89,"scale":0.0834,"box":3.06,"filters":[],"first":[[30,0,"1.0282 0.91665","none",56.7,33.6],[40,0.036,"1.020274 0.940076","none",56.3,34.5],[50,0.077,"1.014258 0.957857","none",56,35.1],[60,0.123,"1.009971 0.970528","none",55.7,35.6],[70,0.171,"1.00699 0.97934","none",55.6,35.9],[79,0.217,"1.005093 0.984947","none",55.5,36.1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1384:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ──────
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":89,"scale":0.0834,"box":3.06,"filters":[],"first":[[29,0,"1.0282 0.91665","none",56.7,33.6],[39,0.036,"1.020274 0.940076","none",56.3,34.5],[48,0.073,"1.014776 0.956327","none",56,35.1],[57,0.113,"1.01071 0.968345","none",55.8,35.5],[69,0.171,"1.00699 0.97934","none",55.6,35.9],[80,0.227,"1.004748 0.985966","none",55.4,36.2]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1401:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: in: its scale and transform scale nothing on every frame {"frames":92,"scale":0.0834,"box":3.06,"filters":[],"first":[[51,0,"1.0282 0.91665","none",68.1,33.6],[62,0.04,"1.019586 0.94211","none",67.6,34.6],[72,0.082,"1.013758 0.959336","none",67.2,35.2],[82,0.127,"1.009622 0.971562","none",66.9,35.6],[93,0.186,"1.006288 0.981414","none",66.7,36],[102,0.233,"1.004585 0.986449","none",66.6,36.2]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.001
+    Received:    0.0834
+
+      1349 |     const at = JSON.stringify(size);
+      1350 |     expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    > 1351 |     expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+           |                                                                                              ^
+      1352 |     expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+      1353 |     expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+      1354 | }
+        at expectWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1351:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix12-ce5f320b7/tree/tests-visual/release-11-1-1.spec.ts:1430:9
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-webkit-desktop/error-context.md
+
+  3 failed
+    [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes 
+    [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween ───────
+    [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming 
+  1 passed (13.1s)

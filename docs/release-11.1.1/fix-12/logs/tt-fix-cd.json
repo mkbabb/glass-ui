@@ -1,0 +1,316 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "tooltip · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-12/logs/tt-fix-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tooltip · a hint keeps its size as it comes and goes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:29:42.759Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "size",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRlciI6eyJmcmFtZXMiOjEyMCwic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzI2LDAsIjEiLCJub25lIiw1NS44LDM2LjddLFszNCwwLjAyOCwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzM4LDAuMDQ0LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDYsMC4wNzksIjEiLCJub25lIiw1NS44LDM2LjddLFs1NCwwLjExMiwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzY0LDAuMTYsIjEiLCJub25lIiw1NS44LDM2LjddXX0sImV4aXQiOnsiZnJhbWVzIjoxNiwic2NhbGUiOjAsImJveCI6MCwiZmlsdGVycyI6W10sImZpcnN0IjpbWzIsMSwiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzExLDAuOTM5LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbMTksMC44ODIsIjEiLCJub25lIiw1NS44LDM2LjddLFsyNiwwLjgyNywiMSIsIm5vbmUiLDU1LjgsMzYuN10sWzMzLDAuNzY1LCIxIiwibm9uZSIsNTUuOCwzNi43XSxbNDEsMC42OTgsIjEiLCJub25lIiw1NS44LDM2LjddXX0sImZpcnN0T3AiOjAsImJldHdlZW4iOjI1LCJnb25lIjp0cnVlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e7a5598c497d9d90ccca",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1356,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:29:45.072Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNiwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s2LDBdLFsxNSwwXSxbMjUsMF0sWzMxLDBdLFs0MCwwLjAzXSxbNDQsMC4wNDZdLFs1MiwwLjA4MV0sWzYwLDAuMTE3XSxbNjIsMC4xMjZdLFs3MCwwLjE2NF0sWzc5LDAuMjFdLFs4NywwLjI1NV0sWzk2LDAuM10sWzEwMSwwLjMzMl0sWzEwOSwwLjM3M10sWzExNywwLjQxN10sWzEyNSwwLjQ2M10sWzEzMSwwLjQ5Nl0sWzEzOCwwLjUzN10sWzE0NiwwLjU4M10sWzE1NCwwLjYyOF0sWzE2MiwwLjY3NF0sWzE2OSwwLjcxNV0sWzE3NiwwLjc1XSxbMTg0LDAuNzkxXSxbMTkyLDAuODM0XSxbMTk3LDAuODU3XSxbMjA1LDAuODkzXSxbMjEzLDAuOTMxXSxbMjIwLDAuOTYxXSxbMjI4LDAuOTldLFsyMzQsMV0sWzI0MiwxXSxbMjUyLDFdLFsyNTksMV0sWzI2NSwxXSxbMjczLDFdLFsyNzksMV0sWzI4OSwxXSxbMjk1LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-89cc16caeab738e3d2b4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1389,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2047,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:29:46.537Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoyNSwic2hhcmUiOjAuMDk1LCJlbmQiOjEsImZyYW1lcyI6W1s1LDBdLFsxMywwXSxbMjEsMF0sWzM3LDBdLFs0NiwwXSxbNTcsMC4wNDJdLFs2NiwwLjA4XSxbNzQsMC4xMTJdLFs4MCwwLjE0Ml0sWzg2LDAuMTY5XSxbOTQsMC4yMV0sWzEwMCwwLjI0Ml0sWzEwNywwLjI4NF0sWzExNywwLjMzNl0sWzEyNCwwLjM3NV0sWzEzMywwLjQyNl0sWzE0MiwwLjQ3OF0sWzE1MCwwLjUyNF0sWzE1NiwwLjU1NV0sWzE2NCwwLjYwMV0sWzE3MiwwLjY0NV0sWzE3OSwwLjY4Nl0sWzE4NywwLjczMl0sWzE5MywwLjc2NF0sWzIwMCwwLjc5Nl0sWzIwOCwwLjg0MV0sWzIxNywwLjg4MV0sWzIyMiwwLjkwNV0sWzIzMCwwLjkzOF0sWzIzNywwLjk2N10sWzI0NSwwLjk5OF0sWzI1NCwxXSxbMjU4LDFdLFsyNjYsMV0sWzI3MywxXSxbMjgxLDFdLFsyODcsMV0sWzI5NSwxXSxbMzA0LDFdLFszMTAsMV1dLCJzdGF0ZXMiOlsieC10b29sdGlwMi1jb250ZW50Omluc3RhbnQtb3BlbiJdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e8dd1eecb4dea66579b1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2024,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T11:29:48.590Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxNiwic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1s5LDFdLFsxOCwxXSxbMjYsMV0sWzM1LDFdLFs0MywwLjk0OV0sWzQ1LDAuOTM0XSxbNTMsMC44NzhdLFs2MywwLjc4OF0sWzcyLDAuNzE0XSxbNzMsMC43XSxbODAsMC42NF0sWzg1LDAuNTldLFs5MSwwLjUzMl0sWzk5LDAuNDU4XSxbMTA3LDAuMzc4XSxbMTE0LDAuMzE0XSxbMTIxLDAuMjUzXSxbMTMxLDAuMTddLFsxMzgsMC4xMTFdLFsxNDUsMC4wNjNdLFsxNTgsMF0sWzE2OCwwXSxbMTc5LDBdLFsxODYsMF0sWzE5MywwXSxbMjAzLDBdLFsyMDgsMF0sWzIxNSwwXSxbMjIzLDBdLFsyMzEsMF0sWzIzOSwwXSxbMjQ2LDBdLFsyNTMsMF0sWzI2MSwwXSxbMjY4LDBdLFsyNzYsMF0sWzI4MiwwXSxbMjg5LDBdLFsyOTgsMF0sWzMwNywwXV0sInN0YXRlcyI6WyJ4LXRvb2x0aXAtY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-db893afc6d39cac6f9a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1405,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T11:29:41.128Z",
+    "duration": 9533.777999999998,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
