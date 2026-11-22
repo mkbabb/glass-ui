@@ -38,4 +38,4 @@ The P17 close returned (bl/demo at 15863894f; verify: merge, with three items wo
 
 ## 2026-11-22: dock pass 8 done (NOT READY); its ruling round
 
-Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruling round `driver/dock-rulings-8.js` (no args) writes RULINGS-8.md; if it stops, resume it with its run id from the Workflow result (recorded in the cursor). The P17 close and cure runs are finished; the font fix `wf_5a0fa209-03c` (no args) is live.
+Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruling round `driver/dock-rulings-8.js` (no args, run `wf_68a44fc8-277`) writes RULINGS-8.md; if it stops, resume it with `resumeFromRunId: "wf_68a44fc8-277"`. The P17 close and cure runs are finished; the font fix `wf_5a0fa209-03c` (no args) is live.
