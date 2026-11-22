@@ -39,3 +39,5 @@ The P17 close returned (bl/demo at 15863894f; verify: merge, with three items wo
 ## 2026-11-22: dock pass 8 done (NOT READY); its ruling round
 
 Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruling round `driver/dock-rulings-8.js` (no args, run `wf_68a44fc8-277`) writes RULINGS-8.md; if it stops, resume it with `resumeFromRunId: "wf_68a44fc8-277"`. The P17 close and cure runs are finished; the font fix `wf_5a0fa209-03c` (no args) is live.
+
+**Owner question added (2026-11-22):** the code font is fetched at app start on routes whose first screen shows code, so it is in hand at first paint and never swaps; on a slow network that paints those routes 30 to 34 ms after P16 (out of about 8.5 s at 400 ms RTT). The other choice starts the font after first paint, so those first screens show code in the fallback face for the rest of the visit. Default: keep the fetch at app start.
