@@ -1,0 +1,33 @@
+tip-chromium-desktop-0 {'skipped': 13, 'passed': 28} tables=16
+   most in one 16.7 ms window 0.157 (exit · Tooltip leaves on the exit curve, shorter t)
+   largest first sample 0.078/9ms (routes · a CommandDialog keeps its list through it)
+   largest last sample 0.031/8ms (exit · Dialog leaves on the exit curve, shorter th)
+   longest hole 17ms (routes · a press on an open Popover's trigger clos); against direction outside turns: none
+tip-chromium-desktop-1 {'passed': 42, 'skipped': 1} tables=22
+   most in one 16.7 ms window 0.301 (reverse · a disclosure reopened while it closes fi)
+   largest first sample 0.162/18ms (expand · an ExpandableContainer reopened while it )
+   largest last sample 0.029/9ms (reverse · a Select reopened while it closes turns )
+   longest hole 18ms (expand · an ExpandableContainer reopened while it ); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-chromium-desktop-2 {'passed': 44} tables=43
+   most in one 16.7 ms window 0.176 (standing · Accordion by trigger: no exit in under )
+   largest first sample 0.078/5ms (standing · CommandDialog by pick: no exit in under)
+   largest last sample 0.051/8ms (standing · Tooltip by escape: no exit in under two)
+   longest hole 15ms (standing · Select by pick: no exit in under two fr); against direction outside turns: none
+tip-chromium-desktop-3 {'passed': 18} no frame tables
+tip-chromium-phone-0 {'passed': 38, 'skipped': 3} tables=17
+   most in one 16.7 ms window 0.156 (sheet · a detented Sheet dragged up and let go at )
+   largest first sample 0.101/9ms (sheet · a detented Sheet dragged up and let go at )
+   largest last sample 0.038/6ms (exit · Dialog leaves on the exit curve, shorter th)
+   longest hole 14ms (routes · a press on an open Popover's trigger clos); against direction outside turns: none
+   FAILED: expand · an ExpandableContainer reopened while it leaves turns from where it is
+tip-chromium-phone-1 {'passed': 31, 'skipped': 11, 'failed': 1} tables=16
+   most in one 16.7 ms window 0.418 (reverse · a disclosure reopened while it closes fi)
+   largest first sample 0.079/9ms (expand · an ExpandableContainer leaves on a tween )
+   largest last sample 0.051/9ms (reverse · a Select reopened while it closes turns )
+   longest hole 16ms (reverse · a Popover reopened while it closes turns); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-chromium-phone-2 {'passed': 41, 'skipped': 3} tables=40
+   most in one 16.7 ms window 0.176 (standing · ExpandableContainer by escape: no exit )
+   largest first sample 0.078/6ms (standing · CommandDialog by pick: no exit in under)
+   largest last sample 0.032/8ms (standing · ExpandableContainer by close: no exit i)
+   longest hole 17ms (standing · Sheet left by close: no exit in under t); against direction outside turns: none
+tip-chromium-phone-3 {'passed': 17, 'skipped': 1} no frame tables

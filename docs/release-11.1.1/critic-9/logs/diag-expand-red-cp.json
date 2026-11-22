@@ -1,0 +1,801 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "expand · an ExpandableContainer reopened while it leaves",
+      "--repeat-each=10",
+      "--trace",
+      "retain-on-failure",
+      "--output=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/diag-expand-red-cp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5075,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[6,0],[12,0],[22,0],[29,0],[38,0],[44,0.005],[51,0.02],[59,0.048],[66,0.079],[72,0.112],[79,0.154],[88,0.215],[95,0.266],[101,0.311],[110,0.372],[117,0.426],[124,0.476],[131,0.525],[137,0.567],[145,0.618],[153,0.671],[161,0.712],[168,0.75],[176,0.783],[182,0.811],[190,0.841],[197,0.864],[205,0.886],[213,0.907],[221,0.925],[228,0.938],[234,0.949],[241,0.959],[249,1],[259,1],[264,1],[270,1],[279,1],[287,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[6,0],[12,0],[22,0],[29,0],[38,0],[44,0.005],[51,0.02],[59,0.048],[66,0.079],[72,0.112],[79,0.154],[88,0.215],[95,0.266],[101,0.311],[110,0.372],[117,0.426],[124,0.476],[131,0.525],[137,0.567],[145,0.618],[153,0.671],[161,0.712],[168,0.75],[176,0.783],[182,0.811],[190,0.841],[197,0.864],[205,0.886],[213,0.907],[221,0.925],[228,0.938],[234,0.949],[241,0.959],[249,1],[259,1],[264,1],[270,1],[279,1],[287,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[6,0],[12,0],[22,0],[29,0],[38,0],[44,0.005],[51,0.02],[59,0.048],[66,0.079],[72,0.112],[79,0.154],[88,0.215],[95,0.266],[101,0.311],[110,0.372],[117,0.426],[124,0.476],[131,0.525],[137,0.567],[145,0.618],[153,0.671],[161,0.712],[168,0.75],[176,0.783],[182,0.811],[190,0.841],[197,0.864],[205,0.886],[213,0.907],[221,0.925],[228,0.938],[234,0.949],[241,0.959],[249,1],[259,1],[264,1],[270,1],[279,1],[287,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:03:40.450Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjYsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTMsMF0sWzYsMF0sWzEyLDBdLFsyMiwwXSxbMjksMF0sWzM4LDBdLFs0NCwwLjAwNV0sWzUxLDAuMDJdLFs1OSwwLjA0OF0sWzY2LDAuMDc5XSxbNzIsMC4xMTJdLFs3OSwwLjE1NF0sWzg4LDAuMjE1XSxbOTUsMC4yNjZdLFsxMDEsMC4zMTFdLFsxMTAsMC4zNzJdLFsxMTcsMC40MjZdLFsxMjQsMC40NzZdLFsxMzEsMC41MjVdLFsxMzcsMC41NjddLFsxNDUsMC42MThdLFsxNTMsMC42NzFdLFsxNjEsMC43MTJdLFsxNjgsMC43NV0sWzE3NiwwLjc4M10sWzE4MiwwLjgxMV0sWzE5MCwwLjg0MV0sWzE5NywwLjg2NF0sWzIwNSwwLjg4Nl0sWzIxMywwLjkwN10sWzIyMSwwLjkyNV0sWzIyOCwwLjkzOF0sWzIzNCwwLjk0OV0sWzI0MSwwLjk1OV0sWzI0OSwxXSxbMjU5LDFdLFsyNjQsMV0sWzI3MCwxXSxbMjc5LDFdLFsyODcsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4918,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[7,0],[11,0],[18,0],[26,0],[34,0],[43,0.01],[52,0.036],[57,0.053],[65,0.091],[72,0.136],[80,0.184],[85,0.221],[94,0.283],[102,0.34],[109,0.395],[118,0.464],[123,0.497],[131,0.555],[138,0.596],[146,0.648],[152,0.683],[160,0.723],[167,0.762],[176,0.799],[185,0.833],[189,0.851],[197,0.875],[205,0.896],[213,0.916],[219,0.929],[225,0.94],[234,0.954],[242,0.979],[251,1],[256,1],[264,1],[272,1],[279,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[7,0],[11,0],[18,0],[26,0],[34,0],[43,0.01],[52,0.036],[57,0.053],[65,0.091],[72,0.136],[80,0.184],[85,0.221],[94,0.283],[102,0.34],[109,0.395],[118,0.464],[123,0.497],[131,0.555],[138,0.596],[146,0.648],[152,0.683],[160,0.723],[167,0.762],[176,0.799],[185,0.833],[189,0.851],[197,0.875],[205,0.896],[213,0.916],[219,0.929],[225,0.94],[234,0.954],[242,0.979],[251,1],[256,1],[264,1],[272,1],[279,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[7,0],[11,0],[18,0],[26,0],[34,0],[43,0.01],[52,0.036],[57,0.053],[65,0.091],[72,0.136],[80,0.184],[85,0.221],[94,0.283],[102,0.34],[109,0.395],[118,0.464],[123,0.497],[131,0.555],[138,0.596],[146,0.648],[152,0.683],[160,0.723],[167,0.762],[176,0.799],[185,0.833],[189,0.851],[197,0.875],[205,0.896],[213,0.916],[219,0.929],[225,0.94],[234,0.954],[242,0.979],[251,1],[256,1],[264,1],[272,1],[279,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:03:45.947Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjcsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTIsMF0sWzcsMF0sWzExLDBdLFsxOCwwXSxbMjYsMF0sWzM0LDBdLFs0MywwLjAxXSxbNTIsMC4wMzZdLFs1NywwLjA1M10sWzY1LDAuMDkxXSxbNzIsMC4xMzZdLFs4MCwwLjE4NF0sWzg1LDAuMjIxXSxbOTQsMC4yODNdLFsxMDIsMC4zNF0sWzEwOSwwLjM5NV0sWzExOCwwLjQ2NF0sWzEyMywwLjQ5N10sWzEzMSwwLjU1NV0sWzEzOCwwLjU5Nl0sWzE0NiwwLjY0OF0sWzE1MiwwLjY4M10sWzE2MCwwLjcyM10sWzE2NywwLjc2Ml0sWzE3NiwwLjc5OV0sWzE4NSwwLjgzM10sWzE4OSwwLjg1MV0sWzE5NywwLjg3NV0sWzIwNSwwLjg5Nl0sWzIxMywwLjkxNl0sWzIxOSwwLjkyOV0sWzIyNSwwLjk0XSxbMjM0LDAuOTU0XSxbMjQyLDAuOTc5XSxbMjUxLDFdLFsyNTYsMV0sWzI2NCwxXSxbMjcyLDFdLFsyNzksMV0sWzI4NSwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4925,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[5,0],[14,0],[22,0],[30,0],[40,0.012],[45,0.026],[53,0.055],[59,0.086],[69,0.142],[77,0.192],[82,0.225],[92,0.295],[97,0.337],[107,0.408],[111,0.442],[118,0.493],[127,0.553],[135,0.604],[141,0.639],[148,0.685],[156,0.726],[164,0.764],[169,0.787],[177,0.82],[185,0.848],[192,0.872],[201,0.898],[209,0.917],[215,0.928],[222,0.941],[230,0.953],[238,0.983],[243,1],[251,1],[258,1],[267,1],[274,1],[281,1],[289,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[5,0],[14,0],[22,0],[30,0],[40,0.012],[45,0.026],[53,0.055],[59,0.086],[69,0.142],[77,0.192],[82,0.225],[92,0.295],[97,0.337],[107,0.408],[111,0.442],[118,0.493],[127,0.553],[135,0.604],[141,0.639],[148,0.685],[156,0.726],[164,0.764],[169,0.787],[177,0.82],[185,0.848],[192,0.872],[201,0.898],[209,0.917],[215,0.928],[222,0.941],[230,0.953],[238,0.983],[243,1],[251,1],[258,1],[267,1],[274,1],[281,1],[289,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":26,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[5,0],[14,0],[22,0],[30,0],[40,0.012],[45,0.026],[53,0.055],[59,0.086],[69,0.142],[77,0.192],[82,0.225],[92,0.295],[97,0.337],[107,0.408],[111,0.442],[118,0.493],[127,0.553],[135,0.604],[141,0.639],[148,0.685],[156,0.726],[164,0.764],[169,0.787],[177,0.82],[185,0.848],[192,0.872],[201,0.898],[209,0.917],[215,0.928],[222,0.941],[230,0.953],[238,0.983],[243,1],[251,1],[258,1],[267,1],[274,1],[281,1],[289,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:03:51.263Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjYsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTMsMF0sWzUsMF0sWzE0LDBdLFsyMiwwXSxbMzAsMF0sWzQwLDAuMDEyXSxbNDUsMC4wMjZdLFs1MywwLjA1NV0sWzU5LDAuMDg2XSxbNjksMC4xNDJdLFs3NywwLjE5Ml0sWzgyLDAuMjI1XSxbOTIsMC4yOTVdLFs5NywwLjMzN10sWzEwNywwLjQwOF0sWzExMSwwLjQ0Ml0sWzExOCwwLjQ5M10sWzEyNywwLjU1M10sWzEzNSwwLjYwNF0sWzE0MSwwLjYzOV0sWzE0OCwwLjY4NV0sWzE1NiwwLjcyNl0sWzE2NCwwLjc2NF0sWzE2OSwwLjc4N10sWzE3NywwLjgyXSxbMTg1LDAuODQ4XSxbMTkyLDAuODcyXSxbMjAxLDAuODk4XSxbMjA5LDAuOTE3XSxbMjE1LDAuOTI4XSxbMjIyLDAuOTQxXSxbMjMwLDAuOTUzXSxbMjM4LDAuOTgzXSxbMjQzLDFdLFsyNTEsMV0sWzI1OCwxXSxbMjY3LDFdLFsyNzQsMV0sWzI4MSwxXSxbMjg5LDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat2/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat2/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4937,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":1,\"between\":26,\"share\":0.206,\"end\":1,\"frames\":[[-72,1],[9,0],[18,0],[27,0],[35,0],[40,0.003],[47,0.018],[55,0.042],[63,0.077],[72,0.13],[81,0.183],[82,0.189],[88,0.234],[96,0.293],[101,0.325],[108,0.381],[116,0.435],[125,0.506],[134,0.566],[143,0.625],[149,0.657],[155,0.696],[163,0.738],[173,0.784],[180,0.813],[186,0.836],[195,0.866],[203,0.89],[210,0.906],[217,0.922],[225,0.937],[232,0.95],[241,0.961],[248,1],[254,1],[262,1],[271,1],[280,1],[288,1],[296,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.206\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":1,\"between\":26,\"share\":0.206,\"end\":1,\"frames\":[[-72,1],[9,0],[18,0],[27,0],[35,0],[40,0.003],[47,0.018],[55,0.042],[63,0.077],[72,0.13],[81,0.183],[82,0.189],[88,0.234],[96,0.293],[101,0.325],[108,0.381],[116,0.435],[125,0.506],[134,0.566],[143,0.625],[149,0.657],[155,0.696],[163,0.738],[173,0.784],[180,0.813],[186,0.836],[195,0.866],[203,0.89],[210,0.906],[217,0.922],[225,0.937],[232,0.95],[241,0.961],[248,1],[254,1],[262,1],[271,1],[280,1],[288,1],[296,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.206\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1481:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1481
+                    },
+                    "snippet": "  1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n> 1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1482 | });\n  1483 |\n  1484 | test(\"expand · Escape is live from the entrance's first frame\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1481
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":1,\"between\":26,\"share\":0.206,\"end\":1,\"frames\":[[-72,1],[9,0],[18,0],[27,0],[35,0],[40,0.003],[47,0.018],[55,0.042],[63,0.077],[72,0.13],[81,0.183],[82,0.189],[88,0.234],[96,0.293],[101,0.325],[108,0.381],[116,0.435],[125,0.506],[134,0.566],[143,0.625],[149,0.657],[155,0.696],[163,0.738],[173,0.784],[180,0.813],[186,0.836],[195,0.866],[203,0.89],[210,0.906],[217,0.922],[225,0.937],[232,0.95],[241,0.961],[248,1],[254,1],[262,1],[271,1],[280,1],[288,1],[296,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.206\u001b[39m\n\n  1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n> 1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1482 | });\n  1483 |\n  1484 | test(\"expand · Escape is live from the entrance's first frame\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1481:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:03:56.706Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MjYsInNoYXJlIjowLjIwNiwiZW5kIjoxLCJmcmFtZXMiOltbLTcyLDFdLFs5LDBdLFsxOCwwXSxbMjcsMF0sWzM1LDBdLFs0MCwwLjAwM10sWzQ3LDAuMDE4XSxbNTUsMC4wNDJdLFs2MywwLjA3N10sWzcyLDAuMTNdLFs4MSwwLjE4M10sWzgyLDAuMTg5XSxbODgsMC4yMzRdLFs5NiwwLjI5M10sWzEwMSwwLjMyNV0sWzEwOCwwLjM4MV0sWzExNiwwLjQzNV0sWzEyNSwwLjUwNl0sWzEzNCwwLjU2Nl0sWzE0MywwLjYyNV0sWzE0OSwwLjY1N10sWzE1NSwwLjY5Nl0sWzE2MywwLjczOF0sWzE3MywwLjc4NF0sWzE4MCwwLjgxM10sWzE4NiwwLjgzNl0sWzE5NSwwLjg2Nl0sWzIwMywwLjg5XSxbMjEwLDAuOTA2XSxbMjE3LDAuOTIyXSxbMjI1LDAuOTM3XSxbMjMyLDAuOTVdLFsyNDEsMC45NjFdLFsyNDgsMV0sWzI1NCwxXSxbMjYyLDFdLFsyNzEsMV0sWzI4MCwxXSxbMjg4LDFdLFsyOTYsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat3/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat3/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1481
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4976,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[10,0],[18,0],[28,0],[33,0],[39,0.005],[49,0.028],[56,0.054],[65,0.1],[70,0.13],[77,0.173],[86,0.232],[94,0.292],[98,0.323],[107,0.387],[114,0.436],[122,0.497],[130,0.549],[135,0.588],[144,0.643],[151,0.682],[159,0.727],[165,0.754],[171,0.785],[180,0.82],[189,0.854],[197,0.878],[203,0.893],[211,0.913],[218,0.928],[225,0.941],[232,0.953],[239,0.962],[247,1],[255,1],[264,1],[269,1],[277,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[10,0],[18,0],[28,0],[33,0],[39,0.005],[49,0.028],[56,0.054],[65,0.1],[70,0.13],[77,0.173],[86,0.232],[94,0.292],[98,0.323],[107,0.387],[114,0.436],[122,0.497],[130,0.549],[135,0.588],[144,0.643],[151,0.682],[159,0.727],[165,0.754],[171,0.785],[180,0.82],[189,0.854],[197,0.878],[203,0.893],[211,0.913],[218,0.928],[225,0.941],[232,0.953],[239,0.962],[247,1],[255,1],[264,1],[269,1],[277,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[10,0],[18,0],[28,0],[33,0],[39,0.005],[49,0.028],[56,0.054],[65,0.1],[70,0.13],[77,0.173],[86,0.232],[94,0.292],[98,0.323],[107,0.387],[114,0.436],[122,0.497],[130,0.549],[135,0.588],[144,0.643],[151,0.682],[159,0.727],[165,0.754],[171,0.785],[180,0.82],[189,0.854],[197,0.878],[203,0.893],[211,0.913],[218,0.928],[225,0.941],[232,0.953],[239,0.962],[247,1],[255,1],[264,1],[269,1],[277,1],[285,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:02.236Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjcsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTIsMF0sWzYsMF0sWzEwLDBdLFsxOCwwXSxbMjgsMF0sWzMzLDBdLFszOSwwLjAwNV0sWzQ5LDAuMDI4XSxbNTYsMC4wNTRdLFs2NSwwLjFdLFs3MCwwLjEzXSxbNzcsMC4xNzNdLFs4NiwwLjIzMl0sWzk0LDAuMjkyXSxbOTgsMC4zMjNdLFsxMDcsMC4zODddLFsxMTQsMC40MzZdLFsxMjIsMC40OTddLFsxMzAsMC41NDldLFsxMzUsMC41ODhdLFsxNDQsMC42NDNdLFsxNTEsMC42ODJdLFsxNTksMC43MjddLFsxNjUsMC43NTRdLFsxNzEsMC43ODVdLFsxODAsMC44Ml0sWzE4OSwwLjg1NF0sWzE5NywwLjg3OF0sWzIwMywwLjg5M10sWzIxMSwwLjkxM10sWzIxOCwwLjkyOF0sWzIyNSwwLjk0MV0sWzIzMiwwLjk1M10sWzIzOSwwLjk2Ml0sWzI0NywxXSxbMjU1LDFdLFsyNjQsMV0sWzI2OSwxXSxbMjc3LDFdLFsyODUsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat4/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat4/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4950,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[0,0],[5,0],[13,0],[21,0],[28,0],[37,0.01],[43,0.026],[50,0.052],[57,0.088],[66,0.139],[74,0.19],[79,0.227],[86,0.274],[95,0.343],[103,0.401],[108,0.435],[116,0.497],[124,0.55],[131,0.599],[141,0.657],[146,0.685],[154,0.728],[161,0.765],[169,0.8],[175,0.823],[182,0.847],[190,0.872],[197,0.894],[206,0.915],[213,0.93],[219,0.941],[227,0.953],[235,0.977],[245,1],[252,1],[260,1],[269,1],[275,1],[283,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[0,0],[5,0],[13,0],[21,0],[28,0],[37,0.01],[43,0.026],[50,0.052],[57,0.088],[66,0.139],[74,0.19],[79,0.227],[86,0.274],[95,0.343],[103,0.401],[108,0.435],[116,0.497],[124,0.55],[131,0.599],[141,0.657],[146,0.685],[154,0.728],[161,0.765],[169,0.8],[175,0.823],[182,0.847],[190,0.872],[197,0.894],[206,0.915],[213,0.93],[219,0.941],[227,0.953],[235,0.977],[245,1],[252,1],[260,1],[269,1],[275,1],[283,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[0,0],[5,0],[13,0],[21,0],[28,0],[37,0.01],[43,0.026],[50,0.052],[57,0.088],[66,0.139],[74,0.19],[79,0.227],[86,0.274],[95,0.343],[103,0.401],[108,0.435],[116,0.497],[124,0.55],[131,0.599],[141,0.657],[146,0.685],[154,0.728],[161,0.765],[169,0.8],[175,0.823],[182,0.847],[190,0.872],[197,0.894],[206,0.915],[213,0.93],[219,0.941],[227,0.953],[235,0.977],[245,1],[252,1],[260,1],[269,1],[275,1],[283,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:07.748Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjcsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTgsMF0sWzAsMF0sWzUsMF0sWzEzLDBdLFsyMSwwXSxbMjgsMF0sWzM3LDAuMDFdLFs0MywwLjAyNl0sWzUwLDAuMDUyXSxbNTcsMC4wODhdLFs2NiwwLjEzOV0sWzc0LDAuMTldLFs3OSwwLjIyN10sWzg2LDAuMjc0XSxbOTUsMC4zNDNdLFsxMDMsMC40MDFdLFsxMDgsMC40MzVdLFsxMTYsMC40OTddLFsxMjQsMC41NV0sWzEzMSwwLjU5OV0sWzE0MSwwLjY1N10sWzE0NiwwLjY4NV0sWzE1NCwwLjcyOF0sWzE2MSwwLjc2NV0sWzE2OSwwLjhdLFsxNzUsMC44MjNdLFsxODIsMC44NDddLFsxOTAsMC44NzJdLFsxOTcsMC44OTRdLFsyMDYsMC45MTVdLFsyMTMsMC45M10sWzIxOSwwLjk0MV0sWzIyNywwLjk1M10sWzIzNSwwLjk3N10sWzI0NSwxXSxbMjUyLDFdLFsyNjAsMV0sWzI2OSwxXSxbMjc1LDFdLFsyODMsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat5/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat5/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4874,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-4,0],[3,0],[9,0],[19,0],[26,0],[35,0.011],[43,0.033],[53,0.075],[60,0.113],[69,0.164],[78,0.227],[83,0.264],[90,0.318],[99,0.382],[106,0.434],[114,0.489],[121,0.54],[127,0.582],[136,0.64],[143,0.677],[152,0.729],[157,0.754],[165,0.788],[173,0.82],[182,0.853],[186,0.867],[195,0.892],[201,0.907],[209,0.925],[219,0.943],[226,0.954],[236,0.999],[243,1],[250,1],[257,1],[265,1],[272,1],[280,1],[287,1],[293,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-4,0],[3,0],[9,0],[19,0],[26,0],[35,0.011],[43,0.033],[53,0.075],[60,0.113],[69,0.164],[78,0.227],[83,0.264],[90,0.318],[99,0.382],[106,0.434],[114,0.489],[121,0.54],[127,0.582],[136,0.64],[143,0.677],[152,0.729],[157,0.754],[165,0.788],[173,0.82],[182,0.853],[186,0.867],[195,0.892],[201,0.907],[209,0.925],[219,0.943],[226,0.954],[236,0.999],[243,1],[250,1],[257,1],[265,1],[272,1],[280,1],[287,1],[293,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-4,0],[3,0],[9,0],[19,0],[26,0],[35,0.011],[43,0.033],[53,0.075],[60,0.113],[69,0.164],[78,0.227],[83,0.264],[90,0.318],[99,0.382],[106,0.434],[114,0.489],[121,0.54],[127,0.582],[136,0.64],[143,0.677],[152,0.729],[157,0.754],[165,0.788],[173,0.82],[182,0.853],[186,0.867],[195,0.892],[201,0.907],[209,0.925],[219,0.943],[226,0.954],[236,0.999],[243,1],[250,1],[257,1],[265,1],[272,1],[280,1],[287,1],[293,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:13.177Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjUsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTQsMF0sWzMsMF0sWzksMF0sWzE5LDBdLFsyNiwwXSxbMzUsMC4wMTFdLFs0MywwLjAzM10sWzUzLDAuMDc1XSxbNjAsMC4xMTNdLFs2OSwwLjE2NF0sWzc4LDAuMjI3XSxbODMsMC4yNjRdLFs5MCwwLjMxOF0sWzk5LDAuMzgyXSxbMTA2LDAuNDM0XSxbMTE0LDAuNDg5XSxbMTIxLDAuNTRdLFsxMjcsMC41ODJdLFsxMzYsMC42NF0sWzE0MywwLjY3N10sWzE1MiwwLjcyOV0sWzE1NywwLjc1NF0sWzE2NSwwLjc4OF0sWzE3MywwLjgyXSxbMTgyLDAuODUzXSxbMTg2LDAuODY3XSxbMTk1LDAuODkyXSxbMjAxLDAuOTA3XSxbMjA5LDAuOTI1XSxbMjE5LDAuOTQzXSxbMjI2LDAuOTU0XSxbMjM2LDAuOTk5XSxbMjQzLDFdLFsyNTAsMV0sWzI1NywxXSxbMjY1LDFdLFsyNzIsMV0sWzI4MCwxXSxbMjg3LDFdLFsyOTMsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat6/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat6/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4869,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[13,0],[31,0],[40,0],[47,0.007],[51,0.017],[59,0.043],[67,0.075],[74,0.117],[83,0.167],[90,0.219],[99,0.281],[106,0.333],[115,0.396],[120,0.437],[127,0.489],[135,0.542],[143,0.596],[152,0.65],[158,0.685],[165,0.722],[172,0.76],[181,0.797],[189,0.83],[195,0.85],[203,0.876],[210,0.897],[218,0.915],[224,0.928],[231,0.941],[239,0.953],[248,0.983],[256,1],[261,1],[268,1],[275,1],[285,1],[290,1],[297,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[13,0],[31,0],[40,0],[47,0.007],[51,0.017],[59,0.043],[67,0.075],[74,0.117],[83,0.167],[90,0.219],[99,0.281],[106,0.333],[115,0.396],[120,0.437],[127,0.489],[135,0.542],[143,0.596],[152,0.65],[158,0.685],[165,0.722],[172,0.76],[181,0.797],[189,0.83],[195,0.85],[203,0.876],[210,0.897],[218,0.915],[224,0.928],[231,0.941],[239,0.953],[248,0.983],[256,1],[261,1],[268,1],[275,1],[285,1],[290,1],[297,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":25,\"share\":0.123,\"end\":1,\"frames\":[[-2,0],[6,0],[13,0],[31,0],[40,0],[47,0.007],[51,0.017],[59,0.043],[67,0.075],[74,0.117],[83,0.167],[90,0.219],[99,0.281],[106,0.333],[115,0.396],[120,0.437],[127,0.489],[135,0.542],[143,0.596],[152,0.65],[158,0.685],[165,0.722],[172,0.76],[181,0.797],[189,0.83],[195,0.85],[203,0.876],[210,0.897],[218,0.915],[224,0.928],[231,0.941],[239,0.953],[248,0.983],[256,1],[261,1],[268,1],[275,1],[285,1],[290,1],[297,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:18.484Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjUsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTIsMF0sWzYsMF0sWzEzLDBdLFszMSwwXSxbNDAsMF0sWzQ3LDAuMDA3XSxbNTEsMC4wMTddLFs1OSwwLjA0M10sWzY3LDAuMDc1XSxbNzQsMC4xMTddLFs4MywwLjE2N10sWzkwLDAuMjE5XSxbOTksMC4yODFdLFsxMDYsMC4zMzNdLFsxMTUsMC4zOTZdLFsxMjAsMC40MzddLFsxMjcsMC40ODldLFsxMzUsMC41NDJdLFsxNDMsMC41OTZdLFsxNTIsMC42NV0sWzE1OCwwLjY4NV0sWzE2NSwwLjcyMl0sWzE3MiwwLjc2XSxbMTgxLDAuNzk3XSxbMTg5LDAuODNdLFsxOTUsMC44NV0sWzIwMywwLjg3Nl0sWzIxMCwwLjg5N10sWzIxOCwwLjkxNV0sWzIyNCwwLjkyOF0sWzIzMSwwLjk0MV0sWzIzOSwwLjk1M10sWzI0OCwwLjk4M10sWzI1NiwxXSxbMjYxLDFdLFsyNjgsMV0sWzI3NSwxXSxbMjg1LDFdLFsyOTAsMV0sWzI5NywxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat7/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat7/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4926,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[2,0],[11,0],[18,0],[28,0],[36,0.008],[42,0.021],[49,0.048],[57,0.082],[65,0.128],[71,0.163],[78,0.21],[87,0.273],[93,0.324],[102,0.386],[107,0.425],[116,0.489],[122,0.535],[130,0.586],[136,0.626],[145,0.677],[153,0.719],[161,0.759],[168,0.79],[175,0.819],[181,0.841],[188,0.867],[199,0.896],[203,0.907],[212,0.927],[219,0.939],[226,0.951],[234,0.966],[240,1],[249,1],[256,1],[263,1],[269,1],[278,1],[284,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[2,0],[11,0],[18,0],[28,0],[36,0.008],[42,0.021],[49,0.048],[57,0.082],[65,0.128],[71,0.163],[78,0.21],[87,0.273],[93,0.324],[102,0.386],[107,0.425],[116,0.489],[122,0.535],[130,0.586],[136,0.626],[145,0.677],[153,0.719],[161,0.759],[168,0.79],[175,0.819],[181,0.841],[188,0.867],[199,0.896],[203,0.907],[212,0.927],[219,0.939],[226,0.951],[234,0.966],[240,1],[249,1],[256,1],[263,1],[269,1],[278,1],[284,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[2,0],[11,0],[18,0],[28,0],[36,0.008],[42,0.021],[49,0.048],[57,0.082],[65,0.128],[71,0.163],[78,0.21],[87,0.273],[93,0.324],[102,0.386],[107,0.425],[116,0.489],[122,0.535],[130,0.586],[136,0.626],[145,0.677],[153,0.719],[161,0.759],[168,0.79],[175,0.819],[181,0.841],[188,0.867],[199,0.896],[203,0.907],[212,0.927],[219,0.939],[226,0.951],[234,0.966],[240,1],[249,1],[256,1],[263,1],[269,1],[278,1],[284,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:23.850Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjcsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTMsMF0sWzIsMF0sWzExLDBdLFsxOCwwXSxbMjgsMF0sWzM2LDAuMDA4XSxbNDIsMC4wMjFdLFs0OSwwLjA0OF0sWzU3LDAuMDgyXSxbNjUsMC4xMjhdLFs3MSwwLjE2M10sWzc4LDAuMjFdLFs4NywwLjI3M10sWzkzLDAuMzI0XSxbMTAyLDAuMzg2XSxbMTA3LDAuNDI1XSxbMTE2LDAuNDg5XSxbMTIyLDAuNTM1XSxbMTMwLDAuNTg2XSxbMTM2LDAuNjI2XSxbMTQ1LDAuNjc3XSxbMTUzLDAuNzE5XSxbMTYxLDAuNzU5XSxbMTY4LDAuNzldLFsxNzUsMC44MTldLFsxODEsMC44NDFdLFsxODgsMC44NjddLFsxOTksMC44OTZdLFsyMDMsMC45MDddLFsyMTIsMC45MjddLFsyMTksMC45MzldLFsyMjYsMC45NTFdLFsyMzQsMC45NjZdLFsyNDAsMV0sWzI0OSwxXSxbMjU2LDFdLFsyNjMsMV0sWzI2OSwxXSxbMjc4LDFdLFsyODQsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat8/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat8/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4888,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[2,0],[5,0],[14,0],[21,0],[28,0],[33,0.004],[41,0.022],[48,0.047],[57,0.087],[66,0.141],[72,0.174],[79,0.222],[88,0.285],[96,0.345],[101,0.383],[108,0.437],[116,0.491],[123,0.544],[132,0.605],[137,0.634],[146,0.686],[153,0.726],[162,0.766],[167,0.79],[174,0.82],[183,0.85],[189,0.871],[197,0.894],[204,0.912],[212,0.928],[219,0.941],[228,0.955],[234,0.965],[240,1],[250,1],[256,1],[264,1],[270,1],[278,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[2,0],[5,0],[14,0],[21,0],[28,0],[33,0.004],[41,0.022],[48,0.047],[57,0.087],[66,0.141],[72,0.174],[79,0.222],[88,0.285],[96,0.345],[101,0.383],[108,0.437],[116,0.491],[123,0.544],[132,0.605],[137,0.634],[146,0.686],[153,0.726],[162,0.766],[167,0.79],[174,0.82],[183,0.85],[189,0.871],[197,0.894],[204,0.912],[212,0.928],[219,0.941],[228,0.955],[234,0.965],[240,1],[250,1],[256,1],[264,1],[270,1],[278,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 1479
+                    },
+                    "snippet": "  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 1479
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":27,\"share\":0.123,\"end\":1,\"frames\":[[-8,0],[2,0],[5,0],[14,0],[21,0],[28,0],[33,0.004],[41,0.022],[48,0.047],[57,0.087],[66,0.141],[72,0.174],[79,0.222],[88,0.285],[96,0.345],[101,0.383],[108,0.437],[116,0.491],[123,0.544],[132,0.605],[137,0.634],[146,0.686],[153,0.726],[162,0.766],[167,0.79],[174,0.82],[183,0.85],[189,0.871],[197,0.894],[204,0.912],[212,0.928],[219,0.941],[228,0.955],[234,0.965],[240,1],[250,1],[256,1],[264,1],[270,1],[278,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1477 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  1478 |     const at = JSON.stringify(read);\n> 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n       |                                                            ^\n  1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  1482 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:04:29.289Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjcsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTgsMF0sWzIsMF0sWzUsMF0sWzE0LDBdLFsyMSwwXSxbMjgsMF0sWzMzLDAuMDA0XSxbNDEsMC4wMjJdLFs0OCwwLjA0N10sWzU3LDAuMDg3XSxbNjYsMC4xNDFdLFs3MiwwLjE3NF0sWzc5LDAuMjIyXSxbODgsMC4yODVdLFs5NiwwLjM0NV0sWzEwMSwwLjM4M10sWzEwOCwwLjQzN10sWzExNiwwLjQ5MV0sWzEyMywwLjU0NF0sWzEzMiwwLjYwNV0sWzEzNywwLjYzNF0sWzE0NiwwLjY4Nl0sWzE1MywwLjcyNl0sWzE2MiwwLjc2Nl0sWzE2NywwLjc5XSxbMTc0LDAuODJdLFsxODMsMC44NV0sWzE4OSwwLjg3MV0sWzE5NywwLjg5NF0sWzIwNCwwLjkxMl0sWzIxMiwwLjkyOF0sWzIxOSwwLjk0MV0sWzIyOCwwLjk1NV0sWzIzNCwwLjk2NV0sWzI0MCwxXSxbMjUwLDFdLFsyNTYsMV0sWzI2NCwxXSxbMjcwLDFdLFsyNzgsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat9/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/out-diag-expand-red-cp/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat9/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 1479
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-88442f8a482e04520655",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1468,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T02:03:38.785Z",
+    "duration": 55608.836,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}

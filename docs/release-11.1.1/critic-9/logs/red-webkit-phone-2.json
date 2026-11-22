@@ -1,0 +1,2589 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "standing · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/red-webkit-phone-2.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3576,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.592,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-2,1],[6,1],[17,1],[18,1],[21,1],[40,0.922],[54,0.33],[59,0.326],[66,0.275],[78,0.211],[90,0.163],[98,0.138],[108,0.112],[119,0.089],[129,0.074],[138,0.063],[150,0.053],[160,0.048],[170,0.003]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.592\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.592,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-2,1],[6,1],[17,1],[18,1],[21,1],[40,0.922],[54,0.33],[59,0.326],[66,0.275],[78,0.211],[90,0.163],[98,0.138],[108,0.112],[119,0.089],[129,0.074],[138,0.063],[150,0.053],[160,0.048],[170,0.003]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.592\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.592,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-2,1],[6,1],[17,1],[18,1],[21,1],[40,0.922],[54,0.33],[59,0.326],[66,0.275],[78,0.211],[90,0.163],[98,0.138],[108,0.112],[119,0.089],[129,0.074],[138,0.063],[150,0.053],[160,0.048],[170,0.003]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.592\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:36:53.749Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNywic2hhcmUiOjAuNTkyLCJ0cmF2ZWwiOjU0OSwidHJhdmVsU2hhcmUiOjAuOTkxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzYsMV0sWzE3LDFdLFsxOCwxXSxbMjEsMV0sWzQwLDAuOTIyXSxbNTQsMC4zM10sWzU5LDAuMzI2XSxbNjYsMC4yNzVdLFs3OCwwLjIxMV0sWzkwLDAuMTYzXSxbOTgsMC4xMzhdLFsxMDgsMC4xMTJdLFsxMTksMC4wODldLFsxMjksMC4wNzRdLFsxMzgsMC4wNjNdLFsxNTAsMC4wNTNdLFsxNjAsMC4wNDhdLFsxNzAsMC4wMDNdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--29400-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dcac1b30273ec27c2107",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:36:57.854Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2453126ebec08f09c819",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3253,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.627,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-11,1],[0,1],[16,0.922],[25,0.295],[30,0.263],[41,0.206],[51,0.166],[61,0.135],[71,0.109],[81,0.089],[92,0.073],[101,0.062],[113,0.053],[122,0.048],[133,0.002]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.627\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.627,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-11,1],[0,1],[16,0.922],[25,0.295],[30,0.263],[41,0.206],[51,0.166],[61,0.135],[71,0.109],[81,0.089],[92,0.073],[101,0.062],[113,0.053],[122,0.048],[133,0.002]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.627\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.627,\"travel\":549,\"travelShare\":0.991,\"gone\":true,\"frames\":[[-11,1],[0,1],[16,0.922],[25,0.295],[30,0.263],[41,0.206],[51,0.166],[61,0.135],[71,0.109],[81,0.089],[92,0.073],[101,0.062],[113,0.053],[122,0.048],[133,0.002]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.627\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:36:58.337Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMywic2hhcmUiOjAuNjI3LCJ0cmF2ZWwiOjU0OSwidHJhdmVsU2hhcmUiOjAuOTkxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTExLDFdLFswLDFdLFsxNiwwLjkyMl0sWzI1LDAuMjk1XSxbMzAsMC4yNjNdLFs0MSwwLjIwNl0sWzUxLDAuMTY2XSxbNjEsMC4xMzVdLFs3MSwwLjEwOV0sWzgxLDAuMDg5XSxbOTIsMC4wNzNdLFsxMDEsMC4wNjJdLFsxMTMsMC4wNTNdLFsxMjIsMC4wNDhdLFsxMzMsMC4wMDJdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--26aed-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5820d46c23f9656723b7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:01.838Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-734ca923cb1de4c372df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3282,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":15,\"share\":0.277,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-3,1],[4,1],[17,1],[21,1],[28,1],[36,0.982],[46,0.793],[56,0.65],[66,0.537],[77,0.439],[87,0.369],[97,0.314],[107,0.272],[117,0.241],[128,0.218],[138,0.115],[148,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.277\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":15,\"share\":0.277,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-3,1],[4,1],[17,1],[21,1],[28,1],[36,0.982],[46,0.793],[56,0.65],[66,0.537],[77,0.439],[87,0.369],[97,0.314],[107,0.272],[117,0.241],[128,0.218],[138,0.115],[148,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.277\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":15,\"share\":0.277,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-3,1],[4,1],[17,1],[21,1],[28,1],[36,0.982],[46,0.793],[56,0.65],[66,0.537],[77,0.439],[87,0.369],[97,0.314],[107,0.272],[117,0.241],[128,0.218],[138,0.115],[148,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.277\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:02.293Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNSwic2hhcmUiOjAuMjc3LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzQsMV0sWzE3LDFdLFsyMSwxXSxbMjgsMV0sWzM2LDAuOTgyXSxbNDYsMC43OTNdLFs1NiwwLjY1XSxbNjYsMC41MzddLFs3NywwLjQzOV0sWzg3LDAuMzY5XSxbOTcsMC4zMTRdLFsxMDcsMC4yNzJdLFsxMTcsMC4yNDFdLFsxMjgsMC4yMThdLFsxMzgsMC4xMTVdLFsxNDgsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--679a2-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e2bea2a00648bc761e61",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 336,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:05.915Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-40d6a8d426b47cc66659",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3246,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":12,\"share\":0.273,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-6,1],[5,1],[13,0.982],[24,0.777],[34,0.637],[43,0.537],[53,0.447],[65,0.363],[75,0.31],[85,0.268],[95,0.238],[105,0.218],[115,0.087],[126,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.273\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":12,\"share\":0.273,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-6,1],[5,1],[13,0.982],[24,0.777],[34,0.637],[43,0.537],[53,0.447],[65,0.363],[75,0.31],[85,0.268],[95,0.238],[105,0.218],[115,0.087],[126,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.273\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":12,\"share\":0.273,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-6,1],[5,1],[13,0.982],[24,0.777],[34,0.637],[43,0.537],[53,0.447],[65,0.363],[75,0.31],[85,0.268],[95,0.238],[105,0.218],[115,0.087],[126,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.273\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:06.409Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMiwic2hhcmUiOjAuMjczLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzUsMV0sWzEzLDAuOTgyXSxbMjQsMC43NzddLFszNCwwLjYzN10sWzQzLDAuNTM3XSxbNTMsMC40NDddLFs2NSwwLjM2M10sWzc1LDAuMzFdLFs4NSwwLjI2OF0sWzk1LDAuMjM4XSxbMTA1LDAuMjE4XSxbMTE1LDAuMDg3XSxbMTI2LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--70a02-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-52ce2e0a86e4b67bd90c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 338,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:10.017Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a214896ef3beab8695e5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3327,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":19,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-6,1],[3,1],[15,1],[24,1],[25,1],[29,1],[54,0.922],[63,0.412],[68,0.412],[75,0.359],[87,0.288],[95,0.252],[104,0.218],[116,0.182],[126,0.159],[136,0.141],[147,0.127],[157,0.117],[166,0.111],[177,0.012],[186,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":19,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-6,1],[3,1],[15,1],[24,1],[25,1],[29,1],[54,0.922],[63,0.412],[68,0.412],[75,0.359],[87,0.288],[95,0.252],[104,0.218],[116,0.182],[126,0.159],[136,0.141],[147,0.127],[157,0.117],[166,0.111],[177,0.012],[186,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":19,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-6,1],[3,1],[15,1],[24,1],[25,1],[29,1],[54,0.922],[63,0.412],[68,0.412],[75,0.359],[87,0.288],[95,0.252],[104,0.218],[116,0.182],[126,0.159],[136,0.141],[147,0.127],[157,0.117],[166,0.111],[177,0.012],[186,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:10.533Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOSwic2hhcmUiOjAuNTEsInRyYXZlbCI6MzAzLCJ0cmF2ZWxTaGFyZSI6MC45ODMsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNiwxXSxbMywxXSxbMTUsMV0sWzI0LDFdLFsyNSwxXSxbMjksMV0sWzU0LDAuOTIyXSxbNjMsMC40MTJdLFs2OCwwLjQxMl0sWzc1LDAuMzU5XSxbODcsMC4yODhdLFs5NSwwLjI1Ml0sWzEwNCwwLjIxOF0sWzExNiwwLjE4Ml0sWzEyNiwwLjE1OV0sWzEzNiwwLjE0MV0sWzE0NywwLjEyN10sWzE1NywwLjExN10sWzE2NiwwLjExMV0sWzE3NywwLjAxMl0sWzE4NiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--8bdad-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-43b3db79276013d42f40",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 339,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:14.123Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4d4061dbafe035408993",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3271,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-3,1],[15,0.922],[22,0.412],[27,0.412],[37,0.339],[46,0.288],[58,0.236],[67,0.205],[78,0.175],[88,0.153],[98,0.137],[106,0.127],[119,0.115],[129,0.11],[139,0.004]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-3,1],[15,0.922],[22,0.412],[27,0.412],[37,0.339],[46,0.288],[58,0.236],[67,0.205],[78,0.175],[88,0.153],[98,0.137],[106,0.127],[119,0.115],[129,0.11],[139,0.004]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.51,\"travel\":303,\"travelShare\":0.983,\"gone\":true,\"frames\":[[-3,1],[15,0.922],[22,0.412],[27,0.412],[37,0.339],[46,0.288],[58,0.236],[67,0.205],[78,0.175],[88,0.153],[98,0.137],[106,0.127],[119,0.115],[129,0.11],[139,0.004]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.51\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:14.611Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMywic2hhcmUiOjAuNTEsInRyYXZlbCI6MzAzLCJ0cmF2ZWxTaGFyZSI6MC45ODMsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMywxXSxbMTUsMC45MjJdLFsyMiwwLjQxMl0sWzI3LDAuNDEyXSxbMzcsMC4zMzldLFs0NiwwLjI4OF0sWzU4LDAuMjM2XSxbNjcsMC4yMDVdLFs3OCwwLjE3NV0sWzg4LDAuMTUzXSxbOTgsMC4xMzddLFsxMDYsMC4xMjddLFsxMTksMC4xMTVdLFsxMjksMC4xMV0sWzEzOSwwLjAwNF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--87c17-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dc9b69728df7c8b542ff",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 319,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:18.138Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-38b6466befc027900241",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3230,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.329,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.605],[41,0.469],[51,0.37],[61,0.289],[71,0.223],[80,0.173],[92,0.119],[100,0.09],[112,0.053],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.329,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.605],[41,0.469],[51,0.37],[61,0.289],[71,0.223],[80,0.173],[92,0.119],[100,0.09],[112,0.053],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.329,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.605],[41,0.469],[51,0.37],[61,0.289],[71,0.223],[80,0.173],[92,0.119],[100,0.09],[112,0.053],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:18.597Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMywic2hhcmUiOjAuMzI5LCJ0cmF2ZWwiOjcsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzEwLDFdLFsyMCwwLjc0OF0sWzMwLDAuNjA1XSxbNDEsMC40NjldLFs1MSwwLjM3XSxbNjEsMC4yODldLFs3MSwwLjIyM10sWzgwLDAuMTczXSxbOTIsMC4xMTldLFsxMDAsMC4wOV0sWzExMiwwLjA1M10sWzEyMiwwLjAzM10sWzEzMiwwLjAxNl0sWzE0MywwLjAwNl1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--bd7c8-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a09688c674e5d26679c7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 307,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:22.101Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f960bf04cccfa338583e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by focus: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3239,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.341,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.591],[41,0.469],[51,0.37],[61,0.289],[70,0.223],[81,0.163],[90,0.127],[102,0.083],[112,0.055],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.341\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.341,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.591],[41,0.469],[51,0.37],[61,0.289],[70,0.223],[81,0.163],[90,0.127],[102,0.083],[112,0.055],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.341\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":13,\"share\":0.341,\"travel\":7,\"travelShare\":null,\"gone\":true,\"frames\":[[-5,1],[10,1],[20,0.748],[30,0.591],[41,0.469],[51,0.37],[61,0.289],[70,0.223],[81,0.163],[90,0.127],[102,0.083],[112,0.055],[122,0.033],[132,0.016],[143,0.006]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.341\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:22.542Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMywic2hhcmUiOjAuMzQxLCJ0cmF2ZWwiOjcsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzEwLDFdLFsyMCwwLjc0OF0sWzMwLDAuNTkxXSxbNDEsMC40NjldLFs1MSwwLjM3XSxbNjEsMC4yODldLFs3MCwwLjIyM10sWzgxLDAuMTYzXSxbOTAsMC4xMjddLFsxMDIsMC4wODNdLFsxMTIsMC4wNTVdLFsxMjIsMC4wMzNdLFsxMzIsMC4wMTZdLFsxNDMsMC4wMDZdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--061f5-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8a68728e96b49341371d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1861,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 313,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:26.129Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1861,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3f646513d678a988b7bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by away: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1861,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:26.592Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1861,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8aff4300aa950788534c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1861,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 210,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:26.807Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1861,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f52b3f352981ae68f9e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3248,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":93,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,1],[19,1],[31,1],[40,1],[49,1],[59,1],[70,1],[81,1],[91,1],[101,1],[111,1],[121,1],[132,1],[141,1],[150,1],[161,1],[172,1],[183,1],[193,1],[204,1],[213,1],[222,1],[234,1],[242,1],[254,1],[264,1],[274,1],[287,1],[294,1],[304,1],[316,1],[326,1],[336,1],[345,1],[357,1],[366,1],[376,1],[385,1],[396,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":93,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,1],[19,1],[31,1],[40,1],[49,1],[59,1],[70,1],[81,1],[91,1],[101,1],[111,1],[121,1],[132,1],[141,1],[150,1],[161,1],[172,1],[183,1],[193,1],[204,1],[213,1],[222,1],[234,1],[242,1],[254,1],[264,1],[274,1],[287,1],[294,1],[304,1],[316,1],[326,1],[336,1],[345,1],[357,1],[366,1],[376,1],[385,1],[396,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":93,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,1],[19,1],[31,1],[40,1],[49,1],[59,1],[70,1],[81,1],[91,1],[101,1],[111,1],[121,1],[132,1],[141,1],[150,1],[161,1],[172,1],[183,1],[193,1],[204,1],[213,1],[222,1],[234,1],[242,1],[254,1],[264,1],[274,1],[287,1],[294,1],[304,1],[316,1],[326,1],[336,1],[345,1],[357,1],[366,1],[376,1],[385,1],[396,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:27.022Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo5Mywic2hhcmUiOjAuMjkxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzksMV0sWzE5LDFdLFszMSwxXSxbNDAsMV0sWzQ5LDFdLFs1OSwxXSxbNzAsMV0sWzgxLDFdLFs5MSwxXSxbMTAxLDFdLFsxMTEsMV0sWzEyMSwxXSxbMTMyLDFdLFsxNDEsMV0sWzE1MCwxXSxbMTYxLDFdLFsxNzIsMV0sWzE4MywxXSxbMTkzLDFdLFsyMDQsMV0sWzIxMywxXSxbMjIyLDFdLFsyMzQsMV0sWzI0MiwxXSxbMjU0LDFdLFsyNjQsMV0sWzI3NCwxXSxbMjg3LDFdLFsyOTQsMV0sWzMwNCwxXSxbMzE2LDFdLFszMjYsMV0sWzMzNiwxXSxbMzQ1LDFdLFszNTcsMV0sWzM2NiwxXSxbMzc2LDFdLFszODUsMV0sWzM5NiwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--6c2d5-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-400698e7532cd1f643eb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:30.596Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTg1LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzUsMV0sWzE1LDFdLFsyNSwxXSxbMjYsMV0sWzI5LDFdLFszNSwxXSxbNDYsMC45MDldLFs1NiwwLjc5N10sWzY2LDAuNjg3XSxbNzgsMC41ODJdLFs4NiwwLjQ2N10sWzk3LDAuNF0sWzEwNSwwLjMyMV0sWzExNywwLjI3Ml0sWzEyNywwLjIxMV0sWzEzNywwLjE2OV0sWzE0OCwwLjEzNl0sWzE1OCwwLjEwNl0sWzE2OCwwLjA4NF0sWzE3OCwwLjA2N10sWzE4NywwLjA1M10sWzE5NywwLjA0M10sWzIxMCwwLjAzNF0sWzIxOSwwLjAyNV0sWzIyOSwwLjAyXSxbMjQwLDAuMDE1XSxbMjUwLDAuMDEyXSxbMjU4LDAuMDA5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-deb240d7052506505f71",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 204,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:34.096Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53923c0feb00349512aa",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3264,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:34.307Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMiwic2hhcmUiOjAuMTg5LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzYsMV0sWzE2LDAuOTA5XSxbMjYsMC44MDhdLFszNywwLjY5OF0sWzQ2LDAuNTgyXSxbNTgsMC40OTRdLFs2NywwLjM5M10sWzc5LDAuMzI4XSxbODgsMC4yNTVdLFsxMDAsMC4yMTFdLFsxMDgsMC4xNjJdLFsxMTksMC4xMzZdLFsxMjgsMC4xMDZdLFsxMzgsMC4wODZdLFsxNDksMC4wNjhdLFsxNTksMC4wNTNdLFsxNzAsMC4wNDJdLFsxODAsMC4wMzJdLFsxODksMC4wMjVdLFsxOTgsMC4wMl0sWzIxMCwwLjAxNl0sWzIyMSwwLjAxMl0sWzIzMSwwLjAwOV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c9514071645de7be2f21",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3194,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:37.576Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTM4LCJ0cmF2ZWwiOjI5MSwidHJhdmVsU2hhcmUiOjAuMTM4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzUsMV0sWzE0LDFdLFsxNywxXSxbMjUsMV0sWzQ2LDAuOTddLFs1MSwwLjg2OV0sWzU1LDAuODM4XSxbNjUsMC44MTJdLFs3NywwLjc0NV0sWzg1LDAuNjZdLFs5NywwLjYwM10sWzEwNSwwLjUxOF0sWzExOCwwLjQ2NF0sWzEyNywwLjM4MV0sWzEzNywwLjMyN10sWzE0OCwwLjI3Ml0sWzE1OCwwLjIxN10sWzE2NiwwLjE3M10sWzE3OCwwLjE0MV0sWzE4OSwwLjA5OV0sWzE5NywwLjA2Nl0sWzIwOSwwLjA0Nl0sWzIxOSwwLjAyMV0sWzIyOCwwLjAwM11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8fee6b4a0a2637d70f1b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:40.775Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8b23ec4e978f40113f9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:40.972Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTIsInRyYXZlbCI6MjkyLCJ0cmF2ZWxTaGFyZSI6MC4xMiwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFs1LDFdLFsxNywwLjk3XSxbMjcsMC45MThdLFszOCwwLjg2M10sWzQ4LDAuNzkzXSxbNTgsMC43MjRdLFs2OCwwLjY1M10sWzc4LDAuNTgxXSxbODksMC41MTFdLFs5OSwwLjQzOF0sWzEwOCwwLjM3NV0sWzExOSwwLjMyMV0sWzEyOSwwLjI2Ml0sWzE0MSwwLjIxM10sWzE1MCwwLjE2MV0sWzE1OSwwLjEyNl0sWzE3MCwwLjA5Nl0sWzE4MCwwLjA2NF0sWzE5MSwwLjAzOV0sWzIwMSwwLjAxN10sWzIxMCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f008b612d324655bd7ec",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:44.209Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTQ2LCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4xNDcsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbNiwxXSxbMTYsMV0sWzE5LDFdLFsyOCwxXSxbMzgsMC45N10sWzQ4LDAuOTI4XSxbNTgsMC44NzVdLFs2OCwwLjgxMl0sWzgxLDAuNzQ0XSxbODksMC42NTJdLFs5OCwwLjU5NV0sWzEwOSwwLjUzMl0sWzExOSwwLjQ1N10sWzEzMSwwLjM5Ml0sWzE0MCwwLjMyMV0sWzE1MiwwLjI3MV0sWzE2MCwwLjIxMl0sWzE3MCwwLjE3Nl0sWzE4MCwwLjEzNl0sWzE5MCwwLjEwMV0sWzIwMiwwLjA3MV0sWzIxMCwwLjA0XSxbMjIyLDAuMDIzXSxbMjMxLDAuMDAyXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-83a4d66494d4daa890fe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 193,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:47.444Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-186ee4e19a3713f86c63",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3211,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:47.644Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTI3LCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4xMjgsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbOSwxXSxbMjAsMC45N10sWzMyLDAuOTIzXSxbMzksMC44NTddLFs1MCwwLjgxMl0sWzYxLDAuNzM3XSxbNzAsMC42NTldLFs4MSwwLjU5NV0sWzkwLDAuNTE4XSxbMTAyLDAuNDU3XSxbMTExLDAuMzhdLFsxMjIsMC4zMjZdLFsxMzMsMC4yNjZdLFsxNDIsMC4yMTJdLFsxNTIsMC4xNzJdLFsxNjIsMC4xMzJdLFsxNzMsMC4wOThdLFsxODIsMC4wNjVdLFsxOTQsMC4wNDNdLFsyMDMsMC4wMThdLFsyMTQsMC4wMDJdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9de0a274f4c078dd6126",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:50.860Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTIyLCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4xMjIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMywxXSxbMiwxXSxbMTEsMV0sWzIzLDFdLFsyNCwxXSxbMjksMV0sWzM0LDFdLFs0MywwLjk3XSxbNTQsMC45MzNdLFs2NCwwLjg3NV0sWzc0LDAuODEyXSxbODQsMC43NDRdLFs5MywwLjY3NF0sWzEwMywwLjYwOV0sWzExNSwwLjUzOV0sWzEyNSwwLjQ1N10sWzEzNSwwLjM5Ml0sWzE0NSwwLjMzMl0sWzE1NiwwLjI3N10sWzE2NCwwLjIyMV0sWzE3NiwwLjE4NV0sWzE4NiwwLjEzNl0sWzE5NiwwLjEwMV0sWzIwNywwLjA3MV0sWzIxNywwLjA0M10sWzIyNywwLjAyMV0sWzIzNywwLjAwNF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eb21f93a10bca3eddc15",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:54.072Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c35a3ad1208ca2c404aa",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:54.269Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTM2LCJ0cmF2ZWwiOjg5LCJ0cmF2ZWxTaGFyZSI6MC4xMzYsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbMywxXSxbMTUsMC45N10sWzI3LDAuOTE4XSxbMzUsMC44NV0sWzQ4LDAuNzk5XSxbNTYsMC43MDldLFs2NiwwLjY1Ml0sWzc2LDAuNTgxXSxbODYsMC41MTFdLFs5OCwwLjQ0NF0sWzEwNywwLjM2OF0sWzExNSwwLjMxNV0sWzEyNywwLjI3MV0sWzEzOSwwLjIxMl0sWzE0NywwLjE2XSxbMTU4LDAuMTI5XSxbMTY4LDAuMDkyXSxbMTc3LDAuMDYzXSxbMTg5LDAuMDRdLFsxOTksMC4wMTZdLFsyMDksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a0008e4238b83ed1b576",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3231,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:37:57.520Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTI1LCJ0cmF2ZWwiOjI5MSwidHJhdmVsU2hhcmUiOjAuMTI2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzAsMV0sWzExLDFdLFsyMSwxXSxbMjUsMV0sWzMxLDFdLFs0MSwwLjk3XSxbNTAsMC45MjhdLFs2MywwLjg4XSxbNzIsMC43OTldLFs4MiwwLjczOF0sWzkyLDAuNjY3XSxbMTAyLDAuNTk2XSxbMTEzLDAuNTI1XSxbMTIzLDAuNDUxXSxbMTMyLDAuMzg3XSxbMTQzLDAuMzMzXSxbMTU1LDAuMjcyXSxbMTYzLDAuMjEzXSxbMTc2LDAuMTc3XSxbMTg0LDAuMTI2XSxbMTk0LDAuMDk5XSxbMjA0LDAuMDY5XSxbMjEzLDAuMDQ0XSxbMjI1LDAuMDI1XSxbMjM1LDAuMDAzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-34b9385d9ed83c7ea8e2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 203,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:00.756Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7a43c4839e9b44c6854",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3212,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:00.964Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTIyLCJ0cmF2ZWwiOjI5MiwidHJhdmVsU2hhcmUiOjAuMTIzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE4LDAuOTddLFsyOCwwLjkyM10sWzM4LDAuODY5XSxbNDgsMC44MDZdLFs1NywwLjczOF0sWzY5LDAuNjc0XSxbNzgsMC41ODhdLFs5MCwwLjUyNV0sWzk4LDAuNDQ0XSxbMTA4LDAuMzkzXSxbMTE5LDAuMzMzXSxbMTMxLDAuMjcyXSxbMTM5LDAuMjEzXSxbMTUxLDAuMTc3XSxbMTYwLDAuMTNdLFsxNzEsMC4wOTldLFsxODEsMC4wNjZdLFsxOTAsMC4wNDJdLFsyMDIsMC4wMjNdLFsyMTEsMC4wMDJdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4995dcc4999e61b180ce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:04.180Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9e1278c4a9a7e4093d86",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3192,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":47,\"share\":0.405,\"travel\":251,\"travelShare\":0.188,\"gone\":true,\"frames\":[[-2,1],[4,1],[12,0.973],[24,0.945],[34,0.892],[44,0.839],[52,0.783],[65,0.736],[75,0.659],[85,0.601],[95,0.545],[105,0.492],[115,0.442],[126,0.405],[136,0.405],[146,0.405],[156,0.405],[166,0.405],[178,0.405],[187,0.405],[196,0.405],[207,0.405],[219,0.405],[228,0.405],[238,0.405],[249,0.405],[258,0.405],[269,0.405],[279,0.405],[289,0.405],[299,0.405],[309,0.405],[320,0.405],[330,0.405],[340,0.405],[350,0.405],[360,0.405],[369,0.405],[382,0.405],[391,0.405]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.405\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":47,\"share\":0.405,\"travel\":251,\"travelShare\":0.188,\"gone\":true,\"frames\":[[-2,1],[4,1],[12,0.973],[24,0.945],[34,0.892],[44,0.839],[52,0.783],[65,0.736],[75,0.659],[85,0.601],[95,0.545],[105,0.492],[115,0.442],[126,0.405],[136,0.405],[146,0.405],[156,0.405],[166,0.405],[178,0.405],[187,0.405],[196,0.405],[207,0.405],[219,0.405],[228,0.405],[238,0.405],[249,0.405],[258,0.405],[269,0.405],[279,0.405],[289,0.405],[299,0.405],[309,0.405],[320,0.405],[330,0.405],[340,0.405],[350,0.405],[360,0.405],[369,0.405],[382,0.405],[391,0.405]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.405\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":47,\"share\":0.405,\"travel\":251,\"travelShare\":0.188,\"gone\":true,\"frames\":[[-2,1],[4,1],[12,0.973],[24,0.945],[34,0.892],[44,0.839],[52,0.783],[65,0.736],[75,0.659],[85,0.601],[95,0.545],[105,0.492],[115,0.442],[126,0.405],[136,0.405],[146,0.405],[156,0.405],[166,0.405],[178,0.405],[187,0.405],[196,0.405],[207,0.405],[219,0.405],[228,0.405],[238,0.405],[249,0.405],[258,0.405],[269,0.405],[279,0.405],[289,0.405],[299,0.405],[309,0.405],[320,0.405],[330,0.405],[340,0.405],[350,0.405],[360,0.405],[369,0.405],[382,0.405],[391,0.405]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.405\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:04.372Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Nywic2hhcmUiOjAuNDA1LCJ0cmF2ZWwiOjI1MSwidHJhdmVsU2hhcmUiOjAuMTg4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzQsMV0sWzEyLDAuOTczXSxbMjQsMC45NDVdLFszNCwwLjg5Ml0sWzQ0LDAuODM5XSxbNTIsMC43ODNdLFs2NSwwLjczNl0sWzc1LDAuNjU5XSxbODUsMC42MDFdLFs5NSwwLjU0NV0sWzEwNSwwLjQ5Ml0sWzExNSwwLjQ0Ml0sWzEyNiwwLjQwNV0sWzEzNiwwLjQwNV0sWzE0NiwwLjQwNV0sWzE1NiwwLjQwNV0sWzE2NiwwLjQwNV0sWzE3OCwwLjQwNV0sWzE4NywwLjQwNV0sWzE5NiwwLjQwNV0sWzIwNywwLjQwNV0sWzIxOSwwLjQwNV0sWzIyOCwwLjQwNV0sWzIzOCwwLjQwNV0sWzI0OSwwLjQwNV0sWzI1OCwwLjQwNV0sWzI2OSwwLjQwNV0sWzI3OSwwLjQwNV0sWzI4OSwwLjQwNV0sWzI5OSwwLjQwNV0sWzMwOSwwLjQwNV0sWzMyMCwwLjQwNV0sWzMzMCwwLjQwNV0sWzM0MCwwLjQwNV0sWzM1MCwwLjQwNV0sWzM2MCwwLjQwNV0sWzM2OSwwLjQwNV0sWzM4MiwwLjQwNV0sWzM5MSwwLjQwNV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--5b0a9-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cb8aebda3c4c863c30d8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Toast by close: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3441,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":21,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[7,1],[18,1],[19,1],[22,1],[27,1],[37,0.771],[49,0.616],[59,0.523],[70,0.452],[79,0.398],[89,0.358],[101,0.325],[109,0.313],[121,0.301],[131,0.256],[143,0.163],[151,0.129],[162,0.086],[172,0.057],[182,0.034],[192,0.019],[202,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":21,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[7,1],[18,1],[19,1],[22,1],[27,1],[37,0.771],[49,0.616],[59,0.523],[70,0.452],[79,0.398],[89,0.358],[101,0.325],[109,0.313],[121,0.301],[131,0.256],[143,0.163],[151,0.129],[162,0.086],[172,0.057],[182,0.034],[192,0.019],[202,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":21,\"share\":0.291,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[7,1],[18,1],[19,1],[22,1],[27,1],[37,0.771],[49,0.616],[59,0.523],[70,0.452],[79,0.398],[89,0.358],[101,0.325],[109,0.313],[121,0.301],[131,0.256],[143,0.163],[151,0.129],[162,0.086],[172,0.057],[182,0.034],[192,0.019],[202,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.291\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:07.837Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMjkxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzcsMV0sWzE4LDFdLFsxOSwxXSxbMjIsMV0sWzI3LDFdLFszNywwLjc3MV0sWzQ5LDAuNjE2XSxbNTksMC41MjNdLFs3MCwwLjQ1Ml0sWzc5LDAuMzk4XSxbODksMC4zNThdLFsxMDEsMC4zMjVdLFsxMDksMC4zMTNdLFsxMjEsMC4zMDFdLFsxMzEsMC4yNTZdLFsxNDMsMC4xNjNdLFsxNTEsMC4xMjldLFsxNjIsMC4wODZdLFsxNzIsMC4wNTddLFsxODIsMC4wMzRdLFsxOTIsMC4wMTldLFsyMDIsMC4wMDhdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--2a6b8-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1f4bc1bdb6baccc3b66e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:11.676Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzIsMV0sWzE1LDFdLFsyNCwxXSxbMjYsMV0sWzM0LDFdLFs0MiwwLjk3N10sWzU1LDAuODc4XSxbNjQsMC43ODhdLFs3NSwwLjY3M10sWzg1LDAuNTczXSxbOTQsMC40ODldLFsxMDYsMC4zOTFdLFsxMTUsMC4zMjhdLFsxMjcsMC4yNTddLFsxMzYsMC4yMTJdLFsxNDYsMC4xNzJdLFsxNTUsMC4xNDFdLFsxNjgsMC4xMDVdLFsxNzcsMC4wODZdLFsxODYsMC4wN10sWzE5NiwwLjA1NV0sWzIwNSwwLjA0NV0sWzIxNywwLjAzM10sWzIyNywwLjAyNl0sWzIzOSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ec8d9a0e4aab42153ab8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Accordion by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3290,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:15.194Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE2LDFdLFsyMCwxXSxbMjcsMV0sWzM3LDAuOTY1XSxbNDcsMC44ODddLFs1NywwLjc4OF0sWzY4LDAuNjczXSxbNzgsMC41NzNdLFs4OCwwLjQ4XSxbOTgsMC4zOTldLFsxMDgsMC4zMjhdLFsxMTksMC4yNjJdLFsxMjgsMC4yMTddLFsxNDAsMC4xNjhdLFsxNDksMC4xMzhdLFsxNTksMC4xMV0sWzE3MCwwLjA4Nl0sWzE4MCwwLjA2OF0sWzE5MCwwLjA1NF0sWzIwMSwwLjA0MV0sWzIwOSwwLjAzNF0sWzIyMSwwLjAyNl0sWzIzMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-624fdccac921267d019f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3258,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":4,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[0,1],[11,1],[21,1],[23,1],[32,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":4,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[0,1],[11,1],[21,1],[23,1],[32,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":4,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[0,1],[11,1],[21,1],[23,1],[32,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:18.489Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0LCJzaGFyZSI6MSwidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFswLDFdLFsxMSwxXSxbMjEsMV0sWzIzLDFdLFszMiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--b648a-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7326abcfaab2b3e95f80",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3357,
+                  "error": {
+                    "message": "Error: painted for more than two frames {\"painted\":0,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: painted for more than two frames {\"painted\":0,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1903:76",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 76,
+                      "line": 1903
+                    },
+                    "snippet": "  1901 |             const at = JSON.stringify(read);\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n> 1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n       |                                                                            ^\n  1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 76,
+                        "line": 1903
+                      },
+                      "message": "Error: painted for more than two frames {\"painted\":0,\"share\":1,\"travel\":0,\"travelShare\":null,\"gone\":true,\"frames\":[[-2,1],[9,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  1901 |             const at = JSON.stringify(read);\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n> 1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n       |                                                                            ^\n  1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1903:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:22.004Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjowLCJzaGFyZSI6MSwidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFs5LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--8233d-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 76,
+                    "line": 1903
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a1641832dc7bdef65af8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3413,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.446,\"travel\":193,\"travelShare\":0.502,\"gone\":true,\"frames\":[[-3,1],[7,1],[18,1],[19,1],[22,1],[55,0.117],[70,0.107],[79,0.088],[88,0.077],[99,0.066],[109,0.054],[120,0.044],[130,0.035],[140,0.029],[150,0.023],[160,0.019],[170,0.015],[180,0.012],[191,0.009]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.446\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.446,\"travel\":193,\"travelShare\":0.502,\"gone\":true,\"frames\":[[-3,1],[7,1],[18,1],[19,1],[22,1],[55,0.117],[70,0.107],[79,0.088],[88,0.077],[99,0.066],[109,0.054],[120,0.044],[130,0.035],[140,0.029],[150,0.023],[160,0.019],[170,0.015],[180,0.012],[191,0.009]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.446\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":17,\"share\":0.446,\"travel\":193,\"travelShare\":0.502,\"gone\":true,\"frames\":[[-3,1],[7,1],[18,1],[19,1],[22,1],[55,0.117],[70,0.107],[79,0.088],[88,0.077],[99,0.066],[109,0.054],[120,0.044],[130,0.035],[140,0.029],[150,0.023],[160,0.019],[170,0.015],[180,0.012],[191,0.009]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.446\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:25.758Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNywic2hhcmUiOjAuNDQ2LCJ0cmF2ZWwiOjE5MywidHJhdmVsU2hhcmUiOjAuNTAyLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzcsMV0sWzE4LDFdLFsxOSwxXSxbMjIsMV0sWzU1LDAuMTE3XSxbNzAsMC4xMDddLFs3OSwwLjA4OF0sWzg4LDAuMDc3XSxbOTksMC4wNjZdLFsxMDksMC4wNTRdLFsxMjAsMC4wNDRdLFsxMzAsMC4wMzVdLFsxNDAsMC4wMjldLFsxNTAsMC4wMjNdLFsxNjAsMC4wMTldLFsxNzAsMC4wMTVdLFsxODAsMC4wMTJdLFsxOTEsMC4wMDldXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6256aa1b07006fb3f0e1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1862,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:29.615Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1862,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ccf750a8885657c89a0e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3230,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":14,\"share\":0.433,\"travel\":193,\"travelShare\":0.487,\"gone\":true,\"frames\":[[-1,1],[33,0.117],[47,0.107],[51,0.09],[61,0.084],[71,0.072],[81,0.06],[90,0.05],[102,0.042],[111,0.033],[123,0.027],[132,0.021],[144,0.017],[151,0.013],[163,0.011],[172,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.433\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":14,\"share\":0.433,\"travel\":193,\"travelShare\":0.487,\"gone\":true,\"frames\":[[-1,1],[33,0.117],[47,0.107],[51,0.09],[61,0.084],[71,0.072],[81,0.06],[90,0.05],[102,0.042],[111,0.033],[123,0.027],[132,0.021],[144,0.017],[151,0.013],[163,0.011],[172,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.433\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1904
+                    },
+                    "snippet": "  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1904
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":14,\"share\":0.433,\"travel\":193,\"travelShare\":0.487,\"gone\":true,\"frames\":[[-1,1],[33,0.117],[47,0.107],[51,0.09],[61,0.084],[71,0.072],[81,0.06],[90,0.05],[102,0.042],[111,0.033],[123,0.027],[132,0.021],[144,0.017],[151,0.013],[163,0.011],[172,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.433\u001b[39m\n\n  1902 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1903 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1904 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1905 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1906 |         });\n  1907 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1904:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:38:30.028Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNCwic2hhcmUiOjAuNDMzLCJ0cmF2ZWwiOjE5MywidHJhdmVsU2hhcmUiOjAuNDg3LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzMzLDAuMTE3XSxbNDcsMC4xMDddLFs1MSwwLjA5XSxbNjEsMC4wODRdLFs3MSwwLjA3Ml0sWzgxLDAuMDZdLFs5MCwwLjA1XSxbMTAyLDAuMDQyXSxbMTExLDAuMDMzXSxbMTIzLDAuMDI3XSxbMTMyLDAuMDIxXSxbMTQ0LDAuMDE3XSxbMTUxLDAuMDEzXSxbMTYzLDAuMDExXSxbMTcyLDAuMDA4XV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/test-results/release-11-1-1-standing-·--b911f-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic9-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1904
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a3743bdc926ff4c4acc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T00:36:52.093Z",
+    "duration": 101208.851,
+    "expected": 12,
+    "skipped": 17,
+    "unexpected": 15,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,1916 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "standing · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-9/logs/tip-webkit-desktop-2.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4061,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:09:46.394Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy00LDFdLFsxMCwxXSxbMTksMV0sWzIwLDFdLFsyNSwxXSxbMzEsMV0sWzQ1LDFdLFs2MiwwLjkzOV0sWzcxLDAuOTAzXSxbODEsMC44NjJdLFs5MiwwLjc3OV0sWzEwMSwwLjcwM10sWzExMSwwLjYzXSxbMTIwLDAuNTYxXSxbMTMyLDAuNDc1XSxbMTQyLDAuNDA3XSxbMTUyLDAuMzQxXSxbMTYyLDAuMjg2XSxbMTczLDAuMjI5XSxbMTgzLDAuMTgzXSxbMTkyLDAuMTQ2XSxbMjAzLDAuMTA3XSxbMjEyLDAuMDhdLFsyMjQsMC4wNTFdLFsyMzQsMC4wMzJdLFsyNDMsMC4wMTldLFsyNTUsMC4wMDddXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-379ba938546375ad379e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:09:50.653Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzExLDFdLFsxNywwLjk3OF0sWzI3LDAuOTQyXSxbNDAsMC44OTFdLFs0OCwwLjg1N10sWzU3LDAuNzgzXSxbNzAsMC42ODRdLFs3OCwwLjYyMl0sWzg4LDAuNTQ3XSxbMTAwLDAuNDYxXSxbMTA5LDAuNDAxXSxbMTE5LDAuMzM4XSxbMTMxLDAuMjddLFsxMzksMC4yMjldLFsxNDksMC4xODNdLFsxNTksMC4xNDJdLFsxNzIsMC4wOThdLFsxODIsMC4wN10sWzE5MCwwLjA1MV0sWzIwMiwwLjAyOV0sWzIxMSwwLjAxN10sWzIyMSwwLjAwN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0bb376d547ef16750e84",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:09:54.163Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTMsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMywxXSxbMTIsMV0sWzI0LDAuOTU3XSxbMzQsMC45MTldLFs0MywwLjg4M10sWzU0LDAuODE1XSxbNjMsMC43NDddLFs3MywwLjY2OF0sWzg1LDAuNTc2XSxbOTMsMC41MTddLFsxMDQsMC40NF0sWzExNSwwLjM2OV0sWzEyNCwwLjMxNV0sWzEzNywwLjI0NF0sWzE0NSwwLjIwMl0sWzE1NywwLjE1NF0sWzE2NywwLjExN10sWzE3NiwwLjA4OV0sWzE4NywwLjA2XSxbMTk3LDAuMDM5XSxbMjA3LDAuMDIzXSxbMjE2LDAuMDEyXSxbMjI4LDAuMDAzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6d0674035c93febd3659",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:09:57.618Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzksMV0sWzIxLDFdLFsyMiwxXSxbMjcsMV0sWzMwLDFdLFs0MCwwLjk2NF0sWzUyLDAuOTE5XSxbNjAsMC44ODddLFs3MiwwLjgyXSxbODIsMC43NF0sWzkxLDAuNjY4XSxbMTAzLDAuNTc2XSxbMTExLDAuNTE3XSxbMTIzLDAuNDM0XSxbMTM0LDAuMzYzXSxbMTQzLDAuMzA5XSxbMTUyLDAuMjU5XSxbMTYyLDAuMjFdLFsxNzMsMC4xNjJdLFsxODIsMC4xMjddLFsxOTQsMC4wODldLFsyMDQsMC4wNjJdLFsyMTMsMC4wNDNdLFsyMjQsMC4wMjVdLFsyMzYsMC4wMV0sWzI0MywwLjAwNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c98888bb2fa41910b1bd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:01.068Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTI4LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzcsMV0sWzE4LDFdLFsxOSwxXSxbMjIsMV0sWzMxLDFdLFszOCwwLjk3OF0sWzQ3LDAuOTQyXSxbNTcsMC45MDNdLFs2NywwLjg2Ml0sWzgwLDAuODAzXSxbODksMC43NDJdLFs5OSwwLjY2MV0sWzExMiwwLjU2NV0sWzEyMCwwLjUwMV0sWzEyOSwwLjQzOF0sWzEzOSwwLjM3Nl0sWzE1MSwwLjMwNF0sWzE2MywwLjIzNl0sWzE3MSwwLjE5OF0sWzE4MCwwLjE1OV0sWzE5MiwwLjExNF0sWzIwMiwwLjA4NV0sWzIxMiwwLjA1N10sWzIyMiwwLjAzN10sWzIzMiwwLjAyMV0sWzI0MiwwLjAwOF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3c8f1a4c02476238dd6e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3311,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:04.568Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTMsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbOCwxXSxbMTgsMC45NjRdLFsyNywwLjkzMV0sWzM5LDAuODgzXSxbNDksMC44NF0sWzU5LDAuNzk0XSxbNjksMC43MTddLFs4MSwwLjYyNl0sWzkwLDAuNTUzXSxbMTAxLDAuNDczXSxbMTEwLDAuNDExXSxbMTIyLDAuMzM1XSxbMTMxLDAuMjg0XSxbMTQwLDAuMjM5XSxbMTUxLDAuMTg0XSxbMTYxLDAuMTQzXSxbMTcyLDAuMTA3XSxbMTgyLDAuMDc1XSxbMTkyLDAuMDUxXSxbMjAxLDAuMDMzXSxbMjEzLDAuMDE2XSxbMjIzLDAuMDA1XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a689d0563990a4b5db17",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:07.884Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzExLDFdLFsyMSwwLjk2NF0sWzMxLDAuOTI3XSxbNDEsMC44ODddLFs1MCwwLjg0OF0sWzYxLDAuNzk5XSxbNzAsMC43MzNdLFs4MiwwLjYzN10sWzk0LDAuNTQ1XSxbMTAzLDAuNDhdLFsxMTMsMC40MTFdLFsxMjMsMC4zNDhdLFsxMzQsMC4yODddLFsxNDIsMC4yNDFdLFsxNTMsMC4xODldLFsxNjUsMC4xMzldLFsxNzMsMC4xMTFdLFsxODQsMC4wNzhdLFsxOTUsMC4wNTFdLFsyMDYsMC4wM10sWzIxNSwwLjAxN10sWzIyNSwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e288126a7e831b754ec4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3419,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:11.336Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE4LDFdLFsxOSwxXSxbMjUsMV0sWzI3LDFdLFszNywwLjk2NF0sWzQ2LDAuOTMxXSxbNTksMC44ODNdLFs2OCwwLjg0XSxbNzgsMC43OTRdLFs4OCwwLjcxN10sWzk4LDAuNjM3XSxbMTA3LDAuNTY4XSxbMTE5LDAuNDhdLFsxMjksMC40MTFdLFsxMzksMC4zNDhdLFsxNDksMC4yODldLFsxNjAsMC4yMzRdLFsxNjksMC4xOTJdLFsxODEsMC4xMzldLFsxOTAsMC4xMDhdLFsyMDAsMC4wNzhdLFsyMTEsMC4wNTJdLFsyMjEsMC4wMzFdLFsyMzEsMC4wMTddLFsyNDEsMC4wMDZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-308a76de3fb01fb5f912",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3523,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:14.760Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzEzLDFdLFsyMywxXSxbMjQsMV0sWzI4LDFdLFszNCwxXSxbNDksMC45NDZdLFs1NiwwLjkxOV0sWzY0LDAuODg3XSxbNzQsMC44MzhdLFs4NCwwLjc1NF0sWzk1LDAuNjcyXSxbMTA1LDAuNTk1XSxbMTE1LDAuNTIxXSxbMTI0LDAuNDU4XSxbMTMzLDAuMzk1XSxbMTQ1LDAuMzI1XSxbMTU2LDAuMjY0XSxbMTY2LDAuMjE0XSxbMTc2LDAuMTddLFsxODcsMC4xMjddLFsxOTYsMC4wOThdLFsyMDgsMC4wNjddLFsyMTYsMC4wNDddLFsyMjgsMC4wMjZdLFsyMzYsMC4wMTZdLFsyNDksMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd68489246770d5e4d21",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:18.289Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTMsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbMTIsMV0sWzE5LDAuOTc0XSxbMzAsMC45MzVdLFs0MCwwLjg5NV0sWzQ4LDAuODYyXSxbNjAsMC43NzRdLFs3MCwwLjY5NV0sWzgxLDAuNjFdLFs5MSwwLjUzNl0sWzEwMSwwLjQ2NV0sWzExMSwwLjM5OV0sWzEyMSwwLjMzN10sWzEzMCwwLjI4NV0sWzE0MCwwLjIzM10sWzE1MiwwLjE3OF0sWzE2MSwwLjE0Ml0sWzE3MywwLjEwMV0sWzE4MywwLjA3Ml0sWzE5MywwLjA0OV0sWzIwMywwLjAzMV0sWzIxMywwLjAxN10sWzIyNCwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5197cc6d5eee19a639f7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:21.756Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMiwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzEyLDFdLFsxNiwwLjk4NF0sWzIzLDAuOTYxXSxbMzYsMC45MTZdLFs0NywwLjg2Nl0sWzU1LDAuODE0XSxbNjYsMC43MjddLFs3NiwwLjY0OF0sWzg2LDAuNTczXSxbOTgsMC40ODZdLFsxMDcsMC40MjVdLFsxMTcsMC4zNjFdLFsxMjcsMC4zMDVdLFsxMzksMC4yMzhdLFsxNDgsMC4xOTZdLFsxNTcsMC4xNTddLFsxNjcsMC4xMjNdLFsxNzgsMC4wODZdLFsxODksMC4wNTldLFsxOTksMC4wMzhdLFsyMDksMC4wMjJdLFsyMTksMC4wMV0sWzIyOSwwLjAwMl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fe2fd6683085bcda583d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:25.131Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzcsMV0sWzE5LDAuOTYyXSxbMjYsMC45NF0sWzM4LDAuODk4XSxbNDcsMC44NjRdLFs1OCwwLjgyMV0sWzY4LDAuNzhdLFs3NywwLjc0Ml0sWzg5LDAuNjldLFs5OSwwLjY0NV0sWzEwOCwwLjYwNV0sWzEyMCwwLjU1XSxbMTMwLDAuNTA1XSxbMTQwLDAuNDU5XSxbMTQ4LDAuNDIyXSxbMTU4LDAuMzc3XSxbMTcxLDAuMzE5XSxbMTgxLDAuMjc1XSxbMTg5LDAuMjQxXSxbMjAyLDAuMTkxXSxbMjEwLDAuMTU1XSxbMjIyLDAuMTEzXSxbMjMyLDAuMDc3XSxbMjQxLDAuMDQ0XSxbMjUxLDAuMDE3XSxbMjYyLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c336a7afb22f1deff177",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3338,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:28.632Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMDgsInRyYXZlbCI6OCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbNSwxXSxbMTYsMC45NjVdLFsyNiwwLjkzM10sWzM3LDAuODk4XSxbNDUsMC44NjRdLFs1NywwLjgxN10sWzY3LDAuNzc2XSxbNzUsMC43NDJdLFs4NiwwLjY5NF0sWzk2LDAuNjU0XSxbMTA4LDAuNl0sWzExNiwwLjU1OV0sWzEyOCwwLjUwNV0sWzEzOSwwLjQ1OV0sWzE0OCwwLjQxM10sWzE1OCwwLjM2OF0sWzE3MCwwLjMxOV0sWzE3OCwwLjI4NF0sWzE5MCwwLjIyOV0sWzIwMCwwLjE4N10sWzIxMCwwLjE0N10sWzIyMCwwLjExXSxbMjMyLDAuMDY3XSxbMjQxLDAuMDQxXSxbMjQ5LDAuMDE0XSxbMjYxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0367d760e7fd47b30b7b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:31.976Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOSwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzEwLDFdLFsyMSwxXSxbMjIsMV0sWzI3LDFdLFszMSwxXSxbNDAsMC45NzFdLFs1MCwwLjk0XSxbNjIsMC44OThdLFs3MSwwLjg2NF0sWzgxLDAuODI1XSxbOTEsMC43ODRdLFsxMDEsMC43NDJdLFsxMTIsMC42OThdLFsxMjIsMC42NV0sWzEzMiwwLjYwNV0sWzE0MiwwLjU1OV0sWzE1MSwwLjUxOF0sWzE2MywwLjQ2M10sWzE3MywwLjQxOF0sWzE4MywwLjM3M10sWzE5MywwLjMyOF0sWzIwNSwwLjI3NV0sWzIxNCwwLjI0MV0sWzIyNCwwLjE5NV0sWzIzNSwwLjE1NV0sWzI0MywwLjEyMV0sWzI1NSwwLjA3N10sWzI2NSwwLjA0N10sWzI3NywwLjAxMV0sWzI4NSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a337c320dd9dc6727b6f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by focus: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:35.484Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzgsMV0sWzE5LDAuOTY4XSxbMjksMC45MzNdLFszOSwwLjg5OF0sWzQ5LDAuODZdLFs2MCwwLjgyMV0sWzY4LDAuNzg0XSxbODAsMC43MzNdLFs5MCwwLjY5XSxbMTAwLDAuNjQ1XSxbMTEwLDAuNl0sWzExOSwwLjU1OV0sWzEzMSwwLjUwNV0sWzE0MCwwLjQ2M10sWzE1MiwwLjQwOV0sWzE2MiwwLjM2OF0sWzE3MiwwLjMyNF0sWzE4MiwwLjI4XSxbMTk0LDAuMjI5XSxbMjAyLDAuMTkxXSxbMjEzLDAuMTUxXSxbMjIzLDAuMTEzXSxbMjMzLDAuMDc3XSxbMjQ1LDAuMDM1XSxbMjUzLDAuMDExXSxbMjY0LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b8b58701535d07fbbf99",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:38.946Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMiwic2hhcmUiOjAuMTYxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE2LDAuOTNdLFsyNywwLjg0NV0sWzM3LDAuNzY5XSxbNDUsMC42ODhdLFs1NywwLjU3Nl0sWzY3LDAuNDgxXSxbNzgsMC4zODZdLFs4OCwwLjI5NF0sWzk4LDAuMjA1XSxbMTA3LDAuMTMxXSxbMTE5LDAuMDQzXSxbMTI4LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f6f9a9f75c24a7b1dd3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by away: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3442,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:42.318Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMiwic2hhcmUiOjAuMTY1LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzUsMV0sWzE1LDAuOTNdLFsyNywwLjgzN10sWzM3LDAuNzUxXSxbNDcsMC42Nl0sWzU2LDAuNTg2XSxbNjgsMC40NzFdLFs3OCwwLjM2N10sWzg4LDAuMjc1XSxbOTgsMC4xODhdLFsxMDgsMC4xMDddLFsxMTksMC4wM10sWzEyNywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-48105e809ba3d2d59338",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3528,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:45.766Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNiwic2hhcmUiOjAuMTY2LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzEyLDFdLFsyMywxXSxbMjQsMV0sWzI1LDFdLFszMiwxXSxbNDEsMC45MzddLFs1MywwLjg0NV0sWzY0LDAuNzUxXSxbNzQsMC42Nl0sWzg0LDAuNTc2XSxbOTMsMC40ODFdLFsxMDUsMC4zNjddLFsxMTQsMC4yODRdLFsxMjMsMC4yMTRdLFsxMzUsMC4xMDddLFsxNDUsMC4wMzZdLFsxNTUsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7c184c47e70c2610a1a7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:49.301Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo5NCwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzEwLDFdLFsyMCwxXSxbMzAsMV0sWzQwLDFdLFs1MiwxXSxbNjEsMV0sWzY5LDFdLFs4MSwxXSxbOTEsMV0sWzEwMywxXSxbMTExLDFdLFsxMjEsMV0sWzEzMiwxXSxbMTQwLDFdLFsxNTMsMV0sWzE2MiwxXSxbMTc0LDFdLFsxODMsMV0sWzE5MSwxXSxbMjA0LDFdLFsyMTMsMV0sWzIyMywxXSxbMjMzLDFdLFsyNDUsMV0sWzI1NSwxXSxbMjY1LDFdLFsyNzQsMV0sWzI4NiwxXSxbMjkzLDFdLFszMDYsMV0sWzMxNiwxXSxbMzI2LDFdLFszMzQsMV0sWzM0NiwxXSxbMzU3LDFdLFszNjgsMV0sWzM3NywxXSxbMzg3LDFdLFszOTcsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0d6b5d2e2fae61fb6388",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3512,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:52.797Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTE3LCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0zLDFdLFsxMSwxXSxbMjAsMV0sWzIxLDFdLFsyNSwxXSxbMzMsMV0sWzQyLDFdLFs1MywxXSxbNjMsMC45NTFdLFs3MiwwLjldLFs4MywwLjg1XSxbOTQsMC43ODVdLFsxMDMsMC43MTddLFsxMTMsMC42NjFdLFsxMjIsMC41OTddLFsxMzQsMC41MzldLFsxNDMsMC40NjNdLFsxNTMsMC40MDZdLFsxNjUsMC4zNDVdLFsxNzUsMC4yNzNdLFsxODUsMC4yMTZdLFsxOTcsMC4xNjJdLFsyMDYsMC4xMDNdLFsyMTYsMC4wNjJdLFsyMjYsMC4wMjFdLFsyMzUsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8cd64d0c84ef048d0e0e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3453,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:56.314Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOSwic2hhcmUiOjAuMTI2LCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0zLDFdLFsxMSwxXSxbMjEsMV0sWzMzLDAuOTU2XSxbNDIsMC44OTRdLFs1MSwwLjg0NF0sWzYzLDAuNzkxXSxbNzMsMC43MTddLFs4MywwLjY1NF0sWzkyLDAuNTldLFsxMDQsMC41MzNdLFsxMTYsMC40NTZdLFsxMjQsMC4zODFdLFsxMzMsMC4zMzJdLFsxNDUsMC4yNzldLFsxNTMsMC4yMTFdLFsxNjUsMC4xNjhdLFsxNzMsMC4xMDddLFsxODUsMC4wN10sWzE5NCwwLjAyMV0sWzIwNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6736314248835597dbb7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3420,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:10:59.772Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOSwic2hhcmUiOjAuMTE2LCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0zLDFdLFs4LDFdLFsxOCwxXSxbMjgsMC45NTZdLFszOCwwLjkwNV0sWzQ4LDAuODVdLFs2MCwwLjc5MV0sWzY5LDAuNzE3XSxbNzksMC42NjFdLFs4OSwwLjU5N10sWzk5LDAuNTMzXSxbMTEwLDAuNDY5XSxbMTE4LDAuNF0sWzEzMSwwLjM1MV0sWzEzOSwwLjI3M10sWzE0OSwwLjIyN10sWzE2MCwwLjE3M10sWzE2OSwwLjExN10sWzE4MSwwLjA3NV0sWzE5MywwLjAyNV0sWzIwMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c9881da7581ac0ccc348",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3508,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:03.197Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDgzLCJ0cmF2ZWwiOjM4MywidHJhdmVsU2hhcmUiOjAuMDgzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzYsMV0sWzE0LDFdLFsxNSwxXSxbMTksMV0sWzMxLDFdLFs0MSwxXSxbNDcsMC45NzFdLFs1OSwwLjk1M10sWzY2LDAuOTEyXSxbNzYsMC44ODddLFs4OCwwLjg0OV0sWzk4LDAuODAxXSxbMTA2LDAuNzU5XSxbMTE4LDAuNzI1XSxbMTI4LDAuNjcyXSxbMTM5LDAuNjI3XSxbMTQ5LDAuNTc4XSxbMTU5LDAuNTMyXSxbMTY5LDAuNDg2XSxbMTc4LDAuNDQxXSxbMTkwLDAuNF0sWzE5OSwwLjM0Nl0sWzIxMCwwLjMwNl0sWzIyMCwwLjI1OF0sWzIyOSwwLjIxNl0sWzI0MSwwLjE3OV0sWzI0OSwwLjEzMl0sWzI2MSwwLjEwMl0sWzI3MSwwLjA2XSxbMjgwLDAuMDI5XSxbMjkyLDAuMDAzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c6109afa68a6eca7330f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:06.712Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMDg0LCJ0cmF2ZWwiOjM3OSwidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzAsMV0sWzExLDFdLFsyMiwxXSxbMzEsMC45NjhdLFs0MSwwLjk0XSxbNTIsMC45MDVdLFs2MSwwLjg2NF0sWzczLDAuODI5XSxbODIsMC43OF0sWzkxLDAuNzQyXSxbMTAzLDAuNzAzXSxbMTEzLDAuNjVdLFsxMjMsMC42MDVdLFsxMzIsMC41NTldLFsxNDQsMC41MThdLFsxNTQsMC40NjNdLFsxNjQsMC40MThdLFsxNzQsMC4zNzNdLFsxODQsMC4zMjhdLFsxOTQsMC4yODRdLFsyMDQsMC4yNDFdLFsyMTUsMC4xOTldLFsyMjUsMC4xNTVdLFsyMzUsMC4xMTddLFsyNDUsMC4wODFdLFsyNTYsMC4wNDddLFsyNjUsMC4wMTRdLFsyNzYsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-db441ed8d473180c7087",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3475,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:10.156Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDg4LCJ0cmF2ZWwiOjM3OSwidHJhdmVsU2hhcmUiOjAuMDksImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbOSwxXSxbMjAsMV0sWzI5LDAuOTY4XSxbNDAsMC45NF0sWzUwLDAuOTAxXSxbNTgsMC44NjRdLFs3MCwwLjgzM10sWzgwLDAuNzg0XSxbOTAsMC43NDJdLFsxMDAsMC42OThdLFsxMTIsMC42NTRdLFsxMjEsMC42XSxbMTMxLDAuNTU5XSxbMTQyLDAuNTE0XSxbMTUwLDAuNDYzXSxbMTYyLDAuNDI3XSxbMTcxLDAuMzczXSxbMTgzLDAuMzMyXSxbMTkzLDAuMjhdLFsyMDEsMC4yMzddLFsyMTMsMC4yMDRdLFsyMjMsMC4xNTVdLFsyMzMsMC4xMTddLFsyNDIsMC4wODFdLFsyNTQsMC4wNTFdLFsyNjQsMC4wMTRdLFsyNzMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-82021eaf27a5df43aae1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3426,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:13.637Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDgyLCJ0cmF2ZWwiOjExNCwidHJhdmVsU2hhcmUiOjAuMDg0LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzEsMV0sWzEzLDFdLFsyMiwxXSxbMjYsMV0sWzM3LDFdLFs0NSwxXSxbNTQsMC45NzhdLFs2NiwwLjk1XSxbNzMsMC45MDldLFs4NSwwLjg4M10sWzk1LDAuODM3XSxbMTA0LDAuNzk3XSxbMTE2LDAuNzZdLFsxMjUsMC43MDhdLFsxMzcsMC42NjldLFsxNDQsMC42MTVdLFsxNTYsMC41ODNdLFsxNjYsMC41MjldLFsxNzcsMC40ODNdLFsxODYsMC40MzNdLFsxOTYsMC4zOTNdLFsyMDUsMC4zNDhdLFsyMTcsMC4zMDhdLFsyMjgsMC4yNTZdLFsyMzgsMC4yMV0sWzI0OCwwLjE3XSxbMjU4LDAuMTMxXSxbMjcwLDAuMDk0XSxbMjc5LDAuMDU0XSxbMjg5LDAuMDI2XSxbMjk5LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c554dfbdd4a5dc4572bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3392,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:17.067Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDksInRyYXZlbCI6MTE2LCJ0cmF2ZWxTaGFyZSI6MC4wOTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbOSwxXSxbMTksMV0sWzMwLDAuOTcyXSxbNDIsMC45MzZdLFs1MCwwLjg5NF0sWzU5LDAuODY1XSxbNzEsMC44MjldLFs4MSwwLjc4MV0sWzkxLDAuNzM4XSxbMTAxLDAuNjk1XSxbMTE0LDAuNjUxXSxbMTIwLDAuNTkyXSxbMTMyLDAuNTY1XSxbMTQyLDAuNTExXSxbMTU0LDAuNDY1XSxbMTYyLDAuNDExXSxbMTc1LDAuMzc1XSxbMTgyLDAuMzE3XSxbMTkzLDAuMjg2XSxbMjA1LDAuMjM5XSxbMjE0LDAuMTldLFsyMjQsMC4xNTRdLFsyMzMsMC4xMTZdLFsyNDMsMC4wODRdLFsyNTUsMC4wNV0sWzI2NCwwLjAxNF0sWzI3NSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2990d77c7be7dfd3bee8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:20.463Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDgzLCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzksMV0sWzE4LDFdLFszMCwwLjk3NV0sWzM3LDAuOTM2XSxbNDksMC45MTJdLFs1OCwwLjg2OF0sWzcwLDAuODMzXSxbNzksMC43ODVdLFs5MCwwLjc0N10sWzEwMCwwLjY5OV0sWzEwOSwwLjY1NV0sWzEyMSwwLjYxNV0sWzEzMSwwLjU2MV0sWzE0MSwwLjUxNV0sWzE1MSwwLjQ3XSxbMTYyLDAuNDI0XSxbMTcxLDAuMzc1XSxbMTgxLDAuMzM1XSxbMTkxLDAuMjkxXSxbMjAyLDAuMjQ4XSxbMjEyLDAuMjAyXSxbMjIyLDAuMTYyXSxbMjMyLDAuMTI0XSxbMjQzLDAuMDg3XSxbMjUzLDAuMDVdLFsyNjEsMC4wMl0sWzI3MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-40b7229ec83e308b9ff8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:23.939Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDgyLCJ0cmF2ZWwiOjExNCwidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzMsMV0sWzE1LDFdLFsyMywxXSxbMjcsMV0sWzM5LDFdLFs0NiwxXSxbNTUsMC45OF0sWzY0LDAuOTUzXSxbNzYsMC45MjNdLFs4MywwLjg4XSxbOTUsMC44NTNdLFsxMDYsMC44MDVdLFsxMTYsMC43Nl0sWzEyNCwwLjcxN10sWzEzNiwwLjY4Ml0sWzE0NiwwLjYyOF0sWzE1NiwwLjU4M10sWzE2NywwLjUzOF0sWzE3NiwwLjQ4OF0sWzE4NiwwLjQ0N10sWzE5OCwwLjQwMl0sWzIwNywwLjM0OF0sWzIxOCwwLjMwOF0sWzIyOCwwLjI2MV0sWzIzOCwwLjIxOV0sWzI0NywwLjE3OF0sWzI1OSwwLjE0M10sWzI2NywwLjA5OF0sWzI3OSwwLjA3XSxbMjkxLDAuMDMyXSxbMjk5LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-92759edf70cc5c5a38d5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:27.398Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMDksInRyYXZlbCI6MTE1LCJ0cmF2ZWxTaGFyZSI6MC4wOTIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMywxXSxbMSwxXSxbMTAsMV0sWzIyLDFdLFszMiwwLjk2NV0sWzQxLDAuOTMzXSxbNTMsMC45MDJdLFs2MywwLjg1N10sWzc0LDAuODE3XSxbODMsMC43NzJdLFs5MywwLjczNF0sWzEwMiwwLjY5MV0sWzExNCwwLjY1MV0sWzEyNiwwLjU5N10sWzEzNCwwLjU0M10sWzE0MywwLjUwNl0sWzE1NSwwLjQ2NV0sWzE2MywwLjQxMV0sWzE3NSwwLjM3NV0sWzE4NSwwLjMyMV0sWzE5NSwwLjI3OF0sWzIwNiwwLjIzNV0sWzIxNCwwLjE5XSxbMjI2LDAuMTU4XSxbMjM2LDAuMTEyXSxbMjQ2LDAuMDc3XSxbMjU1LDAuMDQ0XSxbMjY1LDAuMDE3XSxbMjc3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8836b1fb7f42790f12dc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3474,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:30.812Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDgzLCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzE0LDFdLFsyNCwxXSxbMzYsMC45NzJdLFs0NSwwLjkzM10sWzU1LDAuOTAyXSxbNjUsMC44NjVdLFs3NCwwLjgyNV0sWzg2LDAuNzg5XSxbOTUsMC43MzhdLFsxMDYsMC42OTldLFsxMTUsMC42NTFdLFsxMjcsMC42MTFdLFsxMzcsMC41NTZdLFsxNDcsMC41MTFdLFsxNTcsMC40NjVdLFsxNjcsMC40Ml0sWzE3OCwwLjM3NV0sWzE4OCwwLjMyNl0sWzE5OCwwLjI4Ml0sWzIwOCwwLjIzOV0sWzIxOSwwLjE5OF0sWzIyOCwwLjE1NF0sWzI0MCwwLjEyXSxbMjQ5LDAuMDc3XSxbMjU5LDAuMDQ3XSxbMjY5LDAuMDE3XSxbMjc4LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6c40a6b0ef2d1eab260d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:34.292Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDgzLCJ0cmF2ZWwiOjM3OCwidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzAsMV0sWzksMV0sWzIxLDFdLFsyNCwxXSxbMzIsMV0sWzQxLDFdLFs1NCwwLjk3NF0sWzYxLDAuOTMzXSxbNzIsMC45MDldLFs4MiwwLjg2OF0sWzkyLDAuODI5XSxbMTAyLDAuNzg4XSxbMTExLDAuNzQ2XSxbMTIzLDAuNzA3XSxbMTMzLDAuNjU0XSxbMTQzLDAuNjA5XSxbMTUzLDAuNTY0XSxbMTYzLDAuNTE4XSxbMTczLDAuNDczXSxbMTg1LDAuNDI3XSxbMTkzLDAuMzczXSxbMjA0LDAuMzM3XSxbMjE0LDAuMjg4XSxbMjI0LDAuMjQ1XSxbMjM1LDAuMjA0XSxbMjQ1LDAuMTU5XSxbMjU1LDAuMTIxXSxbMjY0LDAuMDg0XSxbMjc2LDAuMDU0XSxbMjg1LDAuMDE3XSxbMjk1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6ece824f7a6a96955d83",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:37.790Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDg0LCJ0cmF2ZWwiOjM3NiwidHJhdmVsU2hhcmUiOjAuMDg2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzcsMV0sWzE0LDFdLFsyNCwwLjk4XSxbMzUsMC45NDldLFs0NCwwLjkxMl0sWzU2LDAuODc5XSxbNjUsMC44MzNdLFs3NywwLjc5Nl0sWzg1LDAuNzQ2XSxbOTcsMC43MTJdLFsxMDYsMC42NTldLFsxMTcsMC42MThdLFsxMjYsMC41NjhdLFsxMzgsMC41MjddLFsxNDcsMC40NzNdLFsxNTcsMC40MzJdLFsxNjYsMC4zODZdLFsxNzgsMC4zNDZdLFsxODgsMC4yOTNdLFsyMDAsMC4yNV0sWzIwOCwwLjE5OV0sWzIxOSwwLjE2N10sWzIyOSwwLjEyNV0sWzIzOCwwLjA4OF0sWzI1MCwwLjA1N10sWzI1OSwwLjAyXSxbMjcxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-279587da90a0178f72b9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:41.202Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDkzLCJ0cmF2ZWwiOjM3OSwidHJhdmVsU2hhcmUiOjAuMDk0LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzgsMV0sWzIwLDFdLFsyNywwLjk2NV0sWzM5LDAuOTQzXSxbNDksMC45MDFdLFs1OSwwLjg2NF0sWzY5LDAuODI1XSxbNzksMC43ODRdLFs4OCwwLjc0Ml0sWzk5LDAuNzAzXSxbMTEwLDAuNjU0XSxbMTIwLDAuNjA1XSxbMTI5LDAuNTU5XSxbMTQxLDAuNTE4XSxbMTUxLDAuNDYzXSxbMTU5LDAuNDE4XSxbMTcxLDAuMzgyXSxbMTgyLDAuMzI4XSxbMTkyLDAuMjhdLFsyMDIsMC4yMzddLFsyMTEsMC4xOTVdLFsyMjIsMC4xNTldLFsyMzMsMC4xMTddLFsyNDMsMC4wNzddLFsyNTMsMC4wNDRdLFsyNjMsMC4wMTRdLFsyNzIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3a16cc03c86d79862c30",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3508,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:44.727Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMTAzLCJ0cmF2ZWwiOjQ0NywidHJhdmVsU2hhcmUiOjAuMTA0LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE0LDAuOTczXSxbMjYsMC45NDVdLFszNSwwLjg5MV0sWzQ2LDAuODQ0XSxbNTYsMC43ODJdLFs2NiwwLjcyNF0sWzc1LDAuNjY1XSxbODcsMC42MTNdLFs5NiwwLjU0NV0sWzEwOCwwLjQ5N10sWzExNiwwLjQzN10sWzEyOCwwLjM5OV0sWzEzNywwLjM0Nl0sWzE0OCwwLjMxXSxbMTU4LDAuMjddLFsxNjksMC4yMzddLFsxNzgsMC4yMDRdLFsxOTAsMC4xOF0sWzE5OCwwLjE1MV0sWzIwOCwwLjEzNF0sWzIxOSwwLjExNV0sWzIyOSwwLjA5N10sWzI0MCwwLjA4Ml0sWzI1MCwwLjA2OF0sWzI2MCwwLjA1N10sWzI3MCwwLjA0OF0sWzI3OCwwLjA0XSxbMjkxLDAuMDM0XSxbMzAwLDAuMDI2XSxbMzEyLDAuMDIyXSxbMzE5LDAuMDE2XSxbMzMxLDAuMDE0XSxbMzQyLDAuMDFdLFszNTIsMC4wMDhdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-03017a8c9bf26e477eef",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:48.240Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMTExLCJ0cmF2ZWwiOjQ0NiwidHJhdmVsU2hhcmUiOjAuMTEyLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzgsMV0sWzE3LDAuOTczXSxbMjcsMC45NDFdLFszNywwLjg5Nl0sWzQ3LDAuODQ0XSxbNTcsMC43ODhdLFs2NywwLjczXSxbNzgsMC42NzFdLFs4OCwwLjYwN10sWzk2LDAuNTUxXSxbMTA4LDAuNTA4XSxbMTIwLDAuNDQ3XSxbMTI4LDAuMzldLFsxMzksMC4zNTVdLFsxNDksMC4zMV0sWzE1OSwwLjI3M10sWzE2OCwwLjI0XSxbMTc5LDAuMjEzXSxbMTg5LDAuMTgyXSxbMTk5LDAuMTU4XSxbMjA4LDAuMTM2XSxbMjIwLDAuMTE5XSxbMjI5LDAuMDk4XSxbMjM5LDAuMDg1XSxbMjUxLDAuMDcyXSxbMjYxLDAuMDU4XSxbMjcyLDAuMDQ5XSxbMjgxLDAuMDRdLFsyOTMsMC4wMzNdLFszMDIsMC4wMjZdLFszMTIsMC4wMjJdLFszMjIsMC4wMTddLFszMzMsMC4wMTRdLFszNDIsMC4wMV0sWzM1MywwLjAwOF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e5417fed755c3bc702bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Toast by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3591,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:51.678Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzgsMV0sWzIwLDFdLFsyMSwxXSxbMjUsMV0sWzMwLDFdLFs0MCwwLjkzM10sWzUxLDAuODY2XSxbNjEsMC43OTJdLFs3MCwwLjcyMl0sWzgyLDAuNjI2XSxbOTAsMC41NjJdLFsxMDMsMC40N10sWzExMiwwLjM5OV0sWzEyMSwwLjM0Ml0sWzEzMSwwLjI5Nl0sWzE0MywwLjI2NV0sWzE1MiwwLjIzOF0sWzE2MiwwLjIwNV0sWzE3MiwwLjE3NF0sWzE4MywwLjEzMl0sWzE5MSwwLjEwNF0sWzIwMiwwLjA3MV0sWzIxNCwwLjAzMV0sWzIyNCwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-47506454d3c286f89549",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3572,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:55.275Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTcsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbMTEsMV0sWzIxLDFdLFsyOCwxXSxbMzQsMV0sWzQyLDAuOTc3XSxbNTQsMC44ODddLFs2NiwwLjc2N10sWzc4LDAuNjQyXSxbODgsMC41NDRdLFs5MywwLjQ5OF0sWzEwNywwLjM4NF0sWzExMywwLjM0MV0sWzEyNSwwLjI2OF0sWzEzNCwwLjIyMl0sWzE0NCwwLjE3OV0sWzE1NCwwLjE0NF0sWzE2NCwwLjExNV0sWzE3MywwLjA5NF0sWzE4NSwwLjA3MV0sWzE5NSwwLjA1Nl0sWzIwNSwwLjA0NV0sWzIxNiwwLjAzNF0sWzIyNiwwLjAyN10sWzIzNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-310a339e3e319637a4c1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · Accordion by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:11:58.852Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzgsMV0sWzE5LDFdLFsyMywxXSxbMjgsMV0sWzQxLDAuOTQ2XSxbNDgsMC44ODddLFs1OSwwLjc3OF0sWzcxLDAuNjUzXSxbNzgsMC41ODJdLFs5MSwwLjQ2M10sWzEwMCwwLjM5MV0sWzExMSwwLjMxNV0sWzEyMSwwLjI1N10sWzEzMSwwLjIwOF0sWzE0MSwwLjE2OF0sWzE1MCwwLjEzOF0sWzE2MiwwLjEwNV0sWzE3MSwwLjA4Nl0sWzE4MywwLjA2NV0sWzE5MiwwLjA1M10sWzIwMiwwLjA0MV0sWzIxMywwLjAzMl0sWzIyMywwLjAyNV0sWzIzMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4690947f9c7689e504ec",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3475,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:12:02.306Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNywic2hhcmUiOjAuMTY5LCJ0cmF2ZWwiOjk4LCJ0cmF2ZWxTaGFyZSI6MC4xNTksImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbMTAsMV0sWzIwLDFdLFsyMSwxXSxbMjUsMV0sWzM3LDFdLFs0MCwwLjk3MV0sWzQ5LDAuODg4XSxbNTksMC43OV0sWzcxLDAuNjc4XSxbODAsMC41NzddLFs5MiwwLjQ3XSxbMTAyLDAuMzc4XSxbMTEyLDAuMjg2XSxbMTIzLDAuMjFdLFsxMzIsMC4xNDNdLFsxNDMsMC4wODZdLFsxNTMsMC4wMzhdLFsxNjIsMC4wMDNdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cd4648093e2a0b99360a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:12:05.786Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNCwic2hhcmUiOjAuMTY5LCJ0cmF2ZWwiOjk3LCJ0cmF2ZWxTaGFyZSI6MC4xNiwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0zLDFdLFswLDFdLFsxMSwxXSxbMjAsMC45MTZdLFszMCwwLjgyXSxbNDEsMC43MTldLFs1MSwwLjYxN10sWzYxLDAuNTE4XSxbNzEsMC40MTRdLFs4MCwwLjM0NF0sWzkyLDAuMjQ3XSxbMTAyLDAuMTc2XSxbMTEyLDAuMTEzXSxbMTIyLDAuMDU2XSxbMTMyLDAuMDE0XSxbMTQzLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0489b0458cbd44da4a4e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:12:09.212Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTI2LCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy00LDFdLFszLDFdLFsxNCwxXSxbMjQsMV0sWzI1LDFdLFszMiwxXSxbMzQsMV0sWzkxLDFdLFsxMTQsMV0sWzEyNiwwLjkyMl0sWzEzNSwwLjg1N10sWzE0OSwwLjgwNV0sWzE1NywwLjcxOV0sWzE2NywwLjY2OV0sWzE3NiwwLjYwNV0sWzE4NywwLjU0OF0sWzE5NywwLjQ3N10sWzIwOCwwLjQxNF0sWzIxOCwwLjM0N10sWzIyNiwwLjI4N10sWzIzNiwwLjI0MV0sWzI0OCwwLjE4NV0sWzI1OSwwLjEyNF0sWzI2OCwwLjA3Ml0sWzI3OSwwLjAzNF0sWzI5MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e2c1d5d940daee9676fb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3615,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:12:13.120Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOCwic2hhcmUiOjAuMTE3LCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0zLDFdLFs1MiwxXSxbNzAsMV0sWzgyLDAuOTIyXSxbOTEsMC44NTddLFsxMDAsMC44MDVdLFsxMDksMC43NV0sWzEyMSwwLjY5NF0sWzEzMSwwLjYxOF0sWzE0MSwwLjU1NF0sWzE1MCwwLjQ5XSxbMTYxLDAuNDMzXSxbMTcyLDAuMzY1XSxbMTgxLDAuMjk5XSxbMTkyLDAuMjQ2XSxbMjAxLDAuMTg1XSxbMjEyLDAuMTM4XSxbMjI0LDAuMDg1XSxbMjMzLDAuMDM0XSxbMjQzLDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d00eb7d34f8f745f10f0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3570,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:12:16.744Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOCwic2hhcmUiOjAuMTEzLCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFs1MCwxXSxbNzAsMV0sWzgyLDAuOTIyXSxbOTEsMC44NTddLFsxMDIsMC44MDVdLFsxMTMsMC43MzhdLFsxMjIsMC42NjldLFsxMzMsMC42MTJdLFsxNDIsMC41NDFdLFsxNTIsMC40ODRdLFsxNjIsMC40MjFdLFsxNzQsMC4zNTldLFsxODMsMC4yODddLFsxOTMsMC4yMzVdLFsyMDMsMC4xOF0sWzIxMywwLjEyOF0sWzIyMywwLjA4MV0sWzIzNSwwLjAzOF0sWzI0OSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7f71517c3ca093ed4cb2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1859,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T00:09:44.563Z",
+    "duration": 155814.324,
+    "expected": 44,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
