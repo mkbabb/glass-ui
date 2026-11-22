@@ -25,9 +25,10 @@
  * must be first so the bundler hoists them above all rules.
  */
 
-/* The two Latin faces (Plus Jakarta Sans and Fira Code) are declared in
-   index.html's head, which starts their loads as it is parsed; here are the two
-   Latin-ext faces, which no route's first screen uses.
+/* The Latin text face is declared in index.html's head, which starts its load as
+   it is parsed, and the Latin code face is added from script
+   (demo/chassis/code/code-face.ts); here are the two Latin-ext faces, which no
+   route's first screen uses.
 
    ── Plus Jakarta Sans (brand text + display) — published OFL 1.1 face,
    variable wght 200..800. `font-display: optional` mirrors fonts.css. */
