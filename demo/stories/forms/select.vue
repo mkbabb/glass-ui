@@ -1,155 +1,84 @@
 <script setup lang="ts">
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
+import { ref } from "vue";
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
-    SelectLabel,
-    SelectSeparator,
     SelectTrigger,
     SelectValue,
 } from "@glass/components/select";
-import { Label } from "@glass/components/label";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StageSwap from "../../chassis/variants/StageSwap.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import SelectStage from "./select.stage.vue";
 
-// A SelectItem node — `value` is the item value, `text` the label, `extra` any
-// per-item prop (a viz-dot style, a `disabled`).
-const item = (
-    value: string,
-    text: string,
-    extra: Record<string, unknown> = {},
-): SpecimenSpec => ({
-    component: SelectItem,
-    props: { value, ...extra },
-    slots: { default: text },
-});
+const list = ref<"short" | "long">("short");
 
-const group = (label: string, items: SpecimenSpec[]): SpecimenSpec => ({
-    component: SelectGroup,
-    slots: {
-        default: [{ component: SelectLabel, slots: { default: label } }, ...items],
-    },
-});
-
-// A labeled picker field — Label over Select. `models` is the EXPLICIT v-model map
-// (no convention magic): the value binds `modelValue`, and the third
-// field controls the reka `open` NAMED v-model — the anti-no-op floor made visible.
-const field = (
-    id: string,
-    labelText: string,
-    placeholder: string,
-    content: SpecimenSpec[],
-    models: Record<string, string>,
-): SpecimenSpec => ({
-    stack: [
-        { component: Label, props: { for: id }, slots: { default: labelText } },
-        {
-            component: Select,
-            models,
-            slots: {
-                default: [
-                    {
-                        component: SelectTrigger,
-                        props: { id },
-                        slots: { default: { component: SelectValue, props: { placeholder } } },
-                    },
-                    { component: SelectContent, slots: { default: content } },
-                ],
-            },
-        },
-    ],
-});
-
-const body: StoryBody = {
-    kind: "sections",
-    scope: {
-        font: "plus-jakarta-sans",
-        basis: "fourier",
-        density: "",
-        densityOpen: false,
-    },
-    sections: [
-        {
-            heading: "Grouped items",
-            blurb: "Labeled groups with a separator between them.",
-            size: "sm",
-            specimens: [
-                field(
-                    "sel-font",
-                    "Font family",
-                    "Choose a typeface",
-                    [
-                        group("Display + serif", [
-                            item("plus-jakarta-sans", "Plus Jakarta Sans"),
-                            item("plus-jakarta-sans-fallback", "Plus Jakarta Sans Fallback"),
-                        ]),
-                        { component: SelectSeparator },
-                        group("Sans", [
-                            item("inter", "Inter"),
-                            item("system-ui", "System UI"),
-                        ]),
-                        { component: SelectSeparator },
-                        group("Mono", [
-                            item("fira-code", "Fira Code"),
-                            item("jetbrains-mono", "JetBrains Mono"),
-                        ]),
-                    ],
-                    { modelValue: "font" },
-                ),
-            ],
-        },
-        {
-            heading: "Viz-basis fills",
-            blurb: "The selected mark takes the row's own ink — set `color`, the dot follows.",
-            size: "sm",
-            specimens: [
-                field(
-                    "sel-basis",
-                    "Orthogonal basis",
-                    "Pick a basis",
-                    [
-                        // The indicator paints `currentColor`, so the tint handle is
-                        // the platform's own: whatever `color` the row resolves is
-                        // what the dot is. A second custom property naming the same
-                        // thing could only ever disagree with it.
-                        item("fourier", "Fourier", {
-                            style: { color: "var(--viz-fourier)" },
-                        }),
-                        item("chebyshev", "Chebyshev", {
-                            style: { color: "var(--viz-chebyshev)" },
-                        }),
-                        item("legendre", "Legendre", {
-                            style: { color: "var(--viz-legendre)" },
-                        }),
-                    ],
-                    { modelValue: "basis" },
-                ),
-            ],
-        },
-        {
-            heading: "Disabled item + controlled open",
-            blurb: "A disabled item, and the reka open state bound as a NAMED v-model.",
-            size: "sm",
-            specimens: [
-                field(
-                    "sel-density",
-                    "Density",
-                    "Pick a density",
-                    [
-                        item("cozy", "Cozy"),
-                        item("comfortable", "Comfortable"),
-                        item("compact", "Compact"),
-                        item("spacious", "Spacious", { disabled: true }),
-                    ],
-                    { modelValue: "density", open: "densityOpen" },
-                ),
-            ],
-        },
-    ],
-};
+const snippet = `<Select v-model="size">
+    <SelectTrigger aria-label="Size">
+        <SelectValue placeholder="Choose a size" />
+    </SelectTrigger>
+    <SelectContent>
+        <SelectItem value="small">Small</SelectItem>
+        <SelectItem value="medium">Medium</SelectItem>
+        <SelectItem value="large">Large</SelectItem>
+    </SelectContent>
+</Select>`;
 </script>
 
 <template>
-    <StoryPage :body="body" />
+    <StoryPage>
+        <template #stage>
+            <StoryStage size="fit">
+                <StageSwap :swap-key="list">
+                    <SelectStage :list="list" />
+                </StageSwap>
+            </StoryStage>
+        </template>
+
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow
+                    v-model="list"
+                    label="List"
+                    :options="[
+                        { value: 'short', label: 'Short' },
+                        { value: 'long', label: 'Long' },
+                    ]"
+                />
+                <StoryVariantRow label="States">
+                    <Select>
+                        <SelectTrigger class="forms-row-field" aria-label="Empty">
+                            <SelectValue placeholder="Choose one" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="a">First</SelectItem>
+                            <SelectItem value="b">Second</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Select model-value="locked" disabled>
+                        <SelectTrigger class="forms-row-field" aria-label="Disabled">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="locked">Disabled</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
+
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
+    </StoryPage>
 </template>
+
+<style scoped>
+.forms-row-field {
+    inline-size: 10.5rem;
+}
+</style>

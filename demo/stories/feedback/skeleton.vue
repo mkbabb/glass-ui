@@ -1,79 +1,77 @@
 <script setup lang="ts">
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Skeleton } from "@glass/components/skeleton";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import SkeletonStage from "./skeleton.stage.vue";
+
+const snippet = `<script setup lang="ts">
+import { Skeleton } from "@mkbabb/glass-ui/skeleton";
+<\/script>
+
+<template>
+    <div aria-busy="true" aria-label="Loading">
+        <Skeleton class="h-4 w-2/5" />
+        <Skeleton shimmer class="aspect-video w-full rounded-card" />
+    </div>
+</template>`;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection label="text">
-            <ShowcaseFrame
-                class="flex max-w-xl flex-col gap-3"
-                aria-busy="true"
-                aria-label="Loading article summary"
-            >
-                <Skeleton class="h-5 w-2/5" />
-                <Skeleton class="h-4 w-full" />
-                <Skeleton class="h-4 w-11/12" />
-                <Skeleton class="h-4 w-3/5" />
-            </ShowcaseFrame>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <SkeletonStage />
+            </StoryStage>
+        </template>
 
-        <StorySection label="avatar">
-            <ShowcaseFrame
-                class="flex max-w-md items-center gap-4"
-                aria-busy="true"
-                aria-label="Loading profile"
-            >
-                <Skeleton class="size-12 shrink-0 rounded-full" />
-                <div class="flex min-w-0 flex-1 flex-col gap-2">
-                    <Skeleton class="h-4 w-2/5" />
-                    <Skeleton class="h-3 w-3/5" />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Shapes">
+                    <div class="skeleton-row-text" aria-busy="true" aria-label="Loading text">
+                        <Skeleton class="h-4 w-full" />
+                        <Skeleton class="h-4 w-4/5" />
+                        <Skeleton class="h-4 w-3/5" />
+                    </div>
+                    <div class="skeleton-row-avatar" aria-busy="true" aria-label="Loading a profile">
+                        <Skeleton class="size-10 shrink-0 rounded-full" />
+                        <div class="skeleton-row-text">
+                            <Skeleton class="h-4 w-full" />
+                            <Skeleton class="h-3 w-3/5" />
+                        </div>
+                    </div>
+                    <div class="skeleton-row-card" aria-busy="true" aria-label="Loading a card">
+                        <Skeleton class="aspect-[16/9] w-full rounded-card" />
+                        <Skeleton class="h-4 w-1/2" />
+                    </div>
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
 
-        <StorySection label="card">
-            <ShowcaseFrame
-                class="flex max-w-lg flex-col gap-4"
-                aria-busy="true"
-                aria-label="Loading project card"
-            >
-                <Skeleton class="aspect-[16/9] w-full rounded-card" />
-                <Skeleton class="h-5 w-1/2" />
-                <div class="flex flex-col gap-2">
-                    <Skeleton class="h-3.5 w-full" />
-                    <Skeleton class="h-3.5 w-4/5" />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection label="shimmer">
-            <ShowcaseFrame
-                class="flex max-w-xl flex-col gap-3"
-                aria-busy="true"
-                aria-label="Loading the scene"
-            >
-                <p class="text-small text-muted-foreground">
-                    <code>shimmer</code> swaps the breathe for one sheen that travels
-                    across the shape. It is ink only, holds still under reduced motion,
-                    and pauses while the tile is off-screen.
-                </p>
-                <Skeleton shimmer data-testid="skeleton-shimmer" class="aspect-[16/9] w-full rounded-card" />
-                <Skeleton shimmer class="h-5 w-1/2" />
-                <Skeleton shimmer class="h-3.5 w-4/5" />
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection label="light · dark · reduced motion">
-            <ShowcaseFrame class="flex max-w-xl flex-col gap-4">
-                <p class="text-small text-muted-foreground">
-                    The reserved shapes follow the active color scheme. Their scan
-                    becomes a static highlight when reduced motion is requested.
-                </p>
-                <Skeleton data-testid="skeleton-motion" class="h-8 w-full" />
-            </ShowcaseFrame>
-        </StorySection>
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>
+
+<style scoped>
+.skeleton-row-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    inline-size: 10rem;
+}
+.skeleton-row-avatar {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+.skeleton-row-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    inline-size: 9rem;
+}
+</style>

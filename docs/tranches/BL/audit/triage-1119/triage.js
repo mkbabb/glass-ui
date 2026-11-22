@@ -1,0 +1,35 @@
+export const meta = {
+  name: 'atlas-valuejs-asks-triage-1119',
+  description: 'Place atlas G3-G15 (O-413) and value.js design-study G1-G17 (O-414) against glass-ui: read each ask, check source and booked rows, place in a release; an adversarial verify per group (read-only, Opus)',
+  phases: [{ title: 'Place' }, { title: 'Verify' }],
+}
+const G = '/Users/mkbabb/Programming/glass-ui'
+const REL = G + '/.claude/worktrees/release-11.1.1'
+const ATLAS = '/Users/mkbabb/Programming/sci-report/atlas/docs/tranches/U/design/OWNER-1117-GLASS-ROWS.md'
+const STUDY = '/Users/mkbabb/.dev-logs/owner-1112/O41/study/STUDY.md'
+const OID = 'Assert your model id from your own system identity first (expect claude-opus-5-5); if you are not Opus, say so and stop.'
+const RO = 'You read and judge; you change no file in any repo, run no build, test or browser, and send no message. Never run find, du, rg, tree or ls -R over /, ~, /Users or /Volumes; search only inside the paths named here. PRIVACY: two cells of the study\'s frames hold private photographs (the Gallery cell of ~/.dev-logs/owner-1112/O41/study/sheets/glass-extras-today.png and ~/.dev-logs/owner-1112/O41/audit/daraksha/press/gallery-390.png): do not open those two files, and never copy, describe or quote any photograph\'s content anywhere.'
+const CTX = 'Where things stand in glass-ui: master at ' + G + ' carries 11.1.0 plus docs; 11.1.1 (the exits patch, list frozen: surfaces leave on a tween, turn from where they are, fade under reduced motion; plus atlas\'s detented Sheet rows) is built on ' + REL + ' (branch release/11.1.1, tip a476d0cba; read its CHANGELOG.md top section); 11.1.2\'s scope is ' + G + '/docs/tranches/BL/driver/glass-11.1.1-scope.md (despite its name; its sections added 2026-11-17 and 2026-11-19 hold atlas\'s and Home Assistant\'s rows); 11.2.0 is the dock redesign (' + G + '/docs/tranches/BL/design/dock/wi8/RULINGS-7.md, "After the fold: the final lists", and ORCH-LINES-7.md) plus the Metric voice pass (O-344); 11.3.0 holds new parts and options (Home Assistant\'s placements: ' + G + '/docs/tranches/BL/audit/hassio-r13/PLACED.md); 12.0.0 carries removals and the base-size collapse (' + G + '/docs/tranches/BL/PLAN.md). Dedupe against INBOUND (' + G + '/docs/tranches/BL/audit/INBOUND.md), especially O-337 (focus-ring floor), O-344, O-358, O-390, O-396 to O-414, and PLACED.md. '
+  + 'Release rule: a patch (11.1.2) takes a defect cure that removes no export or token and changes no default a consumer chose; a new prop, part, token or changed default is a minor (11.2.0 if it belongs with the dock redesign or the Metric pass; otherwise 11.3.0); a removal or rename is 12.0.0. 11.1.1 takes nothing new unless already built there (say so with the commit). A look or default only the owner can choose is an owner question (give the default you would offer). '
+  + 'For each ask: read it in full (with its frames where the ask cites them, except the two private files); read the glass source it names at master (and on release/11.1.1 where that part changed); decide: glass defect, glass feature, already cured (where, with commit or file:line), the consumer\'s own (say why), a duplicate of a booked row (which), or an owner question. Cite file:line for every claim about glass code.'
+const ITEM = { type: 'object', properties: {
+  id: { type: 'string' }, title: { type: 'string' },
+  verdict: { type: 'string', enum: ['glass defect', 'glass feature', 'already cured', 'consumer side', 'duplicate', 'owner question'] },
+  release: { type: 'string', enum: ['11.1.1 (built)', '11.1.2', '11.2.0', '11.3.0', '12.0.0', 'none'] },
+  dedupe_of: { type: 'string' }, evidence: { type: 'string' },
+  row: { type: 'string', description: 'what the ask is, the reading, where it lands; row ids allowed' },
+  reply: { type: 'string', description: 'one outward line for the asking session: what glass will do and in which version, or why not; no internal row ids' } },
+  required: ['id', 'title', 'verdict', 'release', 'evidence', 'row', 'reply'] }
+const PS = { type: 'object', properties: { model_id: { type: 'string' }, items: { type: 'array', items: ITEM } }, required: ['model_id', 'items'] }
+const VS = { type: 'object', properties: { model_id: { type: 'string' }, items: { type: 'array', items: ITEM }, changed: { type: 'array', items: { type: 'string' } } }, required: ['model_id', 'items', 'changed'] }
+const GROUPS = [
+  { key: 'atlas-command-overlays', who: 'atlas (sci-report), a consumer that builds on glass 10.1.2 today and adopts 11.1.1 next; its rows say whether each was seen on its production or shown in glass alone', src: ATLAS, ids: ['G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10', 'G13'], note: 'For G10 read d46646127 in glass (git show) and say whether it is in master and in 11.1.1.' },
+  { key: 'atlas-asks', who: 'atlas (sci-report), as above', src: ATLAS, ids: ['G3', 'G11', 'G12', 'G14', 'G15'], note: 'G1 was corrected by atlas and is already restated for the dock pass (ORCH-LINES-7 line 4): do not place it. G2 is 11.1.1.' },
+  { key: 'study-slider-dock', who: 'value.js\'s cross-app design study over its four sites (color, keyframes, fourier, daraksha), section 6', src: STUDY, ids: ['G1', 'G2', 'G3', 'G4', 'G14', 'G16'], note: 'G1 joins O-408 (the owner\'s thumbless Slider); place each of its six points. The site has been told: it may set --slider-thumb-bg to its fill and --ui-coarse-scale to 1.25 now.' },
+  { key: 'study-popups-type-forms', who: 'value.js\'s cross-app design study, section 6', src: STUDY, ids: ['G5', 'G6', 'G7', 'G8', 'G9', 'G10', 'G11', 'G12', 'G13', 'G15', 'G17'], note: 'G9 (the coarse scale default) was answered for sites; place only whether 1.25 should become the default. G10 joins Home Assistant\'s LF-16 placement; G11 joins O-337 and LF-39.' },
+]
+const out = await pipeline(GROUPS,
+  g => agent(OID + '\n' + RO + '\n\n' + CTX + '\n\nThe asks come from ' + g.who + ': ' + g.src + '. Your asks: ' + g.ids.join(', ') + '. ' + g.note + '\n\nReturn the schema with one item per ask, in this order.', { label: 'place:' + g.key, phase: 'Place', model: 'opus', schema: PS }),
+  (p, g) => p && agent(OID + '\n' + RO + '\n\n' + CTX + '\n\nYou are an ADVERSARIAL verifier. Another seat placed these asks from ' + g.src + ' (' + g.ids.join(', ') + '). Its placements:\n' + JSON.stringify(p.items, null, 1) + '\n\nTry to refute each placement: re-read the ask and the cited glass code yourself; check every "already cured" against the cited commit or line on the named tree; check every duplicate against the booked row\'s text; check the release against the release rule (a default or look change is never a patch; a defect cure that adds a prop is not a patch); check consumer-side verdicts are not glass faults the consumer would need a shim for. Correct what does not hold, keep what does. Return every item and list in `changed` each id you changed with the reason.', { label: 'verify:' + g.key, phase: 'Verify', model: 'opus', schema: VS })
+)
+return out.map((v, i) => ({ group: GROUPS[i].key, verified: v }))

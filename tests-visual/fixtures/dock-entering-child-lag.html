@@ -12,7 +12,7 @@
      regression class the re-authored gate must RED on: the entering-child opacity
      onset trails the box-width onset PAST the LOCKSTEP_BUDGET_MS budget. The
      re-authored proof:dock-animation-live gate exits 1 here and exits 0 on the
-     real /dock/overview dock (where the children ride the scalar with NO extra
+     real /dock/chrome dock (where the children ride the scalar with NO extra
      per-child transition). */
   :root { --dock-morph-t: 0; }
   body { margin: 0; background: #faf7f2; font-family: system-ui, sans-serif; }
@@ -51,7 +51,7 @@
        entering child opacity onset trails the box-width onset PAST the ~537ms
        deliberate-stagger budget — the exact regression class a re-added per-child
        CSS transition produces. The LIVE gate REDs here (entering-child onset >
-       budget) and GREENs on the real /dock/overview dock (children ride the scalar
+       budget) and GREENs on the real /dock/chrome dock (children ride the scalar
        with NO extra per-child transition). */
     opacity: 0;
     transition: opacity 300ms ease 700ms;

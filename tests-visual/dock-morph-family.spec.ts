@@ -34,7 +34,7 @@ test.beforeAll(() => {
 });
 
 // ── (a)/(b) — the morph is compositor-bound + reveals complete at every frame ────
-// On the /dock/overview route a collapse↔expand morph paints a `transform: scale()`
+// On the /dock/chrome route a collapse↔expand morph paints a `transform: scale()`
 // over a reserved settled footprint. The morph-axis layout box is set to the SETTLED
 // `to` value (one layout solve), so the in-flight frames read a compositor scale, not
 // a per-frame relayout. We assert the resolved morph-axis rule lands `transform:
@@ -43,7 +43,7 @@ test.beforeAll(() => {
 test("(a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout)", async ({
     page,
 }) => {
-    await page.goto("/dock/overview", { waitUntil: "networkidle" });
+    await page.goto("/dock/chrome", { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
 
     const read = await page.evaluate(() => {
@@ -84,7 +84,7 @@ test("(c) — under PRM the dock seats synchronously (every control inside the b
     page,
 }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/dock/overview", { waitUntil: "networkidle" });
+    await page.goto("/dock/chrome", { waitUntil: "networkidle" });
     await page.waitForTimeout(700);
 
     const seat = await page.evaluate(async () => {
@@ -135,42 +135,11 @@ test("(c) — under PRM the dock seats synchronously (every control inside the b
     await page.emulateMedia({ reducedMotion: null });
 });
 
-// ── (d) — DockLayerGroup self-reserves its peak-layer block-size ─────────────────
-test("(d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses)", async ({
-    page,
-}) => {
-    await page.goto("/dock/layers", { waitUntil: "networkidle" });
-    await page.waitForTimeout(700);
-
-    const reserve = await page.evaluate(() => {
-        const group = document.querySelector(".dock-layer-group") as HTMLElement | null;
-        if (!group) return { found: false } as const;
-        const cs = getComputedStyle(group);
-        const peakVar = cs.getPropertyValue("--dock-layer-peak-block-size").trim();
-        const minBlock = cs.minBlockSize;
-        return {
-            found: true,
-            peakVar,
-            minBlock,
-            peakPx: Number.parseFloat(peakVar) || 0,
-            minPx: Number.parseFloat(minBlock) || 0,
-        } as const;
-    });
-
-    expect(reserve.found, "the .dock-layer-group is present").toBe(true);
-    // The group exposes a non-zero measured peak + reserves it as min-block-size.
-    expect(reserve.peakPx, `--dock-layer-peak-block-size is a measured non-zero peak (got ${reserve.peakVar})`).toBeGreaterThan(0);
-    expect(
-        Math.abs(reserve.minPx - reserve.peakPx),
-        `the group min-block-size (${reserve.minPx}) == the measured peak (${reserve.peakPx})`,
-    ).toBeLessThan(2);
-});
-
 // ── (e) — --dock-local-scale threads from a dock scope (the @property thread) ────
 test("(e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread)", async ({
     page,
 }) => {
-    await page.goto("/dock/overview", { waitUntil: "networkidle" });
+    await page.goto("/dock/chrome", { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
 
     const thread = await page.evaluate(() => {

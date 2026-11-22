@@ -21,6 +21,8 @@ describe("demo route hierarchy", () => {
     it.each([
         "/forms/label",
         "/compositions/hero",
+        "/compositions/chassis",
+        "/compositions/form-validation",
         "/does-not-exist",
     ])("routes %s to the semantic 404", (path) => {
         const route = router.resolve(path);

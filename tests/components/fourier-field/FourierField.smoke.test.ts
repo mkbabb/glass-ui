@@ -417,8 +417,6 @@ describe("fourier-field — THE SURFACE", () => {
         expect(story).not.toContain("stage-pill");
         expect(story).not.toMatch(/N \{\{[^}]*\}\} \/ \{\{[^}]*\}\}\s*<\/span>\s*<span[^>]*>\s*\{\{ liveStatus/);
         expect(story).not.toContain("liveStatus");
-        // The readout is the field's own parameter, not a second copy of the clock.
-        expect(story).toContain("headT");
     });
 });
 

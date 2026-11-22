@@ -46,7 +46,7 @@ Recorded so nobody files it against `src/`:
 - The docks at 16 px on `/dock/vertical` and `/dock/layers` are the demo passing `shape="rounded"`;
   the prop's existence is F7.
 
-## How the demo stays honest about these
+## How the demo avoids hiding these faults
 
 - No demo packet changes a file under `src/`.
 - The demo overrides library styling in exactly one place: the pager dock's plate tier (F6). It is

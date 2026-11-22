@@ -1,0 +1,13 @@
+[guarded] waiting for the 'webkit' lock
+renders drop-shadow, literal hsl  computed: drop-shadow(rgba(11, 10, 9, 0.2) 0px 4px 14px)
+renders drop-shadow, oklab mix  computed: drop-shadow(oklab(0.072959 0.000682 0.001045) 0px 4px 14px)
+renders drop-shadow, oklab mix toward transparent  computed: drop-shadow(color(srgb 0.005466 0.00491 0.00455 / 0.2) 0px 4px 14px)
+renders drop-shadow, the Blob's full chain, literal  computed: drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.38) 0px 1px 3px)
+renders drop-shadow, the Blob's full chain, via custom properties  computed: drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.38) 0px 1px 3px)
+renders box-shadow, the Blob's full chain (control)  computed: color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px 0px
+renders full chain + composited canvas child  computed: drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.38) 0px 1px 3px)
+renders full chain + composited canvas child + contain  computed: drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.38) 0px 1px 3px)
+renders oklab mix + composited canvas child  computed: drop-shadow(oklab(0.072959 0.000682 0.001045) 0px 4px 14px)
+renders literal hsl + composited canvas child  computed: drop-shadow(rgba(11, 10, 9, 0.2) 0px 4px 14px)
+renders light chain + composited canvas child  computed: drop-shadow(color(srgb 0.30272 0.29248 0.28448 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.30272 0.29248 0.28448 / 0.38) 0px 1px 3px)
+renders full chain + composited div child  computed: drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.049891 0.040133 0.032721 / 0.38) 0px 1px 3px)

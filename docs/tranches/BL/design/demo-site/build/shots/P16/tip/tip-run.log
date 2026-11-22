@@ -1,0 +1,24 @@
+04:57:40 tip run: build typecheck check sweep webkit wkcheck lift contact vitest on 86e4e6fc1
+04:57:40 start build.txt
+04:57:47 end build.txt rc=0
+04:57:47 start typecheck.txt
+04:57:59 end typecheck.txt rc=0
+04:57:59 start typecheck-test.txt
+04:58:11 end typecheck-test.txt rc=2
+04:58:12 preview up (guard pid 42540)
+04:58:12 start check-d1440.txt
+05:03:41 end check-d1440.txt rc=0
+05:03:41 start check-l1440.txt
+05:09:01 end check-l1440.txt rc=0
+05:09:01 start check-m390.txt
+05:14:13 end check-m390.txt rc=0
+05:14:16 preview stopped (guard pid 42540), KILL for 42540
+05:14:17 preview up (guard pid 70411)
+05:14:17 start sweep-d1440.txt
+05:22:54 end sweep-d1440.txt rc=0
+05:22:54 start sweep-l1440.txt
+05:31:26 end sweep-l1440.txt rc=0
+05:31:26 start sweep-m390.txt
+05:34 the chain's processes were stopped (state T) from outside the run, and stopped again within seconds of each SIGCONT; the tree was ended at 05:50 and the remaining steps run in the foreground on the same build
+05:51:22 start sweep-m390 (first half, foreground)
+06:03:54 the first-half 390 sweep was paused by the power hold (fall level 2 at 05:56) and ended; the remaining steps wait for the hold to release

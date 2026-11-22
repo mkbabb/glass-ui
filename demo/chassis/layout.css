@@ -4,16 +4,13 @@
  * is its own wave).
  *
  * One fluid chassis: a `100dvh` shell grid with an orientation-aware nav seat, a
- * capped article whose only legal widths are four derived measures, a self-packing
- * cel field that turns surplus width into columns instead of line-length, and a
- * single six-rung spacing ladder with exactly one mobile transposition.
+ * capped article whose only legal widths are three derived measures, and a single
+ * six-rung spacing ladder with exactly one mobile transposition.
  *
  * The threshold ledger this file is allowed to contain, in total:
- *   width  {48rem, 768px} · height {30rem} · orientation ×1.
- * `48rem` and `orientation` are the SEAT law (dock-nav.css); `768px` is the ladder's
- * ONE transposition; `30rem` is the short-viewport arm, shared by the seat law and
- * the stage token. No other file in `demo/` may carry a width-conditional spacing
- * block — that singleton is the gate.
+ *   width  {768px}. `48rem`, `orientation` and the `30rem` short arm are the SEAT law
+ * (dock-nav.css); `768px` is the ladder's ONE transposition. No other file in `demo/`
+ * may carry a width-conditional spacing block — that singleton is the gate.
  */
 
 :root {
@@ -29,34 +26,22 @@
     --sp-5: 2rem;
     --sp-6: 3.25rem;
 
-    /* ── THE FOUR MEASURES (§2), each with its derivation ───────────────────
-       Nothing in the demo may cap an inline size with a literal; these four are
+    /* ── THE MEASURES (§2), each with its derivation ────────────────────────
+       Nothing in the demo may cap an inline size with a literal; these three are
        the only legal widths, and each carries its law rather than a taste. */
 
     /* Bringhurst's ideal line. */
     --measure-prose: 66ch;
 
-    /* The largest cel min that is still ≥2-up at EVERY ≥768 census cell under the
-       seat law. Binding constraint 852×393 landscape: rail on, main = 852 − 88 −
-       64 = 700, so c ≤ (700 − 20)/2 = 340px. 21rem = 336px clears it. Accepted
-       seam: 769–772px on classic-scrollbar machines is 1-up (a 4px band with no
-       census cell in it). In-cel prose ≈ 42ch, above the 40ch floor. */
+    /* The largest single-column panel that is still ≥2-up at every ≥768 cell under
+       the seat law: main at 852×393 landscape is 852 − 88 − 64 = 700, so a panel is
+       at most (700 − 20)/2 = 340px; 21rem = 336px clears it. */
     --measure-cel: 21rem;
-
-    /* φ · cel — the aristotelian major, for panel-bearing sections that pin their
-       own field rather than joining the cel run. */
-    --measure-wide: 34rem;
 
     /* 2 × the 48rem seat threshold: content stops growing at twice the width where
        nav earns a rail. Constrained to the 4-up band [4c+3g, 5c+4g) = [87.75,
-       110)rem ✓ — at the cap four cels stretch to 369px ≈ 46ch. */
+       110)rem — at the cap four landing cards stretch to 369px. */
     --article-max: 96rem;
-
-    /* ── THE HEIGHT LAW (§2) ────────────────────────────────────────────────
-       ONE stage token replaces every story-local `vh` envelope. 62svh is the
-       golden major of the short viewport (1/φ = 61.8%); 44rem caps svh runaway on
-       4K portrait. */
-    --stage-block: min(62svh, 44rem);
 }
 
 /* THE ONE TRANSPOSITION. Mobile is not shrunken desktop: the ladder steps down one
@@ -70,15 +55,6 @@
         --sp-4: 0.75rem;
         --sp-5: 1.25rem;
         --sp-6: 2rem;
-    }
-}
-
-/* The short arm keys on the SAME 30rem height the seat law uses to shed the dock —
-   one height threshold in the whole demo. 78svh of a 393px-tall viewport leaves
-   ≥86px of chrome, which is the row of controls a stage always needs beneath it. */
-@media (height <= 30rem) {
-    :root {
-        --stage-block: min(78svh, 44rem);
     }
 }
 
@@ -97,44 +73,185 @@
     text-wrap: pretty;
 }
 
-/* ── THE CEL FIELD (§2) ─────────────────────────────────────────────────────
-   Surplus width becomes COLUMNS, not line-length. `min(--measure-cel, 100%)` is
-   what keeps the track from overflowing a container narrower than one cel — the
-   auto-fit idiom's only real trap. `align-items: start` stops a short section from
-   stretching to its row's tallest sibling.
+/* ── The page form ─────────────────────────────────────────────────────────
+   Header, stage, variants, code: in that order and nothing else. */
+:root {
+    /* The `tall` stage: surfaces, containers, docks, data, scenes. */
+    --story-stage-tall: min(56svh, 40rem);
+    /* The `fit` stage's floor: small controls at their natural size. */
+    --story-stage-fit-min: 16rem;
+    /* The editor's stage floor at narrow widths. */
+    --configurator-stage-min: 18.75rem;
+    /* The stage's plate: a paper wash that reads as a surface in both themes. */
+    --story-stage-plate: color-mix(in srgb, var(--card) 70%, transparent);
+}
 
-   Row-major source order is preserved and `dense` is deliberately absent: a reader
-   follows the page's argument, and `dense` reorders it to fill holes. */
-.story-cels,
-.story-sections,
-.story-field {
+.dark {
+    --story-stage-plate: color-mix(in srgb, var(--foreground) 7%, transparent);
+}
+
+@media (width <= 768px) {
+    :root {
+        --story-stage-fit-min: 14rem;
+    }
+}
+
+.story-article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.story-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--foreground);
+}
+
+.story-header-return {
+    display: inline-flex;
+    inline-size: fit-content;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-header-title {
+    font-family: var(--font-display);
+    font-size: var(--chrome-title-rung);
+    font-weight: var(--type-weight-display);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-display);
+    font-optical-sizing: auto;
+    color: var(--foreground);
+}
+
+.story-header-lede {
+    color: var(--foreground);
+}
+
+/* The stage: one box, full article width, keyed to its own width. */
+[data-story-stage] {
+    position: relative;
+    container-type: inline-size;
+    inline-size: 100%;
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--glass-border-floating);
+    background-color: var(--story-stage-plate);
+    overflow: clip;
+}
+
+[data-story-stage="tall"] {
+    block-size: var(--story-stage-tall);
+}
+
+/* Content height with a floor (FORM.md section 1): the instance sits at the centre
+   of both axes. */
+[data-story-stage="fit"] {
+    min-block-size: var(--story-stage-fit-min);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--measure-cel), 100%), 1fr));
-    gap: var(--sp-5) var(--sp-4);
+    place-content: center;
+    place-items: center;
+    padding: var(--sp-5);
+}
+
+/* Variants: at most three labelled rows under the stage. */
+[data-story-variants] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.story-variant-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3) var(--sp-4);
+}
+
+.story-variant-label {
+    min-inline-size: 6rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-variant-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+/* ── The editor form ───────────────────────────────────────────────────────
+   The studio is the page: it fills from the header to the pager dock's clearance and
+   the page itself does not scroll. Its editor never drops under 18rem. */
+.story-article[data-form="editor"] {
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+.story-article[data-form="editor"] .story-header-lede {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.story-editor {
+    flex: 1 1 auto;
+    min-block-size: 40rem;
+    display: flex;
+}
+
+@media (width > 768px) {
+    .story-editor {
+        min-block-size: 0;
+    }
+}
+
+.story-editor-shell {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    min-block-size: 0;
+}
+
+.story-editor-shell > [data-slot="configurator"] {
+    block-size: 100%;
+}
+
+[data-story-stage="fill"] {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    container-type: normal;
+}
+
+/* One line per control: the label on the left, the control on the right. */
+.story-editor-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    min-block-size: 2.5rem;
+    max-block-size: 3rem;
+    padding-inline: 1.25rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-editor-row > :last-child {
+    flex: 0 1 12rem;
+    display: flex;
+    justify-content: flex-end;
+    min-inline-size: 0;
+}
+
+/* The landing card grid: four across at 1440, one across at 390. */
+.story-card-grid {
+    display: grid;
     align-items: start;
-}
-
-/* DESCENDANT, not child. `StoryBodyRenderer` renders its sections under a
-   `display: contents` wrapper, so the sections ARE the grid items but they are not
-   the grid's children; `grid-column` is inert on a non-item, which makes the
-   descendant selector both correct and safe. */
-.story-article [data-span="full"],
-.optical-bench [data-span="full"] {
-    grid-column: 1 / -1;
-}
-
-/* THE WRAP ARM (§2 kill #18) is NOT declared here, and the omission is the
-   finding. It is specified as `@container (inline-size >= 40rem)` re-keying the two
-   permanent horizontal FadingScroll rails (blob mood rail · aurora preset gallery)
-   to wrap when their column has the room — and at HEAD neither rail has an
-   inline-size container ANYWHERE in its ancestry (the whole-repo census is
-   `container-type: inline-size` ×6, none of them in the studio chain). The arm
-   would therefore never match, and a rule that never matches is a fallback hiding
-   a dead primary. Its container is the studio fork's, which is kill #10/#14's cut,
-   which lives in a file this seat may not touch. ROUTED with its subject. */
-
-/* The one stage envelope. Every story that used to spell `h-[min(70vh,560px)]` in
-   its own dialect reads this instead. */
-.story-stage {
-    block-size: var(--stage-block);
+    grid-template-columns: repeat(auto-fill, minmax(min(18.125rem, 100%), 1fr));
+    gap: var(--sp-4);
 }

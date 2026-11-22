@@ -1,0 +1,19 @@
+[guarded] waiting for the 'webkit' lock
+LIVE {
+ "ambient": "0 4px 14px color-mix(in srgb, color-mix(in srgb, color-mix(in oklab, #0b0a09, black 50%) 22%, color-mix(in oklab, #0b0a09, black 50%)) 20%, transparent)",
+ "contact": "0 1px 3px color-mix(in srgb, color-mix(in srgb, color-mix(in oklab, #0b0a09, black 50%) 22%, color-mix(in oklab, #0b0a09, black 50%)) 38%, transparent)",
+ "shadowColor": "color-mix(in srgb, color-mix(in oklab, #0b0a09, black 50%) 22%, color-mix(in oklab, #0b0a09, black 50%))",
+ "blobColor": "#352a22",
+ "baseShadow": "color-mix(in oklab, #0b0a09, black 50%)",
+ "colorScheme": "dark",
+ "rootScheme": "dark",
+ "darkClass": true,
+ "inlineStyle": "--blob-color: var(--card);"
+}
+CRASH   exact strings, scheme light (at 9 ms)
+CRASH   exact strings, color-scheme dark (at 7 ms)
+CRASH   exact strings, color-scheme dark, canvas child (at 7 ms)
+CRASH   exact strings, color-scheme light, canvas child (at 6 ms)
+CRASH   ambient only, color-scheme dark (at 8 ms)
+CRASH   contact only, color-scheme dark (at 8 ms)
+CRASH   box-shadow with the ambient string, color-scheme dark (control) (at 6 ms)

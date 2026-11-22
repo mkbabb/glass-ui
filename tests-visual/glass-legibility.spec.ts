@@ -51,7 +51,7 @@ const AA_LARGE = 3.0;
 
 // The calm-page routes (the bidirectional roster — a glass card/button/dialog over a calm
 // light page + the dropdown/Select-content overlay plate; the dock over the busy aurora).
-const ROUTES = ["/display/card", "/dock/overview", "/containers/dialog", "/substrates/glass-material"] as const;
+const ROUTES = ["/display/card", "/dock/chrome", "/containers/dialog", "/foundations/paper-glass"] as const;
 const OVERLAY_ROUTE = "/containers/dropdown-menu";
 const BUSY_ROUTE = "/substrates/aurora";
 

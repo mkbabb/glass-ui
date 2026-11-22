@@ -7,7 +7,7 @@
 // storm) is the binding truth, never the source diff alone.
 //
 // THE BINDING ARMS (the W3 readback). We read the REAL `<DarkModeToggle>` mounted on
-// the `/display/dark-mode-toggle` story (its scoped `.toggle-sun[data-v-…]` rule +
+// the `/display/atoms` story (its scoped `.toggle-sun[data-v-…]` rule +
 // the `data-allow-motion` carve attribute are the SHIPPED bytes — a hand-mounted
 // node could not match the scope-hashed selector). The flip window is reproduced by
 // the exact DOM sequence `toggleDark({disableTransitions})` runs (`.no-transition` +
@@ -106,7 +106,7 @@ for (const vp of VIEWPORTS) {
         await page.setViewportSize({ width: vp.width, height: vp.height });
         // domcontentloaded (NOT networkidle) — the story mounts a live GlassDock,
         // so networkidle never fires; wait on the toggle selector instead.
-        await page.goto("/display/dark-mode-toggle", { waitUntil: "domcontentloaded" });
+        await page.goto("/display/atoms", { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".dark-mode-toggle-button", { timeout: 15000 });
 
         // Sanity: the story really mounts a DarkModeToggle.
@@ -160,7 +160,7 @@ for (const vp of VIEWPORTS) {
 test("PRM — the live stylesheets ship the [data-allow-motion] absolute-snap override", async ({
     page,
 }) => {
-    await page.goto("/display/dark-mode-toggle", { waitUntil: "domcontentloaded" });
+    await page.goto("/display/atoms", { waitUntil: "domcontentloaded" });
     await page.waitForSelector(".dark-mode-toggle-button", { timeout: 15000 });
 
     const found = await page.evaluate(() => {

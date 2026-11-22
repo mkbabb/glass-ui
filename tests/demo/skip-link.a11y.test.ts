@@ -12,7 +12,7 @@
 // `empty-states.vue` rendered an h3 under the StoryPage chassis h1 with no h2 between,
 // and `auth-shell.vue` did the same under its own authored h1.
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const read = (path: string): string => readFileSync(path, "utf8");
@@ -71,17 +71,18 @@ describe("W1-F — no composition skips a heading level", () => {
     // discharged RT-18C by deleting the story it duplicated the dismissal grammar in);
     // a name kept here after its file is deleted reds this gate on an ENOENT, which
     // says nothing about heading outlines.
-    const COMPOSITIONS = [
-        "auth-shell",
-        "chassis",
-        "empty-states",
-        "form-validation",
-        "settings",
-    ];
+    const COMPOSITIONS = ["auth-shell", "empty-states", "settings"];
+
+    /** A page and its stage, read as one outline: the stage holds the page's headings. */
+    const readComposition = (name: string): string => {
+        const page = read(`demo/stories/compositions/${name}.vue`);
+        const stage = `demo/stories/compositions/${name}.stage.vue`;
+        return existsSync(stage) ? `${page}\n${read(stage)}` : page;
+    };
 
     for (const name of COMPOSITIONS) {
         it(`${name}.vue renders a contiguous outline`, () => {
-            const source = read(`demo/stories/compositions/${name}.vue`);
+            const source = readComposition(name);
             // Comments blanked FIRST: `auth-shell.vue` mentions `<h1>` in prose and a
             // `<h2>` inside a CSS comment, and a scanner that counts those measures
             // the documentation instead of the page.
@@ -91,10 +92,8 @@ describe("W1-F — no composition skips a heading level", () => {
             const levels = [...body.matchAll(/<h([1-6])\b/g)].map((m) => Number(m[1]));
             if (levels.length === 0) return;
 
-            // The StoryPage chassis renders the page h1 unless the story opts out with
-            // `hero-title="false"`, in which case the story authors its own.
-            const chassisH1 = !/hero-title="false"/.test(body);
-            const outline = chassisH1 ? [1, ...levels] : levels;
+            // StoryPage renders the page h1; the stage's headings follow it.
+            const outline = [1, ...levels];
 
             let deepest = outline[0];
             for (const level of outline) {
@@ -110,7 +109,7 @@ describe("W1-F — no composition skips a heading level", () => {
 
     it("exactly one h1 per composition (the chassis seam is family D's, the count is ours)", () => {
         for (const name of COMPOSITIONS) {
-            const body = read(`demo/stories/compositions/${name}.vue`)
+            const body = readComposition(name)
                 .replace(/<!--[\s\S]*?-->/g, "")
                 .replace(/\/\*[\s\S]*?\*\//g, "");
             const own = [...body.matchAll(/<h1\b/g)].length;

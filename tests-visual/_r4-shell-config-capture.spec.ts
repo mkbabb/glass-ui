@@ -116,7 +116,7 @@ test("AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell)", 
     page,
 }) => {
     await page.setViewportSize({ width: 1280, height: 860 });
-    await page.goto(BASE + "/foundations/intro", { waitUntil: "networkidle" });
+    await page.goto(BASE + "/", { waitUntil: "networkidle" });
     await page.waitForTimeout(500);
 
     const light = await captureMode(page, "light");

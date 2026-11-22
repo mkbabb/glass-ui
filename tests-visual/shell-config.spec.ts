@@ -70,7 +70,7 @@ async function nudgeSlider(
 test.describe("shell-config (π lane — the gear-hosted configurator render + runtime, fail-CLOSED)", () => {
     test("G1 — no floating gear button hovers over the overview", async ({ page }) => {
         await page.setViewportSize({ width: 1440, height: 900 });
-        await page.goto("/foundations/intro", { waitUntil: "domcontentloaded" });
+        await page.goto("/", { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(1000);
 
         // The prior floating FAB was a `fixed bottom-6 right-6 … rounded-full` button
@@ -100,7 +100,7 @@ test.describe("shell-config (π lane — the gear-hosted configurator render + r
 
     test("G2 — the `,` shortcut opens the re-framed configurator", async ({ page }) => {
         await page.setViewportSize({ width: 1440, height: 900 });
-        await page.goto("/foundations/intro", { waitUntil: "domcontentloaded" });
+        await page.goto("/", { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(800);
 
         // The `,` shortcut dispatches glass-ui-demo:toggle-configurator (AppShell).
@@ -138,7 +138,7 @@ test.describe("shell-config (π lane — the gear-hosted configurator render + r
     }) => {
         mkdirSync(VISUAL_DIR, { recursive: true });
         await page.setViewportSize({ width: 1440, height: 900 });
-        await page.goto("/foundations/intro", { waitUntil: "domcontentloaded" });
+        await page.goto("/", { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(800);
 
         // Open via the `,` shortcut.
@@ -242,7 +242,7 @@ test.describe("shell-config (π lane — the gear-hosted configurator render + r
 
         for (const scheme of ["light", "dark"] as const) {
             await page.emulateMedia({ colorScheme: scheme });
-            await page.goto("/foundations/intro", {
+            await page.goto("/", {
                 waitUntil: "domcontentloaded",
             });
             await page.waitForTimeout(1000);
@@ -265,7 +265,7 @@ test.describe("shell-config (π lane — the gear-hosted configurator render + r
         await page.evaluate(() =>
             document.documentElement.classList.remove("dark"),
         );
-        await page.goto("/foundations/intro", { waitUntil: "domcontentloaded" });
+        await page.goto("/", { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(800);
         await parkBackground(page);
         await page.screenshot({

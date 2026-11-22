@@ -25,21 +25,13 @@
  * must be first so the bundler hoists them above all rules.
  */
 
-/* ── Plus Jakarta Sans (brand text + display) — published OFL 1.1 face,
-   variable wght 200..800. `font-display: optional` mirrors fonts.css. */
-@font-face {
-    font-family: "Plus Jakarta Sans";
-    font-style: normal;
-    font-weight: 200 800;
-    font-display: optional;
-    src: url("../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2")
-        format("woff2");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+/* The Latin text face is declared in index.html's head, which starts its load as
+   it is parsed, and the Latin code face is added from script
+   (demo/chassis/code/code-face.ts); here are the two Latin-ext faces, which no
+   route's first screen uses.
 
+   ── Plus Jakarta Sans (brand text + display) — published OFL 1.1 face,
+   variable wght 200..800. `font-display: optional` mirrors fonts.css. */
 @font-face {
     font-family: "Plus Jakarta Sans";
     font-style: normal;
@@ -55,18 +47,6 @@
 
 /* ── Fira Code (canonical mono) — published OFL face, variable wght
    300..700. `font-display: swap` mirrors fonts.css (post-LCP register). */
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 300 700;
-    font-display: swap;
-    src: url("../src/fonts/fira-code/fira-code-latin.woff2") format("woff2");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 @font-face {
     font-family: "Fira Code";
     font-style: normal;
@@ -155,6 +135,15 @@
     --ppmycota: hsl(248 88% 71%);
 }
 
+/* The site's one ground: the shell field's settled mean colour. The head stamp
+   (`vite.dark-stamp.ts`) paints the same two colours before this sheet loads; the
+   body stays transparent over it. */
 html {
-    background: var(--background);
+    background-color: rgb(252 241 230);
+}
+html.dark {
+    background-color: rgb(43 34 27);
+}
+body {
+    background-color: transparent;
 }

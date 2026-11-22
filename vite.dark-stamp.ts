@@ -3,32 +3,31 @@ import type { Plugin } from "vite";
 import { darkModeSyncScript } from "./src/composables/dark/darkModeSyncScript";
 
 /**
- * The demo's parse-time theme stamp — glass-ui dogfooding its own FOUC primitive.
+ * The demo's parse-time theme stamp: glass-ui's own head script, plus the ground
+ * colour the page paints before any stylesheet or module arrives.
  *
- * `darkModeSyncScript()` returns the `<head>` script STRING; a consumer's job is to
- * get that string into the HTML before first paint, and the recipe is this plugin,
- * not a transcription. Injected `head-prepend`, so it is the first thing in `<head>`
- * and the theme is resolved before any stylesheet or module is fetched.
+ * Two tags, first in `<head>`: an inline `<style>` that colours `html` in both
+ * themes, then the theme script that sets `.dark` on `html`. Together they make the
+ * first frame the warm ground, never the browser's dark canvas.
  *
- * Until this existed the demo resolved the theme in `demo/main.ts`, after the whole
- * module graph had loaded — the library's own shell shipped the flash its published
- * primitive exists to remove. `demo/main.ts`'s capture boot still forces `?mode=`
- * over this stamp on purpose: a capture asks for a mode, this answers when nobody has.
- *
- * It lives in its OWN root module because there are TWO shells to stamp and they
- * share no config: `vite.config.ts` is the dev server and the library `build.lib`
- * arm, and `demo/vite.demo-dist.config.ts` is a standalone config that fully replaces
- * it for the built demo. A plugin defined inside either one is a plugin the other
- * silently lacks — which is exactly how `dist-demo/index.html`, the bytes a viewer
- * actually loads, went unstamped while the dev server was stamped.
- *
- * The plugin NAME is load-bearing: `tests/composables/dark/darkModeSyncScript.test.ts`
- * finds it by name in both configs' loaded plugin lists.
+ * Both configs import this one module (`vite.config.ts` for the dev server,
+ * `demo/vite.demo-dist.config.ts` for the built demo). The plugin name is read by
+ * `tests/composables/dark/darkModeSyncScript.test.ts`.
  */
+
+/** The settled shell field's mean ground, light and dark. */
+export const DEMO_GROUND = {
+    light: "rgb(252 241 230)",
+    dark: "rgb(43 34 27)",
+} as const;
+
+export const demoGroundStyle = `html{background-color:${DEMO_GROUND.light}}html.dark{background-color:${DEMO_GROUND.dark}}`;
+
 export function darkModeStamp(): Plugin {
     return {
         name: "glass-ui:dark-mode-stamp",
         transformIndexHtml: () => [
+            { tag: "style", children: demoGroundStyle, injectTo: "head-prepend" },
             { tag: "script", children: darkModeSyncScript(), injectTo: "head-prepend" },
         ],
     };

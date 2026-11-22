@@ -87,3 +87,53 @@ Each has a default, and the work goes on with it unless you say otherwise.
    Default: out, then in.
 
 One thing only you can do: a look at any dock page in real Safari, on a phone if you can. Seats cannot open a headed browser, every Safari reading here is the test engine's, and that engine draws the glass without its blur.
+
+## Added 2026-11-15, after the fifth build was measured
+
+The fifth build passes eight of its tests in both engines, and the work left is small (`MEASURE-5.md`, `RULINGS-5.md`). Today's strips are `fold/strip-fold-5.png`, `fold/strip-swap-5.png` and `fold/crop-many-5.png`. Four things are yours to decide. Each has a default, and the work goes on with it unless you say otherwise.
+
+8. **The current page's name is no longer inside the dock.** Every icon is the same width, the current one included, and the current page is shown by its highlight. On every page change the old named icon moved all the others by 96 px in one frame, and it could not be made to glide in this release. The name shows above the icon on hover and focus instead (question 2). This also replaces the line above about the name giving way on a phone: a dock with too many icons now shows whole icons only and scrolls by whole icons.
+
+   ![seven icons on a phone](fold/crop-many-5.png)
+
+   Default: yes, icons only, with names above. If you want the name beside the icon, it comes back in 12.0.0, where it can glide.
+
+9. **Icons at nine tenths of their seat, on every site.** You asked for icons twice as big with less padding. On daraksha's dock that came out as a 40 px picture in a 44 px seat, with the bar no taller. The same share becomes the default for every dock, line icons included. Strips at today's size, at three quarters and at nine tenths are owed to you before it ships.
+   Default: nine tenths.
+
+10. **A firmer dock.** Measured over a busy ground in dark, the dock's words and icons read at 1.9 to 4.1 where 4.5 is the floor for words. More opacity alone did not fix it on daraksha (two steps only made it greyer). So the plate goes one step more opaque, takes more of the page's own surface colour until the words read, and nothing in a dock is drawn dimmer than the rest to rank it: an inactive tab is as dark as the current one and differs by the highlight. The blur and the shadow do not change. Strips of today's plate, one step, and the first that passes are owed to you.
+    Default: the least firm plate that passes.
+
+11. **When a page changes the room it gives an open dock.** A window resize already moves the dock at once, with the window. The same now holds when the page itself narrows or widens the dock's room: the dock follows in that frame and does not glide after it, so it never paints outside its room and never trails a panel being dragged. Everything the dock does itself (open, fold, layers, icons added or removed) still glides.
+    Default: follow at once.
+
+## Added 2026-11-16, after the sixth build was measured
+
+The sixth build passes eleven of its fourteen tests in both engines (`MEASURE-6.md`, `RULINGS-6.md`). The three that fail are small and each has a cure written. Five things are new and yours to decide. Each has a default, and the work goes on with it unless you say otherwise.
+
+One correction first, to question 10. The sixth build made the dock about two thirds solid. That was firmer than it needed to be: the words were still drawn dim when the firmness was chosen. The next build draws the words at full strength first and then takes the least firm plate that reads. You will get one strip with five firmnesses side by side.
+
+12. **Delete what no site uses, now.** Eleven apps were read. The dock ships 21 named parts that none of them uses: a background toggle, a search slot and its helper, and some options on the layer group and the divider. The redesign adds 14 names, so unless these go the dock ends up with more to learn than before, which is the opposite of what you asked. Deleting them in 11.2.0 breaks none of your sites. The alternative is to mark them as going and delete them in 12.0.0.
+    Default: delete them in 11.2.0.
+
+13. **A page name on a phone.** Names now show above an icon on hover. A phone has no hover, so today a phone shows no name at all. A press and hold will show it (question 2). Should the name of the page you just chose also show above its icon for a moment after you tap?
+    Default: no. Press and hold only, so nothing extra moves on every tap.
+
+14. **A dock that sits in a row with other things** (every figure's dock in atlas). Today, when it opens it pushes its neighbour 76 to 82 px, which is most likely the shifting you saw on hover. It can open over its row and move nothing, or the row can keep an empty space the size of the open dock at all times.
+    Default: it opens over its row, growing away from the edge it is pinned to. Nothing beside it moves.
+
+15. **A dock with one button that always shows** (Play on keyframes). Today the dock opens around its centre, so Play slides 38 to 109 px out from under your pointer. If Play stays put, the dock opens to one side and is off-centre while it is open.
+    Default: the button stays under the pointer and the dock opens away from it.
+
+16. **More icons than fit on a phone.** The dock shows whole icons only and scrolls sideways (question 8). Nothing tells you more icons lie to the side. A half icon peeking at the edge would tell you, and it is the sliver that was removed.
+    Default: no cue. A site with that many icons shows a menu on a phone instead.
+
+17. **Big icons beside words.** At nine tenths (question 9) an icon in a dock of worded tabs is much larger than the words next to it. This is the strip: top row today's size, bottom row nine tenths. The search icon does not grow in it because the demo sized it by hand, which is being fixed. The two right-hand columns in the Chromium strip have their dark and light labels swapped and will be shot again.
+
+    ![the icon's share of its seat](fold/strip-glyph-6.webkit.png)
+
+    Default: one share for every dock, nine tenths, words or not.
+
+## Added 2026-11-16: the sixth rulings' questions
+
+Questions 10 and 12 to 18, as amended by the fold, are at the end of `RULINGS-6.md` (each with its default and the strip that shows it). The defaults stand until you answer; the strips that show each are made by the seventh pass.

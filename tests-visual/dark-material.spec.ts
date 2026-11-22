@@ -39,7 +39,7 @@ const VISUAL_DIR = fileURLToPath(
 );
 
 // A stable light demo route that loads the global `/styles` cascade so the tokens resolve.
-const HOST_ROUTE = "/dock/overview";
+const HOST_ROUTE = "/dock/chrome";
 
 const VIEWPORTS = [
     { name: "mobile", width: 390, height: 844 },

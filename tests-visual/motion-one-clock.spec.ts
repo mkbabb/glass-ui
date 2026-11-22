@@ -74,7 +74,7 @@ const SURFACES = [
     },
     {
         name: "dock-morph",
-        route: "/dock/overview",
+        route: "/dock/chrome",
         register: "dock",
         clock: "--spring-dock-duration",
         note: "the dock V↔H / expand-collapse morph (DOCK register)",

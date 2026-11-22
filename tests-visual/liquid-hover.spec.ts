@@ -36,7 +36,7 @@ const VISUAL_DIR = resolve(ROOT, "docs/tranches/BB/audit/visual");
 const SCHEMES = ["light", "dark"] as const;
 // The dock controls live on the dock routes; the glass buttons on /display/buttons.
 const BUTTONS_ROUTE = "/display/buttons";
-const DOCK_ROUTE = "/dock/overview";
+const DOCK_ROUTE = "/dock/chrome";
 
 async function setScheme(page: Page, scheme: (typeof SCHEMES)[number]) {
     await page.evaluate((s) => {

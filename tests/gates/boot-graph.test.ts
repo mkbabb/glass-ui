@@ -300,10 +300,10 @@ export function scanAsyncShellDeclarations(source: string): BootGraphViolation[]
 }
 
 export function scanFrame0Ground(source: string): BootGraphViolation[] {
+    // The ground is a static plane in the shell's template, mounted on every route and
+    // painted from an eager leaf import; only the live field rides the async chunk.
     const sourceFile = scriptSource(source, "demo/shell/AppShell.vue");
     const bindings = importBindings(sourceFile);
-    const hAlias = importAlias(bindings, "vue", "h");
-    const asyncAlias = importAlias(bindings, "vue", "defineAsyncComponent");
     const groundBinding = bindings.find(
         (binding) =>
             !binding.typeOnly &&
@@ -311,61 +311,37 @@ export function scanFrame0Ground(source: string): BootGraphViolation[] {
             binding.module === "@glass/components/aurora/composables/auroraFallbackGround",
     );
     const violations: BootGraphViolation[] = [];
-    if (!hAlias) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "h must be a runtime import from vue" });
     if (!groundBinding) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "auroraFallbackGround must be an eager runtime leaf import" });
-    const aurora = topLevelVariable(sourceFile, "Aurora");
-    if (!aurora || !ts.isCallExpression(aurora) || !ts.isIdentifier(aurora.expression) || aurora.expression.text !== asyncAlias) {
-        violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Aurora async binding is absent" });
-        return violations;
-    }
-    const options = aurora.arguments[0];
-    const loading = options && ts.isObjectLiteralExpression(options)
-        ? objectProperty(options, "loadingComponent")
-        : null;
-    if (!loading || !ts.isObjectLiteralExpression(loading)) {
-        violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Aurora.loadingComponent is absent" });
-        return violations;
-    }
-    let resultBinding: string | null = null;
+    const ground = topLevelVariable(sourceFile, "ground");
     let groundCallValid = false;
-    let vnodeValid = false;
-    walk(loading, (node) => {
-        if (
-            groundBinding &&
-            ts.isVariableDeclaration(node) &&
-            ts.isIdentifier(node.name) &&
-            node.initializer &&
-            ts.isCallExpression(node.initializer) &&
-            ts.isIdentifier(node.initializer.expression) &&
-            node.initializer.expression.text === groundBinding.local
-        ) {
-            const argument = node.initializer.arguments[0];
-            groundCallValid = Boolean(
-                argument &&
-                ts.isPropertyAccessExpression(argument) &&
-                ts.isIdentifier(argument.expression) &&
-                argument.expression.text === "shellAuroraConfig" &&
-                argument.name.text === "value",
-            );
-            resultBinding = node.name.text;
-        }
-        if (
-            hAlias && resultBinding && ts.isCallExpression(node) &&
-            ts.isIdentifier(node.expression) && node.expression.text === hAlias &&
-            ts.isStringLiteral(node.arguments[0]!) && node.arguments[0]!.text === "div" &&
-            ts.isObjectLiteralExpression(node.arguments[1]!)
-        ) {
-            const style = objectProperty(node.arguments[1]!, "style");
-            if (!style || !ts.isObjectLiteralExpression(style)) return;
-            const uses = (name: string): boolean => {
-                const value = objectProperty(style, name);
-                return Boolean(value && ts.isPropertyAccessExpression(value) && ts.isIdentifier(value.expression) && value.expression.text === resultBinding && value.name.text === name);
-            };
-            vnodeValid = uses("backgroundImage") && uses("backgroundColor");
-        }
-    });
-    if (!groundCallValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "loadingComponent must call the eager ground with shellAuroraConfig.value" });
-    if (!vnodeValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "Vue h(div) must paint both ground background fields" });
+    if (ground && groundBinding) {
+        walk(ground, (node) => {
+            if (
+                ts.isCallExpression(node) &&
+                ts.isIdentifier(node.expression) &&
+                node.expression.text === groundBinding.local
+            ) {
+                const argument = node.arguments[0];
+                groundCallValid = Boolean(
+                    argument &&
+                    ts.isPropertyAccessExpression(argument) &&
+                    ts.isIdentifier(argument.expression) &&
+                    argument.expression.text === "shellAuroraConfig" &&
+                    argument.name.text === "value",
+                );
+            }
+        });
+    }
+    if (!groundCallValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "`ground` must call the eager ground with shellAuroraConfig.value" });
+    const template = source.slice(source.indexOf("<template>"));
+    const plane = template.match(/<div\s+class="shell-ground[^"]*"([^>]*)>/);
+    const planeValid = Boolean(
+        plane &&
+        !/\sv-if=/.test(plane[1]!) &&
+        /backgroundImage:\s*ground\.backgroundImage/.test(plane[1]!) &&
+        /backgroundColor:\s*ground\.backgroundColor/.test(plane[1]!),
+    );
+    if (!planeValid) violations.push({ file: "demo/shell/AppShell.vue", line: 1, detail: "the shell-ground plane must mount unconditionally and paint both ground fields" });
     return violations;
 }
 
@@ -487,12 +463,7 @@ describe("gate:boot-graph — source arm", () => {
             source.replace("backgroundImage: ground.backgroundImage,", "backgroundImage: 'none',"),
             source.replace("backgroundColor: ground.backgroundColor,", "backgroundColor: 'transparent',"),
             source.replace("auroraFallbackGround(shellAuroraConfig.value)", "auroraFallbackGround(otherConfig.value)"),
-            source.replace("loadingComponent:", "lookalikeLoadingComponent:"),
-            source
-                .replace(/\n\s+h,\n/, "\n")
-                .replace("<script setup lang=\"ts\">", "<script setup lang=\"ts\">\nimport type { h } from \"vue\";"),
-            source.replace(/\n\s+h,\n/, "\n"),
-            source.replace('return h("div"', 'return localH("div"'),
+            source.replace('class="shell-ground fixed inset-0 -z-10"', 'class="shell-ground fixed inset-0 -z-10" v-if="shellFieldLive"'),
         ];
         for (const mutation of mutations) {
             expect(scanFrame0Ground(mutation).length).toBeGreaterThan(0);

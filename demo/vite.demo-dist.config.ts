@@ -45,9 +45,10 @@ function normalizeDemoCssAssets(): Plugin {
 }
 
 // Cloudflare Pages reads `_headers` from the deployed directory. The template is
-// `demo/_headers`; its CSP allows inline scripts by hash only, and the one inline
-// script (the dark-mode stamp) is known only once the HTML is written, so the hash
-// is computed here from the built index.html rather than pasted by hand.
+// `demo/_headers`; its CSP allows inline scripts by hash only, and the inline
+// scripts (the text face's load, the dark-mode stamp) are known only once the HTML is
+// written, so their hashes are computed here from the built index.html rather than
+// pasted by hand.
 function pagesHeaders(): Plugin {
     let outDir = "";
     return {
@@ -70,6 +71,28 @@ function pagesHeaders(): Plugin {
     };
 }
 
+// A request under /assets/ that matches no built file must answer 404, uncached: a
+// chunk asked for before a deploy reaches the edge would otherwise get the SPA index
+// with a 200 and the `/assets/*` `immutable` header, and Cloudflare caches it by the
+// `.js` extension for a year. Pages answers a miss with the nearest `404.html` up the
+// tree and serves the SPA index only when there is none, so `assets/404.html` turns
+// misses under /assets/ into 404s while every client route still gets the index. Pages
+// replaces the Cache-Control of every 404 with `no-store`, so the `immutable` rule
+// never reaches a miss. Record: docs/release-infra/asset-miss.md.
+function pagesAssetMiss(): Plugin {
+    return {
+        name: "glass-ui:pages-asset-miss",
+        apply: "build",
+        generateBundle() {
+            this.emitFile({
+                type: "asset",
+                fileName: "assets/404.html",
+                source: '<!doctype html>\n<meta charset="utf-8">\n<title>Not found</title>\n<p>No such file.</p>\n',
+            });
+        },
+    };
+}
+
 export default defineConfig({
     root: repoRoot,
     // `base: "/"` — the deep-SPA-route asset-resolution fix. A deep route
@@ -88,7 +111,14 @@ export default defineConfig({
     // the one module both configs import). It is listed here because this config
     // replaces the root one wholesale: without the line, the BUILT demo — the bytes
     // the paint-judge serves — carries the FOUC the dev server no longer has.
-    plugins: [tailwindcss(), vue(), darkModeStamp(), normalizeDemoCssAssets(), pagesHeaders()],
+    plugins: [
+        tailwindcss(),
+        vue(),
+        darkModeStamp(),
+        normalizeDemoCssAssets(),
+        pagesHeaders(),
+        pagesAssetMiss(),
+    ],
     build: {
         cssTarget: glassCssTarget,
         // A dedicated output dir — NEVER the library `dist/` (which the

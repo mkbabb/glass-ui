@@ -112,3 +112,19 @@
 .story-code-block .hljs-strong {
     font-weight: 600;
 }
+
+/* The colours come in over a tween, on the disclosure's own curve over twice its length,
+   so no frame of it moves more than the open's own. The highlighter's spans replace the
+   plain text once its chunk has loaded, which on a first open can be after the code
+   shows; each span starts from the base ink, and holds it a moment so the frame that lays
+   the spans out (long in WebKit) lands none of the tween. An animation, so the crayon
+   rules above, whatever their specificity, are where it ends. */
+.story-code-block-pre [class^="hljs-"] {
+    animation: story-code-ink calc(2 * var(--spring-present-duration)) var(--spring-present) var(--duration-instant) backwards;
+}
+
+@keyframes story-code-ink {
+    from {
+        color: var(--foreground);
+    }
+}
