@@ -36,7 +36,37 @@ export type Film = {
     frames: Frame[];
 };
 
+/** What a page did while its film ran: its main-frame navigations and its console, each
+ *  stamped in ms from the film's start. A film lives on the page's window, so a page that
+ *  navigates or reloads loses it, and this log names why. */
+type PageLog = { since: number; navigations: string[]; console: string[] };
+const pageLogs = new WeakMap<Page, PageLog>();
+
+function logPage(page: Page): void {
+    let log = pageLogs.get(page);
+    if (!log) {
+        const fresh: PageLog = { since: 0, navigations: [], console: [] };
+        const at = () => `+${Date.now() - fresh.since} ms`;
+        page.on("framenavigated", (frame) => {
+            if (frame === page.mainFrame()) fresh.navigations.push(`${at()} ${frame.url()}`);
+        });
+        page.on("console", (message) => fresh.console.push(`${at()} ${message.type()}: ${message.text()}`));
+        pageLogs.set(page, fresh);
+        log = fresh;
+    }
+    log.since = Date.now();
+    log.navigations.length = 0;
+    log.console.length = 0;
+}
+
+function lostFilm(page: Page): Error {
+    const log = pageLogs.get(page);
+    const read = { navigations: log?.navigations ?? [], console: log?.console.slice(-12) ?? [] };
+    return new Error(`the page lost its film: it navigated or reloaded ${JSON.stringify(read)}`);
+}
+
 export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
+    logPage(page);
     await page.evaluate(({ selector, also }) => {
         const w = window as unknown as { __film: { mark: number; frames: unknown[]; stop: boolean } };
         const film = { mark: -1, turn: -1, turnFrame: -1, armed: false, frames: [] as unknown[], stop: false };
@@ -117,21 +147,36 @@ export async function firstFrame(page: Page, key: string): Promise<void> {
 }
 
 export async function markFilm(page: Page): Promise<void> {
-    await page.evaluate(() => (window as unknown as { __mark: () => void }).__mark());
+    const held = await page.evaluate(() => {
+        const mark = (window as unknown as { __mark?: () => void }).__mark;
+        mark?.();
+        return Boolean(mark);
+    });
+    if (!held) throw lostFilm(page);
 }
 
 /** Marks the second input of a film that reverses a surface mid-motion. */
 export async function markTurn(page: Page): Promise<void> {
-    await page.evaluate(() => (window as unknown as { __turn: () => void }).__turn());
+    const held = await page.evaluate(() => {
+        const turn = (window as unknown as { __turn?: () => void }).__turn;
+        turn?.();
+        return Boolean(turn);
+    });
+    if (!held) throw lostFilm(page);
 }
 
+/** Stops the film `ms` from now and returns it. A page that no longer holds its film
+ *  fails by name, with what the page did since the film began. */
 export async function stopFilm(page: Page, ms: number): Promise<Film> {
     await page.waitForTimeout(ms);
-    return page.evaluate(() => {
-        const f = (window as unknown as { __film: { mark: number; turn: number; turnFrame: number; t0: number; frames: Frame[]; stop: boolean } }).__film;
+    const film = await page.evaluate(() => {
+        const f = (window as unknown as { __film?: { mark: number; turn: number; turnFrame: number; t0: number; frames: Frame[]; stop: boolean } }).__film;
+        if (!f) return null;
         f.stop = true;
         return { mark: f.mark, turn: f.turn, turnFrame: f.turnFrame, t0: f.t0, frames: f.frames };
     });
+    if (!film) throw lostFilm(page);
+    return film;
 }
 
 /** The last frame filmed before the mark; with `present`, the last that holds the
