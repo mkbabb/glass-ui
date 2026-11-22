@@ -14,10 +14,10 @@ export interface RouteRow {
      */
     canvas?: "page" | "card";
     /**
-     * The page's first screen sets figures or code in the code face, so the router
-     * renders it once the face has loaded and its first frame never paints the
-     * fallback. A section page whose card for this page shows it does the same, and so
-     * does `/` for a section's first page. Elsewhere the face loads when code appears.
+     * The page's first screen sets figures or code in the code face, so a navigation to
+     * it starts the face's load with its chunks and the face is in hand by its first
+     * text layout. A section page whose card for this page shows it does the same, and
+     * so does `/` for a section's first page. Elsewhere the face loads when code appears.
      */
     codeFace?: true;
 }

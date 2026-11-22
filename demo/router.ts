@@ -13,7 +13,7 @@ import { loadCodeFace } from "./chassis/code/code-face";
  * and a `/:category/:story` route per row. `meta.ownsCanvas` is read from the rows'
  * own `canvas` declarations: where the page (or a card on it) runs a live canvas, the
  * shell keeps its field static. `meta.codeFace` is read from the rows' `codeFace` the
- * same way: the page renders once the code face has loaded.
+ * same way: the code face's load starts as a navigation to the page starts.
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -90,18 +90,23 @@ export const router = createRouter({
     // owner is the AppShell watch.
 });
 
+// A page whose first screen sets the code face starts the face's load as the navigation
+// starts, beside its chunks (on a first visit, as the app starts), so the face is in
+// hand by the page's first text layout. Nothing waits for it: the face is `optional`,
+// and one that arrives later is never swapped in.
+router.beforeEach((to) => {
+    if (to.meta.codeFace) void loadCodeFace();
+});
+
 // Pre-resolve each lazy route chunk before the View Transition update callback so
 // snapshot capture never includes an unresolved component. Warm chunks resolve
-// synchronously after the first visit. A page whose first screen sets the code face
-// waits for that face too, so its first frame paints in it, not in the fallback.
+// synchronously after the first visit.
 router.beforeResolve(async (to) => {
-    const loads: Promise<unknown>[] = to.matched
+    const comps = to.matched
         .map((r) => r.components?.default)
         .filter(
             (c): c is () => Promise<unknown> => typeof c === "function",
-        )
-        .map((c) => c());
-    if (to.meta.codeFace) loads.push(loadCodeFace());
-    await Promise.all(loads.map((l) => l.catch(() => undefined)));
+        );
+    await Promise.all(comps.map((c) => c().catch(() => undefined)));
     return true;
 });
