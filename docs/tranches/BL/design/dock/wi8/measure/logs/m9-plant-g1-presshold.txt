@@ -1,0 +1,10 @@
+== g1-presshold 2026-11-22 07:40:20 (load { 8.19 8.32 8.80 })
+applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"finger":{"how":"CDP touchStart/touchEnd","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3006,"foldAfterLiftMs":null,"pass":false}}
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"finger":{"how":"dispatched pointerdown/pointerup, pointerType touch (WebKit 2287 has no held touch in Playwright)","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3004,"foldAfterLiftMs":null,"pass":false}}
+cmd rc=0
+reverted g1-presshold
+tree clean: 677 src files equal HEAD
+== done g1-presshold 2026-11-22 07:41:22

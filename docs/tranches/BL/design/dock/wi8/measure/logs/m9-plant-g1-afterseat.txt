@@ -1,0 +1,17 @@
+== g1-afterseat 2026-11-22 07:39:55 (load { 8.17 8.32 8.81 })
+applied g1-afterseat - RU-89: the persistent-seat branch removed (a leave after its press lingers)
+m9/g.sh: line 11: F[@]: unbound variable
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"k2":{"seat":"home","opened":true,"openAtLeave":true,"foldAfterLeaveMs":6535,"pass":false}}
+cmd rc=0
+reverted g1-afterseat
+tree clean: 677 src files equal HEAD
+== done g1-afterseat 2026-11-22 07:40:20
+== g1-afterseat 2026-11-22 07:46:06 (load { 14.39 10.62 9.59 })
+applied g1-afterseat - RU-89: the persistent-seat branch removed (a leave after its press lingers)
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"k2":{"seat":"home","opened":true,"openAtLeave":true,"foldAfterLeaveMs":6538.3,"pass":false}}
+cmd rc=0
+reverted g1-afterseat
+tree clean: 677 src files equal HEAD
+== done g1-afterseat 2026-11-22 07:46:30

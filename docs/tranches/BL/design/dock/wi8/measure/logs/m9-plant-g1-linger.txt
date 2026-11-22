@@ -1,0 +1,14 @@
+== g1-linger 2026-11-22 07:39:28 (load { 7.41 8.21 8.79 })
+applied g1-linger - G-1: the linger token ignored (a fixed 3.6 s, master's literal)
+m9/g.sh: line 11: F[@]: unbound variable
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3604,"pass":false}}
+reverted g1-linger
+== g1-linger 2026-11-22 07:45:40 (load { 14.07 10.24 9.43 })
+applied g1-linger - G-1: the linger token ignored (a fixed 3.6 s, master's literal)
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3607.5,"pass":false}}
+cmd rc=0
+reverted g1-linger
+tree clean: 677 src files equal HEAD
+== done g1-linger 2026-11-22 07:46:06

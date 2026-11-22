@@ -1,0 +1,10 @@
+== g8-nohold 2026-11-22 07:41:22 (load { 10.24 8.82 8.95 })
+applied g8-nohold - RU-114: the overlay hold ignored on a leave and when the linger runs out
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"menu":{"restsFolded":true,"opened":true,"menuOpened":true,"after72s":{"dockOpen":false,"menuOpen":false},"pass":false}}
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"menu":{"restsFolded":true,"opened":true,"menuOpened":true,"after72s":{"dockOpen":false,"menuOpen":false},"pass":false}}
+cmd rc=0
+reverted g8-nohold
+tree clean: 677 src files equal HEAD
+== done g8-nohold 2026-11-22 07:41:56
