@@ -21,3 +21,15 @@ M0 runs at the start of the SOURCE seat, not before the harness, so it takes eve
 ## The step-10 messages
 
 A separate seat greps each site at its current ref for every claim in RULINGS-8's final drafts (C8-2) and writes the corrected drafts to `step10-8.md`; the orchestrator sends them. The sessions are atlas (sci-report-89), Gregg (sci-report-87), value.js with daraksha (value-js-f3), gaggle (gaggle-f4) and Home Assistant (hassio-config-f7). fourier, speedtest, slides and keyframes get theirs when a session appears. All of them go again before the tag with the final numbers.
+
+## atlas's answer on the placement (2026-11-22, after the step-10 message)
+
+atlas (sci-report-89) picks the figure's head row, at its end corner, and does not want the in-plate seat even after the narrow-parent cure. Its conditions:
+
+- At rest the folded dock covers 0 px² of the title. atlas's head row reserves the folded dock's box, so a long title wraps before it, at 375, 390 and 1440 with atlas's longest titles. The 1,500 px² read folded at the eighth measure is what has to go.
+- Open, the dock may grow over the title's row while it stays open and gives the row back when it folds. It never covers the legend, the legend's link or the plot, and never pushes the row: no neighbour moves (atlas tests box identity in every suite).
+- 44 px controls and a fully rounded resting shape.
+
+So the measure seat reads `w-atlas-preset` in the head-row placement as its primary cell: the head row built from atlas's figure frame with its reservation of the folded box, at 375, 390 and 1440, both schemes, both engines, with the longest title atlas ships. Report the overlap with the title (folded: 0 px² required), with the legend, its link and the plot (open and lingering: 0 px² required), and the largest neighbour shift (0 required). Glass's share is that the folded box is predictable (one control square plus the plate's edge, the same in both engines) and that the open dock overlays without moving anything; if the reservation needs a value from glass, name the token. RU-106's inline-size cure for a parent narrower than the buttons stays a library fix (S8), but no site now mounts that seat.
+
+atlas also reports that it never used the dock's search helper or the `#search` slot. Question 12's "first named use" is withdrawn by atlas; the default (delete it in 11.2.0) stands with no released or planned use.
