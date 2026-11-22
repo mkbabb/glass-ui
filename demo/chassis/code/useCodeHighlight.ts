@@ -27,6 +27,10 @@ type Hljs = {
 // A single shared load promise — the core + grammars resolve ONCE per session and
 // every subsequent block reuses the registered instance (idempotent registration).
 let hljsPromise: Promise<Hljs> | null = null;
+let hljsReady = false;
+
+/** The highlighter has loaded. */
+export const hljsLoaded = (): boolean => hljsReady;
 
 export function loadHljs(): Promise<Hljs> {
     if (!hljsPromise) {
@@ -45,6 +49,7 @@ export function loadHljs(): Promise<Hljs> {
             hljs.registerLanguage("xml", xml.default);
             hljs.registerLanguage("css", css.default);
             hljs.registerLanguage("bash", bash.default);
+            hljsReady = true;
             return hljs;
         })();
     }
@@ -81,6 +86,8 @@ export interface UseCodeHighlightOptions {
     lang?: Ref<string | undefined>;
     /** The raw source text to highlight — read live off the rendered `<pre>`. */
     text: () => string;
+    /** False holds the plain text; the colours come in once it turns true. */
+    enabled?: () => boolean;
 }
 
 /**
@@ -95,7 +102,7 @@ export function useCodeHighlight(
     async function highlight(): Promise<void> {
         const el = preRef.value;
         const raw = opts.text();
-        if (!el || !raw) return;
+        if (!el || !raw || opts.enabled?.() === false) return;
 
         // Best-effort COLOR: a failed chunk (offline, missing dep) leaves the raw
         // fira-code text Vue already painted — legible mono, never a blank box
@@ -133,5 +140,5 @@ export function useCodeHighlight(
     onMounted(highlight);
     // `post` flush so a code-prop change re-highlights AFTER Vue has repainted the
     // raw text into the `<pre>` (the raw paint always leads, color follows).
-    watch(() => opts.text(), highlight, { flush: "post" });
+    watch(() => [opts.text(), opts.enabled?.()], highlight, { flush: "post" });
 }

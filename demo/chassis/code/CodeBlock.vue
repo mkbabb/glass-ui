@@ -20,6 +20,8 @@ interface CodeBlockProps {
     lang?: string;
     /** Forwarded class string (merged via `cn`). */
     class?: string;
+    /** False holds the plain text; the highlighter's colours come in once it is true. */
+    colour?: boolean;
 }
 
 const props = defineProps<CodeBlockProps>();
@@ -40,6 +42,7 @@ const hasSlot = computed(() => Boolean(slots.default));
 useCodeHighlight(preRef, {
     lang: toRef(props, "lang"),
     text: () => props.code ?? preRef.value?.textContent ?? "",
+    enabled: () => props.colour !== false,
 });
 
 function copyText(): string {
