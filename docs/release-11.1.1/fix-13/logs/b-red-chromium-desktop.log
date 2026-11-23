@@ -1,0 +1,138 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.4s)
+  ✘  2 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.2s)
+  ✘  3 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.3s)
+  ✘  4 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.9s)
+  ✘  5 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.8s)
+  ✘  6 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.9s)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[6,1,435],[15,1,435],[23,0.117,51],[31,0.107,51],[39,0.097,51],[48,0.087,50],[57,0.076,50],[65,0.065,50],[73,0.056,50],[81,0.048,50],[89,0.041,49],[98,0.035,49],[107,0.029,49],[115,0.024,49],[123,0.02,49],[131,0.017,49],[140,0.014,49],[147,0.011,49],[157,0.01,49]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      614 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      615 |             if (!f.present) continue;
+    > 616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:616:81
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[5,0.117,51],[13,0.107,51],[21,0.097,51],[30,0.087,50],[38,0.075,50],[47,0.066,50],[55,0.056,50],[63,0.048,50],[71,0.041,49],[79,0.035,49],[88,0.029,49],[96,0.024,49],[105,0.02,49],[113,0.017,49],[121,0.014,49],[130,0.012,49],[138,0.009,49]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      614 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      615 |             if (!f.present) continue;
+    > 616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:616:81
+
+    Error Context: test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[2,0.117,51],[10,0.107,51],[19,0.097,51],[27,0.086,50],[35,0.076,50],[44,0.065,50],[52,0.056,50],[61,0.048,50],[68,0.041,49],[77,0.035,49],[85,0.029,49],[94,0.024,49],[102,0.02,49],[110,0.017,49],[119,0.014,49],[127,0.011,49],[135,0.009,49]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      614 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      615 |             if (!f.present) continue;
+    > 616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:616:81
+
+    Error Context: test-results/release-11-1-1-routes-·-a--22113-through-its-exit-by-outside-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":19,"share":0.883,"travel":193,"travelShare":0.994,"gone":true,"frames":[[-5,1],[3,1],[12,1],[19,1],[28,0.117],[36,0.107],[45,0.097],[53,0.086],[62,0.076],[70,0.065],[79,0.056],[87,0.047],[95,0.04],[104,0.034],[111,0.028],[120,0.024],[129,0.02],[137,0.016],[145,0.014],[153,0.011],[161,0.009]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.883
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":16,"share":0.883,"travel":193,"travelShare":0.994,"gone":true,"frames":[[-3,1],[4,0.117],[13,0.107],[22,0.096],[30,0.085],[38,0.075],[47,0.065],[54,0.056],[63,0.048],[72,0.04],[80,0.034],[88,0.029],[97,0.024],[104,0.02],[112,0.017],[121,0.014],[130,0.011],[138,0.009]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.883
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--a76c8-rames-no-frame-over-a-fifth-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":9,"share":0.883,"travel":193,"travelShare":0.994,"gone":true,"frames":[[-11,1],[5,0.117],[22,0.107],[29,0.086],[46,0.077],[72,0.057],[80,0.034],[97,0.029],[113,0.02],[130,0.014],[155,0.009]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.883
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--b911f-rames-no-frame-over-a-fifth-chromium-desktop/error-context.md
+
+  6 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape 
+    [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside 
+    [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+    [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth 
+    [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth 

@@ -1,0 +1,540 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "CommandDialog"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-13/logs/c-pre-red-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by pick",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5355,
+                  "error": {
+                    "message": "Error: the plate keeps its box through its exit {\"rest\":[350,435],\"box\":[[3,350,435],[21,350,435],[36,350,435],[38,350,435],[55,350,435],[59,350,435],[77,350,435],[87,350,435],[105,350,435],[153,350,51],[171,350,51],[188,350,51],[207,350,51],[222,350,51],[241,350,51],[256,350,51],[275,350,51],[297,350,51],[304,350,51],[324,350,51],[338,350,51],[353,350,51],[371,350,51],[386,350,51],[404,350,51],[420,350,51],[443,350,51],[453,350,51],[472,350,51]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m384\u001b[39m",
+                    "stack": "Error: the plate keeps its box through its exit {\"rest\":[350,435],\"box\":[[3,350,435],[21,350,435],[36,350,435],[38,350,435],[55,350,435],[59,350,435],[77,350,435],[87,350,435],[105,350,435],[153,350,51],[171,350,51],[188,350,51],[207,350,51],[222,350,51],[241,350,51],[256,350,51],[275,350,51],[297,350,51],[304,350,51],[324,350,51],[338,350,51],[353,350,51],[371,350,51],[386,350,51],[404,350,51],[420,350,51],[443,350,51],[453,350,51],[472,350,51]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m384\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:621:134",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 134,
+                      "line": 621
+                    },
+                    "snippet": "  619 |             const box = held.map((f) => [Math.round(f.t - film.mark), f.lw, f.lh]);\n  620 |             const drift = Math.max(...held.map((f) => Math.max(Math.abs(f.lw! - read.rest.lw!), Math.abs(f.lh! - read.rest.lh!))));\n> 621 |             expect(drift, `the plate keeps its box through its exit ${JSON.stringify({ rest: [read.rest.lw, read.rest.lh], box })}`).toBeLessThanOrEqual(1);\n      |                                                                                                                                      ^\n  622 |         }\n  623 |         for (const f of read.after.slice(0, read.goneIdx)) {\n  624 |             if (!f.present) continue;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 134,
+                        "line": 621
+                      },
+                      "message": "Error: the plate keeps its box through its exit {\"rest\":[350,435],\"box\":[[3,350,435],[21,350,435],[36,350,435],[38,350,435],[55,350,435],[59,350,435],[77,350,435],[87,350,435],[105,350,435],[153,350,51],[171,350,51],[188,350,51],[207,350,51],[222,350,51],[241,350,51],[256,350,51],[275,350,51],[297,350,51],[304,350,51],[324,350,51],[338,350,51],[353,350,51],[371,350,51],[386,350,51],[404,350,51],[420,350,51],[443,350,51],[453,350,51],[472,350,51]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m384\u001b[39m\n\n  619 |             const box = held.map((f) => [Math.round(f.t - film.mark), f.lw, f.lh]);\n  620 |             const drift = Math.max(...held.map((f) => Math.max(Math.abs(f.lw! - read.rest.lw!), Math.abs(f.lh! - read.rest.lh!))));\n> 621 |             expect(drift, `the plate keeps its box through its exit ${JSON.stringify({ rest: [read.rest.lw, read.rest.lh], box })}`).toBeLessThanOrEqual(1);\n      |                                                                                                                                      ^\n  622 |         }\n  623 |         for (const f of read.after.slice(0, read.goneIdx)) {\n  624 |             if (!f.present) continue;\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:621:134"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:32.960Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjAsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjoyMDQuNSwidyI6MzUwLCJoIjo0MzUsImx3IjozNTAsImxoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0sImFmdGVyIjpbeyJ0IjoxNSwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwibHciOjM1MCwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjMzLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJsdyI6MzUwLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NDgsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjoyMDQuNSwidyI6MzUwLCJoIjo0MzUsImx3IjozNTAsImxoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo1MCwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwibHciOjM1MCwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjY3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJsdyI6MzUwLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NzEsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjoyMDQuNSwidyI6MzUwLCJoIjo0MzUsImx3IjozNTAsImxoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo4OSwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwibHciOjM1MCwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjk5LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJsdyI6MzUwLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6MTE3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJsdyI6MzUwLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6MTY1LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6Mzk2LjUsInciOjM1MCwiaCI6NTEsImx3IjozNTAsImxoIjo1MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoxODMsInByZXNlbnQiOnRydWUsIngiOjIwLjcyNjQwNDE5MDA2MzQ3NywieSI6Mzk2LjYwNTgzNDk2MDkzNzUsInciOjM0OC41NDcxODAxNzU3ODEyNSwiaCI6NTAuNzg4MzMwMDc4MTI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjkxNjk4Miwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTk1ODQ5IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoyMDAsInByZXNlbnQiOnRydWUsIngiOjIyLjI4MDIwMDk1ODI1MTk1MywieSI6Mzk2LjgzMjI0NDg3MzA0NjksInciOjM0NS40Mzk1NzUxOTUzMTI1LCJoIjo1MC4zMzU1MTAyNTM5MDYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC43Mzk0MDYsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk4Njk3IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoyMTksInByZXNlbnQiOnRydWUsIngiOjIzLjc5NzMwMDMzODc0NTExNywieSI6Mzk3LjA1MzMxNDIwODk4NDQsInciOjM0Mi40MDUzOTU1MDc4MTI1LCJoIjo0OS44OTMzNzE1ODIwMzEyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC41NjYwMjMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3ODMwMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MjM0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNS4yNDA0NjEzNDk0ODczMDUsInkiOjM5Ny4yNjM2MTA4Mzk4NDM3NSwidyI6MzM5LjUxOTEwNDAwMzkwNjI1LCJoIjo0OS40NzI3NzgzMjAzMTI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjQwMTA5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NzAwNTUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjI1MywicHJlc2VudCI6dHJ1ZSwieCI6MjYuMTM4Nzk3NzYwMDA5NzY2LCJ5IjozOTcuMzk0NTAwNzMyNDIxOSwidyI6MzM3LjcyMjQxMjEwOTM3NSwiaCI6NDkuMjEwOTk4NTM1MTU2MjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMjk4NDIzLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjQ5MjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjI2OCwicHJlc2VudCI6dHJ1ZSwieCI6MjYuOTkzMzk0ODUxNjg0NTcsInkiOjM5Ny41MTkwNDI5Njg3NSwidyI6MzM2LjAxMzE4MzU5Mzc1LCJoIjo0OC45NjE5MTQwNjI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjIwMDc1NSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTYwMDM4IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoyODcsInByZXNlbnQiOnRydWUsIngiOjI3LjQ4MjU3NDQ2Mjg5MDYyNSwieSI6Mzk3LjU5MDMzMjAzMTI1LCJ3IjozMzUuMDM0ODUxMDc0MjE4NzUsImgiOjQ4LjgxOTMzNTkzNzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMTQ0ODQ5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTcyNDIiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjMwOSwicHJlc2VudCI6dHJ1ZSwieCI6MjcuOTIyODcyNTQzMzM0OTYsInkiOjM5Ny42NTQ0Nzk5ODA0Njg3NSwidyI6MzM0LjE1NDIzNTgzOTg0Mzc1LCJoIjo0OC42OTEwNDAwMzkwNjI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjA5NDUyOSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU0NzI2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjozMTYsInByZXNlbnQiOnRydWUsIngiOjI4LjI1Mjg0Mzg1NjgxMTUyMywieSI6Mzk3LjcwMjU0NTE2NjAxNTYsInciOjMzMy40OTQzMjM3MzA0Njg3NSwiaCI6NDguNTk0OTA5NjY3OTY4NzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDU2ODE4LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTI4NDEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjMzNiwicHJlc2VudCI6dHJ1ZSwieCI6MjguMzI4MzY3MjMzMjc2MzY3LCJ5IjozOTcuNzEzNTYyMDExNzE4NzUsInciOjMzMy4zNDMyNjE3MTg3NSwiaCI6NDguNTcyODc1OTc2NTYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wNDgxODcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MjQwOSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MzUwLCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC40ODgzNDAzNzc4MDc2MTcsInkiOjM5Ny43MzY4Nzc0NDE0MDYyNSwidyI6MzMzLjAyMzMxNTQyOTY4NzUsImgiOjQ4LjUyNjI0NTExNzE4NzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDI5OTA0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTE0OTUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjM2NSwicHJlc2VudCI6dHJ1ZSwieCI6MjguNTYzNTQ3MTM0Mzk5NDE0LCJ5IjozOTcuNzQ3ODMzMjUxOTUzMSwidyI6MzMyLjg3MjkyNDgwNDY4NzUsImgiOjQ4LjUwNDMzMzQ5NjA5Mzc1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjAyMTMwOSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUxMDY1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjozODMsInByZXNlbnQiOnRydWUsIngiOjI4LjYyMDgxNzE4NDQ0ODI0MiwieSI6Mzk3Ljc1NjE2NDU1MDc4MTI1LCJ3IjozMzIuNzU4MzYxODE2NDA2MjUsImgiOjQ4LjQ4NzY3MDg5ODQzNzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDE0NzY0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTA3MzgiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjM5OCwicHJlc2VudCI6dHJ1ZSwieCI6MjguNjY3MjE3MjU0NjM4NjcyLCJ5IjozOTcuNzYyOTM5NDUzMTI1LCJ3IjozMzIuNjY1NTg4Mzc4OTA2MjUsImgiOjQ4LjQ3NDEyMTA5Mzc1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjAwOTQ2MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUwNDczIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0Ijo0MTYsInByZXNlbnQiOnRydWUsIngiOjI4LjY5MzA2MTgyODYxMzI4LCJ5IjozOTcuNzY2NjkzMTE1MjM0NCwidyI6MzMyLjYxMzg5MTYwMTU2MjUsImgiOjQ4LjQ2NjYxMzc2OTUzMTI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjAwNjUwNywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUwMzI1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0Ijo0MzIsInByZXNlbnQiOnRydWUsIngiOjI4LjcxMzc5NDcwODI1MTk1MywieSI6Mzk3Ljc2OTcxNDM1NTQ2ODc1LCJ3IjozMzIuNTcyMzg3Njk1MzEyNSwiaCI6NDguNDYwNTcxMjg5MDYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDQxMzgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDIwNyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6NDU1LCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC43MjU4NjI1MDMwNTE3NTgsInkiOjM5Ny43NzE0ODQzNzUsInciOjMzMi41NDgyNzg4MDg1OTM3NSwiaCI6NDguNDU3MDMxMjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDAyNzU4LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTAxMzgiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjQ2NSwicHJlc2VudCI6dHJ1ZSwieCI6MjguNzM2NTgxODAyMzY4MTY0LCJ5IjozOTcuNzczMDQwNzcxNDg0NCwidyI6MzMyLjUyNjg1NTQ2ODc1LCJoIjo0OC40NTM5MTg0NTcwMzEyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDE1MzMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDA3NyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6NDg0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC43Mzk2MjAyMDg3NDAyMzQsInkiOjM5Ny43NzM0OTg1MzUxNTYyNSwidyI6MzMyLjUyMDc1MTk1MzEyNSwiaCI6NDguNDUzMDAyOTI5Njg3NSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDExODYsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDA1OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6NTI2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NDIsInByZXNlbnQiOmZhbHNlfSx7InQiOjU0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjYwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjE1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MzQsInByZXNlbnQiOmZhbHNlfSx7InQiOjY1MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjcwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzE1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MzEsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzY3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjc5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODE1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MzMsInByZXNlbnQiOmZhbHNlfSx7InQiOjg0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODY3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjg5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTE3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MzMsInByZXNlbnQiOmZhbHNlfSx7InQiOjk0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjk5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAxNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAzNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA2NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA4NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEwNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTExNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEzMywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE2OCwicHJlc2VudCI6ZmFsc2V9XSwiZ29uZUlkeCI6MTgsInBhaW50ZWQiOjE4LCJyZW9wZW5lZCI6ZmFsc2UsInNoYXJlIjowLjMwNywiZnJhbWVzIjpbWzAsMSw0MzVdLFszLDEsNDM1XSxbMjEsMSw0MzVdLFszNiwxLDQzNV0sWzM4LDEsNDM1XSxbNTUsMSw0MzVdLFs1OSwxLDQzNV0sWzc3LDEsNDM1XSxbODcsMSw0MzVdLFsxMDUsMSw0MzVdLFsxNTMsMC4xMTcsNTFdLFsxNzEsMC4xMDcsNTFdLFsxODgsMC4wODQsNTBdLFsyMDcsMC4wNjQsNTBdLFsyMjIsMC4wNDQsNDldLFsyNDEsMC4wMzMsNDldLFsyNTYsMC4wMjIsNDldLFsyNzUsMC4wMTYsNDldLFsyOTcsMC4wMSw0OV0sWzMwNCwwLjAwNiw0OV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 134,
+                    "line": 621
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f8c2c7e701578ad4794",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by escape",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5051,
+                  "error": {
+                    "message": "Error: the list is mounted while the plate is seen [[0,1,435],[34,0.117,51],[43,0.107,51],[63,0.096,51],[82,0.071,50],[101,0.05,50],[116,0.034,49],[131,0.025,49],[146,0.018,49],[164,0.013,49],[182,0.008,49]]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the list is mounted while the plate is seen [[0,1,435],[34,0.117,51],[43,0.107,51],[63,0.096,51],[82,0.071,50],[101,0.05,50],[116,0.034,49],[131,0.025,49],[146,0.018,49],[164,0.013,49],[182,0.008,49]]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:625:81",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 625
+                    },
+                    "snippet": "  623 |         for (const f of read.after.slice(0, read.goneIdx)) {\n  624 |             if (!f.present) continue;\n> 625 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);\n      |                                                                                 ^\n  626 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);\n  627 |         }\n  628 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 625
+                      },
+                      "message": "Error: the list is mounted while the plate is seen [[0,1,435],[34,0.117,51],[43,0.107,51],[63,0.096,51],[82,0.071,50],[101,0.05,50],[116,0.034,49],[131,0.025,49],[146,0.018,49],[164,0.013,49],[182,0.008,49]]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  623 |         for (const f of read.after.slice(0, read.goneIdx)) {\n  624 |             if (!f.present) continue;\n> 625 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);\n      |                                                                                 ^\n  626 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);\n  627 |         }\n  628 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:625:81"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:40.143Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjM1LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJsdyI6MzUwLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LCJhZnRlciI6W3sidCI6NzMsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjozOTYuNSwidyI6MzUwLCJoIjo1MSwibHciOjM1MCwibGgiOjUxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjgyLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMC43MjY0MDQxOTAwNjM0NzcsInkiOjM5Ni42MDU4MzQ5NjA5Mzc1LCJ3IjozNDguNTQ3MTgwMTc1NzgxMjUsImgiOjUwLjc4ODMzMDA3ODEyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC45MTY5ODIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5NTg0OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MTAyLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMS40NjQ0ODg5ODMxNTQyOTcsInkiOjM5Ni43MTM0MDk0MjM4MjgxLCJ3IjozNDcuMDcxMDQ0OTIxODc1LCJoIjo1MC41NzMxODExNTIzNDM3NSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC44MzI2Mywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTkxNjMxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoxMjEsInByZXNlbnQiOnRydWUsIngiOjIzLjI3ODQ1NTczNDI1MjkzLCJ5IjozOTYuOTc3NzIyMTY3OTY4NzUsInciOjM0My40NDMxMTUyMzQzNzUsImgiOjUwLjA0NDU1NTY2NDA2MjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuNjI1MzE5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45ODEyNjYiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjE0MCwicHJlc2VudCI6dHJ1ZSwieCI6MjQuODIwOTY0ODEzMjMyNDIyLCJ5IjozOTcuMjAyNDg0MTMwODU5NCwidyI6MzQwLjM1ODA5MzI2MTcxODc1LCJoIjo0OS41OTUwMzE3MzgyODEyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC40NDkwMzMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3MjQ1MiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MTU1LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNi4wMzExMjIyMDc2NDE2LCJ5IjozOTcuMzc4ODE0Njk3MjY1NiwidyI6MzM3LjkzNzc0NDE0MDYyNSwiaCI6NDkuMjQyMzcwNjA1NDY4NzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMzEwNzI5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjU1MzYiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjE3MCwicHJlc2VudCI6dHJ1ZSwieCI6MjYuNzU0NjEzODc2MzQyNzczLCJ5IjozOTcuNDg0MjUyOTI5Njg3NSwidyI6MzM2LjQ5MDc4MzY5MTQwNjI1LCJoIjo0OS4wMzE0OTQxNDA2MjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMjI4MDQ0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjE0MDIiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjE4NSwicHJlc2VudCI6dHJ1ZSwieCI6MjcuMzA0MDIzNzQyNjc1NzgsInkiOjM5Ny41NjQzMDA1MzcxMDk0LCJ3IjozMzUuMzkxOTY3NzczNDM3NSwiaCI6NDguODcxMzk4OTI1NzgxMjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMTY1MjU0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTgyNjMiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjIwMywicHJlc2VudCI6dHJ1ZSwieCI6MjcuNzEyODIzODY3Nzk3ODUsInkiOjM5Ny42MjM4NzA4NDk2MDk0LCJ3IjozMzQuNTc0MzQwODIwMzEyNSwiaCI6NDguNzUyMjU4MzAwNzgxMjUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMTE4NTM0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTU5MjciLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjIyMSwicHJlc2VudCI6dHJ1ZSwieCI6MjguMDYxNTAyNDU2NjY1MDQsInkiOjM5Ny42NzQ2ODI2MTcxODc1LCJ3IjozMzMuODc3MDE0MTYwMTU2MjUsImgiOjQ4LjY1MDYzNDc2NTYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wNzg2ODUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MzkzNCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MjM0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC4yOTc0NDkxMTE5Mzg0NzcsInkiOjM5Ny43MDkwNDU0MTAxNTYyNSwidyI6MzMzLjQwNTA5MDMzMjAzMTI1LCJoIjo0OC41ODE5MDkxNzk2ODc1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjA1MTcyLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTI1ODYiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjI1MCwicHJlc2VudCI6dHJ1ZSwieCI6MjguNDE3NDgyMzc2MDk4NjMzLCJ5IjozOTcuNzI2NTYyNSwidyI6MzMzLjE2NTAzOTA2MjUsImgiOjQ4LjU0Njg3NSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMzgwMDIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MTkiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjI2NiwicHJlc2VudCI6dHJ1ZSwieCI6MjguNTIzNjA3MjU0MDI4MzIsInkiOjM5Ny43NDIwMDQzOTQ1MzEyNSwidyI6MzMyLjk1Mjc1ODc4OTA2MjUsImgiOjQ4LjUxNTk5MTIxMDkzNzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDI1ODczLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTEyOTQiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjI4MiwicHJlc2VudCI6dHJ1ZSwieCI6MjguNTk2NjE2NzQ0OTk1MTE3LCJ5IjozOTcuNzUyNjU1MDI5Mjk2OSwidyI6MzMyLjgwNjc2MjY5NTMxMjUsImgiOjQ4LjQ5NDY4OTk0MTQwNjI1LCJsdyI6MzUwLCJsaCI6NTEsIm9wIjowLjAxNzUyOSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUwODc2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjoyOTgsInByZXNlbnQiOnRydWUsIngiOjI4LjY0NjUyNjMzNjY2OTkyMiwieSI6Mzk3Ljc1OTkxODIxMjg5MDYsInciOjMzMi43MDY5NzAyMTQ4NDM3NSwiaCI6NDguNDgwMTYzNTc0MjE4NzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDExODI2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTA1OTEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjMxNiwicHJlc2VudCI6dHJ1ZSwieCI6MjguNjgwNDU4MDY4ODQ3NjU2LCJ5IjozOTcuNzY0ODYyMDYwNTQ2OSwidyI6MzMyLjYzOTA5OTEyMTA5Mzc1LCJoIjo0OC40NzAyNzU4Nzg5MDYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDc5NDgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDM5NyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MzMxLCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC43MDU3MDM3MzUzNTE1NjIsInkiOjM5Ny43Njg1NTQ2ODc1LCJ3IjozMzIuNTg4NTYyMDExNzE4NzUsImgiOjQ4LjQ2Mjg5MDYyNSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDUwNjIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDI1MyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6ZmFsc2V9LHsidCI6MzQ4LCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC43MTk2NjkzNDIwNDEwMTYsInkiOjM5Ny43NzA1Njg4NDc2NTYyNSwidyI6MzMyLjU2MDY2ODk0NTMxMjUsImgiOjQ4LjQ1ODg2MjMwNDY4NzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDAzNDY2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTAxNzMiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjM2NywicHJlc2VudCI6dHJ1ZSwieCI6MjguNzMwMzEwNDQwMDYzNDc3LCJ5IjozOTcuNzcyMTI1MjQ0MTQwNiwidyI6MzMyLjUzOTM2NzY3NTc4MTI1LCJoIjo0OC40NTU3NDk1MTE3MTg3NSwibHciOjM1MCwibGgiOjUxLCJvcCI6MC4wMDIyNSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUwMTEzIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjpmYWxzZX0seyJ0IjozODUsInByZXNlbnQiOnRydWUsIngiOjI4LjczNzg5MDI0MzUzMDI3MywieSI6Mzk3Ljc3MzIyMzg3Njk1MzEsInciOjMzMi41MjQyMzA5NTcwMzEyNSwiaCI6NDguNDUzNTUyMjQ2MDkzNzUsImx3IjozNTAsImxoIjo1MSwib3AiOjAuMDAxMzg0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTAwNjkiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOmZhbHNlfSx7InQiOjQxMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDE4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MzMsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ1MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDcwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0ODEsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTE3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MzIsInByZXNlbnQiOmZhbHNlfSx7InQiOjU0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTcxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1OTIsInByZXNlbnQiOmZhbHNlfSx7InQiOjU5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjE0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MzUsInByZXNlbnQiOmZhbHNlfSx7InQiOjY0OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2ODEsInByZXNlbnQiOmZhbHNlfSx7InQiOjY5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzE2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MzEsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzY4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjc5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODE1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MzksInByZXNlbnQiOmZhbHNlfSx7InQiOjg0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODY4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjkwMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTE0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MzIsInByZXNlbnQiOmZhbHNlfSx7InQiOjk0OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTY0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5OTQsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMTMsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMjksInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNDIsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwODIsInByZXNlbnQiOmZhbHNlfV0sImdvbmVJZHgiOjksInBhaW50ZWQiOjksInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuNDMzLCJmcmFtZXMiOltbMCwxLDQzNV0sWzM0LDAuMTE3LDUxXSxbNDMsMC4xMDcsNTFdLFs2MywwLjA5Niw1MV0sWzgyLDAuMDcxLDUwXSxbMTAxLDAuMDUsNTBdLFsxMTYsMC4wMzQsNDldLFsxMzEsMC4wMjUsNDldLFsxNDYsMC4wMTgsNDldLFsxNjQsMC4wMTMsNDldLFsxODIsMC4wMDgsNDldXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 625
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-066d319438e75f96d423",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 598,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:46.969Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 598,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7f4e4099fb9a6c2548e1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5168,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":16,\"share\":0.313,\"travel\":193,\"travelShare\":0.352,\"gone\":true,\"frames\":[[-9,1],[9,1],[25,1],[41,1],[44,1],[58,1],[61,1],[108,0.117],[126,0.107],[135,0.084],[140,0.073],[158,0.067],[173,0.048],[192,0.035],[208,0.024],[223,0.017],[242,0.012],[256,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.313\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":16,\"share\":0.313,\"travel\":193,\"travelShare\":0.352,\"gone\":true,\"frames\":[[-9,1],[9,1],[25,1],[41,1],[44,1],[58,1],[61,1],[108,0.117],[126,0.107],[135,0.084],[140,0.073],[158,0.067],[173,0.048],[192,0.035],[208,0.024],[223,0.017],[242,0.012],[256,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.313\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:2016:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 2016
+                    },
+                    "snippet": "  2014 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  2015 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 2016 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  2017 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  2018 |         });\n  2019 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 2016
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":16,\"share\":0.313,\"travel\":193,\"travelShare\":0.352,\"gone\":true,\"frames\":[[-9,1],[9,1],[25,1],[41,1],[44,1],[58,1],[61,1],[108,0.117],[126,0.107],[135,0.084],[140,0.073],[158,0.067],[173,0.048],[192,0.035],[208,0.024],[223,0.017],[242,0.012],[256,0.008]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.313\u001b[39m\n\n  2014 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  2015 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 2016 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  2017 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  2018 |         });\n  2019 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:2016:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:48.177Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNiwic2hhcmUiOjAuMzEzLCJ0cmF2ZWwiOjE5MywidHJhdmVsU2hhcmUiOjAuMzUyLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzksMV0sWzI1LDFdLFs0MSwxXSxbNDQsMV0sWzU4LDFdLFs2MSwxXSxbMTA4LDAuMTE3XSxbMTI2LDAuMTA3XSxbMTM1LDAuMDg0XSxbMTQwLDAuMDczXSxbMTU4LDAuMDY3XSxbMTczLDAuMDQ4XSxbMTkyLDAuMDM1XSxbMjA4LDAuMDI0XSxbMjIzLDAuMDE3XSxbMjQyLDAuMDEyXSxbMjU2LDAuMDA4XV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 2016
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6256aa1b07006fb3f0e1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 759,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:54.051Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ccf750a8885657c89a0e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5110,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":9,\"share\":0.545,\"travel\":193,\"travelShare\":0.614,\"gone\":true,\"frames\":[[-4,1],[23,0.117],[37,0.107],[47,0.09],[65,0.077],[80,0.056],[97,0.042],[113,0.029],[140,0.021],[147,0.011],[163,0.01]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.545\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":9,\"share\":0.545,\"travel\":193,\"travelShare\":0.614,\"gone\":true,\"frames\":[[-4,1],[23,0.117],[37,0.107],[47,0.09],[65,0.077],[80,0.056],[97,0.042],[113,0.029],[140,0.021],[147,0.011],[163,0.01]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.545\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:2016:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 2016
+                    },
+                    "snippet": "  2014 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  2015 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 2016 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  2017 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  2018 |         });\n  2019 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 2016
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":9,\"share\":0.545,\"travel\":193,\"travelShare\":0.614,\"gone\":true,\"frames\":[[-4,1],[23,0.117],[37,0.107],[47,0.09],[65,0.077],[80,0.056],[97,0.042],[113,0.029],[140,0.021],[147,0.011],[163,0.01]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.545\u001b[39m\n\n  2014 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  2015 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 2016 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  2017 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  2018 |         });\n  2019 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts:2016:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T15:50:55.181Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo5LCJzaGFyZSI6MC41NDUsInRyYXZlbCI6MTkzLCJ0cmF2ZWxTaGFyZSI6MC42MTQsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbMjMsMC4xMTddLFszNywwLjEwN10sWzQ3LDAuMDldLFs2NSwwLjA3N10sWzgwLDAuMDU2XSxbOTcsMC4wNDJdLFsxMTMsMC4wMjldLFsxNDAsMC4wMjFdLFsxNDcsMC4wMTFdLFsxNjMsMC4wMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/test-results/release-11-1-1-standing-·--b911f-rames-no-frame-over-a-fifth-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 2016
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a3743bdc926ff4c4acc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T15:50:29.648Z",
+    "duration": 30731.504,
+    "expected": 0,
+    "skipped": 2,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,33 @@
+10:30:27 a1 green exit 0 105s load { 16.31 20.13 28.68 } -> { 11.70 17.48 26.65 } pixel-floor gate: GREEN — 3 floors ran on the live paint path and passed.
+10:37:21 a1 planted exit 0 412s load { 11.70 17.48 26.65 } -> { 12.20 14.29 21.36 } pixel-floor gate: GREEN (self-test, --plant=all) — 2 floors RED-ed on the planted defect, each on its own assertion; the floors bite.
+10:39:00 a1 flood exit 0 99s load { 12.20 14.29 21.36 } -> { 12.50 13.87 20.41 } pixel-floor gate: GREEN (self-test, --plant=blob-flood) — 1 floors RED-ed on the planted defect, each on its own assertion; the floors bite.
+10:41:27 b-red-chromium-phone red chromium-phone [CommandDialog] exit 1 35s load-at-start={ 19.11 16.16 20.53 } load-end={ 16.30 15.77 20.21 }  6 failed 
+10:41:59 b-tip-chromium-phone tip chromium-phone [CommandDialog] exit 1 32s load-at-start={ 16.30 15.77 20.21 } load-end={ 14.89 15.50 19.94 }  2 failed  4 passed (26.2s) 
+10:42:32 b-red-chromium-desktop red chromium-desktop [CommandDialog] exit 1 33s load-at-start={ 14.89 15.50 19.94 } load-end={ 12.14 14.78 19.52 }  6 failed 
+10:43:18 b-tip-chromium-desktop tip chromium-desktop [CommandDialog] exit 1 46s load-at-start={ 12.14 14.78 19.52 } load-end={ 28.45 18.70 20.72 }  2 failed  4 passed (34.8s) 
+10:44:02 b-red-webkit-phone red webkit-phone [CommandDialog] exit 1 44s load-at-start={ 28.45 18.70 20.72 } load-end={ 27.03 19.63 20.95 }  4 failed  2 skipped 
+10:44:44 b-tip-webkit-phone tip webkit-phone [CommandDialog] exit 1 42s load-at-start={ 27.03 19.63 20.95 } load-end={ 25.42 20.22 21.11 }  2 failed  2 skipped  2 passed (32.5s) 
+10:45:40 b-red-webkit-desktop red webkit-desktop [CommandDialog] exit 1 56s load-at-start={ 25.42 20.22 21.11 } load-end={ 28.29 21.95 21.69 }  6 failed 
+10:46:31 b-tip-webkit-desktop tip webkit-desktop [CommandDialog] exit 1 51s load-at-start={ 28.29 21.95 21.69 } load-end={ 30.71 23.82 22.41 }  2 failed  4 passed (39.6s) 
+10:46:31 b-chain done
+10:47:35 c-pre-tip-chromium-phone tip chromium-phone [CommandDialog] exit 1 44s load-at-start={ 30.33 24.19 22.58 } load-end={ 29.46 24.87 22.91 }  2 failed  4 passed (33.1s) 
+10:48:21 c-pre-red-chromium-phone red chromium-phone [CommandDialog] exit 1 46s load-at-start={ 29.46 24.87 22.91 } load-end={ 24.49 24.22 22.78 }  6 failed 
+10:49:02 c-pre-tip-chromium-desktop tip chromium-desktop [CommandDialog] exit 1 41s load-at-start={ 24.49 24.22 22.78 } load-end={ 23.43 24.19 22.84 }  2 failed  4 passed (33.1s) 
+10:49:47 c-pre-red-chromium-desktop red chromium-desktop [CommandDialog] exit 1 45s load-at-start={ 23.43 24.19 22.84 } load-end={ 33.73 26.92 23.92 }  6 failed 
+10:50:27 c-pre-tip-webkit-phone tip webkit-phone [CommandDialog] exit 1 40s load-at-start={ 33.73 26.92 23.92 } load-end={ 33.76 27.84 24.40 }  2 failed  2 skipped  2 passed (30.6s) 
+10:51:05 c-pre-red-webkit-phone red webkit-phone [CommandDialog] exit 1 37s load-at-start={ 33.76 27.84 24.40 } load-end={ 34.64 28.86 24.93 }  4 failed  2 skipped 
+10:51:48 c-pre-tip-webkit-desktop tip webkit-desktop [CommandDialog] exit 1 43s load-at-start={ 34.64 28.86 24.93 } load-end={ 33.91 29.48 25.34 }  2 failed  4 passed (36.8s) 
+10:52:46 c-pre-red-webkit-desktop red webkit-desktop [CommandDialog] exit 1 58s load-at-start={ 33.91 29.48 25.34 } load-end={ 37.91 31.21 26.25 }  6 failed 
+10:52:46 c-chain pre done
+10:53:58 c-post-tip-chromium-phone tip chromium-phone [CommandDialog] exit 0 67s load-at-start={ 36.15 30.96 26.19 } load-end={ 32.94 30.44 26.31 }  6 passed (29.1s) 
+10:54:34 c-post-tip-chromium-desktop tip chromium-desktop [CommandDialog] exit 0 36s load-at-start={ 32.94 30.44 26.31 } load-end={ 30.89 30.13 26.38 }  6 passed (27.1s) 
+10:55:07 c-post-tip-webkit-phone tip webkit-phone [CommandDialog] exit 0 32s load-at-start={ 30.89 30.13 26.38 } load-end={ 33.33 30.81 26.75 }  2 skipped  4 passed (25.3s) 
+10:55:51 c-post-tip-webkit-desktop tip webkit-desktop [CommandDialog] exit 0 44s load-at-start={ 33.33 30.81 26.75 } load-end={ 27.52 29.65 26.53 }  6 passed (34.7s) 
+10:55:51 c-chain post done
+11:20:37 e-tip-x3 tip webkit [fix 12, coarse phone x3] exit 0 207s load-at-start={ 19.55 27.30 29.25 } load-end={ 15.40 22.71 27.01 }  3 passed (2.5m) 
+11:25:32 e-red-x3 red webkit [fix 12, coarse phone x3] exit 0 295s load-at-start={ 15.40 22.71 27.01 } load-end={ 45.30 28.74 27.74 }  3 passed (2.7m) 
+12:03:11 r3-chromium-phone tip chromium-phone [CommandDialog.* (by )?pick] exit 0 950s load-at-start={ 34.68 33.50 32.15 } load-end={ 32.19 33.08 33.30 }  6 passed (37.7s) 
+12:06:05 r3-chromium-desktop tip chromium-desktop [CommandDialog.* (by )?pick] exit 0 174s load-at-start={ 32.19 33.08 33.30 } load-end={ 37.32 36.38 34.77 }  6 passed (35.1s) 
+12:24:44 r3-webkit-phone tip webkit-phone [CommandDialog.* (by )?pick] exit 0 1119s load-at-start={ 37.32 36.38 34.77 } load-end={ 37.47 39.03 37.93 }  6 passed (53.8s) 
+12:59:50 r3-webkit-desktop tip webkit-desktop [CommandDialog.* (by )?pick] exit 0 2106s load-at-start={ 37.47 39.03 37.93 } load-end={ 24.97 28.21 35.06 }  6 passed (43.5s) 
+12:59:50 r3 done
