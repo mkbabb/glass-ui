@@ -1,0 +1,278 @@
+<title>Scroll Under Load</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column. A picker shows one pair at a time: two bars stuck to the top (A, B), two strips in
+   cards (C, D), or two progress lines stuck to the foot (E, F). One long striped ground scrolls under them.
+   Rebuilt in BM pass 3 (fold of pass 2, B-8): one pair at a time, Busy page off and then on, neutral letters. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(36 30% 94%);
+  --chip: hsl(30 20% 86%);
+  --chip-ink: hsl(24 10% 16%);
+  --stripe-a: hsl(24 40% 30%);
+  --stripe-b: hsl(40 50% 90%);
+  --stripe-c: hsl(200 50% 45%);
+  --veil: oklch(0.28 0.035 70 / 0.14);
+  --on-glass: hsl(24 10% 10%);
+  --shadow-rest: 0 2px 8px hsl(24 10% 10% / 0.06);
+  --shadow-up: 0 6px 18px hsl(24 10% 10% / 0.14);
+  --rim-ink: oklch(0.55 0.2 300);
+  /* the dock spring as shipped (a linear() curve) */
+  --spring-dock-linear: linear(0, 0.00382 2.041%, 0.01450 4.082%, 0.03097 6.122%, 0.05224 8.163%, 0.07746 10.204%, 0.10587 12.245%, 0.13678 14.286%, 0.16961 16.327%, 0.20383 18.367%, 0.23897 20.408%, 0.27465 22.449%, 0.31051 24.490%, 0.34627 26.531%, 0.38167 28.571%, 0.41651 30.612%, 0.45060 32.653%, 0.48380 34.694%, 0.51599 36.735%, 0.54708 38.776%, 0.57700 40.816%, 0.60570 42.857%, 0.63315 44.898%, 0.65931 46.939%, 0.68419 48.980%, 0.70779 51.020%, 0.73011 53.061%, 0.75118 55.102%, 0.77103 57.143%, 0.78968 59.184%, 0.80717 61.224%, 0.82354 63.265%, 0.83883 65.306%, 0.85309 67.347%, 0.86636 69.388%, 0.87869 71.429%, 0.89012 73.469%, 0.90069 75.510%, 0.91046 77.551%, 0.91947 79.592%, 0.92776 81.633%, 0.93538 83.673%, 0.94237 85.714%, 0.94877 87.755%, 0.95461 89.796%, 0.95993 91.837%, 0.96478 93.878%, 0.96918 95.918%, 0.97317 97.959%, 1);
+  /* the same row as one cubic-bezier that leaves rest at no speed (pass 2, curves.json, tokenReplacement) */
+  --spring-dock-bezier: cubic-bezier(0.232, 0, 0.18, 0.703);
+  --dock-dur: 210ms;
+  --fade: 16px;
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(24 9% 9%); --chip: hsl(26 10% 20%); --chip-ink: hsl(30 14% 90%);
+    --stripe-a: hsl(30 30% 70%); --stripe-b: hsl(24 9% 10%); --stripe-c: hsl(200 50% 55%);
+    --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+    --shadow-rest: 0 2px 8px hsl(0 0% 0% / 0.3); --shadow-up: 0 6px 18px hsl(0 0% 0% / 0.5); --rim-ink: oklch(0.72 0.17 300);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(24 9% 9%); --chip: hsl(26 10% 20%); --chip-ink: hsl(30 14% 90%);
+  --stripe-a: hsl(30 30% 70%); --stripe-b: hsl(24 9% 10%); --stripe-c: hsl(200 50% 55%);
+  --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+  --shadow-rest: 0 2px 8px hsl(0 0% 0% / 0.3); --shadow-up: 0 6px 18px hsl(0 0% 0% / 0.5); --rim-ink: oklch(0.72 0.17 300);
+  color-scheme: dark;
+}
+@property --chrome-collapse-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --fade-start { syntax: "<length-percentage>"; inherits: false; initial-value: 0px; }
+@property --fade-end { syntax: "<length-percentage>"; inherits: false; initial-value: 0px; }
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: 400 16px var(--font); min-height: 44px; padding: 0 18px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+button[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; transition: opacity 160ms ease-out, visibility 0s linear 160ms; }
+main:not([data-pair="bars"]) .bars, main:not([data-pair="strips"]) .strips, main:not([data-pair="lines"]) .rims {
+  opacity: 0; visibility: hidden;
+}
+main[data-pair="bars"] .bars, main[data-pair="strips"] .strips, main[data-pair="lines"] .rims { transition-delay: 0s; }
+.how { min-height: 2.9em; }
+.tag { font-size: 13px; color: var(--muted); text-align: center; }
+
+/* ── A and B: the shrinking bar ─────────────────────────────────────────── */
+.bars { position: sticky; top: max(8px, env(safe-area-inset-top, 0px)); z-index: 4; }
+.bar {
+  position: relative; height: 48px; border-radius: 24px; display: grid; place-items: center;
+  color: var(--on-glass); font-size: 15px; transform-origin: top center;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); background: var(--veil);
+}
+/* A: the page writes --chrome-collapse-t on every frame of the scroll and snaps it at a stop (scroll-chrome.css) */
+.bar.a {
+  transform: scale(calc(1 - var(--chrome-collapse-t) * 0.12)) translateY(calc(var(--chrome-collapse-t) * -6px));
+  opacity: calc(1 - var(--chrome-collapse-t) * 0.28);
+  box-shadow: 0 calc(2px + var(--chrome-collapse-t) * 6px) calc(8px + var(--chrome-collapse-t) * 12px)
+    color-mix(in srgb, var(--fg) calc(6% + var(--chrome-collapse-t) * 18%), transparent);
+}
+/* B: a state set when the scroll direction holds; one property moves (scale from the top edge), the bar keeps its
+   full opacity and its one shadow (pass 4 fold, A5; pass 5 fold, A4-10: at 0.72 opacity a word on it falls under the
+   chrome bound in dark) */
+.bar.b {
+  box-shadow: var(--shadow-rest);
+  transition: scale var(--dock-dur) var(--spring-dock-bezier);
+}
+.bar.b[data-collapsed] { scale: 0.88; }
+
+/* ── C and D: the strip's edge fade ─────────────────────────────────────── */
+.card { background: var(--card); border-radius: 16px; padding: 16px; min-width: 0; }
+.strip { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.chip { flex: none; padding: 10px 14px; border-radius: 18px; background: var(--chip); color: var(--chip-ink); font-size: 15px; }
+/* C: each edge's ramp is a registered length scrubbed by a scroll timeline (FadingScroll) */
+.strip.c {
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+}
+@supports (animation-timeline: scroll()) {
+  @keyframes fade-start-in { from { --fade-start: 0px; } to { --fade-start: var(--fade); } }
+  @keyframes fade-end-out { from { --fade-end: var(--fade); } to { --fade-end: 0px; } }
+  .strip.c {
+    animation: fade-start-in linear both, fade-end-out linear both;
+    animation-timeline: scroll(self inline), scroll(self inline);
+    animation-range: 0 var(--fade), calc(100% - var(--fade)) 100%;
+  }
+}
+/* D: the fade never changes; the strip reaches into the card's padding by the fade's width and pads itself by the
+   same, so at rest each ramp covers empty padding and the chips pass under it once scrolled */
+.strip.d {
+  margin-inline: calc(-1 * var(--fade)); padding-inline: var(--fade); scroll-padding-inline: var(--fade);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+}
+
+/* ── the ground the bars pass over ───────────────────────────────────────── */
+.ground {
+  height: 1500px; border-radius: 12px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 46px, var(--stripe-c) 46px 52px),
+    repeating-linear-gradient(45deg, var(--stripe-a) 0 6px, var(--stripe-b) 6px 14px);
+}
+
+/* ── E and F: how far down the page, on a capsule's border ──────────────── */
+.rims { position: sticky; bottom: max(12px, env(safe-area-inset-bottom, 0px)); z-index: 4; }
+.cap {
+  position: relative; height: 48px; border-radius: 24px; display: grid; place-items: center; color: var(--on-glass); font-size: 15px;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); background: var(--veil);
+}
+.rim { position: absolute; inset: 0; border-radius: inherit; overflow: clip; pointer-events: none; }
+.stroke { position: absolute; inset: 0; box-sizing: border-box; border: 2px solid var(--rim-ink); border-radius: 24px; }
+/* E: a clip that grows, fed on each scroll event, its change played on the dock spring's linear() */
+.stroke.e {
+  clip-path: inset(0 calc(100% - var(--fill, 0%)) 0 0);
+  transition: clip-path var(--dock-dur) var(--spring-dock-linear);
+}
+/* F: the rim (the host's box, which never moves) clips; inside it a square window slides by the unread share and
+   the line slides back by the same, so the line stays on the border and only the window's edge moves. Both are
+   translate on the page's scroll timeline: no script and no transition (pass 3 fold, B-6, B-7, A13) */
+.window { position: absolute; inset: 0; overflow: clip; translate: -100% 0; }
+.window > .stroke { translate: 100% 0; }
+@supports (animation-timeline: scroll()) {
+  @keyframes rim-window { from { translate: -100% 0; } to { translate: 0 0; } }
+  @keyframes rim-stroke { from { translate: 100% 0; } to { translate: 0 0; } }
+  .window { animation: rim-window linear both; animation-timeline: scroll(root block); }
+  .window > .stroke { animation: rim-stroke linear both; animation-timeline: scroll(root block); }
+}
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+</style>
+
+<main data-pair="bars">
+  <p class="ask"><strong>Pick a pair, do what it says with Busy page off, then again with it on, and send the letter that stutters, freezes, jumps or lags behind your finger (or “same”).</strong> Do all three pairs; a screen recording of each helps.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading.</p>
+  <div class="controls" role="group" aria-label="Pair">
+    <button type="button" data-pick="bars" aria-pressed="true">Bars</button>
+    <button type="button" data-pick="strips" aria-pressed="false">Strips</button>
+    <button type="button" data-pick="lines" aria-pressed="false">Lines</button>
+    <button id="busy" type="button" aria-pressed="false">Busy page</button>
+  </div>
+  <p class="note how" id="how"></p>
+
+  <div class="bars pair" aria-hidden="true">
+    <div class="bar a" id="barA">A</div>
+    <div class="bar b" id="barB">B</div>
+  </div>
+
+  <div class="strips pair">
+    <div class="card"><div class="strip c" id="stripC"></div><p class="tag">C</p></div>
+    <div class="card"><div class="strip d" id="stripD"></div><p class="tag">D</p></div>
+  </div>
+
+  <div class="ground" aria-hidden="true"></div>
+  <p class="note">Busy page keeps the page’s own work running three quarters of the time, the way a heavy page does.</p>
+
+  <div class="rims pair" aria-hidden="true">
+    <div class="cap">E<span class="rim"><span class="stroke e" id="strokeE"></span></span></div>
+    <div class="cap">F<span class="rim"><span class="window"><span class="stroke"></span></span></span></div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is not printed.
+  const timelines = !!(window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()"));
+  document.getElementById("env").textContent =
+    (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    " · scroll timelines " + (timelines ? "supported" : "not supported: C keeps sharp edges and F does not move");
+
+  const HOW = {
+    bars: "Scroll slowly down a screen or two, then back up. A and B shrink as you go down and grow back as you go up.",
+    strips: "Swipe each strip all the way to its end, then back to its start. Watch the edges.",
+    lines: "Scroll down and up. Each line along a border shows how far down the page you are. Does it keep up with your finger?",
+  };
+  const main = document.querySelector("main"), how = document.getElementById("how");
+  const pick = (name) => {
+    main.dataset.pair = name; how.textContent = HOW[name];
+    document.querySelectorAll("[data-pick]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.pick === name)));
+  };
+  document.querySelectorAll("[data-pick]").forEach((b) => b.addEventListener("click", () => pick(b.dataset.pick)));
+  pick("bars");
+
+  const words = ["Home", "Today", "Library", "Search", "Shared", "Recent", "Starred", "Music", "Photos", "Notes", "Maps", "Files"];
+  for (const id of ["stripC", "stripD"]) document.getElementById(id).innerHTML = words.map((w) => `<span class="chip">${w}</span>`).join("");
+
+  const barA = document.getElementById("barA"), barB = document.getElementById("barB"), strokeE = document.getElementById("strokeE");
+  const RANGE = 116, FLIP = 8, STOP = 140;
+
+  // A: glass-ui's useScrollChrome, reduced to its writes: a rAF-coalesced read, a direction-anchored ramp
+  // written as --chrome-collapse-t every frame, and a snap to 0 or 1 when the scroll stops.
+  let t = 0, anchor = null, lastDir = null, lastY = scrollY, flipAcc = 0, stopTimer = 0, queued = false;
+  const writeA = (v) => { t = Math.max(0, Math.min(1, v)); barA.style.setProperty("--chrome-collapse-t", String(t)); };
+  const readA = () => {
+    queued = false;
+    const y = scrollY, d = y - lastY; lastY = y;
+    if (d !== 0) {
+      const dir = d > 0 ? "down" : "up";
+      flipAcc = dir === lastDir ? 0 : flipAcc + Math.abs(d);
+      if (lastDir === null || (dir !== lastDir && flipAcc >= FLIP)) { lastDir = dir; anchor = null; flipAcc = 0; }
+    }
+    if (anchor === null) anchor = y - t * RANGE;
+    writeA((y - anchor) / RANGE);
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(() => { anchor = null; writeA(t >= 0.5 ? 1 : 0); }, STOP);
+  };
+
+  // B: the same direction read, but it writes one attribute, only when the state changes.
+  let bDir = null, bAcc = 0, bLastY = scrollY;
+  const readB = () => {
+    const y = scrollY, d = y - bLastY; bLastY = y;
+    if (y <= 8) { barB.removeAttribute("data-collapsed"); bDir = "up"; bAcc = 0; return; }
+    const dir = d > 0 ? "down" : d < 0 ? "up" : bDir;
+    bAcc = dir === bDir ? 0 : bAcc + Math.abs(d);
+    if (bDir === null || (dir !== bDir && bAcc >= FLIP)) { bDir = dir; bAcc = 0; barB.toggleAttribute("data-collapsed", dir === "down"); }
+  };
+
+  // E: fed the page's progress by script on each scroll event, as ScrollProgressRim's value is. F needs no script.
+  const readE = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const f = max > 0 ? Math.max(0, Math.min(1, scrollY / max)) : 0;
+    strokeE.style.setProperty("--fill", (f * 100).toFixed(3) + "%");
+  };
+
+  // Only the pair on screen does its work, so one pair's script never loads another's reading.
+  addEventListener("scroll", () => {
+    const p = main.dataset.pair;
+    if (p === "bars") { if (!queued) { queued = true; requestAnimationFrame(readA); } readB(); }
+    else if (p === "lines") readE();
+  }, { passive: true });
+  readE();
+
+  let busy = 0;
+  document.getElementById("busy").addEventListener("click", (e) => {
+    const on = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(on));
+    clearInterval(busy);
+    if (on) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+})();
+</script>

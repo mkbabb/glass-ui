@@ -1,0 +1,356 @@
+<title>Glass Selection Mark</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 5, rebuilt in pass 6's fold (pass-5/fold.md: A5-1 to A5-14, B5-1 to B5-12); corrected in pass 7's fold
+   (pass-6/fold.md: B6-3 C's source, B6-6 B no longer names the page dots, A6-6 no link-callout suppression). The selection is ONE mark, an
+   inert fill that travels between options (DESIGN §7). Every letter has its own strip, so the letters are compared
+   side by side (B5-8). The fill is the foreground at 0.12 over the strip's quiet well (--fill-selected). The chosen
+   word takes full ink and the others the muted ink, traded over 180 ms when the mark leaves (A5-5, A5-13).
+   A tap sends the mark on the dock row (response 0.30 s, damping 0.88), played as keyframes sampled from the spring
+   and ending when it is within half a pixel of its rest (B5-5). Pressing the chosen option and sliding drags the mark:
+   it follows the finger from where it is drawn (A5-3), and on release it settles on the option under the finger
+   (B5-11) with its own speed, capped so it never passes its rest by more than a settle from a standing start does,
+   plus a quarter pixel (A5-1, B5-4). Where options are equal and nothing stretches, the mark is a plain capsule the
+   option's size (A5-2, B5-7); only the letters that change its length use the window of DESIGN §6.3.
+   Numbers: pass-5/mark/mark.json, pass-6/fold/fold.json. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --track: oklch(0.28 0.035 70 / 0.1);
+  --mark: hsl(24 10% 10% / 0.12);
+  --mark-held: hsl(24 10% 10% / 0.15);
+  --plate: hsl(24 10% 10% / 0.16);
+  --edge: hsl(24 10% 10% / 0.5);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --track: oklch(0.17 0.03 70 / 0.14); --mark: hsl(30 14% 90% / 0.12); --mark-held: hsl(30 14% 90% / 0.15);
+    --plate: hsl(30 14% 90% / 0.16); --edge: hsl(30 14% 90% / 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --track: oklch(0.17 0.03 70 / 0.14); --mark: hsl(30 14% 90% / 0.12); --mark-held: hsl(30 14% 90% / 0.15);
+  --plate: hsl(30 14% 90% / 0.16); --edge: hsl(30 14% 90% / 0.5);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1040px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 15px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.toggle, button.key {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 14px 14px; display: grid; gap: 10px; justify-items: start; }
+.letter p { margin: 0; font-size: 15px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+
+/* The strip: a quiet well holding equal options (grid 1fr, today's SegmentedTabs) or options as wide as their words. */
+.strip {
+  position: relative; isolation: isolate; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  padding: 3px; border-radius: 25px; background: var(--track); touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  max-width: 100%;
+}
+.strip[data-layout="content"] { grid-auto-columns: auto; }
+.tab {
+  position: relative; z-index: 1; border: 0; background: none; cursor: pointer; white-space: nowrap;
+  min-height: 44px; padding: 0 12px; border-radius: 22px; font: 500 15px var(--font); color: var(--muted);
+  transition: color 180ms ease-out; -webkit-tap-highlight-color: transparent;
+}
+.tab > span, .tab > i { display: inline-block; transition: scale 160ms cubic-bezier(0.244, 0, 0.251, 0.672); }
+.tab[aria-selected="true"] { color: var(--fg); }
+.tab.grow > span, .tab.grow > i { scale: 1.083; }
+/* The option's own plate: hover at the light strength (fine pointer), the press tone while pressed (W-B.17, W-R.1).
+   It shows on the chosen option too, over the mark (A5-6). Where a lift or the word answers, it stands down. */
+.tab::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--plate); opacity: 0; transition: opacity 120ms ease-out; z-index: -1; }
+@media (hover: hover) and (pointer: fine) { .strip:not([data-quiet]) .tab:hover::before { opacity: 0.31; } }
+.strip:not([data-quiet]) .tab.pressing::before { opacity: 0.5; }
+.tab:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+
+/* The dock run: five round seats, each one seat wide. */
+.strip.seats .tab { width: 44px; padding: 0; display: grid; place-items: center; }
+.strip.seats .tab i { width: 18px; height: 18px; border-radius: 6px; background: currentColor; display: block; }
+
+/* The mark: a plain capsule the option's size, or, for the letters that change its length, a window whose ::before
+   carries the fill (DESIGN §6.3). Both move by translate only. */
+.mark { position: absolute; left: 0; top: 3px; bottom: 3px; border-radius: 22px; z-index: 0; pointer-events: none;
+  transform-origin: var(--ox, 50%) 50%; transition: scale 160ms cubic-bezier(0.244, 0, 0.251, 0.672); }
+.mark[data-window] { overflow: clip; }
+.mark::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--mark); translate: var(--b, 0px) 0; transition: background-color 120ms ease-out; }
+.mark.pressing::before { background: var(--mark-held); }
+.mark.held { scale: var(--lift, 1.06); }
+.mark.letgo { transition: scale 214ms cubic-bezier(0.232, 0, 0.18, 0.703); }
+/* More contrast (Increase Contrast on the phone): the mark takes its one edge, on itself, so it travels with it. */
+@media (prefers-contrast: more) { .mark::before { box-shadow: inset 0 0 0 1px var(--edge); } }
+
+.note { color: var(--muted); font-size: 15px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+</style>
+
+<main>
+  <p class="ask"><strong>Each letter has its own strip: try them all in Light, then again with the phone in Dark, and send back one letter per section.</strong> Say too if the moving shape ever shows a square end, with Busy page off and then on.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading: the motion is what you are looking at.</p>
+  <div class="bar"><button id="busy" class="toggle" type="button" aria-pressed="false">Busy page</button></div>
+
+  <section data-q="hold">
+    <h2>1 · Holding it</h2>
+    <p class="how">Tap a few options, then press the chosen one and slide across the others.</p>
+    <div class="letter" data-v="a"><p><b>A</b> · Glides and never lifts. The option you press answers with its own soft fill. Today’s glide.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="b"><p><b>B</b> · Lifts 6% while you drag it, the amount the library’s held controls grow, and settles back when you let go. A tap only glides.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="c"><p><b>C</b> · Lifts 16% while you drag it, the figure a third-party rebuild of Apple’s tab bar gives for the tab under its lens (not Apple’s own number). A tap only glides.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="d"><p><b>D</b> · Lifts on every press: it moves to the option you press and lifts there, and the choice is made when you let go over it.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="e"><p><b>E</b> · The word grows instead: the mark stays its size, and the word or icon under your finger grows a twelfth.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+  </section>
+
+  <section data-q="stretch">
+    <h2>2 · Stretch</h2>
+    <p class="how">Tap options far apart, then drag the chosen one past either end.</p>
+    <div class="letter" data-v="a"><p><b>A</b> · Keeps its size, and stops at the ends. Today’s.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="b"><p><b>B</b> · Stretches as it travels: its front edge leads, its back edge follows, up to a fifth longer, and it lands at its own size.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="c"><p><b>C</b> · Stretches past the ends: dragged beyond the first or last option, it lengthens toward your finger and comes back when you let go.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+    <div class="letter" data-v="d"><p><b>D</b> · Both B and C.</p><div class="strip" data-items="Library,For You,Browse,Radio"></div><div class="strip seats" data-items="5"></div></div>
+  </section>
+
+  <section data-q="widths">
+    <h2>3 · Widths</h2>
+    <p class="how">Tap between the short words and the long one.</p>
+    <div class="letter" data-v="a"><p><b>A</b> · Every option as wide as the widest. Today’s.</p><div class="strip" data-items="All,Shared,Favourites"></div></div>
+    <div class="letter" data-v="b"><p><b>B</b> · Each option as wide as its word; the mark changes width as it moves.</p><div class="strip" data-layout="content" data-items="All,Shared,Favourites"></div></div>
+  </section>
+
+  <section data-q="keys">
+    <h2>4 · Arrow keys</h2>
+    <p class="how">These two buttons do what the arrow keys do, on all three strips at once (the keys work too, on a strip you have tapped, if a keyboard is attached).</p>
+    <div class="bar">
+      <button class="key" type="button" data-step="-1" aria-label="Previous, as the left arrow key">◀</button>
+      <button class="key" type="button" data-step="1" aria-label="Next, as the right arrow key">▶</button>
+    </div>
+    <div class="letter" data-v="a"><p><b>A</b> · Glides as a tap does. Today’s.</p><div class="strip" data-items="Day,Week,Month,Year"></div></div>
+    <div class="letter" data-v="b"><p><b>B</b> · A shorter glide (about 0.12 s).</p><div class="strip" data-items="Day,Week,Month,Year"></div></div>
+    <div class="letter" data-v="c"><p><b>C</b> · Fades across: the mark fades out where it was and in where it goes, and nothing moves.</p><div class="strip" data-items="Day,Week,Month,Year"></div></div>
+  </section>
+
+  <p class="note">Everything here is a model of the design, drawn by this page alone. With Reduce Motion on, the mark would fade across in every strip. “Busy page” keeps the page’s own work running three quarters of the time, as a heavy page does.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is not printed.
+  document.getElementById("env").textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+
+  let busy = 0;
+  const busyBtn = document.getElementById("busy");
+  busyBtn.addEventListener("click", () => {
+    const on = busyBtn.getAttribute("aria-pressed") !== "true";
+    busyBtn.setAttribute("aria-pressed", String(on));
+    clearInterval(busy);
+    if (on) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+
+  // ── Springs: the closed form from a displacement d0 (px from the target) and a speed v0 (px/s). ──
+  const ROWS = { dock: [0.3, 0.88], press: [0.2, 0.8] };
+  const K = 1.396, S = 0.2; // the trailing edge's response over the leading one, and the stretch cap (mark.json)
+  const state = (resp, z, d0, v0, t) => {
+    const w = (2 * Math.PI) / resp, a = z * w, wd = w * Math.sqrt(1 - z * z), A = d0, B = (v0 + a * d0) / wd;
+    const e = Math.exp(-a * t), c = Math.cos(wd * t), s = Math.sin(wd * t);
+    return [e * (A * c + B * s), e * ((-a * A + B * wd) * c + (-a * B - A * wd) * s)];
+  };
+  // The settle ends when the body stays within half a pixel of its rest (pass-6/fold/fold.json, band).
+  const settleT = (resp, z, d0, v0) => { let last = 0; for (let t = 0; t < 3; t += 1 / 240) if (Math.abs(state(resp, z, d0, v0, t)[0]) > 0.5) last = t; return Math.max(last + 1 / 240, 1 / 30); };
+  // How far a settle from `dist` px short, moving toward the rest at v px/s, passes it.
+  const passBy = (row, dist, v) => { let m = 0; for (let t = 0; t < 1.2; t += 1 / 600) m = Math.max(m, state(row[0], row[1], -dist, v, t)[0]); return m; };
+  // The release seed: the mark's own speed toward its rest, capped so it passes its rest by no more than a settle
+  // from a standing start does, plus a quarter pixel; zero when the mark moves away from it (A5-1, B5-4).
+  const seed = (row, d, v) => {
+    if (!d || Math.sign(v) !== Math.sign(d)) return 0;
+    const dist = Math.abs(d), limit = passBy(row, dist, 0) + 0.25;
+    let lo = 0, hi = Math.abs(v);
+    if (passBy(row, dist, hi) <= limit) return v;
+    for (let i = 0; i < 20; i++) { const m = (lo + hi) / 2; if (passBy(row, dist, m) <= limit) lo = m; else hi = m; }
+    return Math.sign(d) * lo;
+  };
+
+  // ── One strip ──
+  function Strip(root, q, letter) {
+    const seats = root.classList.contains("seats");
+    const items = seats ? Array.from({ length: +root.dataset.items }, (_, i) => "Seat " + (i + 1)) : root.dataset.items.split(",");
+    const tabs = items.map((label, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "tab"; b.setAttribute("role", "tab"); b.tabIndex = i ? -1 : 0;
+      b.setAttribute("aria-selected", String(i === 0));
+      if (seats) { b.setAttribute("aria-label", label); b.appendChild(document.createElement("i")); }
+      else { const s = document.createElement("span"); s.textContent = label; b.appendChild(s); }
+      return b;
+    });
+    root.setAttribute("role", "tablist");
+    root.setAttribute("aria-label", (q === "hold" ? "Holding it" : q === "stretch" ? "Stretch" : q === "widths" ? "Widths" : "Arrow keys") + ", letter " + letter.toUpperCase());
+    const lift = q === "hold" && (letter === "b" || letter === "c" || letter === "d");
+    const grows = q === "hold" && letter === "e";
+    if (lift || grows) root.dataset.quiet = ""; // the plate stands down where the mark or the word answers the press
+    const travelStretch = q === "stretch" && (letter === "b" || letter === "d");
+    const endStretch = q === "stretch" && (letter === "c" || letter === "d");
+    const windowed = (q === "stretch" && letter !== "a") || (q === "widths" && letter === "b");
+    const mark = document.createElement("div"); mark.className = "mark"; mark.setAttribute("aria-hidden", "true");
+    if (windowed) mark.dataset.window = "";
+    if (lift) mark.style.setProperty("--lift", letter === "c" ? "1.16" : "1.06");
+    root.append(mark, ...tabs);
+    let sel = 0, L = 0, R = 0, W = 0, play = null; // edges of the visible mark (px, in the strip's box)
+    const box = (i) => [tabs[i].offsetLeft, tabs[i].offsetLeft + tabs[i].offsetWidth];
+    // A plain capsule takes its width once, at rest; only the window letters change the visible length, by --b.
+    const draw = (l, r) => { mark.style.translate = l + "px 0"; if (windowed) mark.style.setProperty("--b", (r - l - W) + "px"); else if (!play) mark.style.width = (r - l) + "px"; };
+    const layout = () => { if (!windowed) return; W = Math.max(...tabs.map((t) => t.offsetWidth)) * (travelStretch || endStretch ? 1 + S : 1) + 2; mark.style.width = W + "px"; };
+    const hold = () => { if (play) { const [l, r] = play.now(); play.stop(); L = l; R = r; draw(L, R); } };
+
+    // Play both edges from where they are to [l1, r1]. Each edge is its own spring; the leading edge rides `row`, the
+    // trailing edge rides it with a K-times longer response when the travel stretch is on, its lead capped at S.
+    const travel = (l1, r1, row, vL = 0, vR = 0) => {
+      const prev = play && play.now(); if (play) { const v = play.vel(); vL = v[0]; vR = v[1]; play.stop(); }
+      if (prev) { L = prev[0]; R = prev[1]; }
+      if (reduce.matches || row === "fade") return fadeTo(l1, r1);
+      const [resp, z] = ROWS[row];
+      const L0 = L, R0 = R, right = l1 > L, w1 = r1 - l1;
+      const rL = travelStretch && right ? resp * K : resp, rR = travelStretch && !right ? resp * K : resp;
+      const T = Math.max(settleT(rL, z, L0 - l1, vL), settleT(rR, z, R0 - r1, vR));
+      const at = (t) => {
+        let l = l1 + state(rL, z, L0 - l1, vL, t)[0], r = r1 + state(rR, z, R0 - r1, vR, t)[0];
+        if (travelStretch) { const ex = r - l - w1; if (ex > 0) { const cap = S * w1 * Math.tanh(ex / (S * w1)); if (right) l = r - w1 - cap; else r = l + w1 + cap; } }
+        if (t >= T) { l = l1; r = r1; } // the last sample is the rest itself, within half a pixel of the one before
+        return [l, r];
+      };
+      const n = Math.max(2, Math.ceil(T * 120)), fa = [], fb = [];
+      for (let i = 0; i <= n; i++) {
+        const [l, r] = at((T * i) / n);
+        fa.push({ translate: l + "px 0", offset: i / n });
+        if (windowed) fb.push({ translate: (r - l - W) + "px 0", offset: i / n });
+      }
+      const a1 = mark.animate(fa, { duration: T * 1000, easing: "linear" });
+      const a2 = windowed ? mark.animate(fb, { duration: T * 1000, easing: "linear", pseudoElement: "::before" }) : null;
+      const t0 = performance.now();
+      const el = () => Math.min(T, (performance.now() - t0) / 1000);
+      const me = { now: () => at(el()), vel: () => (el() >= T ? [0, 0] : [state(rL, z, L0 - l1, vL, el())[1], state(rR, z, R0 - r1, vR, el())[1]]), stop: () => { a1.cancel(); if (a2) a2.cancel(); if (play === me) play = null; } };
+      play = me;
+      a1.onfinish = () => { if (play === me) { me.stop(); L = l1; R = r1; draw(L, R); } };
+      L = l1; R = r1; draw(l1, r1); // the end state is written underneath; the animation draws over it until it ends
+    };
+    // The reduced-motion form and key letter C: the mark dips, lands while hidden, and returns. Nothing cuts.
+    const fadeTo = (l1, r1) => {
+      const out = mark.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: "ease-in", fill: "forwards" });
+      out.onfinish = () => { L = l1; R = r1; draw(L, R); mark.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 100, easing: "ease-out" }); out.cancel(); };
+    };
+
+    // The commit (law 3): the model and aria-selected change at once; the words trade ink as the mark leaves.
+    const commit = (i) => { sel = i; tabs.forEach((t, k) => { t.setAttribute("aria-selected", String(k === i)); t.tabIndex = k === i ? 0 : -1; }); };
+    const goTo = (i, how) => { const [l1, r1] = box(i); travel(l1, r1, how); };
+    const tabAt = (x) => { for (let k = 0; k < tabs.length; k++) { const [a, b] = box(k); if (x >= a && x < b) return k; } return x < box(0)[0] ? 0 : tabs.length - 1; };
+    const localX = (e) => e.clientX - root.getBoundingClientRect().left;
+    const unpress = () => { tabs.forEach((t) => t.classList.remove("pressing", "grow")); mark.classList.remove("pressing"); };
+    const liftOn = (w) => { mark.style.setProperty("--ox", w / 2 + "px"); mark.classList.remove("letgo"); mark.classList.add("held"); };
+    const liftOff = () => { if (mark.classList.contains("held")) { mark.classList.add("letgo"); mark.classList.remove("held"); } };
+
+    // Press and drag. A press on the chosen option may grab the mark; a press elsewhere is a tap (commit on release).
+    let drag = null;
+    root.addEventListener("pointerdown", (e) => {
+      const i = tabs.findIndex((t) => t.contains(e.target)); if (i < 0) return;
+      root.setPointerCapture(e.pointerId);
+      if (grows) tabs[i].classList.add("grow");
+      if (i !== sel) {
+        tabs[i].classList.add("pressing");
+        if (q === "hold" && letter === "d") { goTo(i, "dock"); liftOn(R - L); }
+        drag = { i, tap: true };
+        return;
+      }
+      if (!lift && !grows) mark.classList.add("pressing"); // the chosen option's press tone, seen through the mark (A5-6); drawn on the mark here, under it in the design
+      if (q === "hold" && letter === "d") { hold(); liftOn(R - L); }
+      drag = { i, moved: false, x0: localX(e), w: R - L, pts: [] };
+    });
+    root.addEventListener("pointermove", (e) => {
+      if (!drag || drag.tap) return;
+      const x = localX(e);
+      if (!drag.moved) {
+        if (Math.abs(x - drag.x0) < 6) return;
+        drag.moved = true; hold();
+        drag.grab = x - L; // measured where the slack runs out, so the mark starts from where it is drawn (A5-3)
+        if (q === "hold" && (letter === "b" || letter === "c")) liftOn(drag.w);
+      }
+      const min = box(0)[0], max = box(tabs.length - 1)[1] - drag.w;
+      let l = x - drag.grab, r;
+      if (l < min) { const over = min - l; l = min; r = l + drag.w; if (endStretch) l = min - S * drag.w * Math.tanh(over / (2 * S * drag.w)); }
+      else if (l > max) { const over = l - max; l = max; r = l + drag.w + (endStretch ? S * drag.w * Math.tanh(over / (2 * S * drag.w)) : 0); }
+      else r = l + drag.w;
+      L = l; R = r; draw(L, R);
+      const now = performance.now(); drag.pts.push([now, L]); while (drag.pts.length > 2 && now - drag.pts[0][0] > 80) drag.pts.shift();
+      if (grows) { const k = tabAt(x); tabs.forEach((t, j) => t.classList.toggle("grow", j === k)); }
+    });
+    const release = (e, cancel) => {
+      if (!drag) return;
+      const d = drag; drag = null;
+      unpress(); liftOff();
+      if (d.tap) {
+        const over = cancel ? -1 : tabs.findIndex((t) => t.contains(document.elementFromPoint(e.clientX, e.clientY)));
+        if (over === d.i) { commit(d.i); if (!(q === "hold" && letter === "d")) goTo(d.i, "dock"); }
+        else if (q === "hold" && letter === "d") goTo(sel, "dock"); // nothing chosen: it returns (L16)
+        return;
+      }
+      if (!d.moved) return;
+      // The commit is the option under the finger (law 3, B5-11); the mark's own speed over the last 80 ms seeds the
+      // settle, capped (A5-1). While the follow held it at an end, its own speed was zero.
+      const p = d.pts, v = p.length > 1 ? ((p[p.length - 1][1] - p[0][1]) / Math.max(1, p[p.length - 1][0] - p[0][0])) * 1000 : 0;
+      const i = cancel ? sel : tabAt(localX(e));
+      if (i !== sel) commit(i);
+      const [l1, r1] = box(i), s = seed(ROWS.dock, l1 - L, v);
+      travel(l1, r1, "dock", s, s);
+    };
+    root.addEventListener("pointerup", (e) => release(e, false));
+    root.addEventListener("pointercancel", (e) => release(e, true));
+    root.addEventListener("click", (e) => { if (e.detail === 0) { const i = tabs.findIndex((t) => t.contains(e.target)); if (i >= 0 && i !== sel) { commit(i); goTo(i, "dock"); } } });
+    const keyRow = q === "keys" ? (letter === "b" ? "press" : letter === "c" ? "fade" : "dock") : "dock";
+    const step = (k) => { const i = (sel + k + tabs.length) % tabs.length; commit(i); goTo(i, keyRow); return i; };
+    root.addEventListener("keydown", (e) => {
+      const k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!k) return;
+      e.preventDefault(); tabs[step(k)].focus();
+    });
+    // A change of layout moves the mark from where it is drawn to its option's new box.
+    const relayout = () => { hold(); layout(); draw(L, R); const [l1, r1] = box(sel); if (l1 !== L || r1 !== R) travel(l1, r1, "dock"); };
+    layout(); [L, R] = box(0); draw(L, R);
+    addEventListener("resize", relayout);
+    return { step };
+  }
+
+  for (const section of document.querySelectorAll("section[data-q]")) {
+    const q = section.dataset.q;
+    const strips = [];
+    for (const row of section.querySelectorAll(".letter")) for (const s of row.querySelectorAll(".strip")) strips.push(Strip(s, q, row.dataset.v));
+    for (const k of section.querySelectorAll("button.key")) k.addEventListener("click", () => strips.forEach((s) => s.step(+k.dataset.step)));
+  }
+})();
+</script>

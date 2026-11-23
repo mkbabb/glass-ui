@@ -1,0 +1,309 @@
+<title>Glass Bud Shapes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 4 (Q1, the shape channel), rebuilt in pass 5 by the fold of pass 4's critiques (A4-1, A4-2, A4-7, A4-9,
+   B4-1, B4-6). One menu grows out of a 44 px button five ways (A to E), one at a time; then a dock folds to a circle
+   two ways (F, G). Every lane opens on the same clock and curve: glass-ui's "present" row, 200 ms, as the single
+   cubic-bezier the study proposes (pass-2/delivery/curves.json, tokenReplacement.present); on today's linear() tokens
+   these lanes would be timed on the page's thread in Safari 27.2 (DESIGN §6.2, fold B4-3).
+   C is today's menu (reveal.css:267-292, the owner's O-171 grow, with its 2rem bleed), started from the button
+   instead of a strip the button's height. E opens below its button, as a menu opens beside its trigger, and never
+   over it. A to D are born on the button's own box: the button lends its glass in that frame, so no frost is ever
+   born over another, and takes it back by a 120 ms fade once the menu has gone (R5's hand-off). Every lane leaves by
+   fading where it stands over 120 ms (P0a rule 3), and a lane leaves before another shows. Each plate draws its 1 px
+   edge and the one elevation shadow, so A's thinning edge and D's missing shadow show. No leg is under 120 ms. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --veil: oklch(0.28 0.035 70 / 0.14);
+  --panel: color-mix(in srgb, hsl(30 85% 96%) 54.5%, transparent);
+  --on-glass: hsl(24 10% 10%);
+  --edge: hsl(24 10% 10% / 0.1);
+  --shadow: hsl(24 30% 18% / 0.2);
+  --frost: blur(16px) saturate(1.5);
+  --ease: cubic-bezier(0.197, 0, 0.124, 0.808);
+  --d: 200ms;
+  --out: 120ms;
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+    --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+    --panel: color-mix(in srgb, hsl(26 22% 17%) 73.9%, transparent);
+    --edge: hsl(30 14% 90% / 0.12); --shadow: hsl(0 0% 0% / 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+  --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+  --panel: color-mix(in srgb, hsl(26 22% 17%) 73.9%, transparent);
+  --edge: hsl(30 14% 90% / 0.12); --shadow: hsl(0 0% 0% / 0.5);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; font-size: 16px; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+button[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.legend { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 15px; color: var(--muted); }
+.legend li { transition: color 160ms ease-out; }
+.legend b { color: var(--fg); font-weight: 600; }
+.legend li[aria-current="true"] { color: var(--fg); }
+.stage {
+  position: relative; height: 276px; border-radius: 8px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px), var(--stripe-b);
+}
+.stage::after { content: ""; position: absolute; left: 0; right: 0; top: 52%; height: 18px; background: var(--stripe-c); z-index: 0; }
+.glass { background: var(--veil); -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost); border: 1px solid var(--edge); box-sizing: border-box; }
+main[data-frost="off"] .glass { background: var(--panel); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lift { box-shadow: 0 8px 24px var(--shadow); }
+/* The button. Its glass is lent to a lane born on its box (no transition: the lane covers it in that same frame) and
+   comes back by a 120 ms fade once the lane has gone. */
+.seat {
+  position: absolute; left: 16px; top: 16px; width: 44px; height: 44px; border-radius: 22px; z-index: 1;
+  display: grid; place-items: center; color: var(--on-glass); transition: opacity var(--out) ease-out;
+}
+.seat.lent { opacity: 0; transition: none; }
+.seat svg { width: 20px; height: 20px; fill: currentColor; }
+.lane { position: absolute; left: 16px; top: 16px; width: 250px; height: 188px; z-index: 2; display: none; }
+.lane.on { display: block; }
+.lane.gone { visibility: hidden; }
+.lane.gone, .lane.gone * { transition: none !important; }
+.lane.leaving { opacity: 0; transition: opacity var(--out) ease-out; }
+.rows {
+  position: absolute; inset: 0; padding: 10px; display: grid; grid-auto-rows: 42px; gap: 0; color: var(--on-glass);
+  font: 400 16px/42px var(--font); opacity: 0; pointer-events: none;
+}
+.rows span { padding-inline: 12px; }
+.lane.open .rows, .lane.half .rows { opacity: 1; transition: opacity calc(var(--d) * 0.6) ease-out calc(var(--d) * 0.45); }
+.lane.half .rows { opacity: 0.5; }
+/* A: the whole panel, shrunk to the button's box by a non-uniform scale from its corner */
+.pA { position: absolute; inset: 0; border-radius: 16px; transform-origin: 0 0; scale: 0.176 0.234; transition: scale var(--d) var(--ease); }
+.open .pA { scale: 1 1; }
+.half .pA { scale: 0.588 0.617; }
+/* B: the panel's own width, height and rounding, changed each frame */
+.pB { position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 22px;
+  transition: width var(--d) var(--ease), height var(--d) var(--ease), border-radius var(--d) var(--ease); }
+.open .pB { width: 250px; height: 188px; border-radius: 16px; }
+.half .pB { width: 147px; height: 116px; border-radius: 19px; }
+/* C: today's menu, a rounded clip that opens out from the button to 2rem past the panel, so its shadow shows at rest */
+.pC { position: absolute; inset: 0; border-radius: 16px; clip-path: inset(0px 206px 144px 0px round 22px); transition: clip-path var(--d) var(--ease); }
+.open .pC { clip-path: inset(-32px -32px -32px -32px round 48px); }
+.half .pC { clip-path: inset(-16px 87px 56px -16px round 35px); }
+/* D: the full panel seen through three rounded windows of its own size, each moved only by translate; the plate's
+   shadow lies outside the outer window, which clips it, so D shows none (DESIGN §6.2) */
+.win { position: absolute; inset: 0; border-radius: 16px; overflow: clip; transition: translate var(--d) var(--ease); }
+.pD { position: absolute; inset: 0; border-radius: 16px; transition: translate var(--d) var(--ease); }
+.lane-d .w2 { translate: -206px 0; }
+.lane-d .w3 { translate: 206px -144px; }
+.lane-d .pD { translate: -206px 0; }
+.lane-d.open .w2, .lane-d.open .w3, .lane-d.open .pD { translate: 0 0; }
+.lane-d.half .w2 { translate: -103px 0; }
+.lane-d.half .w3 { translate: 103px -72px; }
+.lane-d.half .pD { translate: -103px 0; }
+/* E: below its button, at its own size, fading in and growing 4 % from the corner nearest the button */
+.lane-e { top: 68px; }
+.pE { position: absolute; inset: 0; border-radius: 16px; opacity: 0; scale: 0.96; transform-origin: 22px 0;
+  transition: opacity var(--d) var(--ease), scale var(--d) var(--ease); }
+.open .pE { opacity: 1; scale: 1; }
+.half .pE { opacity: 0.5; scale: 0.98; }
+.lane.lane-e .rows, .lane.lane-e.open .rows, .lane.lane-e.half .rows { opacity: 1; transition: none; }
+/* The fold: a capsule dock to a circle. F: the dock's glass is a window of its own shape whose ::before carries the
+   glass, a sibling of the seats (wi8's plate, DESIGN §6.3); both move by translate. G: the dock is scaled narrower.
+   The four seats that go fade over 120 ms on the fold and come back after half the unfold, so no mark stands on the
+   bare stripes before its plate: six animations per fold on this page. */
+.folds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.fstage { height: 104px; }
+.fcap { position: absolute; left: 12px; top: 22px; width: 236px; height: 52px; z-index: 1; --fd: var(--d); }
+.folds.folded .fcap { --fd: var(--out); }
+.fw { position: absolute; inset: 0; border-radius: 26px; overflow: clip; transition: translate var(--fd) var(--ease); }
+.fw::before { content: ""; position: absolute; inset: 0; border-radius: 26px; background: var(--veil); border: 1px solid var(--edge); box-sizing: border-box;
+  -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost); transition: translate var(--fd) var(--ease); }
+main[data-frost="off"] .fw::before { background: var(--panel); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.folded .fw { translate: -184px 0; }
+.folded .fw::before { translate: 184px 0; }
+.fg { position: absolute; inset: 0; border-radius: 26px; transform-origin: 0 50%; transition: scale var(--fd) var(--ease); }
+.folded .fg { scale: 0.2203 1; }
+.dots { position: absolute; inset: 0; display: flex; align-items: center; gap: 0; padding-left: 4px; z-index: 2; pointer-events: none; }
+.dots i { width: 44px; height: 44px; display: grid; place-items: center; transition: opacity var(--out) ease-out calc(var(--d) * 0.5); }
+.folded .dots i { transition-delay: 0ms; }
+.dots i::before { content: ""; width: 12px; height: 12px; border-radius: 6px; background: var(--on-glass); }
+.folded .dots i + i { opacity: 0; }
+.fstage .cap { position: absolute; left: 10px; bottom: 6px; z-index: 3; font: 13px var(--font); color: var(--fg); background: var(--bg); padding: 2px 6px; border-radius: 4px; }
+/* the two fold stages stack at phone width, so each dock keeps its own size */
+@media (max-width: 600px) { .folds { grid-template-columns: minmax(0, 1fr); } }
+.clipread { font: 12px var(--mono); }
+.note { color: var(--muted); font-size: 15px; margin: 0; }
+h2 { font: 400 17px/1.3 var(--font); margin: 8px 0 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+</style>
+
+<main id="main">
+  <p class="ask"><strong>Three short looks at how a menu grows out of its button and how a dock folds, each with Frost on and then off.</strong> Send the letters for each step below, then the one letter, A to E, that best grows out of its button.</p>
+  <ol class="steps">
+    <li>Corners: pick each letter and tap Open (Slow ×4 helps). Which letters lose their round corners, or show a square or darker patch?</li>
+    <li>Busy: turn on Busy page and open each letter again. Which letters stutter?</li>
+    <li>The fold: tap Fold. Does F’s frost look like G’s, and does either show a square patch?</li>
+  </ol>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading: the motion is what you are looking at.</p>
+  <div class="bar" role="group" aria-label="Which way the menu grows">
+    <button type="button" data-pick="a" aria-pressed="true">A</button>
+    <button type="button" data-pick="b" aria-pressed="false">B</button>
+    <button type="button" data-pick="c" aria-pressed="false">C</button>
+    <button type="button" data-pick="d" aria-pressed="false">D</button>
+    <button type="button" data-pick="e" aria-pressed="false">E</button>
+  </div>
+  <div class="bar">
+    <button type="button" id="open" aria-pressed="false">Open</button>
+    <button type="button" id="half" aria-pressed="false">Half</button>
+    <button type="button" id="slow" aria-pressed="false">Slow ×4</button>
+    <button type="button" id="busy" aria-pressed="false">Busy page</button>
+    <button type="button" id="frost" aria-pressed="true">Frost</button>
+  </div>
+  <div class="stage" id="stage">
+    <div class="seat" id="seat" aria-hidden="true"><span class="glass" style="position:absolute;inset:0;border-radius:22px"></span><svg viewBox="0 0 24 24" style="position:relative"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></div>
+    <div class="lane lane-a on gone" data-lane="a"><div class="pA glass lift"></div><div class="rows"><span>New tab</span><span>Bookmarks</span><span>History</span><span>Settings</span></div></div>
+    <div class="lane lane-b gone" data-lane="b"><div class="pB glass lift"></div><div class="rows"><span>New tab</span><span>Bookmarks</span><span>History</span><span>Settings</span></div></div>
+    <div class="lane lane-c gone" data-lane="c"><div class="pC glass lift" id="pc"></div><div class="rows"><span>New tab</span><span>Bookmarks</span><span>History</span><span>Settings</span></div></div>
+    <div class="lane lane-d gone" data-lane="d"><div class="win w1"><div class="win w2"><div class="win w3"><div class="pD glass lift"></div></div></div><div class="rows"><span>New tab</span><span>Bookmarks</span><span>History</span><span>Settings</span></div></div></div>
+    <div class="lane lane-e gone" data-lane="e"><div class="pE glass lift"><div class="rows"><span>New tab</span><span>Bookmarks</span><span>History</span><span>Settings</span></div></div></div>
+  </div>
+  <ul class="legend" id="legend">
+    <li data-for="a" aria-current="true"><b>A</b> · Stretched: the whole menu squeezed to the button’s size, then stretched back out.</li>
+    <li data-for="b"><b>B</b> · Resized: the menu’s own width, height and rounding change on every frame.</li>
+    <li data-for="c"><b>C</b> · Today’s menu: it grows from its button by a rounded cut that opens out, the grow you asked for on 5 November. Here it starts from the button itself.</li>
+    <li data-for="d"><b>D</b> · Windows: the full menu seen through three rounded windows that slide apart. Its shadow arrives only once it has landed.</li>
+    <li data-for="e"><b>E</b> · Fades in: the menu appears below its button at its own size, growing a little. It never takes the button’s shape, and it would undo the November grow.</li>
+  </ul>
+
+  <h2>A dock folding to a circle</h2>
+  <div class="bar"><button type="button" id="fold" aria-pressed="false">Fold</button></div>
+  <div class="folds" id="folds">
+    <div class="stage fstage"><div class="fcap"><div class="fw"></div><div class="dots"><i></i><i></i><i></i><i></i><i></i></div></div><span class="cap">F · Window</span></div>
+    <div class="stage fstage"><div class="fcap"><div class="fg glass lift"></div><div class="dots"><i></i><i></i><i></i><i></i><i></i></div></div><span class="cap">G · Stretched</span></div>
+  </div>
+  <p class="note">Every menu opens on the same 0.2 s curve and leaves by fading where it stands. “Busy page” keeps the page’s own work running three quarters of the time, the way a heavy page does. “Frost” off shows each plate as a plain fill with no blur.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const env = document.getElementById("env");
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is not printed.
+  const pc = document.getElementById("pc");
+  const clipOk = /^inset\(/.test(getComputedStyle(pc).clipPath || "");
+  env.textContent = (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    " · C clip " + (clipOk ? "applied" : "refused");
+
+  const main = document.getElementById("main"), stage = document.getElementById("stage"), seat = document.getElementById("seat");
+  const pressed = (b) => b.getAttribute("aria-pressed") === "true";
+  const flip = (b, on) => b.setAttribute("aria-pressed", String(on));
+  const open = document.getElementById("open"), half = document.getElementById("half");
+  const lane = (k) => stage.querySelector(`.lane[data-lane="${k}"]`);
+  const ms = (name) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
+  let pick = "a", shown = "", timer = 0;
+
+  // Show the picked lane at `target` ("open" or "half"). A lane at rest is hidden on the button's box; A to D are
+  // born on that box in the frame the button lends its glass, then grow. E opens below the button, which stays.
+  const show = (target) => {
+    clearTimeout(timer);
+    const l = lane(pick);
+    if (l.classList.contains("gone") || l.classList.contains("leaving")) {
+      l.classList.remove("gone", "leaving", "open", "half");
+      if (pick !== "e") seat.classList.add("lent");
+      void l.offsetWidth; // the lane's first frame is drawn on the button's box
+    }
+    l.classList.toggle("open", target === "open");
+    l.classList.toggle("half", target === "half");
+    shown = target;
+  };
+  // Leave: the lane fades where it stands, then rests hidden on the button's box, then the button takes its glass back.
+  const leave = (then) => {
+    clearTimeout(timer);
+    const l = lane(pick);
+    if (!shown) { if (then) then(); return; }
+    shown = "";
+    l.classList.add("leaving");
+    timer = setTimeout(() => {
+      l.classList.remove("open", "half", "leaving");
+      l.classList.add("gone");
+      seat.classList.remove("lent");
+      if (then) timer = setTimeout(then, ms("--out"));
+    }, ms("--out"));
+  };
+  for (const b of document.querySelectorAll("[data-pick]")) {
+    b.addEventListener("click", () => {
+      const next = b.dataset.pick;
+      for (const o of document.querySelectorAll("[data-pick]")) flip(o, o === b);
+      for (const li of document.querySelectorAll("#legend li")) li.setAttribute("aria-current", String(li.dataset.for === next));
+      flip(open, false); flip(half, false);
+      leave(() => {
+        lane(pick).classList.remove("on");
+        pick = next;
+        lane(pick).classList.add("on", "gone");
+      });
+    });
+  }
+  open.addEventListener("click", () => {
+    flip(open, !pressed(open)); if (pressed(open)) flip(half, false);
+    if (pressed(open)) show("open"); else leave();
+  });
+  half.addEventListener("click", () => {
+    flip(half, !pressed(half)); if (pressed(half)) flip(open, false);
+    if (pressed(half)) show("half"); else leave();
+  });
+
+  // One clock for every lane: 200 ms in, 120 ms out (about six tenths of the in), ×4 when slowed.
+  const slow = document.getElementById("slow");
+  slow.addEventListener("click", () => {
+    flip(slow, !pressed(slow));
+    const k = pressed(slow) ? 4 : 1;
+    document.documentElement.style.setProperty("--d", 200 * k + "ms");
+    document.documentElement.style.setProperty("--out", 120 * k + "ms");
+  });
+
+  const busy = document.getElementById("busy");
+  let busyId = 0;
+  busy.addEventListener("click", () => {
+    flip(busy, !pressed(busy));
+    clearInterval(busyId);
+    if (pressed(busy)) busyId = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+  const frost = document.getElementById("frost");
+  frost.addEventListener("click", () => { flip(frost, !pressed(frost)); main.dataset.frost = pressed(frost) ? "on" : "off"; });
+
+  // The fold leaves on the out clock and the unfold arrives on the in clock.
+  const fold = document.getElementById("fold"), folds = document.getElementById("folds");
+  fold.addEventListener("click", () => { flip(fold, !pressed(fold)); folds.classList.toggle("folded", pressed(fold)); });
+})();
+</script>

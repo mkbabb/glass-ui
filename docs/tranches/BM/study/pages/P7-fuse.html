@@ -1,0 +1,448 @@
+<title>Glass Split and Fuse</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 7 (fusion and fission, first round: Q2, the theme seat, the fold; DESIGN §9), rebuilt in pass 8 by the fold
+   of pass 7's critiques (pass-7/fold.md; the pass-7 page is kept at pass-8/fold/P7-fuse.pass7.html). Two sections.
+   1 · The theme seat leaves the dock's end as the dock opens and goes back in as it folds, five ways:
+     A, born underneath (F3, Apple's recipe), as pass 7 built it: the seat's fill is its share outside the dock, so the
+        two translucent plates overlap until they part (146 ms of an open on the dock row; pass-8/fold/fold.json).
+     A2, born underneath with no overlap (R4's C rule, fold A7-2, B7-4): opening, the seat carries nothing while any of it
+        is under the dock and takes its glass over the last 8 px of the gap; folding, its glass fades on a 90 ms leg from
+        the press, so it is under three quarters by the time it meets the dock's end and gone 60 ms later.
+     B, edges meet: as A, and the facing ends go square as they touch; radii written each frame.
+     C, goo: the dock's plate and the seat's plate sit in one layer that spans both, under an SVG blur (4 px) and an
+        alpha threshold, so the two are drawn as one shape and a neck forms and pinches at a 5 px gap. Played on the same
+        legs as A (fold B7-2). The filter is on only while a change runs (`data-fusing`), so at each end the plates swap
+        from one filtered layer to two plain fills; Slow ×4 shows it (fold A7-3). The seat's glyph sits outside the layer
+        on legs of its own (fold A7-4). Frostless only.
+     D, one piece, cut: one plate clipped each frame to the capsule, the seat and a neck. Per-frame clip-path writes.
+   2 · The fold, three ways: A, the content fades on its window while the plate narrows by per-frame writes (11.2.0's
+     grammar, as modelled); B, the plate is a window moved by translate, and the seats sit in a second window, 5 px
+     larger than the plate so a focus ring is never cut, that clips only while the fold runs (fold A7-6, B7-9); at the
+     folded rest the seats are hidden and inert in the frame the clip lifts. Only the first seat fades: it trades with
+     the folded glyph by P0a rule 4 (fold A7-5). C, as B on the press row.
+   The plates are the 12.0.0 chrome material (no blur, --card at D3's bound: 0.897 light, 0.872 dark; DESIGN §5.0). The
+   Frost switch is gone: no split ships while the dock is frosted (fold B7-6, B7-13). Flat ground lays a flat grey under
+   every stage, for the held screenshots (fold B7-5). */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --glass: hsl(30 85% 96% / 0.897);
+  --glass-solid: hsl(30 85% 96%);
+  --glass-alpha: 0.897;
+  --icon: hsl(24 10% 10% / 0.8);
+  --shadow: hsl(24 10% 10% / 0.16);
+  --shadow-goo: hsl(24 10% 10% / 0.178);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --flat: hsl(30 8% 55%);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --glass: hsl(26 22% 17% / 0.872); --glass-solid: hsl(26 22% 17%); --glass-alpha: 0.872;
+    --icon: hsl(30 14% 90% / 0.8); --shadow: hsl(0 0% 0% / 0.4); --shadow-goo: hsl(0 0% 0% / 0.459);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%); --flat: hsl(30 8% 55%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --glass: hsl(26 22% 17% / 0.872); --glass-solid: hsl(26 22% 17%); --glass-alpha: 0.872;
+  --icon: hsl(30 14% 90% / 0.8); --shadow: hsl(0 0% 0% / 0.4); --shadow-goo: hsl(0 0% 0% / 0.459);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%); --flat: hsl(30 8% 55%);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1100px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 15px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.toggle {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) { button.toggle:hover { box-shadow: inset 0 0 0 1.5px var(--focus); } }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 14px 14px; display: grid; gap: 10px; min-width: 0; }
+.letter p { margin: 0; font-size: 15px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* A stage: stripes and a band, so a seam, a doubled tint or a square patch shows; Flat ground lays a flat grey. */
+.stage {
+  position: relative; inline-size: 100%; max-inline-size: 340px; block-size: 120px; border-radius: 8px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px), var(--stripe-b);
+}
+.stage::after { content: ""; position: absolute; left: 0; right: 0; top: 56px; height: 14px; background: var(--stripe-c); }
+.flat .stage { background: var(--flat); }
+.flat .stage::after { display: none; }
+.scene { position: absolute; inset: 0; z-index: 1; }
+.abs { position: absolute; top: 34px; left: 12px; }
+
+/* The dock's plate as a window (DESIGN §6.3): the window sets the moving end, its ::before (the glass) the fixed one. */
+.win { inline-size: 236px; block-size: 52px; border-radius: 26px; overflow: clip; z-index: 2; translate: var(--win-x, 0px) 0; }
+.win::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); translate: var(--fill-x, 0px) 0; }
+/* The seat: its own plate on its ::before; under the dock in the stacking order. */
+.seat { inline-size: 52px; block-size: 52px; border-radius: 26px; z-index: 1; translate: var(--seat-x, 0px) 0; }
+.seat::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); opacity: var(--seat-f, 0); }
+/* C: the goo layer spans both plates with a 12 px margin (3 sigma) on every side, so the filter's region is its own box:
+   320 x 76 CSS px. With the filter on, its plates are solid and the layer carries the plate's alpha and one drop-shadow,
+   whose colour is divided by that alpha so the layer's opacity does not thin it (fold A7-3). With it off, each plate is
+   a plain translucent fill with its own shadow, and the folded seat is hidden. */
+.goo { position: absolute; left: 0; top: 22px; inline-size: 320px; block-size: 76px; z-index: 1; }
+.goo[data-fusing] { opacity: var(--glass-alpha); filter: url(#fuse) drop-shadow(0 4px 14px var(--shadow-goo)); }
+.goo .gwin { position: absolute; top: 12px; left: 12px; inline-size: 236px; block-size: 52px; border-radius: 26px; overflow: clip; translate: var(--win-x, 0px) 0; }
+.goo .gwin::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); translate: var(--fill-x, 0px) 0; }
+.goo .gseat { position: absolute; top: 12px; left: 12px; inline-size: 52px; block-size: 52px; border-radius: 26px; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); }
+.goo[data-fusing] .gwin::before, .goo[data-fusing] .gseat { background: var(--glass-solid); box-shadow: none; }
+/* D: one plate, cut each frame. Its clip also cuts away its shadow. */
+.cplate { inline-size: 300px; block-size: 52px; background: var(--glass); z-index: 1; }
+/* Section 2's A: a rounded plate whose width is written each frame, and its content cut by the plate's moving edge. */
+.fplate { inline-size: 236px; block-size: 52px; border-radius: 26px; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); z-index: 1; }
+
+/* Glyphs: four seats, the folded face's glyph, and the theme seat's crescent. The seats' row sits in a window 5 px
+   larger than the plate on every side (so a 3 px focus ring at a 2 px offset is never cut), moved with the plate; its
+   inner row stands still by the counter-translate, so the edge cuts each seat as it passes. The window clips only
+   while a change runs (.morph); at the folded rest the seats are hidden and inert (.folded), set in the frame the clip
+   lifts, so nothing visible changes. Section 2's A clips the row each frame instead. */
+.faces { position: absolute; top: 29px; left: 7px; inline-size: 246px; block-size: 62px; z-index: 3; pointer-events: none; border-radius: 31px; translate: var(--win-x, 0px) 0; }
+.faces.morph { overflow: clip; }
+.faces-in { position: absolute; top: 5px; left: 5px; inline-size: 236px; block-size: 52px; translate: var(--fill-x, 0px) 0; }
+.faces.folded .ico { visibility: hidden; }
+.ico { position: absolute; top: 17px; inline-size: 18px; block-size: 18px; border-radius: 6px; background: var(--icon); }
+.ring { position: absolute; top: 17px; left: 17px; inline-size: 18px; block-size: 18px; border-radius: 50%; box-sizing: border-box; border: 2.5px solid var(--icon); }
+.moon { position: absolute; top: 51px; left: 29px; inline-size: 18px; block-size: 18px; border-radius: 50%; box-shadow: inset -6px -1px 0 0 var(--icon); z-index: 3; pointer-events: none; translate: var(--seat-x, 0px) 0; }
+.note { color: var(--muted); font-size: 15px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+</style>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+  <filter id="fuse" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+    <feGaussianBlur stdDeviation="4"/>
+    <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9.5"/>
+  </filter>
+</svg>
+
+<main>
+  <p class="ask"><strong>Section 1: tap Open a few times at full speed and send the letter that looks most like one piece of glass parting and joining; then turn on Flat ground, tap “Hold where they part” and send a screenshot in Light and one in Dark.</strong> Section 2: send the letter that folds most like iOS, then a second letter with Busy page on.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading: the motion is what you are looking at.</p>
+  <div class="bar">
+    <button id="dark" class="toggle" type="button" aria-pressed="false">Dark</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+    <button id="busy" class="toggle" type="button" aria-pressed="false">Busy page</button>
+    <button id="flat" class="toggle" type="button" aria-pressed="false">Flat ground</button>
+  </div>
+
+  <section data-sec="seat">
+    <h2>1 · A seat that leaves the dock and joins it</h2>
+    <p class="how">Open: the dock opens and a round seat comes out of its end and parts from it. Fold: the seat goes back in and the dock folds to a circle. At full speed a neck lives about two frames as they part and at most one as they join, as on iOS. Hold stops each one 2.5 px apart; each further tap holds at the next opening (0, 1.25, 3.75 and 5 px), and the last lets go. Your daraksha dock draws a neck of its own today: compare with it.</p>
+    <div class="bar">
+      <button class="toggle" type="button" data-run="seat" aria-pressed="false">Open</button>
+      <button class="toggle" type="button" data-hold="seat" aria-pressed="false">Hold where they part</button>
+    </div>
+    <div class="letter" data-v="a">
+      <p><b>A</b> · Born underneath: the seat starts under the dock’s end and slides out; its glass fills in as it comes clear, so for a moment the two overlap. Nothing joins them.</p>
+      <div class="stage" data-lane="under"></div>
+    </div>
+    <div class="letter" data-v="a2">
+      <p><b>A2</b> · As A, but the seat shows no glass while any of it is under the dock, so the two never overlap.</p>
+      <div class="stage" data-lane="clear"></div>
+    </div>
+    <div class="letter" data-v="b">
+      <p><b>B</b> · Edges meet: as A, but where the two touch their facing ends go flat, so for a moment they sit as one bar.</p>
+      <div class="stage" data-lane="meet"></div>
+    </div>
+    <div class="letter" data-v="c">
+      <p><b>C</b> · Goo: the two are drawn as one shape, so a neck forms as they part and breaks. The page itself draws it while they move, so a busy page can stall it.</p>
+      <div class="stage" data-lane="goo"></div>
+    </div>
+    <div class="letter" data-v="d">
+      <p><b>D</b> · One piece, cut: one sheet of glass, cut each frame to the dock, the seat and a neck between them.</p>
+      <div class="stage" data-lane="cut"></div>
+    </div>
+  </section>
+
+  <section data-sec="fold">
+    <h2>2 · The fold</h2>
+    <p class="how">Fold and open a few times. Which folds most like iOS: liquid, quick, and without fading too much? Then turn on Busy page and pick again.</p>
+    <div class="bar">
+      <button class="toggle" type="button" data-run="fold" aria-pressed="false">Fold</button>
+    </div>
+    <div class="letter" data-v="a">
+      <p><b>A</b> · The seats fade out together as the glass narrows to a circle.</p>
+      <div class="stage" data-lane="fade"></div>
+    </div>
+    <div class="letter" data-v="b">
+      <p><b>B</b> · The glass’s edge covers each seat as it passes, so nothing fades but the first seat, which hands over to the folded sign.</p>
+      <div class="stage" data-lane="cover"></div>
+    </div>
+    <div class="letter" data-v="c">
+      <p><b>C</b> · As B on a quicker spring, which passes its rest by 3 px. A move this long would usually take about a third of a second.</p>
+      <div class="stage" data-lane="quick"></div>
+    </div>
+  </section>
+
+  <p class="note">Everything here is a model drawn by this page alone, not glass-ui itself. D in section 1 cuts away its own shadow with its glass.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const env = document.getElementById("env");
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is not printed.
+  env.textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const toggle = (b) => { const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on)); return on; };
+
+  // Light and Dark: the page follows the phone until the switch is used.
+  const root = document.documentElement, darkBtn = document.getElementById("dark");
+  const sysDark = matchMedia("(prefers-color-scheme: dark)");
+  darkBtn.setAttribute("aria-pressed", String(sysDark.matches));
+  darkBtn.addEventListener("click", () => { root.dataset.theme = toggle(darkBtn) ? "dark" : "light"; });
+
+  let slow = 1, busy = 0;
+  document.getElementById("slow").addEventListener("click", (e) => { slow = toggle(e.currentTarget) ? 4 : 1; });
+  document.getElementById("busy").addEventListener("click", (e) => {
+    clearInterval(busy);
+    if (toggle(e.currentTarget)) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+  document.getElementById("flat").addEventListener("click", (e) => { document.querySelector("main").classList.toggle("flat", toggle(e.currentTarget)); });
+
+  // ── The rows (SPRING_PRESETS), closed form from a displacement d0 and a speed v0, in units of p per second ──
+  const DOCK = { r: 0.3, z: 0.88 }, PRESS = { r: 0.2, z: 0.8 };
+  const spring = (row, d0, v0, t) => {
+    const w = (2 * Math.PI) / (row.r * slow), a = row.z * w, wd = w * Math.sqrt(1 - row.z * row.z), B = (v0 + a * d0) / wd;
+    const e = Math.exp(-a * t), c = Math.cos(wd * t), s = Math.sin(wd * t);
+    return [e * (d0 * c + B * s), e * ((-a * d0 + B * wd) * c + (-a * B - d0 * wd) * s)];
+  };
+  const TRAVEL = 244; // px: the seat's whole travel, the longest in the scene; a settle ends within half a pixel of it
+  const settleT = (row, d0, v0) => { let last = 0; for (let t = 0; t < 4 * slow; t += 1 / 240) if (Math.abs(spring(row, d0, v0, t)[0]) * TRAVEL > 0.5) last = t; return Math.max(last + 1 / 240, 1 / 30); };
+  const EASE = "cubic-bezier(0.4, 0, 0.6, 1)";
+
+  // ── The geometry at progress p (0 folded to a circle, 1 open), in px from the dock's left ──
+  const R = 26, OPEN = 236, SEATW = 52, GAP = 8, C = [26, 87.3, 148.7, 210];
+  const geo = (p, withSeat) => {
+    const xe = 2 * R + (OPEN - 2 * R) * p;                 // the plate's moving end
+    const xs = (OPEN + GAP) * p;                            // the seat's left: under the circle at 0, 8 px clear at 1
+    const prot = clamp((xs + SEATW - xe) / SEATW);          // A: the seat's share outside the plate
+    const clear = clamp((xs - xe) / GAP);                   // A2: 0 while any of the seat is under the plate, 1 at rest
+    const corner = R * clamp(Math.abs(xs - xe) / GAP);      // B: square at contact, round 8 px either side of it
+    // The theme seat's glyph rises over the last 70 % of its way out (A, B, C, D); in A2 it follows the seat's glass.
+    return { xe, xs, prot, clear, corner, moon: withSeat ? clamp((prot - 0.3) / 0.7) : 0 };
+  };
+
+  // ── D's cut: the union of the capsule [0, xe] and the seat's circle, joined by fillets whose radius follows the
+  //    waist rida.dev fit to Apple's blend (pass-7/fuse/fuse.json, necks.apple: 37.5, 35, 30, 23, 11.5, 0 px at gaps
+  //    0 to 5). The fillet of radius rho touches both circles; its height above the axis sets the waist. ──
+  const WAIST = [37.5, 35, 30, 23, 11.5, 0];
+  const waistAt = (g) => (g <= 0 ? WAIST[0] : g >= 5 ? 0 : WAIST[Math.floor(g)] + (WAIST[Math.floor(g) + 1] - WAIST[Math.floor(g)]) * (g - Math.floor(g)));
+  const f2 = (v) => v.toFixed(2);
+  function cutPath(xe, xs) {
+    const c1 = xe - R, c2 = xs + R, D = c2 - c1, gap = D - 2 * R;
+    const capsule = `M ${f2(R)} 0 L ${f2(c1)} 0 A ${R} ${R} 0 0 1 ${f2(c1)} ${2 * R} L ${f2(R)} ${2 * R} A ${R} ${R} 0 0 1 ${f2(R)} 0 Z`;
+    if (D <= 0) return capsule; // the seat lies wholly under the dock: the union is the dock
+    if (gap >= 5) return `${capsule} M ${f2(c2)} 0 A ${R} ${R} 0 1 1 ${f2(c2)} ${2 * R} A ${R} ${R} 0 1 1 ${f2(c2)} 0 Z`;
+    const w = waistAt(gap);
+    const rho = gap <= 0 ? 24.2 : Math.max(0.01, (w * w / 4 + D * D / 4 - R * R) / (2 * R - w));
+    const m = (c1 + c2) / 2, yf = Math.sqrt(Math.max(0, (R + rho) ** 2 - (D / 2) ** 2));
+    const k = R / (R + rho);
+    const t1 = [c1 + (m - c1) * k, R - yf * k], t2 = [c2 + (m - c2) * k, R - yf * k];
+    const b1 = [t1[0], 2 * R - t1[1]], b2 = [t2[0], 2 * R - t2[1]];
+    return `M ${f2(R)} 0 L ${f2(c1)} 0 A ${R} ${R} 0 0 1 ${f2(t1[0])} ${f2(t1[1])} A ${f2(rho)} ${f2(rho)} 0 0 0 ${f2(t2[0])} ${f2(t2[1])} ` +
+      `A ${R} ${R} 0 1 1 ${f2(b2[0])} ${f2(b2[1])} A ${f2(rho)} ${f2(rho)} 0 0 0 ${f2(b1[0])} ${f2(b1[1])} ` +
+      `A ${R} ${R} 0 0 1 ${f2(c1)} ${2 * R} L ${f2(R)} ${2 * R} A ${R} ${R} 0 0 1 ${f2(R)} 0 Z`;
+  }
+
+  // ── A stage: builds its scene, draws a progress p, and runs its own spring between targets ──
+  const el = (cls, parent, tag = "div") => { const e = document.createElement(tag); e.className = cls; parent.appendChild(e); return e; };
+  function Stage(stage, p0) {
+    const lane = stage.dataset.lane, withSeat = ["under", "clear", "meet", "goo", "cut"].includes(lane);
+    const row = lane === "quick" ? PRESS : DOCK;
+    // Web Animations sampled from one spring; B, D and section 2's A write each frame.
+    const played = ["under", "clear", "goo", "cover", "quick"].includes(lane);
+    const scene = el("scene", stage);
+    const parts = {};
+    if (["under", "clear", "meet", "cover", "quick"].includes(lane)) { parts.win = el("abs win", scene); if (withSeat) parts.seat = el("abs seat", scene); }
+    if (lane === "goo") { parts.goo = el("goo", scene); parts.win = el("gwin", parts.goo); parts.seat = el("gseat", parts.goo); }
+    if (lane === "cut") parts.cut = el("abs cplate", scene);
+    if (lane === "fade") parts.plate = el("abs fplate", scene);
+    const faces = el("faces", scene), inner = el("faces-in", faces);
+    parts.icons = C.map((c) => { const i = el("ico", inner, "i"); i.style.left = c - 9 + "px"; return i; });
+    parts.folded = el("ring", inner, "i");
+    // The first seat and the folded glyph trade (P0a rule 4): set at rest, played by tradeTo().
+    const glyphs = (p) => { parts.icons[0].style.opacity = p >= 0.5 ? "1" : "0"; parts.folded.style.opacity = p >= 0.5 ? "0" : "1"; };
+    if (withSeat) parts.moon = el("moon", scene, "i");
+    const seatOpacity = (g) => (lane === "clear" ? g.clear : g.prot);
+    const moonOpacity = (g) => (lane === "clear" ? g.clear : g.moon);
+
+    // The rest of the seats' window and of the goo layer: set in one frame at the end of a change (or at load).
+    const atRest = (p) => {
+      if (lane !== "fade") { faces.classList.remove("morph"); faces.classList.toggle("folded", p <= 0.001); }
+      // The goo's filter stays on only at a hold (a rest strictly between folded and open, which only this page has).
+      if (parts.goo) { parts.goo.toggleAttribute("data-fusing", p > 0.001 && p < 0.999); parts.seat.style.opacity = p <= 0.001 ? "0" : "1"; }
+    };
+    // The start of a change: the window clips and the seats show, in one frame before the first moved frame.
+    const atStart = () => {
+      if (lane !== "fade") { faces.classList.add("morph"); faces.classList.remove("folded"); }
+      if (parts.goo) { parts.goo.setAttribute("data-fusing", ""); parts.seat.style.opacity = "1"; }
+    };
+
+    // Draw p as plain styles: the rest state of a played lane, or each frame of a written one.
+    const draw = (p) => {
+      const g = geo(p, withSeat);
+      if (parts.win) { parts.win.style.setProperty("--win-x", -(OPEN - g.xe) + "px"); parts.win.style.setProperty("--fill-x", OPEN - g.xe + "px"); }
+      if (parts.seat) {
+        if (lane === "goo") parts.seat.style.translate = g.xs + "px 0"; else parts.seat.style.setProperty("--seat-x", g.xs + "px");
+        if (lane !== "goo") parts.seat.style.setProperty("--seat-f", seatOpacity(g).toFixed(3));
+      }
+      if (lane === "meet") {
+        const c = g.corner.toFixed(2) + "px";
+        parts.win.style.borderTopRightRadius = parts.win.style.borderBottomRightRadius = c;
+        parts.seat.style.borderTopLeftRadius = parts.seat.style.borderBottomLeftRadius = c;
+      }
+      if (parts.cut) parts.cut.style.clipPath = `path('${cutPath(g.xe, g.xs)}')`;
+      if (parts.plate) {
+        // 11.2.0's grammar as modelled: the plate's width each frame; the content cut by its edge and faded on the window
+        // (out by 55 % of the fold, the folded glyph in from 45 %; W-I.8 R-3). The row's window is 5 px larger here too.
+        parts.plate.style.inlineSize = g.xe + "px";
+        faces.style.clipPath = `inset(5px ${f2(OPEN - g.xe + 5)}px 5px 5px round ${R}px)`;
+        parts.icons.forEach((i) => { i.style.opacity = clamp((p - 0.45) / 0.55).toFixed(3); });
+        parts.folded.style.opacity = clamp((0.55 - p) / 0.55).toFixed(3);
+      } else {
+        faces.style.setProperty("--win-x", -(OPEN - g.xe) + "px"); inner.style.setProperty("--fill-x", OPEN - g.xe + "px");
+      }
+      if (parts.moon) { parts.moon.style.setProperty("--seat-x", g.xs + "px"); parts.moon.style.opacity = moonOpacity(g).toFixed(3); }
+    };
+
+    // The spring's state: from (p0, v0) at t0 toward target.
+    let from = p0, vel = 0, target = p0, t0 = 0, T = 0, raf = 0, anims = [], change = 0;
+    const now = () => performance.now() / 1000;
+    const cur = () => {
+      const t = now() - t0;
+      if (t >= T) return [target, 0];
+      const [d, v] = spring(row, from - target, vel, t);
+      return [target + d, v];
+    };
+    const stopAnims = () => { anims.forEach((a) => a.cancel()); anims = []; };
+    // A played lane: every element's leg sampled from the same spring, 60 samples a second, linear between.
+    const play = (opening) => {
+      const n = Math.max(2, Math.ceil(T * 60)), ps = [];
+      for (let i = 0; i <= n; i++) { const t = (T * i) / n; ps.push(t >= T ? target : target + spring(row, from - target, vel, t)[0]); }
+      const opt = { duration: T * 1000, easing: "linear" };
+      const go = (node, prop, f, pseudo) => anims.push(node.animate(ps.map((p, i) => ({ [prop]: f(geo(p, withSeat)), offset: i / n })), pseudo ? { ...opt, pseudoElement: pseudo } : opt));
+      if (parts.win) { go(parts.win, "translate", (g) => -(OPEN - g.xe) + "px 0"); go(parts.win, "translate", (g) => OPEN - g.xe + "px 0", "::before"); }
+      if (parts.seat) go(parts.seat, "translate", (g) => g.xs + "px 0");
+      if (parts.seat && lane === "under") go(parts.seat, "opacity", (g) => g.prot, "::before");
+      if (parts.moon && lane !== "clear") { go(parts.moon, "translate", (g) => g.xs + "px 0"); go(parts.moon, "opacity", (g) => g.moon); }
+      if (lane === "clear") {
+        go(parts.moon, "translate", (g) => g.xs + "px 0");
+        if (opening) { go(parts.seat, "opacity", (g) => g.clear, "::before"); go(parts.moon, "opacity", (g) => g.clear); }
+        else {
+          // Folding: the seat's glass and glyph fade on one 90 ms leg from the press (fold A7-2, B7-4).
+          const o0 = Number(getComputedStyle(parts.moon).opacity) || 0;
+          const fade = { duration: 90 * slow, easing: EASE, fill: "forwards" };
+          anims.push(parts.seat.animate([{ opacity: o0 }, { opacity: 0 }], { ...fade, pseudoElement: "::before" }));
+          anims.push(parts.moon.animate([{ opacity: o0 }, { opacity: 0 }], fade));
+        }
+      }
+      go(faces, "translate", (g) => -(OPEN - g.xe) + "px 0"); go(inner, "translate", (g) => OPEN - g.xe + "px 0");
+    };
+    const tick = () => { const [p] = cur(); draw(p); raf = now() - t0 < T ? requestAnimationFrame(tick) : 0; if (!raf) { draw(target); atRest(target); } };
+    const dip = (p1) => {
+      stopAnims(); cancelAnimationFrame(raf); raf = 0;
+      const out = scene.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: "ease-in", fill: "forwards" });
+      out.onfinish = () => { draw(p1); atRest(p1); if (lane !== "fade") glyphs(p1); scene.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 100, easing: "ease-out" }); out.cancel(); };
+      from = target = p1; vel = 0; T = 0;
+    };
+    // The trade at the circle by P0a rule 4: the leaving glyph falls to 0 over 90 ms; the arriving one starts when the
+    // leaving is at half (45 ms) and rises over 120 ms; neither is above half while the other shows (pass-8/fold/
+    // fold.json, `trade`). Folding, it starts when the spring brings p under 0.5; opening, at once. Each leg starts from
+    // the opacity its glyph shows now, so a reversal mid-trade turns back from where it is.
+    let trade = [];
+    const tradeTo = (p1) => {
+      const open = p1 >= 0.5;
+      let delay = 0;
+      if (!open) for (let t = 0; t < T; t += 1 / 240) if (target + spring(row, from - target, vel, t)[0] < 0.5) { delay = t; break; }
+      const leaving = open ? parts.folded : parts.icons[0], arriving = open ? parts.icons[0] : parts.folded;
+      trade.forEach((a) => a.cancel()); trade = [];
+      const l0 = Number(getComputedStyle(leaving).opacity), a0 = Number(getComputedStyle(arriving).opacity);
+      leaving.style.opacity = "0"; arriving.style.opacity = "1";
+      const d = delay * 1000;
+      trade.push(leaving.animate([{ opacity: l0 }, { opacity: 0 }], { duration: 90 * slow, delay: d, easing: EASE, fill: "backwards" }));
+      trade.push(arriving.animate([{ opacity: a0 }, { opacity: 1 }], { duration: 120 * slow, delay: d + 45 * slow, easing: EASE, fill: "backwards" }));
+    };
+    const to = (p1) => {
+      if (reduce.matches) { dip(p1); return; }
+      const [p, v] = cur();
+      const opening = p1 > p;
+      from = p; vel = v; target = p1; t0 = now(); T = settleT(row, from - target, vel);
+      stopAnims(); cancelAnimationFrame(raf); raf = 0;
+      const me = ++change;
+      atStart();
+      if (played) {
+        draw(target); play(opening);
+        Promise.all(anims.map((a) => a.finished)).then(() => { if (me === change) atRest(target); }, () => {});
+      } else raf = requestAnimationFrame(tick);
+      if (lane !== "fade") tradeTo(p1);
+    };
+    draw(p0); atRest(p0); if (lane !== "fade") glyphs(p0);
+    if (lane === "cut") {
+      const v = getComputedStyle(parts.cut).clipPath || "none";
+      env.textContent += " · D’s cut " + (v !== "none" ? "applied" : "refused");
+    }
+    return { to };
+  }
+
+  // ── Sections: a run toggle (Open in section 1, Fold in section 2) and, in section 1, a hold where the two part ──
+  // The held openings: 2.5 px first (the middle of the neck's life; it pinches at 5 px), then the four others of the five
+  // BL's R-6 crop holds (W-I.8.md:128). p at a gap g: the seat's left less the plate's end is 60p − 52.
+  const OPENINGS = [2.5, 0, 1.25, 3.75, 5], holdP = (g) => (52 + g) / 60;
+  for (const sec of document.querySelectorAll("section[data-sec]")) {
+    const kind = sec.dataset.sec;
+    const start = kind === "seat" ? 0 : 1;
+    const stages = [...sec.querySelectorAll(".stage")].map((s) => Stage(s, start));
+    const run = sec.querySelector("[data-run]"), hold = sec.querySelector("[data-hold]");
+    const rest = () => (kind === "seat" ? (run.getAttribute("aria-pressed") === "true" ? 1 : 0) : run.getAttribute("aria-pressed") === "true" ? 0 : 1);
+    let k = -1;
+    run.addEventListener("click", () => {
+      toggle(run);
+      if (hold) { k = -1; hold.setAttribute("aria-pressed", "false"); hold.textContent = "Hold where they part"; }
+      stages.forEach((s) => s.to(rest()));
+    });
+    if (hold) hold.addEventListener("click", () => {
+      k = k + 1 < OPENINGS.length ? k + 1 : -1;
+      hold.setAttribute("aria-pressed", String(k >= 0));
+      hold.textContent = k >= 0 ? `Held ${OPENINGS[k]} px apart` : "Hold where they part";
+      if (k >= 0 && run.getAttribute("aria-pressed") !== "true") toggle(run);
+      stages.forEach((s) => s.to(k >= 0 ? holdP(OPENINGS[k]) : rest()));
+    });
+  }
+})();
+</script>

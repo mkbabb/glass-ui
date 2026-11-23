@@ -1,0 +1,189 @@
+<title>Menu Opening Springs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column; one stage with four round buttons in a row; a menu grows out of whichever is tapped. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --ground-a: hsl(200 40% 78%);
+  --ground-b: hsl(24 60% 70%);
+  --ground-ink: hsl(24 20% 20%);
+  --veil: oklch(0.28 0.035 70 / 0.18);
+  --on-glass: hsl(24 10% 10%);
+  --sep: rgb(0 0 0 / 0.12);
+  --row-press: oklch(0.28 0.035 70 / 0.10);
+  --shadow: rgb(0 0 0 / 0.14);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    --ground-a: hsl(210 30% 22%); --ground-b: hsl(20 40% 26%); --ground-ink: hsl(30 20% 80%);
+    --veil: oklch(0.17 0.03 70 / 0.22); --on-glass: hsl(30 14% 92%); --sep: rgb(255 255 255 / 0.12);
+    --row-press: rgb(255 255 255 / 0.08); --shadow: rgb(0 0 0 / 0.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  --ground-a: hsl(210 30% 22%); --ground-b: hsl(20 40% 26%); --ground-ink: hsl(30 20% 80%);
+  --veil: oklch(0.17 0.03 70 / 0.22); --on-glass: hsl(30 14% 92%); --sep: rgb(255 255 255 / 0.12);
+  --row-press: rgb(255 255 255 / 0.08); --shadow: rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+button { font: 400 16px var(--font); transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out; cursor: pointer; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.toggle { min-height: 44px; padding: 0 20px; border-radius: 22px; border: 0; background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); justify-self: start; }
+.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+.stage {
+  position: relative; height: 330px; border-radius: 10px; overflow: hidden;
+  background: linear-gradient(160deg, var(--ground-a), var(--ground-b));
+}
+.text { position: absolute; inset: 64px 14px 0; color: var(--ground-ink); font: 500 22px/1.3 var(--font); opacity: .55; overflow: hidden; }
+.seats { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; z-index: 2; }
+.seat {
+  width: 44px; height: 44px; border-radius: 22px; border: 0; padding: 0; position: relative; isolation: isolate;
+  background: transparent; color: var(--on-glass); font: 500 16px var(--font);
+}
+/* The seat's glass is its one state pseudo-element. The seat lends it to the menu: the menu is born on the seat's
+   own box and opens over it, so one plate stands there, never two. On closing, the seat keeps no glass until the
+   menu has gone, then its glass returns by an opacity tween, never by a blur that changes (pass 3 fold, A7). */
+.seat::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  background: var(--veil); transition: opacity 120ms ease-out;
+}
+.seat.lent::before { opacity: 0; transition: none; }
+.menu {
+  position: absolute; z-index: 3; overflow: hidden;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  background: var(--veil); box-shadow: 0 8px 24px var(--shadow);
+}
+.menu[hidden] { display: none; }
+.rows { position: absolute; left: 0; top: 0; width: var(--w); padding-block: 8px; opacity: 0; transition: opacity 120ms ease-out; }
+.menu.content .rows { opacity: 1; }
+.menu.leaving { transition: opacity 110ms cubic-bezier(0.3, 0.2, 0.7, 0.8); opacity: 0; }
+.row { display: flex; align-items: center; height: 44px; padding-inline: 18px; color: var(--on-glass); font: 17px var(--font); }
+.row + .row { box-shadow: inset 0 0.5px 0 var(--sep); }
+.legend { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+.legend b { color: var(--fg); }
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+b { font-weight: inherit; }
+</style>
+
+<main>
+  <p class="ask"><strong>Tap each round button to open its menu, then open one of Safari’s own menus</strong>, such as the one in its tab overview. Send the letter whose opening feels most like Safari’s: A, B, C or D.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading.</p>
+  <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+  <div class="stage" id="stage">
+    <div class="text" aria-hidden="true">The menu grows out of the button you tap and settles over it. Tap outside the menu, or the button again, to close it. The same menu each time; only the spring changes.</div>
+    <div class="seats">
+      <button class="seat" type="button" data-k="A" aria-expanded="false" aria-label="Menu A">A</button>
+      <button class="seat" type="button" data-k="B" aria-expanded="false" aria-label="Menu B">B</button>
+      <button class="seat" type="button" data-k="C" aria-expanded="false" aria-label="Menu C">C</button>
+      <button class="seat" type="button" data-k="D" aria-expanded="false" aria-label="Menu D">D</button>
+    </div>
+    <div class="menu" id="menu" hidden role="menu">
+      <div class="rows">
+        <div class="row" role="menuitem">Copy link</div>
+        <div class="row" role="menuitem">Add to reading list</div>
+        <div class="row" role="menuitem">Add bookmark</div>
+        <div class="row" role="menuitem">Find on page</div>
+        <div class="row" role="menuitem">Text size</div>
+      </div>
+    </div>
+  </div>
+  <ul class="legend">
+    <li><b>A</b> · glass-ui’s “present” spring: 98 % of the way in 205 ms, no overshoot</li>
+    <li><b>B</b> · “bloom”: 98 % in 315 ms, an overshoot too small to see (0.15 %)</li>
+    <li><b>C</b> · “panel”: 98 % in 202 ms, then a 4.2 % overshoot</li>
+    <li><b>D</b> · Apple’s menu spring as fit in the iOS 27 simulator by rida.dev: 98 % in 188 ms, then a 2.6 % overshoot</li>
+  </ul>
+  <p class="note">C and D overshoot. glass-ui’s rules keep overshoot off menus and allow it only on the dock’s split and join, so picking C or D asks to change that rule.</p>
+  <p class="note">The menu starts as the button’s own round shape and grows into the panel over it; the button lends the menu its glass, so only one piece of glass stands there at a time, and takes it back with a short fade once the menu has gone. The words fade in once the shape has mostly arrived. Closing is the same for all four: a quick fade. The page draws the menu’s size itself each frame, a stand-in for the final method: read the timing and the shape, not the smoothness.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const ios = null; // Safari 26 and later freeze the OS token in the user agent, so the iOS version is asked for, not read
+  document.getElementById("env").textContent =
+    (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    (ios ? " · iOS " + ios[1] + "." + ios[2] + (ios[3] ? "." + ios[3] : "") : "");
+
+  const SPRINGS = { A: [0.22, 1.0], B: [0.42, 0.9], C: [0.4, 0.71], D: [0.341, 0.758] };
+  const pos = (t, resp, z) => {
+    const w0 = 2 * Math.PI / resp;
+    if (z >= 1) return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+    const wd = w0 * Math.sqrt(1 - z * z), e = Math.exp(-z * w0 * t);
+    return 1 - e * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t));
+  };
+  const stage = document.getElementById("stage"), menu = document.getElementById("menu");
+  let slow = false, open = null, raf = 0, closeTimer = 0;
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  const close = () => {
+    if (!open) return;
+    const seat = open;
+    seat.setAttribute("aria-expanded", "false"); open = null;
+    cancelAnimationFrame(raf);
+    menu.classList.add("leaving");
+    // The menu fades where it stands; only once it has gone does the seat take its glass back.
+    closeTimer = setTimeout(() => { menu.hidden = true; menu.classList.remove("leaving", "content"); seat.classList.remove("lent"); }, 120);
+  };
+  const openFrom = (seat) => {
+    clearTimeout(closeTimer); cancelAnimationFrame(raf);
+    menu.classList.remove("leaving", "content"); menu.hidden = false;
+    document.querySelectorAll(".seat.lent").forEach((o) => o.classList.remove("lent"));
+    open = seat; seat.setAttribute("aria-expanded", "true"); seat.classList.add("lent");
+    const sr = stage.getBoundingClientRect(), br = seat.getBoundingClientRect();
+    const W = Math.min(250, sr.width - 16), Hh = 5 * 44 + 16;
+    const x0 = br.left - sr.left, y0 = br.top - sr.top;
+    // The menu opens over its button, as Safari's own menus do, so it covers the seat it was born on.
+    const x1 = Math.max(8, Math.min(x0, sr.width - W - 8)), y1 = y0;
+    menu.style.setProperty("--w", W + "px");
+    const [resp0, z] = SPRINGS[seat.dataset.k], resp = resp0 * (slow ? 4 : 1);
+    const t0 = performance.now();
+    const step = (now) => {
+      const tau = (now - t0) / 1000, p = pos(tau, resp, z);
+      menu.style.left = lerp(x0, x1, p) + "px"; menu.style.top = lerp(y0, y1, p) + "px";
+      menu.style.width = Math.max(0, lerp(44, W, p)) + "px"; menu.style.height = Math.max(0, lerp(44, Hh, p)) + "px";
+      menu.style.borderRadius = lerp(22, 26, Math.min(1, p)) + "px";
+      if (p > 0.6) menu.classList.add("content");
+      if (tau < resp * 2.2) raf = requestAnimationFrame(step);
+    };
+    step(t0); // the first frame is drawn now, on the seat's own box, in the same frame the seat lends its glass
+  };
+  document.querySelectorAll(".seat").forEach((s) => s.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (open === s) close(); else { if (open) open.setAttribute("aria-expanded", "false"); openFrom(s); }
+  }));
+  stage.addEventListener("click", (e) => { if (!menu.contains(e.target)) close(); });
+  menu.addEventListener("click", close);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  document.getElementById("slow").addEventListener("click", (e) => {
+    slow = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(slow));
+  });
+})();
+</script>

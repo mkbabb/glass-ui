@@ -1,0 +1,228 @@
+<title>Four Ways to Settle</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column; four lanes stacked, each a track the dot crosses.
+   Amended in BM pass 3 (fold of pass 2, B-2, B-10, A2): the dots move by `translate`; C is the settle player as
+   sketched (bend-placed keyframes on the row's own clock); Go also works while the dots move, to show a retarget. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 86%);
+  --track: hsl(32 40% 93%);
+  --dot: hsl(16 72% 48%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 20%);
+    --track: hsl(26 16% 11%); --dot: hsl(20 80% 62%); --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 20%);
+  --track: hsl(26 16% 11%); --dot: hsl(20 80% 62%); --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env, .stat { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; font-variant-numeric: tabular-nums; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; }
+button {
+  font: 400 16px var(--font); transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out; min-height: 44px; padding: 0 20px; border-radius: 22px; border: 0;
+  background: var(--fg); color: var(--bg); cursor: pointer;
+}
+button.toggle { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.lanes { display: grid; gap: 14px; }
+.lane { display: grid; gap: 4px; min-width: 0; }
+.lane b { font-size: 15px; }
+.lane span { color: var(--muted); font-size: 13px; }
+.track { position: relative; height: 44px; border-radius: 22px; background: var(--track); overflow: hidden; }
+.puck { position: absolute; left: 4px; top: 4px; width: 36px; height: 36px; border-radius: 50%; background: var(--dot); will-change: translate; }
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+b { font-weight: inherit; }
+</style>
+
+<main>
+  <p class="ask"><strong>Tap “Busy page”, then tap Go a few times, sometimes again while the dots are still moving.</strong> Send the letters of the dots that stutter, freeze or jerk (or “none”), then do the same with Low Power Mode on. Add your iPhone model and the iOS version from Settings → General → About, and a screen recording if you can.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading.</p>
+  <div class="bar">
+    <button id="go" type="button">Go</button>
+    <button id="busy" class="toggle" type="button" aria-pressed="false">Busy page</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+  </div>
+  <div class="lanes">
+    <div class="lane"><b>A · Moved by script</b><span>The page works out every frame itself.</span><div class="track"><div class="puck" id="pa"></div></div></div>
+    <div class="lane"><b>B · Spring curve</b><span>The browser plays a spring-shaped curve.</span><div class="track"><div class="puck" id="pb"></div></div></div>
+    <div class="lane"><b>C · Stepped curve</b><span>Short straight steps through the same spring, closer where it bends.</span><div class="track"><div class="puck" id="pc"></div></div></div>
+    <div class="lane"><b>D · Single curve</b><span>One smooth curve fitted to the spring.</span><div class="track"><div class="puck" id="pd"></div></div></div>
+  </div>
+  <p class="stat" id="stat">Script frames per second: –</p>
+  <p class="note">All four dots run one spring (response 0.3 s, damping 0.88), started as if a finger had flicked it, on the same clock. A second Go while they move sends them back from where they are: A and C keep their speed as they turn, B and D start again from still. “Busy page” keeps the page’s own work running three quarters of the time, the way a heavy page does. Low Power Mode halves the page’s own frame rate. The reading is of the Safari this phone runs.</p>
+  <p class="note" id="fit"></p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is asked for, not read.
+  document.getElementById("env").textContent =
+    safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0];
+
+  // The dock row of glass-ui's spring table (LAW 0b band 2 %), released with a flick.
+  const ROW = { response: 0.3, zeta: 0.88, band: 0.02 };
+  const FLICK = 6; // starting velocity, in travels per second
+  // position and velocity t seconds after leaving x0 at v0 toward `to` (units of the track, px)
+  const state = (resp, z, x0, v0, to, t) => {
+    const w0 = 2 * Math.PI / resp, d = x0 - to;
+    if (z < 1) {
+      const wd = w0 * Math.sqrt(1 - z * z), e = Math.exp(-z * w0 * t), b = (v0 + z * w0 * d) / wd, c = Math.cos(wd * t), s = Math.sin(wd * t);
+      return [to + e * (d * c + b * s), e * (-z * w0 * (d * c + b * s) + wd * (b * c - d * s))];
+    }
+    const e = Math.exp(-w0 * t), b = v0 + w0 * d;
+    return [to + e * (d + b * t), e * (b - w0 * (d + b * t))];
+  };
+  // the row's own clock: the last moment the dot is a band's width (2 % of the motion) from rest
+  const horizon = (resp, x0, v0, to) => {
+    const size = Math.max(Math.abs(to - x0), Math.abs(v0) * resp / (2 * Math.PI), 1e-6), band = ROW.band * size;
+    let last = 0;
+    for (let t = 0.001; t < 3; t += 0.001) if (Math.abs(state(resp, ROW.zeta, x0, v0, to, t)[0] - to) >= band) last = t;
+    return Math.max(0.001, last);
+  };
+  // C: keyframe offsets placed by the curve's bend (the settle player, pass-3/fold/sketch/playSpring.ts)
+  const offsets = (resp, x0, v0, to, T, n) => {
+    const M = 96, acc = [0];
+    for (let i = 1; i <= M; i++) {
+      const va = state(resp, ROW.zeta, x0, v0, to, (i - 1) / M * T)[1], vb = state(resp, ROW.zeta, x0, v0, to, i / M * T)[1];
+      acc.push(acc[i - 1] + Math.sqrt(Math.abs(vb - va) * M / T) + 1e-3);
+    }
+    const out = [0];
+    for (let j = 1, i = 0; j < n - 1; j++) { const goal = acc[M] * j / (n - 1); while (acc[i] < goal) i++; out.push(i / M); }
+    out.push(1);
+    return out;
+  };
+  // D: one cubic-bezier, its first control point carrying the flick, the rest fitted (largest error)
+  const fitBezier = (f, slope) => {
+    const err = (a, b, c) => {
+      let m = 0;
+      for (let i = 1; i < 120; i++) {
+        const u = i / 120, iu = 1 - u;
+        const bx = 3 * iu * iu * u * a + 3 * iu * u * u * b + u * u * u;
+        const by = 3 * iu * iu * u * a * slope + 3 * iu * u * u * c + u * u * u;
+        m = Math.max(m, Math.abs(by - f(bx)));
+      }
+      return m;
+    };
+    let best = [1, 0.2, 0.5, 1];
+    for (let a = 0.05; a <= 0.6; a += 0.025)
+      for (let b = 0.2; b <= 0.98; b += 0.02)
+        for (let c = 0.85; c <= 1.15; c += 0.01) { const e = err(a, b, c); if (e < best[0]) best = [e, a, b, c]; }
+    return best;
+  };
+  const bezierCache = {};
+  const bezierFor = (k, v0n) => {
+    const key = k + ":" + v0n;
+    if (bezierCache[key]) return bezierCache[key];
+    const resp = ROW.response * k, T = horizon(resp, 0, v0n, 1);
+    const f = (p) => state(resp, ROW.zeta, 0, v0n, 1, p * T)[0];
+    const [e, a, b, c] = fitBezier(f, v0n * T);
+    return (bezierCache[key] = { T, e, css: `cubic-bezier(${a.toFixed(3)}, ${Math.min(a * v0n * T, 3).toFixed(3)}, ${b.toFixed(3)}, ${c.toFixed(3)})` });
+  };
+  const d1 = bezierFor(1, FLICK);
+  document.getElementById("fit").textContent =
+    `D’s single curve stays within ${(d1.e * 100).toFixed(1)} % of the spring’s travel; ` +
+    `a flicked settle lasts ${(d1.T * 1000).toFixed(0)} ms (×4 when slowed).`;
+
+  const pucks = ["pa", "pb", "pc", "pd"].map((id) => document.getElementById(id));
+  const span = () => pucks[0].parentElement.clientWidth - 44;
+  const stat = document.getElementById("stat");
+  const tr = (v) => `${v}px 0`;
+  const drawn = (el) => parseFloat(getComputedStyle(el).translate) || 0;
+  let atEnd = false, slow = false;
+  // per lane, what the lane needs to turn round: A its script state, C its animation and spring inputs
+  const lane = { a: null, c: null };
+
+  const go = () => {
+    const k = slow ? 4 : 1, resp = ROW.response * k, D = span();
+    const to = atEnd ? 0 : D;
+    atEnd = !atEnd;
+    const fresh = !lane.a; // a Go from rest carries the flick; a Go mid-glide carries the speed the dot has
+    const flick = (to === 0 ? -1 : 1) * FLICK / k * D;
+
+    // A: script writes translate every frame from the spring's own state
+    let ax0, av0;
+    if (fresh) { ax0 = to === 0 ? D : 0; av0 = flick; }
+    else { const s = lane.a; [ax0, av0] = state(s.resp, ROW.zeta, s.x0, s.v0, s.to, (performance.now() - s.t0) / 1000); }
+    const aT = horizon(resp, ax0, av0, to), t0 = performance.now();
+    lane.a = { resp, x0: ax0, v0: av0, to, t0 };
+    let frames = 0;
+    const tick = (now) => {
+      if (!lane.a || lane.a.t0 !== t0) return;
+      frames++;
+      const t = (now - t0) / 1000;
+      pucks[0].style.translate = tr(t < aT ? state(resp, ROW.zeta, ax0, av0, to, t)[0] : to);
+      if (t < aT) requestAnimationFrame(tick);
+      else { lane.a = null; stat.textContent = `Script frames per second: ${Math.round(frames / Math.max(0.001, (now - t0) / 1000))}`; }
+    };
+    requestAnimationFrame(tick);
+
+    // B and D: a curve from where the dot is drawn; mid-glide they restart from still, as a transition does
+    const play = (el, from, easing, T, v0) => {
+      el.getAnimations().forEach((x) => { try { x.commitStyles(); } catch {} x.cancel(); });
+      const anim = el.animate([{ translate: tr(from) }, { translate: tr(to) }], { duration: T * 1000, easing, fill: "forwards" });
+      anim.finished.then(() => { try { anim.commitStyles(); } catch {} anim.cancel(); }, () => {});
+    };
+    const bFrom = fresh ? (to === 0 ? D : 0) : drawn(pucks[1]);
+    const bv = fresh ? FLICK / k : 0, bT = horizon(resp, 0, bv, 1);
+    const stops = Array.from({ length: 49 }, (_, i) => (i === 48 ? 1 : state(resp, ROW.zeta, 0, bv, 1, i / 48 * bT)[0]).toFixed(5));
+    play(pucks[1], bFrom, "linear(" + stops.join(", ") + ")", bT, bv);
+    const dFrom = fresh ? (to === 0 ? D : 0) : drawn(pucks[3]);
+    const dz = bezierFor(k, fresh ? FLICK / k : 0);
+    play(pucks[3], dFrom, dz.css, dz.T, 0);
+
+    // C: the settle player; a retarget reads the running animation's own time and carries the speed
+    let cx0, cv0;
+    if (fresh || !lane.c) { cx0 = to === 0 ? D : 0; cv0 = flick; }
+    else {
+      const s = lane.c, t = Math.min(s.T, Number(s.anim.currentTime || 0) / 1000);
+      [cx0, cv0] = t >= s.T ? [s.to, 0] : state(s.resp, ROW.zeta, s.x0, s.v0, s.to, t);
+    }
+    pucks[2].getAnimations().forEach((x) => x.cancel());
+    const cT = horizon(resp, cx0, cv0, to), n = Math.min(32, Math.max(8, Math.ceil(12 * Math.sqrt(Math.abs(to - cx0) / 80))));
+    const frames2 = offsets(resp, cx0, cv0, to, cT, n).map((u, i, all) => ({ offset: u, translate: tr(i === all.length - 1 ? to : state(resp, ROW.zeta, cx0, cv0, to, u * cT)[0]) }));
+    const anim = pucks[2].animate(frames2, { duration: cT * 1000, easing: "linear", fill: "forwards" });
+    anim.startTime = document.timeline.currentTime;
+    lane.c = { anim, resp, x0: cx0, v0: cv0, to, T: cT };
+    anim.finished.then(() => { if (lane.c && lane.c.anim === anim) lane.c = null; try { anim.commitStyles(); } catch {} anim.cancel(); }, () => {});
+  };
+  document.getElementById("go").addEventListener("click", go);
+
+  let busy = 0;
+  document.getElementById("busy").addEventListener("click", (e) => {
+    const on = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(on));
+    clearInterval(busy);
+    if (on) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+  document.getElementById("slow").addEventListener("click", (e) => {
+    slow = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(slow));
+  });
+})();
+</script>

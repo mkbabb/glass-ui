@@ -1,0 +1,150 @@
+<title>How Glass Arrives</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column; two stages side by side, one glass card appearing in each. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --veil: oklch(0.28 0.035 70 / 0.14);
+  --on-glass: hsl(24 10% 10%);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --in: 200ms;
+  --out: 120ms;
+  --spring: ease-out;
+  --exit: cubic-bezier(0.3, 0.2, 0.7, 0.8);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+    --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+  --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; }
+button {
+  font: 400 16px var(--font); transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out; min-height: 44px; padding: 0 20px; border-radius: 22px; border: 0;
+  background: var(--fg); color: var(--bg); cursor: pointer;
+}
+button.toggle { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+figure { margin: 0; min-width: 0; display: grid; gap: 6px; }
+figcaption b { display: block; font-size: 15px; }
+figcaption span { color: var(--muted); font-size: 13px; }
+.stage {
+  position: relative; height: 200px; border-radius: 6px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px), var(--stripe-b);
+}
+.stage::after { content: ""; position: absolute; left: 0; right: 0; top: 46%; height: 18px; background: var(--stripe-c); }
+.card {
+  position: absolute; left: 50%; top: 50%; width: 132px; height: 96px; margin: -48px 0 0 -66px; z-index: 1;
+  border-radius: 24px; display: grid; place-items: center; color: var(--on-glass); font: 500 16px var(--font);
+  scale: 0.96;
+}
+.card .label { position: relative; z-index: 1; }
+/* A: full glass from the first frame; the card fades in and grows from 0.96 */
+.fade {
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  background: var(--veil); opacity: 0;
+  transition: opacity var(--out) var(--exit), scale var(--out) var(--exit);
+}
+.shown .fade { opacity: 1; scale: 1; transition: opacity var(--in) var(--spring), scale var(--in) var(--spring); }
+/* B: the frost itself rises from none; the tint rides a layer of its own; the words follow the frost */
+.frost {
+  -webkit-backdrop-filter: blur(0px) saturate(1); backdrop-filter: blur(0px) saturate(1);
+  transition: -webkit-backdrop-filter var(--out) var(--exit), backdrop-filter var(--out) var(--exit), scale var(--out) var(--exit);
+}
+.frost::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--veil); opacity: 0; transition: opacity var(--out) var(--exit); }
+.frost .label { opacity: 0; transition: opacity var(--out) var(--exit); }
+.shown .frost {
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); scale: 1;
+  transition: -webkit-backdrop-filter var(--in) var(--spring), backdrop-filter var(--in) var(--spring), scale var(--in) var(--spring);
+}
+.shown .frost::before { opacity: 1; transition: opacity var(--in) var(--spring); }
+.shown .frost .label { opacity: 1; transition: opacity calc(var(--in) * 0.6) ease-out calc(var(--in) * 0.4); }
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+b { font-weight: inherit; }
+</style>
+
+<main>
+  <p class="ask"><strong>Tap Show a few times, with Slow ×4 on and off.</strong> Send the letter that looks more like glass arriving and leaving: A or B.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading.</p>
+  <div class="bar">
+    <button id="show" class="toggle" type="button" aria-pressed="false">Show</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+  </div>
+  <div class="grid" id="grid">
+    <figure>
+      <div class="stage"><div class="card fade"><span class="label">Glass</span></div></div>
+      <figcaption><b>A · Fades in</b><span>Full glass from the start; the whole card fades and grows a little.</span></figcaption>
+    </figure>
+    <figure>
+      <div class="stage"><div class="card frost"><span class="label">Glass</span></div></div>
+      <figcaption><b>B · Frosts in</b><span>The frost and tint rise from nothing as the card grows a little; the word follows.</span></figcaption>
+    </figure>
+  </div>
+  <p class="note">Both arrive in 0.2 s on glass-ui’s “present” spring and leave in 0.12 s, the same timings, so only the way the glass appears differs.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const ios = null; // Safari 26 and later freeze the OS token in the user agent, so the iOS version is asked for, not read
+  document.getElementById("env").textContent =
+    (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    (ios ? " · iOS " + ios[1] + "." + ios[2] + (ios[3] ? "." + ios[3] : "") : "");
+  // glass-ui's present spring (response 0.22 s, damping 1), sampled as a linear() curve over 0.2 s
+  const resp = 0.22, w0 = 2 * Math.PI / resp, T = 0.2;
+  const stops = Array.from({ length: 33 }, (_, i) => {
+    if (i === 32) return "1";
+    const t = (i / 32) * T;
+    return (1 - Math.exp(-w0 * t) * (1 + w0 * t)).toFixed(4);
+  });
+  const root = document.documentElement.style;
+  root.setProperty("--spring", "linear(" + stops.join(", ") + ")");
+  root.setProperty("--exit", "cubic-bezier(0.3, 0.2, 0.7, 0.8)");
+  const grid = document.getElementById("grid"), show = document.getElementById("show");
+  show.addEventListener("click", () => {
+    const on = !grid.classList.contains("shown");
+    grid.classList.toggle("shown", on);
+    show.setAttribute("aria-pressed", String(on));
+  });
+  document.getElementById("slow").addEventListener("click", (e) => {
+    const slow = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(slow));
+    root.setProperty("--in", slow ? "800ms" : "200ms");
+    root.setProperty("--out", slow ? "480ms" : "120ms");
+  });
+})();
+</script>

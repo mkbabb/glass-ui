@@ -1,0 +1,199 @@
+<title>Glass Split and Join</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column; three stages stacked, a bar and a round seat in each, a Split button under each. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --veil: oklch(0.28 0.035 70 / 0.14);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+    --veil: oklch(0.17 0.03 70 / 0.18);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+  --veil: oklch(0.17 0.03 70 / 0.18);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+button {
+  font: 400 16px var(--font); transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out; min-height: 44px; padding: 0 20px; border-radius: 22px; border: 0;
+  background: var(--fg); color: var(--bg); cursor: pointer; justify-self: start;
+}
+button.toggle { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figcaption b { display: block; font-size: 15px; }
+figcaption span { color: var(--muted); font-size: 13px; }
+.stage {
+  position: relative; height: 124px; border-radius: 6px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px), var(--stripe-b);
+}
+.stage::after { content: ""; position: absolute; left: 0; right: 0; top: 54px; height: 16px; background: var(--stripe-c); }
+.box { position: absolute; left: 50%; top: 34px; width: 232px; height: 56px; margin-left: -116px; z-index: 1; }
+.glass {
+  position: absolute; top: 0; height: 56px;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  background: var(--veil);
+}
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+b { font-weight: inherit; }
+</style>
+
+<main>
+  <p class="ask"><strong>Under each picture, tap Split, then tap it again to join.</strong> Send the letter of the one that reads as one piece of glass coming apart and back together without a dark seam or a square patch: A, B or C.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading.</p>
+  <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+
+  <figure>
+    <div class="stage"><div class="box" id="a"><div class="glass" id="a1"></div><div class="glass" id="a2"></div></div></div>
+    <figcaption><b>A · Two pieces meet</b><span>Two separate glass pieces; where they touch, their facing corners square off.</span></figcaption>
+    <button type="button" class="toggle" data-for="a" aria-pressed="false">Split</button>
+  </figure>
+  <figure>
+    <div class="stage"><div class="box" id="b"><div class="glass" id="b1" style="left:0;width:232px"></div></div></div>
+    <figcaption><b>B · One piece with a waist</b><span>One glass piece, cut to two shapes joined by a narrowing neck.</span></figcaption>
+    <button type="button" class="toggle" data-for="b" aria-pressed="false">Split</button>
+  </figure>
+  <figure>
+    <div class="stage"><div class="box" id="c"><div class="glass" id="c2"></div><div class="glass" id="c1"></div></div></div>
+    <figcaption><b>C · Born underneath</b><span>The round piece starts hidden under the bar’s end and slides out, and takes its own frost only once it is clear of the bar. No neck.</span></figcaption>
+    <button type="button" class="toggle" data-for="c" aria-pressed="false">Split</button>
+  </figure>
+  <p class="note">All three move on glass-ui’s dock spring. B’s neck is drawn with a clip each frame: <span id="clipkind">checking…</span>.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const ios = null; // Safari 26 and later freeze the OS token in the user agent, so the iOS version is asked for, not read
+  document.getElementById("env").textContent =
+    (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    (ios ? " · iOS " + ios[1] + "." + ios[2] + (ios[3] ? "." + ios[3] : "") : "");
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const R = 28, H = 56;
+  // geometry at progress t: 0 joined (one 220-wide bar), 1 split (bar 152 wide, seat 24 px away)
+  const geo = (t) => ({ barEnd: lerp(164, 152, t), seat: lerp(164, 176, t), rr: R * t });
+  const corners = (el, l, w, tl, tr, br, bl) => {
+    el.style.left = l + "px"; el.style.width = w + "px";
+    el.style.borderRadius = `${tl}px ${tr}px ${br}px ${bl}px`;
+  };
+
+  // B: one clip, written as commands then serialised as shape() or path()
+  const rrect = (x0, x1, rl, rr) => [
+    ["M", x0 + rl, 0], ["L", x1 - rr, 0], ["A", rr, x1, rr], ["L", x1, H - rr], ["A", rr, x1 - rr, H],
+    ["L", x0 + rl, H], ["A", rl, x0, H - rl], ["L", x0, rl], ["A", rl, x0 + rl, 0], ["Z"]];
+  const neck = (xa, xb, t) => {
+    const s = Math.max(0, 1 - t / 0.9), w = R * Math.pow(1 - t, 1.2), m = (xa + xb) / 2, e = (m - xa) * 0.35, d = 16;
+    const y = (v) => R + (v - R) * s; // the whole neck thins toward the midline as it parts
+    return [["M", xa, y(0)], ["C", xa + d, y(0), m - e, y(R - w), m, y(R - w)], ["C", m + e, y(R - w), xb - d, y(0), xb, y(0)],
+      ["L", xb, y(H)], ["C", xb - d, y(H), m + e, y(R + w), m, y(R + w)], ["C", m - e, y(R + w), xa + d, y(H), xa, y(H)], ["Z"]];
+  };
+  const toPath = (cmds) => "path('" + cmds.map((c) => {
+    if (c[0] === "A") return c[1] > 0.01 ? `A ${c[1]} ${c[1]} 0 0 1 ${c[2]} ${c[3]}` : `L ${c[2]} ${c[3]}`;
+    return c.join(" ");
+  }).join(" ") + "')";
+  const toShape = (cmds) => {
+    const out = []; let first = true;
+    for (const c of cmds) {
+      if (c[0] === "M") { out.push(first ? `from ${c[1]}px ${c[2]}px` : `move to ${c[1]}px ${c[2]}px`); first = false; }
+      else if (c[0] === "L") out.push(`line to ${c[1]}px ${c[2]}px`);
+      else if (c[0] === "A") out.push(c[1] > 0.01 ? `arc to ${c[2]}px ${c[3]}px of ${c[1]}px cw` : `line to ${c[2]}px ${c[3]}px`);
+      else if (c[0] === "C") out.push(`curve to ${c[5]}px ${c[6]}px with ${c[1]}px ${c[2]}px / ${c[3]}px ${c[4]}px`);
+      else out.push("close");
+    }
+    return "shape(" + out.join(", ") + ")";
+  };
+
+  const draw = {
+    a(t) { const g = geo(t);
+      corners(document.getElementById("a1"), 0, g.barEnd, R, g.rr, g.rr, R);
+      corners(document.getElementById("a2"), g.seat, 56, g.rr, R, R, g.rr); },
+    b(t) { const g = geo(t);
+      const cmds = [...rrect(0, g.barEnd, R, g.rr), ...rrect(g.seat, g.seat + 56, g.rr, R), ...neck(g.barEnd - R, g.seat + R, t)];
+      document.getElementById("b1").style.clipPath = shapeOK ? toShape(cmds) : toPath(cmds); },
+    c(t) { const g = geo(t);
+      corners(document.getElementById("c1"), 0, lerp(220, 152, t), R, R, R, R);
+      const seat = document.getElementById("c2");
+      corners(seat, g.seat, 56, R, R, R, R);
+      // The seat overlaps the bar until its left edge (164 + 12t) passes the bar's end (220 − 68t), at t = 0.7.
+      // Until then it carries no frost and no tint, so two translucent plates never stack; its glass rises once clear.
+      const k = Math.max(0, Math.min(1, (t - 0.7) / 0.15));
+      const f = `blur(${(16 * k).toFixed(2)}px) saturate(${(1 + 0.5 * k).toFixed(3)})`;
+      seat.style.webkitBackdropFilter = f; seat.style.backdropFilter = f;
+      seat.style.background = k > 0 ? `color-mix(in oklab, var(--veil) ${(k * 100).toFixed(1)}%, transparent)` : "transparent"; },
+  };
+  // B's clip: write the exact first-frame string as shape(), read it back, and fall back to path()
+  // only if the engine refused it. A refused value is dropped silently and would leave an unclipped slab.
+  const b1 = document.getElementById("b1");
+  let shapeOK = true;
+  const first = (() => { const g = geo(0); return [...rrect(0, g.barEnd, R, g.rr), ...rrect(g.seat, g.seat + 56, g.rr, R), ...neck(g.barEnd - R, g.seat + R, 0)]; })();
+  b1.style.clipPath = toShape(first);
+  if (!/^shape\(/.test(getComputedStyle(b1).clipPath || "")) { shapeOK = false; b1.style.clipPath = toPath(first); }
+  const applied = (getComputedStyle(b1).clipPath || "none") !== "none";
+  document.getElementById("clipkind").textContent =
+    (shapeOK ? "a drawn shape (shape())" : "a path (path()), since this browser refused shape()") + ", clip " + (applied ? "applied" : "refused");
+  document.getElementById("env").textContent += " · B clip " + (applied ? (shapeOK ? "applied (shape)" : "applied (path)") : "refused");
+  const state = {};
+  for (const k of ["a", "b", "c"]) { state[k] = { t: 0, raf: 0 }; draw[k](0); }
+
+  // glass-ui's dock spring (response 0.3 s, damping 0.88), from rest, with a Slow ×4 option
+  let slow = false;
+  const springPos = (tau, resp, z) => {
+    const w0 = 2 * Math.PI / resp, wd = w0 * Math.sqrt(1 - z * z), e = Math.exp(-z * w0 * tau);
+    return 1 - e * (Math.cos(wd * tau) + (z * w0 / wd) * Math.sin(wd * tau));
+  };
+  const run = (k, target) => {
+    const s = state[k]; cancelAnimationFrame(s.raf);
+    const from = s.t, resp = 0.3 * (slow ? 4 : 1), t0 = performance.now();
+    const step = (now) => {
+      const tau = (now - t0) / 1000, p = springPos(tau, resp, 0.88);
+      s.t = from + (target - from) * p;
+      draw[k](Math.max(0, Math.min(1, s.t)));
+      if (tau < resp * 1.4) s.raf = requestAnimationFrame(step);
+      else { s.t = target; draw[k](target); }
+    };
+    s.raf = requestAnimationFrame(step);
+  };
+  document.querySelectorAll("button[data-for]").forEach((b) => b.addEventListener("click", () => {
+    const split = b.getAttribute("aria-pressed") !== "true";
+    b.setAttribute("aria-pressed", String(split));
+    run(b.dataset.for, split ? 1 : 0);
+  }));
+  document.getElementById("slow").addEventListener("click", (e) => {
+    slow = e.currentTarget.getAttribute("aria-pressed") !== "true";
+    e.currentTarget.setAttribute("aria-pressed", String(slow));
+  });
+})();
+</script>

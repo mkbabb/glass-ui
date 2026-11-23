@@ -9,3 +9,19 @@ The orchestrator publishes each reading page under `study/pages/` as a private p
 ## Readings returned
 
 (none yet)
+
+- 2026-11-23, the reading pages (each read in full before publishing; the only photographs are fourier's giraffe asset and a rendered aurora gradient):
+  - Glass Corner Ghosts (R1): https://claude.ai/artifact/Eo3h83fZXynfDXNVqGXU5i
+  - Four Ways to Settle (R2): https://claude.ai/artifact/1TR7FSwN3VUaMAZQ4fonXk
+  - Glass Material Fits (R3): https://claude.ai/artifact/KpFG8qLhsSpQnUHf1ekm8a
+  - Glass Word Legibility (R3b): https://claude.ai/artifact/SjJWLQHbJ56B7DEC1MZjzo
+  - Menu Opening Springs (R5): https://claude.ai/artifact/GBaSutb84j26cysowDCQ7R
+  - Touch Event Rate (R6): https://claude.ai/artifact/9sGtAjQccg2KFZCZbn4Y1J
+  - How Glass Arrives (R7): https://claude.ai/artifact/Hs9t552WkFNwkgU2nC8y4Z
+  - Scroll Under Load (P2): https://claude.ai/artifact/KkU8yz1FLHmtamSbdUTjqs
+  - Glass Bud Shapes (P4): https://claude.ai/artifact/8RyqCYtFMhc8xFdJquLHC2
+  - Glass Selection Mark (P5): https://claude.ai/artifact/Sf5VYMX7HQeQ6k584cpZxk
+  - Glass Mark Hosts (P6): https://claude.ai/artifact/LbxfwsT94bouKtzq5VoXci
+  - Glass Split and Fuse (P7): https://claude.ai/artifact/RziFpt9Bj5RUTSVBtdAxTU
+  - Menus, Sheets and Dialogs (P8): https://claude.ai/artifact/5Jed1k3wBJvGY72BDUw6AD
+  - The choice board (version 2) links all thirteen under "Reading pages".
