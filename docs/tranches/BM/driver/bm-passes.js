@@ -23,7 +23,8 @@ const CRITIC = {
 }
 
 let p = from
-for (; p <= 10; p++) {
+const until = (args && args.until) || 10
+for (; p <= until; p++) {
   phase('Pass')
   const fold = p > 1 ? 'FIRST fold the two critiques of pass ' + (p - 1) + ' (' + S + '/pass-' + (p - 1) + '/critique-A.md and critique-B.md): accept, accept in part or reject each objection with a one-line reason in ' + S + '/pass-' + (p - 1) + '/fold.md, re-reading the evidence each cites, and amend DESIGN.md for every accepted one, noting the amendment where it lands. Then ' : ''
   const r = await agent(OID + '\n' + LAW + '\n' + OWNER + '\n' + DOCS + '\n' + PAGES + '\n' + PROTO + '\n\nYou are PASS ' + p + ' of the BM design study: the line for pass ' + p + ' in UNION.md section 4 is your brief, with every product it names. ' + fold + 'do the pass. DESIGN.md (' + S + '/DESIGN.md) is the one design document: write your section(s), amend any earlier section you overturn with a line saying so' + (p === 10 ? ', and, as pass 10, rewrite the whole and write the tranche draft, the precept amendments and the messages to each site into ' + S + '/pass-10/ as the plan says' : '') + '. Your working files, readings and strips go under ' + S + '/pass-' + p + '/. Design what a person will see and use: every design claim comes with its page, prototype or reading, and every number with its source. List every page you made for the owner\'s iPhone, and every question for a site (the orchestrator sends them). Commit nothing on master; the orchestrator commits the study. Return the schema (measured true when the pass\'s products exist; a product that needed a refused run is listed under owed).' + RES('pass-' + p), { label: 'pass-' + p, phase: 'Pass', model: 'opus', schema: PS })
@@ -34,6 +35,7 @@ for (; p <= 10; p++) {
   const objs = crit.filter(Boolean).flatMap(c => c.objections || [])
   log('pass ' + p + ' critiques: ' + objs.length + ' objections, ' + objs.filter(o => o.severity === 'blocking').length + ' blocking')
 }
+if (until < 10) return { paused: 'after pass ' + until + ' and its critiques' }
 phase('Final fold')
 const f = await agent(OID + '\n' + OWNER + '\n' + DOCS + '\nYou change no source and run no browser.\n\nYou are the FINAL FOLD of the BM design study. Fold the two critiques of pass 10 (' + S + '/pass-10/critique-A.md and critique-B.md) as each pass folded its predecessor\'s, into ' + S + '/pass-10/fold.md, and amend DESIGN.md and the pass-10 drafts (the tranche draft, the precept amendments, the messages to each site) for every accepted objection. Then list, in ' + S + '/OPEN.md, every question still open and every reading still owed, each with whose word or which iPhone reading closes it. Return the schema.' + RES('final-fold'), { label: 'final-fold', phase: 'Final fold', model: 'opus', schema: PS })
 return { final: f && { decisions: f.decisions, owed: f.owed, summary: (f.summary || '').slice(0, 3000) } }
