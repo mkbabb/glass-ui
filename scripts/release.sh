@@ -31,6 +31,9 @@ fi
 #   GOO-SPLIT-PERF, and VIZ-PARITY-METAL device rows;
 # - confirm the built ./fonts/* and ./styles/fonts export targets resolve.
 
+# `npm test`'s boot-graph gate measures a freshly built dist-demo/, so the demo is built
+# before it, as release.yml builds it before its test step.
+npm run demo:dist:build
 npm run prepublishOnly
 npm run verify:package
 
