@@ -1,6 +1,6 @@
 /* slider/styles.css — THE ONE SLIDER LANE.
  *
- * The scrubber's geometry, its affordance, the weight-train and the loupe. The SFC
+ * The scrubber's geometry and its affordance. The SFC
  * ships no <style> block: one file authors every slider pixel.
  *
  * UNLAYERED ON PURPOSE. `track-well.css` and `liquid-fill.css` are `@layer
@@ -149,19 +149,17 @@
 
 /* The fill COMPOSES `.glass-liquid-fill`; this bridges the slider's one consumer
    colour input onto the register's tint knob. `--slider-fill-ink` is the library's
-   default under it, read by the fill and the loupe's fill alike.
+   default under it, read by the fill.
    THE DARK DEFAULT IS A CALM INK. The warm capsule floor's dark peer
    (`oklch(0.42 0.06 75)`) is a floor, not a value: laid on a dark dock plate as a fill
    it read as a brown stain. On the dark canvas the fill is the foreground's own ink at a
    quiet strength, neutral and below the thumb's light, so the value reads without an
    over-lit colour. A consumer's `--slider-range-bg` still wins in both themes. */
-.glass-slider,
-.glass-loupe {
+.glass-slider {
     --slider-fill-ink: var(--glass-capsule-warm);
 }
 
-.dark .glass-slider,
-.dark .glass-loupe {
+.dark .glass-slider {
     --slider-fill-ink: color-mix(in oklab, var(--foreground) 22%, transparent);
 }
 
@@ -284,49 +282,6 @@
     box-shadow: var(--focus-ring-shadow);
 }
 
-/* THE WEIGHT-TRAIN. The fill is a column of warm glass you PULL: it compresses Y and
-   widens X on the grab, smears toward the drag by the live `--atom-drag-v`, and
-   overshoots on release. The track never moves — only the fill deforms, on the
-   compositor. The smear SATURATES (`useDragVelocity` bounds the var at 0.7), so a
-   faster pull does not rubber-band. `--motion-weight` couples the amplitude; PRM
-   zeroes it to the plain squish floor. One `:active` rule, not two — an earlier pair
-   re-declared `transform`/`transform-origin` at equal specificity and only the
-   transition survived. */
-.glass-slider[data-held] .slider-range,
-.glass-slider:active .slider-range {
-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
-    transform: scale(
-        calc(1.02 + 0.16 * var(--smear)),
-        calc(0.94 - 0.06 * var(--smear))
-    );
-    transform-origin: var(--slider-range-origin);
-    transition: transform var(--spring-press-duration) var(--spring-press);
-}
-
-/* FOLLOW-THROUGH. The punch curve carries the >1.0 overshoot-and-settle knot home; a
-   monotone settle would be a dead spring.
-   IT ALSO CARRIES THE GRASP REGISTER'S INK CHANNEL, and must. This rule governs the
-   release window on the element the register releases on, and an unlayered rule
-   outranks the register's own `transition: --glass-veil-rung`. A shorthand that
-   omitted the channel would strand the ink at 0.6 → 1 in one frame under a blur still
-   fading. The clock is READ from the register, never re-typed.
-   `background` is deliberately NOT in this list: the fill's background is a function
-   of that same rung, so transitioning both would chase one change down two clocks. */
-.glass-slider:not(:active):not([data-held]) .slider-range {
-    transition:
-        transform var(--duration-normal) var(--ease-cartoon-punch),
-        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .glass-slider:active .slider-range,
-    .glass-slider[data-held] .slider-range {
-        --motion-weight: 0;
-        transform: scale(1, 0.97);
-    }
-}
-
 /* The disabled register dims the scrubber's whole value: the fill and the disc
    inscribed in it, so the thumb never paints at full strength on a half-strength
    fill. */
@@ -347,11 +302,6 @@
         inset 0 0 0 1px var(--destructive);
 }
 
-.glass-slider[data-variant="spectrum"][data-held] .slider-thumb {
-    box-shadow:
-        0 0 0 6px var(--surface-tint-15),
-        var(--shadow-sm);
-}
 
 /* ── The gradient-track colour slider (spectrum) ──
    The track's background is a consumer-supplied ramp, the range is transparent — the
@@ -376,11 +326,24 @@
     box-shadow: var(--shadow-sm);
 }
 
-.glass-slider[data-variant="spectrum"]:hover .slider-thumb {
-    box-shadow:
-        0 0 0 4px var(--surface-tint-8),
-        var(--shadow-sm);
+/* BM pass 6 prototype: the halo (a box-shadow spread that cut in on hover and on hold, the thumb transitions only
+   `transform`) becomes the thumb's plate (W-B.17): its own disc behind it, grown in at the light strength on hover
+   and at full strength while held, by `opacity` and `scale` from four fifths, on the effect clock. */
+.glass-slider[data-variant="spectrum"] .slider-thumb::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
+    opacity: 0;
+    scale: 0.8;
+    z-index: -1;
+    transition: opacity 160ms var(--ease-standard), scale 160ms var(--ease-standard);
 }
+@media (hover: hover) {
+    .glass-slider[data-variant="spectrum"]:hover .slider-thumb::before { opacity: 0.5; scale: 1; }
+}
+.glass-slider[data-variant="spectrum"][data-held] .slider-thumb::before { opacity: 1; scale: 1; }
 
 /* The house ring is the ONE focus mark, so the UA outline must be suppressed IN THE
    SAME RULE — Chromium otherwise paints its accent over the accent-aware ring. Never a
@@ -404,27 +367,6 @@
 .glass-slider[data-orientation="vertical"] .slider-range {
     width: 100%;
     height: auto;
-}
-
-.glass-slider[data-orientation="vertical"]:active .slider-range,
-.glass-slider[data-orientation="vertical"][data-held] .slider-range {
-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
-    transform: scale(
-        calc(0.94 - 0.06 * var(--smear)),
-        calc(1.02 + 0.16 * var(--smear))
-    );
-    transform-origin: center bottom;
-}
-
-.glass-slider[data-orientation="vertical"][data-inverted] .slider-range {
-    transform-origin: center top;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .glass-slider[data-orientation="vertical"]:active .slider-range,
-    .glass-slider[data-orientation="vertical"][data-held] .slider-range {
-        transform: scale(0.97, 1);
-    }
 }
 
 /* Forced colours: the material band flattens, so the value must survive in system ink
@@ -455,156 +397,5 @@
     .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
         outline: var(--focus-ring-width) solid Highlight;
         outline-offset: 2px;
-    }
-    .glass-loupe {
-        background: Canvas;
-        border: 1px solid CanvasText;
-    }
-}
-
-/* ════════════════════════════════════════════════════════════════════════
-   THE LOUPE — the lens organ over the scrub site.
-
-   While the hand is on the control the value point is under the finger, which is
-   exactly where it cannot be read. The loupe raises a magnified window of the track
-   ABOVE the finger and keeps the point under it CENTRED.
-
-   THE CONSTRUCTION, and why each piece is the shape it is:
-   · The lens content is laid out ONCE at `--s: 3` and transformed DOWN by `k / 3`.
-     `k` never reaches 3, so the matrix is always a downscale — text and gradients
-     resolve from a larger box instead of being interpolated up out of a smaller one,
-     and no layout re-scale happens per frame.
-   · REGISTRATION IS EXACT BY CONSTRUCTION, not by tuning. A content point at `x` in
-     track coordinates sits at `3x` in the clone; the matrix takes it to `k·x`; the
-     translate is `LENS/2 − k·x`. The two cancel and the point lands dead centre at
-     every `k`.
-   · `k` runs INVERSE to speed — magnified at rest where the precision read is wanted,
-     backing off during a fast throw where it would only smear. It reads `--flex-vel`,
-     the ONE registered velocity term (`writeVelocityWeight`), never a second pole.
-   · The clone carries NO material rung: content is never frosted. The housing is the
-     only glass, and it clips its content, so the lens sits outside every glass stack.
-   ════════════════════════════════════════════════════════════════════════ */
-
-.glass-loupe {
-    /* The k-band. K_MAX at rest, K_MIN at speed, both below the 3× layout scale. */
-    --loupe-k-max: 2.6;
-    --loupe-k-min: 1.15;
-    --loupe-k: calc(
-        var(--loupe-k-max) - (var(--loupe-k-max) - var(--loupe-k-min)) *
-            var(--flex-vel, 0)
-    );
-    /* THE INHERITING MIRROR OF THE ONE TERM, and why it has to exist. `--flex-vel` is
-       `@property`-registered `inherits: false` (property-regs.css §18) — load-bearing,
-       because a per-frame write must invalidate ONE element and never a subtree. The
-       velocity writer therefore reaches the LENS and nothing under it, so a descendant
-       that writes `var(--flex-vel)` reads the registered INITIAL VALUE 0, not the live
-       term, and not even its own fallback. `--loupe-k` above is safe by construction —
-       an unregistered custom property substitutes its `var()`s on the element that
-       DECLARES it, so the lens's live value is baked in before the clone inherits it —
-       and this is that same substitution, published under a name, for the one channel
-       the clone reads directly. Never a second velocity pole; the same measurement,
-       carried one level down. */
-    --loupe-vel: var(--flex-vel, 0);
-    --loupe-span: calc(var(--slider-track-height, 1.25rem) * 6);
-    position: fixed;
-    z-index: calc(var(--z-overlay) - 1);
-    inline-size: var(--loupe-span);
-    block-size: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max));
-    inset-block-start: var(--loupe-top, 0);
-    inset-inline-start: var(--loupe-left, 0);
-    /* The raise: a `present` spring from a 0.13 seed anchored on the well's centre. The
-       seed is a RATIFIED CONSTANT, written as one — nothing declares `--loupe-scale`
-       anywhere, and this file's own opening law is that a knob whose only declaration is
-       a fallback is a literal wearing a token's name. */
-    translate: -50% -100%;
-    scale: 0.13;
-    transform-origin: 50% 100%;
-    transition:
-        scale var(--spring-present-duration) var(--spring-present),
-        opacity var(--spring-present-duration) var(--ease-standard);
-    opacity: 0;
-    overflow: hidden;
-    border-radius: var(--radius-pill);
-    pointer-events: none;
-    /* The HOUSING is the only material here, and it is the ONE plate recipe composed
-       at the element (`glass-plate`, on the template) — this rule authors geometry
-       only. The rim reads the lens curvature; the fringe is its dispersion edge. */
-    box-shadow:
-        var(--glass-material-rim),
-        var(--glass-under-shadow-quiet);
-}
-
-.glass-loupe[data-engaged] {
-    scale: 1;
-    opacity: 1;
-}
-
-/* The exit is the entry's own shorter rung — the library's ratified exit clock, not a
-   second literal. */
-.glass-loupe:not([data-engaged]) {
-    transition:
-        scale var(--spring-present-exit-duration) var(--ease-standard),
-        opacity var(--spring-present-exit-duration) var(--ease-standard);
-}
-
-.glass-loupe-clone {
-    --s: 3;
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 0;
-    inline-size: calc(var(--loupe-track-w, 0px) * var(--s));
-    block-size: calc(var(--slider-track-height, 1.25rem) * var(--s));
-    border-radius: calc(var(--radius-pill) * var(--s));
-    overflow: hidden;
-    background: var(--glass-slider-track-background, var(--muted-medium));
-    transform: translate(
-            calc(var(--loupe-span) / 2 - var(--loupe-k) * var(--loupe-x, 0px)),
-            -50%
-        )
-        scale(calc(var(--loupe-k) / var(--s)));
-    transform-origin: 0 50%;
-    /* The focus PULL: the lens resolves blur → sharp as the hand settles, coupled to
-       the same velocity term the magnification reads — through the lens's inheriting
-       mirror, because the registered term itself does not cross into this element. */
-    filter: blur(calc(var(--loupe-vel, 0) * 0.75px));
-    transition: filter var(--duration-normal) var(--ease-standard);
-}
-
-/* THE LOUPE IS SCRUBBER-ONLY, and the code says so in ONE place. It mounts off
-   `grasping`, which opens only for a graspable variant, so the spectrum can never
-   raise a lens. A spectrum arm here (`[data-variant="spectrum"] .glass-loupe-clone`,
-   a ramp background) was unreachable by construction, and unreachable paint that reads
-   like shipped paint is the thing that gets "fixed" later into a state leak: opening
-   `grasping` for the spectrum gives it no grasp carriers, and the carrier's
-   `transitionend` is what CLOSES `grasping` — a vertical spectrum, which the demo
-   ships, would then strand it open forever. If the spectrum is ever to earn a lens it
-   needs its own close path first, not a background rule. */
-
-.glass-loupe-fill {
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: 0;
-    inline-size: var(--loupe-fill-w, 0px);
-    background: var(--slider-range-bg, var(--slider-fill-ink));
-}
-
-/* The value mark is PURE SIGNAL — full-strength ink on the housing's own axis, never
-   clipped by its housing. */
-.glass-loupe-mark {
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: 50%;
-    inline-size: 2px;
-    translate: -50% 0;
-    background: var(--foreground);
-    opacity: 0.24;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .glass-loupe {
-        transition-duration: 0.01ms;
-    }
-    .glass-loupe-clone {
-        filter: none;
     }
 }
