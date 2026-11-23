@@ -1,5 +1,5 @@
 // A per-frame film of one surface. Every animation frame records whether the surface
-// is mounted, its box, its effective opacity (the product up the ancestor chain), its
+// is mounted, its box (as painted, and its layout size), its effective opacity (the product up the ancestor chain), its
 // scale, transform and filter, its state attributes and its material, from just before an
 // action until `ms` after it.
 import type { Page } from "@playwright/test";
@@ -11,6 +11,9 @@ export type Frame = {
     y?: number;
     w?: number;
     h?: number;
+    /** The layout box, which a transform does not change. */
+    lw?: number;
+    lh?: number;
     op?: number;
     state?: string | null;
     form?: string | null;
@@ -105,6 +108,8 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
                     y: r.top,
                     w: r.width,
                     h: r.height,
+                    lw: (el as HTMLElement).offsetWidth,
+                    lh: (el as HTMLElement).offsetHeight,
                     op: effective(el),
                     state: el.getAttribute("data-state"),
                     form: el.getAttribute("data-form"),

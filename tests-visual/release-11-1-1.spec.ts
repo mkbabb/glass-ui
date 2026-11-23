@@ -601,6 +601,7 @@ for (const route of ["pick", "escape", "outside"] as const) {
         await openPalette(page, project);
         await page.locator('.command-dialog__content[data-state="open"]').waitFor();
         await page.waitForTimeout(900);
+        const rows = await page.locator(".command-dialog__content [data-slot=command-item]").count();
         await startFilm(page, ".command-dialog__content", ".command-dialog__content [data-slot=command-list]");
         await markFilm(page);
         if (route === "pick") await pressOn(page, project, ".command-dialog__content [data-slot=command-item]:not([data-disabled])");
@@ -611,12 +612,28 @@ for (const route of ["pick", "escape", "outside"] as const) {
         await info.attach("routes", { body: JSON.stringify(read), contentType: "application/json" });
         const at = JSON.stringify(read.frames);
         expect(read.goneIdx, `the palette leaves ${at}`).toBeGreaterThan(-1);
+        if (route === "pick") {
+            // The plate's own box, its layout size (the exit's scale does not change it),
+            // from the pick's frame to the last frame it is mounted.
+            const held = film.frames.filter((f) => f.t >= film.mark && f.present);
+            const box = held.map((f) => [Math.round(f.t - film.mark), f.lw, f.lh]);
+            const drift = Math.max(...held.map((f) => Math.max(Math.abs(f.lw! - read.rest.lw!), Math.abs(f.lh! - read.rest.lh!))));
+            expect(drift, `the plate keeps its box through its exit ${JSON.stringify({ rest: [read.rest.lw, read.rest.lh], box })}`).toBeLessThanOrEqual(1);
+        }
         for (const f of read.after.slice(0, read.goneIdx)) {
             if (!f.present) continue;
             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
         }
         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        if (route === "pick") {
+            // Opened again, the palette starts from an empty query with every row.
+            await page.locator(".command-dialog__content").waitFor({ state: "detached" });
+            await pressOn(page, project, "button:has-text('Search commands')");
+            await page.locator('.command-dialog__content[data-state="open"]').waitFor();
+            await expect(page.locator(".command-dialog__content [data-slot=command-input]"), "the next open's query is empty").toHaveValue("");
+            expect(await page.locator(".command-dialog__content [data-slot=command-item]").count(), "the next open shows every row").toBe(rows);
+        }
     });
 }
 

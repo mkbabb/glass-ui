@@ -55,7 +55,9 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   grew from a short strip at the foot of the screen to its rung, laying out its contents
   again on every frame, and now rises into place whole from past the edge. A `CommandDialog`
   dropped its list in the first frame of its close, so the plate fell to its search
-  field before it faded; the list now stays until the dialog is gone. Menus no longer
+  field before it faded; the list now stays until the dialog is gone. A pick no longer
+  rewrites its query as the dialog closes, so rows that follow the query stay as they were
+  while the plate fades, and the query clears once the dialog is gone. Menus no longer
   run keyframes to open or close: `glass-menu-grow` and `glass-menu-grow-up` gave way to
   a transition, so an opening menu can turn back, and `glass-menu-recede` and
   `glass-menu-recede-up` gave way to one for the close. All four are still defined for
