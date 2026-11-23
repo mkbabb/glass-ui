@@ -14,7 +14,7 @@ const faults = [];
 const browser = await chromium.launch({ headless: true });
 try {
   for (const f of pages) for (const scheme of ["light", "dark"]) {
-    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, colorScheme: scheme });
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, colorScheme: scheme, ignoreHTTPSErrors: true });
     try {
       const page = await ctx.newPage(), errs = [];
       page.on("pageerror", (e) => errs.push("pageerror " + e.message));
