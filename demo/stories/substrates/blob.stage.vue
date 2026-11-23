@@ -1,8 +1,10 @@
 <script setup lang="ts">
 // One Blob, centred and as large as the box allows while staying square. It leans
-// toward the pointer and pulses on a press.
+// toward the pointer and pulses on a press. The renderer it armed and that renderer's
+// phase sit on its own element as `data-renderer` and `data-state`, with no visible text.
 import { onMounted, reactive, ref, watch } from "vue";
 import { Blob } from "@glass/components/blob";
+import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import { BLOB_PRESETS, applyBlobStudio, toBlobConfig, type BlobStudio } from "./blob/studio";
 
 const props = withDefaults(
@@ -19,6 +21,7 @@ watch(
 );
 
 const blob = ref<InstanceType<typeof Blob> | null>(null);
+const renderer = ref<RendererStatus | null>(null);
 onMounted(() => blob.value?.setMood(props.studio.mood));
 watch(
     () => props.studio.mood,
@@ -36,6 +39,9 @@ watch(
                 :config="config"
                 seed="studio"
                 :press-label="pressable ? 'Pulse the blob' : undefined"
+                :data-renderer="renderer?.engine"
+                :data-state="renderer?.phase"
+                @renderer-status="renderer = $event"
             />
         </div>
     </div>

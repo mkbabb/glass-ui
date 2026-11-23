@@ -397,11 +397,12 @@ async function forceWebGLFloorPath(page: Page): Promise<void> {
  * readback, that
  *   (a) the resolved MODE is `webgl`, not the `css` degrade the software-raster
  *       guard selects (`src/components/aurora/constants/renderMode.ts`);
- *   (b) the ENGINE that actually armed is `webgl2` — read off the demo's renderer
- *       badge (`data-renderer`, RendererStatus.vue), which reports the resolved
- *       `RendererStatus.engine`. The mode attribute alone does NOT witness this:
- *       `webgl` mode arms WebGPU wherever `navigator.gpu` exists;
- *   (c) the badge reports `data-state="ready"` and the canvas carries
+ *   (b) the ENGINE that actually armed is `webgl2` — read off the aurora's own
+ *       element, where the demo's stage writes the `rendererStatus` it emits as
+ *       `data-renderer` (its `engine`) and `data-state` (its `phase`). The mode
+ *       attribute alone does NOT witness this: `webgl` mode arms WebGPU wherever
+ *       `navigator.gpu` exists;
+ *   (c) that element reports `data-state="ready"` and the canvas carries
  *       `aurora-canvas--armed` — `useAurora` sets both only when the backend
  *       readiness promise resolves, i.e. a real context was acquired.
  *
@@ -432,12 +433,12 @@ async function assertLiveWebGLPath(page: Page, canvas: Locator): Promise<void> {
         `aurora canvas never armed (no "aurora-canvas--armed") — the backend readiness never resolved, so NO context was acquired and any non-black reading is the placeholder ground, not a live paint. RED, never a skip.`,
     ).toHaveClass(/aurora-canvas--armed/, { timeout: 30_000 });
 
-    const badge = page.locator("output.renderer-status[data-renderer]").first();
+    const status = page.locator("[data-aurora-substrate][data-renderer]").first();
     await expect(
-        badge,
-        `the aurora renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
+        status,
+        `the aurora's renderer status never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
     ).toHaveAttribute("data-state", "ready", { timeout: 30_000 });
-    const engine = await badge.getAttribute("data-renderer");
+    const engine = await status.getAttribute("data-renderer");
     expect(
         engine,
         `aurora armed the "${engine}" engine, not the WebGL2 floor path. This gate reads back ONLY the deterministic WebGL2 path (WebGPU-on-SwiftShader is the fragile arm this wave does not gate on) — the harness removes navigator.gpu to force it, so a non-webgl2 engine here means the force failed. RED, never a skip.`,
@@ -585,12 +586,9 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         // Re-source the preset keys (anti-drift manifest check) — the SCENES/preset
         // list is the source-of-truth manifest, never a hand list. The WALK below
         // covers every sourced key; the count is only the STALENESS witness, re-pinned
-        // deliberately at each roster change. 17 is the on-disk count at wire time
-        // (BJ.W-PIXEL-FLOOR-CI cured a stale 13 that RED-ed on staleness, not paint —
-        // a false-RED would poison this gate's born-RED discipline on day one).
-        // GF-AURORA W5 (PRESET-REDUCTION 17→10) re-pins this at its cut.
+        // deliberately at each roster change: the page shows ten presets.
         const presetKeys = sourcePresetKeys();
-        expect(presetKeys.length).toBe(17);
+        expect(presetKeys.length).toBe(10);
 
         const results: Record<string, number> = {};
         async function settleAndRead(label: string) {
@@ -618,13 +616,12 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
             path: `.cache/aurora-${PI_PLANT === "" ? "green" : PI_PLANT}.png`,
         });
 
-        // The per-preset drive. The picker is the demo's OWN preset row
-        // (`demo/stories/substrates/aurora/PresetPickerRow.vue`, slotted into
-        // VizStudio's #presets): plain `type="button"` tiles carrying
+        // The per-preset drive. The picker is the page's own preset row (the
+        // Configurator's default gallery): plain `type="button"` tiles carrying
         // `data-preset-tile` + `aria-pressed`, deliberately NOT `role="tab"` (an ARIA
         // contradiction the component rejects by name). The tile count must equal the
         // sourced key count and each click must LATCH `aria-pressed` — without both,
-        // every labelled read re-measures DEFAULT and the 17-preset coverage this
+        // every labelled read re-measures DEFAULT and the per-preset coverage this
         // floor reports is coverage it never obtained. There is no keyboard fallback:
         // a fallback that masks a dead primary is forbidden.
         const picker = page.locator("button[data-preset-tile]");
@@ -646,9 +643,9 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         // `alpha` is composited at that CSS opacity (`runtime.ts` syncPresentationAlpha
         // writes `canvas.style.opacity`), so the page ground reads THROUGH a dead
         // canvas and this composite metric cannot see the black. Measured under the
-        // plant: every preset reads ~0.4 at opacity 1, SPEEDTEST reads 140.5 at
-        // opacity 0.26. The floor therefore bites 17 of 18 reads; a black substrate on
-        // a low-alpha preset is NOT covered here and belongs to the per-preset
+        // plant on the page's ten presets: DEFAULT reads 0.0 and every preset 2.0, so
+        // the floor bites all eleven reads; a black substrate on a low-alpha preset,
+        // should one join the row, is NOT covered here and belongs to the per-preset
         // hue/chroma parity gates (Family G W10/W11), which read chroma collapse
         // rather than a composite mean.
         const black = Object.entries(results).filter(
@@ -680,13 +677,14 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         const blobCanvas = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
         await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });
 
-        const blobBadge = page.locator("output.renderer-status[data-renderer]").first();
+        // The stage writes the blob's `rendererStatus` on the blob's own element.
+        const blobStatus = page.locator(".goo-blob-wrapper[data-renderer]").first();
         await expect(
-            blobBadge,
-            `the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
+            blobStatus,
+            `the blob's renderer status never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
         ).toHaveAttribute("data-state", "ready", { timeout: 30_000 });
         expect(
-            await blobBadge.getAttribute("data-renderer"),
+            await blobStatus.getAttribute("data-renderer"),
             `blob armed a non-webgl2 engine — this gate reads back ONLY the deterministic WebGL2 path (WebGPU-on-SwiftShader is the fragile arm this wave does not gate on). RED, never a skip.`,
         ).toBe("webgl2");
 

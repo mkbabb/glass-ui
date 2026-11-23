@@ -95,24 +95,21 @@ export const PI_TARGETS = {
 } as const;
 
 /**
- * Re-source the 12 aurora preset KEYS from `demo/stories/substrates/aurora/presets.ts`
- * (`PRESETS = { OPENAI_SKY, … }`) — the same anti-drift discipline. The
- * substrate-paints-color spec renders aurora DEFAULT + EACH preset at t=1.
+ * Re-source the aurora preset keys from `demo/stories/substrates/aurora/presets.ts`
+ * (`AURORA_PRESETS = [{ key: "setting-sun", … }, …]`), in the order the page shows its
+ * chips. The substrate-paints-color spec renders aurora DEFAULT + EACH preset at t=1.
  */
 export function sourcePresetKeys(): string[] {
     const src = readFileSync(PRESETS_PATH, "utf8");
-    // The `export const PRESETS = { KEY, KEY, … } as const;` object literal — the
-    // shorthand-property block names the 12 preset keys (close is `} as const;`,
-    // NOT `};`, so the terminator match must accept the `as const` clause).
-    const block = src.match(
-        /export const PRESETS\s*=\s*\{([\s\S]*?)\}\s*(?:as const)?\s*;/,
-    );
+    // The `export const AURORA_PRESETS … = [ … ];` array literal; each entry opens
+    // with its `key`.
+    const block = src.match(/export const AURORA_PRESETS\b[^=]*=\s*\[([\s\S]*?)\n\];/);
     if (!block) {
         throw new Error(
-            `pi-manifest: could not parse the PRESETS object from ${PRESETS_PATH} — re-source the preset keys, do NOT hand-list.`,
+            `pi-manifest: could not parse the AURORA_PRESETS array from ${PRESETS_PATH} — re-source the preset keys, do NOT hand-list.`,
         );
     }
-    const keys = [...block[1]!.matchAll(/\b([A-Z][A-Z0-9_]+)\b/g)]
+    const keys = [...block[1]!.matchAll(/\{\s*key:\s*"([a-z0-9-]+)"/g)]
         .map((m) => m[1]!)
         .filter((k, i, a) => a.indexOf(k) === i);
     if (keys.length === 0) {
