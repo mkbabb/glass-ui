@@ -37,7 +37,7 @@ const res = {
   master: execFileSync("git", ["-C", ROOT, "rev-parse", "--short", "master"], { encoding: "utf8" }).trim(),
   js_gz: { before: await js(before.vue), after: await js(after.vue) },
   css_gz: { before: gz(cssMin(before.css)), after: gz(cssMin(after.css)) },
-  note: "after = the loupe, the focus veil mount, the grasp carriers and useDragVelocity removed from Slider.vue; the loupe rules and the weight-train removed from styles.css; the spectrum thumb's halo replaced by its plate. useDragVelocity's own module (809 B, pass 1) leaves every slider site's bundle with it; grasp.css and focus-veil.css stay W-R.1's.",
+  note: "after = the loupe, the focus veil mount, the grasp carriers and useDragVelocity removed from Slider.vue; the loupe rules and the weight-train removed from styles.css; the spectrum thumb's two halo shadows deleted (W-B.18 R-8). useDragVelocity's own module (809 B, pass 1) leaves every slider site's bundle with it; grasp.css and focus-veil.css stay W-R.1's.",
 };
 res.js_gz.delta = res.js_gz.after - res.js_gz.before; res.css_gz.delta = res.css_gz.after - res.css_gz.before;
 writeFileSync(path.join(HERE, "slider-bytes.json"), JSON.stringify(res, null, 1));

@@ -326,24 +326,8 @@
     box-shadow: var(--shadow-sm);
 }
 
-/* BM pass 6 prototype: the halo (a box-shadow spread that cut in on hover and on hold, the thumb transitions only
-   `transform`) becomes the thumb's plate (W-B.17): its own disc behind it, grown in at the light strength on hover
-   and at full strength while held, by `opacity` and `scale` from four fifths, on the effect clock. */
-.glass-slider[data-variant="spectrum"] .slider-thumb::before {
-    content: "";
-    position: absolute;
-    inset: -4px;
-    border-radius: inherit;
-    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
-    opacity: 0;
-    scale: 0.8;
-    z-index: -1;
-    transition: opacity 160ms var(--ease-standard), scale 160ms var(--ease-standard);
-}
-@media (hover: hover) {
-    .glass-slider[data-variant="spectrum"]:hover .slider-thumb::before { opacity: 0.5; scale: 1; }
-}
-.glass-slider[data-variant="spectrum"][data-held] .slider-thumb::before { opacity: 1; scale: 1; }
+/* BM pass 6 prototype: the halo's two shadows (4 px on hover, 6 px held, cut in with no transition) are deleted,
+   as BL's W-B.18 R-8 deletes them; the ring's state mark that replaces them is W-B.18's and is not built here. */
 
 /* The house ring is the ONE focus mark, so the UA outline must be suppressed IN THE
    SAME RULE — Chromium otherwise paints its accent over the accent-aware ring. Never a
