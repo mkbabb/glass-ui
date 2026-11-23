@@ -4,6 +4,9 @@
 
 11.1.1 is the patch after 11.1.0. The release that cuts it reads this file. It carries five defect cures that the restraint audit found and that break nothing: no export or token is removed and no default a consumer chose is changed. They were booked to 12.0.0 with the deletions; holding them there would leave consumers on local overrides for five releases, which the precept forbids (C-16). The ruling is `review/fable-2026-11-10/plans.md` item 3.
 
+
+> **First row of 11.1.2 (orchestrator, 2026-11-23, O-419: the owner, "the dropdowns scroll the entire screen when using them ... the filter drawer scrolls the entire screen, too, on mobile").** A gesture begun on any glass plate never moves the page behind it: the phone Select and Command sheets, Sheet (a filter drawer included), Dialog and Popover, one cure at the root for all (O-348 (2), R-096). Its root cause is read on the 11.1.1 tip in `docs/tranches/BL/audit/phone-scroll/` before the 11.1.2 build starts; the build takes that record's cure. Witness: by touch at 390 in Playwright WebKit and Chromium, per surface, the page's scroll position unchanged through open, a swipe on the plate, a swipe on its list (the list scrolls, the page does not) and close, RED on 11.1.1 and GREEN after; the owner's iPhone reads it in Safari.
+
 ## Rules
 
 - **Cut:** `release/11.1.1` from master, after 11.1.0 has published and merged (11.1.0 itself does not tag until `v11.0.1` is merged into it).
