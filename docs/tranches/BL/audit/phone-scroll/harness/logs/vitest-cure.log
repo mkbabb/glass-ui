@@ -1,0 +1,35 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/phone-scroll-cure
+
+ ❯ tests/components/dialog/dialog-dismiss.test.ts (9 tests | 1 failed) 50ms
+     × binds no dismiss intent anywhere in demo/ 39ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/dialog/dialog-dismiss.test.ts > G-DLG-DISMISS · no consumer-side guards > binds no dismiss intent anywhere in demo/
+AssertionError: expected [ 'demo/__phone/Page.vue' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "demo/__phone/Page.vue",
++ ]
+
+ ❯ tests/components/dialog/dialog-dismiss.test.ts:85:27
+     83|             DISMISS_INTENTS.test(readFileSync(f, "utf8")),
+     84|         );
+     85|         expect(offenders).toEqual([]);
+       |                           ^
+     86|     });
+     87|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 27 passed (28)
+      Tests  1 failed | 181 passed (182)
+   Start at  13:26:02
+   Duration  16.52s (transform 1.59s, setup 1.03s, import 7.57s, tests 15.44s, environment 4.94s)
+

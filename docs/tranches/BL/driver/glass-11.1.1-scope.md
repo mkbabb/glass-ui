@@ -7,6 +7,8 @@
 
 > **First row of 11.1.2 (orchestrator, 2026-11-23, O-419: the owner, "the dropdowns scroll the entire screen when using them ... the filter drawer scrolls the entire screen, too, on mobile").** A gesture begun on any glass plate never moves the page behind it: the phone Select and Command sheets, Sheet (a filter drawer included), Dialog and Popover, one cure at the root for all (O-348 (2), R-096). Its root cause is read on the 11.1.1 tip in `docs/tranches/BL/audit/phone-scroll/` before the 11.1.2 build starts; the build takes that record's cure. Witness: by touch at 390 in Playwright WebKit and Chromium, per surface, the page's scroll position unchanged through open, a swipe on the plate, a swipe on its list (the list scrolls, the page does not) and close, RED on 11.1.1 and GREEN after; the owner's iPhone reads it in Safari.
 
+> **11.1.2's first row, after its first round (2026-11-23).** `audit/phone-scroll/` ROOT.md + cure.patch were judged "holds after fixes" (VERIFY.md B1 to B4). The second round folds those four with atlas's touch measurements (INBOUND O-423): the detented list that a finger cannot scroll from its top, the outside tap that presses through, the dismissal that WebKit's tap never sends (B2: the hold ships only with it), and the detented scrim's 0.28 floor (B3). The build takes the second round's patch, not the first.
+
 ## Rules
 
 - **Cut:** `release/11.1.1` from master, after 11.1.0 has published and merged (11.1.0 itself does not tag until `v11.0.1` is merged into it).

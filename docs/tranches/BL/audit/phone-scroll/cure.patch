@@ -1,0 +1,160 @@
+--- a/src/components/_shared/overlay/sheet-width.ts
++++ b/src/components/_shared/overlay/sheet-width.ts
+@@ -1,4 +1,5 @@
+ import { onBeforeUnmount, shallowRef, watch, type ShallowRef } from "vue";
++import { useRootScrollLock } from "./root-scroll-lock";
+ 
+ /**
+  * THE SHEET WIDTH (U/B7 D-6). Below 30rem an overlay has no width to sit beside
+@@ -14,10 +15,23 @@
+  * listener goes and the form stays: a surface leaves in the form it opened in, so its
+  * exit plays on the same box, side and material it entered on. The next open reads the
+  * query again.
++ *
++ * A surface that covers the page holds the page. While an overlay is open at this width
++ * the root scroll lock holds, so a swipe begun on the surface cannot move the page behind
++ * it. The plate's own `overscroll-behavior: contain` cannot promise that: WebKit applies
++ * it only to a box whose content overflows (webkit.org/b/243452), so a list that fits,
++ * and any part of a plate outside its list, hands the swipe straight to the page. A modal
++ * surface passes `modal`: it already holds the page (its scrim's root lock, or reka's
++ * lock for a modal menu or popover), and a second lock on `body` under the root's would
++ * make `body` the scroller. The hold ends at the close, so the page is live while the
++ * surface leaves.
+  */
+ const SHEET_QUERY = "(width < 30rem)";
+ 
+-export function useSheetWidth(open: () => boolean): Readonly<ShallowRef<boolean>> {
++export function useSheetWidth(
++    open: () => boolean,
++    modal: () => boolean = () => false,
++): Readonly<ShallowRef<boolean>> {
+     const sheet = shallowRef(false);
+     let query: MediaQueryList | null = null;
+     const sync = () => {
+@@ -41,5 +55,6 @@
+         { immediate: true, flush: "sync" },
+     );
+     onBeforeUnmount(release);
++    useRootScrollLock(() => open() && sheet.value && !modal());
+     return sheet;
+ }
+--- a/src/components/select/SelectContent.vue
++++ b/src/components/select/SelectContent.vue
+@@ -71,11 +71,11 @@
+         new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),
+ };
+ 
+-/* Body scroll stays free (U/B7 D-2). reka's lock writes `overflow: hidden` onto
+- * `body`; under a root whose overflow is not `visible` that turns `body` into the
+- * scroll container and drops every sticky ancestor, and the listbox with it, to
+- * its in-flow position. The viewport inside the plate holds its own scroll and
+- * contains overscroll, so the page behind it does not move. */
++/* reka's body lock stays off. It writes `overflow: hidden` onto `body`; under a root
++ * whose overflow is not `visible` that turns `body` into the scroll container and drops
++ * every sticky ancestor, and the listbox with it, to its in-flow position. The anchored
++ * form leaves the page free; the sheet form covers the page and holds it through the
++ * root lock (`useSheetWidth`). */
+ const rootAttrs = computed(() => ({
+     ...attrs,
+     position: "popper" as const,
+--- a/src/components/menu/DropdownMenuContent.vue
++++ b/src/components/menu/DropdownMenuContent.vue
+@@ -83,7 +83,10 @@
+    register decides from two facts it already holds (the dock stamp and the viewport);
+    the content carries no material prop (BK #66). An anchored menu outside a dock, or
+    any menu above 30rem, keeps the floating plate. */
+-const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
++const sheetWidth = useSheetWidth(
++    () => menuRoot?.open.value ?? false,
++    () => menuRoot?.modal.value ?? false,
++);
+ const firm = computed(
+     () => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value,
+ );
+--- a/src/components/menu/DropdownMenu.vue
++++ b/src/components/menu/DropdownMenu.vue
+@@ -31,7 +31,8 @@
+        writes `overflow: hidden` onto `body`; under a root whose overflow is not
+        `visible` that makes `body` the scroll container, every sticky ancestor drops
+        to its in-flow position and the menu follows its trigger off screen. An action
+-       menu needs neither the lock nor the inert page. Pass `modal` for a menu that
++       menu needs neither that lock nor the inert page; at sheet width it holds the page
++       through the root lock instead (`useSheetWidth`). Pass `modal` for a menu that
+        must make the page inert. */
+     modal: false,
+     open: undefined,
+--- a/src/components/popover/PopoverContent.vue
++++ b/src/components/popover/PopoverContent.vue
+@@ -14,6 +14,7 @@
+     useDockParticipation,
+     useLeaveFinished,
+     useModalShortcutBarrier,
++    useSheetWidth,
+     type FloatingPlacementProps,
+ } from "../_shared/overlay";
+ import { usePopoverUnion } from "./popoverContext";
+@@ -159,13 +160,15 @@
+ /* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
+    on the hover arm it is a hover card. */
+ const hoverRoot = injectHoverCardRootContext(null);
++const panelOpen = () =>
++    (usesHoverRoot.value ? hoverRoot?.open.value : popoverRoot?.open.value) ?? false;
+ const leave = useLeaveFinished({
+     kind: () => (usesHoverRoot.value ? "hover-card" : "popover"),
+-    open: () =>
+-        (usesHoverRoot.value ? hoverRoot?.open.value : popoverRoot?.open.value) ??
+-        false,
++    open: panelOpen,
+     emit: () => emit("leaveFinished"),
+ });
++/* At sheet width the panel covers the page, so it holds the page while open. */
++useSheetWidth(panelOpen, () => isModal.value);
+ 
+ const dock = useDockParticipation();
+ const contentAttrs = computed(() =>
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -19,6 +19,7 @@
+     useExitPress,
+     useLeaveFinished,
+     useModalShortcutBarrier,
++    useSheetWidth,
+ } from "../_shared/overlay";
+ import {
+     scrimDetentOpacity,
+@@ -125,6 +126,12 @@
+ // does: while reka is enforcing modality, the app's accelerators are barriered off
+ // and only what this sheet registers after this line answers a keystroke.
+ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
++// A modal sheet holds the page through its scrim; at sheet width a non-modal one covers
++// the page and holds it too.
++useSheetWidth(
++    () => dialogRoot.open.value,
++    () => dialogRoot.modal.value,
++);
+ 
+ // ONE spring mount PER ARM, and the sheet has exactly one arm at a time. The slide's
+ // panel spring is seated only on the SLIDING arm: a detented sheet is driven end to end
+--- a/src/components/dialog/DialogContent.vue
++++ b/src/components/dialog/DialogContent.vue
+@@ -20,6 +20,7 @@
+     useExitPress,
+     useLeaveFinished,
+     useModalShortcutBarrier,
++    useSheetWidth,
+ } from "../_shared/overlay";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+ 
+@@ -81,6 +82,12 @@
+ // page behind inert; a `modal={false}` dialog leaves the page operable and its
+ // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
+ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
++// A modal plate holds the page through its scrim; at sheet width a non-modal one covers
++// the page and holds it too.
++useSheetWidth(
++    () => dialogRoot.open.value,
++    () => dialogRoot.modal.value,
++);
+ 
+ // ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
+ // is named here once and the consumer chooses nothing — and the knob that used to offer
