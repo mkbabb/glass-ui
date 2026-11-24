@@ -1,0 +1,157 @@
+
+Running 108 tests using 1 worker
+
+  ✓    1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:88:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto (311ms)
+  ✓    2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:105:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light (345ms)
+  ✓    3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:161:5 › press · a quick press on Again lands under reduced motion at 1440 (3.1s)
+  ✓    4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:161:5 › press · a quick press on Again lands under reduced motion at 390 (2.4s)
+  ✓    5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm) (5.8s)
+  ✓    6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md) (5.5s)
+  ✓    7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg) (5.1s)
+  ✓    8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:256:1 › slider · the thumb paints --foreground by default and --slider-thumb-bg when set (707ms)
+  ✓    9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:279:1 › lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted (2.5s)
+  ✓   10 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:321:1 › edge · a GlassDock page opens and stays alive (2.3s)
+  ✓   11 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:340:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (667ms)
+  ✓   12 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:371:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (717ms)
+  ✓   13 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:431:1 › edge · a host's --glass-border-dock colours the expanded edge (1.0s)
+  ✓   14 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:493:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge (956ms)
+  ✓   15 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:584:5 › static · a static dock's controls draw no backdrop-filter (light) (4.8s)
+  ✓   16 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:584:5 › static · a static dock's controls draw no backdrop-filter (dark) (4.6s)
+  ✓   17 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.4s)
+  ✓   18 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.1s)
+  ✓   19 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps (1.8s)
+  ✓   20 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page (8.4s)
+  ✓   21 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:772:1 › hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it (11.0s)
+  ✘   22 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens (872ms)
+  ✓   23 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:818:1 › blob · through a sweep, a drag and a release the body's drawn reach stays inside its box (4.8s)
+  ✓   24 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:879:1 › blob · from 100 ms after a sweep and release the body stays a bead, not a filled box (3.4s)
+  ✓   25 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:937:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.5s)
+  ✓   26 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:937:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.3s)
+  ✓   27 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.9s)
+  ✓   28 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1012:1 › pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot (4.2s)
+  ✓   29 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1055:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page (1.4s)
+  ✓   30 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1081:1 › wheel · a vertical dock's run contains its own axis and passes the other (405ms)
+  ✓   31 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.8s)
+  ✓   32 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.8s)
+  ✓   33 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover (22.4s)
+  ✓   34 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover (5.0s)
+  ✓   35 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover (22.5s)
+  ✓   36 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover (5.0s)
+  ✓   37 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover (22.1s)
+  ✓   38 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover (4.9s)
+  ✓   39 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover (22.1s)
+  ✓   40 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover (4.9s)
+  ✓   41 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover (22.2s)
+  ✓   42 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover (5.3s)
+  ✓   43 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover (22.3s)
+  ✓   44 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover (5.2s)
+  ✓   45 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1262:1 › hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover (10.3s)
+  ✓   46 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1332:5 › radius · every dock seat's corner is half its block size, at 1440 (8.9s)
+  ✓   47 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1332:5 › radius · every dock seat's corner is half its block size, at 390 (8.8s)
+  ✓   48 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1379:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.5s)
+  ✓   49 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1379:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (3.1s)
+  ✓   50 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1442:1 › transition · a control slotted into a dock's run keeps its own transition (3.2s)
+  ✓   51 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.3s)
+  ✓   52 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.6s)
+  ✓   53 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.5s)
+  ✓   54 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.5s)
+  ✓   55 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:88:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto (267ms)
+  ✓   56 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:105:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light (416ms)
+  ✓   57 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:161:5 › press · a quick press on Again lands under reduced motion at 1440 (2.5s)
+  ✓   58 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:161:5 › press · a quick press on Again lands under reduced motion at 390 (2.4s)
+  ✓   59 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm) (5.0s)
+  ✓   60 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md) (5.2s)
+  ✓   61 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:235:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg) (4.7s)
+  ✓   62 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:256:1 › slider · the thumb paints --foreground by default and --slider-thumb-bg when set (566ms)
+  ✓   63 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:279:1 › lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted (1.9s)
+  ✓   64 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:321:1 › edge · a GlassDock page opens and stays alive (2.0s)
+  ✓   65 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:340:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (641ms)
+  ✓   66 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:371:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (669ms)
+  ✓   67 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:431:1 › edge · a host's --glass-border-dock colours the expanded edge (1.0s)
+  ✓   68 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:493:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge (1.0s)
+  ✓   69 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:584:5 › static · a static dock's controls draw no backdrop-filter (light) (3.4s)
+  ✓   70 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:584:5 › static · a static dock's controls draw no backdrop-filter (dark) (3.8s)
+  ✓   71 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.1s)
+  ✓   72 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.1s)
+  -   73 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps
+  -   74 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page
+  ✓   75 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:772:1 › hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it (10.4s)
+  ✘   76 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens (853ms)
+  ✓   77 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:818:1 › blob · through a sweep, a drag and a release the body's drawn reach stays inside its box (3.9s)
+  -   78 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:879:1 › blob · from 100 ms after a sweep and release the body stays a bead, not a filled box
+  ✓   79 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:937:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.2s)
+  ✓   80 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:937:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.2s)
+  ✓   81 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.4s)
+  ✓   82 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1012:1 › pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot (4.2s)
+  -   83 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1055:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page
+  ✓   84 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1081:1 › wheel · a vertical dock's run contains its own axis and passes the other (274ms)
+  -   85 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc
+  -   86 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+  -   87 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -   88 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   89 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -   90 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   91 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover
+  -   92 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   93 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -   94 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   95 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -   96 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   97 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover
+  -   98 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1254:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover
+  -   99 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1262:1 › hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover
+  ✓  100 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1332:5 › radius · every dock seat's corner is half its block size, at 1440 (6.9s)
+  ✓  101 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1332:5 › radius · every dock seat's corner is half its block size, at 390 (6.6s)
+  ✓  102 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1379:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.1s)
+  ✓  103 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1379:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (3.4s)
+  -  104 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1442:1 › transition · a control slotted into a dock's run keeps its own transition
+  ✓  105 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.8s)
+  ✓  106 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+  ✓  107 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.4s)
+  ✓  108 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      807 |     await page.locator("body[data-ready='1'] .static-dock").waitFor();
+      808 |     await page.waitForTimeout(600);
+    > 809 |     expect(await filtered(page, "Home")).toHaveLength(1);
+          |                                          ^
+      810 | });
+      811 |
+      812 | // The body's reach as the GPU draws it: every WebGL2 draw's `uBodyRadius + |uPulseAmp| +
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:809:42
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--1c8a7-trol-keeps-its-capsule-lens-chromium-headless-new/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      807 |     await page.locator("body[data-ready='1'] .static-dock").waitFor();
+      808 |     await page.waitForTimeout(600);
+    > 809 |     expect(await filtered(page, "Home")).toHaveLength(1);
+          |                                          ^
+      810 | });
+      811 |
+      812 | // The body's reach as the GPU draws it: every WebGL2 draw's `uBodyRadius + |uPulseAmp| +
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:809:42
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--1c8a7-trol-keeps-its-capsule-lens-coarse-touch/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:805:1 › static · a live dock's active control keeps its capsule lens 
+  20 skipped
+  86 passed (8.1m)
+rc=1

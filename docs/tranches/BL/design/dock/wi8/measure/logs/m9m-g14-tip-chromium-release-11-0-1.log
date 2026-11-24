@@ -1,0 +1,44 @@
+
+Running 18 tests using 1 worker
+
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":87,"h":40}
+  ✓   1 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.7s)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":98,"h":40} hover {"radii":["20px","20px","20px","20px"],"w":98,"h":40}
+  ✓   2 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (1.0s)
+o2 open house tokens plate {"radii":["28px","28px","28px","28px"],"w":264,"h":56} root {"radii":["28px","28px","28px","28px"],"w":264,"h":56}
+  ✓   3 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (737ms)
+o2 collapsed house tokens plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓   4 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (927ms)
+o2 narrow house tokens plate {"radii":["28px","28px","28px","28px"],"w":164,"h":56} root {"radii":["28px","28px","28px","28px"],"w":164,"h":56} run {"scroll":0}
+  ✓   5 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (712ms)
+o2 open radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":264,"h":56} root {"radii":["28px","28px","28px","28px"],"w":264,"h":56}
+  ✓   6 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (638ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓   7 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (654ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":164,"h":56} root {"radii":["28px","28px","28px","28px"],"w":164,"h":56} run {"scroll":0}
+  ✓   8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (849ms)
+o3 expand {"frames":164,"morphing":43,"bad":[]}
+o3 collapse {"frames":169,"morphing":46,"bad":[]}
+  ✓   9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.6s)
+o1 focus hover {"radii":["22px","22px","22px","22px"],"w":79,"h":44}
+  ✓  10 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.0s)
+o1 name rest {"radii":["22px","22px","22px","22px"],"w":88,"h":44} hover {"radii":["22px","22px","22px","22px"],"w":88,"h":44}
+  ✓  11 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (1.4s)
+o2 open house tokens plate {"radii":["30px","30px","30px","30px"],"w":266,"h":60} root {"radii":["30px","30px","30px","30px"],"w":266,"h":60}
+  ✓  12 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (643ms)
+o2 collapsed house tokens plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  13 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (753ms)
+o2 narrow house tokens plate {"radii":["30px","30px","30px","30px"],"w":176,"h":60} root {"radii":["30px","30px","30px","30px"],"w":176,"h":60} run {"scroll":0}
+  ✓  14 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (835ms)
+o2 open radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":266,"h":60} root {"radii":["30px","30px","30px","30px"],"w":266,"h":60}
+  ✓  15 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (780ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  16 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (840ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":176,"h":60} root {"radii":["30px","30px","30px","30px"],"w":176,"h":60} run {"scroll":0}
+  ✓  17 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (708ms)
+o3 expand {"frames":165,"morphing":43,"bad":[]}
+o3 collapse {"frames":169,"morphing":46,"bad":[]}
+  ✓  18 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.5s)
+
+  18 passed (26.7s)
+rc=0

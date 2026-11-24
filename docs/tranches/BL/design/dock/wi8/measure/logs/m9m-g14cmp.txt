@@ -1,21 +1,62 @@
+m9m-g14-master-webkit-release-10-1-1.log: rc=0  25 passed (26.4s)
+m9m-g14-master-webkit-release-10-1-2.log: rc=1  1 failed; 51 passed (1.2m)
+m9m-g14-master-webkit-release-10-1-3.log: rc=1  2 failed; 2 skipped; 56 passed (2.2m)
+m9m-g14-master-webkit-release-10-1-4.log: rc=0  8 skipped; 15 passed (20.2s)
+m9m-g14-master-webkit-release-10-1-5.log: rc=0  107 passed (14.2m)
+m9m-g14-master-webkit-release-11-0-1.log: rc=0  9 passed (15.1s)
+m9m-g14-master-webkit-release-11-0-2.log: rc=1  7 failed; 3 skipped; 44 passed (6.2m)
+m9m-g14-master-webkit-ro-loop.log: rc=0  4 passed (31.1s)
 m9m-g14-tip-chromium-release-10-1-1.log: rc=0  50 passed (28.1s)
 m9m-g14-tip-chromium-release-10-1-2.log: rc=0  108 passed (1.6m)
 m9m-g14-tip-chromium-release-10-1-3.log: rc=0  120 passed (4.5m)
 m9m-g14-tip-chromium-release-10-1-4.log: rc=0  46 passed (48.1s)
 m9m-g14-tip-chromium-release-10-1-5.log: rc=1  2 failed; 216 passed (27.5m)
+m9m-g14-tip-chromium-release-11-0-1.log: rc=0  18 passed (26.7s)
+m9m-g14-tip-chromium-release-11-0-2.log: rc=1  2 failed; 20 skipped; 86 passed (8.1m)
+m9m-g14-tip-chromium-ro-loop.log: rc=0  8 passed (1.0m)
+m9m-g14-tip-webkit-release-10-1-1.log: rc=0  50 passed (48.8s)
+m9m-g14-tip-webkit-release-10-1-2.log: rc=0  108 passed (2.4m)
+m9m-g14-tip-webkit-release-10-1-3.log: rc=0  4 skipped; 116 passed (5.5m)
+m9m-g14-tip-webkit-release-10-1-4.log: rc=0  16 skipped; 30 passed (42.3s)
+m9m-g14-tip-webkit-release-10-1-5.log: rc=1  3 failed; 215 passed (29.5m)
+m9m-g14-tip-webkit-release-11-0-1.log: rc=0  18 passed (26.4s)
+m9m-g14-tip-webkit-release-11-0-2.log: rc=1  2 failed; 24 skipped; 82 passed (8.1m)
+m9m-g14-tip-webkit-ro-loop.log: rc=0  8 passed (59.2s)
 
-chromium-headless-new: 271 tests on the tip (334 on master); new failures 1, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 4
+chromium-headless-new: 338 tests on the tip (334 on master); new failures 2, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 5
     NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-11-0-2.spec.ts:805  static · a live dock's active control keeps its capsule lens
     tip-only pass release-10-1-2.spec.ts:521  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
     tip-only pass release-10-1-2.spec.ts:521  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
     tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
     tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
-coarse-touch: 271 tests on the tip (334 on master); new failures 1, failing on both 0, passing only on the tip 2, flaky on the tip 0, not on master 4
+    tip-only pass release-11-0-2.spec.ts:677  fill · the light scheme's seat fills are the dock's ink at the ruled steps
+coarse-touch: 338 tests on the tip (334 on master); new failures 2, failing on both 0, passing only on the tip 2, flaky on the tip 0, not on master 5
     NEW  release-10-1-5.spec.ts:336  g2 expanded (collapsible), each layer and input mode hold g1
+    NEW  release-11-0-2.spec.ts:805  static · a live dock's active control keeps its capsule lens
     tip-only pass release-10-1-2.spec.ts:521  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
     tip-only pass release-10-1-2.spec.ts:521  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
     tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
     tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
-webkit: 0 tests on the tip (334 on master); new failures 0, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 0
-webkit-touch: 0 tests on the tip (0 on master); new failures 0, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 0
+    tip-only skip release-11-0-2.spec.ts:677  fill · the light scheme's seat fills are the dock's ink at the ruled steps
+webkit: 338 tests on the tip (334 on master); new failures 2, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 5
+    NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-11-0-2.spec.ts:805  static · a live dock's active control keeps its capsule lens
+    tip-only pass release-10-1-2.spec.ts:521  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-2.spec.ts:521  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
+    tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
+    tip-only pass release-11-0-2.spec.ts:677  fill · the light scheme's seat fills are the dock's ink at the ruled steps
+webkit-touch: 338 tests on the tip (334 on master); new failures 2, failing on both 0, passing only on the tip 7, flaky on the tip 0, not on master 6
+    NEW  release-10-1-5.spec.ts:336  g2 expanded (collapsible), each layer and input mode hold g1
+    NEW  release-11-0-2.spec.ts:805  static · a live dock's active control keeps its capsule lens
+    tip-only pass release-10-1-2.spec.ts:521  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-2.spec.ts:521  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
+    tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
+    tip-only fail release-10-1-5.spec.ts:2162  r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its 
+    tip-only skip release-11-0-2.spec.ts:677  fill · the light scheme's seat fills are the dock's ink at the ruled steps
 pm-g14-master-runmark.log Test Files  1 passed (1) | Tests  9 passed (9) | rc=0
+m9m-g14-tip-runmark.log Test Files  1 passed (1) | Tests  9 passed (9) | rc=0
+m9m-units-build.log rc=0
+m9m-units.log Test Files  94 passed (94) | Tests  1004 passed | 3 expected fail (1007) | rc=0
