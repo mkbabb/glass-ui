@@ -25,3 +25,4 @@ The orchestrator publishes each reading page under `study/pages/` as a private p
   - Glass Split and Fuse (P7): https://claude.ai/artifact/RziFpt9Bj5RUTSVBtdAxTU
   - Menus, Sheets and Dialogs (P8): https://claude.ai/artifact/5Jed1k3wBJvGY72BDUw6AD
   - The choice board (version 2) links all thirteen under "Reading pages".
+  - 2026-11-23: the owner cannot open artifacts, so the pages are read from this Mac: http://MacBook-Pro-170.local:4415/ (docs/tranches/BM/study/local/, start.sh). The artifact links above may be deleted by the owner (Menu Opening Springs was, 2026-11-23); the local site is built from pages/ and choices/ and needs none of them.
