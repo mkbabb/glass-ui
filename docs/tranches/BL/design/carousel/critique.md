@@ -24,7 +24,7 @@ Five of the seven cures are at the root and close to the smallest form:
 
 Choosing native snap over a pointer glide follows from the numbers, not from taste. Cured native matches bare. No glide can do better than 0 reversals and a 0.99 hand ratio.
 
-One blocking item: the cure removes the content lag, a weight-and-momentum channel, and does not put that to the owner. Six items are major. In short:
+One blocking item: the cure removes the content lag, a weight-and-momentum channel, and does not put that to the owner. Six items are major:
 
 - WebKit's wheel table misreports a reversal it still has.
 - The reconcile is arithmetic on a cached pitch, and nothing re-measures that pitch.

@@ -243,13 +243,16 @@ diff --git a/src/components/carousel/useCarousel.ts b/src/components/carousel/us
  import { useDeck, useDeckSnap, type DeckCore } from "../deck";
  import type { CarouselContext, CarouselEmits, CarouselProps } from "./types";
  
-@@ -42,6 +42,10 @@
+@@ -42,6 +42,13 @@
          },
      });
  
 +    // v-model:active is two-way: a write from outside (a PagerDots bound to the same
 +    // model) moves the deck; `go` ignores the deck's own change coming back.
 +    watch(active, (to) => deck.go(to));
++    // The deck is made before its members are counted, so it seats 0 whatever `active`
++    // says; it takes `active` when the members first arrive, before the strip is seated.
++    watch(count, () => deck.go(active.value), { once: true, flush: "sync" });
 +
      // The inertial travel arm. It commits the settled index from the platform's
      // own snap signal and feeds the continuous channel off the same scroll.
@@ -281,15 +284,15 @@ diff --git a/src/components/carousel/CarouselContent.vue b/src/components/carous
 +   THE PROJECTION RUNS ON TWO CLOCKS (LAW 1), both in the stylesheet. The SCALE is a
 +   function of the scroll position, so the platform draws it from a view timeline;
 +   nothing here writes per scroll frame (a scale written per frame made WebKit snap a
-+   trackpad scroll back, O-421). The OPACITY is a CSS transition on `[data-state]`, a
-+   fired clock on a governed spring.
++   trackpad scroll back). The OPACITY is a CSS transition on `[data-state]`, a fired
++   clock on a governed spring.
  
 -   THE INTERIOR LAG (LAW 3) is written on the member's CONTENT node, off the travel
 -   velocity, on the same bounded velocity-lag law the pager worm's trail edge runs.
 -   A parent transform is not a content lag; it is the housing moving twice.
 +   NO INTERIOR LAG. The content rides its member. A lag written from the scroll's
 +   velocity swung its whole ceiling in one frame and stepped the content backwards
-+   against its member through every settle (O-327, O-421).
++   against its member through every settle.
  
     THE PARTICIPATION FLAG (I4b / #29). In `"window"` projection only the ACTIVE
     member projects and the neighbours do not move. */
@@ -373,6 +376,19 @@ diff --git a/src/components/carousel/CarouselItem.vue b/src/components/carousel/
 diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles.css
 --- a/src/components/carousel/styles.css
 +++ b/src/components/carousel/styles.css
+@@ -5,9 +5,9 @@
+    to retune it had to find both. `--carousel-gutter` is the axis's one value, and
+    `gap` is the mechanism, so the two halves cannot disagree.
+ 
+-   THE OPACITY CHANNEL LIVES HERE, and that is the LAW 1 split made structural:
+-   the scale is written per scroll frame by the strip (the inertial travel clock)
+-   and the fade is this transition on `[data-state]` (a fired clock, the `dock`
++   BOTH PROJECTION CHANNELS LIVE HERE, and that is the LAW 1 split made structural:
++   the scale is drawn by the platform from the scroll position (the inertial travel
++   clock) and the fade is a transition on `[data-state]` (a fired clock, the `dock`
+    preset). A later edit cannot accidentally collapse them onto one `t`. */
+ 
+ @layer components {
 @@ -39,9 +39,6 @@
          scroll-snap-align: start;
          /* a fast flick advances ONE member; the platform enforces it */
@@ -383,7 +399,7 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
          /* the FIRED clock's channel — a different property, a different language */
          opacity: 1;
          transition: opacity var(--spring-dock-duration) var(--spring-dock);
-@@ -51,23 +48,45 @@
+@@ -51,23 +48,49 @@
          opacity: 0.7;
      }
  
@@ -393,10 +409,14 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
 +    /* The travel clock's channel. The scale is a function of the scroll position, so
 +       the platform draws it from the content's view timeline and nothing writes it
 +       per frame: 1 where the member rests on its snap point, 0.965 (1 -
-+       MEMBER_SCALE_DROP) one member either side. The `exit` range starts where the
-+       member's start edge meets the strip's, whatever the member's width. It rides
-+       the CONTENT, never the member: the member is the snap area, and the platform
-+       measures a snap area on its transformed box. */
++       MEMBER_SCALE_DROP) one member either side. The range peaks where the content's
++       start edge meets the strip's start edge, inset by the strip's `scroll-padding`.
++       So a strip that offsets its members from its start (a padding, a centred snap)
++       must state that offset as its `scroll-padding` too, or the member at rest stays
++       below 1. A member that clips uses `overflow: clip`: `hidden` makes the member a
++       scroll container, the content's timeline then reads the member, and the scale
++       stays at 1. The scale rides the CONTENT, never the member: the member is the
++       snap area, and the platform measures a snap area on its transformed box. */
 +    @keyframes carousel-member-travel {
 +        0%,
 +        100% {
@@ -419,7 +439,7 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
 +            .carousel-strip[data-orientation="vertical"][data-projection] .carousel-item .carousel-item-content {
 +                animation-timeline: view(block);
 +            }
-+            /* I4b — in a window expansion the neighbours do not move. */
++            /* In a window expansion the neighbours do not move. */
 +            .carousel-strip[data-projection="window"] .carousel-item:not([data-state="active"]) .carousel-item-content {
 +                scale: 0.965;
 +            }
@@ -438,3 +458,305 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
          .carousel-strip {
              scroll-behavior: auto;
          }
+diff --git a/src/components/carousel/projection.ts b/src/components/carousel/projection.ts
+--- a/src/components/carousel/projection.ts
++++ b/src/components/carousel/projection.ts
+@@ -8,14 +8,16 @@
+ // member off the identical `t` in the identical statement, which is one channel
+ // wearing two properties: the fade cannot lead, the scale cannot lag, and the
+ // arrival has no interior. The split is now structural rather than a matter of
+-// discipline: SCALE rides the INERTIAL travel clock (written per scroll frame off
+-// the continuous position), OPACITY rides a FIRED clock (a CSS transition keyed on
+-// `[data-state]`, on a governed spring). Two clocks that cannot be collapsed by
+-// accident, because they are not even in the same language.
++// discipline: SCALE rides the INERTIAL travel clock (the Carousel's stylesheet draws
++// it from the scroll position on a view timeline), OPACITY rides a FIRED clock (a CSS
++// transition keyed on `[data-state]`, on a governed spring). Two clocks that cannot be
++// collapsed by accident, because they are not even in the same language.
+ //
+-// LAW 3 — CONTENT-LAG IS A SPRING, NEVER A PARENT TRANSFORM. The interior lag is
+-// written on the member's CONTENT node off the travel VELOCITY, using the same
+-// velocity-lag law the pager worm's trail edge runs. One law, two consumers.
++// LAW 3 — CONTENT-LAG IS A SPRING, NEVER A PARENT TRANSFORM. `memberLag` is the
++// bounded velocity lag the pager worm's trail edge runs, for a member's CONTENT node.
++// The Carousel no longer writes it: a lag reads the scroll's velocity, which CSS
++// cannot, and a lag written per scroll frame stepped the content backwards against
++// its member through every settle. It stays for a consumer that projects its own.
+ //
+ // I4b / #29 — THE PARTICIPATION FLAG. "The neighbours do not move." An expansion
+ // is a WINDOW, not a track translation: in `"window"` projection only the active
+diff --git a/src/components/carousel/index.ts b/src/components/carousel/index.ts
+--- a/src/components/carousel/index.ts
++++ b/src/components/carousel/index.ts
+@@ -7,7 +7,8 @@
+ 
+ // The member projection's three laws, pure and testable: the distance function
+ // (lifted intact — it was the one piece of the old engine shaped like a law), the
+-// travel-clock scale, and the bounded velocity lag the interior content rides.
++// travel-clock scale, and the bounded velocity lag. The Carousel itself draws its
++// scale in CSS and writes no lag; these are for a consumer that projects its own.
+ export {
+     memberDistance,
+     memberScale,
+diff --git a/demo/stories/navigation/carousel.stage.vue b/demo/stories/navigation/carousel.stage.vue
+--- a/demo/stories/navigation/carousel.stage.vue
++++ b/demo/stories/navigation/carousel.stage.vue
+@@ -1,7 +1,7 @@
+ <script setup lang="ts">
+ // Carousel's stage: five colour slides, centred, with their neighbours peeking in at
+ // both edges. The dots follow the scroll and step the strip through the carousel's
+-// own `deck`, since a write to `v-model:active` after mount does not reach the strip.
++// own `deck`.
+ import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
+ import { PagerDots } from "@glass/components/pager-dots";
+ 
+@@ -58,10 +58,14 @@
+ }
+ 
+ /* The strip spans the stage. Each slide is centred, and the strip's inline padding
+-   is half of what a slide leaves, so slide i rests at i slide pitches of scroll. */
++   is half of what a slide leaves, so slide i rests at i slide pitches of scroll. The
++   same offset is the strip's scroll-padding: the travel scale's view timeline reads
++   it as its inset, so the slide at rest scales to 1. */
+ .carousel-stage-strip {
+     --slide: 82cqi;
+-    padding-inline: calc((100cqi - var(--slide)) / 2);
++    --inset: calc((100cqi - var(--slide)) / 2);
++    padding-inline: var(--inset);
++    scroll-padding-inline: var(--inset);
+ }
+ 
+ @container (inline-size >= 40rem) {
+diff --git a/tests/components/deck/snap-travel.test.ts b/tests/components/deck/snap-travel.test.ts
+new file mode 100644
+--- /dev/null
++++ b/tests/components/deck/snap-travel.test.ts
+@@ -0,0 +1,228 @@
++import { mount } from "@vue/test-utils";
++import { defineComponent, nextTick, ref } from "vue";
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++import { useDeck, useDeckSnap } from "@glass/components/deck";
++import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
++
++/* The snap arm on the platform's own scroll-snap: the strip's own report never
++   scrolls it again, a press holds the strip's reports once and reconciles where the
++   strip rests, the channel rests at velocity 0, and the Carousel's `v-model:active`
++   moves the strip, from its first value on. happy-dom has no layout, so each member
++   gets a pitch, the strip a scroll position, and the strip's reports come from a
++   stand-in IntersectionObserver. */
++
++const PITCH = 400;
++
++let calls: ScrollToOptions[] = [];
++let report: ((entries: Partial<IntersectionObserverEntry>[]) => void) | null = null;
++
++/** The strip reports member `i` as holding the viewport. */
++function reportMember(strip: HTMLElement, i: number): void {
++    report?.([{ target: strip.children[i]!, intersectionRatio: 1 }]);
++}
++
++function setReduced(on: boolean): void {
++    window.matchMedia = vi.fn().mockImplementation((q: string) => ({
++        matches: on && q.includes("reduce"),
++        media: q,
++        addEventListener: () => {},
++        removeEventListener: () => {},
++        addListener: () => {},
++        removeListener: () => {},
++        onchange: null,
++        dispatchEvent: () => false,
++    })) as unknown as typeof window.matchMedia;
++}
++
++function harness(n = 4) {
++    const deck = useDeck(n);
++    const strip = ref<HTMLElement | null>(null);
++    const Host = defineComponent({
++        setup() {
++            useDeckSnap({ strip, deck });
++            return { strip };
++        },
++        template: `<div ref="strip">${"<div />".repeat(n)}</div>`,
++    });
++    const wrapper = mount(Host, { attachTo: document.body });
++    return { deck, el: wrapper.element as HTMLElement };
++}
++
++beforeEach(() => {
++    vi.useFakeTimers();
++    calls = [];
++    report = null;
++    setReduced(false);
++    (window as unknown as { onscrollend: null }).onscrollend = null;
++    vi.stubGlobal(
++        "IntersectionObserver",
++        class {
++            constructor(cb: (entries: Partial<IntersectionObserverEntry>[]) => void) {
++                report = cb;
++            }
++            observe() {}
++            disconnect() {}
++        },
++    );
++    Object.defineProperty(HTMLElement.prototype, "offsetLeft", {
++        configurable: true,
++        get(this: HTMLElement) {
++            const parent = this.parentElement;
++            return parent ? Array.from(parent.children).indexOf(this) * PITCH : 0;
++        },
++    });
++    Object.defineProperty(HTMLElement.prototype, "clientWidth", {
++        configurable: true,
++        get: () => PITCH,
++    });
++    Object.defineProperty(HTMLElement.prototype, "scrollWidth", {
++        configurable: true,
++        get(this: HTMLElement) {
++            return this.children.length * PITCH;
++        },
++    });
++    const offsets = new WeakMap<Element, number>();
++    Object.defineProperty(HTMLElement.prototype, "scrollLeft", {
++        configurable: true,
++        get(this: HTMLElement) {
++            return offsets.get(this) ?? 0;
++        },
++        set(this: HTMLElement, v: number) {
++            offsets.set(this, v);
++        },
++    });
++    HTMLElement.prototype.scrollTo = function (this: HTMLElement, o?: ScrollToOptions | number) {
++        const opts = o as ScrollToOptions;
++        calls.push(opts);
++        if (typeof opts.left === "number") this.scrollLeft = opts.left;
++        this.dispatchEvent(new Event("scroll"));
++    } as typeof HTMLElement.prototype.scrollTo;
++});
++afterEach(() => {
++    vi.useRealTimers();
++    vi.unstubAllGlobals();
++    document.body.innerHTML = "";
++});
++
++describe("useDeckSnap — the strip and the index", () => {
++    it("commits a member the strip reports and never scrolls the strip to it again", async () => {
++        const { deck, el } = harness();
++        calls = [];
++        reportMember(el, 1);
++        await nextTick();
++        expect(deck.index.value).toBe(1);
++        expect(calls).toHaveLength(0);
++    });
++
++    it("scrolls a press to the member's own offset", async () => {
++        const { deck } = harness();
++        deck.go(2);
++        await nextTick();
++        expect(calls.at(-1)).toEqual({ left: 2 * PITCH, behavior: "smooth" });
++    });
++
++    it("releases a press's hold once, so an earlier press cannot drop a later one's", async () => {
++        const { deck, el } = harness();
++        deck.go(1);
++        await nextTick();
++        el.dispatchEvent(new Event("scrollend"));
++        vi.advanceTimersByTime(500);
++        deck.go(0);
++        await nextTick();
++        // The first press's 900 ms floor has passed; the second press still holds the
++        // strip's reports, so the member it is leaving cannot commit back.
++        vi.advanceTimersByTime(450);
++        reportMember(el, 1);
++        await nextTick();
++        expect(deck.index.value).toBe(0);
++    });
++
++    it("commits where the strip rests when the page took it elsewhere during a press", async () => {
++        const { deck, el } = harness();
++        deck.go(1);
++        await nextTick();
++        el.scrollLeft = 0;
++        reportMember(el, 0);
++        expect(deck.index.value).toBe(1);
++        el.dispatchEvent(new Event("scrollend"));
++        await nextTick();
++        expect(deck.index.value).toBe(0);
++    });
++
++    it("scrolls a press at once under reduced motion", async () => {
++        setReduced(true);
++        const { deck } = harness();
++        deck.go(3);
++        await nextTick();
++        expect(calls.at(-1)).toEqual({ left: 3 * PITCH, behavior: "instant" });
++    });
++});
++
++describe("useDeckSnap — the strip at rest", () => {
++    it("feeds a zero velocity at the strip's scrollend", () => {
++        const { deck, el } = harness();
++        vi.advanceTimersByTime(1000);
++        el.scrollLeft = 300;
++        el.dispatchEvent(new Event("scroll"));
++        vi.advanceTimersByTime(16);
++        el.scrollLeft = 380;
++        el.dispatchEvent(new Event("scroll"));
++        expect(deck.velocity.value).not.toBe(0);
++        el.scrollLeft = 400;
++        el.dispatchEvent(new Event("scrollend"));
++        expect(deck.velocity.value).toBe(0);
++        expect(deck.position.value).toBe(1);
++    });
++
++    it("stands an idle floor in for scrollend where the engine has none", () => {
++        delete (window as unknown as { onscrollend?: null }).onscrollend;
++        const { deck, el } = harness();
++        vi.advanceTimersByTime(1000);
++        el.scrollLeft = 300;
++        el.dispatchEvent(new Event("scroll"));
++        vi.advanceTimersByTime(16);
++        el.scrollLeft = 400;
++        el.dispatchEvent(new Event("scroll"));
++        expect(deck.velocity.value).not.toBe(0);
++        vi.advanceTimersByTime(160);
++        expect(deck.velocity.value).toBe(0);
++    });
++});
++
++describe("Carousel — v-model:active", () => {
++    function carousel(start: number) {
++        const active = ref(start);
++        const Host = defineComponent({
++            components: { Carousel, CarouselContent, CarouselItem },
++            setup: () => ({ active }),
++            template: `
++                <Carousel v-model:active="active" aria-label="Slides">
++                    <CarouselContent>
++                        <CarouselItem v-for="i in 4" :key="i" :index="i - 1">{{ i }}</CarouselItem>
++                    </CarouselContent>
++                </Carousel>`,
++        });
++        const wrapper = mount(Host, { attachTo: document.body });
++        const state = () => wrapper.findAll('[data-slot="carousel-item"]').map((m) => m.attributes("data-state"));
++        return { active, state };
++    }
++
++    it("moves the strip when the model is written from outside", async () => {
++        const { active, state } = carousel(0);
++        await nextTick();
++        active.value = 2;
++        await nextTick();
++        await nextTick();
++        expect(calls.at(-1)).toEqual({ left: 2 * PITCH, behavior: "smooth" });
++        expect(state()[2]).toBe("active");
++    });
++
++    it("seats a non-zero first value at once", async () => {
++        const { active, state } = carousel(2);
++        await nextTick();
++        await nextTick();
++        expect(calls).toEqual([{ left: 2 * PITCH, behavior: "instant" }]);
++        expect(state()[2]).toBe("active");
++        expect(active.value).toBe(2);
++    });
++});
