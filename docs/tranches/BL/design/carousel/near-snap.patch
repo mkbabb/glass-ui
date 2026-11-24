@@ -1,0 +1,114 @@
+diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/deck/composables/useDeckSnap.ts
+--- a/src/components/deck/composables/useDeckSnap.ts
++++ b/src/components/deck/composables/useDeckSnap.ts
+@@ -1,4 +1,4 @@
+-import { onBeforeUnmount, onMounted, watch, type Ref } from "vue";
++import { onBeforeUnmount, onMounted, ref, watch, type Ref } from "vue";
+ import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
+ import type { DeckCore } from "./useDeck";
+ 
+@@ -47,6 +47,9 @@
+     scrollTo(index: number, behavior?: ScrollBehavior): void;
+     /** Re-measure the member extent (a resize, a member count change). */
+     measure(): void;
++    /** The strip is moving: from its first scroll event, or a scroll call, to its
++        `scrollend`. */
++    moving: Readonly<Ref<boolean>>;
+ }
+ 
+ interface SnapChangeEvent extends Event {
+@@ -69,6 +72,7 @@
+     let lastTime = 0;
+     let observer: IntersectionObserver | null = null;
+     let resizer: ResizeObserver | null = null;
++    const moving = ref(false);
+     const reduced = useReducedMotion();
+     /** An engine without `scrollend` (Safari before 26.2) gets one from an idle floor:
+         no scroll event for this long is rest. */
+@@ -152,6 +156,7 @@
+ 
+     /** The strip is at rest: the continuous channel reads its position, still. */
+     function rest(): void {
++        moving.value = false;
+         lastTime = 0;
+         if (!feedContinuous || extent <= 0) return;
+         lastPosition = offset() / extent;
+@@ -159,6 +164,7 @@
+     }
+ 
+     function onScroll(): void {
++        moving.value = true;
+         if (!scrollEnds) {
+             clearTimeout(idle);
+             idle = setTimeout(() => strip.value?.dispatchEvent(new Event("scrollend")), REST_IDLE_MS);
+@@ -209,6 +215,7 @@
+         const to = offsetOf(index);
+         if (Math.abs(offset() - to) < 1) return;
+         programmatic += 1;
++        moving.value = true;
+         // Under reduced motion the strip's sheet asks for an instant scroll; an
+         // explicit `smooth` here would override it.
+         const how = reduced.value && behavior === "smooth" ? "instant" : behavior;
+@@ -285,5 +292,5 @@
+         clearTimeout(idle);
+     });
+ 
+-    return { scrollTo, measure };
++    return { scrollTo, measure, moving };
+ }
+diff --git a/src/components/carousel/types.ts b/src/components/carousel/types.ts
+--- a/src/components/carousel/types.ts
++++ b/src/components/carousel/types.ts
+@@ -1,4 +1,4 @@
+-import type { HTMLAttributes } from "vue";
++import type { HTMLAttributes, Ref } from "vue";
+ import type { DeckAxis, DeckCore } from "../deck";
+ 
+ /* The carousel's own vocabulary. It is small now, because the carousel is a
+@@ -43,6 +43,8 @@
+     deck: DeckCore;
+     /** The scroll container the travel arm drives. */
+     viewport: { value: HTMLElement | null };
++    /** The strip is moving (a gesture, a fling, a turn), until its `scrollend`. */
++    moving: Readonly<Ref<boolean>>;
+     /** Report the live member count (the content half owns the DOM). */
+     setCount: (n: number) => void;
+     /** The resolved props the register reads. */
+diff --git a/src/components/carousel/useCarousel.ts b/src/components/carousel/useCarousel.ts
+--- a/src/components/carousel/useCarousel.ts
++++ b/src/components/carousel/useCarousel.ts
+@@ -48,11 +48,12 @@
+ 
+     // The inertial travel arm. It commits the settled index from the platform's
+     // own snap signal and feeds the continuous channel off the same scroll.
+-    useDeckSnap({ strip: viewport, deck });
++    const { moving } = useDeckSnap({ strip: viewport, deck });
+ 
+     const context: CarouselContext = {
+         deck,
+         viewport,
++        moving,
+         setCount: (n: number) => {
+             count.value = n;
+         },
+diff --git a/src/components/carousel/CarouselItem.vue b/src/components/carousel/CarouselItem.vue
+--- a/src/components/carousel/CarouselItem.vue
++++ b/src/components/carousel/CarouselItem.vue
+@@ -30,7 +30,7 @@
+     } & WithClassAsProps
+ >();
+ 
+-const { deck, orientation, pattern } = useCarousel();
++const { deck, orientation, pattern, moving } = useCarousel();
+ 
+ const state = computed(() => deck.stateFor(props.index));
+ const active = computed(() => state.value === "active");
+@@ -59,7 +59,7 @@
+     >
+         <!-- The content node — the travel scale lives HERE, never on the snap area. -->
+         <div class="carousel-item-content">
+-            <slot :index="index" :active="active" />
++            <slot :index="index" :active="active" :moving="moving" />
+         </div>
+     </div>
+ </template>
