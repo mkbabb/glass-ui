@@ -221,3 +221,32 @@ Readings, citations and witnesses in `docs/tranches/BL/audit/triage-1119/PLACED.
 
 - **The floating Configurator takes the card's radius.** The detached form is `rounded-card` and the floating one `rounded-panel` (`--radius-xl`) (`configurator/Configurator.vue:212`, `:236`); the owner reads the floating panel as not rounded enough. Both take `--radius-card`, and the sections keep deriving their corners from it (the concentric rule at `:321-325`). Witness: one Chromium cell, the floating panel's computed corner equals a card's, and each section's corner equals the panel's less its inset.
 - **The demo (deploys with this release):** a real icon set (an SVG favicon, a 180 px apple-touch-icon and a manifest, flat and coloured per O-290) in place of `data:,`, with missing asset paths answering 404 rather than the page's HTML; and the Substrates tile (`demo/stories/substrates/aurora.tile.vue`) takes the card's inner radius on the corners it bleeds to.
+
+## 2026-11-24: atlas's legislative-mode and phone rows (O-429)
+
+atlas's list of 2026-11-23 (GL-1 to GL-19) asks for a release before December 9, when its legislative mode's second stage builds. Each row is placed below, with the facts read on master.
+
+**Into 11.1.2 (fixes; no new API).**
+- **GL-6, print.** Under `@media print`, glass hides its floating chrome (GlassDock, Popover, Tooltip, Toast) and flattens every surface to paper: no backdrop filter, no frost, no shadow. Dialog and Sheet print flat rather than hidden, so a modal's content can still be printed. Today glass hides only the paper grain (`styles/paper.css:137`, `:175`).
+- **GL-7, the toggle's name.** One pattern: a fixed name, "Dark mode", with `aria-pressed`. Today the name changes with the state and `aria-pressed` is set as well (`dark-mode-toggle/DarkModeToggle.vue:29-30`). The face redesign (O-428 (4)) is separate.
+- **GL-8, PopoverTrigger's `aria-controls`.** The trigger names its content only while the content is mounted.
+- **GL-11, Dialog and Sheet bodies.** `overscroll-behavior: contain` on the body; the page lock keeps the scrollbar's gutter, so the page does not shift; the page's scroll position is untouched on close. The Sheet half joins the phone-scroll cure.
+- **GL-12, stacking.** One witness first: a Dialog opened from inside a Dialog, a Sheet, a Drawer and an ExpandableContainer. It stacks above the lower surface, Escape closes only the top, the lower surface keeps its lock, focus returns inside the lower surface, and the enlarged layer's Escape yields to a Dialog above it. Fix whichever cell fails (Dialog and Sheet are reka dialogs, so most should hold already).
+- **GL-13.** A Sheet at detent [1] fills the height under the safe-area top inset. It goes in with the phone-scroll cure's detent work.
+- **GL-14.** Read first. On master and on 10.1.2, `--control-h-sm` is `max(2.25rem × --ui-scale, --control-floor)`, and the floor lifts to 44 px under `(pointer: coarse)` (`tokens/sizing.css:27`, `tokens/light-dark.css:17-20`). So a small Button should already be 36 px on a fine pointer and 44 px on a coarse one. One cell at 390 with touch confirms it; if it reads 36, find what overrides the floor.
+- **GL-16.** A dock run that does not overflow lets a vertical swipe through. It takes `touch-action: pan-x pan-y`, or `auto`, in place of `pan-x` (`dock/styles/run.css:276`). This joins the overflow cure's item 1.
+- **GL-17.** The Select's close moves focus with `preventScroll` while the list leaves. It joins the O-425 Select row.
+- **GL-18.** `useSelectionGroup` scrolls only its own run to the chosen item, never an outer scroller (`composables/motion/morph/useSelectionGroup.ts:200`). The dock-frames cure does not touch this call.
+- **GL-5 (e).** DataTable's header text at the small step, 14 px or more.
+
+**New API, into the first minor after 11.1.2.**
+- **GL-5 (a), the sticky head.** A sticky header and first column inside the table's own viewport. Today `table/styles.css:22` gives the wrapper `overflow: auto`, so a head can stick only when the wrapper is the vertical scroller too. So DataTable owns its viewport (it fills its host's block size), and a host's virtualizer reads that viewport.
+- **GL-5 (b), the column-fit report.** It says which columns fit the viewport's width. The card projection (`responsive`, `cardBreakpoint` 640) is glass's answer below 640 px; the report is the answer above it.
+- **GL-5 (d).** A caption slot (Table already has `TableCaption`, `table/TableCaption.vue`) and a row-header column (`<th scope="row">`).
+- **GL-10.** The Dialog enters from, and returns to, the rect of the element that opened it, on glass's springs (the panel in, no overshoot out), fading under reduced motion.
+
+**The order of minors.** A minor takes its number in the order it ships. If the dock redesign (with the toggle's new face) isn't ready when atlas's minor is, atlas's ships first as 11.2.0, and the dock takes the next number. Sites are told when the numbers are fixed.
+
+**Not before December 9.**
+- **GL-9.** Whether a GlassDock folds the seats that do not fit into a menu instead of panning goes to the dock's ninth rulings as a question. Until then a long run pans, and from 11.1.2 only under a horizontal gesture (GL-16).
+- **GL-15.** On master the thumb sets no hit area past the track; atlas's 12 px came from its own line. The finger-size target comes with the Slider's expanded view (O-426), which grows inside the slider's own box, in BM's tranche. Whether R-298's thumbless slider stays is for BM's final fold.
