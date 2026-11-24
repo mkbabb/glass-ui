@@ -253,3 +253,18 @@ atlas's list of 2026-11-23 (GL-1 to GL-19) asks for a release before December 9,
 **Not before December 9.**
 - **GL-9.** Whether a GlassDock folds the seats that do not fit into a menu instead of panning goes to the dock's ninth rulings as a question. Until then a long run pans, and from 11.1.2 only under a horizontal gesture (GL-16).
 - **GL-15.** On master the thumb sets no hit area past the track; atlas's 12 px came from its own line. The finger-size target comes with the Slider's expanded view (O-426), which grows inside the slider's own box, in BM's tranche. Whether R-298's thumbless slider stays is for BM's final fold.
+
+## 2026-11-24: value.js's four-site dock study (O-430)
+
+Placed item by item in `design/dock-frames/inbound/value-js-2026-11-24-four-sites.md`.
+- **Already covered by the dock-frames cure:** items 1, 4, 5 and 7.
+- **Added to 11.1.2, for the cure's second challenge to fix and read:**
+  - 2: the crossfade clip reads `--dock-expand-t`.
+  - 6: every spring easing's sampled duration runs until it has settled within 0.1 %, fixed in the generator.
+  - 8: a 120 to 150 ms fade in place under reduced motion.
+  - 9: the dock's words and glyph change on the plate's clock.
+  - 10: the collapsed face fades in changed content.
+  - 11 (b) and (d): the Tooltip over a popover trigger, and the seat-to-seat grace.
+  - 13: Aurora keeps its context through a leave and fades in on its first frame.
+- **To the dock-redesign minor:** 3, 11 (a) and (c), and 12.
+- **fourier's own:** 14.
