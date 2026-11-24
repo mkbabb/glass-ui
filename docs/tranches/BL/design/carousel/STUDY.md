@@ -23,7 +23,7 @@ The content counts too. A live SVG figure on each of 8 slides ran the whole page
 
 ## The cure, in glass 11.1.2
 
-One patch to the Carousel (`cure.patch`, on 11.1.1: seven library files, +188 −101 lines, 123 bytes larger compressed; one line on glass's own Carousel page; and a unit test):
+One patch to the Carousel (`cure.patch`, on 11.1.1: seven library files, +197 −101 lines, 179 bytes larger compressed; one line on glass's own Carousel page; and a unit test):
 
 - The strip remembers where it is heading, so its own report never scrolls it again (1). A press still scrolls.
 - The neighbours' shrink is drawn by the browser from the scroll position, on the picture inside the slide, with nothing written per frame (2). Firefox, and Safari before 26 (iOS 18 and earlier), have no scroll-driven animations, so they show no shrink. A strip that centres its slides with padding states that offset as its scroll-padding too, as glass's own Carousel page now does; without it the slide at rest stays about 1 % small.
@@ -31,12 +31,12 @@ One patch to the Carousel (`cure.patch`, on 11.1.1: seven library files, +188 �
 - A press releases its hold once; a strip that ends somewhere else commits the slide it rests on (5, 6).
 - Dots bound to the Carousel move the strip, and a Carousel that starts on a later slide shows it (7).
 - A press reads each slide's own position, and a resize re-measures (8).
-- Under reduced motion a press arrives at once, as the strip's stylesheet already asked (9).
+- Under reduced motion a press puts the slide in place at once, so nothing slides, and the slide fades in over 150 ms, so nothing appears in one frame either (9).
 - Where the browser has no `scrollend`, 150 ms without a scroll stands in for it (10).
 
 After it, in Chromium, every swipe, flick, carry, trackpad gesture and press runs with no backward step and rests exactly on its slide, and a held finger keeps the picture 1:1: the bare strip's own numbers. The settle is now the browser's own curve, about 0.7 s after a swipe at 1440 (v11.1.0's echo cut it to 0.33 s). In WebKit the trackpad now carries the strip (559 of the bare strip's 602 px when the hand stops), with one snap-back of 8 to 28 px left early in each wheel gesture. It goes away when the neighbours are not dimmed, but its cause is not yet named, and whether Safari with a real trackpad shows it is unread (ROOT §2.2). In Chromium the test for each of the ten faults holds. In WebKit the wheel, pager and logic tests hold apart from that snap-back, and the touch faults have no WebKit test, since Playwright's WebKit cannot send a moving finger.
 
-**Found on the way.** On a deck whose slides hold links, as atlas's previews do, the first arrow key turns the slide and focus then falls out of the strip, so the next presses do nothing (Chromium; in WebKit the Tab key never reaches the strip). It predates the cure, is not jitter, and is placed for a later release.
+**Found on the way.** On a deck whose slides hold links, as atlas's previews do, the first arrow key turns the slide and focus then falls out of the strip, so the next presses do nothing (Chromium; in WebKit the Tab key never reaches the strip). It predates the cure, is not jitter, and is placed for a later release. Under reduced motion the neighbours are still dimmed, and the dimming switches in one frame when a slide is chosen (a 0.7 to 1 step on the slide pressed for, in both engines); that predates the cure too and is placed with the next motion work.
 
 Atlas reaches the cure by moving its glass line onto 11.1.2 (ROOT §7). The owner's item is closed only when atlas's deck runs it.
 
@@ -52,10 +52,12 @@ So 11.3.0 adds one signal, `moving`, on the Carousel and on each slide: true fro
 - **One live drawing at a time.** The portraits page runs the drawing on show; its stage stops drawing when it leaves the screen or the tab is hidden. That is the rule `moving` serves.
 - **Decode ahead.** The photos either side of the one shown are fetched and decoded in advance, so a turn brings its photo in whole. Atlas's first-swipe gap at 390 is what this prevents.
 - **Contain the paint of a live figure**, so its redraws stay inside its own box.
-- **Under reduced motion, a turn fades** (144 ms out, 144 ms in) where the Carousel jumps.
+- **Under reduced motion, a turn fades** (144 ms out, 144 ms in). The Carousel now takes the second half: the slide is put in place at once and fades in over 150 ms.
 - **The keys work wherever focus is**, on the window, guarded against fields.
 
 What it does not teach: that a hand-carried glide is smoother than the browser's snap. Its glide jumps the incoming drawing in one frame at every hand-over, by the distance it had followed the hand (122 to 273 px at 1440, 122 to 253 px at 390, in both engines), and a horizontal trackpad does nothing there. The cured snap has neither fault, keeps the browser's momentum, rubber-banding and accessibility scrolling, and drives the neighbours' shrink with no script. The glide's one gain is a mouse drag on a desktop, which no site has asked for.
+
+The portraits page's dots are glass's PagerDots. This study does not change them, but two other 11.1.2 changes do (a 44 px tap target on a touch screen, and a whole end dot on a rail without its ring), so the note to daraksha asks for a look at them on 11.1.2.
 
 ## The owner's questions
 

@@ -20,6 +20,35 @@ const wrap = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>${body}</body></html>`;
 
+// P10-toggle's crescent by pixels (pass-10 fold A10-1). The large toggle is 120 px with a 72 px glyph at 24 px, 3 px a
+// unit: the bite's point is (13.5, 10) in the viewBox, inside both the disc and the night; the crescent's is (8, 15);
+// the ground is read at the button's top centre, clear of the glyph. A channel within 8 is the same colour.
+async function crescent(page, scheme) {
+  const errs = [], same = (a, b) => a.every((v, i) => Math.abs(v - b[i]) <= 8);
+  const read = async (v) => {
+    const el = page.locator(`.tg.big[data-v="${v}"]`); await el.scrollIntoViewIfNeeded();
+    const b64 = (await el.screenshot()).toString("base64");
+    return page.evaluate(async (b64) => {
+      const img = await createImageBitmap(await (await fetch("data:image/png;base64," + b64)).blob());
+      const c = new OffscreenCanvas(img.width, img.height), g = c.getContext("2d"); g.drawImage(img, 0, 0);
+      const at = (x, y) => [...g.getImageData(x, y, 1, 1).data.slice(0, 3)];
+      return { ground: at(60, 8), bite: at(64, 54), lit: at(48, 69) };
+    }, b64);
+  };
+  const dark0 = await page.evaluate(() => document.documentElement.dataset.theme === "dark");
+  for (const flip of [false, true]) {
+    if (flip) { await page.locator('.tg.big[data-v="b"]').click(); await page.mouse.move(2, 2); await page.waitForTimeout(700); }
+    const dark = dark0 !== flip, theme = dark ? "dark" : "light";
+    for (const v of ["b", "c"]) {
+      const p = await read(v);
+      if (same(p.lit, p.ground)) errs.push(`P10-toggle ${v} ${theme} (${scheme} page): the crescent's point reads the ground ${p.lit}`);
+      if (dark && !same(p.bite, p.ground)) errs.push(`P10-toggle ${v} dark (${scheme} page): the bite reads ${p.bite}, not the ground ${p.ground}`);
+      if (!dark && !same(p.bite, p.lit)) errs.push(`P10-toggle ${v} light (${scheme} page): the sun's disc is cut at the bite (${p.bite} against ${p.lit})`);
+    }
+  }
+  return errs;
+}
+
 const results = [];
 const browser = await chromium.launch({ headless: true });
 try {
@@ -137,7 +166,11 @@ try {
             if (width === 390) await st.screenshot({ path: path.join(HERE, `P8-present-s1-${scheme}-grow.png`) });
             await page.waitForTimeout(500);
             if (width === 390) await st.screenshot({ path: path.join(HERE, `P8-present-s1-${scheme}-open.png`) });
-            await st.locator(".menu [role=menuitem]").nth(2).click(); await page.waitForTimeout(400);
+            await st.locator(".menu [role=menuitem]").nth(2).click();
+            // The close is drawn on --exit-curve, which stays --ease-out (pass-10 fold A10-3), in A and in B.
+            const exit = await st.evaluate((n) => [...n.querySelectorAll(".menu")].flatMap((m) => m.getAnimations().map((a) => a.effect.getTiming().easing)));
+            if (!exit.length || exit.some((e) => e !== "cubic-bezier(0, 0, 0.2, 1)")) errors.push(`P8-present s1: the close is drawn on ${exit.join(", ") || "nothing"}, not --exit-curve (--ease-out, cubic-bezier(0, 0, 0.2, 1))`);
+            await page.waitForTimeout(400);
             if (await st.locator(".menu").count()) errors.push("P8-present s1: a row's click left the menu open");
           }
           // 2: press on the first row, slide to the third, lift: the third is chosen, and the lift reaches it (the press
@@ -195,6 +228,80 @@ try {
             if (!(await st.evaluate((n) => n.querySelector(".dialog").inert))) errors.push(`P8-present s4 ${k}: the closed dialog is not inert`);
           }
           if (cdp) await cdp.detach();
+        }
+        if (f === "P10-toggle") {
+          // The final fold's repairs (A10-1, A10-2, B10-1, B10-4). The crescent by pixels, not by computed translate: on the
+          // large B and C toggles the point inside the night's bite reads the ground in dark and the disc in light, and a
+          // point on the crescent reads the glyph's ink; then each is flipped and read again. At 390, the same under forced
+          // colours and under Reduce Motion. The plate rests at 0 in either theme (no on fill from aria-pressed), and the
+          // colour rides the glyph's 200 ms clock.
+          errors.push(...(await crescent(page, scheme)));
+          const rest = await page.evaluate(() => [...document.querySelectorAll(".tg")].map((t) => {
+            const s = getComputedStyle(t), b = getComputedStyle(t, "::before");
+            return { plate: b.opacity, tr: s.transitionProperty + " " + s.transitionDuration };
+          }));
+          if (rest.some((r) => r.plate !== "0")) errors.push("P10-toggle: a plate rests above 0: " + rest.map((r) => r.plate).join(","));
+          if (rest.some((r) => r.tr !== "color 0.2s")) errors.push("P10-toggle: the colour is not on the 200 ms clock: " + rest[0].tr);
+          if (width === 390 && scheme === "dark") for (const mode of [{ forcedColors: "active" }, { reducedMotion: "reduce" }]) {
+            const c2 = await browser.newContext({ viewport: { width, height: 844 }, colorScheme: "dark", deviceScaleFactor: 1, ...mode });
+            try {
+              const p2 = await c2.newPage();
+              await p2.setContent(html, { waitUntil: "load" }); await p2.waitForTimeout(300);
+              errors.push(...(await crescent(p2, "dark")).map((e) => `${Object.values(mode)[0]}: ${e}`));
+              if (mode.reducedMotion) {
+                const x = await p2.evaluate(() => getComputedStyle(document.querySelector(".rays")).transition);
+                if (!/opacity 0\.2s/.test(x)) errors.push("P10-toggle reduce: the crossfade is not on the 200 ms clock: " + x);
+              }
+            } finally { await c2.close(); }
+          }
+        }
+        if (f === "P10-slider") {
+          // The final fold's repairs (B10-17, A10-5, A10-6, B10-6): B cannot be sent; C's ring stands at g at rest, on Tab and
+          // as Tab leaves; the readout leaves at scale 1; C's ground returns over 200 ms; C's grown ground takes no pointer.
+          const ask = await page.textContent(".ask");
+          if (/A, B or C/.test(ask) || !/Send A or C/.test(ask)) errors.push("P10-slider: the ask still offers B");
+          const r = await page.evaluate(async () => {
+            const s = document.querySelector('.sl[data-letter="c"][data-say]'), t = s.querySelector(".track"), th = s.querySelector(".thumb");
+            const ro = s.querySelector(".readout"), sh = s.querySelector(".shell"), wait = (ms) => new Promise((k) => setTimeout(k, ms));
+            const off = () => getComputedStyle(t).outlineOffset, o = { rest: off(), back: getComputedStyle(sh).transitionDuration, pe: getComputedStyle(sh).pointerEvents };
+            dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" })); th.focus(); await wait(300);
+            o.key = off(); o.ring = getComputedStyle(t).outlineColor; o.say = getComputedStyle(ro).opacity;
+            th.blur(); await wait(40);
+            o.leave = off(); o.leaveScale = getComputedStyle(ro).scale; o.leaveOpacity = +getComputedStyle(ro).opacity;
+            return o;
+          });
+          if (r.rest !== "8px" || r.key !== "8px" || r.leave !== "8px") errors.push(`P10-slider C: the ring moves (rest ${r.rest}, Tab ${r.key}, leaving ${r.leave}); it stands at g`);
+          if (r.say !== "1") errors.push("P10-slider C: Tab did not say the value");
+          if (!(r.leaveOpacity > 0 && r.leaveOpacity < 1) || !["none", "1"].includes(r.leaveScale)) errors.push(`P10-slider: 40 ms into its exit the readout reads scale ${r.leaveScale}, opacity ${r.leaveOpacity}; it leaves by fading at scale 1`);
+          if (r.back !== "0.2s") errors.push("P10-slider C: the ground returns over " + r.back + ", not 200 ms");
+          if (r.pe !== "none") errors.push("P10-slider C: the grown ground takes the pointer");
+        }
+        if (f === "P10-plate") {
+          // The final fold's repairs (A10-4, B10-13, B10-17): each strength is opacity over one fill, read as the product of
+          // the plate's opacity and its fill's alpha, on the still (Pin hovered beside Home); no colour transitions; the glyph
+          // keeps its colour under a resting mouse.
+          const want = { a: [5, 12], b: [12, 12], c: [scheme === "dark" ? 5 : 6.5, 10] };
+          const got = await page.evaluate(() => [...document.querySelectorAll(".letter")].map((card) => {
+            const pct = (n) => { const b = getComputedStyle(n, "::before"), m = b.backgroundColor.match(/\/\s*([\d.]+)\s*\)$/); return +(100 * +b.opacity * (m ? +m[1] : 1)).toFixed(2); };
+            const st = card.querySelectorAll(".still")[1], seats = [...card.querySelectorAll(".seat")];
+            return { v: card.dataset.v, hover: pct(st.children[1]), on: pct(st.children[0]),
+              legs: [...new Set(seats.flatMap((n) => [getComputedStyle(n).transitionProperty, getComputedStyle(n, "::before").transitionProperty]))].join(" | ") };
+          }));
+          for (const g of got) {
+            const [h, o] = want[g.v];
+            if (Math.abs(g.hover - h) > 0.15 || Math.abs(g.on - o) > 0.15) errors.push(`P10-plate ${g.v}: the still reads hover ${g.hover} %, on ${g.on} %; it states ${h} % and ${o} %`);
+            if (/color/.test(g.legs)) errors.push(`P10-plate ${g.v}: a colour leg (${g.legs})`);
+          }
+          if (width === 1440) for (const v of ["a", "b", "c"]) {
+            const pin = page.locator(`.letter[data-v="${v}"] nav.tinted .seat`).nth(1);
+            await pin.scrollIntoViewIfNeeded();
+            const ink0 = await pin.evaluate((n) => getComputedStyle(n).color);
+            await pin.hover(); await page.waitForTimeout(300);
+            const ink1 = await pin.evaluate((n) => getComputedStyle(n).color), plate = await pin.evaluate((n) => getComputedStyle(n, "::before").opacity);
+            if (ink0 !== ink1) errors.push(`P10-plate ${v}: the glyph changes colour on hover`);
+            if (plate === "0") errors.push(`P10-plate ${v}: a resting mouse shows no plate`);
+            await page.mouse.move(2, 2); await page.waitForTimeout(200);
+          }
         }
         // Every button a person can reach, once: handles, not nth locators, since menus come and go. A button inside an
         // inert or hidden subtree is not there for a person and is skipped. A button that lies under an open menu or

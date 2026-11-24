@@ -22,7 +22,11 @@
    pointerup, and says which element the lift reached (B8-5); section 3's B has 1 px rungs, which WebKit keeps, its
    scroller lets the stage through above the panel, and it reports a rung only once the scroll has come to rest (B8-1,
    B8-3, A8-3); section 4's veil is a graded pool in a phone's proportions on the veil clocks §10.6 proposes, and D, a
-   dimming veil under a frosted dialog, joins A to C (B8-7, A8-9, A8-4); every ask names the release it decides (B8-9). */
+   dimming veil under a frosted dialog, joins A to C (B8-7, A8-9, A8-4); every ask names the release it decides (B8-9).
+   Corrected after the final fold (pass-10/fold.md, "The pages"; A10-3): --exit-curve is today's --ease-out,
+   cubic-bezier(0, 0, 0.2, 1), as it stays (motion-registers.css:149), and section 1's close reads it; the page drew
+   cubic-bezier(0.3, 0.2, 0.7, 0.8), which was neither today's curve nor pass 10's proposal. Section 4's exits read the
+   same token. */
 :root {
   --bg: hsl(40 30% 98%);
   --fg: hsl(24 10% 10%);
@@ -161,7 +165,7 @@ button:focus-visible, [role="menuitem"]:focus-visible { outline: 3px solid var(-
 .dialog .row { display: flex; gap: 8px; justify-content: flex-end; }
 .dialog .row button { min-height: 44px; padding: 0 14px; border-radius: 22px; border: 0; background: var(--row-fill); cursor: pointer; }
 .s4 .open { position: absolute; left: 14px; bottom: 14px; min-height: 44px; padding: 0 16px; border-radius: 22px; border: 0; background: var(--card); color: var(--fg); cursor: pointer; }
-:root { --exit-curve: cubic-bezier(0.3, 0.2, 0.7, 0.8); --present: cubic-bezier(0.197, 0, 0.124, 0.808); --bloom: cubic-bezier(0.183, 0, 0.237, 1); }
+:root { --exit-curve: cubic-bezier(0, 0, 0.2, 1); --present: cubic-bezier(0.197, 0, 0.124, 0.808); --bloom: cubic-bezier(0.183, 0, 0.237, 1); }
 </style>
 
 <main>
@@ -246,7 +250,7 @@ button:focus-visible, [role="menuitem"]:focus-visible { outline: 3px solid var(-
       const m = menu; menu = null; owner.setAttribute("aria-expanded", "false"); owner = null;
       const D = (today ? 222 : 120) * slow;
       const legs = [{ opacity: 1 }, { opacity: 0 }];
-      const opts = { duration: D, easing: "cubic-bezier(0.3, 0.2, 0.7, 0.8)", fill: "forwards" };
+      const opts = { duration: D, easing: getComputedStyle(root).getPropertyValue("--exit-curve").trim(), fill: "forwards" };
       const cur = getComputedStyle(m).clipPath, from = cur && cur !== "none" ? cur : OPEN;
       const a = m.animate(today && !reduce.matches ? [{ opacity: 1, clipPath: from }, { opacity: 0, clipPath: SHUT }] : legs, opts);
       a.onfinish = () => m.remove();

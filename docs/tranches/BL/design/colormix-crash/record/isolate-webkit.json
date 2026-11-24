@@ -1,0 +1,329 @@
+{
+ "engine": "webkit",
+ "rows": [
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "plain colour",
+   "value": "rgb(10 20 30 / 0.5)",
+   "crashed": false,
+   "resolved": "rgba(10, 20, 30, 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "one level, relative arm",
+   "value": "color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%))",
+   "crashed": false,
+   "resolved": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "relative colour alone",
+   "value": "oklch(from oklch(0.28 0.035 70) l c h / 0.1)",
+   "crashed": false,
+   "resolved": "oklch(0.28 0.035 70 / 0.1)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, literal arms",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 30000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative in both inner mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 30000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative in one inner mix, other plain",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)), hsl(30 85% 96%) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.865236 0.006627 0.016711 / 0.415)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative in one inner mix, other transparent",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.05)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative at 100% calc",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) calc(1 * 100%), hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) calc(1 * 100%), hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 30000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative, inner at 50%",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 50%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) 50%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 30000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative with var() origin",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from var(--ink) l c h / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from var(--ink) l c h / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 30000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, light-dark() card, no relative",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 50%, light-dark(hsl(30 85% 96%), hsl(26 22% 17%))) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.917401 0.005972 0.014998 / 0.275)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, currentcolor, no relative",
+   "value": "color-mix(in oklab, color-mix(in srgb, currentcolor 50%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.617793 0.003417 0.008316 / 0.461765)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "outer mix holds relative arm and a plain inner mix",
+   "value": "color-mix(in oklab, oklch(from oklch(0.28 0.035 70) l c h / 0.1), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "relative colour of a mix, inside a mix",
+   "value": "color-mix(in oklab, oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h / 0.5) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.25)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "relative colour of a mix, alone",
+   "value": "oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h / 0.5)",
+   "crashed": false,
+   "resolved": "oklch(0.28 0.035 69.999855 / 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "rgb() relative in two levels",
+   "value": "color-mix(in oklab, color-mix(in srgb, rgb(from oklch(0.28 0.035 70) r g b / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.05)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "two levels, relative, opaque inner alpha",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "three levels, relative",
+   "value": "color-mix(in oklab, color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.025)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "plain colour",
+   "value": "rgb(10 20 30 / 0.5)",
+   "crashed": false,
+   "resolved": "rgba(10, 20, 30, 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "one level, relative arm",
+   "value": "color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%))",
+   "crashed": false,
+   "resolved": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "relative colour alone",
+   "value": "oklch(from oklch(0.28 0.035 70) l c h / 0.1)",
+   "crashed": false,
+   "resolved": "oklch(0.28 0.035 70 / 0.1)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, literal arms",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative in both inner mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative in one inner mix, other plain",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)), hsl(30 85% 96%) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.865236 0.006627 0.016711 / 0.415)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative in one inner mix, other transparent",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.05)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative at 100% calc",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) calc(1 * 100%), hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) calc(1 * 100%), hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative, inner at 50%",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 50%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.14) 50%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative with var() origin",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from var(--ink) l c h / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(from var(--ink) l c h / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, light-dark() card, no relative",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 50%, light-dark(hsl(30 85% 96%), hsl(26 22% 17%))) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.917401 0.005972 0.014998 / 0.275)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, currentcolor, no relative",
+   "value": "color-mix(in oklab, color-mix(in srgb, currentcolor 50%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.617793 0.003417 0.008316 / 0.461765)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "outer mix holds relative arm and a plain inner mix",
+   "value": "color-mix(in oklab, oklch(from oklch(0.28 0.035 70) l c h / 0.1), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "relative colour of a mix, inside a mix",
+   "value": "color-mix(in oklab, oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h / 0.5) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.25)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "relative colour of a mix, alone",
+   "value": "oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h / 0.5)",
+   "crashed": false,
+   "resolved": "oklch(0.28 0.035 69.999855 / 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "rgb() relative in two levels",
+   "value": "color-mix(in oklab, color-mix(in srgb, rgb(from oklch(0.28 0.035 70) r g b / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.05)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "two levels, relative, opaque inner alpha",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h) 100%, hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.5)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "three levels, relative",
+   "value": "color-mix(in oklab, color-mix(in oklab, color-mix(in srgb, oklch(from oklch(0.28 0.035 70) l c h / 0.1) 100%, hsl(30 85% 96%)) 50%, transparent) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.025)",
+   "error": null
+  }
+ ]
+}

@@ -49,7 +49,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          // Under reduced motion the strip's sheet asks for an instant scroll; an
          // explicit `smooth` here would override it.
          const how = reduced.value && behavior === "smooth" ? "instant" : behavior;
-@@ -285,5 +292,5 @@
+@@ -289,5 +296,5 @@
          clearTimeout(idle);
      });
  
