@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // witness.mjs [cure-port] [only-prefix] > plan.json: the RED/GREEN plan. Every case runs
 // on the base tree (release/11.1.1, port 5391) and the cure build (port 5392 = cure v1,
-// 5393 = cure v2, 5394 = cure v3, 5395 = cure v4, the patch after the fold), in the cells
+// 5393 = cure v2, 5394 = cure v3, 5395 = cure v4, the patch after the fold, 5396 = cure v5,
+// round 2 with value.js's items), in the cells
 // named. The fold's cases (names from B1 on) read /ovf.html?fold, the critique's
 // compositions.
 // only-prefix keeps the cases whose name starts with it.
 // Run: node tools/inspect.mjs --engine <e> --plan tools/plans/<plan>.json --out ...
-const CURE_PORT = +(process.argv[2] || 5392);
+// cure-port may be a comma list (5395,5396): each case then runs on the base and on each.
+const CURE_PORTS = (process.argv[2] || "5392").split(",").map(Number);
 const ONLY = (process.argv[3] || "").split(",");
 const LONG = "Quarterly enrollment by district and program, all years";
 const TOKEN = "district_enrollment_by_program_quarterly_2019-2026.csv";
@@ -345,7 +347,7 @@ cases.push(
 const jobs = [];
 for (const c of cases.filter((c) => ONLY.some((o) => c.name.startsWith(o)))) {
     for (const cell of c.cells) {
-        for (const [tree, port] of [["base", 5391], [{ 5392: "cure", 5393: "cure2", 5394: "cure3", 5395: "cure4" }[CURE_PORT], CURE_PORT]]) {
+        for (const [tree, port] of [["base", 5391], ...CURE_PORTS.map((p) => [{ 5392: "cure", 5393: "cure2", 5394: "cure3", 5395: "cure4", 5396: "cure5" }[p], p])]) {
             jobs.push({ name: c.name, tree, port, cell, url: c.url, do: c.do, sel: c.sel });
         }
     }
