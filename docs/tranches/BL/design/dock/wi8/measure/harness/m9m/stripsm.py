@@ -7,7 +7,7 @@
 import sys, os, json, glob, re
 from PIL import Image, ImageDraw, ImageFont
 owner, shots, logs, out, sha = sys.argv[1:6]
-ENG = {"chromium": "Chromium", "webkit": "Playwright WebKit 2287, which draws the glass without its blur; not what Safari shows"}
+ENG = {"chromium": "Chromium", "webkit": "headless WebKit, which draws the glass without its blur"}
 CHROMIUM_ONLY = {"q5", "q10", "q14", "q18", "q21"}
 DARK = os.environ.get("DARK", "0.7")
 FONT = "/System/Library/Fonts/Helvetica.ttc"
