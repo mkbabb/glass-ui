@@ -238,6 +238,9 @@ atlas's list of 2026-11-23 (GL-1 to GL-19) asks for a release before December 9,
 - **GL-17.** The Select's close moves focus with `preventScroll` while the list leaves. It joins the O-425 Select row.
 - **GL-18.** `useSelectionGroup` scrolls only its own run to the chosen item, never an outer scroller (`composables/motion/morph/useSelectionGroup.ts:200`). The dock-frames cure does not touch this call.
 - **GL-5 (e).** DataTable's header text at the small step, 14 px or more.
+- **GL-5, the sort buttons (atlas's second note, 2026-11-24).** Each header's sort button is a target at the control height: 36 px on a fine pointer and 44 px on a coarse one, through `--control-floor`. Its focus ring is drawn inset, so a sticky head can't clip it. Without this, atlas's reading tables ship unsorted.
+
+**The date that matters.** atlas's legislative mode builds on 8 December, tags on the 9th and deploys on the 10th. 11.1.2 reaches it only if it publishes before atlas's integration on the 9th, so it has to be on npm by 8 December. If it lands later, the mode ships on 10.1.x and these rows stay open.
 
 **New API, into the first minor after 11.1.2.**
 - **GL-5 (a), the sticky head.** A sticky header and first column inside the table's own viewport. Today `table/styles.css:22` gives the wrapper `overflow: auto`, so a head can stick only when the wrapper is the vertical scroller too. So DataTable owns its viewport (it fills its host's block size), and a host's virtualizer reads that viewport.
