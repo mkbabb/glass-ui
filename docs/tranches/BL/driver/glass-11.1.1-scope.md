@@ -207,3 +207,8 @@ Readings, citations and witnesses in `docs/tranches/BL/audit/triage-1119/PLACED.
   - **First paint must not change:** the box, the posture, `--dock-collapsed-px` and `--dock-expanded-px`, `data-run-fits` and `--dock-run-room-block` on a dock resting expanded with a run, and `--dock-plate-cross-px` all read the same in the first rAF as on v11.1.0.
   - **Merge:** it meets wi8's deletion of the file as a modify/delete conflict; keep the deletion.
   - **Also read:** `HandMark.vue:497` reads `document.fonts.ready` too. Check whether it runs in a mount task and takes the same cure.
+
+## 2026-11-23: value.js's Select and CardHeader profiles (O-425)
+
+- **CardHeader arms its scroll trigger only when `shrink` is set.** Today a header without `shrink` passes a null root (`card/CardHeader.vue:55`), which the reader resolves to the document (`motion/scroll/scrollReader.ts:43-54`): a `window.scrollY` read at mount that forces style and layout mid-commit (106 ms of style over 1,587 elements at 4x CPU on color.babb.dev) and a document scroll listener per header. Witness: vitest, a CardHeader without `shrink` mounts with no scroll listener and no scroll read.
+- **A Select opens within 100 ms to its first frame at 390 with 4x CPU (18 rows, sheet form).** Today 192 ms at the median. Keep the list's content mounted between opens, and in the sheet form (screen-wide, `data-form="sheet"`) place it without floating-ui. The view select's close (floating-ui isRTL/getCssDimensions in the press, 42 to 94 ms) is read in the same row. Built after the phone-overlay cure, which also changes `SelectContent.vue`. Witness: one Chromium cell on a built bundle at 390, 4x CPU, the first frame after the press under 100 ms over five opens, and no floating-ui call in the sheet form.
