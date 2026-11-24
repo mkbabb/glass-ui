@@ -18,8 +18,9 @@ const PAGES = {
   "P4-bud": "8RyqCYtFMhc8xFdJquLHC2", "P5-mark": "Sf5VYMX7HQeQ6k584cpZxk", "P6-hosts": "LbxfwsT94bouKtzq5VoXci",
   "P7-fuse": "RziFpt9Bj5RUTSVBtdAxTU", "P8-present": "5Jed1k3wBJvGY72BDUw6AD",
   // Pass 10 (pass 9's fold, B9-1): pages with no published link, served here only; the board links their local names.
-  // P9-slider is superseded by P10-slider, which draws its letters on one thumbless rule (fold A9-9).
-  "P10-slider": null, "P10-toggle": null, "P10-plate": null,
+  // P9-slider is superseded by P10-slider, which draws its letters on one thumbless rule (fold A9-9); it is served for
+  // the record, and its ask sends the reader to P10-slider.
+  "P9-slider": null, "P10-slider": null, "P10-toggle": null, "P10-plate": null,
 };
 
 const wrap = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">

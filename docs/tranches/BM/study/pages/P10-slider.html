@@ -11,8 +11,13 @@
    C · pass 10's, ChatGPT's construction (BL design/slider/MEASURE.md §2.2): the slider's own ground is the shell. It
        grows out of the band by one clip, g/2 on a hover and g on a press or Tab; the fill keeps its size; a knob grows
        by `scale` on a press or Tab. A site's own ground (the gold row) grows in its own colour.
-   Every letter grows on present's single curve over 200 ms and shrinks over 120 ms (scheme-spring.css:103, :115);
-   the readout enters from 0.9 and leaves by fading. Numbers: pass-10/slider/slider.json. */
+   Every letter grows on present's single curve over 200 ms. A and B shrink over 120 ms (scheme-spring.css:103, :115);
+   C returns over 200 ms, one clock both ways. The readout enters from 0.9 with its fade and leaves by fading alone at
+   its full size. Numbers: pass-10/slider/slider.json.
+   Repaired after the final fold (pass-10/fold.md, "The pages"): B is withdrawn and cannot be sent (B10-17); the readout
+   holds scale 1 on the way out (A10-5); C's ground returns over 200 ms (A10-6); C's focus ring stands at g in every
+   state and fades where it stands, 2 px out under Reduce Motion (A10-5); C's grown ground takes no pointer, so the
+   root's box is the hit region (B10-6). */
 :root {
   --bg: hsl(40 30% 98%);
   --fg: hsl(24 10% 10%);
@@ -122,15 +127,17 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
 /* One rule for every letter: the default slider has no knob, at rest or held (O-408). */
 .sl[data-thumbless] .thumb::before { opacity: 0; }
 .sl.key .shell { border-color: var(--focus); }
+/* The readout rests at its full size, so it leaves by its fade alone (P0a rule 3); it enters from 0.9 by an animation. */
 .readout {
   inset-inline-start: 0; inset-block-end: calc(50% + var(--H) / 2 + 1.5 * var(--g));
   translate: calc(var(--H) / 2 + var(--p) * (100cqi - var(--H)) - 50%) 0;
   box-sizing: border-box; inline-size: calc(4ch + 1rem); block-size: 26px; padding: 2px 0; border: 1px solid var(--hair); border-radius: 13px;
   background: var(--shell); font: 500 12px/20px var(--font); font-variant-numeric: tabular-nums; text-align: center; pointer-events: none;
-  transform-origin: 50% 100%; scale: 0.9; opacity: 0;
+  transform-origin: 50% 100%; opacity: 0;
   transition: opacity var(--out) var(--ease);
 }
-.sl.on.say .readout { scale: 1; opacity: 1; transition: scale var(--in) var(--curve), opacity var(--in) var(--ease); }
+.sl.on.say .readout { opacity: 1; animation: readout-in var(--in) var(--curve); transition: opacity var(--in) var(--ease); }
+@keyframes readout-in { from { scale: 0.9; } }
 
 /* A: the knob grows past the band by a uniform scale of its ::before; the shell is a card. */
 .sl[data-letter="a"] .thumb::before { scale: 1; transition: scale var(--dur) var(--curve); }
@@ -146,10 +153,13 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
 .sl[data-letter="b"]:is(.on, .hov) .fill { box-shadow: 0 0 0 calc(var(--g) / 2) var(--fill, var(--fg)); }
 .sl[data-letter="b"]:is(.on, .hov) .thumb::before { box-shadow: 0 0 0 calc(var(--g) / 4) var(--bg), 0 1px 3px var(--knob-shadow); }
 
-/* C: the ground is the shell. One clip opens by --open: g/2 on a hover, g on a press or Tab. */
-.sl[data-letter="c"] .track { background: transparent; outline-offset: max(2px, var(--open)); }
+/* C: the ground is the shell. One clip opens by --open: g/2 on a hover, g on a press or Tab, and every leg grows and
+   returns on one 200 ms clock. The shell takes no pointer. The focus ring stands at g in every state and shows only on
+   Tab, when the ground is at g, so it never moves; it fades on --duration-fast (200 ms). */
+.sl[data-letter="c"] { --dur: var(--in); }
+.sl[data-letter="c"] .track { background: transparent; outline-offset: max(2px, var(--g)); transition: outline-color var(--in) var(--ease); }
 .sl[data-letter="c"] .shell {
-  border: 0; opacity: 1; background: var(--gr);
+  border: 0; opacity: 1; background: var(--gr); pointer-events: none;
   clip-path: inset(calc(var(--g) - var(--open)) round calc(var(--H) / 2 + var(--open)));
   transition: clip-path var(--dur) var(--curve);
 }
@@ -167,12 +177,13 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
   .sl[data-letter="b"]:is(.on, .hov) :is(.track, .fill) { box-shadow: none; }
   .sl[data-letter="b"]:is(.on, .hov) .lane { clip-path: inset(0 round calc(var(--H) / 2)); }
   .sl[data-letter="c"] { --open: 0px !important; }
-  .readout, .sl.on.say .readout { scale: 1; }
+  .sl[data-letter="c"] .track { outline-offset: 2px; }
+  .sl.on.say .readout { animation: none; }
 }
 </style>
 
 <main>
-  <p class="ask"><strong>On your iPhone, press and drag each slider. On a Mac, also Tab to one and rest the mouse on it. Send A, B or C: the view you want every slider to show while you use it.</strong> C ships in 11.3.0 unless you send another letter.</p>
+  <p class="ask"><strong>On your iPhone, press and drag each slider. On a Mac, also Tab to one and rest the mouse on it. Send A or C: the view you want every slider to show while you use it.</strong> C ships in 11.3.0 unless you send A. B is withdrawn and shown only for comparison.</p>
   <p class="env" id="env">Reading your browser…</p>
   <p class="rm">Reduce Motion is on, so you see the reduced form: in A and B the shell fades in at its full size; in C nothing grows and the value is said.</p>
   <div class="bar">
@@ -193,7 +204,7 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
       <span class="cap">A site’s own colour</span>
       <div class="sl" data-letter="a" data-size="sm" data-gold data-thumbless aria-label="Transport, A"></div>
     </div>
-    <div class="letter" data-v="b"><p><b>B</b> · Pass 9’s: the band itself grows inside a shell. Withdrawn; shown for comparison.</p>
+    <div class="letter" data-v="b"><p><b><s>B</s></b> · Pass 9’s, withdrawn, not a letter to send: the band itself grows inside a shell. Shown so you can see what C replaces.</p>
       <span class="cap">Default</span>
       <div class="sl" data-letter="b" data-size="md" data-thumbless data-say aria-label="Volume, B"></div>
       <span class="cap">With a knob</span>
@@ -215,7 +226,7 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
     <h2>The numbers, in px</h2>
     <p class="how">Held, at each size: the outer edge, the band, and the knob where there is one. g, the outset, is at most 8 px and never more than two thirds of the band.</p>
     <div class="tw"><table>
-      <thead><tr><th>Band</th><th>A</th><th>B</th><th>C</th></tr></thead>
+      <thead><tr><th>Band</th><th>A</th><th><s>B</s> (withdrawn)</th><th>C</th></tr></thead>
       <tbody>
         <tr><td>sm 12</td><td>28·12·20</td><td>28·20·16</td><td>28·12·20</td></tr>
         <tr><td>md 20</td><td>36·20·28</td><td>36·28·24</td><td>36·20·28</td></tr>
@@ -223,7 +234,7 @@ th { font-weight: 600; color: var(--muted); white-space: normal; }
         <tr><td>ChatGPT</td><td>—</td><td>—</td><td>68·42·34</td></tr>
       </tbody>
     </table></div>
-    <p class="how">In C a resting mouse grows the ground half as far (4 px a side). A press or Tab grows it the whole way. In A, B and C everything grows over 200 ms and shrinks over 120 ms.</p>
+    <p class="how">In C a resting mouse grows the ground half as far (4 px a side). A press or Tab grows it the whole way, and the focus ring stands 8 px out, round the grown ground. Every letter grows over 200 ms. A and B shrink over 120 ms; C returns over the same 200 ms, so a hover leaves the way it came. The value said above the slider leaves by fading, at its full size.</p>
   </section>
 
   <p class="cap">Everything here is a model drawn by this page alone, not glass-ui itself.</p>
