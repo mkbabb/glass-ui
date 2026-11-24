@@ -1,0 +1,101 @@
+
+Running 5 tests using 1 worker
+
+[WebServer] 1:53:33 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  1 [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (9.8s)
+[WebServer] 1:53:42 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (8.4s)
+[WebServer] 1:53:54 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (7.1s)
+[WebServer] 1:54:03 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (6.0s)
+[WebServer] 1:54:14 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (6.9s)
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":985,"exit":496,"painted":21,"seenShare":0.09,"curve":"cubic-bezier(0.3, 0.2, 0.7, 0.8)","stray":0.287,"travel":289,"travelShare":0.091,"frames":[[0,1,98],[0,1,98],[19,1,98],[49,1,98],[97,1,98],[172,1,98],[202,0.951,112],[215,0.893,129],[228,0.843,143],[248,0.791,159],[265,0.72,179],[291,0.647,201],[311,0.571,223],[336,0.495,245],[360,0.419,267],[370,0.344,289],[382,0.3,302],[397,0.248,318],[416,0.185,336],[432,0.12,355],[454,0.063,372],[465,0.011,387],[496,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.287
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-phone-repeat1/error-context.md
+
+  2) [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":685,"exit":435,"painted":19,"seenShare":0.076,"curve":"cubic-bezier(0.3, 0.2, 0.7, 0.8)","stray":0.114,"travel":288,"travelShare":0.077,"frames":[[0,1,98],[5,1,98],[16,1,98],[40,1,98],[84,1,98],[116,0.951,112],[135,0.893,129],[153,0.829,148],[185,0.76,168],[203,0.688,189],[222,0.614,211],[233,0.538,233],[258,0.488,247],[282,0.412,270],[313,0.337,292],[332,0.264,313],[352,0.194,333],[381,0.128,353],[399,0.068,370],[414,0.015,386],[435,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.114
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-phone-repeat2/error-context.md
+
+  3) [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":724,"exit":426,"painted":24,"seenShare":0.082,"curve":"cubic-bezier(0.3, 0.2, 0.7, 0.8)","stray":0.251,"travel":286,"travelShare":0.083,"frames":[[0,1,98],[2,1,98],[17,1,98],[36,1,98],[52,1,98],[69,1,98],[85,1,98],[114,1,98],[147,1,98],[163,0.951,112],[178,0.895,128],[186,0.838,145],[201,0.806,154],[220,0.743,173],[234,0.67,194],[252,0.608,212],[268,0.532,234],[287,0.459,256],[301,0.383,278],[320,0.32,296],[335,0.248,318],[351,0.185,336],[374,0.123,354],[387,0.063,372],[402,0.022,384],[426,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.251
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-phone-repeat3/error-context.md
+
+  4) [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":987,"exit":341,"painted":17,"seenShare":0.076,"curve":"cubic-bezier(0.3, 0.2, 0.7, 0.8)","stray":0.081,"travel":282,"travelShare":0.079,"frames":[[0,1,98],[22,1,98],[48,1,98],[59,0.951,112],[73,0.913,123],[90,0.861,138],[106,0.795,157],[122,0.727,177],[137,0.657,198],[156,0.589,218],[172,0.513,240],[189,0.44,261],[206,0.365,283],[222,0.291,305],[239,0.223,325],[257,0.155,345],[275,0.092,363],[295,0.036,379],[341,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.081
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-phone-repeat4/error-context.md
+
+  4 failed
+    [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+  1 passed (1.1m)

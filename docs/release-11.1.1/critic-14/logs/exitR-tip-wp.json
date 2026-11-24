@@ -1,0 +1,313 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "exit.·.Sheet.right",
+      "--repeat-each=5"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 5,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-14/logs/exitR-tip-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5182,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:20:34.549Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjY3LCJleGl0IjoyOTEsInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMDc4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDE3LCJ0cmF2ZWwiOjI3OCwidHJhdmVsU2hhcmUiOjAuMDgyLCJmcmFtZXMiOltbMCwxLDk4XSxbMjEsMSw5OF0sWzM3LDEsOThdLFs0MywwLjk1MywxMTFdLFs1NywwLjkzMywxMTddLFs3NCwwLjg4MywxMzJdLFs5MSwwLjgxOCwxNTFdLFsxMDcsMC43NDksMTcxXSxbMTI0LDAuNjc5LDE5MV0sWzE0MSwwLjYwNSwyMTNdLFsxNTcsMC41MjksMjM1XSxbMTczLDAuNDU2LDI1N10sWzE5MCwwLjM4MywyNzhdLFsyMDYsMC4zMDksMzAwXSxbMjIzLDAuMjM5LDMyMF0sWzI0MSwwLjE3MSwzNDBdLFsyNTksMC4xMDcsMzU5XSxbMjc0LDAuMDQ5LDM3Nl0sWzI5MSwwLjAwNCwzODldXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:20:40.749Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6Njc5LCJleGl0IjozMDEsInBhaW50ZWQiOjE4LCJzZWVuU2hhcmUiOjAuMDc1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDE0LCJ0cmF2ZWwiOjI4MiwidHJhdmVsU2hhcmUiOjAuMDc4LCJmcmFtZXMiOltbMCwxLDk4XSxbMSwxLDk4XSxbMTcsMSw5OF0sWzQxLDEsOThdLFs1MSwwLjk1MSwxMTJdLFs2NywwLjkxNywxMjJdLFs4NSwwLjg1OCwxMzldLFsxMDIsMC43OTEsMTU5XSxbMTE3LDAuNzIsMTc5XSxbMTM0LDAuNjU0LDE5OV0sWzE0OSwwLjU3OSwyMjFdLFsxNjcsMC41MSwyNDFdLFsxODQsMC40MzQsMjYzXSxbMjAwLDAuMzU5LDI4NV0sWzIxOCwwLjI4OCwzMDZdLFsyMzQsMC4yMTcsMzI3XSxbMjUxLDAuMTUyLDM0NV0sWzI2NywwLjA5LDM2NF0sWzI4NCwwLjAzNiwzNzldLFszMDEsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4225,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:20:46.472Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjQwLCJleGl0IjozMTAsInBhaW50ZWQiOjE4LCJzZWVuU2hhcmUiOjAuMDc4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDI5LCJ0cmF2ZWwiOjI4NywidHJhdmVsU2hhcmUiOjAuMDc5LCJmcmFtZXMiOltbMCwxLDk4XSxbMTcsMSw5OF0sWzM4LDEsOThdLFs1MCwwLjk1MSwxMTJdLFs1OSwwLjkxLDEyNF0sWzc4LDAuODc3LDEzNF0sWzkxLDAuODExLDE1M10sWzExMCwwLjc1NywxNjldLFsxMjYsMC42ODUsMTkwXSxbMTQ1LDAuNjE0LDIxMV0sWzE2MCwwLjUzOCwyMzNdLFsxNzYsMC40NjksMjUzXSxbMTk1LDAuMzk2LDI3NF0sWzIwOSwwLjMyMiwyOTZdLFsyMjYsMC4yNjEsMzE0XSxbMjQ0LDAuMTkxLDMzNF0sWzI1OSwwLjEyNSwzNTNdLFsyNzYsMC4wNzEsMzY5XSxbMjkyLDAuMDE4LDM4NV0sWzMxMCwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4307,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:20:51.761Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjQxLCJleGl0IjoyOTgsInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMDgsImN1cnZlIjoiY3ViaWMtYmV6aWVyKDAuMywgMC4yLCAwLjcsIDAuOCkiLCJzdHJheSI6MC4wMTUsInRyYXZlbCI6MjgyLCJ0cmF2ZWxTaGFyZSI6MC4wODMsImZyYW1lcyI6W1swLDEsOThdLFsxNiwxLDk4XSxbMzQsMSw5OF0sWzQ3LDAuOTUxLDExMl0sWzYzLDAuOTA2LDEyNV0sWzc4LDAuODQ2LDE0M10sWzk3LDAuNzg1LDE2MF0sWzExNCwwLjcxNCwxODFdLFsxMjgsMC42NDEsMjAzXSxbMTQ3LDAuNTc3LDIyMV0sWzE2NCwwLjUwMSwyNDNdLFsxODAsMC40MjUsMjY2XSxbMTk1LDAuMzUzLDI4N10sWzIxNCwwLjI4NywzMDZdLFsyMzAsMC4yMTYsMzI3XSxbMjQ3LDAuMTUxLDM0Nl0sWzI2MywwLjA4OSwzNjRdLFsyODIsMC4wMzUsMzgwXSxbMjk4LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:20:57.265Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjQwLCJleGl0IjoyOTgsInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMDc3LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDMzLCJ0cmF2ZWwiOjI4NCwidHJhdmVsU2hhcmUiOjAuMDgsImZyYW1lcyI6W1swLDEsOThdLFsxMiwxLDk4XSxbMjcsMSw5OF0sWzQzLDAuOTU2LDExMF0sWzU5LDAuOTAxLDEyNl0sWzc4LDAuODQxLDE0NF0sWzk0LDAuNzczLDE2NF0sWzEwOSwwLjcwNCwxODRdLFsxMjgsMC42MzgsMjA0XSxbMTQzLDAuNTYyLDIyNl0sWzE2MSwwLjQ5NCwyNDZdLFsxNzcsMC40MTgsMjY4XSxbMTkzLDAuMzQ1LDI4OV0sWzIxMSwwLjI3NSwzMTBdLFsyMjgsMC4yMDUsMzMwXSxbMjQ0LDAuMTM4LDM1MF0sWzI1OSwwLjA3OSwzNjddLFsyNzgsMC4wMywzODFdLFsyOTgsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-074cb084d4dbe3963931",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T05:20:31.739Z",
+    "duration": 31152.053,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

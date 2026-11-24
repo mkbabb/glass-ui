@@ -1,0 +1,69 @@
+tip-chromium-desktop-0 {'skipped': 12, 'passed': 29} tables=16
+   most in one 16.7 ms window 0.157 (exit · Tooltip leaves on the exit curve, shorter t)
+   largest first sample 0.052/9ms (exit · Tooltip leaves on the exit curve, shorter t)
+   largest last sample 0.026/9ms (routes · a press on an open Popover's trigger clos)
+   longest hole 11ms (exit · Popover leaves on the exit curve, shorter t); against direction outside turns: none
+tip-chromium-desktop-1 {'passed': 43, 'skipped': 1} tables=25
+   most in one 16.7 ms window 0.256 (reverse · a disclosure reopened while it closes fi)
+   largest first sample 0.087/8ms (expand · an ExpandableContainer enters on a tween)
+   largest last sample 0.035/8ms (reverse · a Tooltip closed while it opens turns fr)
+   longest hole 11ms (reverse · a press on a leaving Sheet's trigger reo); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-chromium-desktop-2 {'passed': 44} tables=43
+   most in one 16.7 ms window 0.173 (standing · Collapsible by trigger: no exit in unde)
+   largest first sample 0.084/10ms (standing · ExpandableContainer by escape: no exit )
+   largest last sample 0.066/10ms (standing · Tooltip by away: no exit in under two f)
+   longest hole 17ms (standing · detented Sheet by escape: no exit in un); against direction outside turns: none
+tip-chromium-desktop-3 {'passed': 18} no frame tables
+   FAILED: exit · Sheet right leaves on the exit curve, shorter than it entered
+tip-chromium-phone-0 {'passed': 37, 'skipped': 3, 'failed': 1} tables=17
+   most in one 16.7 ms window 0.155 (sheet · a detented Sheet dragged up and let go at )
+   largest first sample 0.095/9ms (sheet · a detented Sheet dragged up and let go at )
+   largest last sample 0.024/8ms (routes · a press on an open Popover's trigger clos)
+   longest hole 83ms (exit · Sheet right leaves on the exit curve, short); against direction outside turns: none
+tip-chromium-phone-1 {'passed': 33, 'skipped': 11} tables=17
+   most in one 16.7 ms window 0.365 (reverse · a disclosure reopened while it closes fi)
+   largest first sample 0.089/8ms (expand · an ExpandableContainer enters on a tween)
+   largest last sample 0.029/8ms (expand · an ExpandableContainer leaves on a tween )
+   longest hole 11ms (reverse · a Select closed while it opens turns fro); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-chromium-phone-2 {'passed': 41, 'skipped': 3} tables=40
+   most in one 16.7 ms window 0.175 (standing · ExpandableContainer by escape: no exit )
+   largest first sample 0.076/9ms (standing · ExpandableContainer by escape: no exit )
+   largest last sample 0.031/9ms (standing · ExpandableContainer by close: no exit i)
+   longest hole 11ms (standing · Select by trigger: no exit in under two); against direction outside turns: none
+tip-chromium-phone-3 {'passed': 17, 'skipped': 1} no frame tables
+tip-webkit-desktop-0 {'skipped': 12, 'passed': 29} tables=16
+   most in one 16.7 ms window 0.160 (exit · Tooltip leaves on the exit curve, shorter t)
+   largest first sample 0.115/17ms (exit · Tooltip leaves on the exit curve, shorter t)
+   largest last sample 0.073/17ms (exit · Dialog leaves on the exit curve, shorter th)
+   longest hole 24ms (routes · a detented Sheet leaves whole by escape); against direction outside turns: none
+   FAILED: reverse · a Select closed while it opens turns from where it is
+tip-webkit-desktop-1 {'failed': 1, 'passed': 42, 'skipped': 1} tables=24
+   most in one 16.7 ms window 0.172 (expand · an ExpandableContainer leaves on a tween )
+   largest first sample 0.163/22ms (tooltip · a hint handed to its neighbour fades, ou)
+   largest last sample 0.066/19ms (reverse · a press on a leaving Select's trigger re)
+   longest hole 41ms (tooltip · a Tooltip enters on a tween); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-webkit-desktop-2 {'passed': 44} tables=43
+   most in one 16.7 ms window 0.172 (standing · Accordion by trigger: no exit in under )
+   largest first sample 0.171/26ms (standing · Accordion by trigger: no exit in under )
+   largest last sample 0.065/16ms (standing · ExpandableContainer by escape: no exit )
+   longest hole 37ms (standing · CommandDialog by escape: no exit in und); against direction outside turns: none
+tip-webkit-desktop-3 {'passed': 18} no frame tables
+   FAILED: exit · Sheet right leaves on the exit curve, shorter than it entered
+tip-webkit-phone-0 {'passed': 24, 'skipped': 16, 'failed': 1} tables=9
+   most in one 16.7 ms window 0.153 (routes · a detented Sheet leaves whole by escape)
+   largest first sample 0.078/21ms (routes · a CommandDialog keeps its list through it)
+   largest last sample 0.044/16ms (exit · Popover leaves on the exit curve, shorter t)
+   longest hole 44ms (exit · Sheet right leaves on the exit curve, short); against direction outside turns: none
+   FAILED: reverse · a Select closed while it opens turns from where it is
+   FAILED: reverse · a DropdownMenu closed while it opens turns from where it is
+tip-webkit-phone-1 {'failed': 2, 'passed': 31, 'skipped': 11} tables=22
+   most in one 16.7 ms window 0.175 (expand · an ExpandableContainer leaves on a tween )
+   largest first sample 0.151/17ms (expand · an ExpandableContainer leaves on a tween )
+   largest last sample 0.135/18ms (reverse · a press on a leaving Select's trigger re)
+   longest hole 42ms (reverse · a press on a leaving Sheet's trigger reo); against direction outside turns: ['reverse · a disclosure reopened while it closes finishes its']
+tip-webkit-phone-2 {'passed': 27, 'skipped': 17} tables=26
+   most in one 16.7 ms window 0.173 (standing · Collapsible by trigger: no exit in unde)
+   largest first sample 0.162/22ms (standing · Select by pick: no exit in under two fr)
+   largest last sample 0.072/16ms (standing · ExpandableContainer by escape: no exit )
+   longest hole 44ms (standing · plain Select by pick: no exit in under ); against direction outside turns: none
+tip-webkit-phone-3 {'passed': 16, 'skipped': 2} no frame tables

@@ -1,0 +1,101 @@
+
+Running 6 tests using 1 worker
+
+c1 {"cell":"light-1440f wk name-active-rest","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk name-active-hover","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk focus-hover","W":220,"H":84,"d":7,"w":186,"stadium":182,"ellipse":122,"css":{"W":73.33333333333333,"H":28}}
+c1 {"cell":"light-1440f wk focus-press","W":222,"H":78,"d":6,"w":184,"stadium":186,"ellipse":118,"css":{"W":74,"H":26}}
+c1 {"cell":"light-1440f wk focus-press","W":222,"H":78,"d":6,"w":184,"stadium":186,"ellipse":118,"css":{"W":74,"H":26}}
+  ✓  1 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint (6.7s)
+c1 {"cell":"light-390c wk name-active-rest","W":232,"H":72,"d":6,"w":204,"stadium":200,"ellipse":128,"css":{"W":77.33333333333333,"H":24}}
+c1 {"cell":"light-390c wk focus-press","W":206,"H":68,"d":5,"w":172,"stadium":173,"ellipse":108,"css":{"W":68.66666666666667,"H":22.666666666666668}}
+c1 {"cell":"light-390c wk focus-press","W":206,"H":68,"d":5,"w":172,"stadium":173,"ellipse":108,"css":{"W":68.66666666666667,"H":22.666666666666668}}
+  ✓  2 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint (4.1s)
+c1 {"cell":"light-1440f wk name-active-rest","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk name-active-hover","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk focus-hover","W":220,"H":84,"d":7,"w":186,"stadium":182,"ellipse":122,"css":{"W":73.33333333333333,"H":28}}
+  ✘  3 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint (6.8s)
+c1 {"cell":"light-390c wk name-active-rest","W":232,"H":72,"d":6,"w":204,"stadium":200,"ellipse":128,"css":{"W":77.33333333333333,"H":24}}
+  ✘  4 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint (5.0s)
+c1 {"cell":"light-1440f wk name-active-rest","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk name-active-hover","W":252,"H":84,"d":7,"w":218,"stadium":214,"ellipse":139,"css":{"W":84,"H":28}}
+c1 {"cell":"light-1440f wk focus-hover","W":220,"H":84,"d":7,"w":186,"stadium":182,"ellipse":122,"css":{"W":73.33333333333333,"H":28}}
+  ✘  5 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint (6.7s)
+c1 {"cell":"light-390c wk name-active-rest","W":232,"H":72,"d":6,"w":204,"stadium":200,"ellipse":128,"css":{"W":77.33333333333333,"H":24}}
+  ✘  6 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint (4.4s)
+
+
+  1) [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint 
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge
+      67 |     const at = rows[top + d]!;
+    > 68 |     const w = at[1] - at[0] + 1;
+         |                 ^
+      69 |     const r = H / 2;
+      70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));
+      71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);
+        at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)
+        at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:188:33
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-f1c55-plate-is-a-capsule-in-paint-webkit-repeat1/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge
+      67 |     const at = rows[top + d]!;
+    > 68 |     const w = at[1] - at[0] + 1;
+         |                 ^
+      69 |     const r = H / 2;
+      70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));
+      71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);
+        at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)
+        at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:188:33
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-ece51-plate-is-a-capsule-in-paint-webkit-repeat1/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint 
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge
+      67 |     const at = rows[top + d]!;
+    > 68 |     const w = at[1] - at[0] + 1;
+         |                 ^
+      69 |     const r = H / 2;
+      70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));
+      71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);
+        at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)
+        at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:188:33
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-f1c55-plate-is-a-capsule-in-paint-webkit-repeat2/error-context.md
+
+  4) [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge
+      67 |     const at = rows[top + d]!;
+    > 68 |     const w = at[1] - at[0] + 1;
+         |                 ^
+      69 |     const r = H / 2;
+      70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));
+      71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);
+        at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)
+        at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-0-1-critic-1.spec.ts:188:33
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-ece51-plate-is-a-capsule-in-paint-webkit-repeat2/error-context.md
+
+  4 failed
+    [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint 
+    [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+    [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint 
+    [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+  2 passed (42.1s)

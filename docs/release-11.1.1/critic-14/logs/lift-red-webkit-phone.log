@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap (2.3s)
+
+
+  1) [webkit-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap 
+
+    Error: scale after the tap: 1.08
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "1"
+    Received: "1.08"
+
+      84 |         await page.waitForTimeout(800);
+      85 |         const after = await read();
+    > 86 |         expect(after.scale, `scale after the tap: ${after.scale}`).toBe(rest.scale);
+         |                                                                    ^
+      87 |     } else {
+      88 |         await tile.hover();
+      89 |         await page.waitForTimeout(800);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:86:68
+
+    Error Context: test-results/release-11-1-1-controls-li-1a42e-returns-to-rest-after-a-tap-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap 

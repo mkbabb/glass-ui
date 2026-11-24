@@ -1,0 +1,278 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic14-cmd/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic14-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-14/logs/text-tip-cp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "text.probe.ts",
+      "file": "text.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "text palette · \"se\" then tap: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4332,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"tap\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[5,350,251,1],[14,350,251,1],[24,350,251,1],[32,350,251,1],[40,350,251,1],[49,350,251,1],[57,350,251,1],[65,350,251,0.966],[74,350,251,0.929],[82,350,251,0.888],[89,350,251,0.843],[97,350,251,0.802],[106,350,251,0.755],[115,350,251,0.706],[124,350,251,0.646],[132,350,251,0.594],[140,350,251,0.542],[149,350,251,0.489],[157,350,251,0.436],[165,350,251,0.386],[174,350,251,0.331],[180,350,251,0.281],[190,350,251,0.24],[199,350,251,0.183],[207,350,251,0.138],[215,350,251,0.095],[224,350,251,0.057],[232,350,251,0.019]],\"rows\":[[-11,4,\"se\",\"1\"],[-4,4,\"se\",\"1\"],[4,4,\"se\",\"1\"],[13,4,\"se\",\"1\"],[23,4,\"se\",\"1\"],[31,4,\"se\",\"1\"],[39,4,\"se\",\"1\"],[48,4,\"se\",\"1\"],[56,4,\"se\",\"1\"],[64,4,\"se\",\"0.966375\"],[72,4,\"se\",\"0.928819\"],[81,4,\"se\",\"0.887725\"],[88,4,\"se\",\"0.843173\"],[96,4,\"se\",\"0.801889\"],[104,4,\"se\",\"0.754911\"],[114,4,\"se\",\"0.705821\"],[123,4,\"se\",\"0.646235\"],[131,4,\"se\",\"0.594322\"],[139,4,\"se\",\"0.54188\"],[148,4,\"se\",\"0.489207\"],[156,4,\"se\",\"0.43596\"],[164,4,\"se\",\"0.385584\"],[173,4,\"se\",\"0.33149\"],[179,4,\"se\",\"0.28148\"],[189,4,\"se\",\"0.240376\"],[198,4,\"se\",\"0.183411\"],[206,4,\"se\",\"0.137938\"],[214,4,\"se\",\"0.0950562\"],[223,4,\"se\",\"0.0571617\"],[231,4,\"se\",\"0.0190275\"],[239,-1,null,null],[248,-1,null,null],[256,-1,null,null],[264,-1,null,null],[273,-1,null,null],[280,-1,null,null],[289,-1,null,null],[297,-1,null,null],[305,-1,null,null],[314,-1,null,null],[322,-1,null,null],[331,-1,null,null],[339,-1,null,null],[348,-1,null,null],[354,-1,null,null],[364,-1,null,null],[373,-1,null,null],[381,-1,null,null],[389,-1,null,null],[397,-1,null,null],[405,-1,null,null],[414,-1,null,null],[423,-1,null,null],[431,-1,null,null],[439,-1,null,null],[447,-1,null,null],[455,-1,null,null],[464,-1,null,null],[472,-1,null,null],[481,-1,null,null],[489,-1,null,null],[496,-1,null,null],[506,-1,null,null],[514,-1,null,null],[523,-1,null,null],[531,-1,null,null],[538,-1,null,null],[547,-1,null,null],[556,-1,null,null],[564,-1,null,null],[572,-1,null,null],[580,-1,null,null],[589,-1,null,null],[598,-1,null,null],[606,-1,null,null],[613,-1,null,null],[622,-1,null,null],[631,-1,null,null],[639,-1,null,null],[647,-1,null,null],[655,-1,null,null],[664,-1,null,null],[672,-1,null,null],[681,-1,null,null],[689,-1,null,null],[696,-1,null,null],[706,-1,null,null],[714,-1,null,null],[721,-1,null,null],[731,-1,null,null],[739,-1,null,null],[748,-1,null,null],[756,-1,null,null],[764,-1,null,null],[773,-1,null,null],[781,-1,null,null],[789,-1,null,null],[797,-1,null,null],[806,-1,null,null],[814,-1,null,null],[821,-1,null,null],[831,-1,null,null],[839,-1,null,null],[846,-1,null,null],[856,-1,null,null],[864,-1,null,null],[872,-1,null,null],[880,-1,null,null],[889,-1,null,null],[897,-1,null,null],[906,-1,null,null],[914,-1,null,null],[923,-1,null,null],[931,-1,null,null],[939,-1,null,null],[947,-1,null,null],[956,-1,null,null]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:21:03.543Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6InRhcCIsImxhYmVscyI6WyJTZWFyY2ggZXZlcnl3aGVyZVxu4oyYSyIsIkFjY291bnQgc2V0dGluZ3NcbuKMmCwiLCJHZW5lcmFsIHNldHRpbmdzIiwiQ2xvc2UgdGFiXG7ijJhXIl0sInJlc3QiOlszNTAsMjUxXSwiZHJpZnQiOjAsInNlZW5EcmlmdCI6MCwiYm94IjpbWzUsMzUwLDI1MSwxXSxbMTQsMzUwLDI1MSwxXSxbMjQsMzUwLDI1MSwxXSxbMzIsMzUwLDI1MSwxXSxbNDAsMzUwLDI1MSwxXSxbNDksMzUwLDI1MSwxXSxbNTcsMzUwLDI1MSwxXSxbNjUsMzUwLDI1MSwwLjk2Nl0sWzc0LDM1MCwyNTEsMC45MjldLFs4MiwzNTAsMjUxLDAuODg4XSxbODksMzUwLDI1MSwwLjg0M10sWzk3LDM1MCwyNTEsMC44MDJdLFsxMDYsMzUwLDI1MSwwLjc1NV0sWzExNSwzNTAsMjUxLDAuNzA2XSxbMTI0LDM1MCwyNTEsMC42NDZdLFsxMzIsMzUwLDI1MSwwLjU5NF0sWzE0MCwzNTAsMjUxLDAuNTQyXSxbMTQ5LDM1MCwyNTEsMC40ODldLFsxNTcsMzUwLDI1MSwwLjQzNl0sWzE2NSwzNTAsMjUxLDAuMzg2XSxbMTc0LDM1MCwyNTEsMC4zMzFdLFsxODAsMzUwLDI1MSwwLjI4MV0sWzE5MCwzNTAsMjUxLDAuMjRdLFsxOTksMzUwLDI1MSwwLjE4M10sWzIwNywzNTAsMjUxLDAuMTM4XSxbMjE1LDM1MCwyNTEsMC4wOTVdLFsyMjQsMzUwLDI1MSwwLjA1N10sWzIzMiwzNTAsMjUxLDAuMDE5XV0sInJvd3MiOltbLTExLDQsInNlIiwiMSJdLFstNCw0LCJzZSIsIjEiXSxbNCw0LCJzZSIsIjEiXSxbMTMsNCwic2UiLCIxIl0sWzIzLDQsInNlIiwiMSJdLFszMSw0LCJzZSIsIjEiXSxbMzksNCwic2UiLCIxIl0sWzQ4LDQsInNlIiwiMSJdLFs1Niw0LCJzZSIsIjEiXSxbNjQsNCwic2UiLCIwLjk2NjM3NSJdLFs3Miw0LCJzZSIsIjAuOTI4ODE5Il0sWzgxLDQsInNlIiwiMC44ODc3MjUiXSxbODgsNCwic2UiLCIwLjg0MzE3MyJdLFs5Niw0LCJzZSIsIjAuODAxODg5Il0sWzEwNCw0LCJzZSIsIjAuNzU0OTExIl0sWzExNCw0LCJzZSIsIjAuNzA1ODIxIl0sWzEyMyw0LCJzZSIsIjAuNjQ2MjM1Il0sWzEzMSw0LCJzZSIsIjAuNTk0MzIyIl0sWzEzOSw0LCJzZSIsIjAuNTQxODgiXSxbMTQ4LDQsInNlIiwiMC40ODkyMDciXSxbMTU2LDQsInNlIiwiMC40MzU5NiJdLFsxNjQsNCwic2UiLCIwLjM4NTU4NCJdLFsxNzMsNCwic2UiLCIwLjMzMTQ5Il0sWzE3OSw0LCJzZSIsIjAuMjgxNDgiXSxbMTg5LDQsInNlIiwiMC4yNDAzNzYiXSxbMTk4LDQsInNlIiwiMC4xODM0MTEiXSxbMjA2LDQsInNlIiwiMC4xMzc5MzgiXSxbMjE0LDQsInNlIiwiMC4wOTUwNTYyIl0sWzIyMyw0LCJzZSIsIjAuMDU3MTYxNyJdLFsyMzEsNCwic2UiLCIwLjAxOTAyNzUiXSxbMjM5LC0xLG51bGwsbnVsbF0sWzI0OCwtMSxudWxsLG51bGxdLFsyNTYsLTEsbnVsbCxudWxsXSxbMjY0LC0xLG51bGwsbnVsbF0sWzI3MywtMSxudWxsLG51bGxdLFsyODAsLTEsbnVsbCxudWxsXSxbMjg5LC0xLG51bGwsbnVsbF0sWzI5NywtMSxudWxsLG51bGxdLFszMDUsLTEsbnVsbCxudWxsXSxbMzE0LC0xLG51bGwsbnVsbF0sWzMyMiwtMSxudWxsLG51bGxdLFszMzEsLTEsbnVsbCxudWxsXSxbMzM5LC0xLG51bGwsbnVsbF0sWzM0OCwtMSxudWxsLG51bGxdLFszNTQsLTEsbnVsbCxudWxsXSxbMzY0LC0xLG51bGwsbnVsbF0sWzM3MywtMSxudWxsLG51bGxdLFszODEsLTEsbnVsbCxudWxsXSxbMzg5LC0xLG51bGwsbnVsbF0sWzM5NywtMSxudWxsLG51bGxdLFs0MDUsLTEsbnVsbCxudWxsXSxbNDE0LC0xLG51bGwsbnVsbF0sWzQyMywtMSxudWxsLG51bGxdLFs0MzEsLTEsbnVsbCxudWxsXSxbNDM5LC0xLG51bGwsbnVsbF0sWzQ0NywtMSxudWxsLG51bGxdLFs0NTUsLTEsbnVsbCxudWxsXSxbNDY0LC0xLG51bGwsbnVsbF0sWzQ3MiwtMSxudWxsLG51bGxdLFs0ODEsLTEsbnVsbCxudWxsXSxbNDg5LC0xLG51bGwsbnVsbF0sWzQ5NiwtMSxudWxsLG51bGxdLFs1MDYsLTEsbnVsbCxudWxsXSxbNTE0LC0xLG51bGwsbnVsbF0sWzUyMywtMSxudWxsLG51bGxdLFs1MzEsLTEsbnVsbCxudWxsXSxbNTM4LC0xLG51bGwsbnVsbF0sWzU0NywtMSxudWxsLG51bGxdLFs1NTYsLTEsbnVsbCxudWxsXSxbNTY0LC0xLG51bGwsbnVsbF0sWzU3MiwtMSxudWxsLG51bGxdLFs1ODAsLTEsbnVsbCxudWxsXSxbNTg5LC0xLG51bGwsbnVsbF0sWzU5OCwtMSxudWxsLG51bGxdLFs2MDYsLTEsbnVsbCxudWxsXSxbNjEzLC0xLG51bGwsbnVsbF0sWzYyMiwtMSxudWxsLG51bGxdLFs2MzEsLTEsbnVsbCxudWxsXSxbNjM5LC0xLG51bGwsbnVsbF0sWzY0NywtMSxudWxsLG51bGxdLFs2NTUsLTEsbnVsbCxudWxsXSxbNjY0LC0xLG51bGwsbnVsbF0sWzY3MiwtMSxudWxsLG51bGxdLFs2ODEsLTEsbnVsbCxudWxsXSxbNjg5LC0xLG51bGwsbnVsbF0sWzY5NiwtMSxudWxsLG51bGxdLFs3MDYsLTEsbnVsbCxudWxsXSxbNzE0LC0xLG51bGwsbnVsbF0sWzcyMSwtMSxudWxsLG51bGxdLFs3MzEsLTEsbnVsbCxudWxsXSxbNzM5LC0xLG51bGwsbnVsbF0sWzc0OCwtMSxudWxsLG51bGxdLFs3NTYsLTEsbnVsbCxudWxsXSxbNzY0LC0xLG51bGwsbnVsbF0sWzc3MywtMSxudWxsLG51bGxdLFs3ODEsLTEsbnVsbCxudWxsXSxbNzg5LC0xLG51bGwsbnVsbF0sWzc5NywtMSxudWxsLG51bGxdLFs4MDYsLTEsbnVsbCxudWxsXSxbODE0LC0xLG51bGwsbnVsbF0sWzgyMSwtMSxudWxsLG51bGxdLFs4MzEsLTEsbnVsbCxudWxsXSxbODM5LC0xLG51bGwsbnVsbF0sWzg0NiwtMSxudWxsLG51bGxdLFs4NTYsLTEsbnVsbCxudWxsXSxbODY0LC0xLG51bGwsbnVsbF0sWzg3MiwtMSxudWxsLG51bGxdLFs4ODAsLTEsbnVsbCxudWxsXSxbODg5LC0xLG51bGwsbnVsbF0sWzg5NywtMSxudWxsLG51bGxdLFs5MDYsLTEsbnVsbCxudWxsXSxbOTE0LC0xLG51bGwsbnVsbF0sWzkyMywtMSxudWxsLG51bGxdLFs5MzEsLTEsbnVsbCxudWxsXSxbOTM5LC0xLG51bGwsbnVsbF0sWzk0NywtMSxudWxsLG51bGxdLFs5NTYsLTEsbnVsbCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666afc21613c51cf1e58-4fe9d20b989d9bb2e3c0",
+          "file": "text.probe.ts",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "text palette · \"se\" then enter: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3959,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"enter\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[5,350,251,1],[14,350,251,1],[21,350,251,0.967],[31,350,251,0.935],[39,350,251,0.886],[47,350,251,0.844],[55,350,251,0.797],[63,350,251,0.748],[72,350,251,0.701],[80,350,251,0.649],[89,350,251,0.595],[97,350,251,0.543],[105,350,251,0.49],[113,350,251,0.437],[122,350,251,0.391],[130,350,251,0.331],[139,350,251,0.282],[147,350,251,0.232],[155,350,251,0.184],[162,350,251,0.139],[172,350,251,0.103],[180,350,251,0.054],[189,350,251,0.02]],\"rows\":[[-4,4,\"se\",\"1\"],[9,4,\"se\",\"1\"],[13,4,\"se\",\"1\"],[20,4,\"se\",\"0.966803\"],[30,4,\"se\",\"0.934953\"],[38,4,\"se\",\"0.886182\"],[46,4,\"se\",\"0.844264\"],[55,4,\"se\",\"0.796755\"],[63,4,\"se\",\"0.748408\"],[71,4,\"se\",\"0.700963\"],[80,4,\"se\",\"0.649339\"],[88,4,\"se\",\"0.594951\"],[96,4,\"se\",\"0.542514\"],[105,4,\"se\",\"0.489842\"],[112,4,\"se\",\"0.436593\"],[122,4,\"se\",\"0.390599\"],[130,4,\"se\",\"0.330873\"],[138,4,\"se\",\"0.282083\"],[146,4,\"se\",\"0.232165\"],[155,4,\"se\",\"0.183973\"],[161,4,\"se\",\"0.139005\"],[172,4,\"se\",\"0.103096\"],[180,4,\"se\",\"0.0539604\"],[188,4,\"se\",\"0.0198399\"],[196,-1,null,null],[205,-1,null,null],[213,-1,null,null],[221,-1,null,null],[230,-1,null,null],[238,-1,null,null],[246,-1,null,null],[255,-1,null,null],[263,-1,null,null],[271,-1,null,null],[280,-1,null,null],[288,-1,null,null],[296,-1,null,null],[305,-1,null,null],[313,-1,null,null],[321,-1,null,null],[330,-1,null,null],[338,-1,null,null],[346,-1,null,null],[355,-1,null,null],[362,-1,null,null],[371,-1,null,null],[380,-1,null,null],[388,-1,null,null],[396,-1,null,null],[405,-1,null,null],[413,-1,null,null],[421,-1,null,null],[428,-1,null,null],[438,-1,null,null],[446,-1,null,null],[453,-1,null,null],[463,-1,null,null],[471,-1,null,null],[480,-1,null,null],[488,-1,null,null],[496,-1,null,null],[503,-1,null,null],[513,-1,null,null],[521,-1,null,null],[530,-1,null,null],[537,-1,null,null],[546,-1,null,null],[555,-1,null,null],[561,-1,null,null],[571,-1,null,null],[580,-1,null,null],[588,-1,null,null],[596,-1,null,null],[605,-1,null,null],[612,-1,null,null],[621,-1,null,null],[630,-1,null,null],[638,-1,null,null],[646,-1,null,null],[654,-1,null,null],[663,-1,null,null],[671,-1,null,null],[679,-1,null,null],[687,-1,null,null],[696,-1,null,null],[704,-1,null,null],[712,-1,null,null],[722,-1,null,null],[730,-1,null,null],[738,-1,null,null],[745,-1,null,null],[755,-1,null,null],[762,-1,null,null],[771,-1,null,null],[780,-1,null,null],[788,-1,null,null],[796,-1,null,null],[805,-1,null,null],[813,-1,null,null],[821,-1,null,null],[829,-1,null,null],[838,-1,null,null],[845,-1,null,null],[855,-1,null,null],[863,-1,null,null],[871,-1,null,null],[880,-1,null,null],[888,-1,null,null],[896,-1,null,null],[904,-1,null,null],[913,-1,null,null]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:21:08.014Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVudGVyIiwibGFiZWxzIjpbIlNlYXJjaCBldmVyeXdoZXJlXG7ijJhLIiwiQWNjb3VudCBzZXR0aW5nc1xu4oyYLCIsIkdlbmVyYWwgc2V0dGluZ3MiLCJDbG9zZSB0YWJcbuKMmFciXSwicmVzdCI6WzM1MCwyNTFdLCJkcmlmdCI6MCwic2VlbkRyaWZ0IjowLCJib3giOltbNSwzNTAsMjUxLDFdLFsxNCwzNTAsMjUxLDFdLFsyMSwzNTAsMjUxLDAuOTY3XSxbMzEsMzUwLDI1MSwwLjkzNV0sWzM5LDM1MCwyNTEsMC44ODZdLFs0NywzNTAsMjUxLDAuODQ0XSxbNTUsMzUwLDI1MSwwLjc5N10sWzYzLDM1MCwyNTEsMC43NDhdLFs3MiwzNTAsMjUxLDAuNzAxXSxbODAsMzUwLDI1MSwwLjY0OV0sWzg5LDM1MCwyNTEsMC41OTVdLFs5NywzNTAsMjUxLDAuNTQzXSxbMTA1LDM1MCwyNTEsMC40OV0sWzExMywzNTAsMjUxLDAuNDM3XSxbMTIyLDM1MCwyNTEsMC4zOTFdLFsxMzAsMzUwLDI1MSwwLjMzMV0sWzEzOSwzNTAsMjUxLDAuMjgyXSxbMTQ3LDM1MCwyNTEsMC4yMzJdLFsxNTUsMzUwLDI1MSwwLjE4NF0sWzE2MiwzNTAsMjUxLDAuMTM5XSxbMTcyLDM1MCwyNTEsMC4xMDNdLFsxODAsMzUwLDI1MSwwLjA1NF0sWzE4OSwzNTAsMjUxLDAuMDJdXSwicm93cyI6W1stNCw0LCJzZSIsIjEiXSxbOSw0LCJzZSIsIjEiXSxbMTMsNCwic2UiLCIxIl0sWzIwLDQsInNlIiwiMC45NjY4MDMiXSxbMzAsNCwic2UiLCIwLjkzNDk1MyJdLFszOCw0LCJzZSIsIjAuODg2MTgyIl0sWzQ2LDQsInNlIiwiMC44NDQyNjQiXSxbNTUsNCwic2UiLCIwLjc5Njc1NSJdLFs2Myw0LCJzZSIsIjAuNzQ4NDA4Il0sWzcxLDQsInNlIiwiMC43MDA5NjMiXSxbODAsNCwic2UiLCIwLjY0OTMzOSJdLFs4OCw0LCJzZSIsIjAuNTk0OTUxIl0sWzk2LDQsInNlIiwiMC41NDI1MTQiXSxbMTA1LDQsInNlIiwiMC40ODk4NDIiXSxbMTEyLDQsInNlIiwiMC40MzY1OTMiXSxbMTIyLDQsInNlIiwiMC4zOTA1OTkiXSxbMTMwLDQsInNlIiwiMC4zMzA4NzMiXSxbMTM4LDQsInNlIiwiMC4yODIwODMiXSxbMTQ2LDQsInNlIiwiMC4yMzIxNjUiXSxbMTU1LDQsInNlIiwiMC4xODM5NzMiXSxbMTYxLDQsInNlIiwiMC4xMzkwMDUiXSxbMTcyLDQsInNlIiwiMC4xMDMwOTYiXSxbMTgwLDQsInNlIiwiMC4wNTM5NjA0Il0sWzE4OCw0LCJzZSIsIjAuMDE5ODM5OSJdLFsxOTYsLTEsbnVsbCxudWxsXSxbMjA1LC0xLG51bGwsbnVsbF0sWzIxMywtMSxudWxsLG51bGxdLFsyMjEsLTEsbnVsbCxudWxsXSxbMjMwLC0xLG51bGwsbnVsbF0sWzIzOCwtMSxudWxsLG51bGxdLFsyNDYsLTEsbnVsbCxudWxsXSxbMjU1LC0xLG51bGwsbnVsbF0sWzI2MywtMSxudWxsLG51bGxdLFsyNzEsLTEsbnVsbCxudWxsXSxbMjgwLC0xLG51bGwsbnVsbF0sWzI4OCwtMSxudWxsLG51bGxdLFsyOTYsLTEsbnVsbCxudWxsXSxbMzA1LC0xLG51bGwsbnVsbF0sWzMxMywtMSxudWxsLG51bGxdLFszMjEsLTEsbnVsbCxudWxsXSxbMzMwLC0xLG51bGwsbnVsbF0sWzMzOCwtMSxudWxsLG51bGxdLFszNDYsLTEsbnVsbCxudWxsXSxbMzU1LC0xLG51bGwsbnVsbF0sWzM2MiwtMSxudWxsLG51bGxdLFszNzEsLTEsbnVsbCxudWxsXSxbMzgwLC0xLG51bGwsbnVsbF0sWzM4OCwtMSxudWxsLG51bGxdLFszOTYsLTEsbnVsbCxudWxsXSxbNDA1LC0xLG51bGwsbnVsbF0sWzQxMywtMSxudWxsLG51bGxdLFs0MjEsLTEsbnVsbCxudWxsXSxbNDI4LC0xLG51bGwsbnVsbF0sWzQzOCwtMSxudWxsLG51bGxdLFs0NDYsLTEsbnVsbCxudWxsXSxbNDUzLC0xLG51bGwsbnVsbF0sWzQ2MywtMSxudWxsLG51bGxdLFs0NzEsLTEsbnVsbCxudWxsXSxbNDgwLC0xLG51bGwsbnVsbF0sWzQ4OCwtMSxudWxsLG51bGxdLFs0OTYsLTEsbnVsbCxudWxsXSxbNTAzLC0xLG51bGwsbnVsbF0sWzUxMywtMSxudWxsLG51bGxdLFs1MjEsLTEsbnVsbCxudWxsXSxbNTMwLC0xLG51bGwsbnVsbF0sWzUzNywtMSxudWxsLG51bGxdLFs1NDYsLTEsbnVsbCxudWxsXSxbNTU1LC0xLG51bGwsbnVsbF0sWzU2MSwtMSxudWxsLG51bGxdLFs1NzEsLTEsbnVsbCxudWxsXSxbNTgwLC0xLG51bGwsbnVsbF0sWzU4OCwtMSxudWxsLG51bGxdLFs1OTYsLTEsbnVsbCxudWxsXSxbNjA1LC0xLG51bGwsbnVsbF0sWzYxMiwtMSxudWxsLG51bGxdLFs2MjEsLTEsbnVsbCxudWxsXSxbNjMwLC0xLG51bGwsbnVsbF0sWzYzOCwtMSxudWxsLG51bGxdLFs2NDYsLTEsbnVsbCxudWxsXSxbNjU0LC0xLG51bGwsbnVsbF0sWzY2MywtMSxudWxsLG51bGxdLFs2NzEsLTEsbnVsbCxudWxsXSxbNjc5LC0xLG51bGwsbnVsbF0sWzY4NywtMSxudWxsLG51bGxdLFs2OTYsLTEsbnVsbCxudWxsXSxbNzA0LC0xLG51bGwsbnVsbF0sWzcxMiwtMSxudWxsLG51bGxdLFs3MjIsLTEsbnVsbCxudWxsXSxbNzMwLC0xLG51bGwsbnVsbF0sWzczOCwtMSxudWxsLG51bGxdLFs3NDUsLTEsbnVsbCxudWxsXSxbNzU1LC0xLG51bGwsbnVsbF0sWzc2MiwtMSxudWxsLG51bGxdLFs3NzEsLTEsbnVsbCxudWxsXSxbNzgwLC0xLG51bGwsbnVsbF0sWzc4OCwtMSxudWxsLG51bGxdLFs3OTYsLTEsbnVsbCxudWxsXSxbODA1LC0xLG51bGwsbnVsbF0sWzgxMywtMSxudWxsLG51bGxdLFs4MjEsLTEsbnVsbCxudWxsXSxbODI5LC0xLG51bGwsbnVsbF0sWzgzOCwtMSxudWxsLG51bGxdLFs4NDUsLTEsbnVsbCxudWxsXSxbODU1LC0xLG51bGwsbnVsbF0sWzg2MywtMSxudWxsLG51bGxdLFs4NzEsLTEsbnVsbCxudWxsXSxbODgwLC0xLG51bGwsbnVsbF0sWzg4OCwtMSxudWxsLG51bGxdLFs4OTYsLTEsbnVsbCxudWxsXSxbOTA0LC0xLG51bGwsbnVsbF0sWzkxMywtMSxudWxsLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666afc21613c51cf1e58-9eea1ac4251b4fc1abf2",
+          "file": "text.probe.ts",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "text palette · \"se\" then escape: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3924,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"escape\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[4,350,251,1],[13,350,251,1],[21,350,251,0.967],[29,350,251,0.929],[38,350,251,0.888],[46,350,251,0.843],[54,350,251,0.797],[63,350,251,0.75],[71,350,251,0.698],[79,350,251,0.647],[88,350,251,0.594],[95,350,251,0.542],[105,350,251,0.493],[113,350,251,0.435],[121,350,251,0.384],[128,350,251,0.332],[138,350,251,0.289],[146,350,251,0.231],[154,350,251,0.185],[163,350,251,0.138],[171,350,251,0.095],[179,350,251,0.055],[188,350,251,0.021]],\"rows\":[[-5,4,\"se\",\"1\"],[10,4,\"se\",\"1\"],[13,4,\"se\",\"1\"],[20,4,\"se\",\"0.966803\"],[28,4,\"se\",\"0.928819\"],[36,4,\"se\",\"0.887725\"],[45,4,\"se\",\"0.843173\"],[53,4,\"se\",\"0.796755\"],[62,4,\"se\",\"0.749592\"],[70,4,\"se\",\"0.697921\"],[78,4,\"se\",\"0.647477\"],[86,4,\"se\",\"0.594322\"],[94,4,\"se\",\"0.54188\"],[103,4,\"se\",\"0.493016\"],[111,4,\"se\",\"0.435328\"],[120,4,\"se\",\"0.384331\"],[127,4,\"se\",\"0.332106\"],[137,4,\"se\",\"0.289331\"],[145,4,\"se\",\"0.230996\"],[153,4,\"se\",\"0.184535\"],[161,4,\"se\",\"0.138471\"],[170,4,\"se\",\"0.0950562\"],[178,4,\"se\",\"0.055329\"],[187,4,\"se\",\"0.0206551\"],[195,-1,null,null],[203,-1,null,null],[212,-1,null,null],[220,-1,null,null],[228,-1,null,null],[236,-1,null,null],[245,-1,null,null],[253,-1,null,null],[262,-1,null,null],[269,-1,null,null],[278,-1,null,null],[286,-1,null,null],[295,-1,null,null],[303,-1,null,null],[311,-1,null,null],[320,-1,null,null],[327,-1,null,null],[337,-1,null,null],[345,-1,null,null],[353,-1,null,null],[361,-1,null,null],[370,-1,null,null],[378,-1,null,null],[386,-1,null,null],[395,-1,null,null],[402,-1,null,null],[412,-1,null,null],[420,-1,null,null],[427,-1,null,null],[435,-1,null,null],[443,-1,null,null],[453,-1,null,null],[461,-1,null,null],[470,-1,null,null],[477,-1,null,null],[487,-1,null,null],[494,-1,null,null],[503,-1,null,null],[511,-1,null,null],[520,-1,null,null],[528,-1,null,null],[537,-1,null,null],[545,-1,null,null],[553,-1,null,null],[561,-1,null,null],[570,-1,null,null],[578,-1,null,null],[586,-1,null,null],[594,-1,null,null],[603,-1,null,null],[611,-1,null,null],[620,-1,null,null],[627,-1,null,null],[635,-1,null,null],[645,-1,null,null],[653,-1,null,null],[662,-1,null,null],[669,-1,null,null],[678,-1,null,null],[686,-1,null,null],[694,-1,null,null],[703,-1,null,null],[711,-1,null,null],[720,-1,null,null],[728,-1,null,null],[735,-1,null,null],[745,-1,null,null],[753,-1,null,null],[762,-1,null,null],[769,-1,null,null],[778,-1,null,null],[786,-1,null,null],[793,-1,null,null],[801,-1,null,null],[812,-1,null,null],[819,-1,null,null],[828,-1,null,null],[836,-1,null,null],[845,-1,null,null],[853,-1,null,null],[862,-1,null,null],[870,-1,null,null],[878,-1,null,null],[887,-1,null,null],[895,-1,null,null],[902,-1,null,null],[912,-1,null,null],[920,-1,null,null]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:21:11.984Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVzY2FwZSIsImxhYmVscyI6WyJTZWFyY2ggZXZlcnl3aGVyZVxu4oyYSyIsIkFjY291bnQgc2V0dGluZ3NcbuKMmCwiLCJHZW5lcmFsIHNldHRpbmdzIiwiQ2xvc2UgdGFiXG7ijJhXIl0sInJlc3QiOlszNTAsMjUxXSwiZHJpZnQiOjAsInNlZW5EcmlmdCI6MCwiYm94IjpbWzQsMzUwLDI1MSwxXSxbMTMsMzUwLDI1MSwxXSxbMjEsMzUwLDI1MSwwLjk2N10sWzI5LDM1MCwyNTEsMC45MjldLFszOCwzNTAsMjUxLDAuODg4XSxbNDYsMzUwLDI1MSwwLjg0M10sWzU0LDM1MCwyNTEsMC43OTddLFs2MywzNTAsMjUxLDAuNzVdLFs3MSwzNTAsMjUxLDAuNjk4XSxbNzksMzUwLDI1MSwwLjY0N10sWzg4LDM1MCwyNTEsMC41OTRdLFs5NSwzNTAsMjUxLDAuNTQyXSxbMTA1LDM1MCwyNTEsMC40OTNdLFsxMTMsMzUwLDI1MSwwLjQzNV0sWzEyMSwzNTAsMjUxLDAuMzg0XSxbMTI4LDM1MCwyNTEsMC4zMzJdLFsxMzgsMzUwLDI1MSwwLjI4OV0sWzE0NiwzNTAsMjUxLDAuMjMxXSxbMTU0LDM1MCwyNTEsMC4xODVdLFsxNjMsMzUwLDI1MSwwLjEzOF0sWzE3MSwzNTAsMjUxLDAuMDk1XSxbMTc5LDM1MCwyNTEsMC4wNTVdLFsxODgsMzUwLDI1MSwwLjAyMV1dLCJyb3dzIjpbWy01LDQsInNlIiwiMSJdLFsxMCw0LCJzZSIsIjEiXSxbMTMsNCwic2UiLCIxIl0sWzIwLDQsInNlIiwiMC45NjY4MDMiXSxbMjgsNCwic2UiLCIwLjkyODgxOSJdLFszNiw0LCJzZSIsIjAuODg3NzI1Il0sWzQ1LDQsInNlIiwiMC44NDMxNzMiXSxbNTMsNCwic2UiLCIwLjc5Njc1NSJdLFs2Miw0LCJzZSIsIjAuNzQ5NTkyIl0sWzcwLDQsInNlIiwiMC42OTc5MjEiXSxbNzgsNCwic2UiLCIwLjY0NzQ3NyJdLFs4Niw0LCJzZSIsIjAuNTk0MzIyIl0sWzk0LDQsInNlIiwiMC41NDE4OCJdLFsxMDMsNCwic2UiLCIwLjQ5MzAxNiJdLFsxMTEsNCwic2UiLCIwLjQzNTMyOCJdLFsxMjAsNCwic2UiLCIwLjM4NDMzMSJdLFsxMjcsNCwic2UiLCIwLjMzMjEwNiJdLFsxMzcsNCwic2UiLCIwLjI4OTMzMSJdLFsxNDUsNCwic2UiLCIwLjIzMDk5NiJdLFsxNTMsNCwic2UiLCIwLjE4NDUzNSJdLFsxNjEsNCwic2UiLCIwLjEzODQ3MSJdLFsxNzAsNCwic2UiLCIwLjA5NTA1NjIiXSxbMTc4LDQsInNlIiwiMC4wNTUzMjkiXSxbMTg3LDQsInNlIiwiMC4wMjA2NTUxIl0sWzE5NSwtMSxudWxsLG51bGxdLFsyMDMsLTEsbnVsbCxudWxsXSxbMjEyLC0xLG51bGwsbnVsbF0sWzIyMCwtMSxudWxsLG51bGxdLFsyMjgsLTEsbnVsbCxudWxsXSxbMjM2LC0xLG51bGwsbnVsbF0sWzI0NSwtMSxudWxsLG51bGxdLFsyNTMsLTEsbnVsbCxudWxsXSxbMjYyLC0xLG51bGwsbnVsbF0sWzI2OSwtMSxudWxsLG51bGxdLFsyNzgsLTEsbnVsbCxudWxsXSxbMjg2LC0xLG51bGwsbnVsbF0sWzI5NSwtMSxudWxsLG51bGxdLFszMDMsLTEsbnVsbCxudWxsXSxbMzExLC0xLG51bGwsbnVsbF0sWzMyMCwtMSxudWxsLG51bGxdLFszMjcsLTEsbnVsbCxudWxsXSxbMzM3LC0xLG51bGwsbnVsbF0sWzM0NSwtMSxudWxsLG51bGxdLFszNTMsLTEsbnVsbCxudWxsXSxbMzYxLC0xLG51bGwsbnVsbF0sWzM3MCwtMSxudWxsLG51bGxdLFszNzgsLTEsbnVsbCxudWxsXSxbMzg2LC0xLG51bGwsbnVsbF0sWzM5NSwtMSxudWxsLG51bGxdLFs0MDIsLTEsbnVsbCxudWxsXSxbNDEyLC0xLG51bGwsbnVsbF0sWzQyMCwtMSxudWxsLG51bGxdLFs0MjcsLTEsbnVsbCxudWxsXSxbNDM1LC0xLG51bGwsbnVsbF0sWzQ0MywtMSxudWxsLG51bGxdLFs0NTMsLTEsbnVsbCxudWxsXSxbNDYxLC0xLG51bGwsbnVsbF0sWzQ3MCwtMSxudWxsLG51bGxdLFs0NzcsLTEsbnVsbCxudWxsXSxbNDg3LC0xLG51bGwsbnVsbF0sWzQ5NCwtMSxudWxsLG51bGxdLFs1MDMsLTEsbnVsbCxudWxsXSxbNTExLC0xLG51bGwsbnVsbF0sWzUyMCwtMSxudWxsLG51bGxdLFs1MjgsLTEsbnVsbCxudWxsXSxbNTM3LC0xLG51bGwsbnVsbF0sWzU0NSwtMSxudWxsLG51bGxdLFs1NTMsLTEsbnVsbCxudWxsXSxbNTYxLC0xLG51bGwsbnVsbF0sWzU3MCwtMSxudWxsLG51bGxdLFs1NzgsLTEsbnVsbCxudWxsXSxbNTg2LC0xLG51bGwsbnVsbF0sWzU5NCwtMSxudWxsLG51bGxdLFs2MDMsLTEsbnVsbCxudWxsXSxbNjExLC0xLG51bGwsbnVsbF0sWzYyMCwtMSxudWxsLG51bGxdLFs2MjcsLTEsbnVsbCxudWxsXSxbNjM1LC0xLG51bGwsbnVsbF0sWzY0NSwtMSxudWxsLG51bGxdLFs2NTMsLTEsbnVsbCxudWxsXSxbNjYyLC0xLG51bGwsbnVsbF0sWzY2OSwtMSxudWxsLG51bGxdLFs2NzgsLTEsbnVsbCxudWxsXSxbNjg2LC0xLG51bGwsbnVsbF0sWzY5NCwtMSxudWxsLG51bGxdLFs3MDMsLTEsbnVsbCxudWxsXSxbNzExLC0xLG51bGwsbnVsbF0sWzcyMCwtMSxudWxsLG51bGxdLFs3MjgsLTEsbnVsbCxudWxsXSxbNzM1LC0xLG51bGwsbnVsbF0sWzc0NSwtMSxudWxsLG51bGxdLFs3NTMsLTEsbnVsbCxudWxsXSxbNzYyLC0xLG51bGwsbnVsbF0sWzc2OSwtMSxudWxsLG51bGxdLFs3NzgsLTEsbnVsbCxudWxsXSxbNzg2LC0xLG51bGwsbnVsbF0sWzc5MywtMSxudWxsLG51bGxdLFs4MDEsLTEsbnVsbCxudWxsXSxbODEyLC0xLG51bGwsbnVsbF0sWzgxOSwtMSxudWxsLG51bGxdLFs4MjgsLTEsbnVsbCxudWxsXSxbODM2LC0xLG51bGwsbnVsbF0sWzg0NSwtMSxudWxsLG51bGxdLFs4NTMsLTEsbnVsbCxudWxsXSxbODYyLC0xLG51bGwsbnVsbF0sWzg3MCwtMSxudWxsLG51bGxdLFs4NzgsLTEsbnVsbCxudWxsXSxbODg3LC0xLG51bGwsbnVsbF0sWzg5NSwtMSxudWxsLG51bGxdLFs5MDIsLTEsbnVsbCxudWxsXSxbOTEyLC0xLG51bGwsbnVsbF0sWzkyMCwtMSxudWxsLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "666afc21613c51cf1e58-0eec428b7557bdf028a9",
+          "file": "text.probe.ts",
+          "line": 19,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T02:21:01.832Z",
+    "duration": 14151.342999999999,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

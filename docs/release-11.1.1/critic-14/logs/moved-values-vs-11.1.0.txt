@@ -1,0 +1,24 @@
+--bouncy-slider-radius
+   11.1.0: ['var(--radius-bar)']
+   tip   : ['max(var(--radius-bar),calc(var(--control-floor) / 2))']
+--card-fill
+   11.1.0: []
+   tip   : ['oklch( from var(--foreground) l c h / calc(var(--fill-hover) * 2 + var(--fill-selected)) )', 'oklch(from var(--foreground) l c h / calc(var(--fill-hover) * 2))']
+--exit-curve
+   11.1.0: ['var(--ease-out)']
+   tip   : ['cubic-bezier(0.3,0.2,0.7,0.8)']
+--glass-level
+   11.1.0: []
+   tip   : ['0.1', '0.35']
+--glass-reveal-blur
+   11.1.0: ['var(--enter-overlay-blur)', 'var(--enter-tooltip-blur)']
+   tip   : []
+--glass-reveal-enter-scale
+   11.1.0: ['var(--enter-overlay-scale)', 'var(--enter-tooltip-scale)']
+   tip   : []
+--glass-veil-rung
+   11.1.0: []
+   tip   : ['calc(var(--glass-veil-rest) + var(--glass-veil-step))']
+--reveal-exit-clock
+   11.1.0: []
+   tip   : ['var(--spring-bloom-exit-duration)']

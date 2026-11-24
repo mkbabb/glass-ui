@@ -1,0 +1,1966 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "(form|glass|exit|routes|round|weight|lift|sheet) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-14/logs/tip-webkit-desktop-0.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-controls.spec.ts",
+      "file": "release-11-1-1-controls.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "round · a compact SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 25,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 371,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:10.763Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 25,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-cfa8c5610b4ab717700f",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 24,
+          "column": 5
+        },
+        {
+          "title": "round · a wide SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 25,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:11.390Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 25,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-2fe133d8d9c0a7455966",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 24,
+          "column": 5
+        },
+        {
+          "title": "weight · selecting a word-labelled ToggleGroupItem moves no item box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:11.682Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk5LjJdLFsxMTkuMiw2MC4xXSxbMTg3LjMsMTI5LjZdXSwib24iOltbMTIsOTkuMl0sWzExOS4yLDYwLjFdLFsxODcuMywxMjkuNl1dLCJvZmYiOltbMTIsOTkuMl0sWzExOS4yLDYwLjFdLFsxODcuMywxMjkuNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-09bffc769f0c21121f08",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:13.957Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-d62b56a1db93308dc7ae",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 71,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock Select leaves in the form it opened in · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2973,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:15.920Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoyMiwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjozOCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjozOSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo0NCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo2MywieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo4MywieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45MjcyNjIsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6OTMsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuODg3MDMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTA1LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjgzNTE0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjEyMiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43NTYzOTQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTM4LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjY3ODIyLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE1NSwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41OTI0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE3MiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41MDUxNDgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTg4LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQyMjkzMywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoyMDUsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMzM2NzU4LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjIyMiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4yNTMxOTQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjM4LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjE3ODM1NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoyNTQsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMTA4ODEzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjI3MCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wNDY1MywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-77901dd3d0923caca803",
+          "file": "release-11-1-1.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:18.899Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNiwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MCwib3AiOjAuOTMxMTEyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzUsIm9wIjowLjg3MDEzMywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjkwLCJvcCI6MC44MDMzNjUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDgsIm9wIjowLjcxNzcwNiwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNSwib3AiOjAuNjMzMDQ5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQxLCJvcCI6MC41NDYyOTksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjAsIm9wIjowLjQ1MzcwMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3NSwib3AiOjAuMzc3MDc1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTkxLCJvcCI6MC4yOTIwOTgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTAsIm9wIjowLjIwNTg5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjI4LCJvcCI6MC4xMjU2MDMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNDMsIm9wIjowLjA2NTA3Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2872bce6c472ca7b44bf",
+          "file": "release-11-1-1.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:21.661Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTEsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjUsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuOTQ5ODM1LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjQxLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjg4NzAzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjYwLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjgwMzM2NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo3NiwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43Mjc0NTksImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6OTMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNjM4MTAxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjEwOCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41NjY4MjUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTI2LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQ3NDI2NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxNDMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMzg3MjI3LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE1OSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4zMDE5NDgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTc2LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjIyNDYxNSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxOTMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMTQ3MTc0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjIwOCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wODA1MzYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjI2LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjAxODg4NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-896b13450ad9b4410a41",
+          "file": "release-11-1-1.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2707,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:24.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTAsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjUsIm9wIjowLjk0NjE2Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQxLCJvcCI6MC44ODI4NDYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MCwib3AiOjAuNzk4NzQ2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzYsIm9wIjowLjcyMjU4OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk1LCJvcCI6MC42MzMwNDksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTAsIm9wIjowLjU1NjU2OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNiwib3AiOjAuNDY5MTIyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQ1LCJvcCI6MC4zNzIwMDksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjAsIm9wIjowLjI5NzAxNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3Niwib3AiOjAuMjE5OTA4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTk1LCJvcCI6MC4xMzQxNTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTAsIm9wIjowLjA3MjczOCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyOCwib3AiOjAuMDEyNDAyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3dd9f1c36c99fba9add9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2680,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:27.185Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTksIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuOTc3ODA2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjM4LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjkwNzUyNiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo1MywieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC44NDQwMjgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6NjksIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNzcwNjYxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjg2LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjY4ODE1NywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxMDMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNjAyNTk4LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjExOSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41MjA1ODksImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTM2LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQzMzE3NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxNTIsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMzUxODE4LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE2OSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4yNjI4NCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxODYsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMTg3NDU2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjIwMSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4xMjEzNjUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjIwLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjA0NjUzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a9fc9dd042c4314cfeef",
+          "file": "release-11-1-1.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:29.871Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyOCwib3AiOjAuOTMxMTEyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDQsIm9wIjowLjg2NTg0Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYwLCJvcCI6MC43OTQxMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc4LCJvcCI6MC43MDc5MDIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5NCwib3AiOjAuNjI3OTksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTAsIm9wIjowLjU0NjI5OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNywib3AiOjAuNDU4ODM5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQ0LCJvcCI6MC4zNzIwMDksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjAsIm9wIjowLjI5MjA5OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3Nywib3AiOjAuMjEwNTQ1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTk0LCJvcCI6MC4xMzQxNTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTAsIm9wIjowLjA2ODg4OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c9219c0acd19ef1f2948",
+          "file": "release-11-1-1.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2680,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:32.547Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTEsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjAsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuOTY3NjIyLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjM3LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjkwMzQ4NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo1NCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC44MzA2NjMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6NzEsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNzUxNjA3LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjg3LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjY3MzIzNywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxMDQsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNTg3Mjk0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjEyMCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjEzNywieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC40MTc4MTcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTU0LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjMzMTc1NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxNzAsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMjQ4MzkzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE4NywieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4xNzM4MzYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjAyLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjEwODgxMywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoyMjAsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMDM5Mzc0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a8d89e9169a9faf8691",
+          "file": "release-11-1-1.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:35.232Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNywib3AiOjAuOTM0OTI3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDMsIm9wIjowLjg3MDEzMywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYwLCJvcCI6MC43OTg3NDYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3Niwib3AiOjAuNzE3NzA2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTMsIm9wIjowLjYzMzA0OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExMCwib3AiOjAuNTQ2Mjk5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTI1LCJvcCI6MC40NjkxMjIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDMsIm9wIjowLjM3MjAwOSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1OSwib3AiOjAuMjk3MDE3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTc3LCJvcCI6MC4yMTA1NDUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTIsIm9wIjowLjE0MjgxMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwOSwib3AiOjAuMDcyNzM4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9eb32b9ffbf4377d3f10",
+          "file": "release-11-1-1.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:37.896Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTEsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjgsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MzMsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6NDQsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6NjIsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuOTM0OTI3LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjc3LCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjg3NDM5NywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0Ijo5NiwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43ODk0NTUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTExLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjcxNzcwNiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxMjgsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuNjMzMDQ5LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE0NCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41NTE0MzUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MTYwLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQ2OTEyMiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoxNzgsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMzc3MDc1LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjE5NCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4yOTcwMTcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9LHsidCI6MjExLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsIm9wIjowLjIxNTIxOCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIn0seyJ0IjoyMjgsIngiOjY4MCwieSI6NjYsInciOjEyOCwib3AiOjAuMTQyODExLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikifSx7InQiOjI0NCwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wNzI3MzgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-49209227c1f6bcb5ef9d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no chosen item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 112,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 212,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:40.555Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no chosen item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 112,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6d9c222ee00608583b44",
+          "file": "release-11-1-1.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 216,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:40.773Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1502d5c3b9baa3013d81",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:40.997Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-19d29a20117b19891200",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 252,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 234,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:41.227Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 252,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2482cce29c443c252c57",
+          "file": "release-11-1-1.spec.ts",
+          "line": 250,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:41.468Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8f5df25c86c055963121",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:41.706Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6468b21f277e2976ea0f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 252,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:41.941Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 252,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-438ae2267f03e703cdc5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 250,
+          "column": 5
+        },
+        {
+          "title": "exit · Select leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3631,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:42.187Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDMwLCJleGl0IjoyNDksInBhaW50ZWQiOjE0LCJzZWVuU2hhcmUiOjAuMDg2LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDM5LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDY4MF0sWzE1LDEsNjgwXSxbMzIsMC45MzksNjgwXSxbNDgsMC44NzQsNjgwXSxbNjYsMC43OTQsNjgwXSxbODIsMC43MTgsNjgwXSxbOTgsMC42MzgsNjgwXSxbMTE1LDAuNTUxLDY4MF0sWzEzMiwwLjQ2NCw2ODBdLFsxNDcsMC4zODcsNjgwXSxbMTY0LDAuMzAyLDY4MF0sWzE4MCwwLjIyNSw2ODBdLFsxOTksMC4xMzgsNjgwXSxbMjE1LDAuMDczLDY4MF0sWzIzMSwwLjAxNiw2ODBdLFsyNDksMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-646e00d6da01abb80a70",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · DropdownMenu leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3579,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:45.823Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDE2LCJleGl0IjoyNDksInBhaW50ZWQiOjE0LCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDcyM10sWzE3LDEsNzIzXSxbMzEsMC45NSw3MjNdLFs1MCwwLjg3NCw3MjNdLFs2NiwwLjgwMyw3MjNdLFs4MSwwLjczMiw3MjNdLFs5OCwwLjY0OCw3MjNdLFsxMTcsMC41NTEsNzIzXSxbMTMzLDAuNDY5LDcyM10sWzE1MCwwLjM4Nyw3MjNdLFsxNjYsMC4zMDIsNzIzXSxbMTgzLDAuMjIsNzIzXSxbMjAwLDAuMTQ3LDcyM10sWzIxNSwwLjA4NCw3MjNdLFsyMzMsMC4wMTYsNzIzXSxbMjQ5LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-be6d6f131b93ac2e736e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · Popover leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3587,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:49.408Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NTAzLCJleGl0IjoyNjUsInBhaW50ZWQiOjE1LCJzZWVuU2hhcmUiOjAuMDgyLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDA4LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDEzNl0sWzE0LDEsMTM2XSxbMzEsMC45NDksMTM2XSxbNTAsMC44ODMsMTM1XSxbNjQsMC44MjUsMTM1XSxbODMsMC43NSwxMzRdLFs5OSwwLjY4MSwxMzNdLFsxMTUsMC42MDUsMTMzXSxbMTMyLDAuNTI3LDEzMl0sWzE0OSwwLjQ1NCwxMzJdLFsxNjUsMC4zNzMsMTMxXSxbMTgyLDAuMzAyLDEzMF0sWzE5OSwwLjIzMywxMzBdLFsyMTUsMC4xNjMsMTI5XSxbMjMyLDAuMDk5LDEyOV0sWzI0OSwwLjA0NCwxMjhdLFsyNjUsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1dd15ee0b69472071565",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3506,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:53.001Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjM0LCJleGl0IjoxNDksInBhaW50ZWQiOjgsInNlZW5TaGFyZSI6MC4xNiwiY3VydmUiOiJjdWJpYy1iZXppZXIoMC4zLCAwLjIsIDAuNywgMC44KSIsInN0cmF5IjowLjA2OSwidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw0MDFdLFsxNiwxLDQwMV0sWzMzLDAuODg1LDQwMV0sWzQ5LDAuNzUxLDQwMV0sWzY0LDAuNjA0LDQwMV0sWzgzLDAuNDI0LDQwMV0sWzk4LDAuMjk0LDQwMV0sWzExNiwwLjEzMSw0MDFdLFsxMzMsMC4wMTcsNDAxXSxbMTQ5LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d9d263a538f4a0f8b919",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · Dialog leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:24:56.513Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjcwLCJleGl0IjoyMTUsInBhaW50ZWQiOjEyLCJzZWVuU2hhcmUiOjAuMTA1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDE0LCJ0cmF2ZWwiOjEyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw0NjRdLFsxNCwxLDQ2NF0sWzMxLDEsNDY0XSxbNDgsMC45MjksNDY1XSxbNjYsMC44NDQsNDY2XSxbODEsMC43NDgsNDY3XSxbOTcsMC42NTcsNDY4XSxbMTE0LDAuNTU3LDQ3MF0sWzEzMiwwLjQ1MSw0NzFdLFsxNDgsMC4zNDcsNDcyXSxbMTY3LDAuMjUsNDc0XSxbMTgxLDAuMTU1LDQ3NV0sWzE5OCwwLjA4Miw0NzZdLFsyMTUsMC4wMDksNDc3XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0cddf32f9b71e381d414",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3452,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:00.000Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjY1LCJleGl0IjoyOTcsInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMDc2LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDI2LCJ0cmF2ZWwiOjM3NiwidHJhdmVsU2hhcmUiOjAuMDc4LCJmcmFtZXMiOltbMCwxLDEwNTZdLFsxNSwxLDEwNTZdLFszMiwxLDEwNTZdLFs0OCwwLjk1MSwxMDc1XSxbNjUsMC44OTUsMTA5Nl0sWzgyLDAuODMyLDExMjFdLFs5OCwwLjc2MywxMTQ3XSxbMTEzLDAuNjk0LDExNzNdLFsxMzIsMC42MjcsMTE5OV0sWzE0OCwwLjU1MiwxMjI4XSxbMTY1LDAuNDc5LDEyNTZdLFsxODEsMC40MDMsMTI4NV0sWzE5OCwwLjMzMSwxMzEzXSxbMjEzLDAuMjU4LDEzNDFdLFsyMzIsMC4xOTUsMTM2NV0sWzI0NywwLjEzLDEzOTBdLFsyNjUsMC4wNzUsMTQxMV0sWzI4MCwwLjAyMiwxNDMyXSxbMjk3LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-44b17b3510ea52a3285b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet bottom leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3437,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:03.457Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDk0LCJleGl0IjoyOTksInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMDc2LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDI5LCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDc3LCJmcmFtZXMiOltbMCwxLDc4M10sWzE2LDEsNzgzXSxbMzIsMSw3ODNdLFs0OSwwLjk1Myw3ODhdLFs2NiwwLjg5Niw3OTVdLFs4MiwwLjgzMiw4MDJdLFs5OSwwLjc2Nyw4MTBdLFsxMTYsMC42OTUsODE4XSxbMTMzLDAuNjIxLDgyN10sWzE0OCwwLjU0Niw4MzZdLFsxNjYsMC40NzcsODQ0XSxbMTgyLDAuNDAyLDg1M10sWzIwMCwwLjMzLDg2MV0sWzIxNiwwLjI1OCw4NzBdLFsyMzIsMC4xOTEsODc4XSxbMjUwLDAuMTI5LDg4NV0sWzI2NSwwLjA2OSw4OTJdLFsyODMsMC4wMjIsODk3XSxbMjk5LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2cbf49635b444e4c5553",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        },
+        {
+          "title": "exit · a Popover enters and leaves on opacity and its slide alone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2784,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:06.900Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6W3sidCI6MTAyLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjExMSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMTYsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTI3LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE0Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNjUsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTc5LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE5Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjI5LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI0Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNjMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjkwLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjMwMiwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozMTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzI5LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjM0Nywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozNjIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6Mzc4LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjM5Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0MTQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDMwLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjQ0Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0NjEsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDc4LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjQ5Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo1MTMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9XSwiZXhpdCI6W3sidCI6Nywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozOSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo1Miwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo2OCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo4Niwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMDIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTE4LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjEzNywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNTMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTY5LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE4Nywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMDQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjIzLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIzNSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8fb5e875164170749995",
+          "file": "release-11-1-1.spec.ts",
+          "line": 448,
+          "column": 5
+        },
+        {
+          "title": "exit · a Tooltip leaves on opacity and its slide alone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:09.690Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6bnVsbCwiZXhpdCI6W3sidCI6Mywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxOCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozMiwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo1MSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo2Nywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo4Miwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMDAsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTE3LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6133a8cb1e9946243bfe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 448,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet leaves whole by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3962,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:11.964Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOi0yLjI3MzczNjc1NDQzMjMyMDZlLTEzLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo0NTAsInciOjE0NDAsImgiOjQ1MCwibHciOjE0NDAsImxoIjo0NTAsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yKSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0sImFmdGVyIjpbeyJ0IjoyOS45OTk5OTk5OTk5OTk3NzMsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ1MCwidyI6MTQ0MCwiaCI6NDUwLCJsdyI6MTQ0MCwibGgiOjQ1MCwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMikiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NTIuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ2Mi4wNjI2MjIwNzAzMTI1LCJ3IjoxNDQwLCJoIjo0MzcuOTM3NSwibHciOjE0NDAsImxoIjo0MzgsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTk5MDUpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NzQuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjUwNS42NzIxNDk2NTgyMDMxLCJ3IjoxNDQwLCJoIjozOTQuMzI4MDk0NDgyNDIxOSwibHciOjE0NDAsImxoIjozOTQsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTk1MTQpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6OTMuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjU2MC45NjkxMTYyMTA5Mzc1LCJ3IjoxNDQwLCJoIjozMzkuMDMxMjUsImx3IjoxNDQwLCJsaCI6MzM5LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk4OTM5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjEwNC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NjExLjE4NzkyNzI0NjA5MzgsInciOjE0NDAsImgiOjI4OC44MTI1LCJsdyI6MTQ0MCwibGgiOjI4OSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5ODYzNCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxMjguOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjYzOS41NDcxMTkxNDA2MjUsInciOjE0NDAsImgiOjI2MC40NTMxMjUsImx3IjoxNDQwLCJsaCI6MjYwLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk3Mjk5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjE0NS45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6Njk2Ljg1MjkwNTI3MzQzNzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk2NDE0KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjE2MC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NzMyLjU2MzExMDM1MTU2MjUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk1NjQpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTc4Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo3NjAuMzU4NzAzNjEzMjgxMiwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTQ1MjYpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTk3Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo3ODkuMTM2MjMwNDY4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkzMjg1KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjIxMi45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODE0LjM5OTE2OTkyMTg3NSwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTI0NjcpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjMwLjk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4MzAuOTY1NTE1MTM2NzE4OCwidyI6MTQ0MCwiaCI6MjA2Ljg5MDY4NjAzNTE1NjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5MTM1NykiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoyNDguOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg0Ny4zNjUyOTU0MTAxNTYyLCJ3IjoxNDQwLCJoIjoyMDYuODkwNTYzOTY0ODQzNzUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkwMjkyKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjI2NC45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NjAuNDcxOTg0ODYzMjgxMiwidyI6MTQ0MCwiaCI6MjA2Ljg5MDU2Mzk2NDg0Mzc1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4OTQ2NykiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoyODEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODY5Ljc3NTI2ODU1NDY4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg4NTk4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjMwMC45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NzcuNjM0MDk0MjM4MjgxMiwidyI6MTQ0MCwiaCI6MjA2Ljg5MDU2Mzk2NDg0Mzc1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4NzYxNSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODg0LjM4MjMyNDIxODc1LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4NzI2OSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMjkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODg3LjQ3NzQxNjk5MjE4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg2NDc2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM0NS45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4OTEuNDkzMTY0MDYyNSwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODU4ODcpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MzY0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg5NC4xNjc5Njg3NSwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODUxNTkpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6Mzc5Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg5Ni40OTA5MDU3NjE3MTg4LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjg2MDM1MTU2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg0NzI4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM5Ny45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4OTcuODEyOTg4MjgxMjUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg0MTgxKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQxMi45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4OTguOTQ2MTA1OTU3MDMxMiwidyI6MTQ0MCwiaCI6MjA2Ljg5MDU2Mzk2NDg0Mzc1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4MzgyNCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0MjkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODk5LjU5OTQ4NzMwNDY4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgzNDE3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ0NS45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo5MDAsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgzMDg3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ2My45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo5MDAsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgyMzI0KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ3OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo5MDAsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgxNjYyKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ5Ni45OTk5OTk5OTk5OTk4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo5MDAsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgwOTk5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjUxNC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MzIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQ0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjU2Mi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NzcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTk1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjYxNC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MjcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQ1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjY2NC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NzkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njk1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjcxMy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MjkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzQ1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjc2MC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NzkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Nzk0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjgxMi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MjkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQ0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjg2MS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODk2Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjkxMS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MjcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTQ0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjk2Mi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NzcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTkzLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAyNy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDQ1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNjEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA3Ny45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDk1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjExMTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEyOS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTQ3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjExNjEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE4MC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTk1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEyMTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTIyNy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjQ0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEyNjIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI3OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjk4Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEzMTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTMyOS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzQ3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEzNjIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM3OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzk3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjE0MTMuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQyOC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDQ1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjE0NjQuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ3OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDk0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjE1MTAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTUyOC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTQ3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjE1NjIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU3Ny45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTk1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjE2MTAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTYyNy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX1dLCJnb25lSWR4IjoyMCwicGFpbnRlZCI6MjAsInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuMTI1LCJmcmFtZXMiOltbMCwxLDQ1MF0sWzIyLDEsNDUwXSxbNDUsMC45NzMsNDM4XSxbNjcsMC44NzYsMzk0XSxbODYsMC43NTMsMzM5XSxbOTcsMC42NDIsMjg5XSxbMTIxLDAuNTc5LDI2MF0sWzEzOCwwLjQ1MSwyMDddLFsxNTMsMC4zNzIsMjA3XSxbMTcxLDAuMzEsMjA3XSxbMTkwLDAuMjQ2LDIwN10sWzIwNSwwLjE5LDIwN10sWzIyMywwLjE1MywyMDddLFsyNDEsMC4xMTcsMjA3XSxbMjU3LDAuMDg4LDIwN10sWzI3NCwwLjA2NywyMDddLFsyOTMsMC4wNSwyMDddLFszMDQsMC4wMzUsMjA3XSxbMzIyLDAuMDI4LDIwN10sWzMzOCwwLjAxOSwyMDddLFszNTcsMC4wMTMsMjA3XSxbMzcyLDAuMDA4LDIwN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-17526dab739777ad9ff4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 506,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet leaves whole by outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3921,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:15.932Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjAsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ1MCwidyI6MTQ0MCwiaCI6NDUwLCJsdyI6MTQ0MCwibGgiOjQ1MCwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSwiYWZ0ZXIiOlt7InQiOjcsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ1MCwidyI6MTQ0MCwiaCI6NDUwLCJsdyI6MTQ0MCwibGgiOjQ1MCwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMikiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ2Mi4wNjI2MjIwNzAzMTI1LCJ3IjoxNDQwLCJoIjo0MzcuOTM3NSwibHciOjE0NDAsImxoIjo0MzgsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTk5NDMpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDEsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ5Mi4yODEyNSwidyI6MTQ0MCwiaCI6NDA3LjcxODc1LCJsdyI6MTQ0MCwibGgiOjQwOCwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5OTc0OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo1NiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NTMyLjQ1MzQzMDE3NTc4MTIsInciOjE0NDAsImgiOjM2Ny41NDY4NzUsImx3IjoxNDQwLCJsaCI6MzY4LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk5NDUzKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjc0LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo1NzEuNTQ2OTk3MDcwMzEyNSwidyI6MTQ0MCwiaCI6MzI4LjQ1MzEyNSwibHciOjE0NDAsImxoIjozMjgsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTg4OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo5MSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NjE5LjAxNTc0NzA3MDMxMjUsInciOjE0NDAsImgiOjI4MC45ODQzNzUsImx3IjoxNDQwLCJsaCI6MjgxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk4MTk2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjEwNywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NjYxLjg3NTQyNzI0NjA5MzgsInciOjE0NDAsImgiOjIzOC4xMjUsImx3IjoxNDQwLCJsaCI6MjM4LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk3NDYpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTI1LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo2OTkuMDczMTgxMTUyMzQzOCwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTY0NTMpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTQwLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo3MzYuNDcyNzE3Mjg1MTU2MiwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTU2NjEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTU4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo3NjMuODAwMjkyOTY4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk0NTI2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjE3NCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NzkyLjAzNjAxMDc0MjE4NzUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkzNTg2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjE5MCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODEzLjE5MzE3NjI2OTUzMTIsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkyNjQ2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjIwNywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODMwLjk2NTUxNTEzNjcxODgsInciOjE0NDAsImgiOjIwNi44OTA2ODYwMzUxNTYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTE2MjEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjI0LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NDYuNTQ1NDEwMTU2MjUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkwNjMxKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjIzOSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODU5LjE2MTYyMTA5Mzc1LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4OTg3MSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoyNTgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg2OC4xODIzMTIwMTE3MTg4LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjg2MDM1MTU2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg4Nzc3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjI3NCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODc3LjIyMjc3ODMyMDMxMjUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg4MDI3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjI5MSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODgzLjExODcxMzM3ODkwNjIsInciOjE0NDAsImgiOjIwNi44OTA1NjM5NjQ4NDM3NSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODcyNDgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MzA3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4ODcuOTg0MTMwODU5Mzc1LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4NjU5OSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMjQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg5MS40OTMxNjQwNjI1LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4NTkzNCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozNDIsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg5NC4zMTEwOTYxOTE0MDYyLCJ3IjoxNDQwLCJoIjoyMDYuODkwNTYzOTY0ODQzNzUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg1MjYzKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM1NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODk2LjQ5MDkwNTc2MTcxODgsInciOjE0NDAsImgiOjIwNi44OTA2ODYwMzUxNTYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODQ4MjIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6Mzc1LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4OTcuODEyOTg4MjgxMjUsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg0MjY0KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM5MSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODk4Ljk0NjEwNTk1NzAzMTIsInciOjE0NDAsImgiOjIwNi44OTA1NjM5NjQ4NDM3NSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODM4NTcpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDA3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4OTkuNjM1NDk4MDQ2ODc1LCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4MzQ4NSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0MjQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjkwMCwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODMxMTIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDQwLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo5MDAsInciOjE0NDAsImgiOjIwNi44OTA2MjUsImx3IjoxNDQwLCJsaCI6MjA3LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgyNDE3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ1NiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6OTAwLCJ3IjoxNDQwLCJoIjoyMDYuODkwNjI1LCJsdyI6MTQ0MCwibGgiOjIwNywib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4MTY5NSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0NzQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjkwMCwidyI6MTQ0MCwiaCI6MjA2Ljg5MDYyNSwibHciOjE0NDAsImxoIjoyMDcsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODEwMTkpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDkwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjUyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjU3NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTkwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjYyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NTcsInByZXNlbnQiOmZhbHNlfSx7InQiOjY3NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjcyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjc3MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzkwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjgyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTcsInByZXNlbnQiOmZhbHNlfSx7InQiOjg3MywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODkwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MDYsInByZXNlbnQiOmZhbHNlfSx7InQiOjkyNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTQxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjk3NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTkwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDA3LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDIzLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDQwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDU4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDczLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDkwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTA2LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTI0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTQwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTU2LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTc0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMTkwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjA4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjIzLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjM5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjU4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjc1LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMjkxLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzA4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzI0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzM5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzU3LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzczLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMzkwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDA4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDI0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDQwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDU4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDczLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNDkxLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTA4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTI1LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTQwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTU3LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTczLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNTkxLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxNjA2LCJwcmVzZW50IjpmYWxzZX1dLCJnb25lSWR4IjoyMSwicGFpbnRlZCI6MjEsInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuMTAzLCJmcmFtZXMiOltbMCwxLDQ1MF0sWzUsMSw0NTBdLFsyMiwwLjk3Myw0MzhdLFszOSwwLjkwNiw0MDhdLFs1NCwwLjgxNywzNjhdLFs3MiwwLjczLDMyOF0sWzg5LDAuNjI0LDI4MV0sWzEwNSwwLjUyOSwyMzhdLFsxMjMsMC40NDcsMjA3XSxbMTM4LDAuMzYzLDIwN10sWzE1NiwwLjMwMywyMDddLFsxNzIsMC4yNCwyMDddLFsxODgsMC4xOTMsMjA3XSxbMjA1LDAuMTUzLDIwN10sWzIyMiwwLjExOSwyMDddLFsyMzcsMC4wOTEsMjA3XSxbMjU2LDAuMDcxLDIwN10sWzI3MiwwLjA1MSwyMDddLFsyODksMC4wMzgsMjA3XSxbMzA1LDAuMDI3LDIwN10sWzMyMiwwLjAxOSwyMDddLFszNDAsMC4wMTMsMjA3XSxbMzU1LDAuMDA4LDIwN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-75887edae6863767f6e0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 506,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet dragged off leaves from where the drag left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4056,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:19.858Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJsZWZ0IjowLjIsImhpZ2hlc3QiOjAuMiwicmlzZSI6MCwibGFzdFNlZW4iOjAuMDEzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYyLDAuMzMzXSxbLTQ2LDAuMzMzXSxbLTI4LDAuMjY3XSxbLTEyLDAuMl0sWzgsMC4yXSxbMjMsMC4xNTJdLFszOCwwLjExOF0sWzU2LDAuMDldLFs3MywwLjA2NF0sWzg5LDAuMDQ1XSxbMTA2LDAuMDMxXSxbMTIzLDAuMDIxXSxbMTM5LDAuMDEzXSxbMTU3LDAuMDA3XSxbMTcyLDAuMDAzXSxbMTg4LDAuMDAxXSxbMjA2LDBdLFsyMjIsMF0sWzI0MCwwXSxbMjU1LDBdLFsyNzIsMF0sWzI5MCwwXSxbMzA2LDBdLFszMjEsMF0sWzMzOSwwXSxbMzU1LDBdLFszNzMsMF0sWzM4OCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-906a51f51bdfbbdd61cb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 532,
+          "column": 1
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3905,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:23.919Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjcsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LCJhZnRlciI6W3sidCI6MjQsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NDIsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NDMsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NTAsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NTgsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NzMsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo5MSwicHJlc2VudCI6dHJ1ZSwieCI6NDY0LCJ5IjoyMzIuNSwidyI6NTEyLCJoIjo0MzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjEwNiwicHJlc2VudCI6dHJ1ZSwieCI6NDY0LjkwOTA4ODEzNDc2NTYsInkiOjIzMy4yNzIzNjkzODQ3NjU2MiwidyI6NTEwLjE4MTc5MzIxMjg5MDYsImgiOjQzMy40NTUyMzA3MTI4OTA2LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC45Mjg5NzcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5NjQ0OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjkyODk3N30seyJ0IjoxMjMsInByZXNlbnQiOnRydWUsIngiOjQ2NS44ODY5MzIzNzMwNDY5LCJ5IjoyMzQuMTAzMTY0NjcyODUxNTYsInciOjUwOC4yMjYxMDQ3MzYzMjgxLCJoIjo0MzEuNzkzNzAxMTcxODc1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC44NTI1ODMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5MjYyOSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjg1MjU4M30seyJ0IjoxNDIsInByZXNlbnQiOnRydWUsIngiOjQ2Ny4wOTQzOTA4NjkxNDA2LCJ5IjoyMzUuMTI5MDI4MzIwMzEyNSwidyI6NTA1LjgxMTI0ODc3OTI5NjksImgiOjQyOS43NDE5NDMzNTkzNzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjc1ODI1MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTg3OTEzIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNzU4MjUxfSx7InQiOjE1NiwicHJlc2VudCI6dHJ1ZSwieCI6NDY4LjM4NTM0NTQ1ODk4NDQsInkiOjIzNi4yMjU4MzAwNzgxMjUsInciOjUwMy4yMjkyNzg1NjQ0NTMxLCJoIjo0MjcuNTQ4MzM5ODQzNzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjY1NzM5NCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTgyODciLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC42NTczOTR9LHsidCI6MTc0LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjkuNTA3NDc2ODA2NjQwNiwieSI6MjM3LjE3OTE5OTIxODc1LCJ3Ijo1MDAuOTg1MDc2OTA0Mjk2OSwiaCI6NDI1LjY0MTYwMTU2MjUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjU2OTcyOCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTc4NDg2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNTY5NzI4fSx7InQiOjE5MCwicHJlc2VudCI6dHJ1ZSwieCI6NDcwLjg2MDMyMTA0NDkyMTksInkiOjIzOC4zMjg1OTgwMjI0NjA5NCwidyI6NDk4LjI3OTMyNzM5MjU3ODEsImgiOjQyMy4zNDI3NzM0Mzc1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC40NjQwMzcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3MzIwMiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjQ2NDAzN30seyJ0IjoyMDgsInByZXNlbnQiOnRydWUsIngiOjQ3Mi4xNDk3NDk3NTU4NTk0LCJ5IjoyMzkuNDI0MTAyNzgzMjAzMTIsInciOjQ5NS43MDA1MzEwMDU4NTk0LCJoIjo0MjEuMTUxODI0OTUxMTcxOSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuMzYzMzAxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjgxNjUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4zNjMzMDF9LHsidCI6MjIzLCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NzMuNDUyODUwMzQxNzk2OSwieSI6MjQwLjUzMTIxOTQ4MjQyMTg4LCJ3Ijo0OTMuMDk0MzI5ODMzOTg0NCwiaCI6NDE4LjkzNzU5MTU1MjczNDQsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjI2MTQ5Nywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTYzMDc1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMjYxNDk3fSx7InQiOjI0MSwicHJlc2VudCI6dHJ1ZSwieCI6NDc0LjU2MjA3Mjc1MzkwNjI1LCJ5IjoyNDEuNDczNjMyODEyNSwidyI6NDkwLjg3NTg1NDQ5MjE4NzUsImgiOjQxNy4wNTI3MzQzNzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjE3NDgzOCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU4NzQyIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMTc0ODM4fSx7InQiOjI1OCwicHJlc2VudCI6dHJ1ZSwieCI6NDc1LjY4NDY5MjM4MjgxMjUsInkiOjI0Mi40Mjc0MjkxOTkyMTg3NSwidyI6NDg4LjYzMDYxNTIzNDM3NSwiaCI6NDE1LjE0NTE0MTYwMTU2MjUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjA4NzEzMywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU0MzU3IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMDg3MTMzfSx7InQiOjI3NCwicHJlc2VudCI6dHJ1ZSwieCI6NDc2LjYzNjY4ODIzMjQyMTksInkiOjI0My4yMzYyNjcwODk4NDM3NSwidyI6NDg2LjcyNjU5MzAxNzU3ODEsImgiOjQxMy41Mjc0NjU4MjAzMTI1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4wMTI3NTgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDYzOCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjAxMjc1OH0seyJ0IjoyOTYsInByZXNlbnQiOmZhbHNlfSx7InQiOjMwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzIzLCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMzksInByZXNlbnQiOmZhbHNlfSx7InQiOjM1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mzc0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozOTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjQwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NDEsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDczLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0OTAsInByZXNlbnQiOmZhbHNlfSx7InQiOjUwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTI1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NDAsInByZXNlbnQiOmZhbHNlfSx7InQiOjU1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTc3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1ODksInByZXNlbnQiOmZhbHNlfSx7InQiOjYwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NDEsInByZXNlbnQiOmZhbHNlfSx7InQiOjY1OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njc1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2OTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjcwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NDEsInByZXNlbnQiOmZhbHNlfSx7InQiOjc1NywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzczLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3OTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjgwNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MzksInByZXNlbnQiOmZhbHNlfSx7InQiOjg1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODczLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODksInByZXNlbnQiOmZhbHNlfSx7InQiOjkwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NDEsInByZXNlbnQiOmZhbHNlfSx7InQiOjk1NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTczLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5OTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMDcsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMjQsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNDMsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNTcsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwNzMsInByZXNlbnQiOmZhbHNlfV0sImdvbmVJZHgiOjE4LCJwYWludGVkIjoxOCwicmVvcGVuZWQiOmZhbHNlLCJzaGFyZSI6MC4xMDYsImZyYW1lcyI6W1swLDEsNDM1XSxbMTQsMSw0MzVdLFszMiwxLDQzNV0sWzMzLDEsNDM1XSxbNDAsMSw0MzVdLFs0OCwxLDQzNV0sWzYzLDEsNDM1XSxbODEsMSw0MzVdLFs5NiwwLjkyMiw0MzNdLFsxMTMsMC44NCw0MzJdLFsxMzIsMC43NCw0MzBdLFsxNDYsMC42MzUsNDI4XSxbMTY0LDAuNTQ1LDQyNl0sWzE4MCwwLjQzOSw0MjNdLFsxOTgsMC4zNDEsNDIxXSxbMjEzLDAuMjQzLDQxOV0sWzIzMSwwLjE2MSw0MTddLFsyNDgsMC4wNzksNDE1XSxbMjY0LDAuMDEyLDQxNF0sWzI4NiwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-835555e49ecf0e8615ac",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:27.830Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjE0LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjQsInkiOjIzMi41LCJ3Ijo1MTIsImgiOjQzNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSwiYWZ0ZXIiOlt7InQiOjMyLCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjQsInkiOjIzMi41LCJ3Ijo1MTIsImgiOjQzNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NTAsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo2NywicHJlc2VudCI6dHJ1ZSwieCI6NDY0LjkwOTA4ODEzNDc2NTYsInkiOjIzMy4yNzIzNjkzODQ3NjU2MiwidyI6NTEwLjE4MTc5MzIxMjg5MDYsImgiOjQzMy40NTUyMzA3MTI4OTA2LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC45Mjg5NzcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5NjQ0OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjkyODk3N30seyJ0Ijo4MSwicHJlc2VudCI6dHJ1ZSwieCI6NDY2LjAwMjcxNjA2NDQ1MzEsInkiOjIzNC4yMDE1MzgwODU5Mzc1LCJ3Ijo1MDcuOTk0NTM3MzUzNTE1NiwiaCI6NDMxLjU5NjkyMzgyODEyNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuODQzNTM3LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45OTIxNzciLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC44NDM1Mzd9LHsidCI6OTksInByZXNlbnQiOnRydWUsIngiOjQ2Ny4wMTkxOTU1NTY2NDA2LCJ5IjoyMzUuMDY1MTI0NTExNzE4NzUsInciOjUwNS45NjE2Mzk0MDQyOTY5LCJoIjo0MjkuODY5NzUwOTc2NTYyNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuNzY0MTI2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45ODgyMDYiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC43NjQxMjZ9LHsidCI6MTE2LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjguMzA2MjQzODk2NDg0NCwieSI6MjM2LjE1ODYxNTExMjMwNDcsInciOjUwMy4zODc1NDI3MjQ2MDk0LCJoIjo0MjcuNjgyNzM5MjU3ODEyNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuNjYzNTc1LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45ODMxNzkiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC42NjM1NzV9LHsidCI6MTMxLCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjkuNjQyMzY0NTAxOTUzMSwieSI6MjM3LjI5MzgwNzk4MzM5ODQ0LCJ3Ijo1MDAuNzE1MzAxNTEzNjcxOSwiaCI6NDI1LjQxMjM1MzUxNTYyNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuNTU5MTksInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3Nzk2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNTU5MTl9LHsidCI6MTQ3LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NzAuODYwMzIxMDQ0OTIxOSwieSI6MjM4LjMyODU5ODAyMjQ2MDk0LCJ3Ijo0OTguMjc5MzI3MzkyNTc4MSwiaCI6NDIzLjM0Mjc3MzQzNzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjQ2NDAzNywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTczMjAyIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNDY0MDM3fSx7InQiOjE2NCwicHJlc2VudCI6dHJ1ZSwieCI6NDcyLjE0OTc0OTc1NTg1OTQsInkiOjIzOS40MjQxMDI3ODMyMDMxMiwidyI6NDk1LjcwMDUzMTAwNTg1OTQsImgiOjQyMS4xNTE4MjQ5NTExNzE5LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4zNjMzMDEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk2ODE2NSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjM2MzMwMX0seyJ0IjoxODIsInByZXNlbnQiOnRydWUsIngiOjQ3My40NTI4NTAzNDE3OTY5LCJ5IjoyNDAuNTMxMjE5NDgyNDIxODgsInciOjQ5My4wOTQzMjk4MzM5ODQ0LCJoIjo0MTguOTM3NTkxNTUyNzM0NCwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuMjYxNDk3LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjMwNzUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4yNjE0OTd9LHsidCI6MTk4LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NzQuNjgwMjY3MzMzOTg0NCwieSI6MjQxLjU3NDA1MDkwMzMyMDMsInciOjQ5MC42Mzk0OTU4NDk2MDk0LCJoIjo0MTYuODUxOTI4NzEwOTM3NSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuMTY1NjA1LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTgyOCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjE2NTYwNX0seyJ0IjoyMTUsInByZXNlbnQiOnRydWUsIngiOjQ3NS43NDcyODM5MzU1NDY5LCJ5IjoyNDIuNDgwNjA2MDc5MTAxNTYsInciOjQ4OC41MDU0MDE2MTEzMjgxLCJoIjo0MTUuMDM4ODE4MzU5Mzc1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4wODIyNDMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1NDExMiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjA4MjI0M30seyJ0IjoyMzIsInByZXNlbnQiOnRydWUsIngiOjQ3Ni42ODY3Njc1NzgxMjUsInkiOjI0My4yNzg4MDg1OTM3NSwidyI6NDg2LjYyNjQ2NDg0Mzc1LCJoIjo0MTMuNDQyMzgyODEyNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuMDA4ODQ2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTA0NDIiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4wMDg4NDZ9LHsidCI6MjUwLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyNjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjI4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mjk5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMTUsInByZXNlbnQiOmZhbHNlfSx7InQiOjMzMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzQ4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjM4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mzk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MTYsInByZXNlbnQiOmZhbHNlfSx7InQiOjQzMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDQ5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTAxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MTQsInByZXNlbnQiOmZhbHNlfSx7InQiOjUzMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQ5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjU4MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTk5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MTYsInByZXNlbnQiOmZhbHNlfSx7InQiOjYzMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQ4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjY4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MTYsInByZXNlbnQiOmZhbHNlfSx7InQiOjczMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzQ5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjc4MywicHJlc2VudCI6ZmFsc2V9LHsidCI6Nzk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MTQsInByZXNlbnQiOmZhbHNlfSx7InQiOjgzMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQ4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NjQsInByZXNlbnQiOmZhbHNlfSx7InQiOjg4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODk5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MTUsInByZXNlbnQiOmZhbHNlfSx7InQiOjkzMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTQ5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NjcsInByZXNlbnQiOmZhbHNlfSx7InQiOjk4MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDE1LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDMyLCJwcmVzZW50IjpmYWxzZX1dLCJnb25lSWR4IjoxMiwicGFpbnRlZCI6MTIsInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuMTA5LCJmcmFtZXMiOltbMCwxLDQzNV0sWzE1LDEsNDM1XSxbMzMsMSw0MzVdLFs1MCwwLjkyMiw0MzNdLFs2NCwwLjgzLDQzMl0sWzgyLDAuNzQ2LDQzMF0sWzk5LDAuNjQxLDQyOF0sWzExNCwwLjUzNSw0MjVdLFsxMzAsMC40MzksNDIzXSxbMTQ3LDAuMzQxLDQyMV0sWzE2NSwwLjI0Myw0MTldLFsxODEsMC4xNTIsNDE3XSxbMTk4LDAuMDc1LDQxNV0sWzIxNSwwLjAwOCw0MTNdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-832d5ee1bebd80d113bc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:31.773Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjI2LCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjQsInkiOjIzMi41LCJ3Ijo1MTIsImgiOjQzNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSwiYWZ0ZXIiOlt7InQiOjQzLCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjQsInkiOjIzMi41LCJ3Ijo1MTIsImgiOjQzNSwibHciOjUxMiwibGgiOjQzNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NjEsInByZXNlbnQiOnRydWUsIngiOjQ2NCwieSI6MjMyLjUsInciOjUxMiwiaCI6NDM1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo3NywicHJlc2VudCI6dHJ1ZSwieCI6NDY0LjkwOTA4ODEzNDc2NTYsInkiOjIzMy4yNzIzNjkzODQ3NjU2MiwidyI6NTEwLjE4MTc5MzIxMjg5MDYsImgiOjQzMy40NTUyMzA3MTI4OTA2LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC45Mjg5NzcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5NjQ0OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjkyODk3N30seyJ0Ijo5MywicHJlc2VudCI6dHJ1ZSwieCI6NDY1Ljk1NjI2ODMxMDU0NjksInkiOjIzNC4xNjIwNjM1OTg2MzI4LCJ3Ijo1MDguMDg3NDkzODk2NDg0NCwiaCI6NDMxLjY3NTkwMzMyMDMxMjUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjg0NzE2Nywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTkyMzU4IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuODQ3MTY3fSx7InQiOjEwOSwicHJlc2VudCI6dHJ1ZSwieCI6NDY3LjExOTUwNjgzNTkzNzUsInkiOjIzNS4xNTAzNzUzNjYyMTA5NCwidyI6NTA1Ljc2MDk4NjMyODEyNSwiaCI6NDI5LjY5OTIxODc1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC43NTYyODcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk4NzgxNCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjc1NjI4N30seyJ0IjoxMjgsInByZXNlbnQiOnRydWUsIngiOjQ2OC4zNTg5NDc3NTM5MDYyNSwieSI6MjM2LjIwMzQxNDkxNjk5MjIsInciOjUwMy4yODIxMDQ0OTIxODc1LCJoIjo0MjcuNTkzMTM5NjQ4NDM3NSwibHciOjUxMiwibGgiOjQzNSwib3AiOjAuNjU5NDU2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45ODI5NzMiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC42NTk0NTZ9LHsidCI6MTQyLCJwcmVzZW50Ijp0cnVlLCJ4Ijo0NjkuNjk2MzgwNjE1MjM0NCwieSI6MjM3LjMzOTY5MTE2MjEwOTM4LCJ3Ijo1MDAuNjA3MjY5Mjg3MTA5NCwiaCI6NDI1LjMyMDY0ODE5MzM1OTQsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjU1NDk3MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTc3NzQ5IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNTU0OTcxfSx7InQiOjE2MSwicHJlc2VudCI6dHJ1ZSwieCI6NDcwLjgzMzI4MjQ3MDcwMzEsInkiOjIzOC4zMDU2MTgyODYxMzI4LCJ3Ijo0OTguMzMzNDY1NTc2MTcxOSwiaCI6NDIzLjM4ODc5Mzk0NTMxMjUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjQ2NjE1LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NzMzMDgiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC40NjYxNX0seyJ0IjoxNzcsInByZXNlbnQiOnRydWUsIngiOjQ3Mi4xNzYzMDAwNDg4MjgxLCJ5IjoyMzkuNDQ2NjcwNTMyMjI2NTYsInciOjQ5NS42NDczNjkzODQ3NjU2LCJoIjo0MjEuMTA2Njg5NDUzMTI1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4zNjEyMjYsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk2ODA2MSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjM2MTIyNn0seyJ0IjoxOTMsInByZXNlbnQiOnRydWUsIngiOjQ3My40MjczOTg2ODE2NDA2LCJ5IjoyNDAuNTA5NTk3Nzc4MzIwMywidyI6NDkzLjE0NTIzMzE1NDI5NjksImgiOjQxOC45ODA4MzQ5NjA5Mzc1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4yNjM0ODUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk2MzE3NCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjI2MzQ4NX0seyJ0IjoyMDksInByZXNlbnQiOnRydWUsIngiOjQ3NC42MDk0OTcwNzAzMTI1LCJ5IjoyNDEuNTEzOTE2MDE1NjI1LCJ3Ijo0OTAuNzgxMDA1ODU5Mzc1LCJoIjo0MTYuOTcyMTY3OTY4NzUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjE3MTEzNCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU4NTU3IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMTcxMTM0fSx7InQiOjIyNiwicHJlc2VudCI6dHJ1ZSwieCI6NDc1LjY4NDY5MjM4MjgxMjUsInkiOjI0Mi40Mjc0MjkxOTkyMTg3NSwidyI6NDg4LjYzMDYxNTIzNDM3NSwiaCI6NDE1LjE0NTE0MTYwMTU2MjUsImx3Ijo1MTIsImxoIjo0MzUsIm9wIjowLjA4NzEzMywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU0MzU3IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMDg3MTMzfSx7InQiOjI0MywicHJlc2VudCI6dHJ1ZSwieCI6NDc2LjYzNjY4ODIzMjQyMTksInkiOjI0My4yMzYyNjcwODk4NDM3NSwidyI6NDg2LjcyNjU5MzAxNzU3ODEsImgiOjQxMy41Mjc0NjU4MjAzMTI1LCJsdyI6NTEyLCJsaCI6NDM1LCJvcCI6MC4wMTI3NTgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1MDYzOCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjAxMjc1OH0seyJ0IjoyNjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjI3OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MjkzLCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjMyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzQ0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjM3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MzkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MTAsInByZXNlbnQiOmZhbHNlfSx7InQiOjQyNywicHJlc2VudCI6ZmFsc2V9LHsidCI6NDQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjQ3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6NDkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MTAsInByZXNlbnQiOmZhbHNlfSx7InQiOjUyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjU3OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTk0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MTIsInByZXNlbnQiOmZhbHNlfSx7InQiOjYyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQ0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjY3NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njk0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjcyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzQzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NjIsInByZXNlbnQiOmZhbHNlfSx7InQiOjc3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzkzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjgyNywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjg3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODkzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjkyNywicHJlc2VudCI6ZmFsc2V9LHsidCI6OTQ0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NjEsInByZXNlbnQiOmZhbHNlfSx7InQiOjk3NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTk0LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDA5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDI2LCJwcmVzZW50IjpmYWxzZX1dLCJnb25lSWR4IjoxMywicGFpbnRlZCI6MTMsInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuMTA3LCJmcmFtZXMiOltbMCwxLDQzNV0sWzE1LDEsNDM1XSxbMzMsMSw0MzVdLFs0OSwwLjkyMiw0MzNdLFs2NSwwLjgzNCw0MzJdLFs4MSwwLjczOCw0MzBdLFsxMDAsMC42MzcsNDI4XSxbMTE0LDAuNTMxLDQyNV0sWzEzMywwLjQ0Miw0MjNdLFsxNDksMC4zMzksNDIxXSxbMTY1LDAuMjQ0LDQxOV0sWzE4MSwwLjE1Nyw0MTddLFsxOTgsMC4wNzksNDE1XSxbMjE1LDAuMDEyLDQxNF0sWzIzMiwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-60025de92fefbbb5023a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 596,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open Select's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:35.573Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjAsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJpbnNldCgtMzJweCByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSwiYWZ0ZXIiOlt7InQiOjE1LCJwcmVzZW50Ijp0cnVlLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsImgiOjIzMCwibHciOjEyOCwibGgiOjIzMCwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsImFuaW0iOmZhbHNlLCJjbGlwIjoiaW5zZXQoLTMycHggcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozMSwicHJlc2VudCI6dHJ1ZSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzAsImx3IjoxMjgsImxoIjoyMzAsIm9wIjowLjkzODcwOCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYyg1LjM4MzczNyUgLSAzMi4yMDk0NjFweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo1MywicHJlc2VudCI6dHJ1ZSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzAsImx3IjoxMjgsImxoIjoyMzAsIm9wIjowLjg1MjgyNiwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYygxNC4yODEwNzglIC0gMzIuNTU1NjIzcHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NjUsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MC43OTQxMSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYygxOS42NjM1MjclIC0gMzIuNzY1MDM0cHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6ODMsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MC43MDc5MDIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoMjguMjI5NDQ3JSAtIDMzLjA5ODMwMnB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjk3LCJwcmVzZW50Ijp0cnVlLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsImgiOjIzMCwibHciOjEyOCwibGgiOjIzMCwib3AiOjAuNjM4MTAxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDM1LjE4MTgwNSUgLSAzMy4zNjg3OTJweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMTUsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MC41NTE0MzUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoNDQuMzQzMjA3JSAtIDMzLjcyNTIyOHB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjEzNCwicHJlc2VudCI6dHJ1ZSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzAsImx3IjoxMjgsImxoIjoyMzAsIm9wIjowLjQ0ODU2NSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYyg1NC4xMTYwOTMlIC0gMzQuMTA1NDU0cHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTQ5LCJwcmVzZW50Ijp0cnVlLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsImgiOjIzMCwibHciOjEyOCwibGgiOjIzMCwib3AiOjAuMzc3MDc1LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDYxLjc4NTIxMSUgLSAzNC40MDM4MzFweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNjgsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MC4yODIyOTQsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoNzEuMjgxMDA0JSAtIDM0Ljc3MzI3N3B4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE4MSwicHJlc2VudCI6dHJ1ZSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzAsImx3IjoxMjgsImxoIjoyMzAsIm9wIjowLjIxOTkwOCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYyg3Ny41Mzg0NTclIC0gMzUuMDE2NzMxcHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTk5LCJwcmVzZW50Ijp0cnVlLCJ4Ijo2ODAsInkiOjY2LCJ3IjoxMjgsImgiOjIzMCwibHciOjEyOCwibGgiOjIzMCwib3AiOjAuMTM4NDcxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDg1LjcxODkyMiUgLSAzNS4zMzUwMDJweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMTgsInByZXNlbnQiOnRydWUsIngiOjY4MCwieSI6NjYsInciOjEyOCwiaCI6MjMwLCJsdyI6MTI4LCJsaCI6MjMwLCJvcCI6MC4wNTc1NDcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoOTMuNDkyNzIxJSAtIDM1LjYzNzQ1MXB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIzMywicHJlc2VudCI6dHJ1ZSwieCI6NjgwLCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzAsImx3IjoxMjgsImxoIjoyMzAsIm9wIjowLjAwOTIzLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDk4Ljc1OTc1OCUgLSAzNS44NDIzNzJweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNDksInByZXNlbnQiOmZhbHNlfSx7InQiOjMwMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzE1LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMzEsInByZXNlbnQiOmZhbHNlfSx7InQiOjM0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzY1LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozODQsInByZXNlbnQiOmZhbHNlfSx7InQiOjQwMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDIxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MzgsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTE4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MzAsInByZXNlbnQiOmZhbHNlfSx7InQiOjU0OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjYwMSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjE0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MzQsInByZXNlbnQiOmZhbHNlfSx7InQiOjY0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjY5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjY5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzE2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MzIsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjc5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODE2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MzQsInByZXNlbnQiOmZhbHNlfSx7InQiOjg1MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODY3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODIsInByZXNlbnQiOmZhbHNlfSx7InQiOjg5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTE1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MzIsInByZXNlbnQiOmZhbHNlfV0sImdvbmVJZHgiOjEzLCJwYWludGVkIjoxMywicmVvcGVuZWQiOmZhbHNlLCJzaGFyZSI6MC4wOSwiZnJhbWVzIjpbWzAsMSwyMzBdLFs3LDEsMjMwXSxbMjMsMC45MzksMjMwXSxbNDUsMC44NTMsMjMwXSxbNTcsMC43OTQsMjMwXSxbNzUsMC43MDgsMjMwXSxbODksMC42MzgsMjMwXSxbMTA3LDAuNTUxLDIzMF0sWzEyNiwwLjQ0OSwyMzBdLFsxNDEsMC4zNzcsMjMwXSxbMTYwLDAuMjgyLDIzMF0sWzE3MywwLjIyLDIzMF0sWzE5MSwwLjEzOCwyMzBdLFsyMTAsMC4wNTgsMjMwXSxbMjI1LDAuMDA5LDIzMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a34dc3a36ba7446f2368",
+          "file": "release-11-1-1.spec.ts",
+          "line": 647,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open DropdownMenu's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3278,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:38.300Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjEsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJpbnNldCgtMzJweCByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSwiYWZ0ZXIiOlt7InQiOjE0LCJwcmVzZW50Ijp0cnVlLCJ4Ijo3MjMsInkiOjY2LCJ3IjoxMjgsImgiOjE1OCwibHciOjEyOCwibGgiOjE1OCwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjYsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC45NTcwNjgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoMy45Mzc0MjclIC0gMzIuMTUzMTkxcHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDQsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC44ODcwMywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYygxMC44ODEzMSUgLSAzMi40MjMzNTFweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo2MCwicHJlc2VudCI6dHJ1ZSwieCI6NzIzLCJ5Ijo2NiwidyI6MTI4LCJoIjoxNTgsImx3IjoxMjgsImxoIjoxNTgsIm9wIjowLjgxMjU0NCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYygxNy44MzU1MzIlIC0gMzIuNjkzOTE0cHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NzUsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC43NDE5OSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYygyNC44MzkzJSAtIDMyLjk2NjQwNHB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjkzLCJwcmVzZW50Ijp0cnVlLCJ4Ijo3MjMsInkiOjY2LCJ3IjoxMjgsImgiOjE1OCwibHciOjEyOCwibGgiOjE1OCwib3AiOjAuNjU4MjMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoMzMuNjc1ODM3JSAtIDMzLjMxMDIwMXB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjEwOSwicHJlc2VudCI6dHJ1ZSwieCI6NzIzLCJ5Ijo2NiwidyI6MTI4LCJoIjoxNTgsImx3IjoxMjgsImxoIjoxNTgsIm9wIjowLjU3NzA2Nywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYyg0MS43ODE3MjElIC0gMzMuNjI1NTdweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMjUsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC40OTQ4NTIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoNTAlIC0gMzMuOTQ1MzEzcHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTQzLCJwcmVzZW50Ijp0cnVlLCJ4Ijo3MjMsInkiOjY2LCJ3IjoxMjgsImgiOjE1OCwibHciOjEyOCwibGgiOjE1OCwib3AiOjAuNDAyNDk5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDU5LjI0MDAwNyUgLSAzNC4zMDQ4MDdweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNTgsInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC4zMjY3NjMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoNjYuODI0Mzk2JSAtIDM0LjU5OTg4N3B4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE3NywicHJlc2VudCI6dHJ1ZSwieCI6NzIzLCJ5Ijo2NiwidyI6MTI4LCJoIjoxNTgsImx3IjoxMjgsImxoIjoxNTgsIm9wIjowLjIzNDA3OSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoiaW5zZXQoLTMycHggLTMycHggY2FsYyg3Ni4xMTY0OTclIC0gMzQuOTYxNDA3cHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTkyLCJwcmVzZW50Ijp0cnVlLCJ4Ijo3MjMsInkiOjY2LCJ3IjoxMjgsImgiOjE1OCwibHciOjEyOCwibGgiOjE1OCwib3AiOjAuMTY0ODYsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoODMuMDY2MjklIC0gMzUuMjMxNzk4cHgpIHJvdW5kIDE2cHgpIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjEwLCJwcmVzZW50Ijp0cnVlLCJ4Ijo3MjMsInkiOjY2LCJ3IjoxMjgsImgiOjE1OCwibHciOjEyOCwibGgiOjE1OCwib3AiOjAuMDg4NDYzLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJpbnNldCgtMzJweCAtMzJweCBjYWxjKDkwLjc1MjYzNSUgLSAzNS41MzA4NDVweCkgcm91bmQgMTZweCkiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMjksInByZXNlbnQiOnRydWUsIngiOjcyMywieSI6NjYsInciOjEyOCwiaCI6MTU4LCJsdyI6MTI4LCJsaCI6MTU4LCJvcCI6MC4wMTU2MjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Imluc2V0KC0zMnB4IC0zMnB4IGNhbGMoOTcuNzgwNjQ4JSAtIDM1LjgwNDI3OHB4KSByb3VuZCAxNnB4KSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI0OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MjYzLCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyNzYsInByZXNlbnQiOmZhbHNlfSx7InQiOjI5NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzEyLCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMjUsInByZXNlbnQiOmZhbHNlfSx7InQiOjM0NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzU5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNzUsInByZXNlbnQiOmZhbHNlfSx7InQiOjM5MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NDEyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MjcsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ0MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDYwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NzUsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ5MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NTEyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MjUsInByZXNlbnQiOmZhbHNlfSx7InQiOjU0NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTYwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NzYsInByZXNlbnQiOmZhbHNlfSx7InQiOjU5MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NjA5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MjcsInByZXNlbnQiOmZhbHNlfSx7InQiOjY0MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NjYyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NzUsInByZXNlbnQiOmZhbHNlfSx7InQiOjY5MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzA5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzU5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NzYsInByZXNlbnQiOmZhbHNlfSx7InQiOjc5NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODA5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MjcsInByZXNlbnQiOmZhbHNlfSx7InQiOjg0NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODYwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NzcsInByZXNlbnQiOmZhbHNlfSx7InQiOjg5NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTA5LCJwcmVzZW50IjpmYWxzZX1dLCJnb25lSWR4IjoxNCwicGFpbnRlZCI6MTQsInJlb3BlbmVkIjpmYWxzZSwic2hhcmUiOjAuMDg2LCJmcmFtZXMiOltbMCwxLDE1OF0sWzksMSwxNThdLFsyMSwwLjk1NywxNThdLFszOSwwLjg4NywxNThdLFs1NSwwLjgxMywxNThdLFs3MCwwLjc0MiwxNThdLFs4OCwwLjY1OCwxNThdLFsxMDQsMC41NzcsMTU4XSxbMTIwLDAuNDk1LDE1OF0sWzEzOCwwLjQwMiwxNThdLFsxNTMsMC4zMjcsMTU4XSxbMTcyLDAuMjM0LDE1OF0sWzE4NywwLjE2NSwxNThdLFsyMDUsMC4wODgsMTU4XSxbMjI0LDAuMDE2LDE1OF0sWzI0MywwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c5567bcb772fe00d2c82",
+          "file": "release-11-1-1.spec.ts",
+          "line": 647,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open Popover's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3462,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:41.591Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjAsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTM2LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LCJhZnRlciI6W3sidCI6OCwicHJlc2VudCI6dHJ1ZSwieCI6MjM0LCJ5IjoxMzYsInciOjIyNCwiaCI6NTMuODkwNjI1LCJsdyI6MjI0LCJsaCI6NTQsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNCwicHJlc2VudCI6dHJ1ZSwieCI6MjM0LCJ5IjoxMzYsInciOjIyNCwiaCI6NTMuODkwNjI1LCJsdyI6MjI0LCJsaCI6NTQsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDIsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTM1LjU0MzQ0MTc3MjQ2MDk0LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MC45NDI5Mywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjU5LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEzNS4wOTM1NjY4OTQ1MzEyNSwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuODg2Njk3LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NzUsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTM0LjU2Njc3MjQ2MDkzNzUsInciOjIyNCwiaCI6NTMuODkwNjI1LCJsdyI6MjI0LCJsaCI6NTQsIm9wIjowLjgyMDg0Nywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjk0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEzMy45NjgyOTIyMzYzMjgxMiwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuNzQ2MDM2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTA4LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEzMy40NDY0NTY5MDkxNzk3LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MC42ODA4MDgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMjQsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTMyLjg3NDIwNjU0Mjk2ODc1LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MC42MDkyNzUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNDMsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTMyLjIxOTM3NTYxMDM1MTU2LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MC41Mjc0MjIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNTgsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTMxLjYzNDUzNjc0MzE2NDA2LCJ3IjoyMjQsImgiOjUzLjg5MDYyNSwibHciOjIyNCwibGgiOjU0LCJvcCI6MC40NTQzMTcsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNzUsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTMxLjAxNzU3ODEyNSwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuMzc3MTk3LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTkyLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEzMC40MTI3MzQ5ODUzNTE1NiwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuMzAxNTkyLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjA4LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEyOS44MjgzNTM4ODE4MzU5NCwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuMjI4NTQ0LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjI0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMzQsInkiOjEyOS4zMzcxODg3MjA3MDMxMiwidyI6MjI0LCJoIjo1My44OTA2MjUsImx3IjoyMjQsImxoIjo1NCwib3AiOjAuMTY3MTUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNDMsInByZXNlbnQiOnRydWUsIngiOjIzNCwieSI6MTI4Ljc2MDQ1MjI3MDUwNzgsInciOjIyNCwiaCI6NTMuODkwNjI1LCJsdyI6MjI0LCJsaCI6NTQsIm9wIjowLjA5NTA1Niwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI1OSwicHJlc2VudCI6dHJ1ZSwieCI6MjM0LCJ5IjoxMjguMzI3MjU1MjQ5MDIzNDQsInciOjIyNCwiaCI6NTMuODkwNjI1LCJsdyI6MjI0LCJsaCI6NTQsIm9wIjowLjA0MDkwNywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI3NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mjk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMDcsInByZXNlbnQiOmZhbHNlfSx7InQiOjMyNywicHJlc2VudCI6ZmFsc2V9LHsidCI6MzQyLCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjM3NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzkzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MDgsInByZXNlbnQiOmZhbHNlfSx7InQiOjQyNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjQ3NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDk0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjUyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQ1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NjEsInByZXNlbnQiOmZhbHNlfSx7InQiOjU3NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjYyNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NjMsInByZXNlbnQiOmZhbHNlfSx7InQiOjY3NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjcyNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzQzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjc3OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MDksInByZXNlbnQiOmZhbHNlfSx7InQiOjgyNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQ3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjg3NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODkyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MDksInByZXNlbnQiOmZhbHNlfV0sImdvbmVJZHgiOjE2LCJwYWludGVkIjoxNiwicmVvcGVuZWQiOmZhbHNlLCJzaGFyZSI6MC4wNzgsImZyYW1lcyI6W1swLDEsNTRdLFswLDEsNTRdLFsxNiwxLDU0XSxbMzQsMC45NDMsNTRdLFs1MSwwLjg4Nyw1NF0sWzY3LDAuODIxLDU0XSxbODYsMC43NDYsNTRdLFsxMDAsMC42ODEsNTRdLFsxMTYsMC42MDksNTRdLFsxMzUsMC41MjcsNTRdLFsxNTAsMC40NTQsNTRdLFsxNjcsMC4zNzcsNTRdLFsxODQsMC4zMDIsNTRdLFsyMDAsMC4yMjksNTRdLFsyMTYsMC4xNjcsNTRdLFsyMzUsMC4wOTUsNTRdLFsyNTEsMC4wNDEsNTRdLFsyNjYsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d6181101a94086f5d501",
+          "file": "release-11-1-1.spec.ts",
+          "line": 647,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the phone form's, by touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 754,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 435,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:45.067Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the phone form's, by touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 754,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7418b8755bc20f635cf2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 752,
+          "column": 1
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the phone form's, by touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 937,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:45.513Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the phone form's, by touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 937,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a0cb662ccca40f1a64c4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 935,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the phone form's, by touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 937,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 409,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T05:25:46.216Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the phone form's, by touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 937,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-67c2d24d3dd10bf4a941",
+          "file": "release-11-1-1.spec.ts",
+          "line": 935,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T05:24:09.042Z",
+    "duration": 97673.711,
+    "expected": 29,
+    "skipped": 12,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,76 @@
+== tip-chromium-desktop-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=16 span=140 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[18]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=23 span=200 boxSteps=0 0->1 | out.fading=23 span=193 boxSteps=0 1->0 | leave=[9]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[11]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[9]
+  pass fade · a Tooltip appears and leaves on a fade              in.fading=23 span=191 boxSteps=0 0->1 | out.fading=13 span=116 boxSteps=0 1->0 | leave=[10]
+  pass fade · a Dialog appears and leaves on a fade               in.fading=20 span=167 boxSteps=0 0->1 | out.fading=20 span=176 boxSteps=0 1->0 | leave=[1]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=22 span=182 boxSteps=0 0->1 | out.fading=23 span=201 boxSteps=0 1->0 | leave=[13] | frost.in.leg.fading=22 span=182 boxSteps=0 0->1 | frost.out.leg.fading=23 span=201 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=22 span=183 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[2] | frost.in.leg.fading=22 span=183 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=22 span=183 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[12] | frost.in.leg.fading=22 span=183 boxSteps=0 0->1 | frost.out.leg.fading=23 span=191 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=23 span=190 boxSteps=0 0->1 | out.fading=18 span=150 boxSteps=0 1->0 | leave=[58]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=23 span=193 boxSteps=0 0->1 | out.fading=23 span=193 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=13 span=115 boxSteps=0 0->1 | out.fading=13 span=116 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=23 span=191 boxSteps=0 0->1 | unfold.out.fading=23 span=191 boxSteps=0 1->0 | fold.in.fading=23 span=191 boxSteps=0 0->1 | fold.out.fading=23 span=191 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=23 span=192 boxSteps=0 0->0.18 | out.fading=23 span=192 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-chromium-phone-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=16 span=143 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[9]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=23 span=200 boxSteps=0 0->1 | out.fading=23 span=193 boxSteps=0 1->0 | leave=[18]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=190 boxSteps=0 1->0 | leave=[16]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[10]
+  skip fade · a Tooltip appears and leaves on a fade              
+  pass fade · a Dialog appears and leaves on a fade               in.fading=20 span=175 boxSteps=0 0->1 | out.fading=20 span=175 boxSteps=0 1->0 | leave=[1]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=23 span=192 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=190 boxSteps=0 1->0 | leave=[10] | frost.in.leg.fading=23 span=191 boxSteps=0 0->1 | frost.out.leg.fading=23 span=190 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=23 span=191 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=23 span=192 boxSteps=0 0->1 | out.fading=18 span=150 boxSteps=0 1->0 | leave=[52]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=190 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=13 span=117 boxSteps=0 0->1 | out.fading=13 span=116 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=23 span=193 boxSteps=0 0->1 | unfold.out.fading=23 span=193 boxSteps=0 1->0 | fold.in.fading=23 span=192 boxSteps=0 0->1 | fold.out.fading=23 span=192 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=23 span=192 boxSteps=0 0->0.18 | out.fading=23 span=192 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-webkit-desktop-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=8 span=147 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=14 span=195 boxSteps=0 0->1 | out.fading=12 span=196 boxSteps=0 1->0 | leave=[21]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=12 span=201 boxSteps=0 0->1 | out.fading=12 span=185 boxSteps=0 1->0 | leave=[18]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=5 span=113 boxSteps=0 0->1 | out.fading=13 span=197 boxSteps=0 1->0 | leave=[18]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=8 span=132 boxSteps=0 0->1 | out.fading=10 span=156 boxSteps=0 1->0 | leave=[25]
+  pass fade · a Tooltip appears and leaves on a fade              in.fading=12 span=206 boxSteps=0 0->1 | out.fading=7 span=112 boxSteps=0 1->0 | leave=[18]
+  pass fade · a Dialog appears and leaves on a fade               in.fading=11 span=162 boxSteps=0 0->1 | out.fading=11 span=188 boxSteps=0 1->0 | leave=[6]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=13 span=197 boxSteps=0 0->1 | out.fading=13 span=203 boxSteps=0 1->0 | leave=[21] | frost.in.leg.fading=13 span=197 boxSteps=0 0->1 | frost.out.leg.fading=13 span=203 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=12 span=207 boxSteps=0 0->1 | out.fading=13 span=202 boxSteps=0 1->0 | leave=[6] | frost.in.leg.fading=12 span=207 boxSteps=0 0->1 | frost.out.leg.fading=13 span=202 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=13 span=196 boxSteps=0 0->1 | out.fading=13 span=200 boxSteps=0 1->0 | leave=[6] | frost.in.leg.fading=13 span=196 boxSteps=0 0->1 | frost.out.leg.fading=13 span=200 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=12 span=192 boxSteps=0 0->1 | out.fading=10 span=150 boxSteps=0 1->0 | leave=[61]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=11 span=191 boxSteps=0 0->1 | out.fading=12 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=13 span=192 boxSteps=0 0->1 | out.fading=13 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=7 span=130 boxSteps=0 0->1 | out.fading=8 span=117 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=13 span=192 boxSteps=0 0->1 | unfold.out.fading=13 span=192 boxSteps=0 1->0 | fold.in.fading=12 span=202 boxSteps=0 0->1 | fold.out.fading=12 span=202 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=12 span=199 boxSteps=0 0->0.18 | out.fading=12 span=199 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-webkit-phone-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=8 span=134 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=12 span=198 boxSteps=0 0->1 | out.fading=11 span=182 boxSteps=0 1->0 | leave=[16]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=12 span=196 boxSteps=0 0->1 | out.fading=11 span=201 boxSteps=0 1->0 | leave=[18]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=12 span=199 boxSteps=0 0->1 | out.fading=11 span=184 boxSteps=0 1->0 | leave=[35]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=12 span=198 boxSteps=0 0->1 | out.fading=12 span=197 boxSteps=0 1->0 | leave=[23]
+  skip fade · a Tooltip appears and leaves on a fade              
+  pass fade · a Dialog appears and leaves on a fade               in.fading=11 span=201 boxSteps=0 0->1 | out.fading=11 span=183 boxSteps=0 1->0 | leave=[2]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=12 span=218 boxSteps=0 0->1 | out.fading=12 span=199 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=12 span=218 boxSteps=0 0->1 | frost.out.leg.fading=12 span=199 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=12 span=200 boxSteps=0 0->1 | out.fading=12 span=199 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=12 span=200 boxSteps=0 0->1 | frost.out.leg.fading=12 span=199 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=12 span=200 boxSteps=0 0->1 | out.fading=12 span=199 boxSteps=0 1->0 | leave=[4] | frost.in.leg.fading=12 span=200 boxSteps=0 0->1 | frost.out.leg.fading=12 span=199 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=11 span=202 boxSteps=0 0->1 | out.fading=8 span=149 boxSteps=0 1->0 | leave=[68]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=11 span=175 boxSteps=0 0->1 | out.fading=11 span=183 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=11 span=184 boxSteps=0 0->1 | out.fading=11 span=184 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=7 span=115 boxSteps=0 0->1 | out.fading=7 span=117 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=12 span=205 boxSteps=0 0->1 | unfold.out.fading=12 span=205 boxSteps=0 1->0 | fold.in.fading=12 span=188 boxSteps=0 0->1 | fold.out.fading=12 span=188 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=11 span=181 boxSteps=0 0->0.18 | out.fading=11 span=181 boxSteps=0 0.18->0 | travel=0
+  skip press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          

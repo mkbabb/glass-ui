@@ -1,0 +1,1322 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-1-critic-2.config.ts",
+      "--project=webkit",
+      "release-11-0-1-critic-1.spec.ts",
+      "release-11-0-1-critic-1b.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-1.spec.ts",
+          "release-11-0-1-daraksha.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-11-0-1-critic-1.spec.ts",
+          "release-11-0-1-critic-1b.spec.ts",
+          "release-11-0-1-fix-2.spec.ts",
+          "release-11-0-1-critic-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-14/logs/reg-branch-c1-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-1.spec.ts",
+      "file": "release-11-0-1-critic-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "critic 1 e",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 121,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, open",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5214,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"wk unpublished open\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:24.258Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-82d103414781ef4b41a4",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            },
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, closed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3211,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"wk unpublished closed\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:31.729Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-6e1b5c7400a3b82b9a08",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a light-1440f: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8890,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk name-active-rest\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk name-active-hover\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk focus-hover\",\"W\":220,\"H\":84,\"d\":7,\"w\":186,\"stadium\":182,\"ellipse\":122,\"css\":{\"W\":73.33333333333333,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":184,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":184,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:35.022Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-3b6ea32f04a2d58190df",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b light-1440f house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9556,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house open\",\"w\":258.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house open-end\",\"w\":308.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk house narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:43.954Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-4c775cead2d3372f04cd",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b light-1440f rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6323,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd open\",\"w\":258.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd open-end\",\"w\":308.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk rd narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:53.519Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-f3a4912c6c6e115ade98",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d light-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4696,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk painted-corner expand\",\"frames\":99,\"morphing\":34,\"morphMs\":549,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk painted-corner collapse\",\"frames\":92,\"morphing\":31,\"morphMs\":542,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:27:59.851Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-b080eaa9cf417c7fc27f",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c light-1440f: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4591,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk morph expand\",\"rows\":[\"0@92ms morph 156x56 55.300995px 28px 55.300995px 28px 55.300995px 28px 55.300995px 28px\",\"1@227ms morph 256x56 33.636814px 28px 33.636814px 28px 33.636814px 28px 33.636814px 28px\",\"2@355ms morph 307x56 28.05398px 28px 28.05398px 28px 28.05398px 28px 28.05398px 28px\",\"3@453ms morph 308x56 28px 28px 28px 28px\",\"4@561ms morph 308x56 28px 28px 28px 28px\",\"5@645ms rest 308x56 28px 28px 28px 28px\",\"6@735ms rest 308x56 28px 28px 28px 28px\",\"7@804ms rest 308x56 28px 28px 28px 28px\",\"8@895ms rest 308x56 28px 28px 28px 28px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f wk morph collapse\",\"rows\":[\"0@110ms morph 292x56 29.512754px 28px 29.512754px 28px 29.512754px 28px 29.512754px 28px\",\"1@191ms morph 181x56 47.542603px 28px 47.542603px 28px 47.542603px 28px 47.542603px 28px\",\"2@292ms morph 152x56 56.677242px 28px 56.677242px 28px 56.677242px 28px 56.677242px 28px\",\"3@381ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"4@477ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"5@577ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"6@691ms rest 148x56 28px 28px 28px 28px\",\"7@756ms rest 148x56 28px 28px 28px 28px\",\"8@825ms rest 148x56 28px 28px 28px 28px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:04.564Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-1b735b07af29385ce5fc",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a light-390c: the wide label seat's plate is a capsule in paint",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5202,
+                      "error": {
+                        "message": "TypeError: Cannot read properties of null (reading '1')",
+                        "stack": "TypeError: Cannot read properties of null (reading '1')\n    at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)\n    at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:188:33",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 17,
+                          "line": 68
+                        },
+                        "snippet": "  66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge\n  67 |     const at = rows[top + d]!;\n> 68 |     const w = at[1] - at[0] + 1;\n     |                 ^\n  69 |     const r = H / 2;\n  70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));\n  71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 17,
+                            "line": 68
+                          },
+                          "message": "TypeError: Cannot read properties of null (reading '1')\n\n  66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge\n  67 |     const at = rows[top + d]!;\n> 68 |     const w = at[1] - at[0] + 1;\n     |                 ^\n  69 |     const r = H / 2;\n  70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));\n  71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);\n    at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)\n    at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts:188:33"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk name-active-rest\",\"W\":232,\"H\":72,\"d\":6,\"w\":204,\"stadium\":200,\"ellipse\":128,\"css\":{\"W\":77.33333333333333,\"H\":24}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:09.179Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-0-1-critic-1-cr-ece51-plate-is-a-capsule-in-paint-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 17,
+                        "line": 68
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-85907245fe1d399b804a",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b light-390c house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9083,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house open\",\"w\":263.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house open-end\",\"w\":317.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk house narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:16.043Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-6542490242304fe429c7",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b light-390c rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7494,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd open\",\"w\":263.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd open-end\",\"w\":317.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk rd narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:26.676Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-f989d4afb6d798b1ce3a",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d light-390c: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5685,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk painted-corner expand\",\"frames\":88,\"morphing\":22,\"morphMs\":545,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk painted-corner collapse\",\"frames\":85,\"morphing\":24,\"morphMs\":553,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:34.186Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-a937669ce4c558b0e69e",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c light-390c: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7593,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk morph expand\",\"rows\":[\"0@99ms morph 168x60 56.837399px 30px 56.837399px 30px 56.837399px 30px 56.837399px 30px\",\"1@189ms morph 276x60 34.522751px 30px 34.522751px 30px 34.522751px 30px 34.522751px 30px\",\"2@337ms morph 316x60 30.21829px 30px 30.21829px 30px 30.21829px 30px 30.21829px 30px\",\"3@513ms morph 318x60 30px 30px 30px 30px\",\"4@652ms morph 318x60 30px 30px 30px 30px\",\"5@845ms rest 318x60 30px 30px 30px 30px\",\"6@951ms rest 318x60 30px 30px 30px 30px\",\"7@1073ms rest 318x60 30px 30px 30px 30px\",\"8@1211ms rest 318x60 30px 30px 30px 30px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c wk morph collapse\",\"rows\":[\"0@178ms morph 310x60 30.759035px 30px 30.759035px 30px 30.759035px 30px 30.759035px 30px\",\"1@374ms morph 168x60 56.782505px 30px 56.782505px 30px 56.782505px 30px 56.782505px 30px\",\"2@557ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\",\"3@710ms rest 160x60 30px 30px 30px 30px\",\"4@957ms rest 160x60 30px 30px 30px 30px\",\"5@1093ms rest 160x60 30px 30px 30px 30px\",\"6@1237ms rest 160x60 30px 30px 30px 30px\",\"7@1332ms rest 160x60 30px 30px 30px 30px\",\"8@1439ms rest 160x60 30px 30px 30px 30px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:39.888Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-ef89936a4d00bd8c32ba",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a dark-1440f: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6874,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk name-active-rest\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk name-active-hover\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk focus-hover\",\"W\":220,\"H\":84,\"d\":7,\"w\":186,\"stadium\":182,\"ellipse\":122,\"css\":{\"W\":73.33333333333333,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":184,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":184,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:47.498Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-ab2c9306436e27bae799",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b dark-1440f house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7426,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house open\",\"w\":258.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house open-end\",\"w\":308.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk house narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:28:54.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-93438c95888c3686bb8a",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b dark-1440f rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9590,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd open\",\"w\":258.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd open-end\",\"w\":308.046875,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk rd narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:01.849Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-a0b1fc21a447f84e909b",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d dark-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5320,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk painted-corner expand\",\"frames\":93,\"morphing\":27,\"morphMs\":548,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk painted-corner collapse\",\"frames\":93,\"morphing\":31,\"morphMs\":549,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:11.458Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-5c5ed17f22a2a46890ca",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c dark-1440f: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5506,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk morph expand\",\"rows\":[\"0@160ms morph 156x56 55.300995px 28px 55.300995px 28px 55.300995px 28px 55.300995px 28px\",\"1@338ms morph 293x56 29.481503px 28px 29.481503px 28px 29.481503px 28px 29.481503px 28px\",\"2@571ms morph 308x56 28px 28px 28px 28px\",\"3@719ms rest 308x56 28px 28px 28px 28px\",\"4@901ms rest 308x56 28px 28px 28px 28px\",\"5@985ms rest 308x56 28px 28px 28px 28px\",\"6@1125ms rest 308x56 28px 28px 28px 28px\",\"7@1213ms rest 308x56 28px 28px 28px 28px\",\"8@1315ms rest 308x56 28px 28px 28px 28px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f wk morph collapse\",\"rows\":[\"0@88ms morph 300x56 28.741547px 28px 28.741547px 28px 28.741547px 28px 28.741547px 28px\",\"1@171ms morph 198x56 43.599525px 28px 43.599525px 28px 43.599525px 28px 43.599525px 28px\",\"2@267ms morph 156x56 55.400066px 28px 55.400066px 28px 55.400066px 28px 55.400066px 28px\",\"3@322ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"4@374ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"5@445ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"6@494ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"7@559ms morph 148x56 58.270271px 28px 58.270271px 28px 58.270271px 28px 58.270271px 28px\",\"8@690ms rest 148x56 28px 28px 28px 28px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:16.786Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-1f740770803977530d0f",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a dark-390c: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5353,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk name-active-rest\",\"W\":232,\"H\":72,\"d\":6,\"w\":204,\"stadium\":200,\"ellipse\":128,\"css\":{\"W\":77.33333333333333,\"H\":24}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk focus-press\",\"W\":206,\"H\":66,\"d\":5,\"w\":174,\"stadium\":175,\"ellipse\":109,\"css\":{\"W\":68.66666666666667,\"H\":22}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk focus-press\",\"W\":206,\"H\":66,\"d\":5,\"w\":174,\"stadium\":175,\"ellipse\":109,\"css\":{\"W\":68.66666666666667,\"H\":22}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:22.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-ed038b06efecb14afbed",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b dark-390c house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7786,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house open\",\"w\":263.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house open-end\",\"w\":317.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk house narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:27.659Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-8291b85bf3f02844528e",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b dark-390c rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8297,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd open\",\"w\":263.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd open-end\",\"w\":317.859375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk rd narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:35.451Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-4302929994024fb8b529",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d dark-390c: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4636,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk painted-corner expand\",\"frames\":98,\"morphing\":34,\"morphMs\":544,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk painted-corner collapse\",\"frames\":96,\"morphing\":33,\"morphMs\":545,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:43.754Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-460f5d7ef9c24e8351a4",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c dark-390c: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6089,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk morph expand\",\"rows\":[\"0@86ms morph 168x60 56.837399px 30px 56.837399px 30px 56.837399px 30px 56.837399px 30px\",\"1@156ms morph 274x60 34.826195px 30px 34.826195px 30px 34.826195px 30px 34.826195px 30px\",\"2@488ms morph 308x60 31.023788px 30px 31.023788px 30px 31.023788px 30px 31.023788px 30px\",\"3@656ms morph 318x60 30px 30px 30px 30px\",\"4@965ms rest 318x60 30px 30px 30px 30px\",\"5@1062ms rest 318x60 30px 30px 30px 30px\",\"6@1242ms rest 318x60 30px 30px 30px 30px\",\"7@1358ms rest 318x60 30px 30px 30px 30px\",\"8@1537ms rest 318x60 30px 30px 30px 30px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c wk morph collapse\",\"rows\":[\"0@129ms morph 310x60 30.759035px 30px 30.759035px 30px 30.759035px 30px 30.759035px 30px\",\"1@218ms morph 181x60 52.803677px 30px 52.803677px 30px 52.803677px 30px 52.803677px 30px\",\"2@305ms morph 163x60 58.641083px 30px 58.641083px 30px 58.641083px 30px 58.641083px 30px\",\"3@424ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\",\"4@589ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\",\"5@673ms rest 160x60 30px 30px 30px 30px\",\"6@738ms rest 160x60 30px 30px 30px 30px\",\"7@819ms rest 160x60 30px 30px 30px 30px\",\"8@903ms rest 160x60 30px 30px 30px 30px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:48.401Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-38b29ae8849ad9263594",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-1-critic-1b.spec.ts",
+      "file": "release-11-0-1-critic-1b.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "critic 1 k3 fine",
+          "file": "release-11-0-1-critic-1b.spec.ts",
+          "line": 12,
+          "column": 10,
+          "specs": [
+            {
+              "title": "k3 scene at 320 fine: span, port, flag, range, corners",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4198,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"k3 wk fine\",\"path\":\"expectFitting\",\"span\":292,\"port\":300,\"range\":0,\"scrollLeft\":0,\"fits\":true,\"dockW\":316,\"plate\":\"28px 28px 28px 28px\",\"half\":28,\"seats\":[\"S1:4.0..91.2\",\"S2:99.2..139.2\",\"S3:147.2..187.2\",\"S4:195.2..296.3\"],\"runW\":300.328125}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:54.523Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83cd9476978951524ebf-e1b59445c852fbc59931",
+              "file": "release-11-0-1-critic-1b.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critic 1 k3 coarse",
+          "file": "release-11-0-1-critic-1b.spec.ts",
+          "line": 12,
+          "column": 10,
+          "specs": [
+            {
+              "title": "k3 scene at 320 coarse: span, port, flag, range, corners",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3044,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"k3 wk coarse\",\"path\":\"expectFitting\",\"span\":300,\"port\":304,\"range\":4,\"scrollLeft\":0,\"fits\":true,\"dockW\":320,\"plate\":\"30px 30px 30px 30px\",\"half\":30,\"seats\":[\"S1:4.0..91.2\",\"S2:99.2..143.2\",\"S3:151.2..195.2\",\"S4:203.2..304.3\"],\"runW\":304}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T06:29:58.730Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83cd9476978951524ebf-ed1d941fd4fe8a828b05",
+              "file": "release-11-0-1-critic-1b.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T06:27:17.330Z",
+    "duration": 164580.907,
+    "expected": 23,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

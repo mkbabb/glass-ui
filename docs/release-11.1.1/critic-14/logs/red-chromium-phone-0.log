@@ -1,0 +1,894 @@
+
+Running 41 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1-controls.spec.ts:24:5 › round · a compact SegmentedTabs strip is round-ended on touch (877ms)
+  ✘   2 [chromium-phone] › release-11-1-1-controls.spec.ts:24:5 › round · a wide SegmentedTabs strip is round-ended on touch (596ms)
+  ✘   3 [chromium-phone] › release-11-1-1-controls.spec.ts:48:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.5s)
+  ✘   4 [chromium-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap (1.5s)
+  ✘   5 [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · pick (2.4s)
+  ✘   6 [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.3s)
+  ✘   7 [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · outside (2.3s)
+  ✘   8 [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✘   9 [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · escape (2.3s)
+  ✘  10 [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  ✘  11 [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · trigger (2.3s)
+  ✘  12 [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.3s)
+  ✘  13 [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · current (2.5s)
+  -  14 [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  ✘  15 [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light (2.5s)
+  ✘  16 [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark (2.4s)
+  ✓  17 [chromium-phone] › release-11-1-1.spec.ts:250:5 › glass · a phone Select is solid under reduced transparency (1.4s)
+  ✘  18 [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light (1.8s)
+  ✘  19 [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark (1.9s)
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:250:5 › glass · a phone dock DropdownMenu is solid under reduced transparency (1.4s)
+  ✘  21 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Select leaves on the exit curve, shorter than it entered (3.3s)
+  ✘  22 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.4s)
+  ✘  23 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.9s)
+  -  24 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Tooltip leaves on the exit curve, shorter than it entered
+[WebServer] 9:35:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  25 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.5s)
+[WebServer] 9:35:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  26 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.5s)
+[WebServer] 9:35:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  27 [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.5s)
+  ✘  28 [chromium-phone] › release-11-1-1.spec.ts:448:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.4s)
+  -  29 [chromium-phone] › release-11-1-1.spec.ts:448:5 › exit · a Tooltip leaves on opacity and its slide alone
+[WebServer] 9:35:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  30 [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by escape (3.5s)
+[WebServer] 9:35:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  31 [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by outside (3.5s)
+[WebServer] 9:35:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  32 [chromium-phone] › release-11-1-1.spec.ts:532:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.9s)
+  ✘  33 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (4.9s)
+  ✘  34 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.4s)
+  ✘  35 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.3s)
+  ✘  36 [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Select's trigger closes it once (2.4s)
+  ✘  37 [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.3s)
+  ✘  38 [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Popover's trigger closes it once (2.3s)
+[WebServer] 9:36:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:36:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:37:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:38:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:38:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 9:38:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  39 [chromium-phone] › release-11-1-1.spec.ts:752:1 › sheet · a detented Sheet rises into place at its rung's size (2.0m)
+[WebServer] 9:38:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  40 [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it (5.3s)
+[WebServer] 9:38:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  41 [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it (5.5s)
+
+
+  1) [chromium-phone] › release-11-1-1-controls.spec.ts:24:5 › round · a wide SegmentedTabs strip is round-ended on touch 
+
+    Error: strip: corner 15 on a 50 px box [{"what":"strip","h":50,"r":15},{"what":"plate","h":44,"r":12},{"what":"tab 0","h":44,"r":12},{"what":"tab 1","h":44,"r":12},{"what":"tab 2","h":44,"r":12}]
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 24.5
+    Received:    15
+
+      41 |         expect(corners[0].h, "the strip holds a 44 px tab and its trim").toBeGreaterThanOrEqual(44);
+      42 |         for (const c of corners) {
+    > 43 |             expect(c.r, `${c.what}: corner ${c.r} on a ${c.h} px box ${JSON.stringify(corners)}`).toBeGreaterThanOrEqual(c.h / 2 - 0.5);
+         |                                                                                                   ^
+      44 |         }
+      45 |     });
+      46 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:43:99
+
+    Error Context: test-results/release-11-1-1-controls-ro-15a7d-rip-is-round-ended-on-touch-chromium-phone/error-context.md
+
+  2) [chromium-phone] › release-11-1-1-controls.spec.ts:48:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     97.7,
+    +     99.5,
+        ],
+        Array [
+    -     113.7,
+    +     115.5,
+          60,
+        ],
+        Array [
+    -     177.7,
+    +     179.5,
+          127.5,
+        ],
+      ]
+
+      65 |     const off = await boxes();
+      66 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 67 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      68 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      69 | });
+      70 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:67:53
+
+    Error Context: test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-phone/error-context.md
+
+  3) [chromium-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap 
+
+    Error: scale after the tap: 1.08
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "1"
+    Received: "1.08"
+
+      84 |         await page.waitForTimeout(800);
+      85 |         const after = await read();
+    > 86 |         expect(after.scale, `scale after the tap: ${after.scale}`).toBe(rest.scale);
+         |                                                                    ^
+      87 |     } else {
+      88 |         await tile.hover();
+      89 |         await page.waitForTimeout(800);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:86:68
+
+    Error Context: test-results/release-11-1-1-controls-li-1a42e-returns-to-rest-after-a-tap-chromium-phone/error-context.md
+
+  4) [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · pick 
+
+    Error: form on every exit frame [{"t":4,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":13,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":21,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":29,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":37,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":47,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":54,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":64,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":70,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":81,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":88,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":96,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":104,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":114,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":122,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":130,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":138,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":145,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":156,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":163,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":0.736129,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":171,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":0.0383417,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      90 |         let prevY = rest.y!;
+      91 |         for (const f of exit) {
+    > 92 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      93 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      94 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      95 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:92:82
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-bbadc-he-form-it-opened-in-·-pick-chromium-phone/error-context.md
+
+  5) [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+
+    Error: material attribute +34 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      125 |         for (const f of exit) {
+      126 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 127 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      128 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      129 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      130 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:127:59
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-chromium-phone/error-context.md
+
+  6) [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · outside 
+
+    Error: form on every exit frame [{"t":6,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":13,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":22,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":29,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":39,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":46,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":56,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":63,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":72,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":80,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":89,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":97,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":105,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":113,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":120,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":129,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0755131,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      90 |         let prevY = rest.y!;
+      91 |         for (const f of exit) {
+    > 92 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      93 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      94 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      95 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:92:82
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-12479-form-it-opened-in-·-outside-chromium-phone/error-context.md
+
+  7) [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+
+    Error: material attribute +11 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      125 |         for (const f of exit) {
+      126 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 127 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      128 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      129 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      130 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:127:59
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-f9776--through-the-exit-·-outside-chromium-phone/error-context.md
+
+  8) [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · escape 
+
+    Error: form on every exit frame [{"t":4,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":14,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":22,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":31,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":38,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":47,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":55,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":64,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":71,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":80,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":89,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":97,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":104,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":115,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":122,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.923026,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":131,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0547717,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      90 |         let prevY = rest.y!;
+      91 |         for (const f of exit) {
+    > 92 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      93 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      94 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      95 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:92:82
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-0bcc0--form-it-opened-in-·-escape-chromium-phone/error-context.md
+
+  9) [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Error: material attribute +9 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      125 |         for (const f of exit) {
+      126 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 127 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      128 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      129 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      130 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:127:59
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-phone/error-context.md
+
+  10) [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · trigger 
+
+    Error: form on every exit frame [{"t":3,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":12,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":20,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":28,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":37,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":44,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":53,"x":162,"y":65.66666412353516,"w":128,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":62,"x":162,"y":65.66666412353516,"w":128,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":70,"x":162.3333282470703,"y":65.66666412353516,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":78,"x":162.3333282470703,"y":65.66666412353516,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":85,"x":162.6666717529297,"y":65.66666412353516,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":94,"x":162.6666717529297,"y":65.66666412353516,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":103,"x":162.6666717529297,"y":65.33333587646484,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":112,"x":163,"y":65.33333587646484,"w":128,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":120,"x":163,"y":65.33333587646484,"w":128,"op":0.875987,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":127,"x":163,"y":65.33333587646484,"w":128,"op":0.102415,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      90 |         let prevY = rest.y!;
+      91 |         for (const f of exit) {
+    > 92 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      93 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      94 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      95 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:92:82
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-0a402-form-it-opened-in-·-trigger-chromium-phone/error-context.md
+
+  11) [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · trigger 
+
+    Error: material attribute +12 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      125 |         for (const f of exit) {
+      126 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 127 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      128 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      129 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      130 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:127:59
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-c2904--through-the-exit-·-trigger-chromium-phone/error-context.md
+
+  12) [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · current 
+
+    Error: form on every exit frame [{"t":5,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":14,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":22,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":31,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":39,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":47,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":72,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":81,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":89,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":96,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":106,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":114,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":121,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":131,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":139,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":147,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":156,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":164,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":172,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":181,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.872537,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":188,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0690545,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      90 |         let prevY = rest.y!;
+      91 |         for (const f of exit) {
+    > 92 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      93 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      94 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      95 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:92:82
+
+    Error Context: test-results/release-11-1-1-form-·-a-do-e03ad-form-it-opened-in-·-current-chromium-phone/error-context.md
+
+  13) [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light 
+
+    Error: the plate blurs its backdrop
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /blur\((?!0px)/
+    Received string:  "none"
+
+      236 |             }
+      237 |             await info.attach("glass", { body: JSON.stringify({ plate, reads }), contentType: "application/json" });
+    > 238 |             expect(plate.bf, "the plate blurs its backdrop").toMatch(/blur\((?!0px)/);
+          |                                                              ^
+      239 |             expect(plate.alpha, "the plate lets its backdrop through").toBeLessThan(1);
+      240 |             expect(plate.nested, "no blur inside the plate's blur").toEqual([]);
+      241 |             expect(highlighted, "a highlighted row to read").toBeTruthy();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:238:62
+
+    Error Context: test-results/release-11-1-1-glass-·-a-p-c253c--over-a-busy-ground-·-light-chromium-phone/error-context.md
+
+  14) [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark 
+
+    Error: the plate blurs its backdrop
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /blur\((?!0px)/
+    Received string:  "none"
+
+      236 |             }
+      237 |             await info.attach("glass", { body: JSON.stringify({ plate, reads }), contentType: "application/json" });
+    > 238 |             expect(plate.bf, "the plate blurs its backdrop").toMatch(/blur\((?!0px)/);
+          |                                                              ^
+      239 |             expect(plate.alpha, "the plate lets its backdrop through").toBeLessThan(1);
+      240 |             expect(plate.nested, "no blur inside the plate's blur").toEqual([]);
+      241 |             expect(highlighted, "a highlighted row to read").toBeTruthy();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:238:62
+
+    Error Context: test-results/release-11-1-1-glass-·-a-p-b9253-1-over-a-busy-ground-·-dark-chromium-phone/error-context.md
+
+  15) [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light 
+
+    Error: the plate blurs its backdrop
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /blur\((?!0px)/
+    Received string:  "none"
+
+      236 |             }
+      237 |             await info.attach("glass", { body: JSON.stringify({ plate, reads }), contentType: "application/json" });
+    > 238 |             expect(plate.bf, "the plate blurs its backdrop").toMatch(/blur\((?!0px)/);
+          |                                                              ^
+      239 |             expect(plate.alpha, "the plate lets its backdrop through").toBeLessThan(1);
+      240 |             expect(plate.nested, "no blur inside the plate's blur").toEqual([]);
+      241 |             expect(highlighted, "a highlighted row to read").toBeTruthy();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:238:62
+
+    Error Context: test-results/release-11-1-1-glass-·-a-p-4b205--over-a-busy-ground-·-light-chromium-phone/error-context.md
+
+  16) [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark 
+
+    Error: the plate blurs its backdrop
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /blur\((?!0px)/
+    Received string:  "none"
+
+      236 |             }
+      237 |             await info.attach("glass", { body: JSON.stringify({ plate, reads }), contentType: "application/json" });
+    > 238 |             expect(plate.bf, "the plate blurs its backdrop").toMatch(/blur\((?!0px)/);
+          |                                                              ^
+      239 |             expect(plate.alpha, "the plate lets its backdrop through").toBeLessThan(1);
+      240 |             expect(plate.nested, "no blur inside the plate's blur").toEqual([]);
+      241 |             expect(highlighted, "a highlighted row to read").toBeTruthy();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:238:62
+
+    Error Context: test-results/release-11-1-1-glass-·-a-p-363ff-1-over-a-busy-ground-·-dark-chromium-phone/error-context.md
+
+  17) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Select leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":416,"exit":142,"painted":17,"seenShare":0.925,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.85,"travel":549,"travelShare":0.992,"frames":[[0,1,615],[0,1,615],[9,1,610],[17,1,66],[25,1,66],[33,1,66],[41,1,66],[49,1,66],[59,1,66],[67,1,66],[75,1,66],[82,1,66],[92,1,66],[99,1,66],[107,1,66],[115,1,66],[124,1,66],[133,0.075,66],[142,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.925
+
+      392 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      393 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 394 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      395 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      396 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      397 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:394:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  18) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":400,"exit":129,"painted":15,"seenShare":0.806,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.747,"travel":0,"travelShare":null,"frames":[[0,1,195],[3,1,195],[12,1,195],[21,1,195],[29,1,195],[37,1,195],[45,1,195],[54,1,195],[63,1,195],[71,1,195],[78,1,195],[87,1,195],[95,1,195],[104,1,195],[112,0.827,195],[121,0.027,195],[129,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.806
+
+      392 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      393 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 394 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      395 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      396 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      397 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:394:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  19) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":504,"exit":139,"painted":16,"seenShare":0.329,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.296,"travel":7,"travelShare":null,"frames":[[0,1,140],[6,1,140],[14,0.81,139],[23,0.671,138],[31,0.559,138],[40,0.464,137],[48,0.384,136],[56,0.315,136],[64,0.256,136],[73,0.204,135],[81,0.16,135],[89,0.124,135],[98,0.092,134],[106,0.066,134],[115,0.045,134],[123,0.028,133],[131,0.015,133],[139,0.007,133]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.329
+
+      392 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      393 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 394 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      395 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      396 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      397 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:394:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  20) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":266,"exit":233,"painted":27,"seenShare":0.169,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.362,"travel":9,"travelShare":null,"frames":[[0,1,20],[8,1,20],[17,0.917,21],[24,0.836,21],[33,0.757,22],[42,0.661,23],[49,0.579,24],[58,0.506,24],[67,0.43,25],[75,0.366,26],[82,0.31,26],[92,0.267,26],[100,0.22,27],[108,0.184,27],[117,0.153,27],[125,0.127,28],[133,0.106,28],[142,0.089,28],[150,0.072,28],[158,0.06,28],[167,0.049,28],[175,0.04,28],[183,0.033,28],[192,0.027,29],[200,0.022,29],[207,0.018,29],[217,0.015,29],[224,0.012,29],[233,0.01,29]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.362
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  21) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":624,"exit":205,"painted":24,"seenShare":0.119,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.102,"travel":286,"travelShare":0.122,"frames":[[0,1,98],[5,1,98],[13,0.97,106],[21,0.937,116],[30,0.894,128],[38,0.845,143],[46,0.791,159],[55,0.734,175],[63,0.674,193],[71,0.616,210],[80,0.556,227],[88,0.499,244],[96,0.443,261],[105,0.39,276],[113,0.339,291],[121,0.293,304],[130,0.249,317],[138,0.209,329],[146,0.172,340],[155,0.139,349],[163,0.11,358],[171,0.083,366],[180,0.06,372],[188,0.04,378],[196,0.023,383],[205,0.008,388]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.102
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  22) [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":485,"exit":203,"painted":24,"seenShare":0.119,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.105,"travel":87,"travelShare":0.122,"frames":[[0,1,755],[4,1,755],[12,0.97,758],[20,0.936,761],[28,0.894,765],[37,0.845,769],[45,0.79,774],[54,0.733,779],[61,0.674,784],[69,0.619,789],[79,0.563,794],[86,0.498,800],[94,0.445,805],[104,0.395,809],[112,0.339,814],[120,0.292,818],[129,0.252,822],[137,0.208,826],[145,0.172,829],[154,0.139,832],[162,0.109,834],[170,0.083,837],[179,0.06,839],[187,0.04,840],[195,0.023,842],[203,0.009,843]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.105
+
+      399 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      400 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 401 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      402 |     });
+      403 | }
+      404 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:401:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  23) [chromium-phone] › release-11-1-1.spec.ts:448:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+
+    Error: no scale entrance +57 ms [{"t":57,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":65,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":73,"scale":"0.996431 0.889268","filter":"blur(5.56191px)"},{"t":82,"scale":"0.996513 0.891809","filter":"blur(5.18435px)"},{"t":91,"scale":"0.996643 0.895841","filter":"blur(4.83425px)"},{"t":98,"scale":"0.996782 0.900138","filter":"blur(4.56537px)"},{"t":108,"scale":"0.996979 0.906258","filter":"blur(4.25827px)"},{"t":115,"scale":"0.997149 0.911534","filter":"blur(4.03434px)"},{"t":124,"scale":"0.997381 0.918725","filter":"blur(3.76497px)"},{"t":132,"scale":"0.997569 0.924558","filter":"blur(3.56617px)"},{"t":141,"scale":"0.997802 0.931802","filter":"blur(3.33595px)"},{"t":149,"scale":"0.998013 0.938357","filter":"blur(3.13833px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      437 |     for (const f of frames) {
+      438 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 439 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      440 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      441 |     }
+      442 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:439:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:460:23
+
+    Error Context: test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-chromium-phone/error-context.md
+
+  24) [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by escape 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,422],[1,1,422],[9,1,422],[18,0.973,411],[25,0.942,398],[34,0.909,384],[43,0.867,366],[51,0.818,345],[59,0.771,325],[68,0.722,305],[75,0.673,284],[84,0.627,265],[92,0.581,245],[101,0.533,225],[108,0.486,205],[117,0.449,189],[125,0.409,173],[134,0.405,171],[142,0.405,171],[151,0.405,171],[158,0.405,171],[167,0.405,171],[175,0.405,171],[184,0.405,171],[193,0.405,171],[201,0.405,171],[208,0.405,171],[218,0.405,171],[226,0.405,171],[233,0.405,171],[242,0.405,171],[250,0.405,171],[259,0.405,171],[267,0.405,171],[276,0.405,171],[284,0.405,171],[293,0.405,171],[300,0.405,171],[308,0.405,171],[317,0.405,171],[326,0.405,171],[334,0.405,171],[343,0.405,171],[350,0.405,171],[359,0.405,171],[367,0.405,171],[375,0.405,171],[384,0.405,171],[392,0.405,171],[401,0.405,171],[409,0.405,171],[417,0.405,171],[425,0.405,171],[434,0.405,171],[443,0.405,171],[450,0.405,171],[459,0.405,171],[467,0.405,171],[476,0.405,171],[484,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.405
+
+      521 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      522 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 523 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      524 |     });
+      525 | }
+      526 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:523:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--9057b-heet-leaves-whole-by-escape-chromium-phone/error-context.md
+
+  25) [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by outside 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,422],[1,1,422],[10,1,422],[18,1,422],[26,0.973,411],[35,0.947,400],[43,0.907,383],[51,0.866,365],[60,0.823,348],[68,0.773,326],[76,0.726,307],[85,0.675,285],[93,0.626,264],[101,0.579,244],[110,0.535,226],[118,0.488,206],[126,0.446,188],[134,0.409,172],[143,0.405,171],[151,0.405,171],[160,0.405,171],[168,0.405,171],[176,0.405,171],[185,0.405,171],[193,0.405,171],[201,0.405,171],[209,0.405,171],[218,0.405,171],[226,0.405,171],[235,0.405,171],[242,0.405,171],[251,0.405,171],[260,0.405,171],[268,0.405,171],[276,0.405,171],[285,0.405,171],[293,0.405,171],[301,0.405,171],[309,0.405,171],[317,0.405,171],[326,0.405,171],[334,0.405,171],[343,0.405,171],[351,0.405,171],[359,0.405,171],[368,0.405,171],[376,0.405,171],[384,0.405,171],[393,0.405,171],[401,0.405,171],[409,0.405,171],[418,0.405,171],[426,0.405,171],[435,0.405,171],[442,0.405,171],[451,0.405,171],[460,0.405,171],[468,0.405,171],[476,0.405,171],[485,0.405,171],[493,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.405
+
+      521 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      522 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 523 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      524 |     });
+      525 | }
+      526 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:523:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--524c4-eet-leaves-whole-by-outside-chromium-phone/error-context.md
+
+  26) [chromium-phone] › release-11-1-1.spec.ts:532:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+
+    Error: no frame shows more than the drag left {"left":0.405,"highest":0.973,"rise":0.568,"lastSeen":0.405,"gone":true,"frames":[[-31,0.405],[-23,0.405],[-14,0.405],[-6,0.405],[2,0.405],[11,0.405],[19,0.973],[26,0.944],[36,0.912],[44,0.865],[52,0.821],[61,0.775],[69,0.723],[77,0.675],[86,0.627],[94,0.579],[102,0.533],[111,0.488],[119,0.447],[127,0.406],[136,0.405],[144,0.405],[152,0.405],[160,0.405],[169,0.405],[177,0.405],[186,0.405],[193,0.405]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    0.568
+
+      588 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);
+      589 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);
+    > 590 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                      ^
+      591 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);
+      592 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);
+      593 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:590:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--d68a9-from-where-the-drag-left-it-chromium-phone/error-context.md
+
+  27) [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the plate keeps its box through its exit {"rest":[350,435],"box":[[6,350,435],[13,350,435],[22,350,435],[31,350,435],[39,350,435],[47,350,51],[56,350,51],[63,350,51],[72,350,51],[80,350,51],[89,350,51],[97,350,51],[106,350,51],[114,350,51],[122,350,51],[131,350,51],[139,350,51],[148,350,51],[156,350,51],[163,350,51],[172,350,51],[181,350,51],[189,350,51],[197,350,51],[206,350,51],[213,350,51],[223,350,51],[230,350,51],[239,350,51],[248,350,51],[255,350,51],[264,350,51],[272,350,51],[281,350,51],[288,350,51],[297,350,51],[305,350,51],[313,350,51],[323,350,51],[330,350,51],[338,350,51],[348,350,51],[356,350,51]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    384
+
+      619 |             const box = held.map((f) => [Math.round(f.t - film.mark), f.lw, f.lh]);
+      620 |             const drift = Math.max(...held.map((f) => Math.max(Math.abs(f.lw! - read.rest.lw!), Math.abs(f.lh! - read.rest.lh!))));
+    > 621 |             expect(drift, `the plate keeps its box through its exit ${JSON.stringify({ rest: [read.rest.lw, read.rest.lh], box })}`).toBeLessThanOrEqual(1);
+          |                                                                                                                                      ^
+      622 |         }
+      623 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      624 |             if (!f.present) continue;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:621:134
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-phone/error-context.md
+
+  28) [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[5,0.117,51],[13,0.107,51],[22,0.097,51],[30,0.086,50],[38,0.076,50],[47,0.067,50],[55,0.056,50],[63,0.048,50],[71,0.041,49],[80,0.035,49],[89,0.029,49],[97,0.024,49],[105,0.02,49],[113,0.017,49],[122,0.014,49],[130,0.011,49],[138,0.009,49]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      623 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      624 |             if (!f.present) continue;
+    > 625 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      626 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      627 |         }
+      628 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:625:81
+
+    Error Context: test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-chromium-phone/error-context.md
+
+  29) [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[7,1,435],[15,1,435],[24,0.117,51],[31,0.107,51],[40,0.097,51],[48,0.086,50],[57,0.076,50],[65,0.065,50],[74,0.057,50],[82,0.048,50],[89,0.041,49],[98,0.035,49],[106,0.029,49],[115,0.024,49],[123,0.02,49],[131,0.017,49],[139,0.014,49],[148,0.012,49],[157,0.01,49]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      623 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      624 |             if (!f.present) continue;
+    > 625 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      626 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      627 |         }
+      628 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:625:81
+
+    Error Context: test-results/release-11-1-1-routes-·-a--22113-through-its-exit-by-outside-chromium-phone/error-context.md
+
+  30) [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Select's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,229],[8,1,229],[16,0.922,230],[24,0.33,230],[34,0.33,230],[41,0.33,230],[49,0.33,230],[58,0.33,230],[67,0.33,230],[75,0.33,230],[84,0.33,230],[92,0.33,230],[100,0.33,230],[108,0.33,230],[116,0.33,230],[125,0.298,230],[133,0.013,230],[142,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.592
+
+      671 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      672 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 673 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      674 |     });
+      675 | }
+      676 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:673:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--df64e-ct-s-trigger-closes-it-once-chromium-phone/error-context.md
+
+  31) [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,158],[9,1,158],[17,1,158],[24,1,158],[33,1,158],[42,1,158],[50,1,158],[58,1,158],[66,1,158],[75,1,158],[84,1,158],[92,1,158],[100,1,158],[108,1,158],[117,1,158],[125,0.958,158],[134,0.043,158],[142,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.949
+
+      671 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      672 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 673 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      674 |     });
+      675 | }
+      676 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:673:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--2349d-nu-s-trigger-closes-it-once-chromium-phone/error-context.md
+
+  32) [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Popover's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,50],[3,1,50],[12,1,50],[19,0.816,49],[28,0.653,49],[36,0.545,48],[45,0.444,48],[53,0.364,48],[62,0.297,47],[70,0.239,47],[78,0.191,47],[86,0.149,46],[95,0.114,46],[103,0.084,46],[111,0.06,46],[119,0.042,46],[128,0.026,45],[137,0.014,45],[145,0.006,45]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.346
+
+      671 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      672 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 673 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      674 |     });
+      675 | }
+      676 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:673:86
+
+    Error Context: test-results/release-11-1-1-routes-·-a--f36a5-er-s-trigger-closes-it-once-chromium-phone/error-context.md
+
+  33) [chromium-phone] › release-11-1-1.spec.ts:752:1 › sheet · a detented Sheet rises into place at its rung's size 
+
+    Error: its block size reads one value on every frame of the rise {"heightSpread":669.06,"firstHead":818,"restHead":150,"share":0.146,"frames":[[-6,932,null],[11,818,171],[19,818,171],[27,818,171],[36,818,171],[52,818,171],[61,798,191],[69,758,231],[77,717,272],[86,675,314],[94,636,353],[102,599,390],[111,560,429],[119,525,464],[127,491,498],[135,461,528],[143,433,556],[152,406,583],[161,377,612],[169,354,635],[177,333,656],[186,313,676],[194,295,694],[202,278,711],[210,263,726],[219,251,738],[227,238,751],[236,227,762],[244,217,772],[252,209,780],[260,201,788],[268,194,795],[277,188,801],[285,182,807],[293,178,811],[301,173,816],[311,170,819],[319,166,823],[327,163,826],[336,161,828],[343,159,830],[352,157,832],[360,156,833],[369,154,835],[377,153,836],[386,152,837],[394,152,837],[402,151,838],[410,150,839],[419,150,839]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    669.06
+
+      896 |     await info.attach("sheet", { body: JSON.stringify(read), contentType: "application/json" });
+      897 |     const at = JSON.stringify({ ...rise, frames: rise.frames.slice(0, 50) });
+    > 898 |     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);
+          |                                                                                                  ^
+      899 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);
+      900 |     for (const after of [120, 190, 250, 400]) {
+      901 |         const these = taps.filter((r) => r.after === after && r.aimed);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:898:98
+
+    Error Context: test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-chromium-phone/error-context.md
+
+  34) [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it 
+
+    Error: from the release no frame carries more than a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":1.036,"frames":[[-6,242],[3,242],[11,242],[19,405],[28,388],[36,367],[44,344],[52,321],[61,299],[69,275],[78,253],[86,233],[94,214],[103,196],[111,181],[119,167],[127,154],[136,144],[144,134],[153,125],[161,118],[169,112],[178,107],[186,102],[194,98],[202,95],[211,93],[219,91],[228,89],[236,87],[244,86],[253,86],[261,85],[269,84],[278,84],[286,84],[294,84],[303,83],[310,83],[319,83]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1.036
+
+      969 |         expect(read.fromRung, `the drag carried the sheet past the midpoint ${at}`).toBeGreaterThan(0.7);
+      970 |         expect(read.fromRung, `and short of the 0.9 rung ${at}`).toBeLessThan(0.88);
+    > 971 |         expect(read.share, `from the release no frame carries more than a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                                            ^
+      972 |         expect(Math.abs(read.endRung - 0.9), `it settles on the 0.9 rung ${at}`).toBeLessThanOrEqual(0.01);
+      973 |     });
+      974 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:971:108
+
+    Error Context: test-results/release-11-1-1-sheet-·-a-d-26991-om-where-the-finger-left-it-chromium-phone/error-context.md
+
+  35) [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it 
+
+    Error: from the release no frame carries more than a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":1.036,"frames":[[-7,242],[2,242],[10,242],[18,405],[27,390],[35,367],[44,345],[52,321],[60,298],[69,275],[77,253],[85,234],[93,214],[102,197],[110,181],[118,167],[127,155],[135,143],[144,134],[152,125],[160,118],[169,112],[177,107],[185,102],[194,98],[202,95],[210,93],[218,91],[227,89],[235,87],[244,86],[252,86],[260,85],[269,84],[277,84],[285,84],[294,84],[302,83],[310,83],[318,83]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1.036
+
+      969 |         expect(read.fromRung, `the drag carried the sheet past the midpoint ${at}`).toBeGreaterThan(0.7);
+      970 |         expect(read.fromRung, `and short of the 0.9 rung ${at}`).toBeLessThan(0.88);
+    > 971 |         expect(read.share, `from the release no frame carries more than a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                                            ^
+      972 |         expect(Math.abs(read.endRung - 0.9), `it settles on the 0.9 rung ${at}`).toBeLessThanOrEqual(0.01);
+      973 |     });
+      974 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic14-red/tree/tests-visual/release-11-1-1.spec.ts:971:108
+
+    Error Context: test-results/release-11-1-1-sheet-·-a-d-c8e91-om-where-the-finger-left-it-chromium-phone/error-context.md
+
+  35 failed
+    [chromium-phone] › release-11-1-1-controls.spec.ts:24:5 › round · a wide SegmentedTabs strip is round-ended on touch 
+    [chromium-phone] › release-11-1-1-controls.spec.ts:48:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+    [chromium-phone] › release-11-1-1-controls.spec.ts:71:1 › lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap 
+    [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · pick 
+    [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+    [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · outside 
+    [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+    [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · escape 
+    [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+    [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · trigger 
+    [chromium-phone] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · trigger 
+    [chromium-phone] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · current 
+    [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light 
+    [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark 
+    [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light 
+    [chromium-phone] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Select leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:319:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › release-11-1-1.spec.ts:448:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+    [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by escape 
+    [chromium-phone] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by outside 
+    [chromium-phone] › release-11-1-1.spec.ts:532:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+    [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape 
+    [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside 
+    [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Select's trigger closes it once 
+    [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+    [chromium-phone] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Popover's trigger closes it once 
+    [chromium-phone] › release-11-1-1.spec.ts:752:1 › sheet · a detented Sheet rises into place at its rung's size 
+    [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it 
+    [chromium-phone] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it 
+  3 skipped
+  3 passed (4.1m)

@@ -1,0 +1,313 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "exit.·.Sheet.right",
+      "--repeat-each=5"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 5,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-14/logs/exitR-tip-cp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:23:39.405Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjEwLCJleGl0IjoyNjUsInBhaW50ZWQiOjMxLCJzZWVuU2hhcmUiOjAuMDgxLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDA5LCJ0cmF2ZWwiOjI4NywidHJhdmVsU2hhcmUiOjAuMDgzLCJmcmFtZXMiOltbMCwxLDk4XSxbNiwxLDk4XSxbMTYsMSw5OF0sWzI0LDAuOTcyLDEwNl0sWzMxLDAuOTQ3LDExM10sWzQwLDAuOTIxLDEyMV0sWzQ3LDAuODg4LDEzMF0sWzU3LDAuODYzLDEzN10sWzY1LDAuODIzLDE0OV0sWzc0LDAuNzksMTU5XSxbODIsMC43NTUsMTY5XSxbOTAsMC43MTksMTgwXSxbOTgsMC42ODMsMTkwXSxbMTA3LDAuNjUsMjAwXSxbMTE1LDAuNjA3LDIxMl0sWzEyNCwwLjU3MSwyMjNdLFsxMzIsMC41MzMsMjM0XSxbMTM5LDAuNDk1LDI0NV0sWzE0OSwwLjQ2MywyNTVdLFsxNTcsMC40MTcsMjY4XSxbMTY0LDAuMzgxLDI3OF0sWzE3NCwwLjM1LDI4OF0sWzE4MiwwLjMwNSwzMDFdLFsxOTEsMC4yNzIsMzExXSxbMTk4LDAuMjM0LDMyMl0sWzIwNywwLjIwMywzMzFdLFsyMTUsMC4xNjYsMzQyXSxbMjI0LDAuMTM0LDM1MV0sWzIzMiwwLjEwMywzNjBdLFsyNDAsMC4wNzMsMzY5XSxbMjQ5LDAuMDQ1LDM3N10sWzI1NywwLjAyLDM4NF0sWzI2NSwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3203,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:23:43.190Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjExLCJleGl0IjoyNjIsInBhaW50ZWQiOjMxLCJzZWVuU2hhcmUiOjAuMDc4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDA4LCJ0cmF2ZWwiOjI4NiwidHJhdmVsU2hhcmUiOjAuMDgsImZyYW1lcyI6W1swLDEsOThdLFs0LDEsOThdLFsxMSwxLDk4XSxbMTksMC45ODEsMTAzXSxbMjksMC45NTUsMTExXSxbMzcsMC45MjIsMTIwXSxbNDYsMC44OTMsMTI5XSxbNTQsMC44NjEsMTM4XSxbNjEsMC44MjgsMTQ4XSxbNjksMC44LDE1Nl0sWzc5LDAuNzY3LDE2Nl0sWzg2LDAuNzI1LDE3OF0sWzk2LDAuNjkzLDE4N10sWzEwNCwwLjY1LDIwMF0sWzExMiwwLjYxNCwyMTBdLFsxMjEsMC41NzcsMjIxXSxbMTI5LDAuNTM3LDIzM10sWzEzNiwwLjUsMjQ0XSxbMTQ0LDAuNDY3LDI1M10sWzE1MywwLjQzMSwyNjRdLFsxNjIsMC4zOSwyNzZdLFsxNzEsMC4zNDksMjg4XSxbMTc5LDAuMzEyLDI5OV0sWzE4NywwLjI3NSwzMTBdLFsxOTYsMC4yNCwzMjBdLFsyMDQsMC4yMDQsMzMwXSxbMjEyLDAuMTcxLDM0MF0sWzIyMSwwLjEzOCwzNTBdLFsyMjksMC4xMDcsMzU5XSxbMjM3LDAuMDc3LDM2N10sWzI0NiwwLjA0OSwzNzZdLFsyNTQsMC4wMjMsMzgzXSxbMjYyLDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3313,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:23:46.868Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjE3LCJleGl0IjoyNjMsInBhaW50ZWQiOjMxLCJzZWVuU2hhcmUiOjAuMDgzLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDA5LCJ0cmF2ZWwiOjI4NSwidHJhdmVsU2hhcmUiOjAuMDg1LCJmcmFtZXMiOltbMCwxLDk4XSxbNCwxLDk4XSxbMTMsMSw5OF0sWzIxLDAuOTc3LDEwNF0sWzI5LDAuOTUxLDExMl0sWzM4LDAuOTIzLDEyMF0sWzQ2LDAuODk0LDEyOV0sWzUzLDAuODYyLDEzOF0sWzYyLDAuODMzLDE0Nl0sWzcxLDAuNzk3LDE1N10sWzc5LDAuNzYsMTY4XSxbODYsMC43MjUsMTc4XSxbOTYsMC42OTUsMTg3XSxbMTAzLDAuNjUxLDIwMF0sWzExMywwLjYyMSwyMDhdLFsxMjAsMC41NzcsMjIxXSxbMTMwLDAuNTQzLDIzMV0sWzEzNywwLjUsMjQ0XSxbMTQ2LDAuNDY2LDI1NF0sWzE1NCwwLjQyNCwyNjZdLFsxNjMsMC4zODcsMjc3XSxbMTcxLDAuMzUsMjg4XSxbMTc5LDAuMzE0LDI5OF0sWzE4OCwwLjI3NywzMDldLFsxOTYsMC4yNCwzMjBdLFsyMDQsMC4yMDYsMzMwXSxbMjEzLDAuMTcyLDM0MF0sWzIyMSwwLjEzOSwzNDldLFsyMjksMC4xMDgsMzU4XSxbMjM4LDAuMDgsMzY3XSxbMjQ2LDAuMDUsMzc1XSxbMjU0LDAuMDI0LDM4M10sWzI2MywwLjAwMSwzOTBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3314,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:23:50.737Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjE5LCJleGl0IjoyNjMsInBhaW50ZWQiOjMxLCJzZWVuU2hhcmUiOjAuMDc5LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDEyLCJ0cmF2ZWwiOjI4NSwidHJhdmVsU2hhcmUiOjAuMDgxLCJmcmFtZXMiOltbMCwxLDk4XSxbNiwxLDk4XSxbMTQsMSw5OF0sWzIzLDAuOTc4LDEwNF0sWzMwLDAuOTUxLDExMl0sWzQwLDAuOTI3LDExOV0sWzQ4LDAuODkzLDEyOV0sWzU2LDAuODYzLDEzOF0sWzY0LDAuODMsMTQ3XSxbNzMsMC43OTYsMTU3XSxbODEsMC43NjIsMTY3XSxbODksMC43MjYsMTc4XSxbOTgsMC42OSwxODhdLFsxMDYsMC42NTMsMTk5XSxbMTE0LDAuNjE2LDIxMF0sWzEyMywwLjU3OCwyMjFdLFsxMzEsMC41NCwyMzJdLFsxMzksMC41MDIsMjQzXSxbMTQ4LDAuNDYzLDI1NF0sWzE1NiwwLjQyNSwyNjZdLFsxNjQsMC4zODgsMjc3XSxbMTczLDAuMzUsMjg4XSxbMTgxLDAuMzE0LDI5OF0sWzE4OCwwLjI3NywzMDldLFsxOTgsMC4yNDgsMzE3XSxbMjA2LDAuMjA1LDMzMF0sWzIxNCwwLjE3MywzMzldLFsyMjMsMC4xNCwzNDldLFsyMzEsMC4xMDksMzU4XSxbMjM5LDAuMDc4LDM2N10sWzI0OCwwLjA1MSwzNzVdLFsyNTYsMC4wMjUsMzgzXSxbMjYzLDAuMDAyLDM4OV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T02:23:54.599Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjEyLCJleGl0IjoyNjcsInBhaW50ZWQiOjMyLCJzZWVuU2hhcmUiOjAuMDc4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDA5LCJ0cmF2ZWwiOjI4NiwidHJhdmVsU2hhcmUiOjAuMDgsImZyYW1lcyI6W1swLDEsOThdLFsxLDEsOThdLFs5LDEsOThdLFsxNywxLDk4XSxbMjUsMC45NzcsMTA0XSxbMzQsMC45NSwxMTJdLFs0MCwwLjkyMiwxMjBdLFs1MSwwLjg5OCwxMjddLFs1NywwLjg2LDEzOF0sWzY3LDAuODM0LDE0Nl0sWzc1LDAuNzk0LDE1OF0sWzgzLDAuNzYsMTY4XSxbOTIsMC43MjgsMTc3XSxbMTAwLDAuNjg3LDE4OV0sWzEwOSwwLjY1MSwyMDBdLFsxMTcsMC42MTMsMjExXSxbMTI1LDAuNTc2LDIyMl0sWzEzNCwwLjUzOCwyMzNdLFsxNDEsMC41LDI0NF0sWzE0OSwwLjQ2NSwyNTRdLFsxNTksMC40MjgsMjY1XSxbMTY3LDAuMzg1LDI3N10sWzE3NSwwLjM0OSwyODhdLFsxODQsMC4zMTIsMjk5XSxbMTkyLDAuMjc1LDMxMF0sWzIwMCwwLjI0LDMyMF0sWzIwOSwwLjIwNiwzMzBdLFsyMTYsMC4xNywzNDBdLFsyMjQsMC4xNDEsMzQ5XSxbMjM0LDAuMTExLDM1OF0sWzI0MiwwLjA3NiwzNjhdLFsyNTAsMC4wNSwzNzZdLFsyNTksMC4wMjMsMzgzXSxbMjY3LDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-92562af27a0c55e15a32",
+          "file": "release-11-1-1.spec.ts",
+          "line": 319,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T02:23:37.686Z",
+    "duration": 20365.011000000002,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
