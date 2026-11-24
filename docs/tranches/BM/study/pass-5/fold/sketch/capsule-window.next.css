@@ -1,0 +1,33 @@
+/* BM pass 4 (Q1): the capsule window, a design sketch, not library source. Restated in pass 5 (folds A4-3, A4-4,
+   B4-5). A capsule changes its width on the compositor with exact ends: the window is an element of its widest
+   capsule, its ::before is the fill at that same size, and the two move by `translate`, so one end is the window's
+   and the other the fill's (pass-4/shape/geometry.json, F_window). One property per node, two animations per change.
+   WHERE IT GOES. On a part with no content, the selection mark, the window is the mark's own element and nothing is
+   added. On the dock it is wi8's existing plate, `.dock-plate`, a SIBLING of the controls (dock.css:9-24), never the
+   dock's root and never an ancestor of a seat: a window around the seats would clip them at rest (C-30) and rebuild
+   the triple identity wi8 cured (dock.css:4-29). The glass moves to the plate's free ::before (its ::after is the
+   grain, dock.css:207). The seats' own motion through a fold is wi8's, counted in pass 7.
+   THE BOX AND THE HIT AREA. Folded, the window rests translated by `--from`, so its box reaches past the visible
+   capsule; `getBoundingClientRect` reports that box. The window takes no pointer and its ::before does; the window's
+   rounded clip bounds the ::before, so only the visible capsule absorbs a tap. (Whether WebKit routes a hit on a
+   pseudo-element under a `pointer-events: none` host this way is critique-B-check.mjs's second cell, owed.)
+   `--from` is how far the far end has travelled in from the widest width (0 at rest open). The delivery is DESIGN
+   §4.3's rule 1, or rule 2 (the settle player) when the change carries a speed. */
+.capsule-window {
+    --from: 0px;
+    border-radius: calc(infinity * 1px);
+    overflow: clip;
+    pointer-events: none;
+    translate: calc(-1 * var(--from)) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.capsule-window::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glass-plate);
+    pointer-events: auto;
+    translate: var(--from) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}

@@ -1,0 +1,336 @@
+{
+ "at": "2026-11-22T23:47:30.861Z",
+ "dist": "glass-ui 11.1.0 (hassio-config's installed copy)",
+ "removed": {
+  "four of the five blur radii and their composed recipes": {
+   "gz": 76,
+   "note": "styles/tokens/glass.css"
+  },
+  "the deep tier (a second blur continuum)": {
+   "gz": 355,
+   "note": "styles/tokens/glass-deep.css + styles/glass/deep.css"
+  },
+  "the rim's inset legs (catch-light and under-shade)": {
+   "gz": 213,
+   "note": "tokens/glass-fx.css, tokens/dark-arm.css, glass/rim.css; each use of the rim also loses a layer from its box-shadow list, not counted"
+  },
+  "the veil clamp (CSS half of the luminance clamp)": {
+   "gz": 187,
+   "note": "the knee token, the @property registration, the clamp expression in @utility glass-plate (veil.css:56-71, re-spelled minified)"
+  }
+ },
+ "added": {
+  "the sketch, whole (one radius, the chrome mix, the edge, the plate, the two brackets)": {
+   "gz": 385,
+   "note": "sketch/material.next.css minified; an upper bound, since most of it replaces rules already shipped"
+  }
+ },
+ "luminance_clamp_js_gz": 2860,
+ "census": {
+  "atlas (library)": {
+   "ref": "u/build-atlas-rc@62405c0",
+   "a blur radius or recipe token": {
+    "count": 0,
+    "first": []
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 8,
+    "first": [
+     "src/charts/frame/PlateDial.vue:283:        var(--glass-rim-top, 0 0 #0000),",
+     "src/charts/frame/PlateDial.vue:284:        var(--glass-rim-bottom, 0 0 #0000),",
+     "src/charts/frame/PlateDock.vue:644:        var(--glass-rim-top, 0 0 #0000),",
+     "src/charts/frame/PlateDock.vue:645:        var(--glass-rim-bottom, 0 0 #0000),"
+    ]
+   },
+   "the luminance clamp's CSS": {
+    "count": 1,
+    "first": [
+     "src/platform/chrome/background/composables/atmosphere.ts:48:    measured backdrop luminance (`--glass-backdrop-luma`) and inks its foreground with"
+    ]
+   },
+   "the veil ink or rung tokens": {
+    "count": 0,
+    "first": []
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 1,
+    "first": [
+     "src/platform/chrome/masthead/GalleryMasthead.vue:25:// retired CSS `::before` radial halo (`backdrop-filter:none` on `.masthead` today, F6). The Surface"
+    ]
+   }
+  },
+  "atlas (sci dashboards)": {
+   "ref": "u/v19-sci@df25605f",
+   "a blur radius or recipe token": {
+    "count": 0,
+    "first": []
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 0,
+    "first": []
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 0,
+    "first": []
+   }
+  },
+  "value.js": {
+   "ref": "c45@243d0b364",
+   "a blur radius or recipe token": {
+    "count": 4,
+    "first": [
+     "demo/styles/shell.css:713: * `--glass-blur-resting` the `.glass-resting` rung consumes (ladder.css),",
+     "demo/styles/shell.css:743:        inset: calc(-2 * var(--glass-blur-resting-radius, 8px));",
+     "demo/styles/shell.css:745:        backdrop-filter: var(--glass-blur-resting);",
+     "demo/styles/shell.css:747:            calc(2 * var(--glass-blur-resting-radius, 8px)) round var(--radius-card)"
+    ]
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 3,
+    "first": [
+     "demo/color-session/ink.ts:49: * + `dark-arm.css`): every plate is `--glass-veil-ink` at the rung's alpha",
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:294:     * `--glass-veil-tier: var(--glass-veil-quiet)`, `glass-plate` reads it), and",
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:305:    --glass-veil-tier: var(--glass-veil-wash);"
+    ]
+   },
+   "the saturate token": {
+    "count": 1,
+    "first": [
+     "demo/color-session/ink.ts:421: * through `blur() saturate(var(--glass-saturate))`, 1.5 (read live on"
+    ]
+   },
+   "a backdrop-filter of its own": {
+    "count": 19,
+    "first": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:309:    -webkit-backdrop-filter: none;",
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:310:    backdrop-filter: none;",
+     "demo/picker/debug/PointerDebugOverlay.vue:178:    backdrop-filter: blur(8px);",
+     "demo/shared/ui/ColorSpaceSelector.vue:286:    -webkit-backdrop-filter: none;"
+    ]
+   }
+  },
+  "daraksha": {
+   "ref": "b11-occasion@406de8f",
+   "a blur radius or recipe token": {
+    "count": 2,
+    "first": [
+     "src/shell/SiteDock.vue:542:    -webkit-backdrop-filter: var(--glass-blur-resting);",
+     "src/shell/SiteDock.vue:543:    backdrop-filter: var(--glass-blur-resting);"
+    ]
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 2,
+    "first": [
+     "src/scripture/HeadDock.vue:180:    --glass-rim-top: 0 0 transparent;",
+     "src/scripture/HeadDock.vue:181:    --glass-rim-bottom: 0 0 transparent;"
+    ]
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 6,
+    "first": [
+     "src/gilt/gilt.css:14:    /* A glass veil warmed by the gold, not greyed (glass's --glass-veil-ink). */",
+     "src/scripture/HeadDock.vue:172:    --glass-veil-dock: 0;",
+     "src/scripture/HeadDock.vue:173:    --glass-veil-wash: 0;",
+     "src/shell/ControlsSeat.vue:183:    --glass-veil-dock: var(--glass-veil-base);"
+    ]
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 4,
+    "first": [
+     "src/shell/SiteDock.vue:542:    -webkit-backdrop-filter: var(--glass-blur-resting);",
+     "src/shell/SiteDock.vue:543:    backdrop-filter: var(--glass-blur-resting);",
+     "src/veil/pages/Leaf.vue:104:    -webkit-backdrop-filter: none;",
+     "src/veil/pages/Leaf.vue:105:    backdrop-filter: none;"
+    ]
+   }
+  },
+  "fourier": {
+   "ref": "f45@22dc445",
+   "a blur radius or recipe token": {
+    "count": 0,
+    "first": []
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 0,
+    "first": []
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 0,
+    "first": []
+   }
+  },
+  "keyframes": {
+   "ref": "kf45@96c6c109",
+   "a blur radius or recipe token": {
+    "count": 1,
+    "first": [
+     "scripts/build/vite/critical-css.ts:61:    --glass-blur-subtle: blur(4px) saturate(1.05);"
+    ]
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 0,
+    "first": []
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 0,
+    "first": []
+   }
+  },
+  "gaggle": {
+   "ref": "site-redesign@8d7fe5d",
+   "a blur radius or recipe token": {
+    "count": 0,
+    "first": []
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 10,
+    "first": [
+     "dashboard/proto/F5/style.css:254:    background: var(--glass-veil-ink);",
+     "dashboard/proto/R/kit/tokens.css:30:    --glass-veil-ink: var(--paper);",
+     "dashboard/proto/R/kit/tokens.css:31:    --glass-veil-base: 1;",
+     "dashboard/proto/R/kit/tokens.css:43:    --glass-veil-base: 1;"
+    ]
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 0,
+    "first": []
+   }
+  },
+  "Home Assistant": {
+   "ref": "master@1c0b560a",
+   "a blur radius or recipe token": {
+    "count": 2,
+    "first": [
+     "frontend/src/styles/tokens.css:69:    --glass-blur-floating: none;",
+     "frontend/src/tiles/css/sheet.css:20:    --glass-blur-floating: none;"
+    ]
+   },
+   "the deep tier": {
+    "count": 0,
+    "first": []
+   },
+   "the rim legs": {
+    "count": 0,
+    "first": []
+   },
+   "the luminance clamp's CSS": {
+    "count": 0,
+    "first": []
+   },
+   "the veil ink or rung tokens": {
+    "count": 2,
+    "first": [
+     "frontend/src/styles/tokens.css:33:    --glass-veil-ink: var(--l-color-veil);",
+     "frontend/src/tiles/css/plate.css:179:    --glass-veil-ink: var(--l-color-plate-veil);"
+    ]
+   },
+   "the saturate token": {
+    "count": 0,
+    "first": []
+   },
+   "a backdrop-filter of its own": {
+    "count": 2,
+    "first": [
+     "frontend/src/styles/tokens.css:84:    -webkit-backdrop-filter: none;",
+     "frontend/src/styles/tokens.css:85:    backdrop-filter: none;"
+    ]
+   }
+  }
+ }
+}

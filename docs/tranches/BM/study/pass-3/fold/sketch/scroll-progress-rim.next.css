@@ -1,0 +1,35 @@
+/* ScrollProgressRim edge="border", as proposed (BM pass 2), amended in pass 3 by the fold (A3, A5, A13, B-6, B-7).
+   A design sketch, not library source.
+   The root keeps `role="progressbar"` and never moves: it is the host's box, and it clips (`overflow: clip`,
+   which follows its inherited radius; the stroke is drawn inside that box, so the clip never cuts it). Inside
+   it, an `aria-hidden` window span with a square `overflow: clip` slides by the unread share and the stroke
+   slides back by the same, so the stroke stays on the host's border and only the window's edge moves. Both
+   legs are `translate`. The same two legs serve both feeds (A3, B-6):
+   - fed by the page's scroll (gaggle's report dock, fourier's reading progress): a scroll-driven animation on
+     the root scroller's timeline (rule 4), with no script and no transition, so it never trails the finger;
+   - fed a value (atlas's beats, fourier's job progress): the value and the dock row's single-curve transition.
+   The window clips with `overflow: clip`, the primitive P2-scroll's F reads (A13). The inset pill (edge="inset")
+   is left out of the change and keeps today's clip: its dots overhang the band, and a clip would cut them
+   (`styles.css:10-15`; A5). The RTL arm mirrors the travel (B-7). */
+.scroll-progress-rim[data-edge="border"] { overflow: clip; }
+.scroll-progress-rim__window { position: absolute; inset: 0; overflow: clip; translate: calc((var(--scroll-progress-rim-f, 0) - 1) * 100%) 0; }
+.scroll-progress-rim__window > .scroll-progress-rim__stroke { translate: calc((1 - var(--scroll-progress-rim-f, 0)) * 100%) 0; }
+.scroll-progress-rim__window:dir(rtl) { translate: calc((1 - var(--scroll-progress-rim-f, 0)) * 100%) 0; }
+.scroll-progress-rim__window:dir(rtl) > .scroll-progress-rim__stroke { translate: calc((var(--scroll-progress-rim-f, 0) - 1) * 100%) 0; }
+.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__window { translate: 0 calc((var(--scroll-progress-rim-f, 0) - 1) * 100%); }
+.scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__window > .scroll-progress-rim__stroke { translate: 0 calc((1 - var(--scroll-progress-rim-f, 0)) * 100%); }
+
+/* Fed a value: the change plays on the dock row's single curve. */
+.scroll-progress-rim[data-feed="value"] :is(.scroll-progress-rim__window, .scroll-progress-rim__stroke) {
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+/* Fed by the page's scroll: the scroll is the clock. */
+@keyframes scroll-progress-rim-window { from { translate: -100% 0; } to { translate: 0 0; } }
+@keyframes scroll-progress-rim-stroke { from { translate: 100% 0; } to { translate: 0 0; } }
+.scroll-progress-rim[data-feed="scroll"] .scroll-progress-rim__window { animation: scroll-progress-rim-window linear both; animation-timeline: scroll(root block); }
+.scroll-progress-rim[data-feed="scroll"] .scroll-progress-rim__window > .scroll-progress-rim__stroke { animation: scroll-progress-rim-stroke linear both; animation-timeline: scroll(root block); }
+
+@media (prefers-reduced-motion: reduce) {
+    /* A value-fed length keeps a 120 ms tween (the P6 line, §4.6); a scroll-fed line follows the reader's own scroll. */
+    .scroll-progress-rim[data-feed="value"] :is(.scroll-progress-rim__window, .scroll-progress-rim__stroke) { transition-duration: 120ms; transition-timing-function: var(--ease-out); }
+}

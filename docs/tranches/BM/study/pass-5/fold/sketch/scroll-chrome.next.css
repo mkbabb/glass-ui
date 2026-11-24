@@ -1,0 +1,16 @@
+/* scroll-chrome, as proposed (BM pass 2), amended in pass 3 (A1, A4), pass 4 (fold A5) and pass 5 (fold A4-10). A
+   design sketch, not library source. The collapse is a state the script sets once per change of direction. One
+   property moves on one node: `scale` from the top edge, on the dock row's single curve. The bar keeps its full
+   opacity: at 0.72 a word on it falls under D3's 4.8 in dark for every R3b letter (A 3.64, B 2.78, C 2.20; pass 4's
+   critique A, A4-10). The bar's one shadow stays as it is. Under reduced motion the bar does not collapse: with the
+   scale dropped there is nothing left to tween, and nothing changes. Solving the chrome bound at a dimmed opacity, so
+   the collapsed bar may dim, is the owner's, beside R3b's letter. */
+.scroll-chrome {
+    transform-origin: top center;
+    box-shadow: var(--shadow-sm);
+    transition: scale var(--spring-dock-duration) var(--spring-dock);
+}
+.scroll-chrome[data-collapsed] { scale: 0.88; }
+@media (prefers-reduced-motion: reduce) {
+    .scroll-chrome[data-collapsed] { scale: none; }
+}

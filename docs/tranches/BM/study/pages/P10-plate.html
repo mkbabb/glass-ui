@@ -1,0 +1,147 @@
+<title>The Hover Plate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 10 (choice 5 under O-426: "the study's final pass recommends one"; DESIGN §6.2). The hover plate three ways,
+   each a model drawn by this page alone, on a run of five seats with Home current.
+   A · the plate as first built (BL W-B.17): the ink at 5 % on hover, 12 % held for the current seat.
+   B · the plate at full strength in the seat's own colour on hover, 12 %, the icon taking that colour.
+   C · recommended: B's colour at the dock's measured ladder (BL wi8 MEASURE-9, choice 42): hover 6.5 % in light and
+       5 % in dark, current 10 %, pressed 12 %, so a hovered seat never reads as a second current page.
+   No letter draws a shape of its own: the plate is the seat's own capsule (choice 5's c, a drawn shape per
+   destination, is refused as ornament). Every plate fades over 120 ms and grows from 0.8 over 200 ms, both ways. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --peach: oklch(0.62 0.13 45);
+  --sea: oklch(0.52 0.09 208);
+  --plum: oklch(0.53 0.17 318);
+  --hover-step: 6.5%;
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --peach: oklch(0.78 0.10 50); --sea: oklch(0.80 0.09 207); --plum: oklch(0.74 0.13 318); --hover-step: 5%;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --peach: oklch(0.78 0.10 50); --sea: oklch(0.80 0.09 207); --plum: oklch(0.74 0.13 318); --hover-step: 5%;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1040px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 14px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 16px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+button.toggle {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) { button.toggle:hover { box-shadow: inset 0 0 0 1.5px var(--focus); } }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 14px 16px; display: grid; gap: 12px; min-width: 0; }
+.letter p { margin: 0; font-size: 16px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+.cap { font: 14px/1.3 var(--font); color: var(--muted); }
+
+.run { display: flex; gap: 2px; padding: 4px; border-radius: 26px; background: color-mix(in oklab, var(--fg) 4%, var(--card)); inline-size: max-content; max-inline-size: 100%; }
+.seat {
+  --tone: var(--fg); --hover: 5%; --on: 12%; --press: 12%;
+  position: relative; isolation: isolate; display: grid; place-items: center; inline-size: 44px; block-size: 44px;
+  border: 0; border-radius: 22px; background: transparent; color: var(--fg); cursor: pointer;
+  transition: color 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.seat svg { inline-size: 22px; block-size: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.seat::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: color-mix(in oklab, var(--tone) var(--level, 0%), transparent); scale: 0.8; opacity: 0;
+  transition: opacity 120ms cubic-bezier(0.4, 0, 0.2, 1), scale 200ms cubic-bezier(0.197, 0, 0.124, 0.808), background-color 120ms ease-out;
+}
+@media (hover: hover) { .seat:hover::before { --level: var(--hover); opacity: 1; scale: 1; } }
+.seat:focus-visible::before { --level: var(--hover); opacity: 1; scale: 1; }
+.seat[aria-current="page"]::before { --level: var(--on); opacity: 1; scale: 1; }
+.seat[data-press]::before { --level: var(--press); opacity: 1; scale: 1; }
+.tinted .seat:nth-child(2) { --tone: var(--peach); } .tinted .seat:nth-child(3) { --tone: var(--sea); } .tinted .seat:nth-child(4) { --tone: var(--plum); }
+
+[data-v="b"] .seat { --hover: 12%; }
+[data-v="b"] .tinted .seat:hover, [data-v="c"] .tinted .seat:hover { color: var(--tone); }
+[data-v="c"] .seat { --hover: var(--hover-step); --on: 10%; }
+@media (prefers-reduced-motion: reduce) { .seat::before { scale: 1; } }
+</style>
+
+<main>
+  <p class="ask"><strong>On a Mac, rest the mouse on each seat beside Home, the current one, in light and then dark. Send A, B or C: the plate you want on every control.</strong> C ships in 11.2.0 unless you send another letter.</p>
+  <p class="env" id="env">Reading your browser…</p>
+  <div class="bar"><button id="dark" class="toggle" type="button" aria-pressed="false">Dark</button></div>
+
+  <section>
+    <h2>A hovered seat beside the current one</h2>
+    <p class="how">The first run in each card is in the text’s colour. The second gives three seats a colour of their own, as a site may. Press a seat to see the pressed plate.</p>
+    <div class="letter" data-v="a"><p><b>A</b> · As first built: a faint grey on hover.</p></div>
+    <div class="letter" data-v="b"><p><b>B</b> · Full strength in the seat’s colour, the icon taking it.</p></div>
+    <div class="letter" data-v="c"><p><b>C</b> · Recommended: the seat’s colour, one step under the current page.</p></div>
+  </section>
+
+  <section>
+    <h2>The strengths</h2>
+    <p class="how">A: hover 5 %, current 12 %. B: hover 12 %, current 12 %. C: hover 6.5 % in light and 5 % in dark, current 10 %, pressed 12 %. C is the dock’s ladder as measured and built for 11.2.0, carried to every control.</p>
+  </section>
+  <p class="cap">Everything here is a model drawn by this page alone, not glass-ui itself.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent, safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  document.getElementById("env").textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const root = document.documentElement, darkBtn = document.getElementById("dark");
+  darkBtn.setAttribute("aria-pressed", String(matchMedia("(prefers-color-scheme: dark)").matches));
+  darkBtn.addEventListener("click", () => { const on = darkBtn.getAttribute("aria-pressed") !== "true"; darkBtn.setAttribute("aria-pressed", String(on)); root.dataset.theme = on ? "dark" : "light"; });
+  const icons = {
+    Home: '<path d="M4 11 12 4l8 7v8h-5v-5H9v5H4z"/>',
+    Pin: '<path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>',
+    Chat: '<path d="M5 5h14v10H9l-4 4z"/>',
+    Star: '<path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
+    Search: '<circle cx="11" cy="11" r="6"/><path d="m20 20-4.2-4.2"/>',
+  };
+  const run = (tinted) => {
+    const r = document.createElement("nav"); r.className = "run" + (tinted ? " tinted" : ""); r.setAttribute("aria-label", tinted ? "Seats with colours" : "Seats");
+    for (const [name, d] of Object.entries(icons)) {
+      const b = document.createElement("button"); b.type = "button"; b.className = "seat"; b.setAttribute("aria-label", name);
+      if (name === "Home") b.setAttribute("aria-current", "page");
+      b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+      b.addEventListener("pointerdown", () => b.setAttribute("data-press", ""));
+      const lift = () => b.removeAttribute("data-press");
+      b.addEventListener("pointerup", lift); b.addEventListener("pointercancel", lift); b.addEventListener("pointerleave", lift);
+      b.addEventListener("click", () => { r.querySelectorAll("[aria-current]").forEach((x) => x.removeAttribute("aria-current")); b.setAttribute("aria-current", "page"); });
+      r.appendChild(b);
+    }
+    return r;
+  };
+  for (const card of document.querySelectorAll(".letter")) {
+    const c1 = document.createElement("span"); c1.className = "cap"; c1.textContent = "In the text’s colour"; card.append(c1, run(false));
+    const c2 = document.createElement("span"); c2.className = "cap"; c2.textContent = "Three seats with colours of their own"; card.append(c2, run(true));
+  }
+})();
+</script>

@@ -1,0 +1,13 @@
+/* BM pass 4 (Q1), lane D, the morph within law 5, for the owner: a design sketch, not library source. The panel
+   is seen through three windows of its own shape; the panel's root is the first (top-left corner, still), two
+   wrappers are the second (moves along x) and third (y), and the plate (the third's ::before) moves along x again,
+   so each of the four corners rides its own window and keeps the panel's radius at every frame
+   (pass-4/shape/geometry.json, D_windows). `--dx` and `--dy` are the panel's width and height less the control's,
+   0 at rest. Two wrappers are added for a motion (restraint's ceiling: 0) and four animations run per open
+   (ceiling: 2); the plate's edge and shadow show only once the windows reach its box. */
+.bud-win, .bud-win-x, .bud-win-y { position: relative; border-radius: var(--radius-card); overflow: clip; }
+.bud-win-x { position: absolute; inset: 0; translate: calc(-1 * var(--dx)) 0; }
+.bud-win-y { position: absolute; inset: 0; translate: var(--dx) calc(-1 * var(--dy)); }
+.bud-win-y::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--glass-plate); translate: calc(-1 * var(--dx)) 0; }
+.bud-win-x, .bud-win-y, .bud-win-y::before { transition: translate var(--spring-present-duration) var(--spring-present); }
+.bud-win[data-state="open"] { --dx: 0px; --dy: 0px; }

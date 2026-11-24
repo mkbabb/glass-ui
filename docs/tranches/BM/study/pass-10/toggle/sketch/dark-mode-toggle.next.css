@@ -1,0 +1,73 @@
+/* BM pass 10 (DESIGN §9; O-428): the glyph's rules, replacing master's `.toggle-sun` and `.toggle-circle`
+   section of `dark-mode-toggle.css` (the sizes above it are unchanged). A design sketch, not library source.
+   Colour: the sun is warm and the night cool, from the palette's two section tokens, each the arm that is
+   legible on its own theme's page (--section-color-5 light: 5.02:1 on the card; --section-color-2 dark).
+   Motion: one clock, present's single curve (rule 1), 200 ms; the night follows the rays by 50 ms going
+   dark and leads them coming back. Two legs, `scale` and `translate`, on SVG children, which WebKit paints
+   on the page's thread: a 24-unit glyph, an effect of 200 ms (P5's clause). Reduce Motion: no movement; the
+   rays fade out as the night fades in at its carving place, 150 ms, a crossfade (choice 8 A).
+
+   Amended by the final fold:
+   - A10-1, B10-1: the mask keeps its own white and black under forced colours, so the night still carves.
+   - A10-2: the colour tweens on the glyph's clock, so nothing changes colour between two frames (P0). A tap runs
+     three legs on one 200 ms clock (the rays, the night, the colour), a yield to O-428 named in DESIGN §1.
+     `--plate-from: 1` keeps the plate a fill alone on hover.
+   - A10-9: `--toggle-tone` set on an ancestor (to the site's ink, say) replaces both colours; unset, the sun is
+     amber and the night indigo.
+   - B10-4: the reduced crossfade rides the same 200 ms clock, so the page-thread leg shows six frames at 30 Hz. */
+.dark-mode-toggle-button {
+    --plate-from: 1;
+    color: var(--toggle-tone, var(--section-color-5));
+    transition: color var(--spring-present-duration) var(--ease-standard);
+}
+:where(.dark) .dark-mode-toggle-button {
+    color: var(--toggle-tone, var(--section-color-2));
+}
+.dark-mode-toggle-button mask {
+    forced-color-adjust: none;
+}
+.dark-mode-toggle-button > svg {
+    fill: currentColor;
+    --toggle-clock: var(--spring-present-duration) var(--spring-present);
+}
+.toggle-rays {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+.toggle-rays,
+.toggle-night {
+    transform-box: view-box;
+    transform-origin: 12px 12px;
+}
+.toggle-rays {
+    transition: scale var(--toggle-clock) 50ms;
+}
+.toggle-night {
+    translate: 9px -9px;
+    transition: translate var(--toggle-clock);
+}
+:where(.dark) .dark-mode-toggle-button .toggle-rays {
+    scale: 0.5;
+    transition: scale var(--toggle-clock);
+}
+:where(.dark) .dark-mode-toggle-button .toggle-night {
+    translate: 0 0;
+    transition: translate var(--toggle-clock) 50ms;
+}
+@media (prefers-reduced-motion: reduce) {
+    .dark-mode-toggle-button .toggle-rays,
+    .dark-mode-toggle-button .toggle-night {
+        scale: 1;
+        translate: 0 0;
+        transition: opacity var(--spring-present-duration) var(--ease-standard);
+    }
+    .dark-mode-toggle-button .toggle-night,
+    :where(.dark) .dark-mode-toggle-button .toggle-rays {
+        opacity: 0;
+    }
+    :where(.dark) .dark-mode-toggle-button .toggle-night {
+        opacity: 1;
+    }
+}

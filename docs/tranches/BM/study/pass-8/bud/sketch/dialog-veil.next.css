@@ -1,0 +1,14 @@
+/* BM pass 8 (Q22; DESIGN §10.6): the focus veil under a centred Dialog, a design sketch, not library source.
+   Today the veil blurs the page behind the dialog (`backdrop-filter` on one fixed, masked, full-viewport plate,
+   focus-veil.css) and the dialog's plate blurs again over it: a blurred plate over a blurred sibling (law 1's sibling
+   clause), two live blurs per modal in Home Assistant's WKWebView. B, proposed for 11.3.0: where the veil is under a
+   dialog, the dialog's plate samples nothing and is its tint alone over the veil's frosted pool, which already holds
+   the page diffused behind it; one blur per modal. From 12.0.0, O-260 zeroes the floating rung the veil reads
+   (`--glass-focus-veil-blur: var(--glass-blur-floating-radius)`), so the veil becomes a dim under a mask unless W-R.1
+   re-points it; a zero blur is then written `backdrop-filter: none` (§3.9). Whether a modal keeps one blur, for Home
+   Assistant's "these modals should be more glassy", is the owner's with W-R.1. */
+.glass-focus-veil ~ [role="dialog"].glass-overlay-plate,
+.glass-focus-veil + * [role="dialog"].glass-overlay-plate {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}

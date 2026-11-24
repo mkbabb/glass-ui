@@ -1,0 +1,35 @@
+/* BM pass 8 (Q12, D16; DESIGN §10.5): a detented sheet as a native snap scroller, a design sketch, not library source.
+   The scroller holds the real content and no script reads its position each frame (the test UNION L14 fails and D16
+   passes). Momentum, rubber band and the choice of rung are the platform's, on its compositor, at its own rate; no
+   spring, no projection and no `block-size` leg of glass-ui's runs. The closed rung is the scroller's top (the panel
+   wholly below the fold); each detent is a snap point `d` viewports down. One IntersectionObserver on the panel, rooted on
+   the scroller, its thresholds at the edges between the rungs' basins, reports the rung it rests on and the close
+   (useSheetScroll.next.ts); nothing reads a scroll position. Opening sets the scroll position to the first rung before the first paint, and the scroller rises by
+   `translate` on `bloom`'s single curve; closing from a control scrolls to the top on the platform's smooth scroll. The scrim is a state, in
+   and out, not a function of the drag. reka's Dialog content is the panel: its focus scope and dismissable layer are
+   unchanged, and a tap on the scroller above the panel is outside the content and closes; a drag there scrolls. */
+.sheet-scroller {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+}
+.sheet-scroller::-webkit-scrollbar { display: none; }
+.sheet-scroller > .sheet-spacer {
+    block-size: 100dvh;
+    scroll-snap-align: start;
+}
+.sheet-scroller > .sheet-rung {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 0;
+    inset-block-start: calc(var(--rung) * 100dvh);
+    scroll-snap-align: start;
+}
+.sheet-scroller > .sheet-panel {
+    min-block-size: calc(var(--rung-max) * 100dvh);
+    border-start-start-radius: var(--radius-sheet);
+    border-start-end-radius: var(--radius-sheet);
+}

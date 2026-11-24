@@ -1,0 +1,22 @@
+/* scroll-chrome, as proposed (BM pass 2), amended in pass 3 by the fold (A1, A4). A design sketch, not library source.
+   The collapse is a state the script sets once per change of direction. Two properties move on one node: `scale`
+   from the top edge (which already reads as rising) and `opacity`, on the dock row's single curve, which WebKit
+   animates off the page's thread. The bar's one shadow is its own elevation token, stepped to the next elevation
+   on collapse; `box-shadow` is page-thread work, so it is an effect leg of 200 ms or less (the P5 draft allows
+   it). No pseudo-element, no second shadow layer, no rise (A4).
+   Reduced motion keeps the quiet as a 150 ms fade and drops the scale. It survives the reduced-motion fallback
+   (`a11y-overrides.css:46-53`) only by enrolment in its authorised set, which is the owner's ruling with BL's
+   W-R.1 (A1; DESIGN §4.3's reduced-motion column). */
+.scroll-chrome {
+    transform-origin: top center;
+    box-shadow: var(--shadow-sm);
+    transition:
+        scale var(--spring-dock-duration) var(--spring-dock),
+        opacity var(--spring-dock-duration) var(--spring-dock),
+        box-shadow 160ms var(--ease-out);
+}
+.scroll-chrome[data-collapsed] { scale: 0.88; opacity: 0.72; box-shadow: var(--shadow-xl); }
+@media (prefers-reduced-motion: reduce) {
+    .scroll-chrome[data-collapsed] { scale: none; }
+    .scroll-chrome { transition: opacity 150ms var(--ease-out), box-shadow 150ms var(--ease-out); }
+}

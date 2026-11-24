@@ -1,0 +1,283 @@
+<title>Slider While Held</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 10 (choice 23 under O-426; DESIGN §8.3). The Slider's expanded view, which every slider shows by default
+   from 11.3.0, three ways, each a model drawn by this page alone. All three draw the default slider the same way:
+   no knob at rest and none while held (O-408). Only the slider with a knob shows each letter's knob.
+   A · as BL built it (W-B.18 R-10, R-11): a separate shell, a card ground with a hairline, grows out of the track by
+       its clip and its opacity; a knob grows past the band by `scale`.
+   B · pass 9's: the band itself grows by g/2 (spreads and a clip), the shell rings it, a knob sits g/4 inside the
+       fill's end. Withdrawn by pass 9's fold; shown so the owner can see what C replaces.
+   C · pass 10's, ChatGPT's construction (BL design/slider/MEASURE.md §2.2): the slider's own ground is the shell. It
+       grows out of the band by one clip, g/2 on a hover and g on a press or Tab; the fill keeps its size; a knob grows
+       by `scale` on a press or Tab. A site's own ground (the gold row) grows in its own colour.
+   Every letter grows on present's single curve over 200 ms and shrinks over 120 ms (scheme-spring.css:103, :115);
+   the readout enters from 0.9 and leaves by fading. Numbers: pass-10/slider/slider.json. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --ground: hsl(24 10% 10% / 0.16);
+  --gold: hsl(42 70% 38%);
+  --gold-ground: hsl(42 70% 38% / 0.236);
+  --shell: color-mix(in oklab, hsl(24 10% 10%) 6%, hsl(30 85% 96%));
+  --hair: hsl(24 10% 10% / 0.1);
+  --knob-shadow: hsl(24 10% 10% / 0.18);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --ground: hsl(30 14% 90% / 0.16); --gold: hsl(44 75% 62%); --gold-ground: hsl(44 75% 62% / 0.236);
+    --shell: color-mix(in oklab, hsl(30 14% 90%) 6%, hsl(26 22% 17%));
+    --hair: hsl(30 14% 90% / 0.12); --knob-shadow: hsl(0 0% 0% / 0.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --ground: hsl(30 14% 90% / 0.16); --gold: hsl(44 75% 62%); --gold-ground: hsl(44 75% 62% / 0.236);
+  --shell: color-mix(in oklab, hsl(30 14% 90%) 6%, hsl(26 22% 17%));
+  --hair: hsl(30 14% 90% / 0.12); --knob-shadow: hsl(0 0% 0% / 0.4);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1180px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 14px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 16px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+button.toggle {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) { button.toggle:hover { box-shadow: inset 0 0 0 1.5px var(--focus); } }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 18px 18px; display: grid; gap: 14px; min-width: 0; }
+.letter p { margin: 0; font-size: 16px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+.cap { font: 14px/1.3 var(--font); color: var(--muted); }
+.rm { display: none; margin: 0; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+.tw { overflow-x: auto; }
+table { border-collapse: collapse; font: 14px/1.35 var(--mono); color: var(--fg); inline-size: 100%; }
+th, td { text-align: start; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 600; color: var(--muted); white-space: normal; }
+
+/* ── The slider model. H is the band, g the outset (min(8px, 2H/3)), --p the value from 0 to 1. The root is a size
+   container, so 100cqi is the track's length W, and the knob's centre travels H/2 + p(W − H) (R-3). `on` is a press,
+   Tab or Hold open; `hov` a mouse resting after its 120 ms dwell, with none of those. ── */
+.sl {
+  --H: 20px; --g: 8px; --p: 0.62; --in: 200ms; --out: 120ms; --curve: cubic-bezier(0.197, 0, 0.124, 0.808);
+  --dur: var(--out); --ease: cubic-bezier(0.4, 0, 0.2, 1); --gr: var(--ground); --open: 0px;
+  position: relative; container-type: inline-size; block-size: max(var(--H), 44px); margin-inline: 8px;
+  touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; color: var(--fg); z-index: 0;
+}
+.sl[data-size="sm"] { --H: 12px; --g: 8px; }
+.sl[data-gold] { --gr: var(--gold-ground); --fill: var(--gold); }
+.sl.on, .sl.hov { --dur: var(--in); z-index: 1; }
+.sl > * { position: absolute; }
+.shell {
+  inset-inline: calc(-1 * var(--g)); inset-block-start: calc(50% - var(--H) / 2 - var(--g)); block-size: calc(var(--H) + 2 * var(--g));
+  box-sizing: border-box; border: 1px solid var(--hair); border-radius: calc(var(--H) / 2 + var(--g)); background: var(--shell);
+  clip-path: inset(var(--g) round calc(var(--H) / 2)); opacity: 0;
+  transition: clip-path var(--dur) var(--curve), opacity var(--dur) var(--ease), border-color 160ms ease-out;
+}
+.sl:is(.on, .hov) .shell { clip-path: inset(0 round calc(var(--H) / 2 + var(--g))); opacity: 1; }
+.track {
+  inset-inline: 0; inset-block-start: calc(50% - var(--H) / 2); block-size: var(--H); border-radius: calc(var(--H) / 2);
+  background: var(--gr); outline: 2px solid transparent; outline-offset: 2px; transition: outline-color 160ms ease-out;
+}
+.lane { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; }
+.fill {
+  position: absolute; inset: 0; border-radius: inherit; background: var(--fill, var(--fg));
+  translate: calc((var(--p) - 1) * (100cqi - var(--H)) - 0.25px) 0;
+}
+.thumb {
+  inset-inline-start: 0; inset-block-start: calc(50% - var(--H) / 2); inline-size: var(--H); block-size: var(--H); border-radius: 50%;
+  translate: calc(var(--p) * (100cqi - var(--H))) 0; outline: none;
+}
+.thumb::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--bg);
+  box-shadow: 0 0 0 0 var(--bg), 0 1px 3px var(--knob-shadow);
+}
+/* One rule for every letter: the default slider has no knob, at rest or held (O-408). */
+.sl[data-thumbless] .thumb::before { opacity: 0; }
+.sl.key .shell { border-color: var(--focus); }
+.readout {
+  inset-inline-start: 0; inset-block-end: calc(50% + var(--H) / 2 + 1.5 * var(--g));
+  translate: calc(var(--H) / 2 + var(--p) * (100cqi - var(--H)) - 50%) 0;
+  box-sizing: border-box; inline-size: calc(4ch + 1rem); block-size: 26px; padding: 2px 0; border: 1px solid var(--hair); border-radius: 13px;
+  background: var(--shell); font: 500 12px/20px var(--font); font-variant-numeric: tabular-nums; text-align: center; pointer-events: none;
+  transform-origin: 50% 100%; scale: 0.9; opacity: 0;
+  transition: opacity var(--out) var(--ease);
+}
+.sl.on.say .readout { scale: 1; opacity: 1; transition: scale var(--in) var(--curve), opacity var(--in) var(--ease); }
+
+/* A: the knob grows past the band by a uniform scale of its ::before; the shell is a card. */
+.sl[data-letter="a"] .thumb::before { scale: 1; transition: scale var(--dur) var(--curve); }
+.sl[data-letter="a"]:is(.on, .hov) .thumb::before { scale: calc((var(--H) + var(--g)) / var(--H)); }
+
+/* B: every leg a concentric outset of the band (spreads and a clip), in the library's default ground. */
+.sl[data-letter="b"] .track { box-shadow: 0 0 0 0 var(--ground); transition: box-shadow var(--dur) var(--curve); }
+.sl[data-letter="b"] .lane { overflow: visible; clip-path: inset(0 round calc(var(--H) / 2)); transition: clip-path var(--dur) var(--curve); }
+.sl[data-letter="b"] .fill { box-shadow: 0 0 0 0 var(--fill, var(--fg)); transition: box-shadow var(--dur) var(--curve); }
+.sl[data-letter="b"] .thumb::before { transition: box-shadow var(--dur) var(--curve); }
+.sl[data-letter="b"]:is(.on, .hov) .track { box-shadow: 0 0 0 calc(var(--g) / 2) var(--ground); }
+.sl[data-letter="b"]:is(.on, .hov) .lane { clip-path: inset(calc(-1 * var(--g) / 2) round calc(var(--H) / 2 + var(--g) / 2)); }
+.sl[data-letter="b"]:is(.on, .hov) .fill { box-shadow: 0 0 0 calc(var(--g) / 2) var(--fill, var(--fg)); }
+.sl[data-letter="b"]:is(.on, .hov) .thumb::before { box-shadow: 0 0 0 calc(var(--g) / 4) var(--bg), 0 1px 3px var(--knob-shadow); }
+
+/* C: the ground is the shell. One clip opens by --open: g/2 on a hover, g on a press or Tab. */
+.sl[data-letter="c"] .track { background: transparent; outline-offset: max(2px, var(--open)); }
+.sl[data-letter="c"] .shell {
+  border: 0; opacity: 1; background: var(--gr);
+  clip-path: inset(calc(var(--g) - var(--open)) round calc(var(--H) / 2 + var(--open)));
+  transition: clip-path var(--dur) var(--curve);
+}
+.sl[data-letter="c"].hov:not(.on) { --open: calc(var(--g) / 2); }
+.sl[data-letter="c"].on { --open: var(--g); }
+.sl[data-letter="c"].key .track { outline-color: var(--focus); }
+.sl[data-letter="c"] .thumb::before { scale: 1; transition: scale var(--dur) var(--curve); }
+.sl[data-letter="c"].on:not([data-thumbless]) .thumb::before { scale: calc((var(--H) + var(--g)) / var(--H)); }
+
+/* Reduce Motion. A and B: nothing grows; the shell and the knob fade in at their sizes. C: nothing grows; the readout
+   fades, and the focus ring sits 2 px round the band. */
+@media (prefers-reduced-motion: reduce) {
+  .sl:not([data-letter="c"]) .shell { clip-path: inset(0 round calc(var(--H) / 2 + var(--g))); }
+  .sl[data-letter="a"]:is(.on, .hov) .thumb::before, .sl[data-letter="c"].on:not([data-thumbless]) .thumb::before { scale: 1; }
+  .sl[data-letter="b"]:is(.on, .hov) :is(.track, .fill) { box-shadow: none; }
+  .sl[data-letter="b"]:is(.on, .hov) .lane { clip-path: inset(0 round calc(var(--H) / 2)); }
+  .sl[data-letter="c"] { --open: 0px !important; }
+  .readout, .sl.on.say .readout { scale: 1; }
+}
+</style>
+
+<main>
+  <p class="ask"><strong>On your iPhone, press and drag each slider. On a Mac, also Tab to one and rest the mouse on it. Send A, B or C: the view you want every slider to show while you use it.</strong> C ships in 11.3.0 unless you send another letter.</p>
+  <p class="env" id="env">Reading your browser…</p>
+  <p class="rm">Reduce Motion is on, so you see the reduced form: in A and B the shell fades in at its full size; in C nothing grows and the value is said.</p>
+  <div class="bar">
+    <button id="dark" class="toggle" type="button" aria-pressed="false">Dark</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+    <button id="busy" class="toggle" type="button" aria-pressed="false">Busy page</button>
+    <button id="hold" class="toggle" type="button" aria-pressed="false">Hold open</button>
+  </div>
+
+  <section>
+    <h2>The slider while you use it</h2>
+    <p class="how">Each card has three sliders: the default (no knob, its value said above it), one with a knob, and one in a site's own colour, as daraksha paints its transport. Hold open keeps all of them grown so you can compare them side by side.</p>
+    <div class="letter" data-v="a"><p><b>A</b> · As built: a separate shell grows round the band, and the knob grows past the band.</p>
+      <span class="cap">Default</span>
+      <div class="sl" data-letter="a" data-size="md" data-thumbless data-say aria-label="Volume, A"></div>
+      <span class="cap">With a knob</span>
+      <div class="sl" data-letter="a" data-size="sm" aria-label="Playback, A"></div>
+      <span class="cap">A site’s own colour</span>
+      <div class="sl" data-letter="a" data-size="sm" data-gold data-thumbless aria-label="Transport, A"></div>
+    </div>
+    <div class="letter" data-v="b"><p><b>B</b> · Pass 9’s: the band itself grows inside a shell. Withdrawn; shown for comparison.</p>
+      <span class="cap">Default</span>
+      <div class="sl" data-letter="b" data-size="md" data-thumbless data-say aria-label="Volume, B"></div>
+      <span class="cap">With a knob</span>
+      <div class="sl" data-letter="b" data-size="sm" aria-label="Playback, B"></div>
+      <span class="cap">A site’s own colour</span>
+      <div class="sl" data-letter="b" data-size="sm" data-gold data-thumbless aria-label="Transport, B"></div>
+    </div>
+    <div class="letter" data-v="c"><p><b>C</b> · Proposed: the slider’s own ground grows round the fill, like the ChatGPT app’s, half as far under a resting mouse.</p>
+      <span class="cap">Default</span>
+      <div class="sl" data-letter="c" data-size="md" data-thumbless data-say aria-label="Volume, C"></div>
+      <span class="cap">With a knob</span>
+      <div class="sl" data-letter="c" data-size="sm" aria-label="Playback, C"></div>
+      <span class="cap">A site’s own colour</span>
+      <div class="sl" data-letter="c" data-size="sm" data-gold data-thumbless aria-label="Transport, C"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The numbers, in px</h2>
+    <p class="how">Held, at each size: the outer edge, the band, and the knob where there is one. g, the outset, is at most 8 px and never more than two thirds of the band.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Band</th><th>A</th><th>B</th><th>C</th></tr></thead>
+      <tbody>
+        <tr><td>sm 12</td><td>28·12·20</td><td>28·20·16</td><td>28·12·20</td></tr>
+        <tr><td>md 20</td><td>36·20·28</td><td>36·28·24</td><td>36·20·28</td></tr>
+        <tr><td>lg 28</td><td>44·28·36</td><td>44·36·32</td><td>44·28·36</td></tr>
+        <tr><td>ChatGPT</td><td>—</td><td>—</td><td>68·42·34</td></tr>
+      </tbody>
+    </table></div>
+    <p class="how">In C a resting mouse grows the ground half as far (4 px a side). A press or Tab grows it the whole way. In A, B and C everything grows over 200 ms and shrinks over 120 ms.</p>
+  </section>
+
+  <p class="cap">Everything here is a model drawn by this page alone, not glass-ui itself.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent, safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  document.getElementById("env").textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const toggle = (b) => { const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on)); return on; };
+  const root = document.documentElement, darkBtn = document.getElementById("dark");
+  darkBtn.setAttribute("aria-pressed", String(matchMedia("(prefers-color-scheme: dark)").matches));
+  darkBtn.addEventListener("click", () => { root.dataset.theme = toggle(darkBtn) ? "dark" : "light"; });
+  let busy = 0, held = false;
+  document.getElementById("busy").addEventListener("click", (e) => {
+    clearInterval(busy);
+    if (toggle(e.currentTarget)) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+  const sliders = [...document.querySelectorAll(".sl")];
+  document.getElementById("slow").addEventListener("click", (e) => {
+    const k = toggle(e.currentTarget) ? 4 : 1;
+    sliders.forEach((s) => { s.style.setProperty("--in", 200 * k + "ms"); s.style.setProperty("--out", 120 * k + "ms"); });
+  });
+  let lastKey = false;
+  addEventListener("keydown", () => { lastKey = true; }, true);
+  addEventListener("pointerdown", () => { lastKey = false; }, true);
+  for (const s of sliders) {
+    const el = (c) => { const d = document.createElement("div"); d.className = c; s.appendChild(d); return d; };
+    el("shell"); const track = el("track"), lane = document.createElement("div"); lane.className = "lane"; track.appendChild(lane);
+    const fill = document.createElement("div"); fill.className = "fill"; lane.appendChild(fill);
+    const thumb = el("thumb"), readout = s.hasAttribute("data-say") ? el("readout") : null;
+    if (readout) readout.setAttribute("aria-hidden", "true");
+    thumb.tabIndex = 0; thumb.setAttribute("role", "slider"); thumb.setAttribute("aria-label", s.getAttribute("aria-label")); s.removeAttribute("aria-label");
+    thumb.setAttribute("aria-valuemin", "0"); thumb.setAttribute("aria-valuemax", "100");
+    let p = s.dataset.size === "sm" ? 0.35 : 0.62, press = false, hover = false, key = false, dwell = 0;
+    const set = (v) => { p = Math.min(1, Math.max(0, v)); s.style.setProperty("--p", p.toFixed(4)); const n = Math.round(p * 100); thumb.setAttribute("aria-valuenow", n); thumb.setAttribute("aria-valuetext", n + " %"); if (readout) readout.textContent = n + " %"; };
+    const state = () => { const on = press || key || held; s.classList.toggle("on", on); s.classList.toggle("hov", hover && !on); s.classList.toggle("say", on); s.classList.toggle("key", key); };
+    s._state = state; set(p);
+    const H = () => parseFloat(getComputedStyle(s).getPropertyValue("--H"));
+    const at = (x) => { const r = s.getBoundingClientRect(), h = H(); return (x - r.left - h / 2) / (r.width - h); };
+    s.addEventListener("pointerdown", (e) => { if (e.button !== 0) return; press = true; s.setPointerCapture(e.pointerId); set(at(e.clientX)); thumb.focus({ preventScroll: true }); state(); });
+    s.addEventListener("pointermove", (e) => { if (press) set(at(e.clientX)); });
+    const up = () => { if (!press) return; press = false; state(); };
+    s.addEventListener("pointerup", up); s.addEventListener("pointercancel", up);
+    s.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse") return; clearTimeout(dwell); dwell = setTimeout(() => { hover = true; state(); }, 120); });
+    s.addEventListener("pointerleave", (e) => { if (e.pointerType !== "mouse") return; clearTimeout(dwell); hover = false; state(); });
+    thumb.addEventListener("focus", () => { if (lastKey) { key = true; state(); } });
+    thumb.addEventListener("blur", () => { key = false; state(); });
+    thumb.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: 0.01, ArrowUp: 0.01, ArrowLeft: -0.01, ArrowDown: -0.01, PageUp: 0.1, PageDown: -0.1 }[e.key];
+      if (step !== undefined) { e.preventDefault(); set(p + step); key = true; state(); }
+      else if (e.key === "Home" || e.key === "End") { e.preventDefault(); set(e.key === "Home" ? 0 : 1); key = true; state(); }
+    });
+  }
+  document.getElementById("hold").addEventListener("click", (e) => { held = toggle(e.currentTarget); sliders.forEach((s) => s._state()); });
+})();
+</script>

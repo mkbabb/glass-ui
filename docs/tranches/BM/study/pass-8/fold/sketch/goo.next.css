@@ -1,0 +1,48 @@
+/* SUPERSEDED in part by pass-10/goo/goo.next.css (pass 9's fold, A9-12, A9-8, B9-4): the filter now stays on through
+   the folded rest and turns off on an open at a 6 px gap; the development warning and the split without the filter are
+   gone. The layer, the matrix and the region below stand. */
+/* BM pass 7 (Q2's goo; DESIGN §9.2 C), amended in pass 8 by the fold of pass 7's critiques (A7-1, A7-3, A7-4, A7-8,
+   A7-9, B7-2, B7-8). A design sketch, not library source; offered to the owner as his order with its price, not as a
+   default (A7-1).
+   - The layer spans both plates: the dock's box, the gap and the seat, with 3 sigma (12 px) of margin on every side, and
+     the filter's region is the layer's own box, so the seat is never cut by the region (B7-8). 320 x 76 CSS px on
+     P7-fuse's geometry, 218,880 device px at DPR 3.
+   - Two nodes are added for the motion, the layer and the seat's own plate inside it, against the ceiling's 0. The seat's
+     glyph and its control stay outside the layer, since a 4 px blur and the threshold would erase a 2.5 px stroke, and
+     move on legs of their own: `translate` and `opacity` (A7-4).
+   - No fill leg under the filter: with the alpha row `20a − 9.5`, a plate at fill f pops from nothing to whole between
+     f = 0.475 and 0.525 (A7-3). The seat's plate is whole whenever it is drawn, and the folded seat is hidden only while
+     the filter is off.
+   - The filter is on while a change runs (`data-fusing`, set at the change's start and cleared at its rest, once each).
+     At the swap the plates change from solid fills under the layer's opacity to translucent fills with their own
+     shadows. Its steps: the round ends move by up to 0.5 px (pass-7/fuse/fuse.json, `rest`); the shadow keeps its
+     strength because the drop-shadow's colour is divided by the plate's alpha (0.16 / 0.897 = 0.178 in light). Keeping
+     the filter on whenever the seat is out would remove the swap and paint every fold on the page's thread instead; that
+     is the owner's to weigh beside it.
+   - It holds only on a plate that samples no backdrop. A dock that keeps the old blur register (O-260's "one documented
+     block") and asks for the goo gets a development warning, and its split plays without the filter, never a silent
+     loss of its frost (A7-8).
+   - One filtered region per document: a second dock's split while one is fusing plays without the filter (A2's form);
+     nothing waits and nothing queues. A reversal is the same change retargeted from where it is drawn (A7-9). The flag is
+     a module-level count, unmeasured and under 100 B.
+   - It loads on intent: the rules and the filter's markup ship in the dock's split module, which a dock imports only when
+     it has a beside seat, and the markup is written once, when the first such dock mounts (value.js's bound, A7-1).
+   The filter's markup, once per document:
+   <svg width="0" height="0" aria-hidden="true"><filter id="glass-fuse" x="0" y="0" width="1" height="1"
+   color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="4"/><feColorMatrix type="matrix"
+   values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9.5"/></filter></svg> */
+.dock-plates {
+    position: absolute;
+    inset-block: -12px;
+    inset-inline: -12px calc(-12px - var(--dock-seat-gap, 0.5rem) - var(--dock-seat-size));
+    pointer-events: none;
+}
+.dock-plates[data-fusing] {
+    opacity: var(--glass-alpha);
+    filter: url(#glass-fuse) drop-shadow(var(--dock-drop-shadow-over-alpha));
+}
+.dock-plates[data-fusing] > * {
+    --glass-plate: var(--glass-plate-solid);
+    box-shadow: none;
+}
+[data-folded] .dock-plates:not([data-fusing]) > .dock-seat-plate { opacity: 0; }

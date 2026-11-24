@@ -1,0 +1,28 @@
+/* BM pass 7 (Q2's goo, offered for 12.0.0 only; DESIGN §9.2 C): a design sketch, not library source.
+   The dock's plate and the seat's plate are the only children of one layer, drawn solid; the layer carries the plate's
+   alpha and the one shadow, after the filter, so the two plates are painted as one shape and a neck forms and pinches
+   as they part (at a 5 px gap with a 4 px blur, the gap at which rida.dev's fit of Apple's blend pinches;
+   pass-7/fuse/fuse.json). It holds only where the plates sample no backdrop: a filter on an ancestor makes it the
+   backdrop root (F2), so in 11.x it would stop the dock's frost, and from 12.0.0 it needs the dock on the zero rung
+   written `backdrop-filter: none` (§6.1). WebKit does not composite an element with `filter: url()`
+   (RenderLayerBacking.cpp:L1025-1031) and paints it in the web process on each repaint (Page.cpp:L5281-5303), so the
+   window's translate under it is painted on the page's thread while the filter is on. It is on only while the seat
+   is in reach of the plate (`data-fusing`, set and cleared once per change by the dock), and off at rest, when each
+   plate draws its own shadow. The filter's markup, once per document:
+   <svg width="0" height="0" aria-hidden="true"><filter id="glass-fuse" x="-10%" y="-60%" width="120%" height="220%"
+   color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="4"/><feColorMatrix type="matrix"
+   values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9.5"/></filter></svg>
+   One wrapper is added for the motion (the layer), against the ceiling's 0. */
+.dock-plates {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.dock-plates[data-fusing] {
+    opacity: var(--glass-alpha);
+    filter: url(#glass-fuse) drop-shadow(var(--dock-drop-shadow));
+}
+.dock-plates[data-fusing] > * {
+    --glass-plate: var(--glass-plate-solid);
+    box-shadow: none;
+}

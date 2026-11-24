@@ -1,0 +1,22 @@
+/* BM pass 8 (F9, Q9, M3; DESIGN §10.1 to §10.3): a presentation out of its control, a design sketch, not library source.
+   - Never over its host (Q9, the birth on glass). A panel opened from a control that sits on a plate (a dock seat, a
+     toolbar's button) is born at the plate's outer edge and never overlaps the plate, at rest or in motion: two
+     translucent plates never stack (F3; law 1's sibling clause; the O-132 ghost; RU-14's junction). reka already places
+     the panel `sideOffset` (4 px) past its trigger; the rule is that a trigger on a plate passes the plate's edge as its
+     anchor (reka's `reference`), so the side offset is measured from the plate, not the seat. The grow (today's, O-171)
+     and the fade (E) then start at that edge by construction; the windows (D) start from the seat's width on that edge.
+   - The spring (Q9). A panel that enters at its own size rides `present` (no overshoot; 90 % in 136 ms). A panel that
+     grows its box (O-171's grow) rides `bloom`, P0a's resize row. R5 reads which one opens like Safari's own menu.
+   - One exit (M3). Every presentation that leaves by fading leaves in 120 ms on `--exit-curve`, whatever row it entered
+     on: P0a's out row (75 to 120 ms) and rule 3 ("it fades and does not slide back"), Home Assistant's 100 to 150 ms, and
+     11.1.1's own bound (no frame of a 60 Hz exit carries more than a fifth of it) at its tightest. Reduced motion keeps
+     it: the exit already moves nothing. A sheet is not under this rule: it leaves the way it came (§10.5).
+   - The panel rule (§7.4). The trigger's held fill (W-B.17 R-14) waits for the panel to land, so a press that opens a
+     panel runs at most two animations at once: the press tone, then the entrance, then the held fill. */
+:where([data-reveal="menu"], [data-reveal="overlay"], [data-reveal="tooltip"]) {
+    --reveal-exit-clock: 120ms;
+    --reveal-exit-curve: var(--exit-curve);
+}
+[aria-expanded="true"]::after {
+    transition-delay: var(--reveal-clock, 0s);
+}

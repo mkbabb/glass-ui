@@ -1,0 +1,40 @@
+/* BM pass 7 (F3, F8; DESIGN §9.3): the theme seat born underneath, a design sketch, not library source.
+   The seat is a sibling of the dock's plate (wi8's `.dock-plate`, the window of §6.3) and of the controls, placed at
+   the open plate's end plus the gap. Folded, it rests translated back by `--seat-from` so its box lies inside the disc
+   (law 8; for a seat no wider than the disc), with its plate's fill and its glyph at 0. Opening, it slides out with
+   the window on the same token (rule 1), its fill rising as it goes and its glyph over the last part of the way; a
+   fold reversed mid-way retargets each leg from where it is drawn. Nothing joins the two plates: the split is Apple's
+   recipe alone ("add them to the same position without animation. Then animate them out together", 284 24:33).
+   `--seat-from` is the open plate's width less the disc's, plus the gap and the seat's width less the disc's, read once
+   per layout; nothing is written per frame. Per change: `translate` on the seat, `opacity` on its ::before and on its
+   glyph, one property each. Under reduced motion it dips (out, landed while hidden, in; §4.3), which survives the library's reduced-motion
+   fallback only by enrolment in the authorised set, or by playing it through the player. */
+.dock-seat-out {
+    position: absolute;
+    inset-inline-start: calc(100% + var(--dock-seat-gap, 0.5rem));
+    inset-block-start: 0;
+    border-radius: calc(infinity * 1px);
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.dock-seat-out::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--glass-plate);
+    box-shadow: var(--dock-shadow);
+    transition: opacity var(--spring-dock-duration) var(--spring-dock);
+}
+.dock-seat-out > * {
+    transition: opacity calc(var(--spring-dock-duration) * 0.5) ease-out calc(var(--spring-dock-duration) * 0.3);
+}
+[data-folded] > .dock-seat-out {
+    translate: calc(-1 * var(--seat-from)) 0;
+    pointer-events: none;
+}
+[data-folded] > .dock-seat-out::before,
+[data-folded] > .dock-seat-out > * {
+    opacity: 0;
+    transition-delay: 0s;
+}

@@ -13,7 +13,7 @@ import path from "node:path";
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const PAGES = path.resolve(HERE, "../pages");
-const ALL = ["R1", "R2", "R3", "R3b", "R5", "R6", "R7", "P2-scroll", "P4-bud", "P5-mark", "P6-hosts", "P7-fuse", "P8-present"];
+const ALL = ["R1", "R2", "R3", "R3b", "R5", "R6", "R7", "P2-scroll", "P4-bud", "P5-mark", "P6-hosts", "P7-fuse", "P8-present", "P9-slider", "P10-slider", "P10-toggle", "P10-plate"];
 const files = process.argv.length > 2 ? ALL.filter((f) => process.argv.includes(f)) : ALL; // pass page names to check a few
 const wrap = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -173,6 +173,8 @@ try {
           await page.waitForTimeout(1400);
           const restA = await sa.locator("xpath=..").locator("[data-rest]").textContent();
           await centre(sb);
+          const restB0 = await sb.locator("xpath=..").locator("[data-rest]").textContent();
+          if (!/40/.test(restB0)) errors.push(`P8-present s3: B reads "${restB0}" after load, not its first rung (fold B8-1)`);
           const bb = await sb.boundingBox();
           if (touch) await cdp.send("Input.synthesizeScrollGesture", { x: Math.round(bb.x + 60), y: Math.round(bb.y + bb.height - 60), yDistance: -Math.round(0.45 * bb.height), gestureSourceType: "touch", speed: 900 });
           else { await page.mouse.move(bb.x + 60, bb.y + bb.height - 60); await page.mouse.wheel(0, Math.round(0.45 * bb.height)); }
@@ -182,7 +184,7 @@ try {
           if (width === 390) for (const k of ["spring", "scroll"]) await page.locator(`.s3[data-sheet="${k}"]`).screenshot({ path: path.join(HERE, `P8-present-s3-${k}-${scheme}.png`) });
           // 4: open each dialog: the page behind it, its Open button included, lies under the veil; capture it; Escape
           // closes it, and the closed dialog is inert.
-          for (const k of ["a", "b", "c"]) {
+          for (const k of ["a", "b", "c", "d"]) {
             const st = page.locator(`.s4[data-dialog="${k}"]`);
             await centre(st);
             await st.locator(".open").click(); await page.waitForTimeout(400);

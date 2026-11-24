@@ -1,0 +1,214 @@
+/* ════════════════════════════════════════════════════════════════════════
+   BM pass 10, C (DESIGN §8.3; choice 23 under O-426). A design sketch, not library
+   source. It replaces BL's expanded-view section of `src/components/slider/styles.css`
+   at `fe30f9882` (from its "THE EXPANDED VIEW" banner to the forced-colours block) whole.
+   `slider-bytes.mjs` splices it in to price it.
+
+   THE EXPANDED VIEW (`expand`, on by default from 11.3.0). ChatGPT's construction,
+   shell ⊃ fill ⊃ knob (BL `design/slider/MEASURE.md` §2.2), where the shell is the
+   track itself: the slider's ground grows out of the band, and the fill keeps its size.
+   · g is the outset, `--slider-expand-outset`, at most two thirds of H (as built).
+   · THE GROUND is the shell node. It is one capsule, the track plus g on every side,
+     radius H/2 + g, and it carries the track's own ground: `--glass-slider-track-background`
+     where a site sets one, else the ink at 16 %. At rest it is clipped to the track's
+     capsule, so it IS the track. A hover opens the clip by g/2 (P0a: a hover edge moves
+     4 px or less); a press or Tab opens it by g. `--slider-open` on the root says how far
+     (0, g/2 or g), and the shell and the focus ring both read it. One leg, `clip-path`, a reveal of
+     200 ms or less, on the page's thread in WebKit (P5's effect clause). No opacity leg,
+     no card ground, no hairline: the track's own ground ringing the fill is the view.
+   · An image ground (a ramp, a checker) is laid on the track's box alone
+     (`background-origin: content-box`, `no-repeat`), so a value keeps its colour; its
+     ring is clear. A colour ground fills the ring.
+   · THE FILL does not change.
+   · THE KNOB: a thumbless slider (O-408, the default from 11.3.0) never draws one.
+     A slider with a knob grows it to H + g by `scale` on a press or Tab (as built, the
+     compositor's), concentric with the ground and g/2 inside its edge. Not on a hover:
+     a hover is one movement.
+   · The track's ink does not deepen while grown: the grow is the answer. Under Reduce
+     Motion nothing grows: the value under the finger and the readout's fade answer.
+   · FOCUS: a 2 px ring on the track's outline at offset g, concentric with the grown
+     ground and outside it, fading on `--duration-fast`. Under Reduce Motion, offset 2 px.
+     Amended by the final fold (A10-5): the offset is g at every state, not `--slider-open`.
+     The ring shows only on Tab, when the ground is at g, so it never moves: as Tab leaves it
+     fades where it stands while the ground shrinks inside it, where the first form jumped
+     6 px on the first frame (critique-A-check.json, ring-leave).
+   · ONE CLOCK BOTH WAYS (final fold, A10-6, B10-4): the ground grows and returns over 200 ms
+     on present, so a hover leaves the way it came (P0a rule 1) and the page-thread clip shows
+     six frames at 30 Hz (law 7). The first form returned on 120 ms, four frames.
+   · NO POINTER (final fold, B10-6): the shell takes no pointer in any state, so the root's
+     box is the hit region and a tap on a neighbour within the grown ground reaches the
+     neighbour. The first form let the grown shell take taps up to g outside the root.
+   · THE SPECTRUM takes the same rules: its ramp is an image ground, so it stays on the
+     track's box and its ring is clear, and its handle grows as a knob does. BL's card
+     shell, its hairline and its opacity leg go for every slider.
+   · The thumbless knob (`[data-thumbless] .slider-thumb::before { opacity: 0 }`) is BL's
+     O-408 build (11.3.0, G1), outside this section and outside its bytes.
+   ════════════════════════════════════════════════════════════════════════ */
+.glass-slider[data-expand] {
+    --slider-g: min(
+        var(--slider-expand-outset, 0.5rem),
+        calc(var(--slider-track-height) * 2 / 3)
+    );
+    --slider-thumb-grown: calc(
+        (var(--slider-track-height) + var(--slider-g)) / var(--slider-track-height)
+    );
+    --slider-shell-ground: color-mix(in oklab, currentColor 6%, var(--card));
+    --slider-grow-duration: var(--spring-present-duration);
+    --slider-grow-delay: 0s;
+    z-index: 0;
+    transition:
+        color var(--duration-fast) var(--ease-standard),
+        z-index 0s linear var(--spring-present-duration);
+}
+
+.glass-slider[data-expand]:is([data-held], [data-focus-key]) {
+    --slider-open: var(--slider-g);
+    --slider-grow-duration: var(--spring-present-duration);
+    z-index: 1;
+    transition:
+        color var(--duration-fast) var(--ease-standard),
+        z-index 0s;
+}
+
+.glass-slider[data-expand][data-hover]:not([data-held], [data-focus-key]) {
+    --slider-open: calc(var(--slider-g) / 2);
+    --slider-grow-duration: var(--spring-present-duration);
+    --slider-grow-delay: var(--spring-press-duration);
+    z-index: 1;
+    transition:
+        color var(--duration-fast) var(--ease-standard),
+        z-index 0s linear var(--spring-press-duration);
+}
+
+.slider-shell {
+    position: absolute;
+    inset-inline: calc(-1 * var(--slider-g));
+    inset-block: calc(50% - var(--slider-radius) - var(--slider-g));
+    padding: var(--slider-g);
+    border-radius: calc(var(--slider-radius) + var(--slider-g));
+    background: var(
+        --glass-slider-track-background,
+        color-mix(in oklab, currentColor 16%, oklch(0 0 0 / 0))
+    );
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    clip-path: inset(
+        calc(var(--slider-g) - var(--slider-open, 0px))
+        round calc(var(--slider-radius) + var(--slider-open, 0px))
+    );
+    pointer-events: none;
+    transition: clip-path var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay);
+}
+
+.glass-slider[data-expand][data-orientation="vertical"] .slider-shell {
+    inset-inline: calc(50% - var(--slider-radius) - var(--slider-g));
+    inset-block: calc(-1 * var(--slider-g));
+}
+
+/* The ground is the shell's; the track draws none of its own, and carries the ring. */
+.glass-slider[data-expand] .slider-track {
+    background: none;
+    outline: 2px solid transparent;
+    outline-offset: max(2px, var(--slider-g));
+    transition: outline-color var(--duration-fast) var(--ease-standard);
+}
+.glass-slider[data-expand][data-focus-key] .slider-track {
+    box-shadow: none;
+    outline-color: var(--focus-ring-color, var(--ring));
+}
+
+.glass-slider[data-expand] .slider-thumb::before {
+    scale: 1;
+    transition: scale var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay);
+}
+.glass-slider[data-expand]:is([data-held], [data-focus-key]):not([data-thumbless]) .slider-thumb::before {
+    scale: var(--slider-thumb-grown);
+}
+
+/* THE READOUT (R-12, as built, with two amendments): it enters from 0.9, within P0a's
+   "from 0.8 to 0.96", and it leaves by fading where it is, with no scale leg on the way
+   out (P0a rule 3). */
+.slider-readout {
+    display: none;
+}
+.slider-readout:popover-open {
+    display: block;
+}
+.slider-readout {
+    position: fixed;
+    inset: 0 auto auto 0;
+    margin: 0;
+    box-sizing: border-box;
+    inline-size: calc(var(--slider-readout-ch, 4) * 1ch + 1rem);
+    block-size: calc(1.5rem + 2px);
+    contain: layout size;
+    padding: 0.125rem 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--slider-shell-ground);
+    color: var(--foreground);
+    font: 500 0.75rem / 1.25rem var(--font-sans, system-ui);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    overflow: visible;
+    --slider-ride: calc(var(--slider-sign) * var(--slider-pa, 0) * var(--slider-rt, 0px));
+    --slider-lift: calc(var(--slider-rh, 0px) + var(--slider-g) * 1.5);
+    translate: calc(var(--slider-rx, 0px) + var(--slider-ride) - 50%)
+        calc(var(--slider-ry, 0px) - var(--slider-lift) - 100%);
+    transform-origin: 50% 100%;
+    opacity: 0;
+    transition:
+        opacity var(--spring-present-exit-duration) var(--ease-standard),
+        translate var(--slider-step-duration) var(--spring-press);
+}
+.glass-slider[data-orientation="vertical"] .slider-readout {
+    transform-origin: 0 50%;
+    translate: calc(var(--slider-rx, 0px) + var(--slider-lift))
+        calc(var(--slider-ry, 0px) + var(--slider-ride) - 50%);
+}
+.glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+    opacity: 1;
+    transition:
+        scale var(--spring-present-duration) var(--spring-present),
+        opacity var(--spring-present-duration) var(--ease-standard),
+        translate var(--slider-step-duration) var(--spring-press);
+}
+@starting-style {
+    .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+        scale: 0.9;
+        opacity: 0;
+    }
+}
+
+/* Reduce Motion: nothing grows (BL's G1(a): no held transform). The value under the
+   finger and the readout's fade answer a press; the focus ring sits 2 px round the band. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider[data-expand] {
+        --slider-open: 0px !important;
+    }
+    .glass-slider[data-expand] .slider-thumb::before {
+        scale: 1 !important;
+    }
+    .glass-slider[data-expand] .slider-track {
+        outline-offset: 2px;
+    }
+}
+.glass-slider[data-expand][data-motion="reduced"] {
+    --slider-open: 0px !important;
+}
+.glass-slider[data-expand][data-motion="reduced"] .slider-thumb::before {
+    scale: 1 !important;
+}
+.glass-slider[data-expand][data-motion="reduced"] .slider-track {
+    outline-offset: 2px;
+}
+@starting-style {
+    @media (prefers-reduced-motion: reduce) {
+        .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+            scale: 1;
+        }
+    }
+}
+

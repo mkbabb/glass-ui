@@ -1,0 +1,400 @@
+<title>Menus, Sheets and Dialogs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 8 (presentations: Q9, Q11, Q12, Q22, M3; DESIGN §10). Four sections, each a model drawn by this page alone.
+   1 · A menu from a dock seat. The menu grows from the dock's top edge above its seat, never over the dock (§10.2), on
+       today's grow (a rounded clip uncovers it from a strip the seat's height, rows at full strength; O-171) on the
+       `bloom` row's single curve. A closes as 11.1.1 does: the clip draws back and the menu fades over 222 ms. B, the
+       proposal: it fades in place over 120 ms on the exit curve (P0a rule 3 and its out row; Home Assistant's 100 to 150).
+       Reduce Motion: the menu fades in over 150 ms and both close by their fade alone.
+       The seat's held fill waits for the menu to land (§7.4's panel rule) in both.
+   2 · A finger slides across an open short menu and lifts on a row (§10.4): the row under the finger is highlighted as it
+       passes, the lift chooses it, and a lift off the list chooses nothing. The list fits, so it takes no scroll.
+   3 · A sheet with two rungs (40 % and 85 % of its frame), two ways (§10.5): A, the page moves it (a drag followed by
+       per-move writes, a release projected to the nearest rung and a spring played by per-frame writes, as glass-ui's
+       detent engine does today); B, the phone scrolls it (a native snap scroller whose rungs are snap points; the page
+       writes nothing while it moves, and one IntersectionObserver reports the rung).
+   4 · A dialog over the page (§10.6), in on present's single curve, out by a 120 ms fade with no scale back: A, today's (the focus veil blurs the page and the dialog's plate blurs again over
+       it); B, the veil's blur alone, the plate its tint over it; C, no blur, a dim under a solid-ish plate (O-260 as
+       written for 12.0.0). Real backdrop-filter: only Safari on the phone draws it as Safari will.
+   Corrected in pass 9's fold (pass-8/fold.md): section 1's menu starts at its seat's start edge, as reka's start
+   alignment places it, not centred on the seat (A8-1, B8-4); section 2 commits as reka does, through the row's own
+   pointerup, and says which element the lift reached (B8-5); section 3's B has 1 px rungs, which WebKit keeps, its
+   scroller lets the stage through above the panel, and it reports a rung only once the scroll has come to rest (B8-1,
+   B8-3, A8-3); section 4's veil is a graded pool in a phone's proportions on the veil clocks §10.6 proposes, and D, a
+   dimming veil under a frosted dialog, joins A to C (B8-7, A8-9, A8-4); every ask names the release it decides (B8-9). */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --glass: hsl(30 85% 96% / 0.897);
+  --menu: hsl(30 85% 96% / 0.94);
+  --tint: hsl(30 85% 96% / 0.55);
+  --row-fill: hsl(24 10% 10% / 0.08);
+  --held-fill: hsl(24 10% 10% / 0.12);
+  --icon: hsl(24 10% 10% / 0.8);
+  --shadow: hsl(24 10% 10% / 0.16);
+  --scrim: hsl(24 10% 10% / 0.18);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --page-line: hsl(24 10% 10% / 0.14);
+  --on-photo: hsl(0 0% 100%);
+  --on-photo-shade: hsl(0 0% 0% / 0.5);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --glass: hsl(26 22% 17% / 0.872); --menu: hsl(26 22% 17% / 0.93); --tint: hsl(26 22% 17% / 0.55);
+    --row-fill: hsl(30 14% 90% / 0.1); --held-fill: hsl(30 14% 90% / 0.14);
+    --icon: hsl(30 14% 90% / 0.8); --shadow: hsl(0 0% 0% / 0.4); --scrim: hsl(0 0% 0% / 0.35);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%); --page-line: hsl(30 14% 90% / 0.16); --on-photo: hsl(0 0% 100%); --on-photo-shade: hsl(0 0% 0% / 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --glass: hsl(26 22% 17% / 0.872); --menu: hsl(26 22% 17% / 0.93); --tint: hsl(26 22% 17% / 0.55);
+  --row-fill: hsl(30 14% 90% / 0.1); --held-fill: hsl(30 14% 90% / 0.14);
+  --icon: hsl(30 14% 90% / 0.8); --shadow: hsl(0 0% 0% / 0.4); --scrim: hsl(0 0% 0% / 0.35);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%); --page-line: hsl(30 14% 90% / 0.16); --on-photo: hsl(0 0% 100%); --on-photo-shade: hsl(0 0% 0% / 0.6);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1100px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 14px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 16px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+button.toggle {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) { button.toggle:hover { box-shadow: inset 0 0 0 1.5px var(--focus); } }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible, [role="menuitem"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 14px 14px; display: grid; gap: 10px; min-width: 0; }
+.letter p { margin: 0; font-size: 16px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+.readout { font: 14px/1.4 var(--mono); color: var(--muted); }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+.stage {
+  position: relative; inline-size: 100%; max-inline-size: 330px; border-radius: 10px; overflow: hidden;
+  background: repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px), var(--stripe-b);
+}
+
+/* 1 · The dock and its seats; a seat's press tone and held fill sit on its ::after (one state pseudo). */
+.s1 { block-size: 300px; }
+.s1::after { content: ""; position: absolute; left: 0; right: 0; top: 120px; height: 14px; background: var(--stripe-c); }
+.dock { position: absolute; left: 12px; bottom: 16px; inline-size: 236px; block-size: 52px; border-radius: 26px; background: var(--glass); box-shadow: 0 4px 14px var(--shadow); z-index: 2; }
+.seat { position: absolute; top: 4px; inline-size: 44px; block-size: 44px; border-radius: 22px; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.seat::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--held-fill); opacity: 0; transition: opacity 120ms ease-out; }
+.seat:active::after { opacity: 0.8; transition-duration: 100ms; }
+.seat[aria-expanded="true"]::after { opacity: 1; transition: opacity 150ms ease-out var(--held-delay, 0ms); }
+.seat i { position: absolute; left: 13px; top: 13px; inline-size: 18px; block-size: 18px; border-radius: 6px; background: var(--icon); }
+.menu { position: absolute; inline-size: 200px; block-size: 192px; padding: 8px; box-sizing: border-box; border-radius: 16px; background: var(--menu); box-shadow: 0 8px 24px var(--shadow); z-index: 3; }
+.menu [role="menuitem"] { display: flex; align-items: center; block-size: 44px; padding: 0 12px; border-radius: 10px; font-size: 16px; color: var(--fg); background: transparent; border: 0; inline-size: 100%; text-align: start; cursor: pointer; transition: background-color 120ms ease-out; }
+.menu [role="menuitem"][data-highlighted] { background: var(--row-fill); }
+
+/* 2 · An open short menu, always shown; a finger slides across it. */
+.s2 { block-size: 236px; display: grid; place-items: center; }
+.s2 .menu { position: relative; touch-action: none; }
+
+/* 3 · A sheet in a phone-sized frame: a page behind it (stripes, lines), the sheet's panel, its grabber. */
+.s3 { block-size: 420px; background: var(--stripe-b); }
+.s3 .page { position: absolute; inset: 0; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.s3 .page i { display: block; block-size: 12px; border-radius: 6px; background: var(--page-line); }
+.s3 .page i:nth-child(3n) { inline-size: 70%; } .s3 .page i:nth-child(3n + 1) { inline-size: 90%; }
+.panel { background: var(--menu); border-radius: 22px 22px 0 0; box-shadow: 0 -4px 18px var(--shadow); padding: 10px 16px; box-sizing: border-box; }
+.panel .grab { display: block; inline-size: 40px; block-size: 5px; border-radius: 3px; background: var(--icon); opacity: 0.4; margin: 0 auto 14px; }
+.panel b { display: block; font-size: 17px; margin-bottom: 8px; }
+.panel i { display: block; block-size: 40px; border-radius: 10px; background: var(--row-fill); margin-bottom: 8px; }
+.springsheet { position: absolute; left: 0; right: 0; bottom: 0; block-size: 100%; touch-action: none; will-change: translate; }
+.scroller { position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; scrollbar-width: none; pointer-events: none; }
+.scroller::-webkit-scrollbar { display: none; }
+.scroller .spacer { block-size: 100%; scroll-snap-align: start; }
+.scroller .rung { position: absolute; left: 0; right: 0; block-size: 1px; scroll-snap-align: start; }
+.scroller .panel { min-block-size: 85%; pointer-events: auto; }
+
+/* 4 · A dialog over a photograph and a line of text. */
+.s4 { block-size: 260px; background: center / cover no-repeat url("__PHOTO__"); }
+.s4 .words { position: absolute; left: 14px; right: 14px; top: 16px; font: 600 20px/1.25 var(--font); color: var(--on-photo); text-shadow: 0 1px 2px var(--on-photo-shade); }
+/* Under every dialog, the modal scrim dims the whole page (ModalOverlay's opacity). Over it, in A and B, the focus veil
+   frosts a pool as glass-ui draws it on a 390 x 844 phone: a 26rem core and a 7rem bloom about the dialog's centre
+   (focus-veil.css; glass.css:113-115). The core is wider than the phone, so the pool spans the width and grades out at
+   its top and foot: clear above 12.1 % and below 87.9 % of the height, whole from 25.4 % to 74.6 %. Both rise with the
+   dialog over 200 ms and leave with it over 120 ms (§10.6). The two are siblings, so the pool's blur is never inside a
+   fading ancestor. */
+.veil-scrim, .veil-pool { position: absolute; inset: 0; opacity: 0; transition: opacity 120ms var(--exit-curve); pointer-events: none; }
+.veil-scrim { background: var(--scrim); }
+.veil-pool { -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 12.1%, black 25.4%, black 74.6%, transparent 87.9%);
+  mask-image: linear-gradient(to bottom, transparent 12.1%, black 25.4%, black 74.6%, transparent 87.9%); }
+.veil-scrim.on, .veil-pool.on { opacity: 1; transition: opacity 200ms ease-out; }
+.veil-scrim.on { pointer-events: auto; }
+.dialog { position: absolute; left: 50%; top: 50%; inline-size: 248px; translate: -50% -50%; border-radius: 20px; padding: 16px; box-sizing: border-box; color: var(--fg); box-shadow: 0 10px 30px var(--shadow);
+  opacity: 0; scale: 0.96; pointer-events: none; transition: opacity 120ms var(--exit-curve), scale 0s 120ms; }
+.dialog.on { opacity: 1; scale: 1; pointer-events: auto; transition: opacity 200ms var(--present), scale 200ms var(--present); }
+.dialog.frost { background: var(--tint); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); }
+.dialog.tint { background: var(--tint); }
+.dialog.solid { background: var(--glass); }
+.dialog p { margin: 0 0 14px; font-size: 16px; }
+.dialog .row { display: flex; gap: 8px; justify-content: flex-end; }
+.dialog .row button { min-height: 44px; padding: 0 14px; border-radius: 22px; border: 0; background: var(--row-fill); cursor: pointer; }
+.s4 .open { position: absolute; left: 14px; bottom: 14px; min-height: 44px; padding: 0 16px; border-radius: 22px; border: 0; background: var(--card); color: var(--fg); cursor: pointer; }
+:root { --exit-curve: cubic-bezier(0.3, 0.2, 0.7, 0.8); --present: cubic-bezier(0.197, 0, 0.124, 0.808); --bloom: cubic-bezier(0.183, 0, 0.237, 1); }
+</style>
+
+<main>
+  <p class="ask"><strong>Four short looks, one line each below: a letter for sections 1, 3 and 4, and for section 2 a screenshot of its two lines after each try.</strong> Nothing waits on you: each section ships its default, named on it, unless you send another.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="rm" style="margin:0;color:var(--muted)">Reduce Motion is on in your settings. Turn it off for this reading: the motion is what you are looking at.</p>
+  <div class="bar">
+    <button id="dark" class="toggle" type="button" aria-pressed="false">Dark</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+    <button id="busy" class="toggle" type="button" aria-pressed="false">Busy page</button>
+  </div>
+
+  <section>
+    <h2>1 · A menu from a dock seat</h2>
+    <p class="how">For 11.3.0’s close (B ships unless you send A). Tap a seat to open its menu, then tap a row or anywhere else to close it. Send the letter whose close you would keep.</p>
+    <div class="letter"><p><b>A</b> · Closes as today: it draws back toward the dock as it fades.</p><div class="stage s1" data-close="today"></div></div>
+    <div class="letter"><p><b>B</b> · Closes by fading where it is, about twice as fast.</p><div class="stage s1" data-close="fade"></div></div>
+  </section>
+
+  <section>
+    <h2>2 · Slide across a menu</h2>
+    <p class="how">A test for 11.3.0’s slide, not a choice. Put your finger on one row, slide to another without lifting, and lift; then once more, sliding away and back to the row you started on. After each try, screenshot the two lines under the menu. Lifting off the list chooses nothing.</p>
+    <div class="letter"><div class="stage s2" id="slide"></div><p class="readout" id="chosen">Chosen: none yet</p><p class="readout" id="lift">Lift reached: nothing yet</p></div>
+  </section>
+
+  <section>
+    <h2>3 · A sheet you drag</h2>
+    <p class="how">For 12.0.0’s sheets with stops (B ships unless you send A). Drag each sheet up and down, fling it, then do both again with Busy page on. Send the letter that moves better. Show brings a closed sheet back.</p>
+    <div class="letter"><p><b>A</b> · The page moves the sheet (today’s).</p><div class="stage s3" data-sheet="spring"></div><div class="bar"><button class="toggle" type="button" data-show>Show</button><span class="readout" data-rest>Rests at 40 %</span></div></div>
+    <div class="letter"><p><b>B</b> · The phone scrolls the sheet.</p><div class="stage s3" data-sheet="scroll"></div><div class="bar"><button class="toggle" type="button" data-show>Show</button><span class="readout" data-rest>Rests at 40 %</span></div></div>
+  </section>
+
+  <section>
+    <h2>4 · A dialog over the page</h2>
+    <p class="how">For 11.3.0’s dialogs (B ships unless you send another). Open each dialog and close it, in Light and in Dark. Send the letter you would ship.</p>
+    <div class="letter"><p><b>A</b> · Today’s: the page behind is frosted, and the dialog is frosted again over it.</p><div class="stage s4" data-dialog="a"></div></div>
+    <div class="letter"><p><b>B</b> · The page behind is frosted once, and the dialog is a tint over it.</p><div class="stage s4" data-dialog="b"></div></div>
+    <div class="letter"><p><b>C</b> · Nothing is frosted: the page dims and the dialog is nearly solid. 12.0.0 as written.</p><div class="stage s4" data-dialog="c"></div></div>
+    <div class="letter"><p><b>D</b> · The page behind dims, and the dialog keeps its own frost.</p><div class="stage s4" data-dialog="d"></div></div>
+  </section>
+
+  <p class="readout">Everything here is a model drawn by this page alone, not glass-ui itself.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const env = document.getElementById("env");
+  env.textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const toggle = (b) => { const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on)); return on; };
+  const el = (tag, cls, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; parent.appendChild(e); return e; };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const root = document.documentElement, darkBtn = document.getElementById("dark");
+  darkBtn.setAttribute("aria-pressed", String(matchMedia("(prefers-color-scheme: dark)").matches));
+  darkBtn.addEventListener("click", () => { root.dataset.theme = toggle(darkBtn) ? "dark" : "light"; });
+  let slow = 1, busy = 0;
+  document.getElementById("slow").addEventListener("click", (e) => { slow = toggle(e.currentTarget) ? 4 : 1; });
+  document.getElementById("busy").addEventListener("click", (e) => {
+    clearInterval(busy);
+    if (toggle(e.currentTarget)) busy = setInterval(() => { const end = performance.now() + 45; while (performance.now() < end) {} }, 60);
+  });
+  const ROWS = ["Upstairs", "Downstairs", "Garage", "Garden"];
+  document.addEventListener("touchstart", () => {}, { passive: true }); // Safari applies :active only with one
+
+  // ── 1 · A menu from a dock seat. Grow: a rounded clip uncovers the menu from a strip the seat's height at its edge
+  //    facing the dock, on bloom's single curve over its 370 ms clock, rows at full strength. A seat's held fill waits
+  //    for the menu to land. Close: A draws the clip back and fades over 222 ms; B fades in place over 120 ms. ──
+  for (const stage of document.querySelectorAll(".s1")) {
+    const today = stage.dataset.close === "today";
+    const dock = el("div", "dock", stage);
+    const seats = [0, 1, 2, 3].map((i) => {
+      const b = el("button", "seat", dock); b.type = "button"; b.style.left = 4 + i * 62 + "px";
+      b.setAttribute("aria-label", "Seat " + (i + 1)); b.setAttribute("aria-haspopup", "menu"); b.setAttribute("aria-expanded", "false");
+      el("i", "", b); return b;
+    });
+    let menu = null, owner = null;
+    const H = 192, STRIP = 44, BLEED = 32; // 11.1.1: --menu-grow-bleed 2rem, a strip the trigger's height (reveal.css:271-290)
+    const OPEN = `inset(-${BLEED}px round 16px)`, SHUT = `inset(${H - STRIP}px -${BLEED}px -${BLEED}px -${BLEED}px round 16px)`;
+    const close = () => {
+      if (!menu) return;
+      const m = menu; menu = null; owner.setAttribute("aria-expanded", "false"); owner = null;
+      const D = (today ? 222 : 120) * slow;
+      const legs = [{ opacity: 1 }, { opacity: 0 }];
+      const opts = { duration: D, easing: "cubic-bezier(0.3, 0.2, 0.7, 0.8)", fill: "forwards" };
+      const cur = getComputedStyle(m).clipPath, from = cur && cur !== "none" ? cur : OPEN;
+      const a = m.animate(today && !reduce.matches ? [{ opacity: 1, clipPath: from }, { opacity: 0, clipPath: SHUT }] : legs, opts);
+      a.onfinish = () => m.remove();
+    };
+    const open = (seat) => {
+      close();
+      const sw = stage.clientWidth, cx = 12 + seat.offsetLeft + 22;
+      const m = el("div", "menu", stage); m.setAttribute("role", "menu");
+      m.style.left = Math.max(8, Math.min(sw - 208, cx - 22)) + "px"; // reka's align start: the menu starts at its seat's start edge, kept 8 px inside the frame
+      m.style.bottom = 16 + 52 + 4 + "px"; // reka's sideOffset (4 px) past the dock's top edge: never over the dock
+      for (const r of ROWS) { const b = el("button", "", m); b.type = "button"; b.setAttribute("role", "menuitem"); b.textContent = r; b.addEventListener("click", () => close()); b.addEventListener("pointerenter", () => { m.querySelectorAll("[data-highlighted]").forEach((x) => x.removeAttribute("data-highlighted")); b.setAttribute("data-highlighted", ""); }); }
+      const D = 370 * slow;
+      seat.style.setProperty("--held-delay", (reduce.matches ? 150 : D) + "ms");
+      seat.setAttribute("aria-expanded", "true");
+      if (reduce.matches) m.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, easing: "ease-out" });
+      else m.animate([{ clipPath: SHUT }, { clipPath: OPEN }], { duration: D, easing: "cubic-bezier(0.183, 0, 0.237, 1)" });
+      menu = m; owner = seat;
+    };
+    seats.forEach((s) => s.addEventListener("click", () => { if (owner === s) close(); else open(s); }));
+    document.addEventListener("click", (e) => { if (menu && !menu.contains(e.target) && !dock.contains(e.target)) close(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  }
+
+  // ── 2 · The slide, as reka 2.10.1 plus two listeners would do it: a touch press releases its row's capture, so
+  //    moves and the lift reach the row under the finger, and a move highlights that row. The lift on a row the press
+  //    did not start on chooses it (reka's pointerup, MenuItem.js:57-61); the row the press started on is chosen only
+  //    by the browser's own click, as in reka, which is what the second try reads. A lift off the list chooses nothing. ──
+  {
+    const stage = document.getElementById("slide"), out = document.getElementById("chosen");
+    const m = el("div", "menu", stage); m.setAttribute("role", "menu");
+    const choose = (b) => { out.textContent = "Chosen: " + b.textContent; const f = getComputedStyle(root).getPropertyValue("--row-fill").trim(); b.animate([{ backgroundColor: f }, { backgroundColor: "transparent" }], { duration: 300, easing: "ease-out" }); };
+    let pressed = null;
+    const items = ROWS.map((r) => { const b = el("button", "", m); b.type = "button"; b.setAttribute("role", "menuitem"); b.textContent = r; b.addEventListener("click", () => choose(b)); return b; });
+    const mark = (b) => { items.forEach((x) => x.toggleAttribute("data-highlighted", x === b)); };
+    const under = (x, y) => { const t = document.elementFromPoint(x, y); return t && t.closest ? t.closest('[role="menuitem"]') : null; };
+    m.addEventListener("pointerdown", (e) => { const t = e.target; pressed = t.closest ? t.closest('[role="menuitem"]') : null; if (e.pointerType === "touch" && t.hasPointerCapture && t.hasPointerCapture(e.pointerId)) t.releasePointerCapture(e.pointerId); mark(under(e.clientX, e.clientY)); });
+    m.addEventListener("pointermove", (e) => mark(under(e.clientX, e.clientY)));
+    m.addEventListener("pointerleave", () => mark(null));
+    // The commit as reka's MenuItem makes it (MenuItem.js:57-61): the row's own pointerup clicks it when the press did not
+    // start on it. Whether the lift reaches that row after the capture was released is the engine's, and the second line
+    // says which element it reached.
+    const lift = document.getElementById("lift");
+    items.forEach((b) => b.addEventListener("pointerup", () => { if (b !== pressed) b.click(); }));
+    document.addEventListener("pointerup", (e) => {
+      if (pressed !== null || m.contains(e.target)) { const t = e.target, row = t.closest ? t.closest('[role="menuitem"]') : null; lift.textContent = "Lift reached: " + (row ? row.textContent : t === m ? "the menu" : "outside the menu"); }
+      pressed = null; mark(null);
+    });
+    m.addEventListener("keydown", (e) => {
+      const i = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); const n = items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length]; n.focus(); mark(n); }
+    });
+  }
+
+  // ── 3 · A sheet with rungs at 40 % and 85 % of its frame (0 is closed) ──
+  const RUNGS = [0, 0.4, 0.85];
+  const nearest = (v) => RUNGS.reduce((a, b) => (Math.abs(b - v) < Math.abs(a - v) ? b : a));
+  const panelBody = (p) => { el("span", "grab", p); const t = el("b", "", p); t.textContent = "Garage"; for (let i = 0; i < 6; i++) el("i", "", p); };
+  for (const stage of document.querySelectorAll(".s3")) {
+    const letter = stage.closest(".letter"), rest = letter.querySelector("[data-rest]"), show = letter.querySelector("[data-show]");
+    const page = el("div", "page", stage); for (let i = 0; i < 14; i++) el("i", "", page);
+    const say = (r) => { rest.textContent = r === 0 ? "Closed" : "Rests at " + Math.round(r * 100) + " %"; };
+    if (stage.dataset.sheet === "spring") {
+      // A: the page moves it. t is the fraction of the frame the sheet shows; translate = (1 − t) of the frame.
+      const sheet = el("div", "panel springsheet", stage); panelBody(sheet);
+      const Hf = () => stage.clientHeight;
+      let t = 0.4, v = 0, raf = 0, drag = null, samples = [];
+      const put = () => { sheet.style.translate = "0 " + ((1 - t) * Hf()).toFixed(2) + "px"; };
+      const settle = (target, v0) => {
+        // glass-ui's rows: rung to rung on dock (0.3, 0.88), open and close on bloom (0.42, 0.9); per-frame writes.
+        const row = target === 0 || t < 0.02 ? { r: 0.42, z: 0.9 } : { r: 0.3, z: 0.88 };
+        const w = (2 * Math.PI) / (row.r * slow), a = row.z * w, wd = w * Math.sqrt(1 - row.z * row.z);
+        const d0 = t - target, B = (v0 + a * d0) / wd, t0 = performance.now();
+        cancelAnimationFrame(raf);
+        const tick = () => {
+          const s = (performance.now() - t0) / 1000, e = Math.exp(-a * s);
+          const d = e * (d0 * Math.cos(wd * s) + B * Math.sin(wd * s));
+          t = target + d; put();
+          if (e * Math.hypot(d0, B) * Hf() > 0.5) raf = requestAnimationFrame(tick); else { t = target; put(); say(target); }
+        };
+        raf = requestAnimationFrame(tick);
+      };
+      sheet.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); drag = { y: e.clientY, t0: t }; samples = [[performance.now(), t]]; sheet.setPointerCapture(e.pointerId); });
+      sheet.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        t = Math.max(0, Math.min(0.95, drag.t0 - (e.clientY - drag.y) / Hf())); put();
+        const now = performance.now(); samples.push([now, t]); samples = samples.filter(([s]) => now - s <= 80);
+      });
+      const release = () => {
+        if (!drag) return; drag = null;
+        const [s0, p0] = samples[0], [s1, p1] = samples[samples.length - 1];
+        v = s1 > s0 ? ((p1 - p0) / (s1 - s0)) * 1000 : 0;
+        // glass-ui's projection: the release carried through the catching spring's horizon, the nearest rung wins.
+        const target = nearest(t + v * 0.2);
+        settle(target, v);
+      };
+      sheet.addEventListener("pointerup", release); sheet.addEventListener("pointercancel", release);
+      show.addEventListener("click", () => { if (t === 0 || nearest(t) === 0) { settle(0.4, 0); } });
+      put(); say(0.4);
+    } else {
+      // B: the phone scrolls it. The spacer is the closed rung; each rung is a snap point; one observer reports it.
+      const sc = el("div", "scroller", stage), spacer = el("div", "spacer", sc);
+      for (const r of RUNGS.slice(1)) { const m = el("i", "rung", sc); m.style.top = r * 100 + "%"; }
+      const panel = el("div", "panel", sc); panelBody(panel);
+      const open = (smooth) => sc.scrollTo({ top: 0.4 * stage.clientHeight, behavior: smooth ? "smooth" : "instant" });
+      sc.scrollTop = 0.4 * stage.clientHeight; // before the first paint; a 1 px rung keeps it in WebKit
+      // One observer, rooted on the scroller, its thresholds at the edges between the rungs' basins (and just above
+      // closed), learns the rung the panel is over; nothing reads scrollTop. The readout changes only when the scroll has
+      // come to rest (scrollend, or 150 ms with no scroll and no finger down), and "closed" counts only once the sheet
+      // has been seen open.
+      let seen = -1, opened = false, down = false, quiet = 0;
+      const commit = () => { if (!down && opened && seen >= 0) say(seen); };
+      const H = stage.clientHeight, P = panel.offsetHeight, edges = [0.001 * P / H, 0.2, 0.625];
+      new IntersectionObserver(([e]) => {
+        seen = e.intersectionRatio < 0.001 ? 0 : nearest((e.intersectionRatio * P) / H) || 0.4;
+        if (seen > 0) opened = true;
+      }, { root: sc, threshold: [0, ...edges.map((x) => Math.min(1, (x * H) / P))] }).observe(panel);
+      if ("onscrollend" in window) sc.addEventListener("scrollend", () => requestAnimationFrame(() => requestAnimationFrame(commit))); // the observer sees an instant scroll's landing a frame later
+      else {
+        const later = () => { clearTimeout(quiet); quiet = setTimeout(commit, 150); };
+        sc.addEventListener("touchstart", () => { down = true; }, { passive: true });
+        sc.addEventListener("touchend", () => { down = false; later(); }, { passive: true });
+        sc.addEventListener("scroll", later, { passive: true });
+      }
+      show.addEventListener("click", () => open(true));
+    }
+  }
+
+  // ── 4 · The dialogs: A frost over frost; B the veil's frost, the plate a tint; C a dim, the plate nearly solid; D a dim,
+  //    the plate its own frost. The veil rises with the dialog over 200 ms and leaves with it over 120 ms (§10.6).
+  //    In on present's single curve (200 ms, opacity and a 0.96 scale); out on the exit curve (120 ms, opacity). ──
+  for (const stage of document.querySelectorAll(".s4")) {
+    const k = stage.dataset.dialog;
+    el("p", "words", stage).textContent = "Turn on the porch light at sunset?";
+    // The opener is part of the page behind: it sits under the veil, frosted or dimmed with the rest while the dialog
+    // is open. A closed dialog is inert, so neither a tap nor Tab reaches its buttons.
+    const opener = el("button", "open", stage); opener.type = "button"; opener.textContent = "Open";
+    const veil = el("div", "veil-scrim", stage), pool = k === "a" || k === "b" ? el("div", "veil-pool", stage) : null;
+    const dlg = el("div", "dialog " + (k === "a" || k === "d" ? "frost" : k === "b" ? "tint" : "solid"), stage);
+    dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-label", "Porch light"); dlg.inert = true;
+    el("p", "", dlg).textContent = "Turn on the porch light every evening at sunset?";
+    const row = el("div", "row", dlg);
+    const btn = (t) => { const b = el("button", "", row); b.type = "button"; b.textContent = t; return b; };
+    const set = (on) => { veil.classList.toggle("on", on); if (pool) pool.classList.toggle("on", on); dlg.classList.toggle("on", on); dlg.inert = !on; opener.inert = on; if (on) dlg.querySelector("button").focus({ preventScroll: true }); else opener.focus({ preventScroll: true }); };
+    opener.addEventListener("click", () => set(true));
+    btn("Not now").addEventListener("click", () => set(false));
+    btn("Turn on").addEventListener("click", () => set(false));
+    veil.addEventListener("click", () => set(false));
+    stage.addEventListener("keydown", (e) => { if (e.key === "Escape") set(false); });
+  }
+})();
+</script>

@@ -1,0 +1,29 @@
+/* BM pass 7 (F7, "faster, less fade"; DESIGN §9.4): the fold with its seats cut by the glass's edge, a design sketch,
+   not library source. The plate is §6.3's window (wi8's `.dock-plate`, its glass on ::before). The controls' own
+   element becomes a second window of the same shape for the length of the change only (`data-morphing`, set and
+   cleared once per change): it clips only during the change, against restraint.md:113 as wi8's lane clip does, and nothing clips at rest; its one child, the seats' row, stands still by the
+   counter-translate. The glass's edge then cuts each seat as it passes and no seat fades, but the first, which trades
+   with the folded glyph on a fixed 100 ms leg that starts when the fold is half done (law 7's 83 ms floor holds on
+   either row; a leg sampled from the spring's progress would last 47 ms on the press row). `--from` is the fold's
+   travel, written once per change. Per change: the plate's two translates, the row's two, the trade's two opacities.
+   Whether wi8's controls element has one child that can stand still is BL's (§9.11). */
+.dock[data-morphing] > .dock-controls {
+    border-radius: calc(infinity * 1px);
+    overflow: clip;
+}
+.dock > .dock-controls {
+    translate: calc(-1 * var(--from, 0px)) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.dock > .dock-controls > .dock-row {
+    translate: var(--from, 0px) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.dock-folded-glyph,
+.dock-row > :first-child {
+    transition: opacity 100ms linear var(--trade-delay, 0s);
+}
+.dock[data-folded] .dock-row > :first-child,
+.dock:not([data-folded]) .dock-folded-glyph {
+    opacity: 0;
+}

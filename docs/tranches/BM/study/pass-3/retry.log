@@ -1,0 +1,5 @@
+18:40:18 attempt 1 (pass-3 page check, nine pages, browser): REFUSED: kernel zone data.kalloc.1024 at 13.83M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+18:48:28 attempt 2 (pass-3 page check, nine pages, browser): REFUSED: kernel zone data.kalloc.1024 at 13.87M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+18:49:59 note: attempt 2 came 8 min 10 s after attempt 1, under the 10-minute floor; later attempts keep the floor
+18:58:36 attempt 3 (pass-3 page check, nine pages, browser): REFUSED: kernel zone data.kalloc.1024 at 13.90M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+18:58:46 stopped: three refusals, the zone climbing 13.83M -> 13.90M; it falls only on a reboot. The page check is recorded as owed (DESIGN §5.9); command: ~/.claude/guard/guarded --timeout 10 -- node docs/tranches/BM/study/pass-3/check/page-check.mjs

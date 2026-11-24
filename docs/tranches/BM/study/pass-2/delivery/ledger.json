@@ -1,0 +1,113 @@
+{
+ "at": "2026-11-22T22:48:34.182Z",
+ "rows": [
+  {
+   "side": "removed",
+   "release": "11.3.0",
+   "what": "six linear() spring tokens (a change of value, not of API)",
+   "gz": 1637,
+   "note": "styles/tokens/scheme-spring.css"
+  },
+  {
+   "side": "added",
+   "release": "11.3.0",
+   "what": "six cubic-bezier() spring tokens",
+   "gz": 150,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0",
+   "what": "FadingScroll's scrubbed ramps: rules, keyframes, two registered properties",
+   "gz": 430,
+   "note": "styles/utilities/base-misc.css"
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0",
+   "what": "useFadingScroll, the script fallback",
+   "gz": 904,
+   "note": ""
+  },
+  {
+   "side": "added",
+   "release": "12.0.0",
+   "what": "FadingScroll's fixed ramps with the bleed (sketch)",
+   "gz": 201,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0",
+   "what": "scroll-chrome.css (the ramp read from a registered property)",
+   "gz": 417,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0",
+   "what": "useScrollChrome (the per-frame ramp machine)",
+   "gz": 897,
+   "note": ""
+  },
+  {
+   "side": "added",
+   "release": "12.0.0",
+   "what": "scroll-chrome.css, a state played on scale, translate and opacity (sketch)",
+   "gz": 330,
+   "note": ""
+  },
+  {
+   "side": "added",
+   "release": "12.0.0",
+   "what": "useScrollChrome, a direction read that sets one attribute (sketch)",
+   "gz": 384,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "11.3.0",
+   "what": "ScrollProgressRim's border clip-path legs",
+   "gz": 319,
+   "note": ""
+  },
+  {
+   "side": "added",
+   "release": "11.3.0",
+   "what": "ScrollProgressRim's border as a sliding window (sketch)",
+   "gz": 273,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0 (after 11.2.0 ships)",
+   "what": "the run's scroll-driven corner: timeline, four keyframes, reduced-motion arm",
+   "gz": 597,
+   "note": "bl/dock/wi8 run.css, minified here"
+  },
+  {
+   "side": "added",
+   "release": "11.3.0",
+   "what": "playSpring, the settle as compositor keyframes (sketch)",
+   "gz": 655,
+   "note": ""
+  },
+  {
+   "side": "removed",
+   "release": "12.0.0",
+   "what": "useSpringMount (Dialog's and Sheet's per-frame Vue writes)",
+   "gz": 791,
+   "note": "replaced by the player where Q6 holds"
+  }
+ ],
+ "totals": {
+  "11.3.0": {
+   "added": 1078,
+   "removed": 1956
+  },
+  "12.0.0": {
+   "added": 915,
+   "removed": 4036
+  }
+ }
+}

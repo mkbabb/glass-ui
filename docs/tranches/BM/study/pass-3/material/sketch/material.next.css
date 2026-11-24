@@ -1,0 +1,49 @@
+/* BM pass 3 sketch: the glass material under one blur value (Q10), its edge (Q13) and the accessibility brackets
+   (Q14). Not glass-ui source: pass 10 places it. Every value is from `pass-3/material/legibility.json`.
+
+   - One blur value. The five radii (tokens/glass.css:69-73) and the deep tier's boost become one radius. The level
+     still scales it, and the level is now only the accessibility and site knob (1 by default, 0.3 under more
+     contrast, 0 for opaque), so no surface's blur changes with its firmness (law 1; BL RULINGS-8 R8-6).
+   - The chrome band's mix. Chrome (the dock, bars, menus, popovers, select, combobox and command content, dialogs,
+     sheets, toasts, tooltips) carries words over whatever the page scrolls beneath it. It mixes its rung with the
+     card colour by a per-mode amount: the least that keeps a --foreground word at 4.5:1 over a black ground in
+     light and a white ground in dark, at the strictest chrome rung (the dock's). The content band mixes nothing
+     (1), as every plate does today. The mix multiplies the level where the plate is composed at the element
+     (`@utility glass-plate`, glass/veil.css), never in the :root-baked --glass-plate-* tokens.
+   - One edge, light only: the chrome's warm hairline at 8 % (tokens/glass.css:232). In dark the plate stands off
+     the page by itself (1.23 against 1.00 today). The rim's inset legs go.
+   - The clamp goes: no --glass-backdrop-luma, no knee, no clamp in the plate. */
+:root {
+    --glass-blur-radius: 12px;
+    --glass-blur: blur(calc(var(--glass-blur-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-mix-chrome: 0.482;
+    --glass-edge-chrome: rgb(from var(--foreground) r g b / 0.08);
+}
+.dark {
+    --glass-mix-chrome: 0.335;
+    --glass-edge-chrome: transparent;
+}
+:where(.glass-dock, .glass-floating, .glass-overlay, .glass-dialog, .glass-sheet) {
+    --glass-mix: var(--glass-mix-chrome);
+    border-color: var(--glass-edge-chrome);
+}
+@utility glass-plate {
+    background: color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-tier)) calc(var(--glass-level) * var(--glass-mix, 1) * 100%), var(--card));
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+}
+/* Increase Contrast fires in Safari (14.1): firmer, less blur, and the one edge in both modes. */
+@media (prefers-contrast: more) {
+    :root, .dark {
+        --glass-level: 0.3;
+        /* about half the foreground: 3:1 against the plate (WCAG 1.4.11), arithmetic, unmeasured; pass 10 measures */
+        --glass-edge-chrome: rgb(from var(--foreground) r g b / 0.5);
+    }
+}
+/* Reduce Transparency fires where a browser exposes it (not Safari). A site's own setting writes the same one
+   token on its root: `--glass-level: 0`. */
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --glass-level: 0;
+    }
+}

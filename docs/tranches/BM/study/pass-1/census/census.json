@@ -1,0 +1,2202 @@
+{
+ "at": "2026-11-22T21:37:11.154Z",
+ "sites": [
+  {
+   "site": "atlas (library)",
+   "repo": "/Users/mkbabb/Programming/atlas",
+   "ref": "u/build-atlas-rc",
+   "path": "src",
+   "head": "62405c0",
+   "imports": {
+    "Aurora": 1,
+    "AuroraConfig": 1,
+    "AuroraHuePath": 1,
+    "AuroraNucleus": 2,
+    "AuroraRenderMode": 1,
+    "Button": 8,
+    "Card": 3,
+    "Collapsible": 2,
+    "CollapsibleContent": 2,
+    "CollapsibleTrigger": 2,
+    "CommandDialog": 1,
+    "CommandEmpty": 1,
+    "CommandGroup": 1,
+    "CommandInput": 1,
+    "CommandItem": 1,
+    "CommandList": 1,
+    "DEFAULT_AURORA_CONFIG": 1,
+    "DarkModeToggle": 1,
+    "DataTable": 3,
+    "DataTableColumn": 3,
+    "DataTableRowAttrs": 2,
+    "DataTableSort": 2,
+    "Dialog": 4,
+    "DialogDescription": 3,
+    "DialogHeader": 3,
+    "DialogTitle": 4,
+    "DockControl": 4,
+    "DockSeparator": 5,
+    "DockTrigger": 4,
+    "DropdownMenu": 1,
+    "DropdownMenuContent": 1,
+    "DropdownMenuItem": 1,
+    "DropdownMenuTrigger": 1,
+    "ExpandableContainer": 1,
+    "GlassDock": 4,
+    "HandMark": 4,
+    "Input": 2,
+    "LabeledField": 1,
+    "OklchStop": 1,
+    "PAPER_WASH_GROUND": 1,
+    "Point": 1,
+    "Popover": 5,
+    "PopoverContent": 5,
+    "PopoverTrigger": 2,
+    "STILL_FIELD": 1,
+    "ScrollProgressRim": 1,
+    "SegmentedTabs": 3,
+    "Select": 8,
+    "SelectContent": 8,
+    "SelectItem": 8,
+    "SelectLabel": 1,
+    "SelectSeparator": 1,
+    "SelectTrigger": 5,
+    "SelectValue": 5,
+    "SheetContent": 4,
+    "Slider": 1,
+    "SpringPresetName": 2,
+    "StillConstellation": 1,
+    "StillPoint": 1,
+    "Surface": 3,
+    "SurfaceDecoration": 1,
+    "SurfaceTier": 1,
+    "Switch": 2,
+    "ToggleGroup": 3,
+    "ToggleGroupItem": 3,
+    "Tooltip": 2,
+    "TooltipContent": 2,
+    "TooltipProvider": 1,
+    "TooltipTrigger": 2,
+    "handLine": 1,
+    "handRing": 1,
+    "hexToOklchStop": 1,
+    "springPreset": 4,
+    "strokeRibbon": 1,
+    "supportsViewTimeline": 1,
+    "useDeck": 1,
+    "useGlobalDark": 2,
+    "useSlideContext": 1
+   },
+   "subpaths": {
+    "(root)": 1,
+    "/aurora": 3,
+    "/button": 8,
+    "/card": 3,
+    "/collapsible": 2,
+    "/command": 1,
+    "/constellation": 2,
+    "/dark": 2,
+    "/dark-mode-toggle": 1,
+    "/data-table": 3,
+    "/deck": 2,
+    "/dialog": 4,
+    "/dock": 8,
+    "/dock-trigger": 4,
+    "/expandable-container": 1,
+    "/handmark": 5,
+    "/input": 2,
+    "/labeled-field": 1,
+    "/menu": 1,
+    "/motion": 5,
+    "/popover": 5,
+    "/scroll-progress-rim": 1,
+    "/select": 8,
+    "/sheet": 4,
+    "/slider": 1,
+    "/surface": 4,
+    "/switch": 2,
+    "/tabs": 3,
+    "/toggle-group": 3,
+    "/tooltip": 3
+   },
+   "cssImports": [
+    "/styles  (src/vite/fixtures/direct/styles.css)",
+    "/styles  (src/vite/fixtures/indirect/styles.css)",
+    "/styles  (src/vite/fixtures/ownlayer/styles.css)",
+    "/styles  (src/vite/fixtures/reference/styles.css)",
+    "/styles  (src/vite/fixtures/sfc/App.vue)",
+    "/styles  (src/vite/fixtures/swapped/styles.css)",
+    "/styles  (src/vite/preset.ts)"
+   ],
+   "candidates": {
+    "CommandDialog plate in plate": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "src/platform/chrome/dock/components/DockSearchPalette.vue"
+     ]
+    },
+    "specular catch-light": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "src/platform/chrome/dock/components/DockCrest.vue"
+     ]
+    },
+    "scroll-chrome (M8, its reduced-motion snap)": {
+     "src": 7,
+     "tests": 0,
+     "files": [
+      "src/platform/chrome/background/composables/useAtmosphereActivity.ts",
+      "src/platform/chrome/dock/Dock.vue",
+      "src/platform/chrome/dock/composables/index.ts",
+      "src/platform/chrome/dock/composables/useDockCollapse.ts",
+      "src/platform/chrome/dock/composables/useScrollChrome.ts",
+      "src/platform/chrome/dock/index.ts",
+      "src/platform/chrome/index.ts"
+     ]
+    },
+    "SegmentedTabs": {
+     "src": 3,
+     "tests": 1,
+     "files": [
+      "src/charts/frame/PlateDial.vue",
+      "src/filter/ui/VizOptionsBand.vue",
+      "src/filter/ui/components/YearScrubber.vue"
+     ]
+    },
+    "GlassDock": {
+     "src": 10,
+     "tests": 1,
+     "files": [
+      "src/charts/frame/PlateControls.vue",
+      "src/charts/frame/PlateDock.vue",
+      "src/charts/scene/StickyScene.vue",
+      "src/design/tokens/space.css",
+      "src/platform/chrome/dock/Dock.css",
+      "src/platform/chrome/dock/Dock.vue",
+      "src/platform/chrome/dock/components/DockStepperRender.vue",
+      "src/platform/chrome/dock/composables/useDockCollapse.ts",
+      "src/platform/chrome/dock/index.ts",
+      "src/platform/chrome/shell/PlatformShell.vue"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "src/editorial/DataAside.vue",
+      "src/filter/ui/SelectionSetPane.vue",
+      "src/filter/ui/SourceDataBrowser.vue",
+      "src/filter/ui/VizOptionsBand.vue"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "src/interaction/EntityDetail.vue",
+      "src/platform/chrome/dock/composables/useDockGear.ts"
+     ]
+    },
+    "Select (glass)": {
+     "src": 8,
+     "tests": 1,
+     "files": [
+      "src/charts/scene/PeriodControl.vue",
+      "src/editorial/DataAside.vue",
+      "src/filter/ui/VizOptionsBand.vue",
+      "src/filter/ui/components/YearScrubber.vue",
+      "src/platform/chrome/dock/components/DockDashboardSelectLive.vue",
+      "src/platform/chrome/dock/components/DockSavedViewsLive.vue",
+      "src/platform/chrome/dock/components/DockSectionSelect.vue",
+      "src/platform/provenance/DataViewerRoute.vue"
+     ]
+    },
+    "Popover": {
+     "src": 5,
+     "tests": 0,
+     "files": [
+      "src/charts/frame/PlateDial.vue",
+      "src/charts/frame/PlateDock.vue",
+      "src/charts/legend/LegendTierSeat.vue",
+      "src/editorial/EasterEgg.vue",
+      "src/interaction/FigureNote.vue"
+     ]
+    },
+    "HoverCard": {
+     "src": 27,
+     "tests": 11,
+     "files": [
+      "src/charts/composables/useEChart.ts",
+      "src/charts/composables/useXFacts.ts",
+      "src/charts/frame/FigureSlug.vue",
+      "src/charts/frame/VizPlate.vue",
+      "src/charts/geo/GeoPlate.vue",
+      "src/charts/legend/ChartDataTable.vue",
+      "src/charts/legend/VizTextOverlay.vue",
+      "src/charts/marks/DiscreteColumns.vue",
+      "src/charts/marks/RankedBar.vue",
+      "src/charts/marks/ScatterPlate.vue",
+      "src/charts/marks/StackedBar.vue",
+      "src/charts/marks/TimeSeries.vue"
+     ]
+    },
+    "Tooltip": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "src/interaction/ControlTip.vue",
+      "src/platform/chrome/dock/components/DockHint.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "src/filter/ui/FilterPanel.vue",
+      "src/interaction/EntityDetail.vue",
+      "src/platform/provenance/DataViewerRoute.vue",
+      "src/platform/provenance/VizAppendixDock.vue"
+     ]
+    },
+    "Sheet": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "src/filter/ui/FilterPanel.vue",
+      "src/interaction/EntityDetail.vue",
+      "src/platform/provenance/DataViewerRoute.vue",
+      "src/platform/provenance/VizAppendixDock.vue"
+     ]
+    },
+    "Sheet detents": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "src/filter/ui/FilterPanel.vue",
+      "src/interaction/EntityDetail.vue"
+     ]
+    },
+    "FadingScroll": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "src/design/recipes/recipes.css"
+     ]
+    },
+    "ScrollProgressRim": {
+     "src": 1,
+     "tests": 1,
+     "files": [
+      "src/platform/chrome/dock/components/DockProgressRim.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "atlas (sci dashboards)",
+   "repo": "/Users/mkbabb/Programming/sci-report",
+   "ref": "u/v19-sci",
+   "path": "dashboards",
+   "head": "df25605f",
+   "imports": {
+    "Button": 5,
+    "Carousel": 1,
+    "CarouselContent": 1,
+    "CarouselItem": 1,
+    "Collapsible": 2,
+    "CollapsibleContent": 2,
+    "CollapsibleTrigger": 2,
+    "Command": 2,
+    "CommandEmpty": 2,
+    "CommandInput": 2,
+    "CommandItem": 2,
+    "CommandList": 2,
+    "DataTable": 2,
+    "DataTableColumn": 2,
+    "GlassDock": 1,
+    "HandMark": 1,
+    "PagerDots": 1,
+    "SegmentedTabs": 3,
+    "Select": 2,
+    "SelectContent": 2,
+    "SelectItem": 2,
+    "SelectTrigger": 2,
+    "SelectValue": 2,
+    "Slider": 4,
+    "Surface": 2,
+    "ToggleGroup": 4,
+    "ToggleGroupItem": 4,
+    "Tooltip": 4,
+    "TooltipContent": 4,
+    "TooltipTrigger": 4
+   },
+   "subpaths": {
+    "/button": 5,
+    "/carousel": 1,
+    "/collapsible": 2,
+    "/command": 2,
+    "/data-table": 2,
+    "/dock": 1,
+    "/handmark": 1,
+    "/pager-dots": 1,
+    "/select": 2,
+    "/slider": 4,
+    "/surface": 2,
+    "/tabs": 3,
+    "/toggle-group": 4,
+    "/tooltip": 4
+   },
+   "cssImports": [
+    "/styles  (dashboards/styles.css)"
+   ],
+   "candidates": {
+    "SegmentedTabs": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "dashboards/ecf/features/filter/EcfFilter.vue",
+      "dashboards/sci/features/filter/SciFilter.vue",
+      "dashboards/usf-integrity/features/filter/ConsultantFilter.vue",
+      "dashboards/usf/features/filter/UsfFilter.vue"
+     ]
+    },
+    "GlassDock": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "dashboards/home/hero/HeroStage.vue"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 8,
+     "tests": 0,
+     "files": [
+      "dashboards/ecf/features/charters/ChartersTreemap.vue",
+      "dashboards/ecf/features/consultants/ConsultantsRankedBar.vue",
+      "dashboards/ecf/features/filter/EcfFilter.vue",
+      "dashboards/sci/features/filter/SciFilter.vue",
+      "dashboards/speedtest/features/distribution/BenchmarkDistribution.vue",
+      "dashboards/speedtest/features/survey/SurveyChapter.vue",
+      "dashboards/usf/features/filter/UsfFilter.vue",
+      "dashboards/vft-germination/story/points/02-the-design/Point.vue"
+     ]
+    },
+    "Select (glass)": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "dashboards/ecf/features/filter/EcfFilter.vue",
+      "dashboards/speedtest/features/survey/SurveyChapter.vue"
+     ]
+    },
+    "HoverCard": {
+     "src": 35,
+     "tests": 0,
+     "files": [
+      "dashboards/bead/features/providers/BuilderClassPlate.vue",
+      "dashboards/bead/features/providers/ProviderRankedStrip.vue",
+      "dashboards/bead/features/providers/composables/useBuilderClassOption.ts",
+      "dashboards/bead/features/providers/composables/useProviderStripOption.ts",
+      "dashboards/demand/features/crossover/CrossoverPlate.vue",
+      "dashboards/demand/features/product-mix/ProductMixPlate.vue",
+      "dashboards/ecf/features/charters/ChartersTreemap.vue",
+      "dashboards/ecf/features/consultants/ConsultantsRankedBar.vue",
+      "dashboards/ecf/features/districts/DistrictChoropleth.vue",
+      "dashboards/ecf/lib/derive.ts",
+      "dashboards/home/dashboard/DashboardView.vue",
+      "dashboards/home/dashboard/plateCard.ts"
+     ]
+    },
+    "Tooltip": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "dashboards/demand/features/product-mix/ProductMixPlate.vue",
+      "dashboards/demand/features/trajectory/DemandRidge.vue",
+      "dashboards/ecf/features/filter/EcfFilter.vue",
+      "dashboards/home/hero/HeroStage.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "value.js",
+   "repo": "/Users/mkbabb/Programming/value.js",
+   "ref": "c45",
+   "path": ".",
+   "head": "243d0b364",
+   "imports": {
+    "Accordion": 1,
+    "AccordionContent": 1,
+    "AccordionItem": 1,
+    "AccordionTrigger": 1,
+    "Alert": 1,
+    "AlertDescription": 1,
+    "AlertTitle": 1,
+    "AuroraAtoms": 5,
+    "AuroraConfig": 2,
+    "AuroraHarmony": 2,
+    "AuroraMedium": 1,
+    "AuroraMotionAtom": 1,
+    "AuroraZoneArrangement": 1,
+    "BLOB_CONFIG_DEFAULTS": 3,
+    "BLOB_CONFIG_KEY": 3,
+    "Badge": 6,
+    "BezierPoints": 2,
+    "Blob": 1,
+    "BlobConfig": 2,
+    "Button": 30,
+    "Card": 6,
+    "CardContent": 2,
+    "CardHeader": 2,
+    "CardTitle": 2,
+    "Chip": 3,
+    "Collapsible": 4,
+    "CollapsibleContent": 4,
+    "CollapsibleTrigger": 4,
+    "ConfiguratorRow": 1,
+    "DEFAULT_AURORA_CONFIG": 1,
+    "Dialog": 10,
+    "DialogContent": 9,
+    "DialogDescription": 10,
+    "DialogFooter": 8,
+    "DialogHeader": 9,
+    "DialogTitle": 10,
+    "DockControl": 10,
+    "DockCrossfade": 1,
+    "DockLayer": 2,
+    "DockLayerGroup": 1,
+    "DockSeparator": 4,
+    "DockTrigger": 3,
+    "DropdownMenu": 5,
+    "DropdownMenuCheckboxItem": 2,
+    "DropdownMenuContent": 5,
+    "DropdownMenuItem": 4,
+    "DropdownMenuLabel": 4,
+    "DropdownMenuRadioGroup": 1,
+    "DropdownMenuRadioItem": 1,
+    "DropdownMenuSeparator": 3,
+    "DropdownMenuShortcut": 1,
+    "DropdownMenuSub": 1,
+    "DropdownMenuSubContent": 1,
+    "DropdownMenuSubTrigger": 1,
+    "DropdownMenuTrigger": 3,
+    "EasingPicker": 1,
+    "EasingPickerValue": 5,
+    "FadingScroll": 3,
+    "GlassDock": 1,
+    "Input": 4,
+    "JumpTerm": 2,
+    "Label": 7,
+    "LabeledField": 4,
+    "NumberField": 1,
+    "NumberFieldInput": 1,
+    "OklchStop": 1,
+    "Popover": 8,
+    "PopoverContent": 8,
+    "PopoverTrigger": 8,
+    "RadioGroup": 1,
+    "RadioGroupItem": 1,
+    "SegmentedTabs": 2,
+    "Select": 7,
+    "SelectContent": 7,
+    "SelectGroup": 2,
+    "SelectItem": 7,
+    "SelectSeparator": 1,
+    "SelectTrigger": 6,
+    "SelectValue": 7,
+    "Separator": 2,
+    "SheetContent": 1,
+    "Skeleton": 5,
+    "Slider": 5,
+    "StatusDot": 1,
+    "Textarea": 1,
+    "ToastAction": 1,
+    "ToastHandle": 1,
+    "Toaster": 1,
+    "ToggleGroup": 1,
+    "ToggleGroupItem": 1,
+    "Tooltip": 4,
+    "TooltipContent": 4,
+    "TooltipProvider": 4,
+    "TooltipTrigger": 4,
+    "chipVariants": 1,
+    "cssToOklch": 2,
+    "deriveAurora": 2,
+    "deriveBlobPalette": 2,
+    "oklchStopToHex": 3,
+    "paletteToCssGradient": 1,
+    "resolveAtoms": 1,
+    "resolveRenderMode": 2,
+    "toast": 1,
+    "useAurora": 1,
+    "useBreakpoint": 2,
+    "useClipboard": 7,
+    "useGlobalDark": 13,
+    "useIdleReady": 1,
+    "useLiquidPress": 1,
+    "useOptionalDockContext": 1,
+    "useRAFLoop": 3,
+    "useReducedMotion": 1,
+    "writeClipboard": 6
+   },
+   "subpaths": {
+    "(root)": 6,
+    "/aurora": 7,
+    "/badge": 6,
+    "/blob": 1,
+    "/blob-config": 3,
+    "/button": 30,
+    "/card": 9,
+    "/chip": 4,
+    "/collapsible": 4,
+    "/color": 4,
+    "/configurator": 1,
+    "/dark": 13,
+    "/dialog": 10,
+    "/dock": 10,
+    "/dock-trigger": 3,
+    "/dom": 14,
+    "/easing": 6,
+    "/fading-scroll": 3,
+    "/input": 4,
+    "/label": 7,
+    "/labeled-field": 4,
+    "/menu": 5,
+    "/motion": 1,
+    "/motion-core": 4,
+    "/number-field": 1,
+    "/popover": 8,
+    "/radio-group": 1,
+    "/select": 7,
+    "/separator": 2,
+    "/sheet": 1,
+    "/slider": 5,
+    "/status-dot": 1,
+    "/tabs": 2,
+    "/textarea": 1,
+    "/toast": 2,
+    "/toggle-group": 1,
+    "/tooltip": 4
+   },
+   "cssImports": [
+    "/styles  (demo/styles/foundation.css)",
+    "/styles.css  (demo/styles/foundation.css)",
+    "/styles/fonts  (plugins/vite-defer-glass-fonts.ts)"
+   ],
+   "candidates": {
+    "segmented indicator width/height glide": {
+     "src": 2,
+     "tests": 1,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css"
+     ]
+    },
+    "capsule blur inside track blur": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css",
+      "demo/shared/ui/ColorSpaceSelector.vue"
+     ]
+    },
+    "grasp carriers": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css"
+     ]
+    },
+    "focus veil": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css"
+     ]
+    },
+    "specular catch-light": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css"
+     ]
+    },
+    "luminance clamp": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "demo/app/composables/boot/useAtmosphereBoot.ts",
+      "demo/shell/dock/Dock.vue"
+     ]
+    },
+    "slider loupe": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue",
+      "demo/workbenches/extract/ImageEyedropper/composables/useImageSampler.ts"
+     ]
+    },
+    "useDragVelocity / per-frame velocity customs": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css"
+     ]
+    },
+    "scroll-chrome (M8, its reduced-motion snap)": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css"
+     ]
+    },
+    "press squish (useLiquidPress/useLiquidFlex)": {
+     "src": 1,
+     "tests": 1,
+     "files": [
+      "demo/palettes/inspector/PaletteInspector.vue"
+     ]
+    },
+    "SegmentedTabs": {
+     "src": 2,
+     "tests": 5,
+     "files": [
+      "demo/palettes/admin/panels/AdminNamesPanel.vue",
+      "demo/workbenches/mix/MixSourceSelector.vue"
+     ]
+    },
+    "SegmentedTabs draggable": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/palettes/PalettesPane.vue"
+     ]
+    },
+    "DockLayerGroup switcher": {
+     "src": 2,
+     "tests": 2,
+     "files": [
+      "demo/shell/dock/Dock.vue",
+      "demo/styles/animations.css"
+     ]
+    },
+    "GlassDock": {
+     "src": 5,
+     "tests": 1,
+     "files": [
+      "demo/app/composables/boot/useAtmosphereBoot.ts",
+      "demo/scenes/ConfigSliderPane.vue",
+      "demo/shell/dock/Dock.vue",
+      "demo/styles/foundation.css",
+      "vite.config.ts"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 1,
+     "tests": 1,
+     "files": [
+      "demo/palettes/browser/search/SearchFilterBar.vue"
+     ]
+    },
+    "Slider (glass)": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/picker/controls/ComponentSliders/composables/useSliderAnnouncements.ts"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 8,
+     "tests": 3,
+     "files": [
+      "demo/palettes/admin/UserSortMenu.vue",
+      "demo/palettes/inspector/PaletteCardMenu.vue",
+      "demo/shell/dock/layers/GenericActionBar.vue",
+      "demo/shell/dock/menus/MobileMenuDropdown.vue",
+      "demo/shell/dock/menus/ProfileSection.vue",
+      "demo/shell/usePanePopups.ts",
+      "demo/styles/foundation.css",
+      "demo/styles/shell.css"
+     ]
+    },
+    "Select (glass)": {
+     "src": 9,
+     "tests": 2,
+     "files": [
+      "demo/app/composables/boot/useViewAccents.ts",
+      "demo/picker/ColorPicker.vue",
+      "demo/scenes/atmosphere/AuroraPane.vue",
+      "demo/shared/ui/ColorSpaceSelector.vue",
+      "demo/shared/ui/InterpolationFields.vue",
+      "demo/shell/dock/DockViewSelect.vue",
+      "demo/workbenches/generate/GenerateControls.vue",
+      "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue",
+      "demo/workbenches/mix/MixConfigBar.vue"
+     ]
+    },
+    "Popover": {
+     "src": 8,
+     "tests": 1,
+     "files": [
+      "demo/palettes/browser/search/MiniColorPicker.vue",
+      "demo/palettes/browser/search/SearchFilterBar.vue",
+      "demo/palettes/browser/search/TagEditPopover.vue",
+      "demo/palettes/inspector/PaletteCardMeta.vue",
+      "demo/picker/ColorPicker.vue",
+      "demo/shared/ui/SwatchHoverMenu.vue",
+      "demo/shell/dock/ActionButton.vue",
+      "demo/shell/dock/ColorInput.vue"
+     ]
+    },
+    "HoverCard": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/picker/ColorPicker.vue"
+     ]
+    },
+    "Tooltip": {
+     "src": 4,
+     "tests": 0,
+     "files": [
+      "demo/palettes/browser/card/CurrentPaletteEditor.vue",
+      "demo/picker/controls/ComponentSliders/ConsoleRail.vue",
+      "demo/shared/ui/PaletteColorStrip.vue",
+      "demo/shell/dock/ColorInput.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 10,
+     "tests": 0,
+     "files": [
+      "demo/palettes/BrowsePane.vue",
+      "demo/palettes/PalettesPane.vue",
+      "demo/palettes/admin/panels/AdminFlaggedPanel.vue",
+      "demo/palettes/admin/panels/AdminNamesPanel.vue",
+      "demo/palettes/admin/panels/AdminTagsPanel.vue",
+      "demo/palettes/admin/panels/AdminUsersPanel.vue",
+      "demo/palettes/browser/dialog/FlagReportDialog.vue",
+      "demo/palettes/browser/dialog/MigratePalettesDialog.vue",
+      "demo/palettes/browser/dialog/VersionHistoryDrawer.vue",
+      "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue"
+     ]
+    },
+    "Sheet": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/palettes/browser/dialog/VersionHistoryDrawer.vue"
+     ]
+    },
+    "FadingScroll": {
+     "src": 11,
+     "tests": 4,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css",
+      "demo/palettes/PalettesPane.vue",
+      "demo/palettes/admin/AdminPane.vue",
+      "demo/scenes/ConfigSliderPane.vue",
+      "demo/scenes/about/AboutPane.vue",
+      "demo/scenes/about/katex/Katex.vue",
+      "demo/scenes/about/markdown/Markdown.vue",
+      "demo/shared/ui/PaneHeader.vue",
+      "demo/shell/PaneShell.vue",
+      "demo/workbenches/gradient/GradientVisualizer/easing/EasingSpecimenStrip.vue"
+     ]
+    },
+    "ScrollProgressRim": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css"
+     ]
+    },
+    "--glass-level written": {
+     "src": 5,
+     "tests": 1,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css",
+      "demo/color-session/ink.ts",
+      "demo/styles/foundation.css",
+      "demo/styles/shell.css"
+     ]
+    },
+    "prefers-reduced-transparency": {
+     "src": 4,
+     "tests": 2,
+     "files": [
+      "bench/paired/sheets/keyframes-js-index.css",
+      "bench/paired/sheets/value-js-index.css",
+      "demo/shared/ui/watercolor-dot/WatercolorDot.vue",
+      "demo/styles/foundation.css"
+     ]
+    },
+    "Blob": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "demo/picker/visual/HeroBlob.vue",
+      "demo/picker/visual/heroBlobConfig.ts",
+      "demo/scenes/blob/BlobPane.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "daraksha",
+   "repo": "/Users/mkbabb/Programming/daraksha",
+   "ref": "b11-occasion",
+   "path": ".",
+   "head": "406de8f",
+   "imports": {
+    "AuroraConfig": 2,
+    "Button": 3,
+    "Card": 2,
+    "CommandDialog": 1,
+    "CommandInput": 1,
+    "CommandItem": 1,
+    "CommandList": 1,
+    "Dialog": 3,
+    "DialogContent": 2,
+    "DialogHeader": 1,
+    "DialogTitle": 3,
+    "DockControl": 12,
+    "DockLayer": 1,
+    "DockLayerGroup": 1,
+    "DockSeparator": 1,
+    "DropdownMenu": 1,
+    "DropdownMenuContent": 1,
+    "DropdownMenuItem": 1,
+    "DropdownMenuTrigger": 1,
+    "GlassDock": 5,
+    "Input": 1,
+    "OklchStop": 1,
+    "Popover": 6,
+    "PopoverContent": 6,
+    "PopoverTrigger": 6,
+    "SheetContent": 2,
+    "Slider": 2,
+    "SpringPresetName": 1,
+    "Tooltip": 12,
+    "TooltipContent": 12,
+    "TooltipProvider": 1,
+    "TooltipTrigger": 12,
+    "darkModeSyncScript": 1,
+    "routeTransition": 1,
+    "springPreset": 1,
+    "startViewTransition": 1,
+    "supportsViewTransitions": 2,
+    "useGlobalDark": 3
+   },
+   "subpaths": {
+    "/aurora": 2,
+    "/button": 3,
+    "/card": 2,
+    "/command": 1,
+    "/dark": 4,
+    "/dialog": 3,
+    "/dock": 15,
+    "/input": 1,
+    "/menu": 1,
+    "/motion": 1,
+    "/motion-core": 2,
+    "/popover": 8,
+    "/sheet": 2,
+    "/slider": 2,
+    "/tooltip": 13
+   },
+   "cssImports": [
+    "/styles  (src/styles.css)"
+   ],
+   "candidates": {
+    "capsule blur inside track blur": {
+     "src": 0,
+     "tests": 2,
+     "files": []
+    },
+    "CommandDialog plate in plate": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "src/scripture/Contents.vue"
+     ]
+    },
+    "slider loupe": {
+     "src": 0,
+     "tests": 1,
+     "files": []
+    },
+    "DockLayerGroup switcher": {
+     "src": 1,
+     "tests": 4,
+     "files": [
+      "src/shell/SiteDock.vue"
+     ]
+    },
+    "GlassDock": {
+     "src": 6,
+     "tests": 4,
+     "files": [
+      "src/scripture/HeadDock.vue",
+      "src/shell/ControlsSeat.vue",
+      "src/shell/SiteDock.vue",
+      "src/shell/dockHold.ts",
+      "src/veil/Star.vue",
+      "src/veil/film/Clasp.vue"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "scripts/check-budget.mjs",
+      "src/veil/film/Clasp.vue"
+     ]
+    },
+    "ContextMenu": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "src/pages/ScripturePage.vue"
+     ]
+    },
+    "Popover": {
+     "src": 6,
+     "tests": 0,
+     "files": [
+      "src/palette/StopCard.vue",
+      "src/scripture/CreditInfo.vue",
+      "src/scripture/TextSeat.vue",
+      "src/shell/FactsInfo.vue",
+      "src/shell/Gloss.vue",
+      "src/veil/Lock.vue"
+     ]
+    },
+    "Tooltip": {
+     "src": 12,
+     "tests": 0,
+     "files": [
+      "src/name/NameDock.vue",
+      "src/pages/ColourPage.vue",
+      "src/pages/MotionPage.vue",
+      "src/portraits/PortraitsDock.vue",
+      "src/scripture/CreditInfo.vue",
+      "src/scripture/HeadDock.vue",
+      "src/scripture/ReaderDock.vue",
+      "src/scripture/TextSeat.vue",
+      "src/shell/FactsInfo.vue",
+      "src/shell/SiteDock.vue",
+      "src/shell/StageSeat.vue",
+      "src/shell/ThemeControl.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "src/palette/PickerDrawer.vue",
+      "src/portraits/PortraitsGallery.vue",
+      "src/veil/pages/Leaf.vue"
+     ]
+    },
+    "Sheet": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "src/palette/PickerDrawer.vue",
+      "src/veil/pages/Leaf.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "fourier",
+   "repo": "/Users/mkbabb/Programming/fourier-analysis",
+   "ref": "f45",
+   "path": "web",
+   "head": "22dc445",
+   "imports": {
+    "Alert": 3,
+    "AlertDescription": 3,
+    "AlertTitle": 3,
+    "Badge": 7,
+    "Button": 41,
+    "Card": 15,
+    "CardContent": 2,
+    "CardDescription": 1,
+    "CardFooter": 1,
+    "CardHeader": 2,
+    "CardTitle": 2,
+    "Carousel": 1,
+    "CarouselContent": 1,
+    "CarouselItem": 1,
+    "CarouselPager": 1,
+    "Checkbox": 3,
+    "Collapsible": 3,
+    "CollapsibleContent": 3,
+    "CollapsibleTrigger": 3,
+    "Command": 1,
+    "CommandEmpty": 1,
+    "CommandGroup": 1,
+    "CommandInput": 1,
+    "CommandItem": 1,
+    "CommandList": 1,
+    "Configurator": 2,
+    "ConfiguratorLayer": 5,
+    "ConfiguratorRow": 1,
+    "DataTable": 4,
+    "DataTableColumn": 4,
+    "Dialog": 7,
+    "DialogContent": 7,
+    "DialogDescription": 7,
+    "DialogFooter": 5,
+    "DialogHeader": 5,
+    "DialogTitle": 7,
+    "DockControl": 8,
+    "DockSeparator": 2,
+    "DockTrigger": 5,
+    "DropdownMenu": 8,
+    "DropdownMenuCheckboxItem": 4,
+    "DropdownMenuContent": 8,
+    "DropdownMenuItem": 8,
+    "DropdownMenuLabel": 2,
+    "DropdownMenuRadioGroup": 2,
+    "DropdownMenuRadioItem": 2,
+    "DropdownMenuSeparator": 5,
+    "DropdownMenuTrigger": 3,
+    "EasingCurve": 3,
+    "FadingScroll": 3,
+    "GenericSidebarState": 1,
+    "GlassDock": 5,
+    "InfiniteScroll": 1,
+    "Input": 5,
+    "Label": 2,
+    "LabeledField": 1,
+    "LabeledSwitch": 1,
+    "Metric": 5,
+    "Popover": 6,
+    "PopoverContent": 6,
+    "PopoverTrigger": 4,
+    "Progress": 4,
+    "ScrollProgressRim": 1,
+    "SegmentedTabOption": 1,
+    "SegmentedTabs": 2,
+    "Select": 5,
+    "SelectContent": 5,
+    "SelectItem": 5,
+    "SelectTrigger": 5,
+    "SelectValue": 3,
+    "Separator": 3,
+    "Skeleton": 5,
+    "Slider": 2,
+    "StatusDot": 1,
+    "Surface": 1,
+    "ToastAction": 1,
+    "ToastHandle": 1,
+    "ToastOptions": 1,
+    "Toaster": 1,
+    "ToggleGroup": 5,
+    "ToggleGroupItem": 5,
+    "Tooltip": 2,
+    "TooltipContent": 2,
+    "TooltipContentProps": 1,
+    "TooltipProvider": 1,
+    "TooltipTrigger": 1,
+    "createTokenColorCache": 1,
+    "darkModeSyncScript": 1,
+    "routeTransition": 1,
+    "toast": 6,
+    "useAnimatedNumber": 1,
+    "useClipboard": 7,
+    "useGlobalDark": 2,
+    "useOptionalDockContext": 1,
+    "useSidebarState": 1
+   },
+   "subpaths": {
+    "(root)": 15,
+    "/badge": 7,
+    "/button": 41,
+    "/card": 15,
+    "/carousel": 1,
+    "/collapsible": 3,
+    "/command": 1,
+    "/configurator": 7,
+    "/dark": 3,
+    "/data-table": 4,
+    "/dialog": 7,
+    "/dock": 10,
+    "/dock-trigger": 5,
+    "/dom": 1,
+    "/easing": 3,
+    "/fading-scroll": 3,
+    "/infinite-scroll": 1,
+    "/input": 5,
+    "/label": 2,
+    "/labeled-field": 2,
+    "/menu": 11,
+    "/metric": 5,
+    "/motion": 1,
+    "/motion-core": 1,
+    "/popover": 6,
+    "/progress": 4,
+    "/scroll-progress-rim": 1,
+    "/select": 5,
+    "/separator": 3,
+    "/sidebar": 2,
+    "/slider": 2,
+    "/status-dot": 1,
+    "/surface": 1,
+    "/tabs": 2,
+    "/toast": 7,
+    "/toggle-group": 5,
+    "/tooltip": 3
+   },
+   "cssImports": [
+    "/styles  (web/src/style.css)",
+    "/styles/fonts  (web/src/style.css)"
+   ],
+   "candidates": {
+    "capsule blur inside track blur": {
+     "src": 1,
+     "tests": 1,
+     "files": [
+      "web/src/components/morph/HarmonicLevelGrid.vue"
+     ]
+    },
+    "CommandDialog plate in plate": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "web/src/components/paper/search/PaperSearchModal.vue"
+     ]
+    },
+    "SegmentedTabs": {
+     "src": 2,
+     "tests": 1,
+     "files": [
+      "web/src/components/equation/EquationModeToggle.vue",
+      "web/src/components/gallery/GalleryView.vue"
+     ]
+    },
+    "DockLayerGroup switcher": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "web/src/components/visualization/EditorControlsDock.vue"
+     ]
+    },
+    "GlassDock": {
+     "src": 7,
+     "tests": 0,
+     "files": [
+      "web/src/App.vue",
+      "web/src/components/layout/AppDock.vue",
+      "web/src/components/paper/PaperTocDrawer.vue",
+      "web/src/components/shared/StageDock.vue",
+      "web/src/components/visualization/AnimationControls.vue",
+      "web/src/components/visualization/EditorControlsDock.vue",
+      "web/src/components/visualization/EquationPanel.vue"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 8,
+     "tests": 4,
+     "files": [
+      "web/src/components/equation/FunctionInput.vue",
+      "web/src/components/gallery/GalleryCard.vue",
+      "web/src/components/gallery/GalleryCardModal.vue",
+      "web/src/components/gallery/GallerySearchBar.vue",
+      "web/src/components/gallery/TierControl.vue",
+      "web/src/components/shared/NotationPills.vue",
+      "web/src/components/visualization/BasisSelector.vue",
+      "web/src/style.css"
+     ]
+    },
+    "Slider (glass)": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "web/src/components/shared/FourierTimeline.vue",
+      "web/src/components/ui/SliderControl.vue"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 11,
+     "tests": 4,
+     "files": [
+      "web/src/components/admin/AdminFlaggedActions.vue",
+      "web/src/components/admin/AdminUserTable.vue",
+      "web/src/components/admin/AdminUserToolbar.vue",
+      "web/src/components/auth/UserSlugBar.vue",
+      "web/src/components/equation/PlotToolsDock.vue",
+      "web/src/components/layout/AppDock.vue",
+      "web/src/components/visualization/AnimationControls.vue",
+      "web/src/components/visualization/EasingPicker.vue",
+      "web/src/components/visualization/EditorControlsDock.vue",
+      "web/src/components/visualization/SpeedSelect.vue",
+      "web/src/components/visualization/WorkspaceTools.vue"
+     ]
+    },
+    "Select (glass)": {
+     "src": 5,
+     "tests": 0,
+     "files": [
+      "web/src/components/admin/AdminUserToolbar.vue",
+      "web/src/components/gallery/GallerySearchBar.vue",
+      "web/src/components/morph/MorphPhaseConfig.vue",
+      "web/src/components/shared/Pager.vue",
+      "web/src/components/visualization/ContourSettings.vue"
+     ]
+    },
+    "Popover": {
+     "src": 8,
+     "tests": 2,
+     "files": [
+      "web/src/components/admin/AdminAuditLog.vue",
+      "web/src/components/auth/UserSlugBar.vue",
+      "web/src/components/equation/EquationTools.vue",
+      "web/src/components/equation/EquationView.vue",
+      "web/src/components/gallery/GallerySearchBar.vue",
+      "web/src/components/layout/AppDock.vue",
+      "web/src/components/paper/PaperTocBar.vue",
+      "web/src/components/shared/LeaveSignal.ts"
+     ]
+    },
+    "Tooltip": {
+     "src": 13,
+     "tests": 1,
+     "files": [
+      "web/src/components/equation/EquationTools.vue",
+      "web/src/components/equation/FunctionInput.vue",
+      "web/src/components/equation/PlotToolsDock.vue",
+      "web/src/components/paper/PaperTocDrawer.vue",
+      "web/src/components/shared/CoefficientsSpectrum.vue",
+      "web/src/components/shared/FourierTimeline.vue",
+      "web/src/components/ui/tooltip/Tooltip.vue",
+      "web/src/components/ui/tooltip/index.ts",
+      "web/src/components/visualization/AnimationControls.vue",
+      "web/src/components/visualization/BasisSelector.vue",
+      "web/src/components/visualization/ContourSettings.vue",
+      "web/src/components/visualization/EditorControlsDock.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 8,
+     "tests": 2,
+     "files": [
+      "web/src/components/admin/AdminTokens.vue",
+      "web/src/components/gallery/GalleryCardModal.vue",
+      "web/src/components/paper/search/PaperSearchModal.vue",
+      "web/src/components/shared/ConfirmDialog.vue",
+      "web/src/components/shared/LeaveSignal.ts",
+      "web/src/components/visualization/ExportModal.vue",
+      "web/src/components/visualization/FullscreenViewer.vue",
+      "web/src/components/visualization/VisualizationView.vue"
+     ]
+    },
+    "FadingScroll": {
+     "src": 5,
+     "tests": 1,
+     "files": [
+      "web/src/components/equation/EquationResult.vue",
+      "web/src/components/equation/EquationView.vue",
+      "web/src/components/equation/convergence/ConvergenceLegend.vue",
+      "web/src/components/shared/CoefficientsSpectrum.vue",
+      "web/src/components/visualization/EquationPanel.vue"
+     ]
+    },
+    "ScrollProgressRim": {
+     "src": 4,
+     "tests": 3,
+     "files": [
+      "web/src/components/layout/AppDock.vue",
+      "web/src/components/paper/PaperView.vue",
+      "web/src/composables/useDockProgress.ts",
+      "web/src/composables/usePageScroll.ts"
+     ]
+    },
+    "--glass-level written": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "web/src/components/visualization/VisualizationView.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "keyframes",
+   "repo": "/Users/mkbabb/Programming/keyframes.js",
+   "ref": "kf45",
+   "path": ".",
+   "head": "13f9825a",
+   "imports": {
+    "Alert": 2,
+    "AlertDescription": 2,
+    "AlertTitle": 2,
+    "Aurora": 1,
+    "Avatar": 1,
+    "AvatarFallback": 1,
+    "AvatarImage": 1,
+    "Button": 17,
+    "Card": 8,
+    "CardContent": 1,
+    "Chip": 3,
+    "Collapsible": 2,
+    "CollapsibleContent": 2,
+    "CollapsibleTrigger": 2,
+    "ConfiguratorLayer": 7,
+    "CopyResult": 1,
+    "DarkModeToggle": 1,
+    "Dialog": 4,
+    "DialogClose": 1,
+    "DialogContent": 3,
+    "DialogDescription": 2,
+    "DialogFooter": 2,
+    "DialogHeader": 2,
+    "DialogTitle": 4,
+    "DockControl": 3,
+    "DockSeparator": 3,
+    "DockTrigger": 3,
+    "DropdownMenu": 3,
+    "DropdownMenuContent": 3,
+    "DropdownMenuItem": 2,
+    "DropdownMenuLabel": 1,
+    "DropdownMenuRadioGroup": 2,
+    "DropdownMenuRadioItem": 2,
+    "DropdownMenuSeparator": 2,
+    "DropdownMenuShortcut": 2,
+    "DropdownMenuTrigger": 1,
+    "EasingCurve": 1,
+    "EasingPicker": 2,
+    "EasingPickerValue": 4,
+    "FadingScroll": 5,
+    "GlassDock": 3,
+    "Input": 2,
+    "JumpTerm": 1,
+    "Label": 1,
+    "LabeledField": 4,
+    "LabeledInput": 1,
+    "LabeledSlider": 2,
+    "NumberField": 1,
+    "NumberFieldInput": 1,
+    "NumberFieldStep": 1,
+    "OklchStop": 1,
+    "PAPER_WASH_GROUND": 1,
+    "Popover": 3,
+    "PopoverContent": 3,
+    "PopoverTrigger": 2,
+    "SegmentedTabOption": 1,
+    "SegmentedTabs": 1,
+    "Select": 5,
+    "SelectContent": 5,
+    "SelectGroup": 5,
+    "SelectItem": 5,
+    "SelectLabel": 1,
+    "SelectTrigger": 3,
+    "SelectValue": 5,
+    "Separator": 9,
+    "SheetContent": 1,
+    "Skeleton": 4,
+    "Slider": 4,
+    "Switch": 1,
+    "Textarea": 1,
+    "ToastAction": 4,
+    "ToastHandle": 2,
+    "Toaster": 1,
+    "ToggleGroup": 2,
+    "ToggleGroupItem": 2,
+    "Tooltip": 12,
+    "TooltipContent": 12,
+    "TooltipProvider": 2,
+    "TooltipTrigger": 12,
+    "formatCombo": 2,
+    "formatComboParts": 1,
+    "registerShortcut": 5,
+    "resolveAtoms": 1,
+    "resolveCanvasColor": 1,
+    "toast": 9,
+    "useGlobalDark": 4,
+    "useOptionalDockContext": 1,
+    "useRegisteredShortcuts": 1,
+    "useTouchGate": 1,
+    "writeClipboard": 2
+   },
+   "subpaths": {
+    "(root)": 23,
+    "/aurora": 1,
+    "/button": 9,
+    "/card": 5,
+    "/chip": 3,
+    "/collapsible": 2,
+    "/configurator": 7,
+    "/dark": 4,
+    "/dark-mode-toggle": 1,
+    "/dialog": 3,
+    "/dock": 4,
+    "/dock-trigger": 3,
+    "/dom": 2,
+    "/easing": 4,
+    "/fading-scroll": 5,
+    "/input": 2,
+    "/keyboard": 7,
+    "/label": 1,
+    "/labeled-field": 6,
+    "/menu": 3,
+    "/number-field": 1,
+    "/popover": 3,
+    "/select": 3,
+    "/separator": 2,
+    "/sheet": 1,
+    "/slider": 3,
+    "/switch": 1,
+    "/tabs": 1,
+    "/textarea": 1,
+    "/toast": 10,
+    "/toggle-group": 2,
+    "/tooltip": 14
+   },
+   "cssImports": [
+    "/styles  (demo/app/App.vue)",
+    "/styles/font-files  (demo/app/embed/embed.css)",
+    "/styles  (demo/app/transition/useSceneTransition.ts)",
+    "/styles/fonts  (demo/styles/fonts.css)",
+    "/styles  (demo/styles/style.css)"
+   ],
+   "candidates": {
+    "capsule blur inside track blur": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/components/instrument/pane/channel-controls/EasingField.vue"
+     ]
+    },
+    "specular catch-light": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "scripts/observe/demo/live-session.mjs"
+     ]
+    },
+    "luminance clamp": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/app/dock/ChromeDock.vue"
+     ]
+    },
+    "slider loupe": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/components/EasingCatalogue/EasingCatalogue.vue"
+     ]
+    },
+    "useSpringMount": {
+     "src": 1,
+     "tests": 1,
+     "files": [
+      "demo/app/dock/menu/KeyboardShortcutsModal.vue"
+     ]
+    },
+    "press squish (useLiquidPress/useLiquidFlex)": {
+     "src": 2,
+     "tests": 1,
+     "files": [
+      "demo/components/instrument/transport/composables/usePlayActuation.ts",
+      "demo/styles/playback-idiom.css"
+     ]
+    },
+    "useDragMorph": {
+     "src": 0,
+     "tests": 1,
+     "files": []
+    },
+    "SegmentedTabs": {
+     "src": 2,
+     "tests": 4,
+     "files": [
+      "demo/components/EasingCatalogue/EasingCatalogue.vue",
+      "demo/components/instrument/pane/channel-controls/composables/useSelectedControlSurface.ts"
+     ]
+    },
+    "DockLayerGroup switcher": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/app/dock/ChromeDock.vue"
+     ]
+    },
+    "GlassDock": {
+     "src": 9,
+     "tests": 13,
+     "files": [
+      "demo/app/App.vue",
+      "demo/app/dock/ChromeDock.vue",
+      "demo/app/dock/menu/MbabbMenu.vue",
+      "demo/app/main.ts",
+      "demo/components/instrument/pane/RibbonBar.vue",
+      "demo/components/instrument/transport/AnimationControlsGroup.css",
+      "demo/components/instrument/transport/TransportDock.vue",
+      "demo/composables/dockEdge.ts",
+      "scripts/probe/kf-embed-bounds.mjs"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 2,
+     "tests": 5,
+     "files": [
+      "demo/components/EasingCatalogue/EasingCatalogue.vue",
+      "demo/scenes/spring/SpringPhysicsFacet.vue"
+     ]
+    },
+    "Slider (glass)": {
+     "src": 3,
+     "tests": 1,
+     "files": [
+      "demo/components/playback/AnimationVisualizer.vue",
+      "demo/components/playback/PlaybackRibbon.vue",
+      "demo/scenes/spring/useSpringDemo.ts"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 6,
+     "tests": 1,
+     "files": [
+      "demo/app/dock/ChromeDock.vue",
+      "demo/app/dock/menu/MbabbMenu.vue",
+      "demo/components/instrument/timeline/KeyframeTimeline.vue",
+      "scripts/lib/demo-driver.mjs",
+      "scripts/observe/demo/live-session-mobile.mjs",
+      "scripts/observe/demo/live-session.mjs"
+     ]
+    },
+    "Select (glass)": {
+     "src": 9,
+     "tests": 4,
+     "files": [
+      "demo/app/dock/ChromeDock.vue",
+      "demo/components/instrument/pane/ControlsPaneWrapper.vue",
+      "demo/components/instrument/pane/channel-controls/ChannelControls.vue",
+      "demo/components/instrument/pane/channel-controls/ChannelOptionsForm.vue",
+      "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue",
+      "demo/components/instrument/transport/TransportDock.vue",
+      "demo/scenes/cube/CubeScene.vue",
+      "demo/styles/layout.css",
+      "scripts/lib/demo-driver.mjs"
+     ]
+    },
+    "Popover": {
+     "src": 3,
+     "tests": 3,
+     "files": [
+      "demo/app/dock/menu/SharePopover.vue",
+      "demo/components/instrument/pane/channel-controls/EasingField.vue",
+      "demo/scenes/spring/SpringPhysicsFacet.vue"
+     ]
+    },
+    "Tooltip": {
+     "src": 14,
+     "tests": 7,
+     "files": [
+      "demo/app/App.vue",
+      "demo/app/dock/ChromeDock.vue",
+      "demo/app/dock/menu/MbabbMenu.vue",
+      "demo/components/CopyButton/CopyButton.vue",
+      "demo/components/instrument/pane/RibbonBar.vue",
+      "demo/components/instrument/pane/SheetResetButton.vue",
+      "demo/components/instrument/pane/channel-controls/EasingField.vue",
+      "demo/components/instrument/timeline/KeyframeTimeline.vue",
+      "demo/components/instrument/timeline/components/TimelineHoverPreview.vue",
+      "demo/components/instrument/timeline/components/TimelineTrack.vue",
+      "demo/components/instrument/transport/TransportDock.vue",
+      "demo/components/playback/PlaybackRibbon.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 5,
+     "tests": 2,
+     "files": [
+      "demo/app/dock/menu/KeyboardShortcutsModal.vue",
+      "demo/app/dock/menu/MbabbMenu.vue",
+      "demo/components/instrument/pane/ControlsPaneWrapper.css",
+      "demo/components/instrument/pane/ControlsPaneWrapper.vue",
+      "demo/components/instrument/timeline/CSSPasteDialog.vue"
+     ]
+    },
+    "Sheet": {
+     "src": 3,
+     "tests": 5,
+     "files": [
+      "demo/components/instrument/pane/ControlsPaneWrapper.css",
+      "demo/components/instrument/pane/ControlsPaneWrapper.vue",
+      "scripts/observe/demo/live-session-mobile.mjs"
+     ]
+    },
+    "Sheet detents": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "demo/components/instrument/pane/ControlsPaneWrapper.css",
+      "demo/components/instrument/pane/ControlsPaneWrapper.vue"
+     ]
+    },
+    "FadingScroll": {
+     "src": 14,
+     "tests": 2,
+     "files": [
+      "demo/app/dock/menu/KeyboardShortcutsModal.vue",
+      "demo/app/dock/menu/groupShortcuts.ts",
+      "demo/components/EasingCatalogue/EasingCatalogue.vue",
+      "demo/components/instrument/pane/ControlsPaneWrapper.css",
+      "demo/components/instrument/pane/ControlsPaneWrapper.vue",
+      "demo/components/instrument/pane/channel-controls/ChannelControls.vue",
+      "demo/components/instrument/pane/composables/useControlsLayout.ts",
+      "demo/components/instrument/pane/composables/useFoldLanding.ts",
+      "demo/scenes/cube/matrix-editor/MatrixEditor.vue",
+      "demo/scenes/easing/EasingTarget.css",
+      "demo/scenes/spring/SpringPhysicsFacet.vue",
+      "demo/styles/layout.css"
+     ]
+    },
+    "prefers-reduced-transparency": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "demo/app/hero/HeroAurora.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "gaggle",
+   "repo": "/Users/mkbabb/Programming/gaggle-site",
+   "ref": "site-redesign",
+   "path": "dashboard",
+   "head": "8d7fe5d",
+   "imports": {
+    "Aurora": 3,
+    "AuroraConfig": 3,
+    "AuroraNucleus": 2,
+    "Button": 18,
+    "Card": 20,
+    "Collapsible": 6,
+    "CollapsibleContent": 6,
+    "CollapsibleTrigger": 4,
+    "DarkModeToggle": 6,
+    "DataTable": 18,
+    "DataTableColumn": 16,
+    "DataTableSort": 7,
+    "Dialog": 15,
+    "DialogHeader": 3,
+    "DialogTitle": 15,
+    "DockControl": 16,
+    "DockSeparator": 9,
+    "DockTrigger": 9,
+    "DropdownMenu": 1,
+    "DropdownMenuCheckboxItem": 1,
+    "DropdownMenuContent": 1,
+    "DropdownMenuItem": 1,
+    "DropdownMenuLabel": 1,
+    "DropdownMenuSeparator": 1,
+    "GlassDock": 9,
+    "InfiniteScroll": 1,
+    "Input": 6,
+    "Metric": 4,
+    "MetricRow": 1,
+    "MetricStack": 1,
+    "OklchStop": 3,
+    "Popover": 15,
+    "PopoverContent": 15,
+    "PopoverTrigger": 6,
+    "ScrollProgressRim": 1,
+    "Select": 1,
+    "SelectContent": 1,
+    "SelectItem": 1,
+    "SelectTrigger": 1,
+    "SelectValue": 1,
+    "Separator": 5,
+    "SheetContent": 15,
+    "SpringPresetName": 3,
+    "StatusDot": 8,
+    "StatusDotState": 8,
+    "Surface": 2,
+    "Timeline": 1,
+    "TimelineSegment": 1,
+    "ToggleGroup": 2,
+    "ToggleGroupItem": 2,
+    "Tooltip": 15,
+    "TooltipContent": 15,
+    "TooltipProvider": 13,
+    "TooltipTrigger": 15,
+    "auroraFallbackGround": 1,
+    "cssToOklch": 1,
+    "formatCombo": 1,
+    "handLine": 1,
+    "readReducedMotion": 48,
+    "registerShortcut": 2,
+    "resolveAtoms": 2,
+    "sequenceWindow": 1,
+    "springPreset": 4,
+    "strokeRibbon": 1,
+    "useAnimatedNumber": 6,
+    "useGlobalDark": 4,
+    "useReducedMotion": 2,
+    "useRegisteredShortcuts": 1
+   },
+   "subpaths": {
+    "/aurora": 6,
+    "/button": 18,
+    "/card": 20,
+    "/collapsible": 6,
+    "/dark": 4,
+    "/dark-mode-toggle": 6,
+    "/data-table": 21,
+    "/deck": 1,
+    "/dialog": 15,
+    "/dock": 17,
+    "/dock-trigger": 9,
+    "/handmark": 1,
+    "/infinite-scroll": 1,
+    "/input": 6,
+    "/keyboard": 3,
+    "/menu": 1,
+    "/metric": 4,
+    "/motion": 10,
+    "/motion-core": 50,
+    "/popover": 15,
+    "/scroll-progress-rim": 1,
+    "/select": 1,
+    "/separator": 5,
+    "/sheet": 15,
+    "/status-dot": 15,
+    "/surface": 2,
+    "/timeline": 1,
+    "/toggle-group": 2,
+    "/tooltip": 27
+   },
+   "cssImports": [
+    "/styles  (dashboard/proto/F0/style.css)",
+    "/styles/fonts  (dashboard/proto/F0/style.css)",
+    "/styles  (dashboard/proto/F1/style.css)",
+    "/styles/fonts  (dashboard/proto/F1/style.css)",
+    "/styles  (dashboard/proto/F2/style.css)",
+    "/styles/fonts  (dashboard/proto/F2/style.css)",
+    "/styles  (dashboard/proto/F3/style.css)",
+    "/styles/fonts  (dashboard/proto/F3/style.css)",
+    "/styles  (dashboard/proto/F4/style.css)",
+    "/styles/fonts  (dashboard/proto/F4/style.css)",
+    "/styles  (dashboard/proto/F5/style.css)",
+    "/styles/fonts  (dashboard/proto/F5/style.css)",
+    "/styles  (dashboard/proto/F6/style.css)",
+    "/styles/fonts  (dashboard/proto/F6/style.css)",
+    "/styles  (dashboard/proto/M/style.css)",
+    "/styles/fonts  (dashboard/proto/M/style.css)",
+    "/styles  (dashboard/proto/R/kit/style.css)",
+    "/styles/fonts  (dashboard/proto/R/kit/style.css)",
+    "/styles  (dashboard/proto/kit/style.css)",
+    "/styles/fonts  (dashboard/proto/kit/style.css)",
+    "/styles  (dashboard/src/report/styles/kit.css)",
+    "/styles/fonts  (dashboard/src/report/styles/kit.css)",
+    "/styles  (dashboard/src/style.css)",
+    "/styles/fonts  (dashboard/src/style.css)"
+   ],
+   "candidates": {
+    "run mark length writes": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "dashboard/scripts/capture/rw2e.mjs"
+     ]
+    },
+    "specular catch-light": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/R/page/style.css",
+      "dashboard/src/report/styles/page.css"
+     ]
+    },
+    "press squish (useLiquidPress/useLiquidFlex)": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/R/kit/press/plate.css",
+      "dashboard/proto/kit/press/plate.css",
+      "dashboard/src/report/styles/plate.css"
+     ]
+    },
+    "GlassDock": {
+     "src": 9,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F2/App.vue",
+      "dashboard/proto/F3/App.vue",
+      "dashboard/proto/F4/App.vue",
+      "dashboard/proto/R/kit/KitDock.vue",
+      "dashboard/proto/R/page/PageDock.vue",
+      "dashboard/proto/kit/KitDock.vue",
+      "dashboard/src/report/kit/KitDock.vue",
+      "dashboard/src/report/page/PageDock.vue",
+      "dashboard/src/shell/Dock.vue"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F3/App.vue",
+      "dashboard/src/parts/RunBand.vue"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "dashboard/src/shell/Dock.vue"
+     ]
+    },
+    "Select (glass)": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "dashboard/src/parts/Ledger.vue"
+     ]
+    },
+    "Popover": {
+     "src": 17,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/App.vue",
+      "dashboard/proto/R/kit/KitDock.vue",
+      "dashboard/proto/R/kit/Lamp.vue",
+      "dashboard/proto/R/page/Figure.vue",
+      "dashboard/proto/R/page/Gloss.vue",
+      "dashboard/proto/R/page/PageDock.vue",
+      "dashboard/proto/R/page/Tip.vue",
+      "dashboard/proto/kit/KitDock.vue",
+      "dashboard/proto/kit/Lamp.vue",
+      "dashboard/src/parts/Gloss.vue",
+      "dashboard/src/report/kit/KitDock.vue",
+      "dashboard/src/report/kit/Lamp.vue"
+     ]
+    },
+    "Tooltip": {
+     "src": 15,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/App.vue",
+      "dashboard/proto/F1/App.vue",
+      "dashboard/proto/F3/App.vue",
+      "dashboard/proto/F6/TeamPage.vue",
+      "dashboard/proto/M/App.vue",
+      "dashboard/proto/R/kit/KitDock.vue",
+      "dashboard/proto/R/page/PageDock.vue",
+      "dashboard/proto/kit/KitDock.vue",
+      "dashboard/src/components/ItemMark.vue",
+      "dashboard/src/components/Term.vue",
+      "dashboard/src/parts/ItemSheet.vue",
+      "dashboard/src/parts/RunBand.vue"
+     ]
+    },
+    "Dialog": {
+     "src": 15,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/App.vue",
+      "dashboard/proto/F1/App.vue",
+      "dashboard/proto/F5/App.vue",
+      "dashboard/proto/F6/RecordSheet.vue",
+      "dashboard/proto/M/App.vue",
+      "dashboard/proto/R/kit/Lamp.vue",
+      "dashboard/proto/R/page/Page.vue",
+      "dashboard/proto/kit/Lamp.vue",
+      "dashboard/proto/kit/Specimen.vue",
+      "dashboard/src/App.vue",
+      "dashboard/src/parts/ItemSheet.vue",
+      "dashboard/src/report/kit/Lamp.vue"
+     ]
+    },
+    "Sheet": {
+     "src": 15,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/App.vue",
+      "dashboard/proto/F1/App.vue",
+      "dashboard/proto/F5/App.vue",
+      "dashboard/proto/F6/RecordSheet.vue",
+      "dashboard/proto/M/App.vue",
+      "dashboard/proto/R/kit/Lamp.vue",
+      "dashboard/proto/R/page/Page.vue",
+      "dashboard/proto/kit/Lamp.vue",
+      "dashboard/proto/kit/Specimen.vue",
+      "dashboard/src/App.vue",
+      "dashboard/src/parts/ItemSheet.vue",
+      "dashboard/src/report/kit/Lamp.vue"
+     ]
+    },
+    "Sheet detents": {
+     "src": 13,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/App.vue",
+      "dashboard/proto/F1/App.vue",
+      "dashboard/proto/F6/RecordSheet.vue",
+      "dashboard/proto/M/App.vue",
+      "dashboard/proto/R/kit/Lamp.vue",
+      "dashboard/proto/R/page/Page.vue",
+      "dashboard/proto/kit/Lamp.vue",
+      "dashboard/proto/kit/Specimen.vue",
+      "dashboard/src/App.vue",
+      "dashboard/src/parts/ItemSheet.vue",
+      "dashboard/src/report/kit/Lamp.vue",
+      "dashboard/src/report/page/Page.vue"
+     ]
+    },
+    "FadingScroll": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F0/DayStrip.vue",
+      "dashboard/scripts/capture/rw2c.mjs"
+     ]
+    },
+    "ScrollProgressRim": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "dashboard/proto/F3/App.vue",
+      "dashboard/proto/R/page/PageDock.vue",
+      "dashboard/src/report/page/PageDock.vue"
+     ]
+    }
+   }
+  },
+  {
+   "site": "Home Assistant",
+   "repo": "/Users/mkbabb/Programming/hassio-config",
+   "ref": "master",
+   "path": "frontend",
+   "head": "cbed400d",
+   "imports": {
+    "Avatar": 3,
+    "AvatarFallback": 3,
+    "AvatarImage": 2,
+    "Badge": 2,
+    "Button": 21,
+    "Card": 7,
+    "CardContent": 5,
+    "CardFooter": 1,
+    "CardHeader": 4,
+    "CardTitle": 2,
+    "Checkbox": 1,
+    "Collapsible": 4,
+    "CollapsibleContent": 4,
+    "CollapsibleTrigger": 4,
+    "Dialog": 1,
+    "DialogContent": 1,
+    "DialogDismiss": 1,
+    "DialogHeader": 1,
+    "DialogTitle": 1,
+    "DockControl": 1,
+    "DockSeparator": 1,
+    "DockTrigger": 1,
+    "DropdownMenu": 1,
+    "DropdownMenuContent": 1,
+    "DropdownMenuItem": 1,
+    "DropdownMenuRadioGroup": 1,
+    "DropdownMenuRadioItem": 1,
+    "GlassDock": 1,
+    "Input": 1,
+    "Label": 5,
+    "Metric": 8,
+    "Progress": 1,
+    "RadioGroup": 1,
+    "RadioGroupItem": 1,
+    "Separator": 7,
+    "SheetContent": 1,
+    "Skeleton": 8,
+    "Slider": 1,
+    "Surface": 6,
+    "Switch": 5,
+    "ToggleGroup": 8,
+    "ToggleGroupItem": 8,
+    "Tooltip": 1,
+    "TooltipContent": 1,
+    "TooltipProvider": 1,
+    "TooltipTrigger": 1,
+    "gamutMapStop": 1,
+    "semanticTokens": 1,
+    "useGlobalDark": 1
+   },
+   "subpaths": {
+    "(root)": 11,
+    "/badge": 2,
+    "/button": 21,
+    "/card": 7,
+    "/checkbox": 1,
+    "/collapsible": 4,
+    "/color": 1,
+    "/dark": 1,
+    "/dialog": 1,
+    "/dock": 2,
+    "/dock-trigger": 1,
+    "/input": 1,
+    "/label": 5,
+    "/menu": 1,
+    "/metric": 8,
+    "/progress": 1,
+    "/radio-group": 1,
+    "/separator": 7,
+    "/sheet": 1,
+    "/slider": 1,
+    "/surface": 6,
+    "/switch": 5,
+    "/toggle-group": 8,
+    "/tokens": 1,
+    "/tooltip": 1
+   },
+   "cssImports": [],
+   "candidates": {
+    "capsule blur inside track blur": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "frontend/src/styles/tokens.css",
+      "frontend/src/tiles/slide.ts"
+     ]
+    },
+    "grasp carriers": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/styles/tokens.css"
+     ]
+    },
+    "focus veil": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/styles/scale.css"
+     ]
+    },
+    "specular catch-light": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css",
+      "frontend/src/styles/tokens.css",
+      "frontend/src/tiles/css/rooms.css"
+     ]
+    },
+    "useDragVelocity / per-frame velocity customs": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css"
+     ]
+    },
+    "useSpringMount": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css"
+     ]
+    },
+    "scroll-chrome (M8, its reduced-motion snap)": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css"
+     ]
+    },
+    "press squish (useLiquidPress/useLiquidFlex)": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css"
+     ]
+    },
+    "GlassDock": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "frontend/scripts/gates/glass_map.ts",
+      "frontend/src/tiles/GlassTabs.ts"
+     ]
+    },
+    "ToggleGroup": {
+     "src": 11,
+     "tests": 0,
+     "files": [
+      "frontend/scripts/gates/bundle_budget.ts",
+      "frontend/src/cards/glass-day/phases.ts",
+      "frontend/src/cards/glass-plant/group_sheet.ts",
+      "frontend/src/tiles/choices.ts",
+      "frontend/src/tiles/climate.ts",
+      "frontend/src/tiles/css/day_lines.css",
+      "frontend/src/tiles/inline_choices.ts",
+      "frontend/src/tiles/light_sheet.ts",
+      "frontend/src/tiles/people.ts",
+      "frontend/src/tiles/presets.ts",
+      "frontend/src/tiles/quick.ts"
+     ]
+    },
+    "DropdownMenu": {
+     "src": 5,
+     "tests": 0,
+     "files": [
+      "frontend/scripts/gates/bundle_budget.ts",
+      "frontend/src/core/sheet.css",
+      "frontend/src/tiles/GlassTabs.ts",
+      "frontend/src/tiles/css/tabs.css",
+      "frontend/src/tiles/dock_menu.ts"
+     ]
+    },
+    "Tooltip": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/src/tiles/tip.ts"
+     ]
+    },
+    "Dialog": {
+     "src": 3,
+     "tests": 0,
+     "files": [
+      "frontend/src/core/sheet.css",
+      "frontend/src/tiles/css/sheet.css",
+      "frontend/src/tiles/sheet.ts"
+     ]
+    },
+    "Sheet": {
+     "src": 2,
+     "tests": 0,
+     "files": [
+      "frontend/src/tiles/css/sheet.css",
+      "frontend/src/tiles/sheet.ts"
+     ]
+    },
+    "prefers-reduced-transparency": {
+     "src": 1,
+     "tests": 0,
+     "files": [
+      "frontend/scripts/codegen-theme.ts"
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/mkbabb/Programming/hassio-config/frontend/node_modules/@mkbabb/glass-ui/dist/styles/index.css">
+<link rel="stylesheet" href="file:///Users/mkbabb/Programming/hassio-config/frontend/node_modules/@mkbabb/glass-ui/dist/components/tabs/styles/segmented.css">
+<style>/* BM pass 6's fold of pass 5 (A5-2, A5-5, A5-6, A5-10, A5-13, B5-2, B5-7, B5-9, B5-11): the one selection mark,
+   amended. A design sketch, not library source; it replaces pass-5/mark/sketch/mark.next.css.
+   The mark is one inert, aria-hidden node per selection group. Where the options are equal and nothing changes its
+   length (every pill strip with room, every dock run, wi8 RU-28), it is a plain capsule its option's size moved by
+   `translate` alone: no window, no clip, no second handle, and `.segmented-indicator`'s box is the pill (the O-4 glide
+   spec and tabs-seam arm (e) stand). Only a host whose options differ in width, or a stretch the owner keeps, makes it
+   the window of DESIGN §6.3 (`data-window`), whose ::before carries the fill and a second `translate`. */
+.selection-group {
+    position: relative;
+    isolation: isolate;
+    /* A vertical pan scrolls the page; a horizontal one is the group's (B5-11). A run that scrolls keeps `pan-x`
+       and takes no drag (DESIGN §8.1). */
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.selection-mark {
+    position: absolute;
+    inset-block: var(--track-trim, 0px);
+    inset-inline-start: 0;
+    inline-size: var(--mark-w); /* the option's width, written once per layout */
+    border-radius: calc(infinity * 1px);
+    pointer-events: none;
+    z-index: 0;
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
+    box-sizing: border-box;
+    transition: background-color 120ms var(--ease-standard);
+}
+/* The window, only where the visible length changes (Q15 B, Q8 B or C, a strip without room, the underline). */
+.selection-mark[data-window] { overflow: clip; background: none; }
+.selection-mark[data-window]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
+}
+
+/* The options: the chosen word at full ink, the others at the muted ink, traded over 180 ms as the mark leaves
+   (colour waits for shape; five frames at 30 fps, law 7). Hover and press are every option's own plate (W-B.17
+   R-14), the chosen one's included (A5-6), drawn under the mark: the plate's light strength on hover, and on press
+   that strength deepened by 2 % of the ink (P0a's press amount; W-R.1, "deepens the hover wash"). Both are `opacity`
+   on the plate's ::before, so both are compositor legs (rule 1). On the chosen option the press shows through the
+   mark, which is the mark answering without a property of its own. Once a follow starts the mark has left, and the
+   pressed plate stands down (`data-following`). */
+.selection-option { position: relative; color: var(--muted-foreground); transition: color 180ms var(--ease-standard); }
+.selection-option[data-active] { color: var(--foreground); }
+.selection-option::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
+    opacity: 0; transition: opacity 150ms var(--ease-standard); /* the hover row */
+}
+@media (hover: hover) and (pointer: fine) {
+    .selection-option:hover::before { opacity: calc(var(--fill-hover) / var(--fill-selected)); }
+}
+.selection-option:active::before { opacity: calc((var(--fill-hover) + 0.02) / var(--fill-selected)); transition-duration: 100ms; /* the press row */ }
+.selection-group[data-following] .selection-option::before { opacity: 0; }
+
+/* Forced colours: the mark's fill is forced away; the selection's sign is a Highlight ring drawn on the mark itself,
+   so it travels with it, takes no focus channel and moves no option's box (A5-10, B5-2). The global ring in
+   accessibility.css:31-43 stands down for options a mark serves: its selector gains `:not(.selection-option)`. */
+@media (forced-colors: active) {
+    .selection-mark { border: 2px solid Highlight; forced-color-adjust: none; background: none; }
+}
+/* More contrast: the mark takes its one edge at the perimeter rung (0.48, `--ink-perimeter`), on itself. */
+@media (prefers-contrast: more) {
+    .selection-mark { border: 1px solid color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent); }
+}
+
+@media (forced-colors: active) { .selection-option[aria-selected="true"], .selection-option[aria-current] { border: 0 !important; } }</style>
+</head><body style="padding:24px">
+<div class="segmented-tabs segmented-tabs--pill selection-group" role="tablist" id="strip">
+  <div class="selection-mark" aria-hidden="true" id="mark"></div>
+  <button class="segmented-tab selection-option" role="tab" aria-selected="true" data-active>All</button>
+  <button class="segmented-tab selection-option" role="tab" aria-selected="false" tabindex="-1">Shared</button>
+  <button class="segmented-tab selection-option" role="tab" aria-selected="false" tabindex="-1">Favourites</button>
+</div>
+<div class="glass-dock" style="margin-top:24px"><div class="dock-layers"><nav class="dock-run" id="run" style="display:flex;gap:8px">
+  <a href="#a" class="dock-icon-button selection-option" aria-current="page" style="display:grid;place-items:center;width:44px;height:44px;border-radius:22px">A</a>
+  <a href="#b" class="dock-icon-button selection-option" style="display:grid;place-items:center;width:44px;height:44px;border-radius:22px">B</a>
+</nav></div></div></body></html>

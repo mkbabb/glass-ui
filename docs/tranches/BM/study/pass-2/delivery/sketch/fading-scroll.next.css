@@ -1,0 +1,18 @@
+/* FadingScroll, as proposed (BM pass 2). A design sketch, not library source.
+   The ramps never change. The scroll port reaches into its host's padding by the ramp's width and pads
+   itself by the same width, so at rest each ramp covers empty padding (a sharp edge) and content passes
+   under it once scrolled. Native scroll only: no timeline, no registered property, no script. */
+.fading-scroll--x {
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--fade-scroll-width));
+    padding-inline: var(--fade-scroll-width);
+    scroll-padding-inline: var(--fade-scroll-width);
+    mask-image: linear-gradient(to right, transparent, #000 var(--fade-scroll-width), #000 calc(100% - var(--fade-scroll-width)), transparent);
+}
+.fading-scroll--y {
+    overflow-y: auto;
+    margin-block: calc(-1 * var(--fade-scroll-width));
+    padding-block: var(--fade-scroll-width);
+    scroll-padding-block: var(--fade-scroll-width);
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-scroll-width), #000 calc(100% - var(--fade-scroll-width)), transparent);
+}
