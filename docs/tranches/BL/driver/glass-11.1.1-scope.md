@@ -274,3 +274,8 @@ Placed item by item in `design/dock-frames/inbound/value-js-2026-11-24-four-site
 ## 2026-11-24: the detented scrim, from 11.1.1
 
 `audit/phone-scroll/scrim.patch` goes in 11.1.2's first row with the phone-scroll cure. Its witness: the detented Sheet's scrim ramps in from 0 and out to under 0.001, with no frame cut, in both engines. 11.1.1 ships without it, by the owner's order to ship only judged work before the limits (`glass-11.1.1-exits-scope.md`, the 2026-11-24 section).
+
+## 2026-11-24: Home Assistant's LF-56 and LF-57 (O-435)
+
+- **LF-56, the dock's press check through shadow roots.** `useDockState.ts:400` and `:652` and `isTeleportedTarget.ts:18-20` test `contains`/`closest` on a target that `document` sees retargeted to the outermost shadow host. They take `e.composedPath()` instead, and `composables/dom/useTouchGate.ts:28` gets the same cure. It joins the dock-frames challenge round. Witness: a dock in an open shadow root keeps a seat press inside, in both engines, plus a unit test.
+- **LF-57, the Slider's touch intent.** On a coarse pointer the horizontal Slider is `touch-action: pan-y` (`slider/styles.css:31` is `none`). It sets no value until the pointer has moved 10 px more along the track than across it, and a tap sets the value once at its release. Witness at 390 with touch: a vertical swipe scrolls the page and leaves the value unchanged.
