@@ -1,0 +1,194 @@
+diff --git a/src/components/dialog/styles.css b/src/components/dialog/styles.css
+index 25d12dd..61cd910 100644
+--- a/src/components/dialog/styles.css
++++ b/src/components/dialog/styles.css
+@@ -21,6 +21,10 @@
+     :where([data-slot="dialog-content"]) {
+         border-radius: var(--radius-3xl);
+         display: grid;
++        /* One column the plate's width: an implicit `auto` column takes the widest
++           child's min-content (a long file name in a description) and runs past the
++           plate. With a `0` floor the line law breaks the word inside the plate. */
++        grid-template-columns: minmax(0, 1fr);
+         gap: var(--space-body);
+         inline-size: min(100% - 2 * var(--space-section), 32rem);
+         padding-inline: var(--space-family);
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+index 24f3859..2639ca6 100644
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -91,6 +91,9 @@
+         contain: layout paint;
+         display: grid;
+         grid-template-rows: auto minmax(0, 1fr);
++        /* The grip and the region take the rung's width, never their own min-content,
++           so a row that can shrink lays out at the rung's width instead of past it. */
++        grid-template-columns: minmax(0, 1fr);
+     }
+ 
+     /* THE LIVE-BEHIND LAYER CONTRACT. `<Dialog :modal="false">` is reka's own non-modal arm
+@@ -122,6 +125,11 @@
+      * graded sampler with the scrollport. */
+     :where([data-slot="sheet-content"] > [data-slot="sheet-content-region"]) {
+         display: grid;
++        /* THE REGION IS THE SHEET'S WIDTH. An implicit `auto` column takes the widest
++           child's min-content, so a narrow sheet (a side rung, a phone) grew a region
++           wider than itself and cut the overhang at its paint containment. A `0` floor
++           lets every row reflow to the sheet instead. */
++        grid-template-columns: minmax(0, 1fr);
+         align-content: start;
+         gap: var(--space-body);
+     }
+@@ -535,8 +543,9 @@
+      * the engine still requests the close. Below the floor the box stops shrinking, so the
+      * plate slides by the difference instead: what shows of it is always the rung's share of
+      * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
+-     * that closes it. The INLINE axis takes no floor: a narrow side rung clips along that
+-     * axis.
++     * that closes it. The INLINE axis takes no floor: a narrow side rung lays its rows out
++     * at the rung's width (the region's `minmax(0, 1fr)` column), and a row with a fixed
++     * minimum wider than the rung is still cut at the plate's paint containment.
+      *
+      * On the way in the box takes the rung it opens to on its first frame
+      * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
+diff --git a/src/components/tabs/styles/segmented.css b/src/components/tabs/styles/segmented.css
+index 6736361..ec10047 100644
+--- a/src/components/tabs/styles/segmented.css
++++ b/src/components/tabs/styles/segmented.css
+@@ -61,6 +61,18 @@
+         display: inline-grid;
+         grid-auto-flow: column;
+         grid-auto-columns: 1fr;
++        /* THE STRIP IS BOUNDED BY ITS BOX. A column is never narrower than its tab's
++           label (`white-space: nowrap` below), so a strip whose tabs need more room
++           than its container ran past it and made the nearest scroller pan sideways.
++           The strip is no wider than its container and pans its own tabs, as the dock
++           run does: every tab keeps its whole label, a selected tab scrolls itself into
++           view (`useSelectionGroup`), and the indicator measures through the scroll
++           (`useSelectionIndicator`). A strip whose tabs fit has nothing to scroll, and a
++           pan that reaches the strip's end stops there. */
++        max-inline-size: 100%;
++        overflow-x: auto;
++        overscroll-behavior-x: contain;
++        scrollbar-width: none;
+         padding: var(--bouncy-track-trim);
+         border-radius: var(--bouncy-track-radius);
+         /* The warm-glass quiet surface + the rim + the iOS-27
+diff --git a/src/components/timeline/Timeline.vue b/src/components/timeline/Timeline.vue
+index 5c78f7d..e2e9f7e 100644
+--- a/src/components/timeline/Timeline.vue
++++ b/src/components/timeline/Timeline.vue
+@@ -402,6 +402,12 @@ defineExpose({ value });
+         grid-template-columns: 100%;
+         row-gap: var(--space-body);
+         position: relative;
++        /* The end marks sit centred on the track's ends, so half a mark's target lies
++           past each end. The plate reserves it on the inline axis as the marks row
++           reserves it on the block axis below: a target never overhangs the plate.
++           Half the fine target (`.tl__mark`, 1.5rem); the coarse arm below takes half
++           of `--touch-target`. */
++        padding-inline: 0.75rem;
+     }
+ 
+     .tl__track,
+@@ -559,6 +565,10 @@ defineExpose({ value });
+        row reserves the inflated box too, or a 44px mark overhangs a 24px list by
+        10px on both edges. */
+     @media (pointer: coarse) {
++        .tl {
++            padding-inline: calc(var(--touch-target) / 2);
++        }
++
+         .tl__marks {
+             min-block-size: var(--touch-target);
+         }
+diff --git a/src/components/toast/Toaster.vue b/src/components/toast/Toaster.vue
+index a755a6c..d75b2bd 100644
+--- a/src/components/toast/Toaster.vue
++++ b/src/components/toast/Toaster.vue
+@@ -110,7 +110,9 @@ const viewportClass = computed(() => {
+             v-bind="toastRootProps(toast)"
+             @animationend="onToastExitComplete(toast.id, $event)"
+         >
+-            <div class="grid gap-1">
++            <!-- `grid-cols-1` is one `minmax(0, 1fr)` column: the body shrinks beside the
++                 action instead of holding the toast open at a long word's width. -->
++            <div class="grid grid-cols-1 gap-1">
+                 <ToastTitle v-if="toast.title">
+                     {{ toast.title }}
+                 </ToastTitle>
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index 3b5d8c2..6821dfd 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -54,6 +54,9 @@
+         display: inline-flex;
+         flex: none;
+         min-inline-size: var(--toggle-group-item-size);
++        /* An item never outgrows the row: past it, its label wraps between words and
++           the item is a bar. */
++        max-inline-size: 100%;
+         min-block-size: var(--toggle-group-item-size);
+         align-items: center;
+         justify-content: center;
+diff --git a/src/styles/glass/overlay-plate.css b/src/styles/glass/overlay-plate.css
+index d93767a..db0f931 100644
+--- a/src/styles/glass/overlay-plate.css
++++ b/src/styles/glass/overlay-plate.css
+@@ -139,6 +139,10 @@
+         padding: var(--overlay-pad-hint);
+         font-size: var(--tooltip-text);
+         line-height: var(--type-leading-caption);
++        /* THE INLINE CEILING is the menu arm's too. Without it a hint was as wide as
++           its text on one line, so a long one ran off the screen; at the cap its
++           lines wrap and the line law breaks a word longer than the cap. */
++        max-inline-size: var(--overlay-inline-cap);
+         max-block-size: min(
+             var(--overlay-max-block),
+             var(--reka-popper-available-height, var(--overlay-max-block))
+diff --git a/src/styles/typography/semantic.css b/src/styles/typography/semantic.css
+index d75e41a..083fac3 100644
+--- a/src/styles/typography/semantic.css
++++ b/src/styles/typography/semantic.css
+@@ -17,6 +17,41 @@
+         font-size: var(--type-body);
+         line-height: var(--type-leading-body);
+     }
++
++    /* THE LINE LAW: a word longer than its line (a file name, a URL, an id) breaks
++       where the line ends instead of pushing the part past its container, where a
++       scroller above it then pans sideways or a plate's `overflow: hidden` cuts it off.
++
++       The surfaces that hold prose, and the Label, break such a word only where it
++       would overflow: `break-word` leaves every intrinsic size alone, so a short word
++       in a narrow cell never splits.
++
++       The rows a plate gives its width to (menu and Command rows, the Accordion
++       trigger, the Select trigger) also give the word up in their min-content
++       (`anywhere`): the label is a flex item, and a flex item cannot shrink below a
++       word that will not break. Their width comes from outside, so `anywhere` splits
++       only a word wider than the whole row, and the Select trigger's one-line value
++       (`line-clamp-1`) ends in its ellipsis.
++
++       Buttons, Chips, toggle items and badges keep every word whole. They size to
++       their own label, and with `anywhere` a table column or a squeezed row could
++       narrow them to a letter a line. */
++    :where(
++        .glass-overlay-plate,
++        [data-slot="select-content"],
++        [data-slot="command"],
++        [data-slot="dialog-content"],
++        [data-slot="sheet-content"],
++        [data-slot="toast"],
++        .disclosure-content,
++        .label
++    ) {
++        overflow-wrap: break-word;
++    }
++
++    :where(.glass-menu-row, .disclosure-group-trigger, [data-slot="select-trigger"]) {
++        overflow-wrap: anywhere;
++    }
+ }
+ 
+ /* A family-neutral headline/kicker pair. Consumers choose the font family,

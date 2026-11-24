@@ -1,0 +1,47 @@
+/* BM pass 9, corrected from pass 8 (folds B8-1, A8-3, A8-12, B8-8; overflow study V4; DESIGN §10.5): a detented sheet as
+   a native snap scroller, a design sketch, not library source.
+   - The rungs. Each detent is a snap area 1 px tall. WebKit drops a zero-height snap area: with pass 8's 0 px rungs the
+     scroller rested at 0 in Playwright WebKit and the observer closed the sheet at load (critique-B-snap-webkit.json); a
+     1 px area or an in-flow one rests on its rung in both engines (re-read in pass 9, pass-9/fold/sheet-check.mjs).
+   - The pointer. The scroller and its spacer take no pointer; the panel does. So the page above a peeking sheet gets its
+     taps: beside a non-modal sheet a tap reaches the page, as beside an iPhone's nonmodal sheet, and below 30rem the
+     page's scroll holds still through the one root lock (BL phone-scroll, The rule); beside a modal one the tap lands on
+     the scrim, which answers it (`answerTap`, ModalScrim.vue) and closes. A drag above the panel moves nothing. A drag
+     on the panel scrolls its scroller, the panel's nearest scrolling ancestor, whatever the ancestor's pointer-events.
+   - The grip. A device with no coarse pointer draws no grip: a mouse drag does not move a native scroller, and a grip
+     that does nothing explains nothing (restraint). Wheel, trackpad and keys move the sheet there, as the Carousel's
+     strip after its 11.1.2 cure, which likewise refused a hand-carried mouse glide (BL carousel study).
+   - The scrim keeps its rung law (`scrimDetentOpacity`, BL phone-scroll B3): played from the scroll position by a
+     scroll timeline where the engine has one, else set at each rung's commit (useSheetScroll.next.ts).
+   - The scroller hides its sideways overflow, as glass's other vertical scrollers do from 11.1.2 (overflow study V4). */
+.sheet-scroller {
+    position: fixed;
+    inset: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    pointer-events: none;
+}
+.sheet-scroller::-webkit-scrollbar { display: none; }
+.sheet-scroller > .sheet-spacer {
+    block-size: 100dvh;
+    scroll-snap-align: start;
+}
+.sheet-scroller > .sheet-rung {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 1px;
+    inset-block-start: calc(var(--rung) * 100dvh);
+    scroll-snap-align: start;
+}
+.sheet-scroller > .sheet-panel {
+    pointer-events: auto;
+    min-block-size: calc(var(--rung-max) * 100dvh);
+    border-start-start-radius: var(--radius-sheet);
+    border-start-end-radius: var(--radius-sheet);
+}
+@media not (any-pointer: coarse) {
+    .sheet-panel [data-slot="sheet-detent-handle"] { display: none; }
+}

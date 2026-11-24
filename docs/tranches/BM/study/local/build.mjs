@@ -17,6 +17,9 @@ const PAGES = {
   R5: "GBaSutb84j26cysowDCQ7R", R6: "9sGtAjQccg2KFZCZbn4Y1J", R7: "Hs9t552WkFNwkgU2nC8y4Z", "P2-scroll": "KkU8yz1FLHmtamSbdUTjqs",
   "P4-bud": "8RyqCYtFMhc8xFdJquLHC2", "P5-mark": "Sf5VYMX7HQeQ6k584cpZxk", "P6-hosts": "LbxfwsT94bouKtzq5VoXci",
   "P7-fuse": "RziFpt9Bj5RUTSVBtdAxTU", "P8-present": "5Jed1k3wBJvGY72BDUw6AD",
+  // Pass 10 (pass 9's fold, B9-1): pages with no published link, served here only; the board links their local names.
+  // P9-slider is superseded by P10-slider, which draws its letters on one thumbless rule (fold A9-9).
+  "P10-slider": null, "P10-toggle": null, "P10-plate": null,
 };
 
 const wrap = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -50,7 +53,8 @@ for (const [file, id] of Object.entries(PAGES)) {
   }
   const name = slug(title) + ".html";
   writeFileSync(path.join(OUT, name), wrap(html));
-  links[`https://claude.ai/artifact/${id}`] = name;
+  if (id) links[`https://claude.ai/artifact/${id}`] = name;
+  else if (!readFileSync(path.join(STUDY, "choices", "glass-choices.html"), "utf8").includes(`href="${name}"`)) throw new Error(`the board does not link ${name}`);
   console.log(`${file.padEnd(10)} → ${name}`);
 }
 

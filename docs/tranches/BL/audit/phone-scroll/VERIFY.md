@@ -331,3 +331,20 @@ shell, 390x844, `isMobile`, `hasTouch`, one browser per variant, closed in `fina
    afterwards.
 
 No WebKit run, no iPhone, no Safari.
+
+## The second round's last verifiers (2026-11-24, on the fourth fix): not closed, six items blocking
+
+The run ended after its third fix-and-verify pass without two consecutive clean reads. Chromium is Playwright's headless shell 149; WebKit is Playwright's WebKit 26.5, not Safari.
+
+1. **A phone held sideways gets no cure.** The hold and the outside layer key to `useSheetWidth` (under 30rem). A landscape iPhone is 667 to 932 px wide, so both of the owner's reports reproduce at 844 by 390. On atlas's right filter drawer (mounted from 768 px), a swipe on its foot, its list or beside it moves the page about 200 px. The rule should key to the input, a coarse pointer or touch, and not to the width.
+2. **A modal Popover, DropdownMenu or ContextMenu still can't be closed by touch in WebKit.** reka's modal popover and menu set `body` to `pointer-events: none`, so a tap beside the plate lands on `html`, which gets no click in WebKit. The cure lays its listening layer only for non-modal surfaces.
+3. **The CSS hold fails with the iPhone keyboard up.** WebKit's iOS source (`WKWebViewIOS.mm`, `_updateScrollViewForTransaction:`) turns the page's pan back on whenever a docked input view is shown. The record says the CSS hold holds on Safari 26.4 and later without that exception.
+4. **atlas's (d) is answered on a refuted cause.** In atlas's own trace (`bodyAfterWheelUp`) the list sits at 150 px and a 273 px finger-up leaves it there. On the tip `onPointerdown` returns for a list that isn't at its leading edge, so the detents engine never takes that press. `onPointerdown` and `scrollIsAtLeadingEdge` are unchanged from v10.1.2. So (d)'s cause on atlas is still open.
+5. **ROOT.md misquotes Apple.** Apple's HIG Popovers page reads: "Never show a cascade or hierarchy of popovers, in which one emerges from another. If you need to show a new popover, close the open one first." Quote it verbatim. It bears on the pop-pop cell: Apple says never, and glass allows it.
+6. **The iPhone gate misses half of the owner's complaint.** No step reads the open and close motion on the device, and no step swipes with the keyboard up. Step 6 reads the harness drawer where (d) was measured on atlas's. Steps 6, 9 and 12 use internal names.
+
+**The earlier passes' items this one confirmed fixed:** nested dismissal (a tap on a parent plate closed both surfaces), a non-modal Dialog's layer over its own Select, a horizontal scroller in a detented body losing its pan, a mouse press lifted outside the sheet leaving it armed, and ModalScrim's focus loss.
+
+**For 11.1.1.** `scrim.patch`, the detented scrim law (0 when dismissed, rising to the old law at the first rung), applies alone to the 11.1.1 tip. On the tip the detented Sheet's scrim appears at 0.28 within one frame and vanishes from 0.28 in one frame, in both engines. That breaks the exits patch's own rule that no exit completes in under two frames. Placed into 11.1.1 by the orchestrator (2026-11-24).
+
+**The direction for the next round.** Key the rule to the input rather than the width. Answer (2) with one listening layer for modal and non-modal surfaces alike. State (3) as a limit and read it on the device. Leave (4) open until atlas's trace is explained. Keep `detents.patch` out of 11.1.2 until (4) is rooted.

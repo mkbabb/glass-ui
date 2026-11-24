@@ -1,0 +1,146 @@
+{
+ "engine": "chromium",
+ "at": "2026-11-24T03:31:19.350Z",
+ "cells": {
+  "openAt_mount": {
+   "path": "scrollend",
+   "restFrac": 0.4,
+   "closed": false,
+   "log": [
+    {
+     "t": 2,
+     "scrollend": true
+    },
+    {
+     "t": 3,
+     "seen": 0.4
+    },
+    {
+     "t": 8,
+     "commit": 0.4,
+     "scrollFrac": 0.4
+    }
+   ]
+  },
+  "openAt_raf": {
+   "path": "scrollend",
+   "restFrac": 0.4,
+   "closed": false,
+   "log": [
+    {
+     "t": 1,
+     "seen": 0.4
+    },
+    {
+     "t": 3,
+     "scrollend": true
+    },
+    {
+     "t": 11,
+     "commit": 0.4,
+     "scrollFrac": 0.4
+    }
+   ]
+  },
+  "smoothToNextRung": {
+   "path": "scrollend",
+   "rung": 0.85,
+   "log": [
+    {
+     "t": 499,
+     "seen": 0.85
+    },
+    {
+     "t": 732,
+     "scrollend": true
+    },
+    {
+     "t": 741,
+     "commit": 0.85,
+     "scrollFrac": 0.85
+    }
+   ]
+  },
+  "heldPastEdge_quiet": {
+   "rungWhileHeldAt070": 0.4,
+   "rungAfterLift": 0.85,
+   "log": [
+    {
+     "t": 1,
+     "seen": 0.4
+    },
+    {
+     "t": 152,
+     "commit": 0.4,
+     "scrollFrac": 0.4
+    },
+    {
+     "t": 503,
+     "seen": 0.85
+    },
+    {
+     "t": 1083,
+     "commit": 0.85,
+     "scrollFrac": 0.7
+    }
+   ]
+  },
+  "pointerThroughAndWheel": {
+   "hitAbovePanel": "pg",
+   "pageClicksAfterTapAbove": 1,
+   "afterWheelOnPanel": {
+    "restFrac": 0.85,
+    "rung": 0.85
+   }
+  },
+  "closeReduced": {
+   "closed": true,
+   "log": [
+    {
+     "t": 507,
+     "hidden": 0
+    },
+    {
+     "t": 507,
+     "scrollend": true
+    },
+    {
+     "t": 507,
+     "seen": 0
+    },
+    {
+     "t": 515,
+     "commit": "close"
+    }
+   ]
+  },
+  "presentPlain": {
+   "animations": {
+    "own": 1,
+    "subtree": 1
+   },
+   "result": "unmounted at 134 ms"
+  },
+  "presentWithSpinner": {
+   "animations": {
+    "own": 1,
+    "subtree": 2
+   },
+   "result": "unmounted at 126 ms"
+  },
+  "p8presentSheetB": {
+   "afterLoad": {
+    "rest": "Rests at 40 %",
+    "frac": 0.4
+   },
+   "afterClose": {
+    "rest": "Closed",
+    "frac": 0
+   },
+   "afterShow": {
+    "rest": "Rests at 40 %",
+    "frac": 0.4
+   }
+  }
+ }
+}

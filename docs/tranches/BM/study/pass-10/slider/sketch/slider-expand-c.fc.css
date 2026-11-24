@@ -1,0 +1,8 @@
+/* BM pass 10, C, appended inside BL's forced-colours block (its last rules): the grown
+   ground is Canvas with a CanvasText edge (BL's shell rule already says so), the band
+   keeps its CanvasText edge, and the root's 2 px outline is the one focus ring. */
+@media (forced-colors: active) {
+    .glass-slider[data-expand] .slider-track {
+        outline: none;
+    }
+}

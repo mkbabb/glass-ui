@@ -1,0 +1,3 @@
+16:52:22 attempt 1: REFUSED kernel zone data.kalloc.1024 13.42M
+17:02:57 attempt 2: [guarded] REFUSED: kernel zone data.kalloc.1024 at 13.46M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+17:03:10 owed: the zone only climbs (13.42M at 16:52 → 13.46M at 17:02; the reaper's log shows +55/s) and only a reboot clears it; ~/.claude/CLAUDE.md: at the 13M refusal, stop heavy work and tell the owner to reboot. Retries stopped after attempt 2; the check is owed to the first pass that runs after a reboot (rerun: guarded --timeout 10 -- node docs/tranches/BM/study/pass-1/check/page-check.mjs from the glass-ui checkout).

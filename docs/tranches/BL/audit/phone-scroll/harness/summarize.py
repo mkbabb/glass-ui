@@ -1,6 +1,8 @@
 """summarize.py: the probe JSON as one table per lane, plain against cured.
 
-    python3 summarize.py [lane ...]
+    python3 summarize.py [--dir data/r2] [lane ...]
+
+The default directory is data/ (round 1); the second round's files are in data/r2/.
 
 Each row is one cell (surface:rows). Columns: the page's scrollY before open, the change
 at open, each swipe's change of the page during / after it (plate or list, finger down v,
@@ -14,8 +16,12 @@ import json
 import sys
 from pathlib import Path
 
+ARGS = sys.argv[1:]
 HERE = Path(__file__).parent / "data"
-LANES = sys.argv[1:] or ["chromium", "webkit-wheel", "webkit-touch"]
+if ARGS[:1] == ["--dir"]:
+    HERE = Path(__file__).parent / ARGS[1]
+    ARGS = ARGS[2:]
+LANES = ARGS or ["chromium", "webkit-wheel", "webkit-touch"]
 
 
 def cell_line(r):
@@ -37,7 +43,9 @@ def cell_line(r):
         if (d != 0 or (dm or 0) != 0) and r["surface"] != "page":
             red = True
         during = f"{dm:+d}/" if dm is not None else ""
-        parts.append(f"{w['where']}{arrow} {during}{d:+d}{lm}")
+        st = (w["post"].get("plate") or {}).get("state")
+        gone = "" if st in (None, "open") else " (plate " + str(st) + ")"
+        parts.append(f"{w['where']}{arrow} {during}{d:+d}{lm}{gone}")
     ref = r.get("beforeClose") or r["afterOpen"]
     c = r["afterClose"]["scrollY"] - ref["scrollY"] if r.get("afterClose") else None
     root = r["afterOpen"]["rootOverflow"]

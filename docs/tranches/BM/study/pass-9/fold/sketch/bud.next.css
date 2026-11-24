@@ -1,0 +1,30 @@
+/* BM pass 9, corrected from pass 8 (folds A8-1, A8-6, A8-11; DESIGN §10.2, §10.3, §10.4): a design sketch, not library
+   source.
+   - One exit (M3, choice 11 B). Every presentation that leaves by fading leaves in 120 ms on `--exit-curve`.
+   - The panel rule (§7.4, choice 19). The held fill (W-B.17 R-14) of a trigger that opens a popup waits for the popup to
+     land, so a press that opens it runs at most two animations at once. The rule is scoped to a trigger that opens a
+     popup (`aria-haspopup`; reka sets it on DropdownMenuTrigger, SelectTrigger, PopoverTrigger and DialogTrigger), not
+     every disclosure (pass 8 matched accordions and collapsibles too). It reads the register's own root clock, which a
+     trigger sees (pass 8 read `--reveal-clock`, declared only on the portalled content, so the delay was always 0 s).
+     Only the opacity leg into the held strength waits; leaving the held state does not.
+   - The birth on a host (§10.2, choice 10). A trigger on a plate keeps itself as reka's anchor, so alignment and the
+     Select's width floor are unchanged; its side offset is the host's inset plus reka's 4 px, so the panel is born past
+     the plate's edge. The dock passes it (`:side-offset`), since it knows its own inset; nothing here.
+   - A press-point anchor (ContextMenu, fold A8-11). Today's grow (C, choice 10's default) starts from a strip the
+     anchor's height (`glass-menu-grow-*`, animations.css:205-214); a press point has none, so the grow would start from
+     nothing (P0a: "never from nothing"). The keyframe's first frame reads
+     `max(var(--reka-popper-anchor-height, 0px), var(--reveal-anchor-seed, 0px))`, and ContextMenu's content (the one
+     family with a press-point anchor, family-context.ts) sets the seed to a row's height. Every other menu is unchanged. */
+:where([data-reveal="menu"], [data-reveal="overlay"], [data-reveal="tooltip"]) {
+    --reveal-exit-clock: 120ms;
+    --reveal-exit-curve: var(--exit-curve);
+}
+[aria-haspopup][aria-expanded="true"]::after {
+    transition: opacity 150ms var(--ease-standard) var(--enter-menu-clock);
+}
+[aria-haspopup="dialog"][aria-expanded="true"]::after {
+    transition-delay: var(--enter-overlay-clock);
+}
+[data-reveal="menu"][data-family="context"] {
+    --reveal-anchor-seed: 2.75rem;
+}

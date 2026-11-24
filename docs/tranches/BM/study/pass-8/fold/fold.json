@@ -1,0 +1,90 @@
+{
+ "method": "pass-8/fold/fold.mjs; P7-fuse's springs and geometry, in Node",
+ "overlap": {
+  "press": {
+   "contact_p": 0.8667,
+   "seat_travel_overlapping_px": 211.5,
+   "open_overlap_ms": 88.5,
+   "open_overlap_frames60": 5.3,
+   "fold_overlap_from_ms": 19.5
+  },
+  "dock": {
+   "contact_p": 0.8667,
+   "seat_travel_overlapping_px": 211.5,
+   "open_overlap_ms": 146,
+   "open_overlap_frames60": 8.8,
+   "fold_overlap_from_ms": 29.8
+  }
+ },
+ "aPrime": {
+  "press": {
+   "open_fade_ms": [
+    88.5,
+    131.8
+   ],
+   "fold_fade_ms": [
+    0,
+    19.5
+   ],
+   "fold_fade_frames60": 1.17
+  },
+  "dock": {
+   "open_fade_ms": [
+    146,
+    260.5
+   ],
+   "fold_fade_ms": [
+    0,
+    29.8
+   ],
+   "fold_fade_frames60": 1.79
+  }
+ },
+ "trade": {
+  "curve": "cubic-bezier(0.4, 0, 0.6, 1) on both legs",
+  "pass7": "two linear 100 ms legs started together",
+  "proposed": {
+   "leaving_ms": 90,
+   "arriving_ms": 120,
+   "arriving_starts_ms": 45,
+   "total_ms": 165,
+   "rule4_breach": 0,
+   "max_share_per_frame": 0.303
+  },
+  "shorter": {
+   "leaving_ms": 84,
+   "arriving_ms": 100,
+   "arriving_starts_ms": 42,
+   "total_ms": 142,
+   "rule4_breach": 0,
+   "max_share_per_frame": 0.324
+  }
+ },
+ "gooLayer": {
+  "css_px": [
+   320,
+   76
+  ],
+  "device_px_dpr3": 218880,
+  "pass7_model_device_px": 218880,
+  "pass7_page_device_px": 940896
+ },
+ "controlsWindow": {
+  "ring_reach_px": 5,
+  "window_px": [
+   246,
+   62
+  ],
+  "radius_px": 31
+ },
+ "weightClock": {
+  "travel_px": 184,
+  "p0a_s": 0.329,
+  "dock_row_to_half_px_ms": 339,
+  "press_row_to_half_px_ms": 248
+ },
+ "seatFrom": {
+  "as_written_px": 192,
+  "corrected_px": 244
+ }
+}

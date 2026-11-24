@@ -1,0 +1,443 @@
+{
+ "families": {
+  "artefact": "a reading the probe made, not the page",
+  "F1": "SegmentedTabs strip wider than its box",
+  "F2": "detented sheet at a narrow rung",
+  "F2c": "the toast body's grid column (Toaster.vue), the toast past the screen",
+  "F4a": "Timeline end targets past the plate",
+  "F4b": "PagerDots wider than its box",
+  "designed-dock": "dock: the run's 4 px focus-ring reserve, the run strip, the status live region, a trigger's coarse hit slop (touch-floor.css), the rail's summary layer inside the dock's padding",
+  "designed-strip": "a wide table scrolling inside the DataTable demo's own scroller",
+  "designed-motion": "the Alert stage mid-entrance: nothing is past it 1.5 s later (triage)",
+  "badge": "Badge never wraps (house ruling): beyond its contract",
+  "designed-paint": "a paint or a strip the part means (shimmer, reveal, deck strip, staff window, blob bleed, range fill, status marks, corner hit area, halo)",
+  "demo-stage": "the demo's own stage or chassis CSS under the stress pass",
+  "F7": "a selected Chip's flood scale (glass-chip.css:27-28) past a full-width parent; a fault where that parent scrolls",
+  "F5": "LabeledField side by side in a narrow box: its layout collapses by viewport width, not by its box",
+  "menu-indicator": "menu check column narrower than its icon (inside the row's padding)",
+  "F6": "an icon Button squeezed below its icon (min-inline-size: 0)",
+  "F3": "a long word in a part's text (Label, Button, Chip, ToggleGroup item, menu row, Select, Command, Accordion, Popover, Toast)",
+  "pan": "a vertical scroller panned sideways by a horizontal swipe (the spill inside it is the cause)",
+  "page": "the document wider than the viewport",
+  "edge-sub2": "past the screen by 2 px or less",
+  "other": "a demo stage's clip around an F3 part, with no breaker recorded under it"
+ },
+ "rows": [
+  {
+   "family": "designed-dock",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 27
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 4
+   },
+   "max": 4,
+   "n": 27,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.dock-controls > div.dock-layers",
+    "breaker": "div.dock-layers > div#glass-dock-v-8-full.dock-layer.dock-layer--full.dock-run.is-active[role=toolbar] > button.dock-tab-button.glass-specular-track Quarterly e"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 27
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 4
+   },
+   "max": 4,
+   "n": 27,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.dock-controls > div.dock-layers",
+    "breaker": "div.dock-layers > div#glass-dock-v-8-full.dock-layer.dock-layer--full.dock-run.is-active[role=toolbar] > button.dock-tab-button.glass-specular-track Quarterly e"
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 17
+   },
+   "max": 17,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "span.slider-track.track-well > span.slider-lane",
+    "breaker": "span.slider-track.track-well > span.slider-lane > span.slider-range.glass-liquid-fill "
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 17
+   },
+   "max": 17,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "span.slider-track.track-well > span.slider-lane",
+    "breaker": "span.slider-track.track-well > span.slider-lane > span.slider-range.glass-liquid-fill "
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-scroller": 9,
+    "a-spill": 11,
+    "a-clipped": 2,
+    "a-edge": 2
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 3327
+   },
+   "max": 3327,
+   "n": 24,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.fold-box.fold-scroll > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group]",
+    "breaker": "div.fold-box.fold-scroll > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group] > button.segmented-tab district_enrollment_by_program_quarter"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 9,
+    "a-spill": 11,
+    "b-horizontal": 1,
+    "c-page": 1,
+    "a-clipped": 2,
+    "a-edge": 2
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 2419
+   },
+   "max": 2419,
+   "n": 26,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.fold-box.fold-scroll > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group]",
+    "breaker": "div.fold-box.fold-scroll > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group] > button.segmented-tab district_enrollment_by_program_quarter"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 107,
+    "a-clipped": 13
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 269
+   },
+   "max": 269,
+   "n": 120,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "button[data-slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover.h-(--control-h-md)[role=combobox] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 101,
+    "b-horizontal": 1,
+    "a-clipped": 5,
+    "a-edge": 1
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 260
+   },
+   "max": 260,
+   "n": 108,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "button[data-slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover.h-(--control-h-md)[role=combobox] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 34,
+    "a-clipped": 38
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 159
+   },
+   "max": 159,
+   "n": 72,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.fold-row > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 26,
+    "a-clipped": 30,
+    "b-horizontal": 1,
+    "a-edge": 1
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 155
+   },
+   "max": 155,
+   "n": 58,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div.fold-row > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 36
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 67
+   },
+   "max": 67,
+   "n": 36,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > button[data-slot=select-trigger]#v-18-control.control-surface.glass-control-edge.glass-"
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 36
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 64
+   },
+   "max": 64,
+   "n": 36,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > button[data-slot=select-trigger]#v-18-control.control-surface.glass-control-edge.glass-"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-scroller": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 49
+   },
+   "max": 49,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-box.fold-scroll",
+    "breaker": "main.ovf-page > div.fold-box.fold-scroll > button.glass-chip.glass-capsule.accent-tone.inline-flex district_enrollment_by_program_quarterly_2019-2026.csv"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 20
+   },
+   "max": 20,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-box.fold-scroll",
+    "breaker": "main.ovf-page > div.fold-box.fold-scroll > button.glass-chip.glass-capsule.accent-tone.inline-flex district_enrollment_by_program_quarterly_2019-2026.csv"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-scroller": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 49
+   },
+   "max": 49,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-box.fold-scroll",
+    "breaker": "main.ovf-page > div.fold-box.fold-scroll > button.glass-chip.glass-capsule.accent-tone.inline-flex district_enrollment_by_program_quarterly_2019-2026.csv"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 9
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 20
+   },
+   "max": 20,
+   "n": 9,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-box.fold-scroll",
+    "breaker": "main.ovf-page > div.fold-box.fold-scroll > button.glass-chip.glass-capsule.accent-tone.inline-flex district_enrollment_by_program_quarterly_2019-2026.csv"
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 10
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 97
+   },
+   "max": 97,
+   "n": 10,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-row",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 92
+   },
+   "max": 92,
+   "n": 2,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-row",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 10
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 97
+   },
+   "max": 97,
+   "n": 10,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-row",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure5",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/ovf.html?fold&round=2": 92
+   },
+   "max": 92,
+   "n": 2,
+   "sample": {
+    "route": "/ovf.html?fold&round=2",
+    "step": "stress-labels:57 labels",
+    "el": "main.ovf-page > div.fold-row",
+    "breaker": ""
+   }
+  }
+ ]
+}

@@ -40,6 +40,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { EasingPicker } from "@glass/components/easing";
 import { Carousel, CarouselContent, CarouselItem, CarouselPager } from "@glass/components/carousel";
 import { DockLayer, DockLayerGroup } from "@glass/components/dock";
+// Round 2 (/ovf.html?fold): value.js's four items.
+import { DialogContent, DialogHeader, DialogFooter } from "@glass/components/dialog";
+import { Card } from "@glass/components/card";
+import { FadingScroll } from "@glass/components/fading-scroll";
+import { DeckSlide, DeckStage, useDeck } from "@glass/components/deck";
 
 const LONG = "Quarterly enrollment by district and program, all years";
 const TOKEN = "district_enrollment_by_program_quarterly_2019-2026.csv";
@@ -89,6 +94,18 @@ const vizMeasure = ref(MEASURES[0]);
 const vizShow = ref(true);
 const layer = ref("assets");
 const easing = ref();
+// round 2: value.js's items
+const gType = ref("linear");
+const gSpace = ref("oklch");
+const gHue = ref("shorter");
+const kfDir = ref("alternate-reverse");
+const easing2 = ref();
+const scrollDialogOpen = ref(false);
+const scrollSheetOpen = ref(false);
+const bodySheetOpen = ref(false);
+const bodyRung = ref<number | null>(0.7);
+const deckV = useDeck(3, { axis: "vertical" });
+const ROWS8 = Array.from({ length: 8 }, (_, i) => `Row ${i + 1}: ${LONG}`);
 </script>
 
 <template>
@@ -199,6 +216,126 @@ const easing = ref();
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>
+            </div>
+
+            <!-- round 2, value.js's item 1: a three-seat dock in a host narrower than it asks -->
+            <div class="fold-box" style="inline-size: 300px" data-testid="fold-dock-tight">
+                <GlassDock :collapse="false" aria-label="Three seats, tight">
+                    <DockControl v-for="d in ['Map', 'Table', 'Chart']" :key="d" shape="tab">{{ d }}</DockControl>
+                </GlassDock>
+            </div>
+
+            <!-- item 2: value.js's Gradient band, three LabeledFields in 73 px columns -->
+            <div class="fold-grid3" style="inline-size: 243px" data-testid="fold-lf3">
+                <LabeledField class="min-w-0" label="Type" :control-labelable="false" v-slot="{ labelledBy }">
+                    <Select v-model="gType">
+                        <SelectTrigger class="h-(--control-h-sm)" :aria-labelledby="labelledBy"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="linear">Linear</SelectItem>
+                            <SelectItem value="radial">Radial</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </LabeledField>
+                <LabeledField class="min-w-0" label="Color space" :control-labelable="false" v-slot="{ labelledBy }">
+                    <Select v-model="gSpace">
+                        <SelectTrigger class="h-(--control-h-sm)" :aria-labelledby="labelledBy"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="oklch">OKLCh</SelectItem>
+                            <SelectItem value="oklab">OKLab</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </LabeledField>
+                <LabeledField class="min-w-0" label="Hue method" :control-labelable="false" v-slot="{ labelledBy }">
+                    <Select v-model="gHue">
+                        <SelectTrigger class="h-(--control-h-sm)" :aria-labelledby="labelledBy"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="shorter">Shorter</SelectItem>
+                            <SelectItem value="increasing">Increasing</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </LabeledField>
+            </div>
+
+            <!-- item 2: keyframes' Controls column, a 120 px column -->
+            <div class="fold-box" style="inline-size: 120px" data-testid="fold-lf-kf">
+                <LabeledField label="Direction" v-slot="{ controlId, labelledBy }">
+                    <Select v-model="kfDir">
+                        <SelectTrigger :id="controlId" class="gap-1.5 pe-10" :aria-labelledby="labelledBy">
+                            <span class="fold-glyph" aria-hidden="true" />
+                            <SelectValue class="min-w-0 flex-1 text-start" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="normal">normal</SelectItem>
+                            <SelectItem value="alternate-reverse">alternate-reverse</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </LabeledField>
+            </div>
+
+            <!-- item 3: EasingPicker in steps mode; the plan sets the column's width -->
+            <div class="fold-box" style="inline-size: 200px" data-testid="fold-easing">
+                <EasingPicker v-model="easing2" :initial="{ mode: 'steps' }" />
+            </div>
+
+            <!-- item 4: glass's vertical scrollers, each in a 300 px column -->
+            <div class="fold-box" style="inline-size: 300px" data-testid="fold-v4">
+                <FadingScroll axis="y" style="max-block-size: 120px" data-testid="v4-fading">
+                    <p v-for="r in ROWS8" :key="r" class="fold-p">{{ r }}</p>
+                </FadingScroll>
+                <Card>
+                    <div class="card-scroll-host" style="max-block-size: 120px" data-testid="v4-card">
+                        <p v-for="r in ROWS8" :key="r" class="fold-p">{{ r }}</p>
+                    </div>
+                </Card>
+                <Carousel orientation="vertical" aria-label="Pages, vertical" class="fold-vcarousel" data-testid="v4-carousel">
+                    <CarouselContent>
+                        <CarouselItem v-for="(n, i) in 3" :key="n" :index="i" :label="`Page ${n}`">
+                            <div class="fold-slide">Page {{ n }}</div>
+                        </CarouselItem>
+                    </CarouselContent>
+                </Carousel>
+                <div class="fold-deck" data-testid="v4-deck">
+                    <DeckStage :deck="deckV" register="snap" :ratio="null" aria-label="Slides, vertical">
+                        <DeckSlide v-for="(n, i) in 3" :key="n" :index="i">
+                            <p v-for="r in ROWS8" :key="r" class="fold-p">{{ r }}</p>
+                        </DeckSlide>
+                    </DeckStage>
+                </div>
+                <Dialog v-model:open="scrollDialogOpen">
+                    <DialogTrigger as-child>
+                        <Button data-testid="fold-open-dialog-scroll">Dialog that scrolls</Button>
+                    </DialogTrigger>
+                    <DialogContent :scroll="true" data-testid="v4-dialog">
+                        <DialogTitle>Rows</DialogTitle>
+                        <DialogDescription>Every row of the table.</DialogDescription>
+                        <p v-for="n in 30" :key="n" class="fold-p">Row {{ n }}: {{ LONG }}</p>
+                    </DialogContent>
+                </Dialog>
+                <Dialog v-model:open="scrollSheetOpen" :modal="false">
+                    <DialogTrigger as-child>
+                        <Button data-testid="fold-open-sheet-scroll">Sheet that scrolls</Button>
+                    </DialogTrigger>
+                    <SheetContent side="right" :scroll="true" data-testid="v4-sheet" @interact-outside.prevent>
+                        <DialogTitle>Rows</DialogTitle>
+                        <DialogDescription>Every row of the table.</DialogDescription>
+                        <p v-for="n in 30" :key="n" class="fold-p">Row {{ n }}: {{ LONG }}</p>
+                    </SheetContent>
+                </Dialog>
+                <Dialog v-model:open="bodySheetOpen">
+                    <DialogTrigger as-child>
+                        <Button data-testid="fold-open-sheet-body">Detented sheet</Button>
+                    </DialogTrigger>
+                    <SheetContent side="bottom" :detents="[0.4, 0.7, 1]" v-model:detent="bodyRung" data-testid="v4-detents">
+                        <DialogHeader>
+                            <DialogTitle>Rows</DialogTitle>
+                            <DialogDescription>Every row of the table.</DialogDescription>
+                        </DialogHeader>
+                        <div data-testid="v4-detents-body">
+                            <p v-for="n in 30" :key="n" class="fold-p">Row {{ n }}: {{ LONG }}</p>
+                        </div>
+                        <DialogFooter><Button>Done</Button></DialogFooter>
+                    </SheetContent>
+                </Dialog>
             </div>
         </main>
         <main v-else class="ovf-page">
@@ -422,6 +559,31 @@ const easing = ref();
 }
 .fold-full {
     inline-size: 100%;
+}
+.fold-grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+.fold-glyph {
+    display: inline-block;
+    inline-size: 1.5em;
+    block-size: 1em;
+    flex: none;
+    border: 1.5px solid currentColor;
+    border-radius: 3px;
+}
+.fold-p {
+    margin: 0 0 0.5rem;
+}
+.fold-vcarousel :deep(.carousel-strip) {
+    block-size: 160px;
+}
+.fold-deck {
+    block-size: 200px;
+}
+.fold-deck :deep(.deck-stage) {
+    block-size: 100%;
 }
 .fold-slide {
     block-size: 120px;

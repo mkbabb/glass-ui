@@ -217,6 +217,8 @@ Readings, citations and witnesses in `docs/tranches/BL/audit/triage-1119/PLACED.
 
 - **The specular ruling widens to every surface.** atlas (the "radial artifact" on glass cards) and Home Assistant (a light band on a hovered card) show the same thing: the card's `::before` catch-light (`styles/glass/material.css:138`, intensity on hover and press at :334 and :347). The specular ruling that removes the pointer light from controls in 11.1.2 (`bl/specular/proto`) takes it off `.glass-card` and the material rungs as well: no pointer-following light on any surface. Witness: static over the built CSS, no `radial-gradient` and no `--specular-*` read on any surface's `::before`; one Chromium cell, a hovered card's top band equal to the unhovered card's within 1 % luminance, light and dark.
 
+- **The line it keeps (O-431, Home Assistant's finding).** `--glass-specular-intensity-active` also lights a surface's state at rest: checked, on, pressed, selected, expanded or current (`styles/glass/material.css:368-375`). The removal takes the pointer-following light on hover and press. A state's rest light stays until the dock redesign shows selection by fill steps; without that, removing it would dim the selected dock seat and an on toggle with nothing in their place. Witness: the selected seat's and an on Switch's `::before` intensity is unchanged at rest, and 0 under hover and press.
+
 ## 2026-11-23: the owner on glass.babb.dev (O-428)
 
 - **The floating Configurator takes the card's radius.** The detached form is `rounded-card` and the floating one `rounded-panel` (`--radius-xl`) (`configurator/Configurator.vue:212`, `:236`); the owner reads the floating panel as not rounded enough. Both take `--radius-card`, and the sections keep deriving their corners from it (the concentric rule at `:321-325`). Witness: one Chromium cell, the floating panel's computed corner equals a card's, and each section's corner equals the panel's less its inset.
@@ -268,3 +270,12 @@ Placed item by item in `design/dock-frames/inbound/value-js-2026-11-24-four-site
   - 13: Aurora keeps its context through a leave and fades in on its first frame.
 - **To the dock-redesign minor:** 3, 11 (a) and (c), and 12.
 - **fourier's own:** 14.
+
+## 2026-11-24: the detented scrim, from 11.1.1
+
+`audit/phone-scroll/scrim.patch` goes in 11.1.2's first row with the phone-scroll cure. Its witness: the detented Sheet's scrim ramps in from 0 and out to under 0.001, with no frame cut, in both engines. 11.1.1 ships without it, by the owner's order to ship only judged work before the limits (`glass-11.1.1-exits-scope.md`, the 2026-11-24 section).
+
+## 2026-11-24: Home Assistant's LF-56 and LF-57 (O-435)
+
+- **LF-56, the dock's press check through shadow roots.** `useDockState.ts:400` and `:652` and `isTeleportedTarget.ts:18-20` test `contains`/`closest` on a target that `document` sees retargeted to the outermost shadow host. They take `e.composedPath()` instead, and `composables/dom/useTouchGate.ts:28` gets the same cure. It joins the dock-frames challenge round. Witness: a dock in an open shadow root keeps a seat press inside, in both engines, plus a unit test.
+- **LF-57, the Slider's touch intent.** On a coarse pointer the horizontal Slider is `touch-action: pan-y` (`slider/styles.css:31` is `none`). It sets no value until the pointer has moved 10 px more along the track than across it, and a tap sets the value once at its release. Witness at 390 with touch: a vertical swipe scrolls the page and leaves the value unchanged.

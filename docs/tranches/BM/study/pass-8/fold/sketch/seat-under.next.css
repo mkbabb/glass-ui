@@ -1,0 +1,49 @@
+/* BM pass 7 (F3, F8; DESIGN §9.3), amended in pass 8 by the fold of pass 7's critiques (A7-2, A7-10, A7-11, B7-4,
+   B7-7, B7-11). A design sketch, not library source.
+   The theme seat is a sibling of the dock's plate (wi8's `.dock-plate`, the window of §6.3) and of the controls, placed
+   at the open plate's end plus the gap. Folded, it rests translated back by `--seat-from` so its box lies inside the
+   disc (law 8): the open width plus the gap, plus the seat's width less the disc's (244 px for a seat as wide as the
+   disc; pass 7 wrote "the open width less the disc's", which rests it beside the disc). It is `inert` while folded,
+   set once per change, so neither the keyboard nor VoiceOver reaches a seat no one can see.
+   Two forms go to the owner on P7-fuse (A and A2); the sketch draws A2, R4's C rule, the one that never stacks two
+   translucent plates (F3; pass 1's fold B-9):
+   - opening, the seat (its plate and glyph together, one node) shows nothing while any of it is under the dock and
+     takes its opacity over the last 8 px of the gap, played as the window's sampled spring (rule 2) since the opacity
+     is a function of the travel;
+   - folding, it fades on one 90 ms leg from the press, which leaves it under three quarters at contact and gone 60 ms
+     later: a brief interior ghost, which the device record also shows on a merge ("a darker disc INSIDE the bar for
+     ~2–3 frames", BI DOCK-LADDER.md:130-131). A fade tied to the gap would land in 30 ms, under law 7's floor.
+   Per change: `translate` and `opacity` on the seat, two legs on one node.
+   Its hover plate and press tone sit on `::after`, the one pseudo-element that carries state (W-B.17 R-14,
+   "Hover, focus and press are every plate's"; law 11); its `::before` is the plate the split drives. A seat that holds a
+   readout (gaggle's lamp) takes no `::after`. Under reduced motion it dips (§4.3). */
+.dock-seat-out {
+    position: absolute;
+    inset-inline-start: calc(100% + var(--dock-seat-gap, 0.5rem));
+    inset-block-start: 0;
+    border-radius: calc(infinity * 1px);
+}
+.dock-seat-out::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--glass-plate);
+    box-shadow: var(--dock-shadow);
+}
+.dock-seat-out::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--plate-state-fill);
+    opacity: var(--plate-state, 0);
+    transition: opacity var(--duration-hover, 150ms) var(--ease-out);
+}
+.dock-seat-out:hover { --plate-state: var(--plate-hover-strength); }
+.dock-seat-out:active { --plate-state: var(--plate-press-strength); }
+[data-folded] > .dock-seat-out {
+    translate: calc(-1 * var(--seat-from)) 0; /* --seat-from: open width + gap + (seat width − disc width) */
+    opacity: 0;
+}

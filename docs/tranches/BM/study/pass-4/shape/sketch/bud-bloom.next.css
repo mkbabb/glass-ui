@@ -1,0 +1,12 @@
+/* BM pass 4 (Q1), lane E, the proposed default for a panel out of its control: a design sketch, not library
+   source. The panel enters at its own size, its corners its own, by opacity and a 0.96 scale from its control's
+   side (the existing --enter-menu-scale), on the present row's single curve, with no clip and no blur leg. One
+   node, two properties, two animations per open, nothing added. It replaces the clip-path strip that uncovers the
+   menu plate today (reveal.css:267-292). Exit: the same two properties on 0.6 of the clock (P0a). */
+.bud-bloom {
+    transform-origin: var(--reka-dropdown-menu-content-transform-origin, top left);
+    transition:
+        opacity var(--spring-present-duration) var(--spring-present),
+        scale var(--spring-present-duration) var(--spring-present);
+}
+.bud-bloom:where([data-state="closed"]) { opacity: 0; scale: var(--enter-menu-scale); }

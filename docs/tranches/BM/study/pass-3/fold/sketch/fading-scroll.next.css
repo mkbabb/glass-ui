@@ -1,0 +1,26 @@
+/* FadingScroll, as proposed (BM pass 2), amended in pass 3 by the fold (A10, B-5). A design sketch, not library source.
+   The ramps never change. The FadingScroll component's own port reaches into its host's padding by the ramp's
+   width and pads itself by the same width, so at rest each ramp covers empty padding (a sharp edge) and
+   content passes under it once scrolled. Native scroll only: no timeline, no registered property, no script.
+   Designed behaviour on a host with less padding than the ramp on the scroll axis (A10): the port overflows
+   the host by the difference; a host that clips cuts the ramp, and at a viewport edge the page would scroll
+   sideways. The component's documentation names the padding it needs; the sites are asked whether any host
+   lacks it (§4.9). There is no runtime branch.
+   Scope (B-5): these rules belong to the component's own class, `.fading-scroll-port`. The shared
+   `.fading-scroll` register that SelectContent, CommandList and `.card-scroll-host` compose keeps today's
+   scroll-timeline rules until their own pass designs them (the overlay inset law, pass 8; the card's sticky
+   header), and its `@property` registrations stay with it. */
+.fading-scroll-port--x {
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--fade-scroll-width));
+    padding-inline: var(--fade-scroll-width);
+    scroll-padding-inline: var(--fade-scroll-width);
+    mask-image: linear-gradient(to right, transparent, #000 var(--fade-scroll-width), #000 calc(100% - var(--fade-scroll-width)), transparent);
+}
+.fading-scroll-port--y {
+    overflow-y: auto;
+    margin-block: calc(-1 * var(--fade-scroll-width));
+    padding-block: var(--fade-scroll-width);
+    scroll-padding-block: var(--fade-scroll-width);
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-scroll-width), #000 calc(100% - var(--fade-scroll-width)), transparent);
+}

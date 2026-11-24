@@ -1,0 +1,1009 @@
+{
+ "at": "2026-11-23T01:30:52.098Z",
+ "travel": {
+  "row": "dock",
+  "response": 0.3,
+  "zeta": 0.88,
+  "settle_ms_2pct": 214,
+  "peak_overshoot_pct": 0.297,
+  "t90_ms": 159
+ },
+ "stretch": {
+  "cap_s": 0.2,
+  "k": 1.396,
+  "trailing_response_s": 0.419,
+  "peak": {
+   "one_slot": 1.15,
+   "two_slots": 1.192,
+   "three_slots": 1.199
+  },
+  "raw_gap_max_of_travel": 0.195,
+  "trailing_edge_settle_ms": 299,
+  "leading_edge_settle_ms": 214,
+  "keyframes_at_120Hz_upper_bound": 37,
+  "note": "the leading edge is the dock row; the trailing edge follows it at a gap of S*w*tanh(D*(pLead-pSlow)/(S*w)); both land together, no overshoot past the dock row's own"
+ },
+ "lift": {
+  "L": 1.08,
+  "apple_sim_pct": 16,
+  "apple_device_rest_ratio": 1.14,
+  "p0a_hover_edge_px": 4,
+  "rows": [
+   {
+    "host": "SegmentedTabs pill, fine pointer (a tab 32 px tall, 80 px wide)",
+    "w": 80,
+    "h": 32,
+    "edge_x_px": 3.2,
+    "edge_y_px": 1.28,
+    "within_4px": true
+   },
+   {
+    "host": "SegmentedTabs pill, coarse pointer (44 px floor)",
+    "w": 96,
+    "h": 44,
+    "edge_x_px": 3.84,
+    "edge_y_px": 1.76,
+    "within_4px": true
+   },
+   {
+    "host": "dock run seat (44 px circle)",
+    "w": 44,
+    "h": 44,
+    "edge_x_px": 1.76,
+    "edge_y_px": 1.76,
+    "within_4px": true
+   },
+   {
+    "host": "a long worded tab (Home Assistant's dock words, 120 px)",
+    "w": 120,
+    "h": 44,
+    "edge_x_px": 4.8,
+    "edge_y_px": 1.76,
+    "within_4px": false
+   }
+  ]
+ },
+ "clocks": {
+  "keyboard_A_same_as_tap": {
+   "ms": 210,
+   "at60": 12.6,
+   "at30": 6.3,
+   "under_five_at30": false
+  },
+  "keyboard_B_press_row": {
+   "ms": 120,
+   "at60": 7.2,
+   "at30": 3.6,
+   "under_five_at30": true
+  },
+  "keyboard_C_fade_across": {
+   "ms": 200,
+   "at60": 12,
+   "at30": 6,
+   "under_five_at30": false
+  },
+  "reduced_motion_dip": {
+   "out": {
+    "ms": 100,
+    "at60": 6,
+    "at30": 3,
+    "under_five_at30": true
+   },
+   "in": {
+    "ms": 100,
+    "at60": 6,
+    "at30": 3,
+    "under_five_at30": true
+   },
+   "total": {
+    "ms": 200,
+    "at60": 12,
+    "at30": 6,
+    "under_five_at30": false
+   }
+  },
+  "label_exchange_fast": {
+   "ms": 150,
+   "at60": 9,
+   "at30": 4.5,
+   "under_five_at30": true
+  }
+ },
+ "fills": {
+  "model": "chrome plate = --card at the R3b letter's alpha over the ground (D3's law, no blur, O-260); fills composited in gamma sRGB; WCAG 2 contrast; glass-ui master's default colours",
+  "table": {
+   "light": {
+    "A": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.196,
+       "vs_plate": 1.196,
+       "word_on_it": 10.739,
+       "muted_word_on_it": 4.016
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.224,
+       "vs_plate": 1.463,
+       "word_on_it": 8.777,
+       "muted_word_on_it": 3.282
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.254,
+       "vs_plate": 1.499,
+       "word_on_it": 8.565,
+       "muted_word_on_it": 3.203
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.263,
+       "vs_plate": 1.263,
+       "word_on_it": 10.164,
+       "muted_word_on_it": 3.801
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.392,
+       "vs_plate": 1.392,
+       "word_on_it": 9.225,
+       "muted_word_on_it": 3.45
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.196,
+       "vs_plate": 1.196,
+       "word_on_it": 10.739,
+       "muted_word_on_it": 4.016
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.1,
+       "vs_plate": 1.1,
+       "word_on_it": 11.678,
+       "muted_word_on_it": 4.367
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.206,
+       "vs_plate": 1.206,
+       "word_on_it": 13.48,
+       "muted_word_on_it": 5.041
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.285,
+       "vs_plate": 1.55,
+       "word_on_it": 10.49,
+       "muted_word_on_it": 3.923
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.266,
+       "vs_plate": 1.527,
+       "word_on_it": 10.649,
+       "muted_word_on_it": 3.982
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.275,
+       "vs_plate": 1.275,
+       "word_on_it": 12.753,
+       "muted_word_on_it": 4.769
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.415,
+       "vs_plate": 1.415,
+       "word_on_it": 11.488,
+       "muted_word_on_it": 4.296
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.206,
+       "vs_plate": 1.206,
+       "word_on_it": 13.48,
+       "muted_word_on_it": 5.041
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.103,
+       "vs_plate": 1.103,
+       "word_on_it": 14.732,
+       "muted_word_on_it": 5.509
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.201,
+       "vs_plate": 1.201,
+       "word_on_it": 12.086,
+       "muted_word_on_it": 4.52
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.256,
+       "vs_plate": 1.508,
+       "word_on_it": 9.624,
+       "muted_word_on_it": 3.599
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.26,
+       "vs_plate": 1.514,
+       "word_on_it": 9.589,
+       "muted_word_on_it": 3.586
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.269,
+       "vs_plate": 1.269,
+       "word_on_it": 11.436,
+       "muted_word_on_it": 4.277
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.404,
+       "vs_plate": 1.404,
+       "word_on_it": 10.337,
+       "muted_word_on_it": 3.866
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.201,
+       "vs_plate": 1.201,
+       "word_on_it": 12.086,
+       "muted_word_on_it": 4.52
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.102,
+       "vs_plate": 1.102,
+       "word_on_it": 13.178,
+       "muted_word_on_it": 4.928
+      }
+     }
+    },
+    "B": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.137,
+       "vs_plate": 1.137,
+       "word_on_it": 4.229,
+       "muted_word_on_it": 1.582
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.037,
+       "vs_plate": 1.097,
+       "word_on_it": 4.386,
+       "muted_word_on_it": 1.64
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.184,
+       "vs_plate": 1.347,
+       "word_on_it": 3.572,
+       "muted_word_on_it": 1.336
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.196,
+       "vs_plate": 1.196,
+       "word_on_it": 4.022,
+       "muted_word_on_it": 1.504
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.265,
+       "vs_plate": 1.265,
+       "word_on_it": 3.803,
+       "muted_word_on_it": 1.422
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.137,
+       "vs_plate": 1.137,
+       "word_on_it": 4.229,
+       "muted_word_on_it": 1.582
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.076,
+       "vs_plate": 1.076,
+       "word_on_it": 4.469,
+       "muted_word_on_it": 1.671
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.206,
+       "vs_plate": 1.206,
+       "word_on_it": 13.657,
+       "muted_word_on_it": 5.107
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.289,
+       "vs_plate": 1.555,
+       "word_on_it": 10.596,
+       "muted_word_on_it": 3.963
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.267,
+       "vs_plate": 1.528,
+       "word_on_it": 10.783,
+       "muted_word_on_it": 4.032
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.275,
+       "vs_plate": 1.275,
+       "word_on_it": 12.92,
+       "muted_word_on_it": 4.832
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.416,
+       "vs_plate": 1.416,
+       "word_on_it": 11.633,
+       "muted_word_on_it": 4.35
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.206,
+       "vs_plate": 1.206,
+       "word_on_it": 13.657,
+       "muted_word_on_it": 5.107
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.104,
+       "vs_plate": 1.104,
+       "word_on_it": 14.93,
+       "muted_word_on_it": 5.583
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.182,
+       "vs_plate": 1.182,
+       "word_on_it": 8.144,
+       "muted_word_on_it": 3.046
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.148,
+       "vs_plate": 1.356,
+       "word_on_it": 7.097,
+       "muted_word_on_it": 2.654
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.237,
+       "vs_plate": 1.462,
+       "word_on_it": 6.584,
+       "muted_word_on_it": 2.462
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.247,
+       "vs_plate": 1.247,
+       "word_on_it": 7.714,
+       "muted_word_on_it": 2.885
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.36,
+       "vs_plate": 1.36,
+       "word_on_it": 7.074,
+       "muted_word_on_it": 2.645
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.182,
+       "vs_plate": 1.182,
+       "word_on_it": 8.144,
+       "muted_word_on_it": 3.046
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.094,
+       "vs_plate": 1.094,
+       "word_on_it": 8.795,
+       "muted_word_on_it": 3.289
+      }
+     }
+    },
+    "C": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.106,
+       "vs_plate": 1.106,
+       "word_on_it": 2.989,
+       "muted_word_on_it": 1.118
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.148,
+       "vs_plate": 1.038,
+       "word_on_it": 3.432,
+       "muted_word_on_it": 1.284
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.148,
+       "vs_plate": 1.27,
+       "word_on_it": 2.604,
+       "muted_word_on_it": 1.027
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.159,
+       "vs_plate": 1.159,
+       "word_on_it": 2.854,
+       "muted_word_on_it": 1.067
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.201,
+       "vs_plate": 1.201,
+       "word_on_it": 2.753,
+       "muted_word_on_it": 1.03
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.106,
+       "vs_plate": 1.106,
+       "word_on_it": 2.989,
+       "muted_word_on_it": 1.118
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.063,
+       "vs_plate": 1.063,
+       "word_on_it": 3.112,
+       "muted_word_on_it": 1.164
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.207,
+       "vs_plate": 1.207,
+       "word_on_it": 13.711,
+       "muted_word_on_it": 5.128
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.29,
+       "vs_plate": 1.557,
+       "word_on_it": 10.629,
+       "muted_word_on_it": 3.975
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.267,
+       "vs_plate": 1.529,
+       "word_on_it": 10.824,
+       "muted_word_on_it": 4.048
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.275,
+       "vs_plate": 1.275,
+       "word_on_it": 12.972,
+       "muted_word_on_it": 4.851
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.417,
+       "vs_plate": 1.417,
+       "word_on_it": 11.678,
+       "muted_word_on_it": 4.367
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.207,
+       "vs_plate": 1.207,
+       "word_on_it": 13.711,
+       "muted_word_on_it": 5.128
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.104,
+       "vs_plate": 1.104,
+       "word_on_it": 14.991,
+       "muted_word_on_it": 5.606
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.174,
+       "vs_plate": 1.174,
+       "word_on_it": 7.129,
+       "muted_word_on_it": 2.666
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.11,
+       "vs_plate": 1.304,
+       "word_on_it": 6.42,
+       "muted_word_on_it": 2.401
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.228,
+       "vs_plate": 1.441,
+       "word_on_it": 5.807,
+       "muted_word_on_it": 2.172
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.239,
+       "vs_plate": 1.239,
+       "word_on_it": 6.757,
+       "muted_word_on_it": 2.527
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.344,
+       "vs_plate": 1.344,
+       "word_on_it": 6.229,
+       "muted_word_on_it": 2.33
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.174,
+       "vs_plate": 1.174,
+       "word_on_it": 7.129,
+       "muted_word_on_it": 2.666
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.091,
+       "vs_plate": 1.091,
+       "word_on_it": 7.67,
+       "muted_word_on_it": 2.868
+      }
+     }
+    }
+   },
+   "dark": {
+    "A": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.131,
+       "vs_plate": 1.131,
+       "word_on_it": 8.424,
+       "muted_word_on_it": 5.441
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.093,
+       "vs_plate": 1.237,
+       "word_on_it": 9.209,
+       "muted_word_on_it": 5.948
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.369,
+       "vs_plate": 1.21,
+       "word_on_it": 6.154,
+       "muted_word_on_it": 3.975
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.348,
+       "vs_plate": 1.348,
+       "word_on_it": 5.523,
+       "muted_word_on_it": 3.567
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.416,
+       "vs_plate": 1.416,
+       "word_on_it": 5.259,
+       "muted_word_on_it": 3.397
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.131,
+       "vs_plate": 1.131,
+       "word_on_it": 8.424,
+       "muted_word_on_it": 5.441
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.133,
+       "vs_plate": 1.133,
+       "word_on_it": 6.572,
+       "muted_word_on_it": 4.244
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.046,
+       "vs_plate": 1.046,
+       "word_on_it": 12.395,
+       "muted_word_on_it": 8.006
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.034,
+       "vs_plate": 1.011,
+       "word_on_it": 11.985,
+       "muted_word_on_it": 7.741
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.39,
+       "vs_plate": 1.329,
+       "word_on_it": 8.917,
+       "muted_word_on_it": 5.759
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.394,
+       "vs_plate": 1.394,
+       "word_on_it": 8.503,
+       "muted_word_on_it": 5.492
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.479,
+       "vs_plate": 1.479,
+       "word_on_it": 8.014,
+       "muted_word_on_it": 5.176
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.046,
+       "vs_plate": 1.046,
+       "word_on_it": 12.395,
+       "muted_word_on_it": 8.006
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.141,
+       "vs_plate": 1.141,
+       "word_on_it": 10.39,
+       "muted_word_on_it": 6.71
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.086,
+       "vs_plate": 1.086,
+       "word_on_it": 10.406,
+       "muted_word_on_it": 6.721
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.02,
+       "vs_plate": 1.108,
+       "word_on_it": 10.619,
+       "muted_word_on_it": 6.858
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.393,
+       "vs_plate": 1.282,
+       "word_on_it": 7.472,
+       "muted_word_on_it": 4.826
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.386,
+       "vs_plate": 1.386,
+       "word_on_it": 6.914,
+       "muted_word_on_it": 4.466
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.464,
+       "vs_plate": 1.464,
+       "word_on_it": 6.543,
+       "muted_word_on_it": 4.226
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.086,
+       "vs_plate": 1.086,
+       "word_on_it": 10.406,
+       "muted_word_on_it": 6.721
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.143,
+       "vs_plate": 1.143,
+       "word_on_it": 8.38,
+       "muted_word_on_it": 5.412
+      }
+     }
+    },
+    "B": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.199,
+       "vs_plate": 1.199,
+       "word_on_it": 5.773,
+       "muted_word_on_it": 3.729
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.233,
+       "vs_plate": 1.479,
+       "word_on_it": 7.118,
+       "muted_word_on_it": 4.597
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.299,
+       "vs_plate": 1.083,
+       "word_on_it": 4.445,
+       "muted_word_on_it": 2.87
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.262,
+       "vs_plate": 1.262,
+       "word_on_it": 3.816,
+       "muted_word_on_it": 2.464
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.31,
+       "vs_plate": 1.31,
+       "word_on_it": 3.675,
+       "muted_word_on_it": 2.373
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.199,
+       "vs_plate": 1.199,
+       "word_on_it": 5.773,
+       "muted_word_on_it": 3.729
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.103,
+       "vs_plate": 1.103,
+       "word_on_it": 4.364,
+       "muted_word_on_it": 2.818
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.035,
+       "vs_plate": 1.035,
+       "word_on_it": 12.996,
+       "muted_word_on_it": 8.394
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.048,
+       "vs_plate": 1.012,
+       "word_on_it": 12.404,
+       "muted_word_on_it": 8.011
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.384,
+       "vs_plate": 1.337,
+       "word_on_it": 9.393,
+       "muted_word_on_it": 6.066
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.389,
+       "vs_plate": 1.389,
+       "word_on_it": 9.039,
+       "muted_word_on_it": 5.838
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.475,
+       "vs_plate": 1.475,
+       "word_on_it": 8.513,
+       "muted_word_on_it": 5.498
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.035,
+       "vs_plate": 1.035,
+       "word_on_it": 12.996,
+       "muted_word_on_it": 8.394
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.137,
+       "vs_plate": 1.137,
+       "word_on_it": 11.045,
+       "muted_word_on_it": 7.133
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.117,
+       "vs_plate": 1.117,
+       "word_on_it": 9.029,
+       "muted_word_on_it": 5.832
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.069,
+       "vs_plate": 1.194,
+       "word_on_it": 9.652,
+       "muted_word_on_it": 6.234
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.379,
+       "vs_plate": 1.234,
+       "word_on_it": 6.548,
+       "muted_word_on_it": 4.229
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.363,
+       "vs_plate": 1.363,
+       "word_on_it": 5.932,
+       "muted_word_on_it": 3.831
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.434,
+       "vs_plate": 1.434,
+       "word_on_it": 5.637,
+       "muted_word_on_it": 3.64
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.117,
+       "vs_plate": 1.117,
+       "word_on_it": 9.029,
+       "muted_word_on_it": 5.832
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.138,
+       "vs_plate": 1.138,
+       "word_on_it": 7.106,
+       "muted_word_on_it": 4.589
+      }
+     }
+    },
+    "C": {
+     "worst": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.247,
+       "vs_plate": 1.247,
+       "word_on_it": 4.117,
+       "muted_word_on_it": 2.659
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.36,
+       "vs_plate": 1.696,
+       "word_on_it": 5.598,
+       "muted_word_on_it": 3.616
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.23,
+       "vs_plate": 1.014,
+       "word_on_it": 3.347,
+       "muted_word_on_it": 2.162
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.186,
+       "vs_plate": 1.186,
+       "word_on_it": 2.783,
+       "muted_word_on_it": 1.797
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.219,
+       "vs_plate": 1.219,
+       "word_on_it": 2.707,
+       "muted_word_on_it": 1.748
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.247,
+       "vs_plate": 1.247,
+       "word_on_it": 4.117,
+       "muted_word_on_it": 2.659
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.075,
+       "vs_plate": 1.075,
+       "word_on_it": 3.071,
+       "muted_word_on_it": 1.984
+      }
+     },
+     "page": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.026,
+       "vs_plate": 1.026,
+       "word_on_it": 13.538,
+       "muted_word_on_it": 8.744
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.059,
+       "vs_plate": 1.032,
+       "word_on_it": 12.788,
+       "muted_word_on_it": 8.259
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.375,
+       "vs_plate": 1.34,
+       "word_on_it": 9.848,
+       "muted_word_on_it": 6.36
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.381,
+       "vs_plate": 1.381,
+       "word_on_it": 9.556,
+       "muted_word_on_it": 6.172
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.467,
+       "vs_plate": 1.467,
+       "word_on_it": 8.996,
+       "muted_word_on_it": 5.81
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.026,
+       "vs_plate": 1.026,
+       "word_on_it": 13.538,
+       "muted_word_on_it": 8.744
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.132,
+       "vs_plate": 1.132,
+       "word_on_it": 11.661,
+       "muted_word_on_it": 7.531
+      }
+     },
+     "grey": {
+      "track (the strip's quiet well)": {
+       "vs_what_it_sits_on": 1.145,
+       "vs_plate": 1.145,
+       "word_on_it": 7.876,
+       "muted_word_on_it": 5.087
+      },
+      "mark, today (.glass-capsule fill)": {
+       "vs_what_it_sits_on": 1.118,
+       "vs_plate": 1.28,
+       "word_on_it": 8.806,
+       "muted_word_on_it": 5.687
+      },
+      "mark, --fill-selected (foreground 0.12)": {
+       "vs_what_it_sits_on": 1.358,
+       "vs_plate": 1.187,
+       "word_on_it": 5.799,
+       "muted_word_on_it": 3.745
+      },
+      "mark, --fill-selected, no track": {
+       "vs_what_it_sits_on": 1.334,
+       "vs_plate": 1.334,
+       "word_on_it": 5.158,
+       "muted_word_on_it": 3.331
+      },
+      "dock seat, current (--dock-control-active-bg)": {
+       "vs_what_it_sits_on": 1.398,
+       "vs_plate": 1.398,
+       "word_on_it": 4.921,
+       "muted_word_on_it": 3.178
+      },
+      "menu row, highlighted (quiet fill)": {
+       "vs_what_it_sits_on": 1.145,
+       "vs_plate": 1.145,
+       "word_on_it": 7.876,
+       "muted_word_on_it": 5.087
+      },
+      "hover (--fill-hover, foreground 0.05)": {
+       "vs_what_it_sits_on": 1.129,
+       "vs_plate": 1.129,
+       "word_on_it": 6.097,
+       "muted_word_on_it": 3.937
+      }
+     }
+    }
+   }
+  },
+  "least_fg_alpha_for_3_to_1": {
+   "light": {
+    "A": {
+     "page": {
+      "fg_alpha": 0.47,
+      "word_on_it": 5.383
+     },
+     "worst": {
+      "fg_alpha": 0.49,
+      "word_on_it": 4.253
+     }
+    },
+    "B": {
+     "page": {
+      "fg_alpha": 0.47,
+      "word_on_it": 5.44
+     },
+     "worst": {
+      "fg_alpha": 0.68,
+      "word_on_it": 1.592
+     }
+    },
+    "C": {
+     "page": {
+      "fg_alpha": 0.47,
+      "word_on_it": 5.458
+     },
+     "worst": {
+      "fg_alpha": 0.9,
+      "word_on_it": 1.096
+     }
+    }
+   },
+   "dark": {
+    "A": {
+     "page": {
+      "fg_alpha": 0.39,
+      "word_on_it": 3.863
+     },
+     "worst": {
+      "fg_alpha": 0.48,
+      "word_on_it": 2.453
+     }
+    },
+    "B": {
+     "page": {
+      "fg_alpha": 0.38,
+      "word_on_it": 4.136
+     },
+     "worst": {
+      "fg_alpha": 0.65,
+      "word_on_it": 1.587
+     }
+    },
+    "C": {
+     "page": {
+      "fg_alpha": 0.38,
+      "word_on_it": 4.296
+     },
+     "worst": {
+      "fg_alpha": 0.91,
+      "word_on_it": 1.093
+     }
+    }
+   }
+  },
+  "bound_solved_on_the_fill": {
+   "light": {
+    "B_bare_plate": 0.545,
+    "word_on_mark_fill_selected_over_track": 0.654,
+    "word_on_mark_fill_selected_no_track": 0.605,
+    "word_on_mark_today": 0.587,
+    "word_on_dock_current_seat": 0.629,
+    "word_on_hover": 0.568
+   },
+   "dark": {
+    "B_bare_plate": 0.739,
+    "word_on_mark_fill_selected_over_track": 0.772,
+    "word_on_mark_fill_selected_no_track": 0.823,
+    "word_on_mark_today": 0.536,
+    "word_on_dock_current_seat": 0.84,
+    "word_on_hover": 0.771
+   }
+  }
+ }
+}

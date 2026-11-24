@@ -156,3 +156,33 @@ All three are interactive, and DockLayerGroup is a switcher strip like Segmented
   - `run.css` is untouched, and O-263's one-axis containment stands. DockTrigger's select arm does match `[data-slot="select-trigger"]`, but horizontal dock layers are `white-space: nowrap` (`layers.css:263-264`), so the line law changes nothing in a horizontal dock run.
 - **value.js item 4** (`overflow-x: hidden` beside every `overflow-y: auto`) is refused, rightly, as a mask.
 - **The sweep's WebKit, Safari, dark-mode and 1440-opens gaps** are each stated in §4.
+
+## Round 2's last critic (2026-11-24, on v6): holds after fixes, three items blocking
+
+Chromium is Playwright's headless shell 149; WebKit is Playwright's WebKit 26.5, not Safari.
+
+1. **A strip that scrolls lifts its ancestors' touch-action.** v6 gives `.segmented-tabs` `overflow-x: auto`. Pointer Events stop collecting touch-action at the nearest scroll container, and both engines decide that from style alone, so a strip with nothing to scroll does it too. A detented Sheet header (`touch-action: none`, `sheet/styles.css:108-113`) drags from anywhere in it (`sheet/detents/use.ts:82`, `:256-258`).
+   - **The Sheet drag** (Chromium, 390 touch), a slow 70 px drag from a tab:
+     - base: 30 moves, no cancel, the sheet follows 56 px;
+     - v6: 7 moves, then a pointercancel, and the sheet moves 0;
+     - v6, a fast 220 px swipe from the tab: cancelled after one move, and the sheet flings shut on that one move's speed.
+   - **Isolated cells**, a strip that fits:
+     - in a `touch-action: none` box: on v6 the page scrolls about 280 px, where the base scrolled 0;
+     - in a `pan-x` run: the same.
+   - keyframes' controls pane (`pan-y`) loses its restriction too.
+   - **Cure options:** make the strip a scroller only while it overflows, or give a strip in a detented header the drag axis's restriction.
+2. **A scroll container's automatic minimum size is 0,** so the v6 strip shrinks wherever a flex sibling must also give, and its clip then hides tabs the base showed whole. Read the same in both engines:
+   - a 358 px row with a heading: the strip is 121 px holding 160;
+   - a 240 px column over a list: the strip is 14.3 px tall holding 50;
+   - a vertical strip beside a paragraph: 31 px holding 81.
+
+   No site's composition hits this today. **Proposed cure:** `flex-shrink: 0` on `.segmented-tabs`, so `max-inline-size: 100%` still bounds it; a grid `auto` track would still squeeze it, and the comment should say so.
+3. **SITES.md points value.js at a glass file.** `ConfiguratorLayer.vue:198` (`min-h-0 overflow-hidden`) is glass's, inside the 0fr/1fr region (`:195-197`); the clip is how a closed layer hides its body. **The cure is glass's:** clip the block axis only (`overflow-y: clip`, the inline axis visible). Take the paragraph out of value.js's note.
+
+**Notes the next seat also answers.**
+- The line law's `overflow-wrap: anywhere` on `.glass-menu-row` splits a Chip or a Button inside a menu, Command, Accordion or Select row (a Chip on 3 lines and a Button on 4, at 260 px). The comment in `semantic.css` says the opposite.
+- Choice 7 is worse than 11.1.1 in WebKit, and SITES.md should say so.
+- SITES.md's claim that the ring shows whole in WebKit overstates: SWEEP §7.1 records a faint cut at 390.
+- SITES.md says "the owner" in letters signed by Mike.
+- `check-overflow.mjs`'s `put()` should restore with `scrollTo({ behavior: "instant" })`, since v6's strip glides.
+- WebKit read F2 and F4a only on v2.

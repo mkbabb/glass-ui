@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/ps4-cure
+
+ ❯ tests/components/dialog/dialog-dismiss.test.ts (9 tests | 1 failed) 315ms
+     × binds no dismiss intent anywhere in demo/ 199ms
+(node:72663) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/dialog/dialog-dismiss.test.ts > G-DLG-DISMISS · no consumer-side guards > binds no dismiss intent anywhere in demo/
+AssertionError: expected [ 'demo/__phone/Page.vue' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "demo/__phone/Page.vue",
++ ]
+
+ ❯ tests/components/dialog/dialog-dismiss.test.ts:85:27
+     83|             DISMISS_INTENTS.test(readFileSync(f, "utf8")),
+     84|         );
+     85|         expect(offenders).toEqual([]);
+       |                           ^
+     86|     });
+     87|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 34 passed (35)
+      Tests  1 failed | 265 passed | 1 skipped (267)
+   Start at  01:00:53
+   Duration  52.89s (transform 10.90s, setup 4.37s, import 37.96s, tests 22.84s, environment 25.38s)
+
+vitest rc=1

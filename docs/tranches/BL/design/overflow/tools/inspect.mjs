@@ -2,7 +2,7 @@
 // inspect.mjs --engine chromium|webkit --port 5391 --plan plan.json [--out f.json]
 // One headless browser (closed in finally), one context per job. A plan is a list of
 // jobs: { name, cell: "390t-light", url, do: ["tap:<sel>", "fclick:<sel>", "wait:900", "key:Escape",
-// "eval:<js>", "swipe:<sel>:<dx>:<dy>"], sel: ["<sel>", ...] }. For every element
+// "eval:<js>", "swipe:<sel>@<dx>@<dy>[@start]", "wheel:<sel>@<dx>@<dy>", "shot:<sel>@<file>"], sel: ["<sel>", ...] }. For every element
 // matching each selector the job prints its box, its scroll extents and the computed
 // properties that decide horizontal bounding, plus the document's scrollWidth. Used to
 // root a fault the sweep found and to witness it RED (base) and GREEN (cure).
@@ -74,6 +74,29 @@ try {
                         const h = await page.$(arg);
                         if (!h) rec.log.push(`no element: ${arg}`);
                         else await h.click({ force: true, timeout: 5000 });
+                    } else if (verb === "wheel") {
+                        // A mouse wheel on the element's centre: the sideways pan an engine
+                        // with no touch-move input (Playwright's WebKit) can still be asked for.
+                        const [sel, dx, dy] = arg.split("@");
+                        const b = await page.$eval(sel, (el) => {
+                            const r = el.getBoundingClientRect();
+                            return { x: Math.min(Math.max(r.left + r.width / 2, 8), innerWidth - 8), y: Math.min(Math.max(r.top + r.height / 2, 8), innerHeight - 8) };
+                        });
+                        await page.mouse.move(b.x, b.y);
+                        await page.mouse.wheel(+dx, +dy);
+                        await sleep(600);
+                        rec.log.push(`wheel ${sel} ${dx},${dy}: ok`);
+                    } else if (verb === "shot") {
+                        // A picture of one element (headless, the page's own render), to see
+                        // how a cut text ends: record/shots/<file>.<engine>.<cell>.png.
+                        const [sel, file] = arg.split("@");
+                        const h = await page.$(sel);
+                        if (!h) rec.log.push(`no element: ${sel}`);
+                        else {
+                            const out = resolve(HERE, "../record/shots", `${file}.${ENGINE}.${job.cell}.png`);
+                            await h.screenshot({ path: out, animations: "disabled" });
+                            rec.log.push(`shot ${sel}: ${out.split("/").slice(-2).join("/")}`);
+                        }
                     } else if (verb === "swipe") {
                         const [sel, dx, dy, from] = arg.split("@");
                         rec.log.push(`swipe ${sel} ${dx},${dy}${from ? " from " + from : ""}: ${await swipe(page, cdp, sel, +dx, +dy, from)}`);

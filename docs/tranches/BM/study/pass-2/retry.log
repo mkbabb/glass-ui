@@ -1,0 +1,10 @@
+17:21:09 attempt 1 (pass-1 page check, browser): REFUSED kernel zone data.kalloc.1024 at 13.53M
+17:36:52 attempt 2 (page check, browser): zone 13.58M REFUSED
+17:44:44 attempt 3 (pass-2 page check, browser): zone 13.61M REFUSED
+17:54:58 attempt 4 (pass-2 page check, browser): zone 13.64M REFUSED
+17:54:58 owed: the zone has only climbed (13.53M at 17:21 to 13.64M now; the guard asks for a reboot), so no retry inside the hour can pass; the runs below are recorded as owed
+# Owed after a reboot (each from the glass-ui checkout; one at a time):
+#   ~/.claude/guard/guarded --timeout 10 -- node docs/tranches/BM/study/pass-2/check/page-check.mjs   (the eight pages, 390 and 1440, light and dark)
+#   ~/.claude/guard/guarded --timeout 15 -- node docs/tranches/BM/study/pass-2/probe/probe.mjs        (kf follow against a direct write; scroll main-thread counts)
+#   one headless Chromium capture on bl/dock/wi8 after 11.2.0 ships: a seat flush against a run's end under a still rest-corner clip
+# Noted in pass 3 (fold A14): attempts 2 and 3 above came 7 min 52 s apart, under the machine law's 10-minute floor. Later passes hold the floor.

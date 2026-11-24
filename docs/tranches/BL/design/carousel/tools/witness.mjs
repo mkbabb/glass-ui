@@ -34,6 +34,12 @@
 //   frozen    the near-snap tree only (hero, svg, live=slot) without `scrollend`: press
 //             Next and wait. Holds: the landed member's figure runs again.
 //
+// Added by the second fold (fold.md, the 2026-11-24 section):
+//   start     the hero page mounted with v-model:active already 2 (start=2). Holds: the
+//             strip rests on member 2's own offset, member 2 is active, the dots and the
+//             caption say 3, and the strip reaches it with no offset in between.
+//   reduce    also counts the strip's `scrollend` events after the instant press.
+//
 // Writes <out>/witness.<label>.<engine>.json and prints one line per cell.
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -302,7 +308,9 @@ async function cellReduce(browser, v) {
         await page.evaluate((s) => {
             const strip = document.querySelector(s);
             window.__rows = [];
+            window.__ends = [];
             const t0 = performance.now();
+            strip.addEventListener("scrollend", () => window.__ends.push(+(performance.now() - t0).toFixed(1)));
             const tick = () => {
                 window.__rows.push([+(performance.now() - t0).toFixed(1), strip.scrollLeft]);
                 if (performance.now() - t0 < 1200) requestAnimationFrame(tick);
@@ -312,6 +320,7 @@ async function cellReduce(browser, v) {
         await pressFor(page, 1, 0);
         await sleep(1300);
         const rows = await page.evaluate(() => window.__rows);
+        const scrollends = await page.evaluate(() => window.__ends);
         const end = await page.evaluate(STATE, HERO_STRIP);
         const target = end.offsets[1];
         const start = rows[0][1];
@@ -319,7 +328,28 @@ async function cellReduce(browser, v) {
         const firstMove = rows.find(([, x]) => Math.abs(x - start) > 1);
         const arrive = rows.find(([, x]) => Math.abs(x - target) <= 1);
         const holds = end.active === 1 && Math.abs(end.sl - target) <= 1 && between.length === 0;
-        return { cell: "reduce", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, between: between.length, firstMoveMs: firstMove?.[0] ?? null, arriveMs: arrive?.[0] ?? null, holds, errors };
+        return { cell: "reduce", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, between: between.length, firstMoveMs: firstMove?.[0] ?? null, arriveMs: arrive?.[0] ?? null, scrollends, holds, errors };
+    } finally {
+        await context.close().catch(() => {});
+    }
+}
+
+// In-page, from the first script: every distinct scrollLeft the hero strip takes in
+// its first two seconds, so a seat that animates shows its steps.
+const TRACK_START = `(() => { window.__seat = []; const t0 = performance.now(); const tick = () => { const s = document.querySelector("[data-testid=hero-carousel] [data-slot=carousel-content]"); if (s) { const x = Math.round(s.scrollLeft); const l = window.__seat[window.__seat.length - 1]; if (!l || l[1] !== x) window.__seat.push([+(performance.now() - t0).toFixed(1), x]); } if (performance.now() - t0 < 2000) requestAnimationFrame(tick); }; requestAnimationFrame(tick); })();`;
+
+async function cellStart(browser, v) {
+    const { context, page, errors } = await open(browser, v, `${BASE}/?c=carousel-hero&content=none&start=2`, TRACK_START);
+    try {
+        await page.waitForSelector(HERO_STRIP, { timeout: 20000 });
+        await sleep(2200);
+        const end = await page.evaluate(STATE, HERO_STRIP);
+        const caption = await page.evaluate(() => document.querySelector(".hero-stage__caption")?.textContent?.trim() ?? null);
+        const seat = await page.evaluate(() => window.__seat);
+        const target = end.offsets[2];
+        const between = seat.filter(([, x]) => x !== 0 && Math.abs(x - target) > 1);
+        const holds = end.active === 2 && end.dot === 2 && Math.abs(end.sl - target) <= 1 && between.length === 0;
+        return { cell: "start", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, caption, seat, between: between.length, holds, errors };
     } finally {
         await context.close().catch(() => {});
     }
@@ -365,6 +395,7 @@ async function main() {
             if (CELLS.has("reduce")) rows.push(await cellReduce(browser, v).catch((e) => err("reduce", v, e)));
             if (CELLS.has("noend")) rows.push(await cellHeld(browser, v, true).catch((e) => err("noend", v, e)));
             if (CELLS.has("frozen")) rows.push(await cellFrozen(browser, v).catch((e) => err("frozen", v, e)));
+            if (CELLS.has("start")) rows.push(await cellStart(browser, v).catch((e) => err("start", v, e)));
         }
         const meta = { engine: opt.engine, browserVersion: browser.version(), label: opt.label, port: opt.port, cells: opt.cells, when: new Date().toISOString() };
         writeFileSync(join(opt.out, `witness.${opt.label}.${opt.engine}.json`), JSON.stringify({ meta, rows }, null, 1));

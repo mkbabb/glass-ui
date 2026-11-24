@@ -1,0 +1,10 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 45 > 36)
+webkit doc-only: click=none log=[["pointerdown","box","touch"],["pointerup","box","touch"]]
+webkit own: click=box log=[["pointerdown","box","touch"],["pointerup","box","touch"],["click","box","mouse"]]
+webkit own-pd: click=none log=[["pointerdown","box","touch"],["pointerup","box","touch"]]
+webkit own-pd-mouse: click=box log=[["pointerdown","box","touch"],["pointerup","box","touch"],["click","box","mouse"]]
+webkit body-none: click=none log=[["pointerdown","HTML","touch"],["pointerup","HTML","touch"]]
+webkit body-none-layer: click=layer log=[["pointerdown","layer","touch"],["pointerup","layer","touch"],["click","layer","mouse"]]
+webkit body-none-bare: click=none log=[["pointerdown","layer","touch"],["pointerup","layer","touch"]]

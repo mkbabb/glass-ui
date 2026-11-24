@@ -1,0 +1,512 @@
+{
+ "at": "2026-11-23T04:06:57.564Z",
+ "method": "imports from @mkbabb/glass-ui parsed per file; mounts as `<Name` or `h(Name`; a single ToggleGroup by `type=\"single\"` or `type: \"single\"` in a file that imports ToggleGroup",
+ "sites": [
+  {
+   "site": "atlas (library)",
+   "ref": "u/build-atlas-rc@62405c0",
+   "importers": {
+    "GlassDock": [
+     "src/charts/frame/PlateControls.vue",
+     "src/charts/frame/PlateDock.vue",
+     "src/charts/scene/StickyScene.vue",
+     "src/platform/chrome/dock/Dock.vue"
+    ],
+    "SegmentedTabs": [
+     "src/charts/frame/PlateDial.vue",
+     "src/filter/ui/VizOptionsBand.vue",
+     "src/filter/ui/components/YearScrubber.vue"
+    ],
+    "Switch": [
+     "src/editorial/DataAside.vue",
+     "src/filter/ui/VizOptionsBand.vue"
+    ],
+    "ToggleGroup": [
+     "src/editorial/DataAside.vue",
+     "src/filter/ui/SelectionSetPane.vue",
+     "src/filter/ui/SourceDataBrowser.vue"
+    ],
+    "Slider": [
+     "src/filter/ui/RangeFacet.vue"
+    ]
+   },
+   "mounts": {
+    "GlassDock": [
+     "src/charts/frame/PlateControls.vue:151",
+     "src/charts/frame/PlateDock.vue:348",
+     "src/charts/scene/StickyScene.vue:153",
+     "src/platform/chrome/dock/Dock.vue:530",
+     "src/platform/chrome/dock/Dock.vue:609"
+    ],
+    "SegmentedTabs": [
+     "src/charts/frame/PlateDial.vue:205",
+     "src/filter/ui/VizOptionsBand.vue:73",
+     "src/filter/ui/components/YearScrubber.vue:211"
+    ],
+    "Switch": [
+     "src/editorial/DataAside.vue:150",
+     "src/filter/ui/VizOptionsBand.vue:112"
+    ],
+    "ToggleGroup": [
+     "src/editorial/DataAside.vue:88",
+     "src/filter/ui/SelectionSetPane.vue:220",
+     "src/filter/ui/SourceDataBrowser.vue:410"
+    ],
+    "Slider": [
+     "src/filter/ui/RangeFacet.vue:60"
+    ]
+   },
+   "toggleGroupSingle": [
+    "src/editorial/DataAside.vue (1)",
+    "src/filter/ui/SelectionSetPane.vue (2)",
+    "src/filter/ui/SourceDataBrowser.vue (1)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": [
+    "src/filter/ui/RangeFacet.vue"
+   ]
+  },
+  {
+   "site": "atlas (sci dashboards)",
+   "ref": "u/v19-sci@df25605f",
+   "importers": {
+    "Slider": [
+     "dashboards/demand/features/filter/DemandFilter.vue",
+     "dashboards/ecf/features/filter/EcfFilter.vue",
+     "dashboards/sci/features/filter/SciFilter.vue",
+     "dashboards/usf/features/filter/UsfFilter.vue"
+    ],
+    "SegmentedTabs": [
+     "dashboards/ecf/features/filter/EcfFilter.vue",
+     "dashboards/usf-integrity/features/filter/ConsultantFilter.vue",
+     "dashboards/usf/features/filter/UsfFilter.vue"
+    ],
+    "PagerDots": [
+     "dashboards/home/hero/HeroStage.vue"
+    ],
+    "Carousel": [
+     "dashboards/home/hero/HeroStage.vue"
+    ],
+    "GlassDock": [
+     "dashboards/home/hero/HeroStage.vue"
+    ],
+    "ToggleGroup": [
+     "dashboards/sci/features/filter/SciFilter.vue",
+     "dashboards/speedtest/features/distribution/BenchmarkDistribution.vue",
+     "dashboards/speedtest/features/survey/SurveyChapter.vue",
+     "dashboards/usf/features/filter/UsfFilter.vue"
+    ]
+   },
+   "mounts": {
+    "Slider": [
+     "dashboards/demand/features/filter/DemandFilter.vue:63",
+     "dashboards/ecf/features/filter/EcfFilter.vue:366",
+     "dashboards/ecf/features/filter/EcfFilter.vue:383",
+     "dashboards/sci/features/filter/SciFilter.vue:188",
+     "dashboards/usf/features/filter/UsfFilter.vue:100"
+    ],
+    "SegmentedTabs": [
+     "dashboards/ecf/features/filter/EcfFilter.vue:218",
+     "dashboards/ecf/features/filter/EcfFilter.vue:298",
+     "dashboards/usf-integrity/features/filter/ConsultantFilter.vue:64",
+     "dashboards/usf-integrity/features/filter/ConsultantFilter.vue:79",
+     "dashboards/usf/features/filter/UsfFilter.vue:79"
+    ],
+    "PagerDots": [
+     "dashboards/home/hero/HeroStage.vue:115"
+    ],
+    "Carousel": [
+     "dashboards/home/hero/HeroStage.vue:40"
+    ],
+    "GlassDock": [
+     "dashboards/home/hero/HeroStage.vue:90"
+    ],
+    "ToggleGroup": [
+     "dashboards/sci/features/filter/SciFilter.vue:167",
+     "dashboards/speedtest/features/distribution/BenchmarkDistribution.vue:258",
+     "dashboards/speedtest/features/survey/SurveyChapter.vue:86",
+     "dashboards/usf/features/filter/UsfFilter.vue:92"
+    ]
+   },
+   "toggleGroupSingle": [
+    "dashboards/speedtest/features/distribution/BenchmarkDistribution.vue (1)",
+    "dashboards/speedtest/features/survey/SurveyChapter.vue (1)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": [
+    "dashboards/demand/features/filter/DemandFilter.vue",
+    "dashboards/ecf/features/filter/EcfFilter.vue",
+    "dashboards/sci/features/filter/SciFilter.vue",
+    "dashboards/usf/features/filter/UsfFilter.vue"
+   ]
+  },
+  {
+   "site": "value.js",
+   "ref": "c45@243d0b364",
+   "importers": {
+    "SegmentedTabs": [
+     "demo/palettes/admin/panels/AdminNamesPanel.vue",
+     "demo/workbenches/mix/MixSourceSelector.vue"
+    ],
+    "ToggleGroup": [
+     "demo/palettes/browser/search/SearchFilterBar.vue"
+    ],
+    "Slider": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue",
+     "demo/scenes/ConfigSliderPane.vue",
+     "demo/workbenches/extract/ExtractControls.vue",
+     "demo/workbenches/generate/GenerateControls.vue",
+     "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue"
+    ],
+    "DockLayerGroup": [
+     "demo/shell/dock/Dock.vue"
+    ],
+    "GlassDock": [
+     "demo/shell/dock/Dock.vue"
+    ]
+   },
+   "mounts": {
+    "SegmentedTabs": [
+     "demo/palettes/admin/panels/AdminNamesPanel.vue:28",
+     "demo/workbenches/mix/MixSourceSelector.vue:147"
+    ],
+    "ToggleGroup": [
+     "demo/palettes/browser/search/SearchFilterBar.vue:35"
+    ],
+    "Slider": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:63",
+     "demo/scenes/ConfigSliderPane.vue:217",
+     "demo/workbenches/extract/ExtractControls.vue:48",
+     "demo/workbenches/extract/ExtractControls.vue:77",
+     "demo/workbenches/generate/GenerateControls.vue:366",
+     "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue:307"
+    ],
+    "DockLayerGroup": [
+     "demo/shell/dock/Dock.vue:305"
+    ],
+    "GlassDock": [
+     "demo/shell/dock/Dock.vue:298"
+    ]
+   },
+   "toggleGroupSingle": [
+    "demo/palettes/browser/search/SearchFilterBar.vue (1)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": [
+    "demo/picker/controls/ComponentSliders/ComponentSliders.vue",
+    "demo/scenes/ConfigSliderPane.vue",
+    "demo/workbenches/extract/ExtractControls.vue",
+    "demo/workbenches/generate/GenerateControls.vue",
+    "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue"
+   ]
+  },
+  {
+   "site": "daraksha",
+   "ref": "b11-occasion@406de8f",
+   "importers": {
+    "Slider": [
+     "src/name/NameDock.vue",
+     "src/portraits/PortraitsDock.vue"
+    ],
+    "GlassDock": [
+     "src/scripture/HeadDock.vue",
+     "src/shell/ControlsSeat.vue",
+     "src/shell/SiteDock.vue",
+     "src/veil/Star.vue",
+     "src/veil/film/Clasp.vue",
+     "test/glass-repro/dock-cutcap.ts",
+     "test/glass-repro/dock-press-scroll.ts"
+    ],
+    "DockLayerGroup": [
+     "src/shell/SiteDock.vue",
+     "test/glass-repro/dock-cutcap.ts",
+     "test/glass-repro/dock-press-scroll.ts"
+    ]
+   },
+   "mounts": {
+    "Slider": [
+     "src/name/NameDock.vue:116",
+     "src/portraits/PortraitsDock.vue:79"
+    ],
+    "GlassDock": [
+     "src/scripture/HeadDock.vue:82",
+     "src/shell/ControlsSeat.vue:161",
+     "src/shell/SiteDock.vue:236",
+     "src/shell/SiteDock.vue:283",
+     "src/veil/Star.vue:34",
+     "src/veil/film/Clasp.vue:90"
+    ],
+    "DockLayerGroup": [
+     "src/shell/SiteDock.vue:244",
+     "test/glass-repro/dock-cutcap.ts:25",
+     "test/glass-repro/dock-press-scroll.ts:25"
+    ]
+   },
+   "toggleGroupSingle": [],
+   "sliderMarks": [],
+   "sliderStep": [
+    "src/name/NameDock.vue",
+    "src/portraits/PortraitsDock.vue"
+   ]
+  },
+  {
+   "site": "fourier",
+   "ref": "f45@22dc445",
+   "importers": {
+    "SegmentedTabs": [
+     "web/src/components/equation/EquationModeToggle.vue",
+     "web/src/components/gallery/GalleryView.vue"
+    ],
+    "Progress": [
+     "web/src/components/equation/EquationView.vue",
+     "web/src/components/visualization/EquationPanel.vue",
+     "web/src/components/visualization/ImageUpload.vue",
+     "web/src/components/visualization/VisualizationView.vue"
+    ],
+    "ToggleGroup": [
+     "web/src/components/equation/FunctionInput.vue",
+     "web/src/components/gallery/GallerySearchBar.vue",
+     "web/src/components/gallery/TierControl.vue",
+     "web/src/components/shared/NotationPills.vue",
+     "web/src/components/visualization/BasisSelector.vue"
+    ],
+    "Carousel": [
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue"
+    ],
+    "GlassDock": [
+     "web/src/components/layout/AppDock.vue",
+     "web/src/components/paper/PaperTocDrawer.vue",
+     "web/src/components/shared/StageDock.vue",
+     "web/src/components/visualization/AnimationControls.vue",
+     "web/src/components/visualization/EditorControlsDock.vue"
+    ],
+    "Slider": [
+     "web/src/components/shared/FourierTimeline.vue",
+     "web/src/components/ui/SliderControl.vue"
+    ]
+   },
+   "mounts": {
+    "SegmentedTabs": [
+     "web/src/components/equation/EquationModeToggle.vue:59",
+     "web/src/components/gallery/GalleryView.vue:473"
+    ],
+    "Progress": [
+     "web/src/components/equation/EquationView.vue:644",
+     "web/src/components/equation/EquationView.vue:731",
+     "web/src/components/visualization/EquationPanel.vue:119",
+     "web/src/components/visualization/ImageUpload.vue:129",
+     "web/src/components/visualization/VisualizationView.vue:682"
+    ],
+    "ToggleGroup": [
+     "web/src/components/equation/FunctionInput.vue:190",
+     "web/src/components/equation/FunctionInput.vue:218",
+     "web/src/components/gallery/GallerySearchBar.vue:174",
+     "web/src/components/gallery/TierControl.vue:34",
+     "web/src/components/shared/NotationPills.vue:30",
+     "web/src/components/visualization/BasisSelector.vue:166",
+     "web/src/components/visualization/BasisSelector.vue:176"
+    ],
+    "Carousel": [
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:66",
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:68",
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:70"
+    ],
+    "GlassDock": [
+     "web/src/components/layout/AppDock.vue:402",
+     "web/src/components/paper/PaperTocDrawer.vue:137",
+     "web/src/components/shared/StageDock.vue:88",
+     "web/src/components/shared/StageDock.vue:91",
+     "web/src/components/visualization/AnimationControls.vue:268",
+     "web/src/components/visualization/EditorControlsDock.vue:92"
+    ],
+    "Slider": [
+     "web/src/components/shared/FourierTimeline.vue:222",
+     "web/src/components/ui/SliderControl.vue:187"
+    ]
+   },
+   "toggleGroupSingle": [
+    "web/src/components/equation/FunctionInput.vue (2)",
+    "web/src/components/gallery/GallerySearchBar.vue (1)",
+    "web/src/components/gallery/TierControl.vue (2)",
+    "web/src/components/shared/NotationPills.vue (2)",
+    "web/src/components/visualization/BasisSelector.vue (1)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": [
+    "web/src/components/shared/FourierTimeline.vue",
+    "web/src/components/ui/SliderControl.vue"
+   ]
+  },
+  {
+   "site": "keyframes",
+   "ref": "kf45@96c6c109",
+   "importers": {
+    "GlassDock": [
+     "demo/app/dock/ChromeDock.vue",
+     "demo/components/instrument/pane/RibbonBar.vue",
+     "demo/components/instrument/transport/TransportDock.vue"
+    ],
+    "ToggleGroup": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue",
+     "demo/scenes/spring/SpringPhysicsFacet.vue"
+    ],
+    "SegmentedTabs": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue"
+    ],
+    "Slider": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue",
+     "demo/components/instrument/transport/TransportScrub.vue",
+     "demo/components/playback/PlaybackRibbon.vue",
+     "demo/scenes/spring/SpringPhysicsFacet.vue"
+    ],
+    "Switch": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue"
+    ]
+   },
+   "mounts": {
+    "GlassDock": [
+     "demo/app/dock/ChromeDock.vue:457",
+     "demo/components/instrument/pane/RibbonBar.vue:76",
+     "demo/components/instrument/transport/TransportDock.vue:39"
+    ],
+    "ToggleGroup": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue:61",
+     "demo/scenes/spring/SpringPhysicsFacet.vue:177"
+    ],
+    "SegmentedTabs": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue:42"
+    ],
+    "Slider": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:155",
+     "demo/components/instrument/transport/TransportScrub.vue:10",
+     "demo/components/playback/PlaybackRibbon.vue:65",
+     "demo/scenes/spring/SpringPhysicsFacet.vue:144"
+    ],
+    "Switch": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:193"
+    ]
+   },
+   "toggleGroupSingle": [
+    "demo/components/EasingCatalogue/EasingCatalogue.vue (2)",
+    "demo/scenes/spring/SpringPhysicsFacet.vue (3)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": [
+    "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue",
+    "demo/components/instrument/transport/TransportScrub.vue",
+    "demo/components/playback/PlaybackRibbon.vue",
+    "demo/scenes/spring/SpringPhysicsFacet.vue"
+   ]
+  },
+  {
+   "site": "gaggle",
+   "ref": "site-redesign@8d7fe5d",
+   "importers": {
+    "GlassDock": [
+     "dashboard/proto/F2/App.vue",
+     "dashboard/proto/F3/App.vue",
+     "dashboard/proto/F4/App.vue",
+     "dashboard/proto/R/kit/KitDock.vue",
+     "dashboard/proto/R/page/PageDock.vue",
+     "dashboard/proto/kit/KitDock.vue",
+     "dashboard/src/report/kit/KitDock.vue",
+     "dashboard/src/report/page/PageDock.vue",
+     "dashboard/src/shell/Dock.vue"
+    ],
+    "ToggleGroup": [
+     "dashboard/proto/F3/App.vue",
+     "dashboard/src/parts/RunBand.vue"
+    ]
+   },
+   "mounts": {
+    "GlassDock": [
+     "dashboard/proto/F2/App.vue:512",
+     "dashboard/proto/F3/App.vue:494",
+     "dashboard/proto/F4/App.vue:709",
+     "dashboard/proto/R/kit/KitDock.vue:64",
+     "dashboard/proto/R/page/PageDock.vue:67",
+     "dashboard/proto/kit/KitDock.vue:62",
+     "dashboard/src/report/kit/KitDock.vue:64",
+     "dashboard/src/report/page/PageDock.vue:81",
+     "dashboard/src/shell/Dock.vue:126"
+    ],
+    "ToggleGroup": [
+     "dashboard/proto/F3/App.vue:495",
+     "dashboard/src/parts/RunBand.vue:110"
+    ]
+   },
+   "toggleGroupSingle": [
+    "dashboard/proto/F3/App.vue (1)",
+    "dashboard/src/parts/RunBand.vue (1)"
+   ],
+   "sliderMarks": [],
+   "sliderStep": []
+  },
+  {
+   "site": "Home Assistant",
+   "ref": "0f6deae4@0f6deae4",
+   "importers": {
+    "Switch": [
+     "frontend/src/cards/glass-automatic/auto_card.ts",
+     "frontend/src/tiles/air_sheet.ts",
+     "frontend/src/tiles/garage_sheet.ts",
+     "frontend/src/tiles/people.ts",
+     "frontend/src/tiles/room_sheet.ts"
+    ],
+    "ToggleGroup": [
+     "frontend/src/cards/glass-day/phases.ts",
+     "frontend/src/cards/glass-plant/group_sheet.ts",
+     "frontend/src/tiles/choices.ts",
+     "frontend/src/tiles/climate.ts",
+     "frontend/src/tiles/inline_choices.ts",
+     "frontend/src/tiles/light_sheet.ts",
+     "frontend/src/tiles/people.ts",
+     "frontend/src/tiles/presets.ts"
+    ],
+    "GlassDock": [
+     "frontend/src/tiles/GlassTabs.ts"
+    ],
+    "Progress": [
+     "frontend/src/tiles/car.ts"
+    ],
+    "Slider": [
+     "frontend/src/tiles/rails.ts"
+    ]
+   },
+   "mounts": {
+    "Switch": [
+     "frontend/src/cards/glass-automatic/auto_card.ts:138",
+     "frontend/src/tiles/air_sheet.ts:113",
+     "frontend/src/tiles/garage_sheet.ts:44",
+     "frontend/src/tiles/people.ts:283",
+     "frontend/src/tiles/room_sheet.ts:128"
+    ],
+    "ToggleGroup": [
+     "frontend/src/cards/glass-day/phases.ts:98"
+    ],
+    "Progress": [
+     "frontend/src/tiles/car.ts:156"
+    ],
+    "Slider": [
+     "frontend/src/tiles/rails.ts:234"
+    ]
+   },
+   "toggleGroupSingle": [
+    "frontend/src/cards/glass-day/phases.ts (3)",
+    "frontend/src/cards/glass-plant/group_sheet.ts (1)",
+    "frontend/src/tiles/choices.ts (1)",
+    "frontend/src/tiles/climate.ts (1)",
+    "frontend/src/tiles/inline_choices.ts (1)",
+    "frontend/src/tiles/light_sheet.ts (1)",
+    "frontend/src/tiles/people.ts (1)",
+    "frontend/src/tiles/presets.ts (1)"
+   ],
+   "sliderMarks": [
+    "frontend/src/tiles/rails.ts"
+   ],
+   "sliderStep": [
+    "frontend/src/tiles/rails.ts"
+   ]
+  }
+ ]
+}

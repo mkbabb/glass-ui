@@ -1,0 +1,5 @@
+19:38:13 attempt 1 (pass-4 page check, ten pages with the P4-bud strips, browser): REFUSED: kernel zone data.kalloc.1024 at 14.04M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+19:42:43 attempt 2 (same run): REFUSED: kernel zone data.kalloc.1024 at 14.06M
+19:42:50 note: attempt 2 came 4 min 30 s after attempt 1, under the 10-minute floor (my error: I read the clock after sending); later attempts keep the floor, the next no earlier than 19:52:43
+19:52:47 attempt 3 (same run): REFUSED: kernel zone data.kalloc.1024 at 14.09M
+19:53:10 stopped: three refusals, the zone climbing 14.04M -> 14.09M; it falls only on a reboot. Owed with their commands: ~/.claude/guard/guarded --timeout 10 -- node docs/tranches/BM/study/pass-4/check/page-check.mjs (the ten pages and P4-bud's strips); ~/.claude/guard/guarded --timeout 10 -- node docs/tranches/BM/study/pass-4/shape/probe.mjs (the page's own work per lane, Chromium). Neither was attempted separately: one heavy run at a time, and the same gate refuses both.

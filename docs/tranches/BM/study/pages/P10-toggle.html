@@ -1,0 +1,177 @@
+<title>Dark Mode Toggle</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 10 (O-428; DESIGN §9). Glass's light and dark toggle, three ways, each a model drawn by this page alone.
+   A · today's (master): an eight-point sun outline turning half a turn on the dock spring while a disc slides 15 %.
+   B · proposed, after daraksha's grammar with fewer parts: a warm sun whose rays draw in under its disc, then a cool
+       night disc slides across the disc to carve the crescent; one clock, present's single curve, 200 ms; the night
+       follows the rays by 50 ms going dark and leads them coming back. Colours: glass's --section-color-5 (light arm)
+       and --section-color-2 (dark arm). Reduce Motion: the rays fade out as the night fades in, 150 ms.
+   C · B's motion in the text's own colour, so the colour can be judged apart from the motion.
+   Every toggle here flips the whole page, so all three turn together. Glass's path in A is glass-ui's own. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --sun: oklch(0.530 0.124 69.6);
+  --night: oklch(0.484 0.163 265.5);
+  --tone: var(--sun);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --sun: oklch(0.813 0.109 78.2); --night: oklch(0.718 0.107 268.4); --tone: var(--night);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --sun: oklch(0.813 0.109 78.2); --night: oklch(0.718 0.107 268.4); --tone: var(--night);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  transition: background-color 200ms ease-out, color 200ms ease-out;
+}
+main { max-width: 1040px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 14px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 16px; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+button.toggle {
+  font: 400 16px var(--font); min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 22px; border: 0; cursor: pointer;
+  background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line);
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) { button.toggle:hover { box-shadow: inset 0 0 0 1.5px var(--focus); } }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 18px 18px; display: grid; gap: 14px; min-width: 0; transition: background-color 200ms ease-out; }
+.letter p { margin: 0; font-size: 16px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+.row { display: flex; align-items: center; gap: 18px; }
+.cap { font: 14px/1.3 var(--font); color: var(--muted); }
+
+/* The control: a round seat with a plate (W-B.17's model: the tone at 6.5 % on hover, 12 % pressed; no shrink, since
+   the glyph carries the verb, and the pressed tone waits for the glyph to land). */
+.tg {
+  --s: 44px; --dur: 200ms; --curve: cubic-bezier(0.197, 0, 0.124, 0.808);
+  position: relative; isolation: isolate; display: inline-grid; place-items: center; inline-size: var(--s); block-size: var(--s);
+  padding: calc(var(--s) * 0.2); border: 0; border-radius: 50%; background: transparent; cursor: pointer; color: var(--fg);
+  transition: color 200ms ease-out;
+}
+.tg.big { --s: 120px; }
+.tg::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: color-mix(in oklab, currentColor 12%, transparent); opacity: 0; scale: 0.8;
+  transition: opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) var(--hold, 0ms), scale 200ms var(--curve);
+}
+@media (hover: hover) { .tg:hover::before { opacity: 0.54; scale: 1; } }
+.tg:focus-visible::before { opacity: 0.54; scale: 1; }
+.tg[data-press]::before { opacity: 1; scale: 1; }
+.tg.landing { --hold: var(--dur); }
+.tg svg { display: block; inline-size: 100%; block-size: 100%; overflow: visible; }
+.tg[data-v="b"] { color: var(--tone); }
+
+/* A: today's, on the dock spring. */
+.tg[data-v="a"] svg { fill: currentColor; }
+.tg[data-v="a"] :is(.sun, .disc) { transform-box: view-box; transform-origin: center; transition: transform calc(var(--dur) * 1.5) cubic-bezier(0.232, 0, 0.18, 0.703); }
+:root[data-theme="dark"] .tg[data-v="a"] .sun { transform: rotate(0.5turn); }
+:root[data-theme="dark"] .tg[data-v="a"] .disc { transform: translateX(-15%); }
+
+/* B and C: the proposed glyph. */
+.tg:is([data-v="b"], [data-v="c"]) svg { fill: currentColor; }
+.rays { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.rays, .night { transform-box: view-box; transform-origin: 12px 12px; }
+.rays { transition: scale var(--dur) var(--curve) 50ms; }
+.night { translate: 9px -9px; transition: translate var(--dur) var(--curve); }
+:root[data-theme="dark"] .rays { scale: 0.5; transition: scale var(--dur) var(--curve); }
+:root[data-theme="dark"] .night { translate: 0 0; transition: translate var(--dur) var(--curve) 50ms; }
+@media (prefers-reduced-motion: reduce) {
+  .tg[data-v="a"] :is(.sun, .disc) { transition: none; }
+  .rays, .night, :root[data-theme="dark"] :is(.rays, .night) { scale: 1; translate: 0 0; transition: opacity 150ms ease-out; }
+  .night, :root[data-theme="dark"] .rays { opacity: 0; }
+  :root[data-theme="dark"] .night { opacity: 1; }
+}
+</style>
+
+<main>
+  <p class="ask"><strong>Tap any toggle a few times; the whole page turns with it. Send A, B or C: the toggle you want in glass-ui.</strong> B ships in 11.2.0 unless you send another letter.</p>
+  <p class="env" id="env">Reading your browser…</p>
+  <div class="bar">
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+  </div>
+
+  <section>
+    <h2>Light and dark</h2>
+    <p class="how">Each card shows the toggle at a dock seat’s size and large. Rest a mouse on one to see its plate.</p>
+    <div class="letter"><p><b>A</b> · Today’s: a sun outline turns half a turn while a disc slides.</p>
+      <div class="row">
+        <button class="tg" data-v="a" type="button" aria-label="Dark mode, A"></button>
+        <button class="tg big" data-v="a" type="button" aria-label="Dark mode, A, large"></button>
+      </div>
+    </div>
+    <div class="letter"><p><b>B</b> · Proposed: a warm sun draws its rays in, then a cool night carves the crescent.</p>
+      <div class="row">
+        <button class="tg" data-v="b" type="button" aria-label="Dark mode, B"></button>
+        <button class="tg big" data-v="b" type="button" aria-label="Dark mode, B, large"></button>
+      </div>
+    </div>
+    <div class="letter"><p><b>C</b> · B’s motion in the text’s colour, to judge the colour apart.</p>
+      <div class="row">
+        <button class="tg" data-v="c" type="button" aria-label="Dark mode, C"></button>
+        <button class="tg big" data-v="c" type="button" aria-label="Dark mode, C, large"></button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What runs</h2>
+    <p class="how">B and C: a press shows the plate’s tone. The change runs two motions on one 200 ms clock: the rays draw in, then the night slides. The plate’s tone returns after the glyph lands. With Reduce Motion on, nothing moves: the rays fade as the crescent fades in, over 150 ms.</p>
+  </section>
+
+  <p class="cap">Everything here is a model drawn by this page alone, not glass-ui itself.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent, safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  document.getElementById("env").textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const root = document.documentElement;
+  const dark = () => root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark() ? "dark" : "light";
+  const NS = "http://www.w3.org/2000/svg";
+  const A = '<svg viewBox="0 0 472.39 472.39" aria-hidden="true"><g class="sun"><path d="M403.21,167V69.18H305.38L236.2,0,167,69.18H69.18V167L0,236.2l69.18,69.18v97.83H167l69.18,69.18,69.18-69.18h97.83V305.38l69.18-69.18Zm-167,198.17a129,129,0,1,1,129-129A129,129,0,0,1,236.2,365.19Z"/></g><g class="disc"><circle cx="236.2" cy="236.2" r="90"/></g></svg>';
+  let n = 0;
+  const B = () => { const id = "night-" + n++; return `<svg viewBox="0 0 24 24" aria-hidden="true"><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><circle class="night" cx="15.5" cy="8.5" r="5.75"/></mask><g mask="url(#${id})"><path class="rays" d="M20.5 12h2M18 18l1.4 1.4M12 20.5v2M6 18l-1.4 1.4M3.5 12h-2M6 6 4.6 4.6M12 3.5v-2M18 6l1.4-1.4"/><circle cx="12" cy="12" r="6.5"/></g></svg>`; };
+  const tgs = [...document.querySelectorAll(".tg")];
+  const sync = () => tgs.forEach((t) => t.setAttribute("aria-pressed", String(dark())));
+  for (const t of tgs) {
+    t.innerHTML = t.dataset.v === "a" ? A : B();
+    t.addEventListener("pointerdown", () => { t.classList.remove("landing"); t.setAttribute("data-press", ""); });
+    const lift = () => { if (!t.hasAttribute("data-press")) return; t.classList.add("landing"); t.removeAttribute("data-press"); };
+    t.addEventListener("pointerup", lift); t.addEventListener("pointercancel", lift); t.addEventListener("pointerleave", lift);
+    t.addEventListener("click", () => { root.dataset.theme = dark() ? "light" : "dark"; sync(); });
+  }
+  sync();
+  document.getElementById("slow").addEventListener("click", (e) => {
+    const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", String(on));
+    tgs.forEach((t) => t.style.setProperty("--dur", (on ? 800 : 200) + "ms"));
+  });
+})();
+</script>

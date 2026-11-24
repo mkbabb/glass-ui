@@ -1,0 +1,63 @@
+/* BM pass 5: the one selection mark (UNION L1, T1, T3, T4; DESIGN §7). A design sketch, not library source.
+   One inert, aria-hidden node per selection group. It is a WINDOW of its widest capsule (overflow: clip) whose
+   ::before carries the fill, so a mark between options of different widths keeps exact round ends while both move
+   by `translate` alone (DESIGN §6.3, pass-4/shape/geometry.json F_window). Between equal options (every SegmentedTabs
+   pill strip today: `grid-auto-columns: 1fr`, segmented.css; every dock run seat in wi8, RU-28) the ::before never
+   moves and the window's translate is the whole motion.
+   The writer (selectionMark.next.ts) sets `--mark-w` (the window's width, once per layout), the window's `translate`
+   and the fill's `translate` (once per change through the settle player, once per pointer event in a follow).
+   Nothing writes a custom property per frame. */
+.selection-mark {
+    position: absolute;
+    inset-block: var(--track-trim, 0px);
+    inset-inline-start: 0;
+    inline-size: var(--mark-w);
+    border-radius: calc(infinity * 1px);
+    overflow: clip;
+    pointer-events: none;
+    z-index: 0;
+    /* The lift, only if the owner takes it on P5-mark (Q3): a uniform scale from the visible capsule's centre, which
+       the writer sets once per hold (`--mark-ox`). One property, the press row's clock in and the dock row's out. */
+    transform-origin: var(--mark-ox, 50%) 50%;
+    transition: scale var(--spring-press-duration) var(--spring-press);
+}
+.selection-mark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    /* The plate's held fill, travelling: the same colour and strength W-B.17 gives a control that is "on" (its
+       strength the owner's pick; --fill-selected, 0.12 of the foreground, as built). A tab under the mark takes no
+       held fill of its own (W-B.17 R-14), so the selection shows one fill. No rim, no gleam, no shadow, no blur:
+       law 1 makes it a tint on its plate. */
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent);
+}
+.selection-mark[data-held] { scale: 1.08; }
+
+/* The options. The chosen label takes full ink and the others the muted ink, exchanged over 150 ms on the effect
+   clock: the mark's coupled colour leg (P0a, "colour waits for shape"). A press on an option starts its label toward
+   full ink at once (the press's answer, P0a's "2 % of colour" and more), and the commit carries it on. */
+.selection-option { color: var(--muted-foreground); transition: color 150ms var(--ease-standard); }
+.selection-option[data-active] { color: var(--foreground); }
+.selection-option[data-pressing]:not([data-active]) {
+    color: color-mix(in oklab, var(--muted-foreground), var(--foreground) var(--hover-ink-mix));
+}
+/* Hover, on a fine pointer: the option's own plate at the light strength, the fill alone (W-B.17 R-2 on a tab); the
+   label does not also change, so one hover is one motion. The chosen option shows none. */
+@media (hover: hover) and (pointer: fine) {
+    .selection-option:not([data-active]):hover::before { opacity: 1; }
+}
+.selection-option::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    background: color-mix(in oklab, var(--foreground) calc(var(--fill-hover) * 100%), transparent);
+    opacity: 0; transition: opacity 150ms var(--ease-standard);
+}
+/* Forced colours: the mark's fill is forced away with every background, and the selection's sign is the global
+   Highlight ring (accessibility.css:31-43), drawn as an outline so that it moves no box (DESIGN §7.6). */
+@media (forced-colors: active) {
+    .selection-option[data-active] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
+/* More contrast: the chosen option's ring at about half the foreground, 1 px, inset (DESIGN §5.4 as amended). */
+@media (prefers-contrast: more) {
+    .selection-option[data-active] { outline: 1px solid color-mix(in oklab, var(--foreground) 50%, transparent); outline-offset: -1px; }
+}

@@ -1,0 +1,23 @@
+/* BM pass 9, corrected from pass 8 (folds B8-7, A8-9; DESIGN §10.6): the focus veil under a centred Dialog, a design
+   sketch, not library source.
+   - B (choice 12's default, 11.3.0): the veil is the one blur; the dialog's plate samples nothing and is its tint over the
+     veil's pool. Pass 8's selectors matched nothing in glass-ui: the veil is a <span> inside the scrim
+     (ModalOverlay.vue:87) and the dialog is the scrim's sibling with the class `glass-floating`, not
+     `glass-overlay-plate` (DialogContent.vue:180-183, 195). DialogContent is the only part that passes `veil`
+     ("`veil` is passed HERE and nowhere else", DialogContent.vue:192-194), and it stamps `data-slot="dialog-content"`, so
+     that is the key. Under reduced transparency and forced colours the veil is removed (focus-veil.css, last block), and
+     the plate then shows its tint alone, as a firm plate should there.
+   - The veil's clocks (A8-9): in with the dialog on its entering clock and with no lag, out with the dialog on the one
+     exit clock. Today it rises 300 ms after a 100 ms lag and leaves over 200 ms, so its pool outlasted a 120 ms dialog by
+     80 ms. Under Reduce Motion it fades (choice 8 A), enrolled past the library's reduced-motion carve like every fade. */
+@layer components {
+    .glass-floating[data-slot="dialog-content"] {
+        backdrop-filter: none;
+    }
+    .glass-focus-veil {
+        transition: opacity var(--reveal-exit-clock, 120ms) var(--exit-curve);
+    }
+    .glass-focus-veil[data-engaged] {
+        transition: opacity var(--enter-overlay-clock) var(--ease-standard);
+    }
+}

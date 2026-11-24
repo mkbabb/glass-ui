@@ -1,0 +1,27 @@
+/* scroll-chrome, as proposed (BM pass 2). A design sketch, not library source.
+   The collapse is a state the script sets once per change of direction; this sheet plays it on scale,
+   translate and opacity, which WebKit animates off the page's thread, on the dock row's single curve.
+   The lifted shadow is the state pseudo-element's opacity. Reduced motion keeps the quiet as a fade. */
+.scroll-chrome {
+    transform-origin: top center;
+    transition:
+        scale var(--spring-dock-duration) var(--spring-dock),
+        translate var(--spring-dock-duration) var(--spring-dock),
+        opacity var(--spring-dock-duration) var(--spring-dock);
+}
+.scroll-chrome::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--shadow-color) 24%, transparent);
+    opacity: 0;
+    transition: opacity var(--spring-dock-duration) var(--spring-dock);
+}
+.scroll-chrome[data-collapsed] { scale: 0.88; translate: 0 -6px; opacity: 0.72; }
+.scroll-chrome[data-collapsed]::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+    .scroll-chrome[data-collapsed] { scale: none; translate: none; }
+    .scroll-chrome { transition: opacity 150ms var(--ease-out); }
+}

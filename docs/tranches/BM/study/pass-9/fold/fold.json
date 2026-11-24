@@ -1,0 +1,89 @@
+{
+ "method": "pass-9/fold/fold.mjs: single curves sampled, areas, and standalone gzip -9 of minified bundles or comment-stripped CSS (upper bounds)",
+ "presentSingleCurve": {
+  "curve": "cubic-bezier(0.197, 0, 0.124, 0.808) over 200 ms",
+  "ms90": 142,
+  "ms98": 184,
+  "ms100": 200
+ },
+ "exitAt30": {
+  "120ms": {
+   "frames30": 3.6,
+   "steepest30": 0.315,
+   "steepest60": 0.158
+  },
+  "150ms": {
+   "frames30": 4.5,
+   "steepest30": 0.253,
+   "steepest60": 0.127
+  },
+  "180ms": {
+   "frames30": 5.4,
+   "steepest30": 0.211,
+   "steepest60": 0.106
+  },
+  "190ms": {
+   "frames30": 5.7,
+   "steepest30": 0.2,
+   "steepest60": 0.1
+  },
+  "200ms": {
+   "frames30": 6,
+   "steepest30": 0.19,
+   "steepest60": 0.095
+  },
+  "222ms": {
+   "frames30": 6.7,
+   "steepest30": 0.171,
+   "steepest60": 0.086
+  }
+ },
+ "q22": {
+  "A_today": 3762720,
+  "B_veil_alone": 2962440,
+  "C_dim_only": 0,
+  "D_plate_alone": 800280,
+  "D_share_of_B": 0.27
+ },
+ "bytes": {
+  "usePresent.next.ts": {
+   "pass9": 345,
+   "pass8": 241
+  },
+  "useSheetScroll.next.ts": {
+   "pass9": 977,
+   "pass8": 430
+  },
+  "bud.next.css": {
+   "pass9": 241,
+   "pass8": 158,
+   "pass9_marginal": 163
+  },
+  "sheet-scroll.next.css": {
+   "pass9": 352,
+   "pass8": 277,
+   "pass9_marginal": 246
+  },
+  "dialog-veil.next.css": {
+   "pass9": 193,
+   "pass8": 115,
+   "pass9_marginal": 112
+  },
+  "useMenuTouchSlide.next.ts": {
+   "pass8": 377
+  }
+ },
+ "net_11_3_0": {
+  "note": "per site entry; script adds standalone gzip (upper bounds), CSS adds marginal in the built sheet; the slide loads on a menu's first touch, so an entry carries only its loader (about 60 B, estimated); exit readers in reveal.css not measured",
+  "entry_with_a_Dialog_or_side_Sheet": {
+   "adds": 680,
+   "removes": 901,
+   "net": -221
+  },
+  "entry_with_menus_only": {
+   "adds": 568,
+   "removes": 110,
+   "net": 458
+  }
+ }
+}

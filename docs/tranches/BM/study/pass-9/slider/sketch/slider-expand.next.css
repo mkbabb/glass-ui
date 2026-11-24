@@ -1,0 +1,82 @@
+/* BM pass 9 (choice 23 under O-426; DESIGN §12): the Slider's expanded view refined after the ChatGPT app, a design
+   sketch over BL's W-B.18 build (`bl/slider/proto` @ fe30f9882, src/components/slider/styles.css), not library source.
+   It replaces that build's disc rules (the `scale` of the thumb's ::before) and keeps everything else of R-10 to R-12:
+   the shell, its clocks, the dwell, the raise, the readout, the focus edge.
+
+   THE CONSTRUCTION (ChatGPT's, MEASURE §2.2): shell ⊃ band ⊃ knob, three capsules on one centre line, each end
+   concentric with the next. Held, the band itself grows, so the thing under the finger is larger, and the knob sits
+   inside the fill's end with a ring of the fill round it. One number sets it all: BL's outset g, never over the host
+   plate's padding (R-12), so every ring is a fraction of g:
+     · the shell, outset g from the band at rest (as built): ring g/2 round the grown band;
+     · the band (track and fill), outset g/2;
+     · the knob, outset g/4 from its rest disc, so it sits g/4 inside the grown fill's end.
+   md (H 20, g 8): shell 36, band 28, knob 24; ChatGPT: 68, 42, 34 (pass-9/slider/slider.json).
+
+   THE MECHANISM: every leg is a concentric outset of the band, so every frame between is the held picture with its
+   rings scaled, nested at every frame (no ring below 0):
+     · the track: its ground's outset is a `box-shadow` spread, 0 to g/2;
+     · the lane (the fill's window): its clip, from the band's capsule to the band's outset;
+     · the fill: its ink's outset, a `box-shadow` spread, 0 to g/2;
+     · the knob (the thumb's ::before; reka's node is never scaled, R-10): its outset, a spread, 0 to g/4, and in a
+       thumbless slider (O-408, the default) its opacity, 0 to 1, so the knob rises in the page's colour out of the
+       fill's cap. Thumbless at rest is therefore the knob at opacity 0, not the knob painted in the fill's colour;
+     · the shell: as built, its clip and its opacity.
+   All of the geometry is on the page's thread (WebKit composites none of clip-path or box-shadow), on one clock and one
+   curve, so under a busy page the picture can stall but never comes apart. The built A mixes threads: its disc's
+   `scale` runs on the compositor while its shell's clip waits on the page, so a stalled grow shows the disc up to g/2
+   outside the shell (derived, slider.json). The two fades may run ahead on the compositor; they move no edge.
+
+   The spectrum (a colour ramp, R-8) keeps the built view: its handle is a ring with no fill to nest in, and a ramp
+   cannot be drawn as a spread. A scrubber whose track a consumer paints with an image keeps its ring in the default
+   ground (asked of the sites, §12.7). */
+.glass-slider[data-expand]:not([data-variant="spectrum"]) {
+    --slider-band-out: calc(var(--slider-g) / 2);
+    --slider-knob-out: calc(var(--slider-g) / 4);
+    --slider-grow: var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay);
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-track {
+    box-shadow: 0 0 0 0 color-mix(in oklab, currentColor var(--slider-track-ink), oklch(0 0 0 / 0));
+    transition: background var(--duration-fast) var(--ease-standard), box-shadow var(--slider-grow);
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-lane {
+    overflow: visible;
+    clip-path: inset(0 round var(--slider-radius));
+    transition: translate var(--slider-step-duration) var(--spring-press), clip-path var(--slider-grow);
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-range {
+    box-shadow: 0 0 0 0 var(--slider-range-bg, var(--slider-fill-ink));
+    transition: translate var(--slider-step-duration) var(--spring-press), box-shadow var(--slider-grow);
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-thumb::before {
+    box-shadow: 0 0 0 0 var(--slider-thumb-bg, var(--background)), var(--shadow-sm);
+    transition: box-shadow var(--slider-grow), opacity var(--slider-grow-duration) var(--ease-standard) var(--slider-grow-delay);
+}
+.glass-slider[data-thumbless] .slider-thumb::before {
+    opacity: 0;
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]):is([data-held], [data-focus-key], [data-hover]) .slider-track {
+    box-shadow: 0 0 0 var(--slider-band-out) color-mix(in oklab, currentColor var(--slider-track-ink), oklch(0 0 0 / 0));
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]):is([data-held], [data-focus-key], [data-hover]) .slider-lane {
+    clip-path: inset(calc(-1 * var(--slider-band-out)) round calc(var(--slider-radius) + var(--slider-band-out)));
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]):is([data-held], [data-focus-key], [data-hover]) .slider-range {
+    box-shadow: 0 0 0 var(--slider-band-out) var(--slider-range-bg, var(--slider-fill-ink));
+}
+.glass-slider[data-expand]:not([data-variant="spectrum"]):is([data-held], [data-focus-key], [data-hover]) .slider-thumb::before {
+    box-shadow: 0 0 0 var(--slider-knob-out) var(--slider-thumb-bg, var(--background)), var(--shadow-sm);
+    opacity: 1;
+}
+/* Reduce Motion: nothing grows. The shell fades in at its full size (as built) and the knob fades in at its rest size,
+   so the held view is the shell round the band with the knob at the fill's end. A fade, never a cut (choice 8 A). */
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider[data-expand]:not([data-variant="spectrum"]) :is(.slider-track, .slider-range) { box-shadow: none !important; }
+    .glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-lane { clip-path: inset(0 round var(--slider-radius)) !important; }
+    .glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-thumb::before { box-shadow: var(--shadow-sm) !important; }
+}
+/* Forced colours: the band does not grow; the shell and the knob carry the view in system ink (R-11's rules). */
+@media (forced-colors: active) {
+    .glass-slider[data-expand] :is(.slider-track, .slider-range, .slider-thumb::before) { box-shadow: none !important; }
+    .glass-slider[data-expand] .slider-lane { clip-path: none !important; overflow: hidden; }
+    .glass-slider[data-thumbless][data-expand]:is([data-held], [data-focus-key], [data-hover]) .slider-thumb::before { opacity: 1; }
+}

@@ -44,7 +44,7 @@ const FAMILIES = [
     ["other", "a demo stage's clip around an F3 part, with no breaker recorded under it", () => true],
 ];
 
-const files = readdirSync(dir).filter((f) => /^(base|cure[234]?)\.(chromium|webkit)\..+\.json$/.test(f));
+const files = readdirSync(dir).filter((f) => /^(base|cure[2345]?)\.(chromium|webkit)\..+\.json$/.test(f));
 const rows = new Map();
 function put(fam, tag, engine, cell, cls, route, step, excess, el, br) {
     const k = `${fam}|${tag}|${engine}|${cell}`;

@@ -1,0 +1,40 @@
+/* BM pass 7 (F7, "faster, less fade"; DESIGN §9.4), amended in pass 8 by the fold of pass 7's critiques (A7-5, A7-6,
+   B7-9). A design sketch, not library source.
+   The plate is §6.3's window (wi8's `.dock-plate`, its glass on ::before). The controls' own element becomes a second
+   window for the length of the change only (`data-morphing`, set and cleared once per change): it is the plate's shape
+   grown by a focus ring's reach (a 3 px ring at a 2 px offset, 5 px on every side), so a ring at an end seat is never
+   cut, and nothing clips at rest. Its one child, the seats' row, stands still by the counter-translate, and the glass's
+   edge cuts each seat as it passes; no seat fades but the first.
+   The folded rest: in the frame the clip lifts, the row takes `visibility: hidden` and `inert` (every seat outside the
+   disc is already cut away, so nothing visible changes); opening, the clip goes on and the row shows in one frame before
+   the first moved frame (A7-6, B7-9).
+   The trade at the disc follows P0a rule 4 (A7-5): the leaving glyph falls to 0 over 90 ms, the arriving one starts when
+   the leaving is at half (45 ms) and rises over 120 ms, both on a symmetric ease; neither is above half while the other
+   shows, and neither lands more than 0.30 of its travel in one 60 Hz frame (pass-8/fold/fold.json, `trade`). Folding it
+   starts when the fold is half done; opening, at once.
+   A region that rides the plate's end (`#persistent-end`, W-I.8.md:58) sits outside the controls' window and rides the
+   plate's edge by its own `translate`: one more leg. Per change: the plate's two translates, the row's two, the trade's
+   two opacities, and the end region's one. */
+.dock > .dock-controls {
+    translate: calc(-1 * var(--from, 0px)) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.dock[data-morphing] > .dock-controls {
+    margin: -5px;
+    padding: 5px;
+    border-radius: calc(infinity * 1px);
+    overflow: clip;
+}
+.dock > .dock-controls > .dock-row {
+    translate: var(--from, 0px) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.dock[data-folded]:not([data-morphing]) .dock-row { visibility: hidden; }
+.dock-row > :first-child { transition: opacity 90ms cubic-bezier(0.4, 0, 0.6, 1) var(--trade-delay, 0s); }
+.dock-folded-glyph { transition: opacity 120ms cubic-bezier(0.4, 0, 0.6, 1) calc(var(--trade-delay, 0s) + 45ms); }
+.dock[data-folded] .dock-row > :first-child { transition-delay: var(--trade-delay, 0s); }
+.dock:not([data-folded]) .dock-folded-glyph { transition-duration: 90ms; transition-delay: 0s; }
+.dock:not([data-folded]) .dock-row > :first-child { transition-duration: 120ms; transition-delay: 45ms; }
+.dock[data-folded] .dock-row > :first-child,
+.dock:not([data-folded]) .dock-folded-glyph { opacity: 0; }
+.dock-persistent-end { translate: calc(-1 * var(--from, 0px)) 0; transition: translate var(--spring-dock-duration) var(--spring-dock); }

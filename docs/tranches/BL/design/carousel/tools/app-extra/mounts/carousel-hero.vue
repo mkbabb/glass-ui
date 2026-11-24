@@ -3,7 +3,7 @@
 // dashboards/home/hero/HeroStage.vue) rebuilt on this tree's own Carousel, so the
 // carousel's own cost can be read apart from its content's.
 //
-//   ?c=carousel-hero&content=none|webp|svg|canvas[&live=always|active|moving|slot][&link=1]
+//   ?c=carousel-hero&content=none|webp|svg|canvas[&live=always|active|moving|slot][&link=1][&start=k]
 //
 // Same shape as atlas's stage: Carousel projection="travel", v-model:active shared
 // with PagerDots, a 2rem gutter, a static pill GlassDock holding previous, the dots
@@ -19,6 +19,7 @@
 // its `moving` does not (all eight mounted). live=slot adds the page's own near window
 // (carousel-near.vue): a figure exists only near where the strip last rested.
 // link=1 wraps each slide in a link, as atlas's previews are (the keyboard route).
+// start=k mounts the Carousel with v-model:active already k (the start cell).
 import { ref } from "vue";
 import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
@@ -54,7 +55,7 @@ const slides = Array.from({ length: N }, (_, i) => ({
     hue: 20 + i * 40,
     src: urls.length ? urls[i % urls.length] : "",
 }));
-const active = ref(0);
+const active = ref(Math.max(0, Math.trunc(Number(q.get("start") ?? 0)) || 0));
 (window as unknown as { __heroInfo: unknown }).__heroInfo = { content, live, link, N, images: urls.length, bare, projection };
 </script>
 

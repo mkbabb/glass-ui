@@ -1,0 +1,47 @@
+/* BM pass 10 (DESIGN §7.4; choice 24 C under O-426; folds A9-8, A9-12, B9-3, B9-4). The goo's sketch with pass 9's
+   switching times written in. It supersedes `pass-8/fold/sketch/goo.next.css` on two points, the times the filter turns
+   on and off and the guard; the layer, the matrix and the region are pass 8's, unchanged. A design sketch, not library
+   source.
+
+   WHEN THE FILTER IS ON (`data-fusing` on the layer, written by the dock's motion at most once per change):
+   - Close (the seat joins the dock): set on the frame the close starts, so the first moving frame is already filtered.
+     It stays set through the folded rest. A folded dock is therefore filtered at rest: its disc and the dock are one
+     union, and no swap lands on a still frame.
+   - Open (the seat parts): cleared on the first frame whose gap reaches 6 px, a pixel past the neck's pinch at 5. On
+     the dock row that is 200 ms in, a frame that moves the seat 5.0 px at 60 Hz and 12.0 px at 30 Hz
+     (`pass-9/goo/swap.json`). From there the plates are the 12.0.0 chrome, translucent, with their own shadow.
+   - A reversal mid-change keeps the attribute as it is and retargets the motion. Under Reduce Motion the fold is the
+     dip (choice 8 A) and the attribute is never set.
+   - What a fold shows: on the dock row's close the gap goes 8 → 5.02 → −1.73 px at 60 Hz and 8 → −1.73 at 30 Hz, so no
+     drawn frame has a neck; the plates meet with filleted corners. An open draws the neck on 3 frames at 60 Hz, 1 at 30.
+
+   NO SECOND PATH. The goo is an option of the 12.0.0 register alone. It holds only on a dock that samples nothing:
+   W-R.1 moves `--dock-surface-blur` to the zero rung and writes the dock's `backdrop-filter: none` (§3.9's two
+   conditions; tranche gate G-6). The development warning and the split without the filter are gone. If the gate is not
+   met, the goo does not ship, and no dock draws a substitute.
+
+   COST, UNMEASURED. While the attribute is set WebKit paints the layer on the CPU on each repaint: the σ 4 blur and the
+   threshold, then the drop-shadow's own blur, two blurs over 320 × 76 CSS px (218,880 device px at DPR 3). The time per
+   frame on a phone, in Low Power Mode, under a page scroll with the dock folded, and in Home Assistant's WKWebView is a
+   fact check owed to Safari's Web Inspector (Timelines and Layers), DESIGN §15.
+
+   The filter's markup, once per document, unchanged:
+   <svg width="0" height="0" aria-hidden="true"><filter id="glass-fuse" x="0" y="0" width="1" height="1"
+   color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="4"/><feColorMatrix type="matrix"
+   values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9.5"/></filter></svg> */
+.dock-plates {
+    position: absolute;
+    inset-block: -12px;
+    inset-inline: -12px calc(-12px - var(--dock-seat-gap, 0.5rem) - var(--dock-seat-size));
+    pointer-events: none;
+}
+.dock-plates[data-fusing] {
+    opacity: var(--glass-alpha);
+    filter: url(#glass-fuse) drop-shadow(var(--dock-drop-shadow-over-alpha));
+}
+.dock-plates[data-fusing] > * {
+    --glass-plate: var(--glass-plate-solid);
+    box-shadow: none;
+}
+/* Folded and filtered at rest, the seat's plate is part of the union; the seat's glyph and control fold away on their
+   own legs outside the layer (pass 8). */

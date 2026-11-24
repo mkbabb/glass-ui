@@ -1,0 +1,347 @@
+{
+ "method": "pass-10/access/frames.mjs; cubic-bezier evaluated at each frame boundary, the drawn step per frame",
+ "rows": [
+  {
+   "leg": "slider: the ground grows (press, Tab)",
+   "ms": 200,
+   "curve": "present",
+   "thread": "page thread (clip-path)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: the ground grows by g/2 (hover, after a 120 ms dwell)",
+   "ms": 200,
+   "curve": "present",
+   "thread": "page thread (clip-path)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: the ground returns (press, Tab, hover)",
+   "ms": 200,
+   "curve": "present",
+   "thread": "page thread (clip-path)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: a knob grows (press, Tab)",
+   "ms": 200,
+   "curve": "present",
+   "thread": "compositor (scale)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: the readout enters, opacity",
+   "ms": 200,
+   "curve": "standard",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.221
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.372
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: the readout enters, scale 0.9 → 1",
+   "ms": 200,
+   "curve": "present",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "slider: the readout leaves, opacity",
+   "ms": 120,
+   "curve": "standard",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 8,
+    "maxStepShare": 0.339
+   },
+   "hz30": {
+    "frames": 4,
+    "maxStepShare": 0.53
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": false
+   }
+  },
+  {
+   "leg": "slider: the focus ring fades",
+   "ms": 200,
+   "curve": "standard",
+   "thread": "page thread (outline-color)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.221
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.372
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "toggle: the rays draw in",
+   "ms": 200,
+   "curve": "present",
+   "thread": "page thread (SVG child)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "toggle: the night slides",
+   "ms": 200,
+   "curve": "present",
+   "thread": "page thread (SVG child)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "toggle: the colour, amber to indigo and back",
+   "ms": 200,
+   "curve": "standard",
+   "thread": "page thread (color)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.221
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.372
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "toggle, Reduce Motion: the crossfade",
+   "ms": 200,
+   "curve": "standard",
+   "thread": "page thread (SVG child)",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.221
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.372
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "plate: hover fade",
+   "ms": 120,
+   "curve": "standard",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 8,
+    "maxStepShare": 0.339
+   },
+   "hz30": {
+    "frames": 4,
+    "maxStepShare": 0.53
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": false
+   }
+  },
+  {
+   "leg": "plate: grows from 0.8",
+   "ms": 200,
+   "curve": "present",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 12,
+    "maxStepShare": 0.189
+   },
+   "hz30": {
+    "frames": 6,
+    "maxStepShare": 0.323
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  },
+  {
+   "leg": "press: the shrink to 0.97 and back, each way",
+   "ms": 120,
+   "curve": "press",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 8,
+    "maxStepShare": 0.232
+   },
+   "hz30": {
+    "frames": 4,
+    "maxStepShare": 0.378
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": false
+   }
+  },
+  {
+   "leg": "every exit: the fade (--exit-curve = --ease-out)",
+   "ms": 120,
+   "curve": "out",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 8,
+    "maxStepShare": 0.388
+   },
+   "hz30": {
+    "frames": 4,
+    "maxStepShare": 0.616
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": false
+   }
+  },
+  {
+   "leg": "Reduce Motion: the dip, each half",
+   "ms": 100,
+   "curve": "standard",
+   "thread": "compositor",
+   "hz60": {
+    "frames": 6,
+    "maxStepShare": 0.372
+   },
+   "hz30": {
+    "frames": 3,
+    "maxStepShare": 0.464
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": false
+   }
+  },
+  {
+   "leg": "Reduce Motion: a length's tween",
+   "ms": 150,
+   "curve": "out",
+   "thread": "compositor or page",
+   "hz60": {
+    "frames": 9,
+    "maxStepShare": 0.329
+   },
+   "hz30": {
+    "frames": 5,
+    "maxStepShare": 0.536
+   },
+   "law7": {
+    "stepAt60UnderTwoFifths": true,
+    "atLeast83ms": true,
+    "fiveFramesAt30": true
+   }
+  }
+ ]
+}

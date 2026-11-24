@@ -10,7 +10,10 @@
 // A deliberate horizontal strip (a carousel, a dock run, a tab strip, a table, a code
 // block, anything with `touch-action: pan-x` or `scroll-snap-type: x`, and whatever you
 // pass with --strip) may scroll sideways by a horizontal swipe. It is still checked under
-// vertical swipes.
+// vertical swipes, and a strip that shows all of its content and still has a sideways
+// range (a dock run whose seats all show and pans a few pixels) is a fault (b). A child
+// that hands its padding back by negative margins (a full-bleed row, `-mx-4 px-4`) is read
+// by its margin box: when that fits, its padding reaching past the box is no fault (a).
 //
 // Run it from a project that has Playwright installed, through the machine guard:
 //   ~/.claude/guard/guarded --timeout 30 -- node check-overflow.mjs \
@@ -21,7 +24,13 @@
 // Options:
 //   --url <u>        a page to read (repeat for more)
 //   --click <sel>    after load, tap or click each element matching <sel> in turn and read
-//                    the page again with it open (repeat; Escape closes it between clicks)
+//                    the page again with it open (repeat; Escape closes it between clicks).
+//                    A selector that finds nothing it can click on a page is an error: that
+//                    page was not read open, so the run exits 2.
+//   --then <sel>     after the --click before it, tap or click the first visible element
+//                    matching <sel> that follows the last one clicked (repeat for more steps):
+//                    a gear that opens a menu, then the item in it. A step that finds
+//                    nothing is an error, as for --click.
 //   --strip <sel>    a box of yours that is meant to scroll sideways (repeat)
 //   --cells <list>   390t-light (390x844, touch, scale 2), 390t-dark, 1440-light,
 //                    1440-dark; any WxH or W with a t for touch; default 390t-light,1440-light
@@ -29,7 +38,8 @@
 //                    has no touch-move input, so (b) runs in Chromium only.
 //   --settle <ms>    wait after load and after each click (default 1200)
 //   --json <file>    also write every reading as JSON
-// Exit status: 0 when every page reads clean, 1 when any fault is found, 2 on a usage error.
+// Exit status: 0 when every page reads clean, 1 when any fault is found, 2 on a usage error
+// or when a --click selector found nothing to click on a page.
 // One browser per run, one context per cell, a page per URL; all closed when it ends.
 import { createRequire } from "node:module";
 import { writeFileSync } from "node:fs";
@@ -39,14 +49,20 @@ const argv = process.argv.slice(2);
 const many = (name) => argv.flatMap((v, i) => (v === `--${name}` && argv[i + 1] ? [argv[i + 1]] : []));
 const one = (name, dflt) => many(name).at(-1) ?? dflt;
 const URLS = many("url");
-const CLICKS = many("click");
+// Each --click starts an opening; each --then adds a step to the one before it.
+const CLICKS = [];
+let orphan = false;
+argv.forEach((v, i) => {
+    if (v === "--click" && argv[i + 1]) CLICKS.push([argv[i + 1]]);
+    if (v === "--then" && argv[i + 1]) CLICKS.length ? CLICKS.at(-1).push(argv[i + 1]) : (orphan = true);
+});
 const STRIPS = many("strip");
 const ENGINE = one("engine", "chromium");
 const SETTLE = +one("settle", 1200);
 const CELLS = one("cells", "390t-light,1440-light").split(",");
 const JSON_OUT = one("json", null);
-if (!URLS.length || !["chromium", "webkit"].includes(ENGINE)) {
-    console.error("usage: node check-overflow.mjs --url <page> [--url ...] [--click <sel>] [--strip <sel>] [--cells 390t-light,1440-light] [--engine chromium|webkit] [--json out.json]");
+if (!URLS.length || orphan || !["chromium", "webkit"].includes(ENGINE)) {
+    console.error("usage: node check-overflow.mjs --url <page> [--url ...] [--click <sel> [--then <sel> ...]] [--strip <sel>] [--cells 390t-light,1440-light] [--engine chromium|webkit] [--json out.json]");
     process.exit(2);
 }
 // Playwright comes from the project you run this in (the current directory).
@@ -97,6 +113,16 @@ function inPage(strips) {
         if (cs.touchAction === "pan-x") return "pan-x";
         return null;
     };
+    // Whether any of a box's content lies past its padding box at its current scroll.
+    const hides = (box) => {
+        const r = box.getBoundingClientRect();
+        const left = r.left + box.clientLeft;
+        const right = left + box.clientWidth;
+        const g = document.createRange();
+        g.selectNodeContents(box);
+        for (const q of g.getClientRects()) if (q.width > 0 && (q.left < left - 0.5 || q.right > right + 0.5)) return true;
+        return false;
+    };
     const shown = (el, cs) => cs.display !== "none" && cs.visibility !== "hidden" && (el.getBoundingClientRect().width > 0 || el.getBoundingClientRect().height > 0);
     const field = (el) => el.matches("input, textarea, select, [contenteditable=''], [contenteditable=true]");
     // The children that run past a box's padding edge while their own parent does not.
@@ -123,9 +149,14 @@ function inPage(strips) {
             const pr = { left: pq.left + sl, right: pq.right + sl, width: pq.width };
             const over = Math.max(r.right - right, left - r.left);
             const parentIn = n.parentElement === box || (pr.right <= right + 0.5 && pr.left >= left - 0.5);
-            if (over > 0.5 && parentIn) hits.push({ node: n, el: path(n, 3), text: text(n), over: r1(over), width: r1(r.width), parentWidth: r1(pr.width) });
+            // A child that hands its own padding back by negative margins (a full-bleed
+            // row, a scroller whose clip reaches past its slot) takes only its margin box.
+            const ncs = getComputedStyle(n);
+            const inMargin = Math.max(r.right + parseFloat(ncs.marginRight) - right, left - (r.left - parseFloat(ncs.marginLeft))) <= 0.5;
+            if (over > 0.5 && parentIn) hits.push({ node: n, el: path(n, 3), text: text(n), over: r1(over), width: r1(r.width), parentWidth: r1(pr.width), inMargin });
         }
-        return hits.sort((a, b) => b.over - a.over).slice(0, 4);
+        hits.sort((a, b) => b.over - a.over);
+        return { hits: hits.slice(0, 4), handedBack: hits.length > 0 && hits.every((h) => h.inMargin) };
     };
     function measure() {
         const vw = innerWidth;
@@ -143,10 +174,23 @@ function inPage(strips) {
             const scroller = ox === "auto" || ox === "scroll";
             if (scroller && el.scrollWidth > el.clientWidth + 1) out.scrollers.push({ key: key(el), el: path(el), strip: strip(el, cs), sw: el.scrollWidth, cw: el.clientWidth });
             if (el.clientWidth > 0 && el.scrollWidth >= el.clientWidth + 2 && !field(el)) {
-                const ellipsis = cs.textOverflow === "ellipsis" && (ox === "hidden" || ox === "clip");
+                // A cut that ends in an ellipsis: `text-overflow`, or a line clamp that cut
+                // lines, which paints its own. A clamped line that runs past its box with no
+                // line under it (one word that cannot break) is cut with no ellipsis.
+                const clamp = cs.webkitLineClamp && cs.webkitLineClamp !== "none" && el.scrollHeight > el.clientHeight + 1;
+                const ellipsis = (cs.textOverflow === "ellipsis" || clamp) && (ox === "hidden" || ox === "clip");
+                if (scroller && strip(el, cs) && !hides(el)) {
+                    out.boxes.push({ node: el, key: key(el), kind: "idle strip", el: path(el), text: text(el), excess: el.scrollWidth - el.clientWidth, sw: el.scrollWidth, cw: el.clientWidth, past: [] });
+                    continue;
+                }
                 if (ellipsis || (scroller && strip(el, cs))) continue;
                 const kind = scroller ? "scroller" : ox === "visible" && !/paint|strict|content/.test(cs.contain) ? "spill" : "clipped";
-                out.boxes.push({ node: el, key: key(el), kind, el: path(el), text: text(el), excess: el.scrollWidth - el.clientWidth, sw: el.scrollWidth, cw: el.clientWidth, past: past(el) });
+                const { hits, handedBack } = past(el);
+                // A box whose whole excess is such a child's handed-back padding is the
+                // right size: the child's layout fits it, and only its padding reaches out.
+                const excess = el.scrollWidth - el.clientWidth;
+                if (kind === "spill" && handedBack && excess <= Math.ceil(hits[0].over) + 1) continue;
+                out.boxes.push({ node: el, key: key(el), kind, el: path(el), text: text(el), excess, sw: el.scrollWidth, cw: el.clientWidth, past: hits });
             }
         }
         // A box that is too wide makes every box around it read too wide as well, up to
@@ -159,7 +203,7 @@ function inPage(strips) {
         });
         out.boxes = out.boxes
             .filter((b) => b.kind === "scroller" || !echo(b))
-            .map(({ node, past: hits, ...b }) => ({ ...b, past: hits.map(({ node: _n, ...h }) => h) }));
+            .map(({ node, past: hits, ...b }) => ({ ...b, past: hits.map(({ node: _n, inMargin: _m, ...h }) => h) }));
         return out;
     }
     function pointIn(k) {
@@ -199,7 +243,7 @@ async function swipe(cdp, x0, y0, x1, y1) {
 
 async function gestures(page, cdp, cell, scrollers) {
     const found = [];
-    for (const s of scrollers.slice(0, 8)) {
+    for (const s of scrollers) {
         const p = await page.evaluate((k) => window.__checkOverflow.pointIn(k), s.key);
         if (!p) continue;
         const tries = [["vertical", 0], ["vertical, 16 px drift", 16], ["vertical, 48 px drift", 48]];
@@ -231,7 +275,10 @@ async function read(page, cdp, cell, label) {
     const m = await page.evaluate(() => window.__checkOverflow.measure());
     const faults = [];
     if (m.docWidth > cell.viewport.width + 1 || m.pagePans > 0) faults.push({ class: "c", what: `the page is ${m.docWidth} px wide in a ${cell.viewport.width} px viewport${m.pagePans > 0 ? `, and pans ${m.pagePans} px` : ""}` });
-    for (const b of m.boxes) faults.push({ class: "a", what: `${b.kind} ${b.el}: ${b.sw}/${b.cw} (+${b.excess})`, past: b.past });
+    for (const b of m.boxes) {
+        if (b.kind === "idle strip") faults.push({ class: "b", what: `a strip that shows all its content still scrolls: ${b.el}: ${b.sw}/${b.cw} (+${b.excess})` });
+        else faults.push({ class: "a", what: `${b.kind} ${b.el}: ${b.sw}/${b.cw} (+${b.excess})`, past: b.past });
+    }
     if (cdp && cell.touch) for (const g of await gestures(page, cdp, cell, m.scrollers)) faults.push({ class: "b", what: `${g.gesture} swipe on ${g.on} panned ${g.moved.map((x) => `${x.key === "window" ? "the window" : "a box"} by ${x.by} px`).join(", ")}` });
     return { label, faults, scrollers: m.scrollers.map((s) => ({ el: s.el, strip: s.strip, sw: s.sw, cw: s.cw })) };
 }
@@ -240,6 +287,7 @@ const engine = playwright[ENGINE];
 const browser = await engine.launch({ headless: true });
 const report = { engine: ENGINE, version: browser.version(), pages: [] };
 let total = 0;
+let missed = 0;
 try {
     for (const cellName of CELLS) {
         const cell = cellOf(cellName);
@@ -262,20 +310,57 @@ try {
                     await page.goto(url, { waitUntil: "load", timeout: 30000 });
                     await sleep(SETTLE);
                     rec.readings.push(await read(page, cdp, cell, "as it loads"));
-                    for (const sel of CLICKS) {
-                        const handles = await page.$$(sel);
+                    // A tap or click, forced if the element will not settle; false if both fail.
+                    const press = async (h, sel) => {
+                        try {
+                            if (cell.touch) await h.tap({ timeout: 3000 });
+                            else await h.click({ timeout: 3000 });
+                            return true;
+                        } catch {
+                            return h.click({ force: true, timeout: 3000 }).then(
+                                () => true,
+                                (e) => (rec.errors.push(`${sel}: ${String(e).slice(0, 100)}`), false),
+                            );
+                        }
+                    };
+                    for (const [first, ...steps] of CLICKS) {
+                        const name = [first, ...steps].join(" then ");
+                        const handles = await page.$$(first);
+                        let clicked = 0;
                         for (const [i, h] of handles.entries()) {
                             if (!(await h.isVisible().catch(() => false))) continue;
-                            try {
-                                if (cell.touch) await h.tap({ timeout: 3000 });
-                                else await h.click({ timeout: 3000 });
-                            } catch {
-                                await h.click({ force: true, timeout: 3000 }).catch((e) => rec.errors.push(`${sel}: ${String(e).slice(0, 100)}`));
+                            if (!(await press(h, first))) continue;
+                            let last = h;
+                            let opened = true;
+                            for (const sel of steps) {
+                                await sleep(SETTLE / 2);
+                                // the first visible match after the element clicked last
+                                const next = (await page.evaluateHandle(([sel, last]) => {
+                                    const shown = (e) => {
+                                        const r = e.getBoundingClientRect();
+                                        return r.width > 0 && r.height > 0 && getComputedStyle(e).visibility !== "hidden" && !e.closest("[inert]");
+                                    };
+                                    const all = [...document.querySelectorAll(sel)].filter(shown);
+                                    return all.find((e) => last.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING) ?? all[0] ?? null;
+                                }, [sel, last])).asElement();
+                                if (!next || !(await press(next, sel))) {
+                                    rec.errors.push(`--then '${sel}' found nothing to click after '${first}' #${i + 1}`);
+                                    opened = false;
+                                    break;
+                                }
+                                last = next;
                             }
-                            await sleep(SETTLE);
-                            rec.readings.push(await read(page, cdp, cell, `${sel} #${i + 1} open`));
+                            if (opened) {
+                                clicked++;
+                                await sleep(SETTLE);
+                                rec.readings.push(await read(page, cdp, cell, `${name} #${i + 1} open`));
+                            }
                             for (let k = 0; k < 2; k++) await page.keyboard.press("Escape").catch(() => {});
                             await sleep(500);
+                        }
+                        if (!clicked) {
+                            missed++;
+                            rec.errors.push(`--click '${name}' opened nothing (${handles.length} match${handles.length === 1 ? "" : "es"} for '${first}'): the page was not read open`);
                         }
                     }
                 } catch (e) {
@@ -305,4 +390,5 @@ try {
 }
 if (JSON_OUT) writeFileSync(JSON_OUT, JSON.stringify(report, null, 1));
 console.log(`\n${total} fault reading${total === 1 ? "" : "s"} on ${report.pages.length} page reading${report.pages.length === 1 ? "" : "s"} (${ENGINE} ${report.version}${ENGINE === "webkit" ? ", Playwright's WebKit, not Safari" : ""}).`);
-process.exit(total ? 1 : 0);
+if (missed) console.log(`${missed} --click reading${missed === 1 ? "" : "s"} found nothing to click, so the run is incomplete.`);
+process.exit(missed ? 2 : total ? 1 : 0);

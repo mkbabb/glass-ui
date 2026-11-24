@@ -1,0 +1,238 @@
+{
+ "method": "pass-8/bud/bud.mjs: closed-form springs, the exit curve sampled, geometry, and standalone gzip -9 of minified bundles or comment-stripped CSS (upper bounds)",
+ "entry": {
+  "present": {
+   "response": 0.22,
+   "damping": 1,
+   "to90_ms": 136,
+   "to98_ms": 205,
+   "overshoot_pct": 0,
+   "band2_ms": 204
+  },
+  "bloom": {
+   "response": 0.42,
+   "damping": 0.9,
+   "to90_ms": 228,
+   "to98_ms": 314,
+   "overshoot_pct": 0.15,
+   "band2_ms": 314
+  },
+  "panel": {
+   "response": 0.4,
+   "damping": 0.71,
+   "to90_ms": 170,
+   "to98_ms": 202,
+   "overshoot_pct": 4.21,
+   "band2_ms": 379
+  },
+  "dock": {
+   "response": 0.3,
+   "damping": 0.88,
+   "to90_ms": 159,
+   "to98_ms": 215,
+   "overshoot_pct": 0.3,
+   "band2_ms": 214
+  },
+  "apple_menu_sim": {
+   "response": 0.341,
+   "damping": 0.758,
+   "to90_ms": 154,
+   "to98_ms": 188,
+   "overshoot_pct": 2.6,
+   "band2_ms": 307
+  }
+ },
+ "exits_11_1_1": {
+  "press": 120,
+  "present": 120,
+  "dock": 126,
+  "panel": 250,
+  "bloom": 222,
+  "world": 250
+ },
+ "exits_11_1_1_by_surface": {
+  "menu_and_select": "bloom exit, 222 ms (the menu's clip grows on bloom, reveal.css:120-122)",
+  "popover_toast_dialog_default": "panel exit, 250 ms (--exit-overlay-duration, motion-registers.css:147)",
+  "tooltip": "present exit, 120 ms (reveal.css:134-136)"
+ },
+ "exitClocks": [
+  {
+   "ms": 100,
+   "frames60": 6,
+   "frames30": 3,
+   "maxShare60": 0.19,
+   "maxShare30": 0.376,
+   "withinFifth60": true,
+   "inP0aOutRow": true,
+   "inHA": true
+  },
+  {
+   "ms": 110,
+   "frames60": 6.6,
+   "frames30": 3.3,
+   "maxShare60": 0.173,
+   "maxShare30": 0.343,
+   "withinFifth60": true,
+   "inP0aOutRow": true,
+   "inHA": true
+  },
+  {
+   "ms": 120,
+   "frames60": 7.2,
+   "frames30": 3.6,
+   "maxShare60": 0.158,
+   "maxShare30": 0.315,
+   "withinFifth60": true,
+   "inP0aOutRow": true,
+   "inHA": true
+  },
+  {
+   "ms": 150,
+   "frames60": 9,
+   "frames30": 4.5,
+   "maxShare60": 0.127,
+   "maxShare30": 0.253,
+   "withinFifth60": true,
+   "inP0aOutRow": false,
+   "inHA": true
+  },
+  {
+   "ms": 180,
+   "frames60": 10.8,
+   "frames30": 5.4,
+   "maxShare60": 0.106,
+   "maxShare30": 0.211,
+   "withinFifth60": true,
+   "inP0aOutRow": false,
+   "inHA": false
+  },
+  {
+   "ms": 222,
+   "frames60": 13.3,
+   "frames30": 6.7,
+   "maxShare60": 0.086,
+   "maxShare30": 0.171,
+   "withinFifth60": true,
+   "inP0aOutRow": false,
+   "inHA": false
+  },
+  {
+   "ms": 250,
+   "frames60": 15,
+   "frames30": 7.5,
+   "maxShare60": 0.076,
+   "maxShare30": 0.152,
+   "withinFifth60": true,
+   "inP0aOutRow": false,
+   "inHA": false
+  }
+ ],
+ "weightClock": {
+  "grow148px_ms": 296,
+  "grow100px_ms": 254,
+  "grow240px_ms": 379,
+  "note": "linear between P0a's two points; a box that resizes"
+ },
+ "birth": {
+  "D_from_seat_box": {
+   "frame0_px2_over_dock": 1936,
+   "note": "the first window is the seat's box, wholly inside the dock's plate"
+  },
+  "D_from_dock_edge": {
+   "frame0_px2_over_dock": 0,
+   "note": "the first window is the seat's width, starting 4 px (reka's sideOffset) past the dock's outer edge"
+  },
+  "grow_C": {
+   "frame0_px2_over_dock": 0,
+   "note": "the strip is the panel's own edge facing the trigger, sideOffset past the anchor"
+  },
+  "fade_E": {
+   "frame0_px2_over_dock": 0,
+   "note": "the panel at 0.96 about its edge facing the trigger, sideOffset past the anchor"
+  }
+ },
+ "counts": {
+  "rule": "running at once on one press (restraint.md, the ceiling: 2); the trigger's held fill waits for the panel to land",
+  "grow_C": {
+   "press": [
+    "the seat plate's press tone"
+   ],
+   "open": [
+    "the panel's clip"
+   ],
+   "after": [
+    "the seat's held fill"
+   ],
+   "maxAtOnce": 1,
+   "propsPerNode": 1
+  },
+  "fade_E": {
+   "press": [
+    "the seat plate's press tone"
+   ],
+   "open": [
+    "the panel's opacity",
+    "the panel's scale"
+   ],
+   "after": [
+    "the seat's held fill"
+   ],
+   "maxAtOnce": 2,
+   "propsPerNode": 2
+  },
+  "windows_D": {
+   "press": [
+    "the seat plate's press tone"
+   ],
+   "open": [
+    "three windows' translate",
+    "the plate's translate"
+   ],
+   "after": [
+    "the seat's held fill"
+   ],
+   "maxAtOnce": 4,
+   "propsPerNode": 1
+  },
+  "exit": {
+   "any": [
+    "the panel's opacity, 120 ms",
+    "the seat's held fill, out"
+   ],
+   "maxAtOnce": 2
+  }
+ },
+ "q22": {
+  "A_today": {
+   "liveBlurs": 2,
+   "device_px": 3762720,
+   "note": "the veil's masked full-viewport backdrop-filter, and the dialog's plate over it"
+  },
+  "B_veil_alone": {
+   "liveBlurs": 1,
+   "device_px": 2962440,
+   "note": "the plate samples nothing over the veil"
+  },
+  "C_dim_only": {
+   "liveBlurs": 0,
+   "device_px": 0,
+   "note": "O-260 as written: the veil reads the floating rung, which goes to 0"
+  }
+ },
+ "bytes": {
+  "adds": {
+   "usePresent.next.ts": 241,
+   "useMenuTouchSlide.next.ts": 377,
+   "useSheetScroll.next.ts": 430,
+   "bud.next.css": 158,
+   "sheet-scroll.next.css": 277,
+   "dialog-veil.next.css": 115
+  },
+  "removes": {
+   "the presence hold: its declaration (11.1.1 reveal.css:207) and keyframe (animations.css:171-175)": 110,
+   "useSpringMount (pass 2, §4.7)": 791,
+   "the sheet's detent engine (sheet/detents/use.ts with projection.ts, master, bundled alone)": 1546
+  },
+  "note": "standalone gzip -9; upper bounds on both sides, so no net is claimed (pass 10 closes per entry)"
+ }
+}

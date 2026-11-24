@@ -1,0 +1,54 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/ps3-plain
+
+ ❯ tests/components/sheet/sheet-motion.test.ts (15 tests | 2 failed) 86ms
+     × is 0 at dismissal, so the scrim fades in and out on the sheet's travel 3ms
+     × ramps to the lowest rung above 0 when the ladder holds a rung at 0 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/sheet/sheet-motion.test.ts > scrimDetentOpacity (rung scalar → opacity) > is 0 at dismissal, so the scrim fades in and out on the sheet's travel
+AssertionError: expected 0.28 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 0.28
+
+ ❯ tests/components/sheet/sheet-motion.test.ts:85:47
+     83|
+     84|     it("is 0 at dismissal, so the scrim fades in and out on the sheet'…
+     85|         expect(scrimDetentOpacity(0, ladder)).toBe(0);
+       |                                               ^
+     86|         expect(scrimDetentOpacity(-0.02, ladder)).toBe(0);
+     87|         expect(scrimDetentOpacity(0.2, ladder)).toBeCloseTo((0.28 + 0.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/sheet/sheet-motion.test.ts > scrimDetentOpacity (rung scalar → opacity) > ramps to the lowest rung above 0 when the ladder holds a rung at 0
+AssertionError: expected 0.28 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 0.28
+
+ ❯ tests/components/sheet/sheet-motion.test.ts:97:52
+     95|
+     96|     it("ramps to the lowest rung above 0 when the ladder holds a rung …
+     97|         expect(scrimDetentOpacity(0, [0, 0.5, 1])).toBe(0);
+       |                                                    ^
+     98|         expect(scrimDetentOpacity(0.25, [0, 0.5, 1])).toBeCloseTo((0.2…
+     99|         expect(scrimDetentOpacity(0.5, [0, 0.5, 1])).toBeCloseTo(0.28 …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 13 passed (15)
+   Start at  22:26:42
+   Duration  1.20s (transform 440ms, setup 62ms, import 697ms, tests 86ms, environment 190ms)
+

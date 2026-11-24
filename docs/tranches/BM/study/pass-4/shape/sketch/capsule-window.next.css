@@ -1,0 +1,24 @@
+/* BM pass 4 (Q1): the capsule window, a design sketch, not library source. A capsule-shaped part (the dock, a
+   selection mark, a seat that splits off) changes its width on the compositor with exact ends: the part's own
+   element is a window of its widest capsule, its ::before is the glass at that same size, and the two move by
+   `translate` in opposite directions, so one end is the window's and the other the glass's. A capsule seen through
+   a capsule of the same height is a capsule at every width (pass-4/shape/geometry.json, F_window). No node is
+   added; one property per node; two animations per change. `--from` is how far the right end has travelled in from
+   the widest width (0 at rest). The delivery is DESIGN §4.3's rule 1 (a transition on the row's single curve) or
+   rule 2 (the settle player) when the change carries a speed. */
+.capsule-window {
+    --from: 0px;
+    border-radius: calc(infinity * 1px);
+    overflow: clip;
+    translate: calc(-1 * var(--from)) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}
+.capsule-window::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glass-plate);
+    translate: var(--from) 0;
+    transition: translate var(--spring-dock-duration) var(--spring-dock);
+}

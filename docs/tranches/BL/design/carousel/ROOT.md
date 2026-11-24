@@ -6,11 +6,13 @@ Engines, as in the record. **Chromium** is Playwright's headless shell 149.0.782
 
 **RED** is glass v11.1.0 (d19e12559). **GREEN** is v11.1.0 with the folded `cure.patch`. The first cure as written is kept where a cell shows what the fold changed (`witness/probe-green/`, and the `cure1` witness rows). Each was built from `git archive` into `trees/`, served on 5381 to 5384, and filmed with `tools/carousel-probe.mjs` and the record's inputs. The 1-minute load ran 26 to 46 during the folded Chromium films (the machine was shared).
 
+**The second fold** (`fold.md`, second section) moved `cure.patch` onto release/11.1.1 (ca61ce5b6). 11.1.1 changes no library file the cure touches, so the films on v11.1.0 stand for the library half. It added the stage's scroll-padding, the start value, the comment fixes and a unit test, and re-read what those touch on trees built from release/11.1.1 (§2.4).
+
 ## Verdict
 
 - **The platform's scroll-snap is sound, and the jitter is glass's own writes around it.** With the cure, every touch, wheel and pager cell in Chromium runs 0 reversals and rests 0 px off its snap point, and a held finger keeps the picture 1:1 (0.99 at 1440, 0.96 at 390): the bare strip's own numbers. In WebKit the wheel now carries the strip, with one snap-back left per wheel gesture whose cause is not named (§2.2).
 - **No fork between native snap and a pointer glide.** Native stays (§5).
-- **11.1.2** is `cure.patch`: five files, +167 −90 lines, 122 B gzip larger than v11.1.0 in a consumer build (§3). It fixes ten faults (§1), among them the Home View study's carousel defect (the dots and the slides disagree), a stale pitch after a resize, presses that animate under reduced motion, and an engine without `scrollend`.
+- **11.1.2** is `cure.patch` against release/11.1.1: seven library files (+188 −101), glass's own Carousel stage (+7 −3) and a unit test (+228), 123 B gzip larger than 11.1.1 in a consumer build (§3). It fixes ten faults (§1), among them the Home View study's carousel defect (the dots and the slides disagree), a stale pitch after a resize, presses that animate under reduced motion, and an engine without `scrollend`.
 - **The content lag goes by default, and bringing it back is the owner's call** (§1.3, question 1). It cannot return without a per-frame write, and WebKit drops the trackpad when anything is written per frame.
 - **11.3.0** gets one `moving` signal for heavy live members (`near-snap.patch`, +36 B, §4), the commit at the decision (§1.2), and the autoplay (CR-06). On the cure a consumer's own "run only while still" rule is already smooth (§4); `moving` makes that rule direct and right at the strip's end.
 - **Atlas** runs a glass line whose page turn causes its 150 to 350 px jumps (record §2.1). Its path onto the cure is §7: 11.1.2 takes the line's resize, rest and reduced-motion handling, and the spring turn for presses is question 2.
@@ -22,12 +24,12 @@ Lines are v11.1.0's. Paths are under `src/components/`.
 | # | Source | Cause | What it does | Cure (11.1.2) |
 |---|---|---|---|---|
 | 1 | **Commit echo** | `deck/composables/useDeckSnap.ts:167-170`: `watch(deck.index)` calls `scrollTo` on every index change, including the ones the strip itself committed (`:98-101`, reached from `:114-121` and `:127-139`) | Chromium: a smooth scroll lands mid-gesture, replaces the platform's snap curve, pulls the strip on under a held finger (carry ratio 1.29 at 1440, 1.36 at 390, against bare's 0.99 and 0.96), restarts the velocity (cause 3's lurch) and cuts programmatic jumps short (P-21a). WebKit: flat turns two slides on a 60 % wheel. Atlas's line: an instant seat fights the platform's snap animation, giving jumps of +315 px | `heading`: the arm remembers the member the strip is going to (the last it reported, or the last it was sent to). The watcher scrolls only when the index is somewhere else |
-| 2 | **Per-scroll writes on the scrolled content** | `carousel/CarouselContent.vue:50-75` writes `--member-scale` and `--member-lag` on every member on every scroll event; `carousel/styles.css:43` applies the scale to the member, which is the snap area (`:39`) | (a) Chromium measures a snap area on its transformed box: rests 18 px (1440) and 7 px (390) off, then creeps the last pixels in. (b) WebKit snaps a trackpad wheel back after each event when anything in the scrolled content is restyled per scroll (§2.2) | The travel scale becomes a scroll-driven animation on the **content** node: `animation-timeline: view(inline)`, `animation-range: exit -100% exit 100%`, 1 at the snap point and 0.965 one member away, inside `@supports (animation-timeline: view())` and `prefers-reduced-motion: no-preference`. Nothing is written per frame (BM DESIGN rule 4) |
+| 2 | **Per-scroll writes on the scrolled content** | `carousel/CarouselContent.vue:50-75` writes `--member-scale` and `--member-lag` on every member on every scroll event; `carousel/styles.css:43` applies the scale to the member, which is the snap area (`:39`) | (a) Chromium measures a snap area on its transformed box: rests 18 px (1440) and 7 px (390) off, then creeps the last pixels in. (b) WebKit snaps a trackpad wheel back after each event when anything in the scrolled content is restyled per scroll (§2.2) | The travel scale becomes a scroll-driven animation on the **content** node: `animation-timeline: view(inline)`, `animation-range: exit -100% exit 100%`, 1 at the snap point and 0.965 one member away, inside `@supports (animation-timeline: view())` and `prefers-reduced-motion: no-preference`. Nothing is written per frame (BM DESIGN rule 4). The view timeline's inset is the strip's `scroll-padding`, so a strip that offsets its members from its start (a padding, a centred snap) states that offset as `scroll-padding`; glass's own Carousel stage now does (§2.4) |
 | 3 | **Velocity lag** | `CarouselContent.vue:60,67`, `styles.css:54-60`; the velocity is a two-sample quotient on the main thread (`useDeckSnap.ts:103-112`) | The lag swings its whole 8 % ceiling in one frame. With causes 1 and 2 cured it still steps the content backwards through every settle: 20 reversals (37 px) in a 1440 swipe, 26 (54 px) in a flick (`witness/probe-green-lagkept`, still rows skipped) | Removed by default; §1.3 states the trade and question 1 asks the owner. The `memberLag` and `MEMBER_LAG_*` exports stay until 12.0.0 |
 | 4 | **Velocity never zeroed** | `useDeckSnap.ts:103-112`: only scroll events feed the velocity, so the last one stands at rest | The lag's content rested 9 px (Chromium) to 65 px (WebKit) off its housing (record §2.2); any reader of `deck.velocity` reads a speed at rest | `rest()` feeds the position with velocity 0 on `scrollend` |
 | 5 | **Double release** | `useDeckSnap.ts:157-162`: the hold is released on `scrollend` and again by a 900 ms timer | An earlier press's timer drops a later press's hold, and the observer commits the member being left: Previous pressed 800 to 900 ms after Next is undone (§2.3) | Release once, whichever comes first, and clear the timer |
 | 6 | **Reports dropped during a hold** (CR-09) | `useDeckSnap.ts:98-101`: a commit during a programmatic scroll is dropped, and the engine reports nothing more if the strip comes back to the member it last settled on | Next, then the page's own scroll back to member 0 within 60 ms: the strip rests on 0 with member 1 active | At the hold's end, if the strip rests somewhere other than where it was sent, commit the member whose own offset it rests on (`restingOn`) |
-| 7 | **The model is one-way** (the Home View study's defect; W-L.2 item 9) | `carousel/Carousel.vue:24` with `carousel/useCarousel.ts:35-43`: `active` is read once, at creation | A PagerDots bound to the same `v-model:active` moves its dot and not the strip: at 390 every press, at 1440 every dot | `watch(active, (to) => deck.go(to))`. `go` ignores the deck's own change coming back |
+| 7 | **The model is one-way** (the Home View study's defect; W-L.2 item 9) | `carousel/Carousel.vue:24` with `carousel/useCarousel.ts:35-43`: `active` is read once, at creation | A PagerDots bound to the same `v-model:active` moves its dot and not the strip: at 390 every press, at 1440 every dot | `watch(active, (to) => deck.go(to))`. `go` ignores the deck's own change coming back. The deck is made while the member count is 0, so it seats 0 whatever `active` says: a second watch takes `active` once, synchronously, when the members first arrive, before the strip is seated (§2.4, start) |
 | 8 | **A cached pitch** | `useDeckSnap.ts:146`: `scrollTo` goes to `index × extent`, and `extent` is measured only at mount and on a member-count change (`:171-174`, `:179`) | After a resize or a rotation a press goes to the old pitch's offset. Chromium, 1440 → 1000: the strip rests on member 3 with member 2 active (v11.1.0 and the first cure); 390 → 844: the first cure rests on member 1 with the dots on 3 | `scrollTo` and the reconcile read each member's own offset (`offsetOf`, clamped to the strip's end); a `ResizeObserver` re-measures the pitch the continuous channel divides by |
 | 9 | **Reduced motion ignored** (CR-08) | `useDeckSnap.ts:143`: `scrollTo` passes `behavior: "smooth"`, which overrides the stylesheet's `scroll-behavior: auto` under `reduce` (`styles.css:71-73`) | A press animates under reduced motion: 64 rows over 575 ms in Chromium (62 over 601 ms in the first cure) | Under reduced motion a press scrolls `instant`: it arrives in one frame |
 | 10 | **No `scrollend`** | Safari 26.0 and 26.1 do not fire it; v11.1.0's release falls to the 900 ms floor | The hold's reconcile never runs and the velocity is never zeroed: the held cell fails with the event removed, in both engines | Where the engine has no `scrollend`, 150 ms with no scroll event dispatches one on the strip, so `rest()` and the reconcile run as they do elsewhere |
@@ -40,6 +42,9 @@ Lines are v11.1.0's. Paths are under `src/components/`.
 - **Found, not cured here: focus falls out of the strip.** With a link in each slide (atlas's previews are anchors), Tab focuses slide 1's link, the first ArrowRight turns the strip, and the commit makes that slide `inert`, which drops focus to `body`; later presses do nothing. v11.1.0 and the cure alike, in Chromium (§2.3). With nothing focusable in the slides, Chromium focuses the strip itself and the arrows turn three slides. In WebKit, Tab reaches neither the strip nor a link (only the dock's buttons), so the arrows never reach the strip there. It predates the cure and is not jitter, so it is placed as a new row for the accessibility wave: keep focus in the strip when its slide goes inert.
 - **The fade half of O-327.** The neighbours' opacity still starts at the commit and ends about 60 ms after rest. It moves with the commit timing (§1.2).
 - **The `window` projection** switches the newly active member's scale from 0.965 to its timeline value in one frame at the commit, as v11.1.0 did in script. Unfilmed; no page in glass's `src` or `demo` uses `window`. With §1.2.
+- **A press just after a lift.** A Next press 60 or 150 ms after a swipe's lift (Chromium, hero, 1440) ends its smooth scroll 3 px short (`scrollend` at 2069 against 2072), and the snap then creeps the rest with 1 to 3 px back-steps. The reconcile commits the right member and the active member never steps back. This is the second critique's reading, not refilmed here, and it looks like the engine's snap, not glass.
+- **No stacking context under `projection="none"` or reduced motion.** v11.1.0's `.carousel-item` always carried `scale: var(--member-scale, 1)`, so every member was a stacking context and the containing block of a fixed-position child. The cure scales the content node, and only where the travel scale runs, so under `"none"` and under reduced motion a member is neither. It is kept: that containment was a side effect of the per-frame channel, glass's only CarouselItem page (the stage) depends on neither, and a rule that restores it would have no other job. The release note says so (§3). Unfilmed.
+- **A member with `overflow: hidden`** is a scroll container, so its content's view timeline reads the member, which never scrolls: every member reads 1.0 (§2.4, both engines). `overflow: clip` keeps the scale. No page in glass clips a member; the stylesheet comment says to use `clip`.
 
 ### 1.2 Commit timing (law 3), for 11.3.0
 
@@ -88,7 +93,7 @@ A reversal is a moving step (over 0.5 px) against the last moving step, still ro
 - **The settle is the platform's** (§1.3). GREEN's rest after a swipe is bare's to within 6 ms at both widths.
 - **Per-gesture style writes on the members** (hero): RED 223 to 854 → GREEN 0. The pager's own writes (about 200 a turn) are unchanged.
 - **The commit** comes where RED's did, within 14 ms: 360 ms into the swipe, 264 ms into the flick and 552 ms into the carry at 1440 (§1.2).
-- **The travel scale** (`tools/scale.mjs`, both engines, the first cure's CSS, unchanged by the fold): 0.965 / 1 / 0.965 at rest, within 0.0015 of v11.1.0 in flight. The view timeline ramps over the member's width rather than its pitch, which is the whole difference.
+- **The travel scale** (`tools/scale.mjs`, both engines, the first cure's CSS, unchanged by the fold): 0.965 / 1 / 0.965 at rest, within 0.0015 of v11.1.0 in flight. The view timeline ramps over the member's width rather than its pitch, which is the whole difference. That holds for members that rest at the strip's start; a strip that centres them is §2.4.
 
 ### 2.2 WebKit (Playwright 26.5, not Safari), RED → GREEN
 
@@ -163,20 +168,55 @@ One browser per run, a context per cell. RED is v11.1.0, cure 1 the first cure a
 
 The model cell is also the P-21a witness: a jump of two members lands on its target with `scroll-snap-stop: always` in place. After both resizes, both engines had already re-snapped the resting strip to its member (796 px and 876 px) before the press, so 11.1.2 re-measures and does not re-seat.
 
+### 2.4 The second fold, on release/11.1.1
+
+RED here is release/11.1.1 (ca61ce5b6), GREEN is 11.1.1 with this `cure.patch`, each from `git archive` into `trees/`, built with `tools/build-tree.sh`, served on 5381 and 5382.
+
+**The travel scale on a strip that centres its slides** (`tools/scale-stage.mjs`). The page is glass's own Carousel page (`?c=carousel`): 11.1.1's CarouselStage, slides 64cqi wide at 40rem and up (82cqi below), `scroll-snap-align: center`, the strip's `padding-inline` half of what a slide leaves. The strip is held at member 1 and at fractions of a pitch past it, snap off; members 0, 1 and 2 are read (the member's scale times its content's).
+
+| Chromium 149, GPU lane | at rest on member 1 (members 0 / 1 / 2) | member 1 leaving: +0.1 / +0.2 / +0.28 / +0.5 of a pitch |
+|---|---|---|
+| 11.1.1, 1440 and 390 | 0.965 / 1 / 0.965 | 0.9965 / 0.993 / 0.9902 / 0.9825 |
+| the cure without the stage's scroll-padding, 1440 | 0.9741 / 0.9901 / 0.965 | 0.9937 / 0.9973 / **0.9999** / 0.992 |
+| the same, 390 | 0.9675 / 0.9961 / 0.965 | **0.9998** / 0.9966 / 0.9937 / 0.9857 |
+| 11.1.2 (the stage states its offset as `scroll-padding-inline`), 1440 | 0.965 / 1 / 0.965 | 0.9964 / 0.9929 / 0.99 / 0.9821 |
+| the same, 390 | 0.965 / 1 / 0.965 | 0.9964 / 0.9928 / 0.9899 / 0.9819 |
+| 11.1.2 with every member `overflow: hidden`, both widths | 1 / 1 / 1 | 1 at every hold |
+| 11.1.2 with every member `overflow: clip`, both widths | as 11.1.2 | as 11.1.2 |
+
+WebKit 26.5 reads every row the same to the fourth decimal: 11.1.1 at 0.965 / 1 / 0.965; the cure without the line at 0.9741 / 0.9901 / 0.965 (1440) and 0.9675 / 0.9961 / 0.965 (390), member 1 swelling to 0.9999 at +0.28 (1440) and 0.9998 at +0.1 (390); 11.1.2 at 0.965 / 1 / 0.965; `hidden` at 1 everywhere; `clip` as 11.1.2.
+
+Without the scroll-padding the view range peaks where the content's start edge meets the strip's start edge, which on this stage is 28 % of a slide past rest at 1440 (18cqi of padding against a 64cqi slide) and 11 % at 390 (9cqi against 82cqi). So the slide at rest sits about 1 % small, and a leaving slide grows to full size before it shrinks. `view()`'s `auto` inset is the strip's `scroll-padding`; with it the peak is the snap point. A strip let go 30 % of a pitch past member 1 rests at one pitch (940 px at 1440, 330 at 390) in every variant, on 11.1.1 and on 11.1.2: symmetric scroll-padding leaves a centred snap where it was. The hero page (full-width members, start-aligned) reads 1 / 0.965 on both builds in both engines; in Chromium 11.1.1's hero rests 18 px (1440) and 7 px (390) past its snap point, cause 2's shortfall again, and in WebKit both builds rest on it.
+
+**The logic cells** (`tools/witness.mjs --cells model,start,reduce`, hero page):
+
+| cell | Chromium: 11.1.1 → 11.1.2 | WebKit: 11.1.1 → 11.1.2 |
+|---|---|---|
+| model 1440 / 390 | fails: the dot moves, the strip stays at 0 → **holds** (2072 / 844 px, member 2 active, dots on 3) | fails → **holds** (2072 / 844 px, member 2 active, dots on 3) |
+| start 1440 / 390 (`v-model:active` 2 at mount) | fails: the strip rests at 0 with member 0 active, the dots and the caption on 3 → **holds**: the first sampled frame is already at 2072 / 844 px, member 2 active | fails, as in Chromium → **holds**: the first sampled frame is already at 2072 / 844 px |
+| reduce 1440 | animates (59 offsets between, 104 → 596 ms) → **one frame** at 91 ms | animates (11 offsets between, 61 → 244 ms) → **one frame** at 73 ms |
+| reduce 390 | the dot does not move the strip (cause 7) → **one frame** at 44 ms | the dot does not move the strip → **one frame** at 137 ms |
+| `scrollend` after the instant press (11.1.2) | one, in the arriving frame (90 ms, 44 ms) | one, 12 ms (1440) and 18 ms (390) after the strip arrives |
+
+**The unit test** (`tests/components/deck/snap-travel.test.ts`, in the patch; happy-dom): nine tests, for `heading`, the press offset, the release-once, the reconcile, reduced motion, rest velocity 0, the idle floor, the inbound model and the start value. 9 of 9 pass on 11.1.2; 8 fail on 11.1.1 (the press offset passes, since its members are equal); on the cure without the start watch only the start test fails.
+
 ## 3. Bytes and code
 
-| | v11.1.0 | first cure | 11.1.2 (folded cure) | 11.3.0 (cure + `moving`) |
-|---|---|---|---|---|
-| a consumer build: the Carousel's chunks, minified, gzip -9 (`CarouselItem` js + css, `slideContext` js) | 1505 + 496 + 1458 = **3459 B** | 1174 + 580 + 1574 = 3328 B | 1175 + 580 + 1826 = **3581 B** (+122) | 1186 + 580 + 1851 = **3617 B** (+36 over the cure) |
-| lines changed | | +93 −71, five files | **+167 −90**, five files | +16 −6, four files |
+| | v11.1.0 and 11.1.1 | first cure | folded cure | 11.1.2 (second fold) | 11.3.0 (cure + `moving`) |
+|---|---|---|---|---|---|
+| a consumer build: the Carousel's chunks, minified, gzip -9 (`CarouselItem` js + css, `slideContext` js) | 1505 + 496 + 1458 = **3459 B** | 1174 + 580 + 1574 = 3328 B | 1175 + 580 + 1826 = 3581 B | 1176 + 580 + 1826 = **3582 B** (+123) | 1186 + 580 + 1851 = **3617 B** (+36 over the folded cure) |
+| lines changed | | +93 −71, five files | +167 −90, five files | **library +188 −101 in seven files; the stage +7 −3; the test +228** | +16 −6, four files |
 
-The cure moves the scale out of script: the per-frame `project()` and its two watchers are gone, and the CSS grows by 84 B for the keyframes. `useDeckSnap` grows by the fixes the fold added: live offsets and the resting member, the resize observer, the idle floor and the reduced-motion branch, together 252 B over the first cure.
+The cure moves the scale out of script: the per-frame `project()` and its two watchers are gone, and the CSS grows by 84 B for the keyframes. `useDeckSnap` grows by the fixes the fold added: live offsets and the resting member, the resize observer, the idle floor and the reduced-motion branch, together 252 B over the first cure. The second fold adds 1 B (the start watch); its comment changes cost nothing minified. 11.1.1's chunks are v11.1.0's to the byte (both demo builds read 3459 B).
 
 **Release note, 11.1.2.**
 - The Carousel no longer jitters under a swipe, a trackpad or a pager press; the strip settles on the browser's own snap and rests exactly on it.
-- The neighbours' travel scale is drawn by the browser from the scroll position. Firefox has not shipped scroll-driven animations, so it shows no travel scale.
+- The neighbours' travel scale is drawn by the browser from the scroll position. Firefox, and Safari before 26 (iOS 18 and earlier), have no scroll-driven animations, so they show no travel scale.
+- A strip that offsets its slides from its start (a padding, a centred snap) must state that offset as its `scroll-padding` too, or the slide at rest stays slightly small. Glass's Carousel page does.
+- A slide that clips uses `overflow: clip`; `overflow: hidden` turns its travel scale off.
+- Under `projection="none"` and reduced motion a slide is no longer a stacking context or the containing block of a fixed-position child. A page that relied on that sets `isolation: isolate` (the stacking context) or `contain: layout` (both) on its slides.
 - The content no longer lags its slide (question 1 decides whether it comes back).
-- Dots bound to the Carousel's `v-model:active` move the slides.
+- Dots bound to the Carousel's `v-model:active` move the slides, and a Carousel mounted with `v-model:active` on a later slide shows that slide.
 - A press scrolls at once under reduced motion.
 - A press after a resize or a rotation lands on the right slide.
 
@@ -185,7 +225,7 @@ The cure moves the scale out of script: the per-frame `project()` and its two wa
 - W-F.3 cure 3 zeroes the velocity at `scrollsnapchange`. WebKit never fires that, and Chromium fires it with `scrollend`, so the cure zeroes at `scrollend` (cause 4), with the idle floor where there is none (cause 10).
 - W-K.6 item 13 (CR-08) is now cause 9.
 - O-327 is part-cured (§1.3).
-- O-372 placed atlas's fix commit `b1bd7d088` (`u/glass-fixes-on-11.1.0`) in 11.1.2. It rewrites the same function as this cure. §7 takes its parts into the cure and leaves its spring turn to question 2, so `b1bd7d088` itself is not applied.
+- O-372 placed atlas's fix commit `b1bd7d088` (`u/glass-fixes-on-11.1.0`) in 11.1.2. It rewrites the same function as this cure. §7 takes its parts into the cure and leaves its spring turn to question 2, so `b1bd7d088` itself is not applied. Its test, `tests/components/deck/snap-travel.test.ts`, is replaced by the cure's test at the same path (§2.4).
 
 ## 4. Heavy live members (11.3.0)
 
@@ -200,7 +240,7 @@ The record measured the problem (§2.6): a live SVG on each of 8 slides runs the
 | the slot's `moving`, all 8 mounted | 0; 0; 25.0 ms | 0; 0; 24.6 ms | 1 / 0 / 0 (29.0) | 0 |
 | `moving`, and the page mounts only the rested slide and its neighbours | 0; 0; 10.3 ms | 0; 0; 18.4 ms | 1 / 0 / 0 (32.3) | 0 |
 
-On the cure, the consumer's own rule is as smooth as anything the library adds; the earlier witness compared the prototype with v11.1.0 and so credited the cure's gains to it. Mounting three figures instead of eight changes nothing measurable on this lane. The one long frame at the first press appears in every variant (§1.1).
+On the cure, the consumer's own rule is as smooth as anything the library adds; the earlier witness compared the prototype with v11.1.0 and so credited the cure's gains to it. That rule's position test needs a tolerance a page cannot easily choose: `extent` comes from rounded `offsetLeft`, while `scrollLeft` rests at the true offset, so at a pitch of 808.4 px member 7 rests at 7.0035, past the study page's 0.002; and the velocity also reads 0 on the first scroll event of each gesture, because `rest()` clears `lastTime`. On 11.1.2 a page reads "still" from the strip's own `scroll` and `scrollend` instead: listeners on `CarouselContent` fall through to the strip (checked in happy-dom), and 11.1.2 dispatches `scrollend` where the engine has none. `moving` is that same signal. Mounting three figures instead of eight changes nothing measurable on this lane. The one long frame at the first press appears in every variant (§1.1).
 
 **So the library adds one signal, `moving`**, on `CarouselContext` and on `CarouselItem`'s slot beside `index` and `active`: true from the strip's first scroll event or a press, false at its `scrollend` (or the idle floor). A consumer writes:
 
@@ -214,7 +254,7 @@ Why a signal and not the position: "still" read from the deck's position (an int
 
 What stays with the page: which slides mount a figure (the near window, `tools/app-extra/mounts/carousel-near.vue` shows one), pausing off screen and in a hidden document (daraksha's stage does both, §6), `contain: paint`, decoding ahead.
 
-Cost: +36 B gzip, +16 −6 lines. Without `scrollend` the figure still starts after landing (the frozen cell, §2.3).
+Cost: +36 B gzip, +16 −6 lines. Without `scrollend` the figure still starts after landing (the frozen cell, §2.3). After an instant press under reduced motion both engines fire `scrollend` (Chromium in the arriving frame, WebKit 12 to 18 ms later; §2.4), so `moving` falls there too.
 
 **Weighed and left out.**
 - `near`, `live` and `rested` (the first prototype): `live` is `active && !moving`, and the window is a page's loading policy.
@@ -313,7 +353,10 @@ Held: an entrance for a carousel's media dock, until glass has one.
 - Safari and real phones: the machine law allows no safaridriver, no headed browser and no device. No iPhone reading was taken. Safari 26.0 and 26.1 (no `scrollend`) were stood in for by removing the event in both engines.
 - WebKit touch, flick and carry: Playwright's WebKit cannot send a moving touch. The WebKit wheel is unphased steps, so whether Safari's phased trackpad shows the remaining snap-back is unread.
 - Atlas in WebKit (it crashed there in the record), and atlas on 11.1.2 (not built).
-- Firefox: not in the matrix. Under the `@supports` guard it shows no travel scale.
+- Firefox: not in the matrix. Under the `@supports` guard it shows no travel scale, and neither does Safari before 26.
+- On the 11.1.1 base: race, held and noend (they press the chevron pager on `?c=carousel`, and 11.1.1 rebuilt that page into CarouselStage, which has none; the second critique's hero-page form of them fails on unpatched 11.1.1 at 800 to 900 ms and holds on the cure, in Chromium), resize and keyboard, and the touch, wheel and pager films. The library source they read is v11.1.0's, byte for byte.
+- `projection="none"` without a stacking context on the member (§1.1): reasoned from the stylesheet, not filmed.
+- A press 60 or 150 ms after a lift (§1.1): the second critique's Chromium reading, not refilmed.
 - Questions 1 to 4's B sides, filmed against the cure.
 - Right-to-left: not run. Live offsets make `scrollTo` and the reconcile follow the members' own positions, but the continuous position is negative there.
 - The reconcile at the end of a peek strip (`restingOn`'s first-of-the-clamped rule): reasoned, not filmed.
@@ -326,7 +369,7 @@ Held: an entrance for a carousel's media dock, until glass has one.
 
 ## 12. Files
 
-- `cure.patch`: 11.1.2 against v11.1.0 (`patch -p1` or `git apply` at the repo root). `near-snap.patch`: 11.3.0 against the cure.
+- `cure.patch`: 11.1.2 against release/11.1.1 (`patch -p1` or `git apply` at the repo root): the library, glass's Carousel stage and `tests/components/deck/snap-travel.test.ts`. Its library half applies to v11.1.0 too; the stage file does not exist there. `near-snap.patch`: 11.3.0 against the cure.
 - `fold.md`: each objection's ruling. `STUDY.md`: the study for the owner. `SITES.md`: the notes for atlas, and for value.js and daraksha.
 - `witness/`
   - `probe-red/`, `probe-green-fold/`: RED and the folded GREEN, with `summary.json`. `probe-green/`: the first cure.
@@ -334,4 +377,5 @@ Held: an entrance for a carousel's media dock, until glass has one.
   - `probe-green-lagkept/`, `probe-green-jsscale/`, `probe-green-io-off/`, `probe-nearsnap-io-off/`: the intermediate builds §1, §1.2 and §2.2 cite.
   - `witness.{red,green}.{chromium,webkit}.json`: the first logic witness. `witness.{red,cure1,green,near}-fold.*.json`: the fold's cells.
   - `snapback-fold-webkit.log`: the variants, three runs at each width. `scale-*.log`, `snapback-webkit.log`, `snapback-travel-webkit.log`: the first checks.
-- `tools/`: `carousel-probe.mjs`, `analyze.mjs` (still rows skipped), `witness.mjs`, `snapback.mjs`, `scale.mjs`, `compare.py`, `wheel.py`, `tables.py`, `build-tree.sh`, `serve.sh`, and the study pages under `app-extra/mounts/`.
+  - The second fold: `scale-stage-{chromium,webkit}.log` (§2.4's scale), `run-fold2-{red,green}-{chromium,webkit}.log` and `witness.{red,green}-fold2.*.json` (§2.4's logic cells).
+- `tools/`: `carousel-probe.mjs`, `analyze.mjs` (still rows skipped), `witness.mjs` (with the `start` cell), `snapback.mjs`, `scale.mjs`, `scale-stage.mjs`, `compare.py`, `wheel.py`, `tables.py`, `build-tree.sh`, `serve.sh`, and the study pages under `app-extra/mounts/`.

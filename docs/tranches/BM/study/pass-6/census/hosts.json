@@ -1,0 +1,265 @@
+{
+ "at": "2026-11-23T02:44:37.617Z",
+ "sites": [
+  {
+   "site": "atlas (library)",
+   "ref": "u/build-atlas-rc@62405c0",
+   "hits": {
+    "Slider mounts": [
+     "src/filter/ui/RangeFacet.vue:60:        <Slider"
+    ],
+    "Slider step": [
+     "src/filter/ui/RangeFacet.vue:64:            :step=\"1\""
+    ],
+    "Switch mounts": [
+     "src/editorial/DataAside.vue:150:            <Switch",
+     "src/filter/ui/VizOptionsBand.vue:112:                <Switch"
+    ],
+    "ToggleGroup mounts": [
+     "src/editorial/DataAside.vue:88:            <ToggleGroup",
+     "src/filter/ui/SelectionSetPane.vue:220:                <ToggleGroup",
+     "src/filter/ui/SourceDataBrowser.vue:410:                <ToggleGroup"
+    ]
+   }
+  },
+  {
+   "site": "atlas (sci dashboards)",
+   "ref": "u/v19-sci@df25605f",
+   "hits": {
+    "Slider mounts": [
+     "dashboards/demand/features/filter/DemandFilter.vue:63:                <Slider",
+     "dashboards/ecf/features/filter/EcfFilter.vue:366:                <Slider",
+     "dashboards/ecf/features/filter/EcfFilter.vue:383:                <Slider",
+     "dashboards/sci/features/filter/SciFilter.vue:188:                <Slider",
+     "dashboards/usf/features/filter/UsfFilter.vue:100:                <Slider"
+    ],
+    "Slider step": [
+     "dashboards/demand/features/filter/DemandFilter.vue:67:                    :step=\"1\"",
+     "dashboards/ecf/features/filter/EcfFilter.vue:370:                    :step=\"1\"",
+     "dashboards/ecf/features/filter/EcfFilter.vue:388:                    :step=\"perAdmStep\"",
+     "dashboards/sci/features/filter/SciFilter.vue:192:                    :step=\"1\"",
+     "dashboards/usf/features/filter/UsfFilter.vue:104:                    :step=\"1\""
+    ],
+    "PagerDots or Carousel mounts": [
+     "dashboards/home/hero/HeroStage.vue:40:        <Carousel",
+     "dashboards/home/hero/HeroStage.vue:115:                            <PagerDots"
+    ],
+    "ToggleGroup mounts": [
+     "dashboards/sci/features/filter/SciFilter.vue:167:                <ToggleGroup",
+     "dashboards/speedtest/features/distribution/BenchmarkDistribution.vue:258:            <ToggleGroup",
+     "dashboards/speedtest/features/survey/SurveyChapter.vue:86:        <ToggleGroup",
+     "dashboards/usf/features/filter/UsfFilter.vue:92:                <ToggleGroup v-model=\"regionModel\" type=\"multiple\" aria-label=\"Region\" size=\"sm\">"
+    ]
+   }
+  },
+  {
+   "site": "value.js",
+   "ref": "c45@243d0b364",
+   "hits": {
+    "Slider mounts": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:63:                        <Slider",
+     "demo/scenes/ConfigSliderPane.vue:217:                            <Slider",
+     "demo/workbenches/extract/ExtractControls.vue:48:                <Slider",
+     "demo/workbenches/extract/ExtractControls.vue:77:            <Slider",
+     "demo/workbenches/generate/GenerateControls.vue:366:            <Slider",
+     "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue:307:                <Slider"
+    ],
+    "Slider variant=spectrum": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:65:                            variant=\"spectrum\"",
+     "demo/styles/foundation.css:490:.glass-slider:not([data-variant=\"spectrum\"]) {",
+     "demo/styles/foundation.css:825:.glass-slider[data-variant=\"spectrum\"] .slider-range {",
+     "demo/styles/foundation.css:983:    .glass-slider[data-variant=\"spectrum\"] .slider-range,",
+     "demo/styles/foundation.css:988:    .glass-slider[data-variant=\"spectrum\"] .slider-track,"
+    ],
+    "Slider step": [
+     "demo/picker/controls/ComponentSliders/ComponentSliders.vue:68:                            :step=\"0.001\"",
+     "demo/scenes/ConfigSliderPane.vue:223:                                :step=\"def.step\"",
+     "demo/workbenches/extract/ExtractControls.vue:56:                    :step=\"1\"",
+     "demo/workbenches/extract/ExtractControls.vue:84:                :step=\"0.1\"",
+     "demo/workbenches/generate/GenerateControls.vue:373:                :step=\"1\"",
+     "demo/workbenches/gradient/GradientVisualizer/GradientStopInspector.vue:65:                        :step=\"0.1\"",
+     "demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue:313:                    :step=\"1\""
+    ],
+    "Slider loupe": [
+     "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:218:const loupe = useLoupeCanvas({",
+     "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:223:const reticle = computed(() => Math.max(10, loupe.lensScale(gesture.zoom.value)));",
+     "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:243:    const scale = loupe.lensScale(zoom);",
+     "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:253:    loupe.drawLoupe(p.x, p.y, zoom);",
+     "demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:276:    loupe.drawLoupe(at.x, at.y, zoom);"
+    ],
+    "thumb paint token": [
+     "demo/styles/foundation.css:491:    --slider-thumb-bg: var(--slider-range-bg);",
+     "demo/styles/utils.css:320:    --slider-range-bg: var(--ink-slider-fill, var(--foreground));",
+     "demo/workbenches/extract/ExtractControls.vue:22:             (`--slider-range-bg`, utils.css) over glass's quiet track — the"
+    ],
+    "DockLayerGroup mounts": [
+     "demo/shell/dock/Dock.vue:305:            <DockLayerGroup v-model:active=\"activeLayer\" :show-switcher=\"false\">"
+    ],
+    "draggable (any component: SegmentedTabs' prop among them)": [
+     "demo/palettes/PalettesPane.vue:156:                            :draggable=\"palette.isLocal\""
+    ],
+    "ToggleGroup mounts": [
+     "demo/palettes/browser/search/SearchFilterBar.vue:35:                        <ToggleGroup"
+    ]
+   }
+  },
+  {
+   "site": "daraksha",
+   "ref": "b11-occasion@406de8f",
+   "hits": {
+    "Slider mounts": [
+     "src/name/NameDock.vue:116:            <Slider",
+     "src/portraits/PortraitsDock.vue:79:            <Slider"
+    ],
+    "Slider variant=spectrum": [
+     "src/gilt/gilt.css:57:.site-dock .glass-slider:not([data-variant=\"spectrum\"]) {",
+     "src/gilt/gilt.css:63::root:not(.dark) .site-dock .glass-slider:not([data-variant=\"spectrum\"]) {"
+    ],
+    "Slider step": [
+     "src/name/NameDock.vue:122:                :step=\"0.001\"",
+     "src/pages/ScripturePage.vue:1221:                    <HeadDock :surah=\"n\" :state=\"state\" :specimen=\"specimen\" :name=\"record.name\" :near=\"near\" :english-at=\"englishAt\" @step=\"stepSurahBy\" @change=\"commit\" @contents=\"openC",
+     "src/portraits/PortraitsDock.vue:85:                :step=\"0.001\""
+    ],
+    "thumb paint token": [
+     "src/gilt/gilt.css:58:    --slider-thumb-bg: var(--gilt-light);",
+     "src/gilt/gilt.css:59:    --slider-range-bg: var(--gilt-body);",
+     "src/gilt/gilt.css:64:    --slider-range-bg: var(--gilt-deep);",
+     "src/gilt/gilt.css:65:    --slider-thumb-bg: var(--ground);"
+    ],
+    "PagerDots or Carousel mounts": [
+     "src/pages/PortraitsPage.vue:558:                    <PagerDots"
+    ],
+    "DockLayerGroup mounts": [
+     "src/shell/SiteDock.vue:244:                <DockLayerGroup v-model:active=\"layer\" :show-switcher=\"false\" class=\"layers\">"
+    ]
+   }
+  },
+  {
+   "site": "fourier",
+   "ref": "f45@22dc445",
+   "hits": {
+    "Slider mounts": [
+     "web/src/components/shared/FourierTimeline.vue:222:        <Slider",
+     "web/src/components/ui/SliderControl.vue:187:        <Slider"
+    ],
+    "Slider step": [
+     "web/src/components/equation/FunctionInput.vue:211:                :min=\"1\" :max=\"100\" :step=\"1\"",
+     "web/src/components/equation/convergence/ConvergenceTimeline.vue:100:                :step=\"STEP\"",
+     "web/src/components/morph/HarmonicLevelGrid.vue:15:                :step=\"1\"",
+     "web/src/components/morph/HarmonicLevelGrid.vue:25:                :step=\"1\"",
+     "web/src/components/morph/MorphPhaseConfig.vue:53:            :step=\"10\"",
+     "web/src/components/shared/FourierTimeline.vue:227:            :step=\"step\"",
+     "web/src/components/ui/SliderControl.vue:193:            :step=\"step\"",
+     "web/src/components/visualization/BasisSelector.vue:192:            :step=\"1\"",
+     "web/src/components/visualization/BasisSelector.vue:201:            :step=\"128\"",
+     "web/src/components/visualization/ContourSettings.vue:302:            :step=\"0.05\"",
+     "web/src/components/visualization/ContourSettings.vue:314:            :step=\"0.1\"",
+     "web/src/components/visualization/ContourSettings.vue:341:                        :step=\"0.5\"",
+     "web/src/components/visualization/ContourSettings.vue:353:                        :step=\"1\"",
+     "web/src/components/visualization/ContourSettings.vue:365:                        :step=\"0.05\"",
+     "web/src/components/visualization/EditorControlsDock.vue:127:                            :step=\"1\"",
+     "web/src/components/visualization/EquationPanel.vue:111:                    :min=\"2\" :max=\"20\" :step=\"1\""
+    ],
+    "thumb paint token": [
+     "web/src/components/shared/FourierTimeline.vue:286:   site's amber through glass's own `--slider-range-bg`, and the thumb wears",
+     "web/src/components/shared/FourierTimeline.vue:287:   the fill's colour through glass's documented `--slider-thumb-bg` (theming:",
+     "web/src/components/shared/FourierTimeline.vue:292:    --slider-range-bg: var(--viz-amber);",
+     "web/src/components/shared/FourierTimeline.vue:293:    --slider-thumb-bg: var(--slider-range-bg);",
+     "web/src/components/ui/SliderControl.vue:196:            :style=\"{ '--slider-range-bg': color || undefined }\"",
+     "web/src/components/ui/SliderControl.vue:262:   alone: the row hue reaches the fill through `--slider-range-bg` (template), at",
+     "web/src/components/ui/SliderControl.vue:272:    --slider-thumb-bg: var(--slider-range-bg, var(--slider-fill-ink));"
+    ],
+    "PagerDots or Carousel mounts": [
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:66:             throws by contract outside a `<Carousel>`. The header row sat",
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:68:             ('useCarousel must be used within a <Carousel />'). The root now",
+     "web/src/components/gallery/GalleryFeaturedCarousel.vue:70:        <Carousel aria-labelledby=\"featured-heading\" projection=\"none\">"
+    ],
+    "Progress mounts": [
+     "web/src/components/equation/EquationView.vue:644:                            <Progress :model-value=\"jobValue\" :max=\"1\" size=\"sm\" class=\"eq-job-bar\"",
+     "web/src/components/equation/EquationView.vue:731:                                <Progress :model-value=\"computing ? jobValue : null\" :max=\"1\" size=\"sm\" class=\"eq-status-bar\"",
+     "web/src/components/visualization/EquationPanel.vue:119:                    <Progress :model-value=\"null\" size=\"sm\" aria-label=\"Simplifying the equation\" />",
+     "web/src/components/visualization/ImageUpload.vue:129:            <Progress",
+     "web/src/components/visualization/VisualizationView.vue:682:                                <Progress :model-value=\"null\" size=\"sm\" aria-label=\"Uploading the image\" />"
+    ],
+    "ToggleGroup mounts": [
+     "web/src/components/equation/FunctionInput.vue:190:                        <ToggleGroup type=\"single\" size=\"sm\" :aria-labelledby=\"labelledBy\"",
+     "web/src/components/equation/FunctionInput.vue:218:                        <ToggleGroup",
+     "web/src/components/gallery/GallerySearchBar.vue:174:                            <ToggleGroup",
+     "web/src/components/gallery/TierControl.vue:34:    <ToggleGroup",
+     "web/src/components/shared/NotationPills.vue:30:    <ToggleGroup type=\"single\" size=\"sm\" aria-label=\"Notation\" class=\"notation-group\"",
+     "web/src/components/visualization/BasisSelector.vue:166:            <ToggleGroup type=\"single\" size=\"sm\" aria-label=\"Fourier mode\"",
+     "web/src/components/visualization/BasisSelector.vue:176:            <ToggleGroup type=\"multiple\" size=\"sm\" aria-label=\"Polynomial bases\""
+    ],
+    "ToggleGroup single": [
+     "web/src/components/equation/FunctionInput.vue:190:                        <ToggleGroup type=\"single\" size=\"sm\" :aria-labelledby=\"labelledBy\"",
+     "web/src/components/shared/NotationPills.vue:30:    <ToggleGroup type=\"single\" size=\"sm\" aria-label=\"Notation\" class=\"notation-group\"",
+     "web/src/components/visualization/BasisSelector.vue:166:            <ToggleGroup type=\"single\" size=\"sm\" aria-label=\"Fourier mode\""
+    ]
+   }
+  },
+  {
+   "site": "keyframes",
+   "ref": "kf45@96c6c109",
+   "hits": {
+    "Slider mounts": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:155:            <Slider",
+     "demo/components/instrument/transport/TransportScrub.vue:10:        <Slider",
+     "demo/components/playback/AnimationVisualizer.vue:12:         The STAGE stays a decorative visual twin of the real reka <Slider>",
+     "demo/components/playback/PlaybackRibbon.vue:65:                            <Slider",
+     "demo/scenes/spring/SpringPhysicsFacet.vue:144:                            <Slider"
+    ],
+    "Slider step": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:119:            :step=\"1\"",
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:161:                :step=\"0.01\"",
+     "demo/components/instrument/timeline/components/SequenceLanes.vue:19:        :step=\"SCRUB_KEY_STEP\"",
+     "demo/components/instrument/timeline/components/TimelineCaret.vue:121:            step=\"any\"",
+     "demo/components/instrument/transport/TransportScrub.vue:16:            :step=\"0.01\"",
+     "demo/components/playback/PlaybackRibbon.vue:72:                                :step=\"scrubStep\"",
+     "demo/scenes/cube/matrix-editor/MatrixEditor.vue:124:                            :step=\"selectedMeta.sliderOptions.step\"",
+     "demo/scenes/easing/EasingSidebar.vue:31:                        :step=\"100\"",
+     "demo/scenes/spring/SpringPhysicsFacet.vue:149:                                :step=\"PARAM_STEP\""
+    ],
+    "Slider loupe": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue:39:        <!-- K6 (value.js §0hz.canon, C-42) — glass's default tabs (the loupe"
+    ],
+    "thumb paint token": [
+     "demo/styles/style.css:248:       reads `--slider-range-bg`, falling back to the warm capsule) is the",
+     "demo/styles/style.css:252:    --slider-range-bg: var(--color-progress);",
+     "demo/styles/style.css:255:    --slider-thumb-bg: var(--slider-range-bg);"
+    ],
+    "Switch mounts": [
+     "demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:193:        <Switch"
+    ],
+    "ToggleGroup mounts": [
+     "demo/components/EasingCatalogue/EasingCatalogue.vue:61:            <ToggleGroup",
+     "demo/scenes/spring/SpringPhysicsFacet.vue:177:                <ToggleGroup"
+    ]
+   }
+  },
+  {
+   "site": "gaggle",
+   "ref": "site-redesign@8d7fe5d",
+   "hits": {
+    "Slider step": [
+     "dashboard/proto/F6/TeamPage.vue:673:                @step=\"step\""
+    ],
+    "ToggleGroup mounts": [
+     "dashboard/proto/F3/App.vue:495:                <ToggleGroup v-model=\"order\" type=\"single\" size=\"sm\" aria-label=\"Order\" data-order>",
+     "dashboard/src/parts/RunBand.vue:110:            <ToggleGroup"
+    ],
+    "ToggleGroup single": [
+     "dashboard/proto/F3/App.vue:495:                <ToggleGroup v-model=\"order\" type=\"single\" size=\"sm\" aria-label=\"Order\" data-order>"
+    ]
+   }
+  },
+  {
+   "site": "Home Assistant",
+   "ref": "master@0f6deae4",
+   "hits": {
+    "thumb paint token": [
+     "frontend/src/tiles/rails.ts:251:                    \"--slider-range-bg\": unset ? \"transparent\" : spec.tone,"
+    ]
+   }
+  }
+ ]
+}

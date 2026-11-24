@@ -17,7 +17,7 @@ const cell = (f, c, tag) => {
     const r = rows.find((x) => x.family === f && `${x.engine} ${x.cell}` === c && x.tag === tag);
     return r ? `${r.n} (${Math.round(r.max)})` : "0";
 };
-const VER = { cure: "v1", cure2: "v2", cure3: "v3", cure4: "v4" };
+const VER = { cure: "v1", cure2: "v2", cure3: "v3", cure4: "v4", cure5: "v5" };
 console.log(`| family | ${cols.map((c) => `${c}: base → ${VER[latest[c]]}`).join(" | ")} |`);
 console.log(`|---|${cols.map(() => "---").join("|")}|`);
 for (const f of fams) console.log(`| ${f} | ${cols.map((c) => `${cell(f, c, "base")} → ${cell(f, c, latest[c])}`).join(" | ")} |`);

@@ -19,6 +19,9 @@
 //                     hasTouch, 390x844. The swipe is a wheel over the same point: not touch,
 //                     but WebKit's own scrolling tree deciding where the scroll lands.
 //
+// Each surface is swiped on its plate (where it has a part outside its list), on its list,
+// then on the page beside it, and closed by touch.
+//
 // Run under the guard: guarded [--exclusive webkit] --timeout 30 -- node probe.mjs ...
 import { chromium, webkit, devices } from "playwright";
 import { writeFileSync } from "node:fs";
@@ -35,6 +38,7 @@ const CELLS = [
     ["ob-control", 0],
     ["select", 4],
     ["select", 40],
+    ["nselect", 4],
     ["dock-select", 4],
     ["dock-select", 40],
     ["command", 4],
@@ -43,6 +47,8 @@ const CELLS = [
     ["sheet", 40],
     ["drawer", 3],
     ["drawer", 40],
+    ["pdrawer", 3],
+    ["pdrawer", 40],
     ["detents", 40],
     ["dialog", 2],
     ["dialog", 40],
@@ -64,6 +70,18 @@ const SURFACE = {
         list: '[data-slot="select-viewport"]',
         platePoint: null,
         close: { tap: '[data-slot="select-viewport"] [role="option"]' },
+    },
+    nselect: {
+        plate: '[data-slot="select-content"]',
+        list: '[data-slot="select-viewport"]',
+        platePoint: null,
+        close: { tap: '[data-slot="select-viewport"] [role="option"]' },
+    },
+    pdrawer: {
+        plate: '[data-slot="sheet-content"]',
+        list: ".ps-pdrawer-body",
+        platePoint: null,
+        close: { tap: '[data-slot="dialog-close"]' },
     },
     "dock-select": {
         plate: '[data-slot="select-content"]',
@@ -274,6 +292,10 @@ async function runCell(browser, s, n) {
             const low = await centerOf(page, sel.list, "lower");
             if (up && low) points.push(["list", up, low]);
         }
+        // Last, a swipe on the page beside the surface: from the top-left corner, clear of
+        // every plate here (the phone drawer leaves the top tenth of the page above it)
+        // and of the press target at the top right.
+        if (s !== "page" && s !== "ob-control") points.push(["beside", [40, 20], [40, 76]]);
         for (const [where, pDown, pUp] of points) {
             // Finger down first (the list sits at its top, so this is the pull past the
             // boundary), then finger up (a long list scrolls; a short one cannot). The

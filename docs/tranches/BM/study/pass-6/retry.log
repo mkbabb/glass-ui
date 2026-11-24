@@ -1,0 +1,7 @@
+21:10:27 attempt 1 (no-op probe under guarded, browser pool, to learn whether browser runs are admitted): REFUSED: kernel zone data.kalloc.1024 at 14.29M (heavy and browser runs stop): reboot the Mac
+21:21:29 attempt 2 (the same no-op probe): [guarded] REFUSED: kernel zone data.kalloc.1024 at 14.32M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+21:31:03 attempt 3 (pass-6/check/page-check.mjs: the twelve pages at 390 and 1440, light and dark, P5-mark's and P6-hosts' strips; headless Chromium): [guarded] REFUSED: kernel zone data.kalloc.1024 at 14.35M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+21:42:20 attempt 4 (pass-6/check/page-check.mjs): [guarded] REFUSED: kernel zone data.kalloc.1024 at 14.39M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+21:52:27 attempt 5 (pass-6/check/page-check.mjs): [guarded] REFUSED: kernel zone data.kalloc.1024 at 14.42M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+22:02:34 attempt 6, the last inside the hour (pass-6/check/page-check.mjs): [guarded] REFUSED: kernel zone data.kalloc.1024 at 14.45M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+22:02:34 the hour from the first refusal (21:10:27) is spent: the browser check, pass-6/fold/forced-colors.mjs and pass-4/critique-B-check.mjs are recorded as owed (DESIGN §8.12). Each needs the Mac rebooted (the kernel zone rose from 14.29M to 14.45M over the hour).

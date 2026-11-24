@@ -1,0 +1,23 @@
+/* BM pass 4 (Q1), lane E, restated in pass 5 (fold B4-2): a design sketch, not library source, and no longer the
+   proposed default (DESIGN §6.4 item 3: today's grow ships until the owner rules on P4-bud; E reverses his O-171).
+   If the owner takes E, it rides the recipe that already ships instead of a bare transition, because reka mounts
+   portaled content already `data-state="open"` (reveal.css:145-158, cured there by `@starting-style`) and tears a
+   transition-only exit down before it paints (reveal.css:185-191, cured there by the `glass-reveal-out` keyframe,
+   which is reka's presence gate: UNION M2's workaround, kept until Q11 decides the overlay substrate).
+   So E is three changed declarations in the menu register and the strip's removal:
+     · the register reads the menu's own scale, which nothing reads today (motion-registers.css:79, 0.96);
+     · blur and slide are 0, as the menu register already holds them (reveal.css:119-120);
+     · the grow and recede rules and keyframes (reveal.css:267-292, animations.css) are deleted.
+   One node, two properties (opacity, scale); per press with the trigger's held fill, three (DESIGN §6.2), so E is
+   within the press ceiling only where the trigger's plate stands down on that press (§7.4). Under reduced motion the
+   base carve drops `scale` and keeps the opacity fade (reveal.css:342-360). */
+.glass-reveal[data-reveal="menu"] {
+    --reveal-spring: var(--enter-menu-spring);
+    --reveal-clock: var(--enter-menu-clock);
+    --reveal-exit-clock: var(--spring-present-exit-duration);
+    --glass-reveal-enter-scale: var(--enter-menu-scale);
+    --lq-stretch-x: 1;
+    --lq-stretch-y: 1;
+    --glass-reveal-blur: 0px;
+    --glass-reveal-slide: 0px;
+}

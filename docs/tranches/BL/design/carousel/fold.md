@@ -39,3 +39,43 @@ Engines: **Chromium** is Playwright's headless shell 149.0.7827.55 on the GPU la
 - WebKit: the logic cells on v11.1.0 and the folded cure, the frozen-figure cell, the snap-back variants three times at each width, and the GREEN wheel and pager cells (ROOT §2.2, §2.3).
 - The first cure as written (Chromium): resize, reduce and no-`scrollend` cells, to show the faults M-2, M-4 and M-6 name.
 - Unit: `tests/components/carousel/contract.test.ts` passes on the folded tree; `public-surface.spec.ts` fails the same seven built-`dist/` checks on v11.1.0 and the fold (no library build in a study tree). `vue-tsc --noEmit` is clean on the near-snap tree and, on the folded tree, flags only the study page's use of `moving`.
+
+## 2026-11-24: the second challenge
+
+Seat: claude-opus-5-5, asserted from its own system identity. It answers the second critique's three blocking items and its notes, re-reading each against built pages first.
+
+Builds: `git archive release/11.1.1` (ca61ce5b6) into `trees/red` and `trees/green` (docs left out, `node_modules` linked to the repo's), `cure.patch` applied to green with `patch -p1`, then this fold's edits; both demos built with `tools/build-tree.sh` and served on 5381 and 5382, every run under `guarded`, WebKit under `--exclusive webkit`. **Chromium** is Playwright's headless shell 149.0.7827.55 on the GPU lane; **WebKit** is Playwright's WebKit 26.5, not Safari. The 1-minute load ran 30 to 48 (the machine was shared). The trees are deleted.
+
+### Rulings
+
+| # | Item | Ruling | Reading |
+|---|---|---|---|
+| 1 | The travel scale no longer rests at 1 on a strip that centres its slides | **Accept** | `tools/scale-stage.mjs` on the built `?c=carousel` (CarouselStage). Chromium: 11.1.1 rests members 0, 1, 2 at 0.965 / 1 / 0.965 at 1440 and 390. The cure without the stage's line rests at 0.9741 / 0.9901 / 0.965 (1440) and 0.9675 / 0.9961 / 0.965 (390), and member 1 leaving forward swells to 0.9999 at +0.28 of a pitch (1440) and 0.9998 at +0.1 (390) before it shrinks. With `scroll-padding-inline` on the strip it rests at 0.965 / 1 / 0.965 at both widths and falls steadily, within 0.0012 of 11.1.1 in flight. WebKit 26.5 reads the same numbers to the fourth decimal. The snap rests at one pitch in every variant (940 px at 1440, 330 at 390), so the scroll-padding moves no snap point. The stage states the offset once (`--inset`) for both properties, and the stylesheet comment states the rule. |
+| 2 | Row ids in the src comments the patch adds | **Accept** | "O-421", "(O-327, O-421)" and "I4b —" are gone and the sentences kept. No other added src line carries a row id. "LAW 1" stays: it names the file's own design law, not a row. |
+| 3 | SITES.md's sign-off, voice and pointer | **Accept** | Both notes are in Mike's voice ("What I saw", "until I decide", "Tell me when your deck runs 11.1.2"), end "Thanks,\nMike", name the two engines inside each note, and offer the study on request instead of a path. |
+| n-1 | race, held and noend cannot rerun on 11.1.1 | **Recorded** | ROOT §11. The library source they read is v11.1.0's. |
+| n-2 | A press 60 or 150 ms after a lift ends 3 px short | **Recorded** | ROOT §1.1, as the critique's reading. |
+| n-3 | `overflow: hidden` on a member | **Accept** | Read: every member 1.0 at every hold in Chromium and in WebKit; `overflow: clip` keeps the scale. One sentence in the stylesheet comment and the release note. |
+| n-4 | Safari before 26 also loses the travel scale | **Accept** | Release note, STUDY and the atlas note. |
+| n-5 | Stale comments | **Accept** | `styles.css`'s header, `projection.ts`'s LAW 1 and LAW 3, `index.ts`, and the stage's comment, whose claim cause 7 made false. |
+| n-6 | A non-zero starting value | **Accept** | `watch(count, () => deck.go(active.value), { once: true, flush: "sync" })` in `useCarousel`. Sync, so the deck holds `active` before the snap arm's mount seat, which then seats it instantly. The `start` cell (hero, `v-model:active` 2 at mount): Chromium 11.1.1 rests at 0 with member 0 active while the dots and the caption say 3; the cure seats 2072 px (1440) and 844 px (390) in the first sampled frame with member 2 active. WebKit the same, seated in the first sampled frame. The unit test fails without the watch. The mount now emits one `change(2, 0)`. |
+| n-7 | SITES item 3's rule fails at a fractional pitch | **Accept** | The atlas note now reads "still" from the strip's own `scroll` and `scrollend` on 11.1.2 (listeners on `CarouselContent` reach the strip; checked in happy-dom) and from `moving` on 11.3.0. ROOT §4 gives the tolerance and the first-frame velocity of 0. |
+| n-8 | No unit test; `b1bd7d088`'s test dropped | **Accept** | `tests/components/deck/snap-travel.test.ts` in the patch, 9 tests: the strip's own report never scrolls it (`heading`), a press goes to the member's own offset, the hold releases once, the reconcile, reduced motion, rest velocity 0, the idle floor, the inbound model and the start value. The tree: 9 of 9 pass (with the deck and carousel contract tests, 15 in 3 files). Unpatched 11.1.1: 8 fail (the press offset passes, equal members). The cure without the start watch: only the start test fails. `vue-tsc --noEmit` is clean; `-p tsconfig.test.json` reports only the fourier-math self-import a study tree cannot resolve. |
+| n-9 | No stacking context under `projection="none"` | **Refuse a rule; note it** | The containment came from the per-frame scale; glass's one CarouselItem page (the stage) relies on neither a stacking context nor a fixed-position child, and a rule that restores them would have no other job. ROOT §1.1 and the release note say how a page restores either. Unfilmed. |
+| n-10 | `scrollend` after an instant press | **Read** | The `reduce` cell now counts the strip's `scrollend`: Chromium fires one, at 90 ms (1440) and 44 ms (390), in the frame the strip arrives. WebKit fires one too, 12 ms (1440) and 18 ms (390) after the strip arrives. So the near-snap `moving` falls after an instant press in both engines, and `near-snap.patch` needs no change for it. |
+| n-11 | `trees/` not ignored | **Accept** | `.gitignore` gains `trees/`. |
+| n-12 | STUDY's "all ten faults pass in both engines" | **Accept** | Rewritten: every fault's test holds in Chromium; in WebKit the wheel, pager and logic tests hold apart from the one snap-back, and the touch faults have no WebKit test. |
+| n-13 | `critique.md` trips the lint | **Accept** | "In short:" became ":". Every .md in the folder passes the register lint. |
+
+### Applied
+
+- `cure.patch` now applies to release/11.1.1: the library in seven files (+188 −101), the stage's scroll-padding and comment (+7 −3), and the new test (+228). It adds 123 B gzip over 11.1.1's Carousel chunks (3459 → 3582 B), 1 B more than the folded cure.
+- `near-snap.patch`: only its `useCarousel.ts` hunk header moved (-48 → -51); its lines are unchanged and it applies on the new cure.
+- `ROOT.md`: the second fold's note, causes 2 and 7, §1.1 (the press after a lift, the stacking context, `overflow: hidden`), §2.4, §3's bytes and release note, §4's tolerance, §11, §12. `STUDY.md`: the patch, Safari before 26, the centred strip, the start value, the test scope. `SITES.md`: voice, sign-offs, engines, item 3.
+- `tools/scale-stage.mjs` (new); `tools/witness.mjs`: the `start` cell and the `scrollend` count in `reduce`; `carousel-hero.vue`: `start=k`.
+
+### Re-witnessed
+
+- Chromium: `scale-stage` on 11.1.1 and the cure (`witness/scale-stage-chromium.log`); the `model`, `start` and `reduce` cells on both (`witness/run-fold2-{red,green}-chromium.log`).
+- WebKit, after 70 minutes in the machine-wide WebKit queue: `scale-stage` and the `model`, `start` and `reduce` cells on both builds (`witness/scale-stage-webkit.log`, `witness/run-fold2-{red,green}-webkit.log`).
+- Unit and type checks on the green tree, as n-8.

@@ -13,6 +13,8 @@
 # preview too when 5391 is down, and stop what they started on exit.
 #   ~/.claude/guard/guarded --timeout 20 -- tools/probe-group.sh F chromium
 #   ~/.claude/guard/guarded --exclusive webkit --timeout 60 -- tools/probe-group.sh E webkit
+# Round 2 (value.js's items, cure v5 on 5396): V (Chromium witness), VW (WebKit witness), P5
+# (the v5 sweep), K (check-overflow.mjs on base and v5).
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/.." && pwd)"
@@ -46,6 +48,7 @@ serve3() { serve cure 5394 dist-cure3; }
 serveb() { serve v11.1.1 5391 dist-base; }
 serve4() { serve v11.1.1 5395 dist-cure4; }
 serve3f() { serve v11.1.1 5394 dist-cure3; }
+serve5() { serve v11.1.1 5396 dist-cure5; }
 CURE_ROUTES="$REP,/containers/dialog,/feedback/toast,/containers/tooltip"
 case "$1" in
 A)
@@ -129,5 +132,42 @@ H)
     inspect webkit "$HERE/plans/witness4c.json" "$INS/witness4c.webkit.json"
     probe webkit cure4 5395 390t-light base,opens,variants,stress "$CURE_ROUTES"
     probe webkit cure4 5395 1440-light base,opens,variants,stress "$REP"
+    ;;
+V)
+    # round 2: value.js's four items on the base, v4 and v5 (cure v5 = v4 with value.js's
+    # items, dist-cure5 on 5396), Chromium
+    serveb
+    serve4
+    serve5
+    inspect chromium "$HERE/plans/witness5.json" "$INS/witness5.chromium.json"
+    ;;
+VW)
+    # round 2 in Playwright's WebKit: value.js's four items (sideways pans by mouse wheel,
+    # as WebKit has no touch-move input), then v4's strip, line law and toggle item, on the
+    # base, v4 and v5
+    serveb
+    serve4
+    serve5
+    inspect webkit "$HERE/plans/witness5w.json" "$INS/witness5.webkit.json"
+    inspect webkit "$HERE/plans/witness-wk5.json" "$INS/witness-wk5.webkit.json"
+    ;;
+P5)
+    # the v5 sweep: the 22 cure routes, and the fold page with round 2's cells on the base
+    # and v5 (route /ovf.html?fold&round=2, suffix fold5, so the first fold page's records
+    # stay as they were)
+    serveb
+    serve5
+    for cell in 390t-light 1440-light; do
+        log "probe fold page, round 2, $cell"
+        node "$HERE/probe.mjs" --engine chromium --tag base --port 5391 --cell "$cell" --passes base,opens,variants,stress --routes "/ovf.html?fold&round=2" --suffix fold5 --out "$RAW" >> "$ROOT/trees/probe-fold5-base-$cell.log" 2>&1
+        node "$HERE/probe.mjs" --engine chromium --tag cure5 --port 5396 --cell "$cell" --passes base,opens,variants,stress --routes "/ovf.html?fold&round=2" --suffix fold5 --out "$RAW" >> "$ROOT/trees/probe-fold5-cure5-$cell.log" 2>&1
+        probe chromium cure5 5396 "$cell" base,opens,variants,stress "$CURE_ROUTES"
+    done
+    ;;
+K)
+    # check-overflow.mjs on the base and v5 stress and fold pages, Chromium
+    serveb
+    serve5
+    "$HERE/check-selftest.sh"
     ;;
 esac

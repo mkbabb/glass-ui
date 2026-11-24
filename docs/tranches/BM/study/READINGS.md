@@ -26,3 +26,8 @@ The orchestrator publishes each reading page under `study/pages/` as a private p
   - Menus, Sheets and Dialogs (P8): https://claude.ai/artifact/5Jed1k3wBJvGY72BDUw6AD
   - The choice board (version 2) links all thirteen under "Reading pages".
   - 2026-11-23: the owner cannot open artifacts, so the pages are read from this Mac: http://MacBook-Pro-170.local:4415/ (docs/tranches/BM/study/local/, start.sh). The artifact links above may be deleted by the owner (Menu Opening Springs was, 2026-11-23); the local site is built from pages/ and choices/ and needs none of them.
+- 2026-11-24, pass 10 (pass 9's fold, B9-1). The local site is rebuilt from `pages/`, so it now serves the rebuilt Menus, Sheets and Dialogs (pass 9's 1 px rungs) in place of pass 8's. Three pages are added there only, with no published link, and the board links them under "Reading pages":
+  - Slider While Held (P10-slider): http://MacBook-Pro-170.local:4415/slider-while-held.html. A as built, B (pass 9's, withdrawn) and C (ships in 11.3.0), each drawn under one thumbless rule. Send A, B or C. It replaces Held Slider View (P9-slider), which was never served.
+  - Dark Mode Toggle (P10-toggle): http://MacBook-Pro-170.local:4415/dark-mode-toggle.html. Today's, the coloured one (B, ships in 11.2.0), and B uncoloured (C). Send A, B or C.
+  - The Hover Plate (P10-plate): http://MacBook-Pro-170.local:4415/the-hover-plate.html. As first built, full strength, and the recommendation (C, ships in 11.2.0). Send A, B or C.
+  - Under the ruling (O-426) every letter is optional: a letter that arrives amends, and none holds a release. The fact readings, which are not letters, are listed in DESIGN §15.
