@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.1.1 — unreleased
+## 11.1.1 — 2026-11-24
 
 A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
 
