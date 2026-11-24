@@ -1,0 +1,25 @@
+@import "tailwindcss" source("./");
+@source "../src/components/**/*.vue";
+@source "../src/components/_shared/**/*.ts";
+@source "../src/components/**/*Variants.ts";
+@source "../src/components/**/index.ts";
+@import "tw-animate-css";
+@import "../src/styles/index.css";
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 24px;
+}
+.cell {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+    max-width: 22rem;
+}
+.bare {
+    display: block;
+    width: 12rem;
+    height: 2.5rem;
+}

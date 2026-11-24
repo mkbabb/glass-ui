@@ -40,6 +40,13 @@
 //             caption say 3, and the strip reaches it with no offset in between.
 //   reduce    also counts the strip's `scrollend` events after the instant press.
 //
+// Added by the third fix seat (fold.md, the third section):
+//   reduce    also reads, each frame, the opacity of the member left (0) and the member
+//             pressed for (1), each the member's times its content's. Holds now also
+//             asks that the pressed member is under 0.25 in the frame the strip arrives
+//             and climbs to 1 over 100 to 250 ms: the seat is instant and the arrival
+//             fades in, so nothing travels and nothing cuts in.
+//
 // Writes <out>/witness.<label>.<engine>.json and prints one line per cell.
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -311,8 +318,13 @@ async function cellReduce(browser, v) {
             window.__ends = [];
             const t0 = performance.now();
             strip.addEventListener("scrollend", () => window.__ends.push(+(performance.now() - t0).toFixed(1)));
+            const seen = (m) => {
+                const c = m.querySelector(".carousel-item-content") || m;
+                return +(parseFloat(getComputedStyle(m).opacity) * parseFloat(getComputedStyle(c).opacity)).toFixed(3);
+            };
             const tick = () => {
-                window.__rows.push([+(performance.now() - t0).toFixed(1), strip.scrollLeft]);
+                const [m0, m1] = strip.children;
+                window.__rows.push([+(performance.now() - t0).toFixed(1), strip.scrollLeft, seen(m0), seen(m1)]);
                 if (performance.now() - t0 < 1200) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
@@ -326,9 +338,21 @@ async function cellReduce(browser, v) {
         const start = rows[0][1];
         const between = rows.filter(([, x]) => Math.abs(x - start) > 1 && Math.abs(x - target) > 1);
         const firstMove = rows.find(([, x]) => Math.abs(x - start) > 1);
-        const arrive = rows.find(([, x]) => Math.abs(x - target) <= 1);
-        const holds = end.active === 1 && Math.abs(end.sl - target) <= 1 && between.length === 0;
-        return { cell: "reduce", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, between: between.length, firstMoveMs: firstMove?.[0] ?? null, arriveMs: arrive?.[0] ?? null, scrollends, holds, errors };
+        const at = rows.findIndex(([, x]) => Math.abs(x - target) <= 1);
+        const arrive = rows[at];
+        // The pressed member's opacity from the frame before the strip arrives until it
+        // first reads 1, and the largest rise between two rows.
+        const done = rows.findIndex((r, i) => i >= at && r[3] >= 0.999);
+        const fade = at >= 0 ? rows.slice(Math.max(0, at - 1), done >= 0 ? done + 1 : rows.length).map(([t, , o0, o1]) => [t, o0, o1]) : [];
+        let maxRise = 0;
+        for (let i = Math.max(1, at); at >= 0 && i <= (done >= 0 ? done : rows.length - 1); i++) maxRise = Math.max(maxRise, rows[i][3] - rows[i - 1][3]);
+        const seatOpacity = arrive ? arrive[3] : null;
+        const fadeMs = at >= 0 && done >= 0 ? +(rows[done][0] - arrive[0]).toFixed(1) : null;
+        const leftAtSeat = arrive ? arrive[2] : null;
+        const seated = end.active === 1 && Math.abs(end.sl - target) <= 1 && between.length === 0;
+        const fades = seatOpacity !== null && seatOpacity <= 0.25 && fadeMs !== null && fadeMs >= 100 && fadeMs <= 250;
+        const holds = seated && fades;
+        return { cell: "reduce", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, between: between.length, firstMoveMs: firstMove?.[0] ?? null, arriveMs: arrive?.[0] ?? null, seatOpacity, fadeMs, maxRise: +maxRise.toFixed(3), leftAtSeat, fade, scrollends, seated, fades, holds, errors };
     } finally {
         await context.close().catch(() => {});
     }
