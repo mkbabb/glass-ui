@@ -2,7 +2,7 @@
 
 2026-11-15. The dock's new carrier has been built three times, measured in both engines (Chromium and Safari's, through Playwright WebKit; real Safari is still unread), challenged twice, and amended again today. It is not finished: no test passes in both engines with its counter-test read. This page says what you will see when it is, where it stands today, what was cut and why, and seven questions.
 
-The strips are today's build. In each, v11.0.1 is above and the build is below, in Chromium and in Safari's engine, with the change held at seven points.
+The strips are today's build. In each, v11.0.1 is above and the build is below, in Chromium and in Playwright WebKit, which draws the glass without its blur and is not what Safari shows, with the change held at seven points.
 
 ![the fold, before and after](fold/strip-fold-2.png)
 
@@ -24,7 +24,7 @@ The strips are today's build. In each, v11.0.1 is above and the build is below, 
 
 ## Where it stands
 
-On the third build, every test in both engines: the fold and the unfold pass on the pill, the rounded and card docks, atlas's rail, the layered docks, a held slider, the controls dock at all four corners, and the daraksha, sci-report, fourier and keyframes compositions. 110 of 114 travels pass in Chromium and 109 of 114 in Safari's engine. Turning back during a fold works in every case tried. A press outside closes the dock within a frame or two, and a scroll no longer opens it in either engine.
+On the third build, every test in both engines: the fold and the unfold pass on the pill, the rounded and card docks, atlas's rail, the layered docks, a held slider, the controls dock at all four corners, and the daraksha, sci-report, fourier and keyframes compositions. 110 of 114 travels pass in Chromium and 109 of 114 in Playwright WebKit, which draws the glass without its blur. Turning back during a fold works in every case tried. A press outside closes the dock within a frame or two, and a scroll no longer opens it in either engine.
 
 Cured today, and read in both engines:
 
@@ -43,13 +43,13 @@ Still failing:
 - The current page's seat moving twice in quick succession in a scrolling dock on a phone.
 - One seat that vanishes a frame or two early where a pinned seat slides over it.
 - An icon added to or removed from an open dock appears and disappears in one frame.
-- **Found today:** on a phone in Safari's engine, keyframes's transport dock cannot be opened by touch at all. Every earlier Safari "phone" test was pressing with a mouse. The rule is written (a dock with nothing to tap stays open on a phone) and not built.
+- **Found today:** at phone width under touch in Playwright WebKit (without the glass's blur, and not what Safari shows), keyframes's transport dock cannot be opened by touch at all. Every earlier WebKit "phone" test was pressing with a mouse. The rule is written (a dock with nothing to tap stays open on a phone) and not built.
 
 Not yet done: a whole pass of every test on today's build (today's changes were read on thirty cells), and the release checks of the versions already shipped.
 
 ## What was cut, and why
 
-- **The theme seat parting from the dock with a neck.** Three ways of drawing the neck were built. None reads as one piece of glass, and the last is worst in Safari's engine. In 11.2.0 the theme toggle is a round dock of its own beside the main one; the fusing waits for 12.0.0 and one Safari test that says a neck can be drawn.
+- **The theme seat parting from the dock with a neck.** Three ways of drawing the neck were built. None reads as one piece of glass, and the last is worst in Playwright WebKit, which draws the glass without its blur. In 11.2.0 the theme toggle is a round dock of its own beside the main one; the fusing waits for 12.0.0 and one Safari test that says a neck can be drawn.
 - **Names that appear beside an icon and shift the others.** Built twice, the name printed over the next icon and gave a phone nothing, and it made every icon move on every hover.
 - **Two docks side by side that move each other.** The controls dock in its corner replaces that arrangement.
 - **A "More" button for icons that do not fit.** Which icons hide behind it is a choice each site would have to make, and you asked for one rule.
@@ -137,3 +137,85 @@ One correction first, to question 10. The sixth build made the dock about two th
 ## Added 2026-11-16: the sixth rulings' questions
 
 Questions 10 and 12 to 18, as amended by the fold, are at the end of `RULINGS-6.md` (each with its default and the strip that shows it). The defaults stand until you answer; the strips that show each are made by the seventh pass.
+
+## Added 2026-11-22 and 2026-11-23, after the ninth build was measured
+
+The ninth build is the eighth with this round's rulings built in. It was measured on one build, in Chromium, where the glass's blur can be judged, and in Playwright WebKit 2287, the other browser we can run here, which draws the glass without its blur and is not what Safari shows, so your own look in Safari settles that. The measure stopped on 2026-11-22 when the Mac's kernel memory reached the point where our test runs wait for a restart, and it was finished after the restart on 2026-11-23: every test in both browsers, the older releases' tests in all four of their set-ups, the word-contrast cells, and the faults we plant to show each test can fail. It isn't ready to become 11.2.0. These stand in the way:
+
+- **The dock's code is 439 lines over its budget**: 5,180 lines against 11.1.0's 4,741. Nothing has been cut. Even with every block on the list removed, behaviours included, it would still be about 90 lines over; the list and what each block does are in `MEASURE-9.md`. Your apps could delete 425 lines of their own once 11.2.0 lands (question 22).
+- **A page that uses the dock loads 299 bytes more than on 11.1.0** (104,596 bytes compressed against 104,297), where the budget is no more than 11.1.0. Against 11.0.2 it is 1,965 bytes more (102,631).
+- **Opening a dock still costs a few more layout passes than allowed** in 10 of 32 first frames, and three times a figure dock forces one more in the frames after. Landing a fold or an open costs nothing extra, and a page of 18 docks forces one layout in its first frame, within its bound.
+- **One of 11.0.2's own tests fails, in both browsers.** In 11.0.2 a moving dock's current button shows the page behind it through its own small glass. This build took that away when it removed the segmented control's second channel inside the dock, and the rule that removed it and the rule that no published fix may be lost disagree. It needs a decision.
+- **Three more of the older releases' tests that 11.1.0 passes fail here**: a cockpit dock at phone width paints a sliver of a button past its round end while its row scrolls (both browsers), and a dock whose input layer is taller than one row rests with a corner 5 px short of round under touch (both browsers).
+- **Some buttons still jump instead of gliding.** When a word button's label gets shorter, the button beside it jumps about 106 px in one frame. When a button is added or removed, two buttons overlap by about 3.5 px while the row makes room (16 px with reduced motion), and in one change of the dock's regions a button jumps 15 px. In WebKit, when one face of the dock gives way to another, the leaving face moves 0.55 to 1.9 px in its first frame on six of the swaps, where it should hold still; and a wide dock at phone width starts its fold 71 to 78 ms after the tap, where 34 is allowed.
+- **A few names and highlights read under the floors.** In dark on the warm figure page, dials's selected 5Y and Lin read 4.48 and 4.36 to 1, under the 4.5 floor for words and under today's 7.69 and 7.56. In light, the action row's highlight on Format stands 1.196 to 1 off the dock, where 1.2 is needed. The loose control's current fill stands 1.27 off the dock in dark, under today's 1.32 (1.25 against 1.27 in WebKit).
+- **A few docks are not quite round at the ends**: a crossfading dock's corner is 13 px short of a capsule, a dock with one tall row 4 px short, and a vertical dock folds 3 px off a circle.
+- **atlas's figure dock in the head row** works as atlas asked when the folded dock shows its icon directly: none of the title is covered, and nothing moves when it opens. With a 44 px handle around the icon, as atlas's figure docks have today, it folds 74 px wide instead of 52 and covers part of the title.
+- **Most of the faults we plant to show a test can fail are caught**, in every browser they are meant for. Four are not: rounding the inner corners where the dock's regions meet changes pixels and no test notices; removing the dock's memory of how its row fits changes nothing a test reads; and two small unit tests miss a fault their browser tests catch (when a finger's lift starts the pause, and the current-page mark's glide).
+
+In WebKit the morning's frames came 17 ms apart instead of the 10 they came at before, so a test that reads the first frame after a tap read a little later there. The WebKit tests that failed were read again at 10 ms: the ones about a missing face for one frame and the reduced-motion folds pass, and the ones above stay.
+
+On the eighth build two things read badly, and this build answers both. Dials's selected range was hard to pick out, 1.07 to 1 off the dock, because a segmented control drew a second, darker channel inside the dock; that channel is gone, and the selected choice is drawn like any selected dock button (1.25 to 1 off the dock in light, 1.37 in dark). A hovered Home looked like a second current page; the hover is now fainter than the current page's highlight in both themes.
+
+Your questions with strips from this build. Each has a default, and the work goes on with it unless you say otherwise.
+
+3. **How long a dock stays after you leave.** 6 s for a site's dock whatever the length of the visit (6,004 to 6,012 ms read), and 3 s for a controls dock (3,026 ms). The pause that grew with the visit is gone.
+
+    Default: the fixed pauses.
+
+5. **A folded card or rounded dock.** Both fold to a circle, 56 px across with a 28 px corner, and keep their corners open (24 px for the card, 16 for the rounded dock). Nothing is scaled while they move, so the corner is one shape in every frame.
+
+    ![a folded card and rounded dock](fold/strip-q5-9m.chromium.png)
+
+    Default: a circle for a folded card or rounded dock; 11.1.0's corners on a dock taller than one row.
+
+10. **A firmer dock.** In dark the dock takes the third of five steps. On the warm figure page it now stands 1.44 to 1 off the page, where today's barely stands off it (1.01), and the page still shows through. On the near-black grid page about as much of the grid shows through it as through the light dock on the white grid. At that step the dark dock blurs 11.2 px, where the light dock and every card blur 16. Light takes the first step: 1.30 to 1 off the warm page (today's 1.20), and 1.31 on daraksha's ground (today's 1.21). The rule that would pick the dark step from the readings meets no step on every dock: at the third, the round dock lets a little more of the dark grid through than the light dock lets of the white one (0.124 folded and 0.147 open, against 0.122).
+
+    ![a firmer dock, on the grid page](fold/strip-q10-grid-9m.chromium.png)
+
+    Also `fold/strip-q10-field-9m.chromium.png` and `fold/strip-q10-daraksha-9m.chromium.png`.
+    Default: the third of five in dark, with its blur; the first in light.
+
+12. **Delete what no site uses, now.** 78 names a site can use against 11.1.0's 80: 15 added and 17 deleted, the dock's search helper among them.
+
+    ![the names](fold/strip-q12-names-9m.png)
+
+    Default: delete them in 11.2.0.
+
+14. **A dock that sits in a row with other things.** On this build atlas's figure dock pushes its legend 36 px when it opens and covers none of it. The overlay that would keep the row still is not built; on the eighth build it moved the legend 27 px and covered 1,872 px² of it, its link included. Atlas has since chosen the head row for its figure docks, where the open dock covers none of the legend, its link or the plot, and nothing moves.
+
+    ![a dock in a row](fold/strip-q14-9m.chromium.png)
+
+    Default: no change in 11.2.0.
+
+18. **How a hovered icon differs from the current page's.** The current page's highlight is 10 % of the dock's text colour. The hover is 6.5 % in light and 5 % in dark: in light it stands 1.08 to 1 from the current highlight and 1.15 off the dock; in dark 1.14 and 1.13. In light 5 % would stand 1.11 from both, but on one dock it stood under 1.1 off the dock, so light takes 6.5 %. The strip shows 5, 6.5, 8 and 10 % in both themes.
+
+    ![hover strengths](fold/strip-q18-9m.chromium.png)
+
+    Default: as built; the separation is yours to judge.
+
+19. **A dialog opened from the dock.** A press on the dimmed page closes the dialog, and the dock stays open for its usual pause, folding and landing 6.4 s later. A press outside a menu closes the menu and the dock together.
+
+    ![a dialog and a menu](fold/strip-q19-9m.chromium.png)
+
+    Also `fold/strip-q19-9m.webkit.png`, in headless WebKit, without the glass's blur.
+
+    Default: yes.
+
+20. **The controls dock on a desktop.** With four controls it rests folded at 1440 and at 390, opens under the pointer, and folds again 3.1 s after the pointer leaves. With one control it is that control.
+
+    ![the controls dock](fold/strip-q20-9m.chromium.png)
+
+    Also `fold/strip-q20-9m.webkit.png`, in headless WebKit, without the glass's blur.
+
+    Default: yes, with icons at half the button.
+
+21. **The selected tab in dark.** On the warm figure page the selected Reports reads 4.26 to 1 on its highlight, under the 4.5 floor for words but above today's 3.26; dials's selected 5Y reads 4.49 in this frame and 4.48 in the word-contrast cells, under the floor and under today's 7.69, so it stands in the way of the release. On the dark grid page Reports reads 10.33 (today's 9.62). The highlights stand 1.29 to 1.37 off the dock.
+
+    ![the selected tab in dark](fold/strip-q21-9m.chromium.png)
+
+    Default: keep the dock glass and every name readable; where a selected name still can't reach the floor at the third step, as here on the warm page, the highlight is the faintest that still reads as selected, and those docks are named.
+
+22. **The dock's code.** It is 5,180 lines against 11.1.0's 4,741, 439 more. The list of what could still go is in `MEASURE-9.md`: about 33 lines rewritten shorter with nothing you'd see, and the rest each a behaviour a ruling or a site asked for (nothing changing in a single frame, daraksha's fission seat, 11.1.0's long press, and others). With all of it removed the dock would still be about 92 lines over. Your apps could delete 425 lines of their own with 11.2.0 (their holds, folds and the controls seat), which would leave the two together 14 lines over 11.1.0.
+
+    Default: keep every behaviour. The release waits until the count is met, or until you name what to drop, or let the apps' deletions count against the dock's growth.
