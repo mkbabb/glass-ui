@@ -1,0 +1,22 @@
+[
+ {"name":"filters-sheet","cell":"390t-light","url":"/ovf.html","do":["tap:[data-testid=ovf-open-filters]","wait:2500"],
+  "sel":["[data-testid=ovf-filters]","[data-testid=ovf-filters-body]","[data-testid=ovf-filters] .glass-dock","[data-testid=ovf-filters] .dock-layers","[data-testid=ovf-filters] .dock-run","[data-testid=ovf-filters] .segmented-tabs","[data-testid=ovf-filters] [data-slot=toggle-group]","[data-testid=ovf-filters] .ovf-chips","[data-testid=ovf-filters] [data-slot=select-trigger]","[data-testid=ovf-filters] [data-slot=input]"]},
+ {"name":"filters-sheet-swipe","cell":"390t-light","url":"/ovf.html","do":["tap:[data-testid=ovf-open-filters]","wait:2500","swipe:[data-testid=ovf-filters-body]@0@-200","eval:document.querySelector('[data-testid=ovf-filters-body]').scrollLeft","swipe:[data-testid=ovf-filters-body]@48@-200","eval:document.querySelector('[data-testid=ovf-filters-body]').scrollLeft","swipe:[data-testid=ovf-filters-body]@-150@0","eval:document.querySelector('[data-testid=ovf-filters-body]').scrollLeft"],
+  "sel":["[data-testid=ovf-filters-body]"]},
+ {"name":"detented-left-sheet","cell":"390t-light","url":"/containers/sheet","do":["key:Escape","wait:700","eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Edge')).querySelectorAll('.segmented-tab')[3].click()","wait:1200","key:Escape","wait:700","eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Detents')).querySelectorAll('.segmented-tab')[1].click()","wait:2500"],
+  "sel":["[data-slot=sheet-content]","[data-slot=sheet-detent-handle]","[data-slot=sheet-content-region]","[data-slot=sheet-content-region] > *","[data-slot=sheet-content] [data-slot=dialog-footer]","[data-slot=sheet-content] [data-slot=input]"]},
+ {"name":"menu","cell":"390t-light","url":"/ovf.html","do":["tap:[data-testid=ovf-open-menu]","wait:1200"],
+  "sel":["[data-slot=menu-content]","[data-slot=menu-content] [data-slot=menu-item]","[data-slot=menu-content] [data-slot=menu-sub-trigger]"]},
+ {"name":"popover","cell":"390t-light","url":"/ovf.html","do":["tap:[data-testid=ovf-open-popover]","wait:1200"],
+  "sel":["[data-slot=popover-content]","[data-slot=popover-content] p"]},
+ {"name":"select","cell":"390t-light","url":"/ovf.html","do":["tap:[data-testid=ovf-open-select]","wait:1200"],
+  "sel":["[data-slot=select-content]","[data-slot=select-viewport]","[data-slot=select-viewport] [role=option]"]},
+ {"name":"tooltip","cell":"1440-light","url":"/ovf.html","do":["eval:document.querySelector('[data-testid=ovf-open-tooltip]').focus()","wait:1000"],
+  "sel":["[data-slot=tooltip]","[role=tooltip]"]},
+ {"name":"narrow-column","cell":"390t-light","url":"/ovf.html","do":[],
+  "sel":[".ovf-narrow","[data-testid=ovf-narrow] [data-slot=command]","[data-testid=ovf-narrow] [data-slot=command-list]","[data-testid=ovf-narrow] [data-slot=command-item]","[data-testid=ovf-narrow] .segmented-tabs","[data-testid=ovf-narrow] [data-slot=toggle-group]","[data-testid=ovf-narrow] .glass-dock","[data-testid=ovf-narrow] [data-slot=number-field]","[data-testid=ovf-narrow] [data-slot=pager-dots]","[data-testid=ovf-narrow] [data-slot=accordion-trigger]","[data-testid=ovf-narrow] .glass-chip"]},
+ {"name":"constellation-slider","cell":"390t-light","url":"/substrates/constellation","do":[],
+  "sel":[".slider-lane",".slider-range"]},
+ {"name":"main-drift","cell":"390t-light","url":"/foundations/colors","do":["eval:(()=>{const t=document.querySelector('.story-variant-row .segmented-tab');t.textContent='Quarterly enrollment by district and program, all years';return document.querySelector('main').scrollWidth})()","wait:600","swipe:main@0@-240","eval:document.querySelector('main').scrollLeft","swipe:main@16@-240","eval:document.querySelector('main').scrollLeft","swipe:main@48@-240","eval:document.querySelector('main').scrollLeft","swipe:main@96@-240","eval:document.querySelector('main').scrollLeft"],
+  "sel":["main"]}
+]

@@ -1,0 +1,3083 @@
+{
+ "families": {
+  "artefact": "a reading the probe made, not the page",
+  "F1": "SegmentedTabs strip wider than its box",
+  "F2": "detented sheet at a narrow rung",
+  "F2c": "the toast body's grid column (Toaster.vue), the toast past the screen",
+  "F4a": "Timeline end targets past the plate",
+  "F4b": "PagerDots wider than its box",
+  "designed-dock": "dock: the run's 4 px focus-ring reserve, the run strip, the status live region, a trigger's coarse hit slop (touch-floor.css), the rail's summary layer inside the dock's padding",
+  "designed-strip": "a wide table scrolling inside the DataTable demo's own scroller",
+  "designed-motion": "the Alert stage mid-entrance: nothing is past it 1.5 s later (triage)",
+  "badge": "Badge never wraps (house ruling): beyond its contract",
+  "designed-paint": "a paint or a strip the part means (shimmer, reveal, deck strip, staff window, blob bleed, range fill, status marks, corner hit area, halo)",
+  "demo-stage": "the demo's own stage or chassis CSS under the stress pass",
+  "F7": "a selected Chip's flood scale (glass-chip.css:27-28) past a full-width parent; a fault where that parent scrolls",
+  "F5": "LabeledField side by side in a narrow box: its layout collapses by viewport width, not by its box",
+  "menu-indicator": "menu check column narrower than its icon (inside the row's padding)",
+  "F6": "an icon Button squeezed below its icon (min-inline-size: 0)",
+  "F3": "a long word in a part's text (Label, Button, Chip, ToggleGroup item, menu row, Select, Command, Accordion, Popover, Toast)",
+  "pan": "a vertical scroller panned sideways by a horizontal swipe (the spill inside it is the cause)",
+  "page": "the document wider than the viewport",
+  "edge-sub2": "past the screen by 2 px or less",
+  "other": "a demo stage's clip around an F3 part, with no breaker recorded under it"
+ },
+ "rows": [
+  {
+   "family": "artefact",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "b-vertical": 1
+   },
+   "routes": {
+    "/containers/command": 235
+   },
+   "max": 235,
+   "n": 1,
+   "sample": {
+    "route": "/containers/command",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.demo-app-shell.relative.text-foreground > main.demo-main-scroller.smooth-scroll.relative.min-h-0",
+    "breaker": "section.story-variants > div.story-variant-row > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group] district_enrollment_by_program_quarterl"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 3,
+    "a-spill": 4
+   },
+   "routes": {
+    "/forms/checks": 3,
+    "/containers/expandable-container": 1101,
+    "/compositions/auth-shell": 87,
+    "/compositions/settings": 102
+   },
+   "max": 1101,
+   "n": 7,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 3,
+    "a-spill": 19,
+    "b-horizontal": 2,
+    "a-clipped": 3
+   },
+   "routes": {
+    "/display/buttons": 91,
+    "/forms/checks": 234,
+    "/containers/expandable-container": 904,
+    "/compositions/auth-shell": 59,
+    "/compositions/settings": 66
+   },
+   "max": 904,
+   "n": 27,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 2,
+    "a-spill": 4
+   },
+   "routes": {
+    "/containers/expandable-container": 1101,
+    "/compositions/settings": 102,
+    "/compositions/auth-shell": 87
+   },
+   "max": 1101,
+   "n": 6,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 4,
+    "a-spill": 19,
+    "a-clipped": 3
+   },
+   "routes": {
+    "/display/buttons": 64,
+    "/forms/checks": 235,
+    "/containers/expandable-container": 904,
+    "/compositions/settings": 66,
+    "/compositions/auth-shell": 59
+   },
+   "max": 904,
+   "n": 26,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 4,
+    "a-clipped": 2
+   },
+   "routes": {
+    "/forms/select": 48,
+    "/containers/expandable-container": 904
+   },
+   "max": 904,
+   "n": 6,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/checks": 40,
+    "/containers/expandable-container": 1032
+   },
+   "max": 1032,
+   "n": 2,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 5,
+    "a-clipped": 2
+   },
+   "routes": {
+    "/forms/checks": 40,
+    "/forms/select": 48,
+    "/containers/expandable-container": 1101
+   },
+   "max": 1101,
+   "n": 7,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 4,
+    "a-clipped": 2
+   },
+   "routes": {
+    "/forms/select": 48,
+    "/containers/expandable-container": 904
+   },
+   "max": 904,
+   "n": 6,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 2,
+    "a-spill": 2
+   },
+   "routes": {
+    "/containers/expandable-container": 845
+   },
+   "max": 845,
+   "n": 4,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 3,
+    "a-spill": 6
+   },
+   "routes": {
+    "/forms/checks": 3,
+    "/forms/select": 48,
+    "/containers/expandable-container": 1101,
+    "/compositions/settings": 102,
+    "/compositions/auth-shell": 87
+   },
+   "max": 1101,
+   "n": 9,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "demo-stage",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 3,
+    "a-spill": 27,
+    "b-horizontal": 3,
+    "a-clipped": 3
+   },
+   "routes": {
+    "/forms/toggle": 57,
+    "/display/buttons": 91,
+    "/forms/checks": 234,
+    "/forms/select": 48,
+    "/containers/expandable-container": 904,
+    "/compositions/settings": 66,
+    "/compositions/auth-shell": 59
+   },
+   "max": 904,
+   "n": 36,
+   "sample": {
+    "route": "/containers/expandable-container",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.expandable-stage",
+    "breaker": "div.story-stage-box > div.expandable-stage > div.expandable-container.expandable-stage-box Quarterly enrollment by district and program, all yearsdistr"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-dark",
+   "classes": {
+    "a-spill": 42
+   },
+   "routes": {
+    "/foundations/colors": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/select": 4,
+    "/forms/checks": 4,
+    "/forms/toggle": 4,
+    "/forms/chip": 4,
+    "/forms/labeled-field": 4,
+    "/containers/dialog": 4,
+    "/containers/sheet": 4,
+    "/containers/popover": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/tooltip": 4,
+    "/containers/accordion": 4,
+    "/containers/expandable-container": 4,
+    "/containers/command": 4,
+    "/navigation/pager-dots": 4,
+    "/data/timeline": 4,
+    "/feedback/toast": 4,
+    "/compositions/auth-shell": 4,
+    "/compositions/settings": 4
+   },
+   "max": 4,
+   "n": 42,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "base",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-28-full.dock-layer.dock-layer--full.dock-run Auth ShellSettingsEmpty States"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 422
+   },
+   "routes": {
+    "/foundations/colors": 10,
+    "/display/buttons": 10,
+    "/forms/inputs": 10,
+    "/forms/select": 10,
+    "/forms/checks": 10,
+    "/forms/toggle": 10,
+    "/forms/chip": 10,
+    "/forms/labeled-field": 10,
+    "/containers/dialog": 10,
+    "/containers/sheet": 10,
+    "/containers/popover": 10,
+    "/containers/dropdown-menu": 10,
+    "/containers/tooltip": 10,
+    "/containers/accordion": 10,
+    "/containers/expandable-container": 10,
+    "/containers/command": 10,
+    "/navigation/pager-dots": 10,
+    "/data/timeline": 10,
+    "/feedback/toast": 10,
+    "/compositions/auth-shell": 10,
+    "/compositions/settings": 10
+   },
+   "max": 10,
+   "n": 422,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.dock-layers > div.dock-layer.dock-layer--summary.is-active[role=button]",
+    "breaker": "div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active[role=button] > span.demo-sidebar-face "
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "a-spill": 21
+   },
+   "routes": {
+    "/foundations/colors": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/select": 4,
+    "/forms/checks": 4,
+    "/forms/toggle": 4,
+    "/forms/chip": 4,
+    "/forms/labeled-field": 4,
+    "/containers/dialog": 4,
+    "/containers/sheet": 4,
+    "/containers/popover": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/tooltip": 4,
+    "/containers/accordion": 4,
+    "/containers/expandable-container": 4,
+    "/containers/command": 4,
+    "/navigation/pager-dots": 4,
+    "/data/timeline": 4,
+    "/feedback/toast": 4,
+    "/compositions/auth-shell": 4,
+    "/compositions/settings": 4
+   },
+   "max": 4,
+   "n": 21,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "base",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-28-full.dock-layer.dock-layer--full.dock-run Auth ShellSettingsEmpty States"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 122
+   },
+   "routes": {
+    "/foundations/colors": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/select": 4,
+    "/forms/checks": 4,
+    "/forms/toggle": 4,
+    "/forms/chip": 4,
+    "/forms/labeled-field": 4,
+    "/containers/dialog": 4,
+    "/containers/sheet": 4,
+    "/containers/popover": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/tooltip": 4,
+    "/containers/accordion": 4,
+    "/containers/expandable-container": 4,
+    "/containers/command": 4,
+    "/navigation/pager-dots": 4,
+    "/data/timeline": 4,
+    "/feedback/toast": 4,
+    "/compositions/auth-shell": 4,
+    "/compositions/settings": 4
+   },
+   "max": 4,
+   "n": 122,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-28-full.dock-layer.dock-layer--full.dock-run Auth ShellSettingsEmpty States"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 300
+   },
+   "routes": {
+    "/containers/sheet": 10,
+    "/data/timeline": 10,
+    "/foundations/colors": 10,
+    "/forms/toggle": 10,
+    "/display/buttons": 10,
+    "/forms/inputs": 10,
+    "/forms/labeled-field": 10,
+    "/forms/checks": 10,
+    "/containers/dropdown-menu": 10,
+    "/containers/popover": 10,
+    "/forms/select": 4,
+    "/containers/command": 10,
+    "/containers/accordion": 4,
+    "/forms/chip": 10,
+    "/containers/expandable-container": 10,
+    "/compositions/settings": 10,
+    "/compositions/auth-shell": 10,
+    "/navigation/pager-dots": 10
+   },
+   "max": 10,
+   "n": 300,
+   "sample": {
+    "route": "/navigation/pager-dots",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.dock-layers > div.dock-layer.dock-layer--summary.is-active[role=button]",
+    "breaker": "div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active[role=button] > span.demo-sidebar-face "
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 109
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4,
+    "/forms/select": 4,
+    "/containers/command": 4,
+    "/containers/accordion": 4,
+    "/forms/chip": 4,
+    "/containers/expandable-container": 4,
+    "/compositions/settings": 4,
+    "/compositions/auth-shell": 4,
+    "/navigation/pager-dots": 4,
+    "/containers/dialog": 4,
+    "/feedback/toast": 4,
+    "/containers/tooltip": 4
+   },
+   "max": 4,
+   "n": 109,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-40-full.dock-layer.dock-layer--full.dock-run DialogSheetPopoverMenuTooltipAccordionExpandable ContainerCo"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 101
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4,
+    "/forms/select": 4,
+    "/containers/command": 4,
+    "/containers/accordion": 4,
+    "/forms/chip": 4,
+    "/containers/expandable-container": 4,
+    "/compositions/settings": 4,
+    "/compositions/auth-shell": 4,
+    "/navigation/pager-dots": 4
+   },
+   "max": 4,
+   "n": 101,
+   "sample": {
+    "route": "/navigation/pager-dots",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-26-full.dock-layer.dock-layer--full.dock-run TabsCarouselPager DotsToC Tracking"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 300
+   },
+   "routes": {
+    "/containers/sheet": 10,
+    "/data/timeline": 10,
+    "/foundations/colors": 10,
+    "/forms/toggle": 10,
+    "/display/buttons": 10,
+    "/forms/inputs": 10,
+    "/forms/labeled-field": 10,
+    "/forms/checks": 10,
+    "/containers/dropdown-menu": 10,
+    "/containers/popover": 10,
+    "/forms/select": 4,
+    "/containers/command": 10,
+    "/containers/accordion": 4,
+    "/forms/chip": 10,
+    "/containers/expandable-container": 10,
+    "/compositions/settings": 10,
+    "/compositions/auth-shell": 10,
+    "/navigation/pager-dots": 10
+   },
+   "max": 10,
+   "n": 300,
+   "sample": {
+    "route": "/navigation/pager-dots",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.dock-layers > div.dock-layer.dock-layer--summary.is-active[role=button]",
+    "breaker": "div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active[role=button] > span.demo-sidebar-face "
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 57
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4
+   },
+   "max": 4,
+   "n": 57,
+   "sample": {
+    "route": "/containers/popover",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-28-full.dock-layer.dock-layer--full.dock-run DialogSheetPopoverMenuTooltipAccordionExpandable ContainerCo"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 422
+   },
+   "routes": {
+    "/containers/sheet": 10,
+    "/data/timeline": 10,
+    "/foundations/colors": 10,
+    "/forms/toggle": 10,
+    "/display/buttons": 10,
+    "/forms/inputs": 10,
+    "/forms/labeled-field": 10,
+    "/forms/checks": 10,
+    "/containers/dropdown-menu": 10,
+    "/containers/popover": 10,
+    "/forms/select": 10,
+    "/containers/command": 10,
+    "/containers/accordion": 10,
+    "/forms/chip": 10,
+    "/containers/expandable-container": 10,
+    "/compositions/settings": 10,
+    "/compositions/auth-shell": 10,
+    "/navigation/pager-dots": 10,
+    "/containers/dialog": 10,
+    "/feedback/toast": 10,
+    "/containers/tooltip": 10
+   },
+   "max": 10,
+   "n": 422,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.dock-layers > div.dock-layer.dock-layer--summary.is-active[role=button]",
+    "breaker": "div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active[role=button] > span.demo-sidebar-face "
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 122
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4,
+    "/forms/select": 4,
+    "/containers/command": 4,
+    "/containers/accordion": 4,
+    "/forms/chip": 4,
+    "/containers/expandable-container": 4,
+    "/compositions/settings": 4,
+    "/compositions/auth-shell": 4,
+    "/navigation/pager-dots": 4,
+    "/containers/dialog": 4,
+    "/feedback/toast": 4,
+    "/containers/tooltip": 4
+   },
+   "max": 4,
+   "n": 122,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-40-full.dock-layer.dock-layer--full.dock-run DialogSheetPopoverMenuTooltipAccordionExpandable ContainerCo"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 109
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4,
+    "/forms/select": 4,
+    "/containers/command": 4,
+    "/containers/accordion": 4,
+    "/forms/chip": 4,
+    "/containers/expandable-container": 4,
+    "/compositions/settings": 4,
+    "/compositions/auth-shell": 4,
+    "/navigation/pager-dots": 4,
+    "/containers/dialog": 4,
+    "/feedback/toast": 4,
+    "/containers/tooltip": 4
+   },
+   "max": 4,
+   "n": 109,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-40-full.dock-layer.dock-layer--full.dock-run DialogSheetPopoverMenuTooltipAccordionExpandable ContainerCo"
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 422
+   },
+   "routes": {
+    "/containers/sheet": 10,
+    "/data/timeline": 10,
+    "/foundations/colors": 10,
+    "/forms/toggle": 10,
+    "/display/buttons": 10,
+    "/forms/inputs": 10,
+    "/forms/labeled-field": 10,
+    "/forms/checks": 10,
+    "/containers/dropdown-menu": 10,
+    "/containers/popover": 10,
+    "/forms/select": 10,
+    "/containers/command": 10,
+    "/containers/accordion": 10,
+    "/forms/chip": 10,
+    "/containers/expandable-container": 10,
+    "/compositions/settings": 10,
+    "/compositions/auth-shell": 10,
+    "/navigation/pager-dots": 10,
+    "/containers/dialog": 10,
+    "/feedback/toast": 10,
+    "/containers/tooltip": 10
+   },
+   "max": 10,
+   "n": 422,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.dock-layers > div.dock-layer.dock-layer--summary.is-active[role=button]",
+    "breaker": "div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active[role=button] > span.demo-sidebar-face "
+   }
+  },
+  {
+   "family": "designed-dock",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 122
+   },
+   "routes": {
+    "/containers/sheet": 4,
+    "/data/timeline": 4,
+    "/foundations/colors": 4,
+    "/forms/toggle": 4,
+    "/display/buttons": 4,
+    "/forms/inputs": 4,
+    "/forms/labeled-field": 4,
+    "/forms/checks": 4,
+    "/containers/dropdown-menu": 4,
+    "/containers/popover": 4,
+    "/forms/select": 4,
+    "/containers/command": 4,
+    "/containers/accordion": 4,
+    "/forms/chip": 4,
+    "/containers/expandable-container": 4,
+    "/compositions/settings": 4,
+    "/compositions/auth-shell": 4,
+    "/navigation/pager-dots": 4,
+    "/containers/dialog": 4,
+    "/feedback/toast": 4,
+    "/containers/tooltip": 4
+   },
+   "max": 4,
+   "n": 122,
+   "sample": {
+    "route": "/containers/tooltip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "nav.demo-bottom-dock > div.demo-bottom-dock__shell.glass-dock.horizontal.shape-pill",
+    "breaker": "div.dock-controls > div.dock-layers > div#glass-dock-v-40-full.dock-layer.dock-layer--full.dock-run DialogSheetPopoverMenuTooltipAccordionExpandable ContainerCo"
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 864
+   },
+   "max": 864,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 5
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/feedback/toast": 10,
+    "/ovf.html": 10
+   },
+   "max": 234,
+   "n": 6,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 864
+   },
+   "max": 864,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/feedback/toast": 10
+   },
+   "max": 234,
+   "n": 4,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 2
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/ovf.html": 44
+   },
+   "max": 234,
+   "n": 3,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 864
+   },
+   "max": 864,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 234
+   },
+   "max": 234,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 864
+   },
+   "max": 864,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 5
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/ovf.html": 10,
+    "/feedback/toast": 10
+   },
+   "max": 234,
+   "n": 6,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/feedback/toast": 10
+   },
+   "max": 234,
+   "n": 4,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/containers/sheet": 864
+   },
+   "max": 864,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "designed-paint",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 5
+   },
+   "routes": {
+    "/containers/sheet": 234,
+    "/ovf.html": 10,
+    "/feedback/toast": 10
+   },
+   "max": 234,
+   "n": 6,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > span[data-slot=glass-graded-halo]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/feedback/toast": 2,
+    "/ovf.html": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf toast",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/feedback/toast": 2,
+    "/ovf.html": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf toast",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 2
+   },
+   "routes": {
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 2,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 2
+   },
+   "routes": {
+    "/ovf.html": 2
+   },
+   "max": 2,
+   "n": 2,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf toast",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/ovf.html": 2,
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/ovf.html": 2,
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 2
+   },
+   "routes": {
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 2,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/ovf.html": 2,
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "edge-sub2",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 4
+   },
+   "routes": {
+    "/ovf.html": 2,
+    "/feedback/toast": 2
+   },
+   "max": 2,
+   "n": 4,
+   "sample": {
+    "route": "/feedback/toast",
+    "step": "open:toasts",
+    "el": "div[role=region] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-dark",
+   "classes": {
+    "c-page": 1,
+    "a-spill": 4,
+    "a-edge": 1
+   },
+   "routes": {
+    "/ovf.html": 431
+   },
+   "max": 431,
+   "n": 6,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "base",
+    "el": "div.ovf-narrow > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group]",
+    "breaker": "div.ovf-narrow > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group] > button.segmented-tab Individual schools div.ovf-narrow > div.segmente"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-scroller": 12,
+    "a-spill": 88,
+    "a-clipped": 2,
+    "c-page": 12,
+    "a-edge": 12
+   },
+   "routes": {
+    "/foundations/colors": 73,
+    "/containers/dialog": 126,
+    "/containers/sheet": 562,
+    "/containers/popover": 126,
+    "/containers/accordion": 126,
+    "/compositions/settings": 1477,
+    "/ovf.html": 1166
+   },
+   "max": 1477,
+   "n": 126,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist]",
+    "breaker": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist] > button.segmented-tab[role=tab] Qu"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "c-page": 1,
+    "a-spill": 4
+   },
+   "routes": {
+    "/ovf.html": 275
+   },
+   "max": 275,
+   "n": 5,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "base",
+    "el": "div.ovf-narrow > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group]",
+    "breaker": "div.ovf-narrow > div.segmented-tabs.segmented-tabs--pill.glass-capsule-track[role=group] > button.segmented-tab Individual schools div.ovf-narrow > div.segmente"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 22,
+    "a-spill": 121,
+    "b-horizontal": 17,
+    "a-clipped": 2,
+    "c-page": 12
+   },
+   "routes": {
+    "/foundations/colors": 664,
+    "/forms/select": 339,
+    "/containers/dialog": 704,
+    "/containers/sheet": 1030,
+    "/containers/popover": 704,
+    "/containers/dropdown-menu": 339,
+    "/containers/accordion": 704,
+    "/containers/expandable-container": 339,
+    "/containers/command": 339,
+    "/data/timeline": 339,
+    "/compositions/settings": 1421,
+    "/ovf.html": 821
+   },
+   "max": 1421,
+   "n": 174,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist]",
+    "breaker": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist] > button.segmented-tab[role=tab] Qu"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-scroller": 7,
+    "a-spill": 44,
+    "a-clipped": 2,
+    "c-page": 5,
+    "a-edge": 5
+   },
+   "routes": {
+    "/containers/sheet": 508,
+    "/foundations/colors": 73,
+    "/containers/popover": 74,
+    "/compositions/settings": 1479,
+    "/ovf.html": 431
+   },
+   "max": 1479,
+   "n": 63,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist]",
+    "breaker": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist] > button.segmented-tab[role=tab] Qu"
+   }
+  },
+  {
+   "family": "F1",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 18,
+    "a-spill": 79,
+    "a-clipped": 2,
+    "c-page": 5,
+    "a-edge": 5
+   },
+   "routes": {
+    "/containers/sheet": 1030,
+    "/data/timeline": 339,
+    "/foundations/colors": 643,
+    "/containers/dropdown-menu": 339,
+    "/containers/popover": 705,
+    "/containers/command": 339,
+    "/containers/expandable-container": 339,
+    "/compositions/settings": 1423,
+    "/ovf.html": 275,
+    "/containers/dialog": 666
+   },
+   "max": 1423,
+   "n": 109,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist]",
+    "breaker": "div[data-slot=card-content].card-content.settings-stage-content > div.segmented-tabs.segmented-tabs--underline[role=tablist] > button.segmented-tab[role=tab] Qu"
+   }
+  },
+  {
+   "family": "F2",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 1
+   },
+   "routes": {
+    "/containers/sheet": 66
+   },
+   "max": 66,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > div[data-slot=sheet-content].fixed.border-r.glass-floating[role=dialog]",
+    "breaker": "body > div[data-slot=sheet-content]#reka-dialog-content-v-25.fixed.border-r.glass-floating[role=dialog] > div[data-slot=sheet-detent-handle][role=slider]  body "
+   }
+  },
+  {
+   "family": "F2",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 1
+   },
+   "routes": {
+    "/containers/sheet": 66
+   },
+   "max": 66,
+   "n": 1,
+   "sample": {
+    "route": "/containers/sheet",
+    "step": "variant:Detents=On",
+    "el": "body > div[data-slot=sheet-content].fixed.border-r.glass-floating[role=dialog]",
+    "breaker": "body > div[data-slot=sheet-content]#reka-dialog-content-v-25.fixed.border-r.glass-floating[role=dialog] > div[data-slot=sheet-detent-handle][role=slider]  body "
+   }
+  },
+  {
+   "family": "F2c",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1,
+    "a-edge": 1
+   },
+   "routes": {
+    "/ovf.html": 78
+   },
+   "max": 78,
+   "n": 2,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf toast",
+    "el": "ol.fixed.top-0.z-toast.flex > li[data-slot=toast].glass-floating.glass-reveal.glass-vaporize.glass-corner-host",
+    "breaker": "ol.fixed.top-0.z-toast.flex > li[data-slot=toast].glass-floating.glass-reveal.glass-vaporize.glass-corner-host > div.grid.gap-1 district_enrollment_by_program_q"
+   }
+  },
+  {
+   "family": "F2c",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1
+   },
+   "routes": {
+    "/ovf.html": 26.600000000000023
+   },
+   "max": 26.600000000000023,
+   "n": 1,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf toast",
+    "el": "li[data-slot=toast].glass-floating.glass-reveal.glass-vaporize.glass-corner-host > div.grid.gap-1",
+    "breaker": "district_enrollment_by_program_quarterly_2019-2026.csvdistri"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-dark",
+   "classes": {
+    "a-clipped": 2,
+    "a-spill": 6
+   },
+   "routes": {
+    "/ovf.html": 245
+   },
+   "max": 245,
+   "n": 8,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "base",
+    "el": "div[data-slot=accordion-item].disclosure-item > h3[data-slot=accordion-header].disclosure-header",
+    "breaker": "div[data-slot=accordion-item].disclosure-item > h3[data-slot=accordion-header].disclosure-header > button[data-slot=accordion-trigger]#glass-disclosure-trigger-"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 142,
+    "a-clipped": 32
+   },
+   "routes": {
+    "/display/buttons": 199,
+    "/forms/inputs": 249,
+    "/forms/select": 267,
+    "/forms/checks": 1060,
+    "/forms/toggle": 274,
+    "/forms/chip": 92,
+    "/forms/labeled-field": 259,
+    "/feedback/toast": 179,
+    "/compositions/auth-shell": 177,
+    "/compositions/settings": 225,
+    "/ovf.html": 266
+   },
+   "max": 1060,
+   "n": 174,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div.checks-stage-group.checks-stage-switches Quarterly enrollment by district and program, all yearsdistr div.story-sta"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "a-clipped": 2,
+    "a-spill": 6
+   },
+   "routes": {
+    "/ovf.html": 204
+   },
+   "max": 204,
+   "n": 8,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "base",
+    "el": "div[data-slot=command-group].command__group[role=group] > div[data-slot=command-item].command__item.interactive-item.glass-menu-row.relative[role=option]",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 167,
+    "a-scroller": 6,
+    "a-clipped": 40,
+    "b-horizontal": 2
+   },
+   "routes": {
+    "/display/buttons": 154,
+    "/forms/inputs": 104,
+    "/forms/select": 257,
+    "/forms/checks": 585,
+    "/forms/toggle": 262,
+    "/forms/chip": 72,
+    "/forms/labeled-field": 120,
+    "/feedback/toast": 152,
+    "/compositions/auth-shell": 128,
+    "/compositions/settings": 138,
+    "/ovf.html": 255
+   },
+   "max": 585,
+   "n": 215,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div[data-slot=radio-group].radio-group.checks-stage-group[role=radiogroup] district_enrollment_by_program_quarterly_201"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 79,
+    "a-clipped": 14
+   },
+   "routes": {
+    "/display/buttons": 185,
+    "/forms/inputs": 225,
+    "/forms/labeled-field": 235,
+    "/forms/checks": 988,
+    "/forms/chip": 92,
+    "/compositions/settings": 225,
+    "/compositions/auth-shell": 177,
+    "/ovf.html": 279
+   },
+   "max": 988,
+   "n": 93,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div.checks-stage-group.checks-stage-switches Quarterly enrollment by district and program, all yearsdistr div.story-sta"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-scroller": 4,
+    "a-spill": 116,
+    "a-clipped": 18,
+    "a-edge": 5
+   },
+   "routes": {
+    "/forms/toggle": 262,
+    "/display/buttons": 141,
+    "/forms/inputs": 81,
+    "/forms/labeled-field": 97,
+    "/forms/checks": 585,
+    "/forms/chip": 72,
+    "/compositions/settings": 139,
+    "/compositions/auth-shell": 129,
+    "/ovf.html": 215,
+    "/feedback/toast": 139
+   },
+   "max": 585,
+   "n": 143,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div[data-slot=radio-group].radio-group.checks-stage-group[role=radiogroup] district_enrollment_by_program_quarterly_201"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-edge": 1,
+    "a-spill": 1
+   },
+   "routes": {
+    "/ovf.html": 281.6
+   },
+   "max": 281.6,
+   "n": 2,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open:ovf tooltip",
+    "el": "body > div",
+    "breaker": "district_enrollment_by_program_quarterly_2019-2026.csvdistri"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1
+   },
+   "routes": {
+    "/ovf.html": 3
+   },
+   "max": 3,
+   "n": 1,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "button[data-slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover.h-(--control-h-md)[role=combobox] > span",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 76,
+    "a-clipped": 3,
+    "a-scroller": 3
+   },
+   "routes": {
+    "/forms/toggle": 80,
+    "/display/buttons": 199,
+    "/forms/inputs": 249,
+    "/forms/labeled-field": 259,
+    "/forms/checks": 1060,
+    "/forms/chip": 92,
+    "/compositions/settings": 225,
+    "/compositions/auth-shell": 177,
+    "/ovf.html": 89,
+    "/feedback/toast": 179
+   },
+   "max": 1060,
+   "n": 82,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div.checks-stage-group.checks-stage-switches Quarterly enrollment by district and program, all yearsdistr div.story-sta"
+   }
+  },
+  {
+   "family": "F3",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 8,
+    "a-scroller": 5,
+    "a-spill": 92,
+    "b-horizontal": 1
+   },
+   "routes": {
+    "/forms/toggle": 75,
+    "/display/buttons": 154,
+    "/forms/inputs": 104,
+    "/forms/labeled-field": 120,
+    "/forms/checks": 585,
+    "/forms/chip": 72,
+    "/compositions/settings": 138,
+    "/compositions/auth-shell": 128,
+    "/ovf.html": 82,
+    "/feedback/toast": 152
+   },
+   "max": 585,
+   "n": 106,
+   "sample": {
+    "route": "/forms/checks",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.checks-stage",
+    "breaker": "div.story-stage-box > div.checks-stage > div[data-slot=radio-group].radio-group.checks-stage-group[role=radiogroup] district_enrollment_by_program_quarterly_201"
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-dark",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 3,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "base",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 15
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 15,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "a-spill": 4
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 4,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "base",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 20
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 20,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 15
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 15,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 20
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 20,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 12
+   },
+   "max": 12,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4a",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 5
+   },
+   "routes": {
+    "/data/timeline": 22
+   },
+   "max": 22,
+   "n": 5,
+   "sample": {
+    "route": "/data/timeline",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.tl[role=group] > ul.tl__marks[role=list]",
+    "breaker": "div.tl[role=group] > ul.tl__marks[role=list] > li.tl__mark-seat "
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "a-spill": 2,
+    "a-edge": 5
+   },
+   "routes": {
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 7,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "base",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 26,
+    "a-edge": 60
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 86,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 12,
+    "a-edge": 25
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 37,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open-sub:cus-ring.glass-capsule :: Menu > submenu",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 38,
+    "a-edge": 60
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 98,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 38,
+    "a-edge": 60
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 98,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 17,
+    "a-edge": 25
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 66
+   },
+   "max": 66,
+   "n": 42,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "open-sub:cus-ring.glass-capsule :: Menu > submenu",
+    "el": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F4b",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 38,
+    "a-edge": 60,
+    "a-scroller": 2,
+    "b-horizontal": 1
+   },
+   "routes": {
+    "/navigation/pager-dots": 22,
+    "/ovf.html": 81
+   },
+   "max": 81,
+   "n": 101,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "main.ovf-page > div.ovf-narrow",
+    "breaker": "div[data-slot=pager-dots].pager-dots.inline-flex.items-center.justify-center[role=group] > div.pager-bed-layer > span.goo-dot  div[data-slot=pager-dots].pager-d"
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/compositions/settings": 16
+   },
+   "max": 16,
+   "n": 3,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > input[data-slot=input]#v-26-control.field-control.glass-control-edge "
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/compositions/settings": 16
+   },
+   "max": 16,
+   "n": 3,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > input[data-slot=input]#v-26-control.field-control.glass-control-edge "
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1,
+    "a-spill": 8
+   },
+   "routes": {
+    "/compositions/settings": 16
+   },
+   "max": 16,
+   "n": 9,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > input[data-slot=input]#v-26-control.field-control.glass-control-edge "
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1,
+    "a-spill": 8
+   },
+   "routes": {
+    "/compositions/settings": 16
+   },
+   "max": 16,
+   "n": 9,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > input[data-slot=input]#v-26-control.field-control.glass-control-edge "
+   }
+  },
+  {
+   "family": "F5",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/compositions/settings": 16
+   },
+   "max": 16,
+   "n": 3,
+   "sample": {
+    "route": "/compositions/settings",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control",
+    "breaker": "div[data-slot=labeled-field].labeled-field > div.labeled-field-control > input[data-slot=input]#v-26-control.field-control.glass-control-edge "
+   }
+  },
+  {
+   "family": "F6",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 2
+   },
+   "max": 2,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule",
+    "breaker": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule > svg.lucide.lucide-trash2-icon.lucide-trash-2 "
+   }
+  },
+  {
+   "family": "F6",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 3
+   },
+   "max": 3,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule",
+    "breaker": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule > svg.lucide.lucide-trash2-icon.lucide-trash-2 "
+   }
+  },
+  {
+   "family": "F6",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 7
+   },
+   "max": 7,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring",
+    "breaker": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring > svg.lucide.lucide-trash2-icon.lucide-trash-2 "
+   }
+  },
+  {
+   "family": "F6",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 7
+   },
+   "max": 7,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring",
+    "breaker": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring > svg.lucide.lucide-trash2-icon.lucide-trash-2 "
+   }
+  },
+  {
+   "family": "F6",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 2
+   },
+   "max": 2,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule",
+    "breaker": "div.buttons-stage > button[data-slot=button].button.tap-squish.focus-ring.glass-capsule > svg.lucide.lucide-trash2-icon.lucide-trash-2 "
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 72
+   },
+   "max": 72,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 72
+   },
+   "max": 72,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 12
+   },
+   "max": 12,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-labels:8 labels",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 6
+   },
+   "routes": {
+    "/forms/chip": 9,
+    "/ovf.html": 8
+   },
+   "max": 9,
+   "n": 6,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 13
+   },
+   "routes": {
+    "/forms/chip": 9,
+    "/ovf.html": 7
+   },
+   "max": 9,
+   "n": 13,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 12
+   },
+   "max": 12,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-labels:8 labels",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 12
+   },
+   "max": 12,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-labels:8 labels",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 12
+   },
+   "routes": {
+    "/ovf.html": 99
+   },
+   "max": 99,
+   "n": 12,
+   "sample": {
+    "route": "/ovf.html",
+    "step": "stress-labels:31 labels",
+    "el": "main.ovf-page > div.ovf-narrow",
+    "breaker": "main.ovf-page > div.ovf-narrow > button.glass-chip.glass-capsule.accent-tone.inline-flex district_enrollment_by_program_quarterly_2019-2026.csv main.ovf-page > "
+   }
+  },
+  {
+   "family": "F7",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/chip": 72
+   },
+   "max": 72,
+   "n": 2,
+   "sample": {
+    "route": "/forms/chip",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.chip-stage[role=group]",
+    "breaker": "div.story-stage-box > div.chip-stage[role=group] > button.glass-chip.glass-capsule.accent-tone.inline-flex Quarterly enrollment by district and program, all yea"
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-dark",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-dark",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 3,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "open-sub:-ring.glass-capsule :: Options > submenu",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 3,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "open-sub:-ring.glass-capsule :: Options > submenu",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 3,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "open-sub:-ring.glass-capsule :: Options > submenu",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 3,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "open-sub:-ring.glass-capsule :: Options > submenu",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure3",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 3
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 3,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "open-sub:-ring.glass-capsule :: Options > submenu",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "menu-indicator",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/containers/dropdown-menu": 5
+   },
+   "max": 5,
+   "n": 1,
+   "sample": {
+    "route": "/containers/dropdown-menu",
+    "step": "base",
+    "el": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator",
+    "breaker": "div[data-slot=menu-checkbox-item].menu__item.interactive-item.glass-menu-row[role=menuitemcheckbox] > span.menu__indicator > span "
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1,
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 74
+   },
+   "max": 74,
+   "n": 2,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 6,
+    "a-spill": 2
+   },
+   "routes": {
+    "/display/buttons": 134,
+    "/forms/chip": 14,
+    "/feedback/toast": 132
+   },
+   "max": 134,
+   "n": 8,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1,
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 60
+   },
+   "max": 60,
+   "n": 2,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "base",
+   "engine": "webkit",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 6,
+    "a-spill": 2
+   },
+   "routes": {
+    "/display/buttons": 121,
+    "/forms/chip": 14,
+    "/feedback/toast": 119
+   },
+   "max": 121,
+   "n": 8,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure2",
+   "engine": "webkit",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 6
+   },
+   "max": 6,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure3",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 6
+   },
+   "max": 6,
+   "n": 1,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-narrow:stage child at 240px",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "1440-light",
+   "classes": {
+    "a-clipped": 1,
+    "a-spill": 1
+   },
+   "routes": {
+    "/display/buttons": 74
+   },
+   "max": 74,
+   "n": 2,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  },
+  {
+   "family": "other",
+   "tag": "cure4",
+   "engine": "chromium",
+   "cell": "390t-light",
+   "classes": {
+    "a-clipped": 7,
+    "a-spill": 2
+   },
+   "routes": {
+    "/forms/toggle": 16,
+    "/display/buttons": 134,
+    "/forms/chip": 14,
+    "/feedback/toast": 132
+   },
+   "max": 134,
+   "n": 9,
+   "sample": {
+    "route": "/display/buttons",
+    "step": "stress-labels:16 labels",
+    "el": "div.story-stage-box > div.buttons-stage",
+    "breaker": ""
+   }
+  }
+ ]
+}
