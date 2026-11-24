@@ -270,3 +270,7 @@ Placed item by item in `design/dock-frames/inbound/value-js-2026-11-24-four-site
   - 13: Aurora keeps its context through a leave and fades in on its first frame.
 - **To the dock-redesign minor:** 3, 11 (a) and (c), and 12.
 - **fourier's own:** 14.
+
+## 2026-11-24: the detented scrim, from 11.1.1
+
+`audit/phone-scroll/scrim.patch` goes in 11.1.2's first row with the phone-scroll cure. Its witness: the detented Sheet's scrim ramps in from 0 and out to under 0.001, with no frame cut, in both engines. 11.1.1 ships without it, by the owner's order to ship only judged work before the limits (`glass-11.1.1-exits-scope.md`, the 2026-11-24 section).
