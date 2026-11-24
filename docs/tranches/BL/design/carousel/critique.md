@@ -182,3 +182,17 @@ The smallest form that serves atlas is one `moving` ref on the context and the s
 
 - `critique.md`: this file.
 - The patched tree and the keyboard check lived in `trees/` (gitignored) and are deleted.
+
+## Round 2, the second critic (2026-11-24): holds after fixes, two items blocking
+
+Chromium is Playwright's headless shell 149 on the GPU lane; WebKit is Playwright's WebKit 26.5, not Safari.
+
+1. **Reduced motion cuts.** `useDeckSnap.scrollTo` sends `instant` under reduced motion, and `styles.css` keeps `.carousel-item { transition: none }` there, so a press lands in one frame: at 91 ms in Chromium and 73 ms in WebKit at 1440. 11.1.1 travelled over 59 offsets. The motion canon's P0 says reduced motion shortens the travel to a fade and never makes a cut; the rule the patch followed (W-K.6 item 13) predates the owner's law of 2026-11-12. **The cure:** keep the instant seat, so nothing travels, and on a press fade the arriving slide's content in over a shortened duration (daraksha uses 144 ms). Read it in both engines.
+2. **SITES.md on PagerDots.** The note to value.js and daraksha says PagerDots does not change. That is false for 11.1.2: LT-18 takes the Carousel dots to the 44 px coarse floor, and O-372 places atlas's two pager-dots commits in 11.1.2. daraksha's portraits page renders glass's PagerDots (`src/pages/PortraitsPage.vue:556`). **The cure:** say this study's patches do not touch PagerDots, and that 11.1.2's other rows change its coarse size and its end dot, so the portraits dots are worth a look on 11.1.2.
+
+**For atlas's note.** Keeping 9235d026c conflicts in `useCarousel.ts`: it adds `watch(active, (i) => deck.go(i))` and the `watch` import where 11.1.2 does. atlas drops that hunk. f373de108 also changes StillConstellation; ROOT §7 already says to drop the commit.
+
+**Notes left open.**
+- A named view timeline would cure the `overflow: hidden` case at its root: `view-timeline: --cm inline` on the member, with the content's `animation-timeline: --cm`. It reads the shipped values in Chromium; WebKit was not read.
+- A Carousel mounted hidden loses its start value.
+- Dot jumps in Chromium grow with distance: 0 to 7 takes 1.4 s.
