@@ -4,7 +4,9 @@
 //   round   on a touch screen every SegmentedTabs strip, its tabs and its selected plate
 //           are round-ended, at a compact width and past 20rem where the strip is a bar
 //   weight  selecting and deselecting a word-labelled ToggleGroupItem moves no item box
-//   lift    after a tap on touch, a `scale-on-hover` element returns to its rest scale
+//   lift    a `scale-on-hover` element carries the utility's rule (it rests at scale 1, where
+//           an element without the rule reads none); after a tap on touch it returns to that
+//           rest scale, and under a mouse hover at 1440 it lifts to `--scale-hover`
 import { expect, test, type Page } from "@playwright/test";
 import { gotoReady, isPhone, pressOn } from "./release-11-1-1/film";
 
@@ -66,11 +68,27 @@ test("weight · selecting a word-labelled ToggleGroupItem moves no item box", as
     expect(off, "deselected: every item where it was").toEqual(rest);
 });
 
-test("lift · a scale-on-hover element returns to rest after a tap", async ({ page }, info) => {
-    test.skip(!isPhone(info.project.name), "a tap is a touch claim");
+test("lift · a scale-on-hover element lifts under a hovering mouse and returns to rest after a tap", async ({ page }, info) => {
+    const project = info.project.name;
     await openHarness(page);
-    await pressOn(page, info.project.name, '[data-testid="c-lift"]');
-    await page.waitForTimeout(800);
-    const scale = await page.locator('[data-testid="c-lift"]').evaluate((el) => getComputedStyle(el).scale);
-    expect(scale === "none" || scale === "1", `scale after the tap: ${scale}`).toBe(true);
+    const tile = page.locator('[data-testid="c-lift"]');
+    const read = () =>
+        tile.evaluate((el) => {
+            const cs = getComputedStyle(el);
+            return { scale: cs.scale, token: cs.getPropertyValue("--scale-hover").trim() };
+        });
+    const rest = await read();
+    expect(rest.scale, `the tile carries scale-on-hover's rule: it rests at scale 1 ${JSON.stringify(rest)}`).toBe("1");
+    if (isPhone(project)) {
+        await pressOn(page, project, '[data-testid="c-lift"]');
+        await page.waitForTimeout(800);
+        const after = await read();
+        expect(after.scale, `scale after the tap: ${after.scale}`).toBe(rest.scale);
+    } else {
+        await tile.hover();
+        await page.waitForTimeout(800);
+        const hover = await read();
+        const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;
+        expect(lifted, `a mouse hover lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);
+    }
 });

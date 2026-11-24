@@ -2,7 +2,7 @@
 // at a wide strip (the wide one is past 20rem, so it takes the bar shape), a ToggleGroup
 // with word labels at their own width, and a `scale-on-hover` tile. Imports are relative
 // to `src/`, so the file mounts unchanged on an older tree.
-import "../../demo/demo.css";
+import "./controls-harness.css";
 import { createApp, h, ref } from "vue";
 
 import SegmentedTabs from "../../src/components/tabs/SegmentedTabs.vue";
