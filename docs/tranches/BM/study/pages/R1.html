@@ -1,0 +1,193 @@
+<title>Glass Corner Ghosts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column; four test cells in a 2 × 2 grid that holds at 390 px. */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(24 6% 36%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --stripe-a: hsl(24 10% 12%);
+  --stripe-b: hsl(40 40% 96%);
+  --stripe-c: hsl(12 72% 52%);
+  --veil: oklch(0.28 0.035 70 / 0.14);
+  --on-glass: hsl(24 10% 10%);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+    --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+    --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(30 8% 64%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%);
+  --stripe-a: hsl(30 14% 88%); --stripe-b: hsl(24 9% 8%); --stripe-c: hsl(12 72% 58%);
+  --veil: oklch(0.17 0.03 70 / 0.18); --on-glass: hsl(30 14% 92%);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 760px; margin-inline: auto; display: grid; gap: 16px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button {
+  font: 400 16px var(--font); transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out; min-height: 44px; padding: 0 20px; border-radius: 22px; border: 0;
+  background: var(--fg); color: var(--bg); cursor: pointer;
+}
+button.toggle { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px var(--line); }
+button.toggle[aria-pressed="true"] { background: var(--focus); color: var(--bg); box-shadow: none; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 700px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+figure { margin: 0; min-width: 0; display: grid; gap: 6px; }
+figcaption { font-size: 15px; line-height: 1.3; }
+figcaption b { display: block; }
+figcaption span { color: var(--muted); font-size: 13px; }
+.stage {
+  position: relative; height: 190px; border-radius: 6px; overflow: hidden;
+  background:
+    repeating-linear-gradient(45deg, var(--stripe-a) 0 5px, var(--stripe-b) 5px 11px),
+    var(--stripe-b);
+}
+.stage::after { /* one coloured bar so a ghost's tint shows */
+  content: ""; position: absolute; left: 0; right: 0; top: 46%; height: 18px; background: var(--stripe-c);
+}
+.plate {
+  position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  background: var(--veil); z-index: 1;
+  display: grid; place-items: center; color: var(--on-glass); font: 500 15px var(--font);
+}
+/* The fold runs on one clock, --dur (0.5 s, ×4 when slowed); Half fold holds each shape at its midpoint. */
+/* A: the corners come from border-radius (WebKit shapes the backdrop by it) */
+.a { border-radius: 28px; transition: width var(--dur) var(--ease), height var(--dur) var(--ease), margin var(--dur) var(--ease); }
+.half .a { width: 88px; height: 88px; margin: -44px 0 0 -44px; }
+.folded .a { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+/* B: square box, corners cut by clip-path: inset(… round …) */
+.b { border-radius: 0; clip-path: inset(0 round 28px); transition: clip-path var(--dur) var(--ease); }
+.half .b { clip-path: inset(16px round 28px); }
+.folded .b { clip-path: inset(32px round 28px); }
+/* C: square box, cut by clip-path: shape(), written each frame by script */
+.c { border-radius: 0; }
+/* D: rounded box squashed by a non-uniform scale */
+.d { border-radius: 28px; transform: scale(1.3, 0.75); transition: transform var(--dur) var(--ease); }
+.half .d { transform: scale(0.885, 0.675); }
+.folded .d { transform: scale(0.47, 0.6); }
+:root { --ease: cubic-bezier(0.3, 0.7, 0.2, 1); --dur: 0.5s; }
+.clipread { position: absolute; inset: auto 8px 8px; z-index: 2; font: 12px var(--mono); background: var(--bg); color: var(--fg); padding: 4px 6px; border-radius: 4px; }
+.note { color: var(--muted); font-size: 14px; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+.rm { display: none; }
+b { font-weight: inherit; }
+</style>
+
+<main>
+  <p class="ask"><strong>Look at the corners of each glass shape at rest, then with Half fold on, then while you tap Fold with Slow ×4 on.</strong> Send the letters of any shape that shows a square or darker patch outside its rounded edge, or say “none”.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading: the folds are what you are looking at.</p>
+  <div class="bar">
+    <button id="fold" class="toggle" type="button" aria-pressed="false">Fold</button>
+    <button id="half" class="toggle" type="button" aria-pressed="false">Half fold</button>
+    <button id="slow" class="toggle" type="button" aria-pressed="false">Slow ×4</button>
+  </div>
+  <div class="grid" id="grid">
+    <figure>
+      <div class="stage"><div class="plate a">A</div></div>
+      <figcaption><b>A · Rounded box</b><span>The reference: corners from its own rounding.</span></figcaption>
+    </figure>
+    <figure>
+      <div class="stage" id="stage-b"><div class="plate b" id="plate-b">B</div></div>
+      <figcaption><b>B · Square box, cut round</b><span>Corners cut by a clip, the box itself square.</span></figcaption>
+    </figure>
+    <figure>
+      <div class="stage" id="stage-c"><div class="plate c" id="plate-c">C</div></div>
+      <figcaption><b>C · Square box, cut by a drawn shape</b><span>The newer drawn-shape clip.</span></figcaption>
+    </figure>
+    <figure>
+      <div class="stage"><div class="plate d">D</div></div>
+      <figcaption><b>D · Rounded box, stretched</b><span>Rounded, then stretched wider than tall.</span></figcaption>
+    </figure>
+  </div>
+  <p class="note">Each shape is one frosted glass plate over the same stripes. The stripes behind a plate blur only where the glass is. If the blur spills past a rounded edge into a square, that square is the ghost this page looks for.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  const ios = null; // Safari 26 and later freeze the OS token in the user agent, so the iOS version is asked for, not read
+  document.getElementById("env").textContent =
+    (safari ? "Safari " + safari : "Browser: " + (ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]) +
+    (ios ? " · iOS " + ios[1] + "." + ios[2] + (ios[3] ? "." + ios[3] : "") : "") +
+    "";
+
+  // C: a rounded rectangle written as shape(), stepped by script so the fold moves
+  // even where the browser cannot tween shape() itself.
+  const plate = document.getElementById("plate-c");
+  const W = 120, H = 120;
+  const rect = (inset) => {
+    const r = 28, L = inset, T = inset, R = W - inset, B = H - inset;
+    return `shape(from ${L + r}px ${T}px, hline to ${R - r}px, arc to ${R}px ${T + r}px of ${r}px cw, ` +
+      `vline to ${B - r}px, arc to ${R - r}px ${B}px of ${r}px cw, hline to ${L + r}px, ` +
+      `arc to ${L}px ${B - r}px of ${r}px cw, vline to ${T + r}px, arc to ${L + r}px ${T}px of ${r}px cw, close)`;
+  };
+  // Write the exact first-frame string, then read it back: a value the engine refuses is dropped
+  // silently and would leave C a square frosted plate, the very ghost this page looks for.
+  plate.style.clipPath = rect(0);
+  const cApplied = /^shape\(/.test(getComputedStyle(plate).clipPath || "");
+  const bApplied = /^inset\(/.test(getComputedStyle(document.getElementById("plate-b")).clipPath || "");
+  for (const [stage, ok] of [["stage-b", bApplied], ["stage-c", cApplied]]) {
+    const n = document.createElement("div");
+    n.className = "clipread"; n.textContent = ok ? "clip applied" : "clip refused";
+    document.getElementById(stage).appendChild(n);
+  }
+  document.getElementById("env").textContent += " · B clip " + (bApplied ? "applied" : "refused") + " · C clip " + (cApplied ? "applied" : "refused");
+  // the same curve as the CSS transitions on A, B and D: cubic-bezier(0.3, 0.7, 0.2, 1) over 0.5 s
+  const bez = (p1x, p1y, p2x, p2y) => (x) => {
+    let lo = 0, hi = 1, u = x;
+    for (let i = 0; i < 24; i++) {
+      u = (lo + hi) / 2;
+      const bx = 3 * (1 - u) * (1 - u) * u * p1x + 3 * (1 - u) * u * u * p2x + u * u * u;
+      if (bx < x) lo = u; else hi = u;
+    }
+    return 3 * (1 - u) * (1 - u) * u * p1y + 3 * (1 - u) * u * u * p2y + u * u * u;
+  };
+  const ease = bez(0.3, 0.7, 0.2, 1);
+  let from = 0, to = 0, t0 = 0, raf = 0, cur = 0, dur = 500;
+  const step = (now) => {
+    const p = Math.min(1, (now - t0) / dur);
+    cur = from + (to - from) * ease(p);
+    plate.style.clipPath = rect(cur);
+    if (p < 1) raf = requestAnimationFrame(step);
+  };
+  const grid = document.getElementById("grid");
+  const fold = document.getElementById("fold"), half = document.getElementById("half"), slowB = document.getElementById("slow");
+  const pressed = (b) => b.getAttribute("aria-pressed") === "true";
+  const apply = () => {
+    const isFolded = pressed(fold), isHalf = !isFolded && pressed(half);
+    grid.classList.toggle("folded", isFolded);
+    grid.classList.toggle("half", isHalf);
+    if (cApplied) { cancelAnimationFrame(raf); from = cur; to = isFolded ? 32 : isHalf ? 16 : 0; t0 = performance.now(); raf = requestAnimationFrame(step); }
+  };
+  fold.addEventListener("click", () => { fold.setAttribute("aria-pressed", String(!pressed(fold))); if (pressed(fold)) half.setAttribute("aria-pressed", "false"); apply(); });
+  half.addEventListener("click", () => { half.setAttribute("aria-pressed", String(!pressed(half))); if (pressed(half)) fold.setAttribute("aria-pressed", "false"); apply(); });
+  slowB.addEventListener("click", () => {
+    slowB.setAttribute("aria-pressed", String(!pressed(slowB)));
+    dur = pressed(slowB) ? 2000 : 500;
+    document.documentElement.style.setProperty("--dur", dur / 1000 + "s");
+  });
+})();
+</script>

@@ -1,0 +1,774 @@
+[
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-dark",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-dark",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs in the Filters sheet (atlas's Filters view)",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-filters]",
+   "wait:2500",
+   "swipe:[data-testid=ovf-filters-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=ovf-filters-body]\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-filters-body]",
+   "[data-testid=ovf-filters] .segmented-tabs",
+   "[data-testid=ovf-filters] .segmented-tab"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs long label in a demo variant row",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/foundations/colors",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\".story-variant-row .segmented-tab\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Quarterly enrollment by district and program, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:main@-150@0",
+   "eval:document.querySelector(\"main\")?.scrollLeft"
+  ],
+  "sel": [
+   "main",
+   ".story-variant-row .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs long label in a demo variant row",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/foundations/colors",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\".story-variant-row .segmented-tab\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Quarterly enrollment by district and program, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:main@-150@0",
+   "eval:document.querySelector(\"main\")?.scrollLeft"
+  ],
+  "sel": [
+   "main",
+   ".story-variant-row .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs long label in a demo variant row",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/foundations/colors",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\".story-variant-row .segmented-tab\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Quarterly enrollment by district and program, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:main@-150@0",
+   "eval:document.querySelector(\"main\")?.scrollLeft"
+  ],
+  "sel": [
+   "main",
+   ".story-variant-row .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F1 SegmentedTabs long label in a demo variant row",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/foundations/colors",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\".story-variant-row .segmented-tab\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Quarterly enrollment by district and program, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:main@-150@0",
+   "eval:document.querySelector(\"main\")?.scrollLeft"
+  ],
+  "sel": [
+   "main",
+   ".story-variant-row .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F2 detented left sheet at its 0.4 rung",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/containers/sheet",
+  "do": [
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Edge')).querySelectorAll('.segmented-tab')[3].click()",
+   "wait:1200",
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Detents')).querySelectorAll('.segmented-tab')[1].click()",
+   "wait:2500"
+  ],
+  "sel": [
+   "[data-slot=sheet-content]",
+   "[data-slot=sheet-content-region]",
+   "[data-slot=sheet-content] [data-slot=dialog-footer]"
+  ]
+ },
+ {
+  "name": "F2 detented left sheet at its 0.4 rung",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/containers/sheet",
+  "do": [
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Edge')).querySelectorAll('.segmented-tab')[3].click()",
+   "wait:1200",
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Detents')).querySelectorAll('.segmented-tab')[1].click()",
+   "wait:2500"
+  ],
+  "sel": [
+   "[data-slot=sheet-content]",
+   "[data-slot=sheet-content-region]",
+   "[data-slot=sheet-content] [data-slot=dialog-footer]"
+  ]
+ },
+ {
+  "name": "F2 detented left sheet at its 0.4 rung",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/containers/sheet",
+  "do": [
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Edge')).querySelectorAll('.segmented-tab')[3].click()",
+   "wait:1200",
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Detents')).querySelectorAll('.segmented-tab')[1].click()",
+   "wait:2500"
+  ],
+  "sel": [
+   "[data-slot=sheet-content]",
+   "[data-slot=sheet-content-region]",
+   "[data-slot=sheet-content] [data-slot=dialog-footer]"
+  ]
+ },
+ {
+  "name": "F2 detented left sheet at its 0.4 rung",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/containers/sheet",
+  "do": [
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Edge')).querySelectorAll('.segmented-tab')[3].click()",
+   "wait:1200",
+   "key:Escape",
+   "wait:700",
+   "eval:[...document.querySelectorAll('.story-variant-row')].find(r=>r.textContent.includes('Detents')).querySelectorAll('.segmented-tab')[1].click()",
+   "wait:2500"
+  ],
+  "sel": [
+   "[data-slot=sheet-content]",
+   "[data-slot=sheet-content-region]",
+   "[data-slot=sheet-content] [data-slot=dialog-footer]"
+  ]
+ },
+ {
+  "name": "F3 DropdownMenu rows with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-menu]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=menu-content]",
+   "[data-slot=menu-content] [data-slot=menu-item]",
+   "[data-slot=menu-content] [data-slot=menu-sub-trigger]"
+  ]
+ },
+ {
+  "name": "F3 DropdownMenu rows with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-menu]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=menu-content]",
+   "[data-slot=menu-content] [data-slot=menu-item]",
+   "[data-slot=menu-content] [data-slot=menu-sub-trigger]"
+  ]
+ },
+ {
+  "name": "F3 DropdownMenu rows with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-menu]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=menu-content]",
+   "[data-slot=menu-content] [data-slot=menu-item]",
+   "[data-slot=menu-content] [data-slot=menu-sub-trigger]"
+  ]
+ },
+ {
+  "name": "F3 DropdownMenu rows with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-menu]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=menu-content]",
+   "[data-slot=menu-content] [data-slot=menu-item]",
+   "[data-slot=menu-content] [data-slot=menu-sub-trigger]"
+  ]
+ },
+ {
+  "name": "F3 Popover body with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-popover]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=popover-content]",
+   "[data-slot=popover-content] p"
+  ]
+ },
+ {
+  "name": "F3 Popover body with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-popover]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=popover-content]",
+   "[data-slot=popover-content] p"
+  ]
+ },
+ {
+  "name": "F3 Popover body with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-popover]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=popover-content]",
+   "[data-slot=popover-content] p"
+  ]
+ },
+ {
+  "name": "F3 Popover body with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-popover]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=popover-content]",
+   "[data-slot=popover-content] p"
+  ]
+ },
+ {
+  "name": "F3 Select options with a long word (phone sheet form at 390, popover at 1440)",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-select]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=select-content]",
+   "[data-slot=select-viewport]",
+   "[data-slot=select-viewport] [role=option]"
+  ]
+ },
+ {
+  "name": "F3 Select options with a long word (phone sheet form at 390, popover at 1440)",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-select]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=select-content]",
+   "[data-slot=select-viewport]",
+   "[data-slot=select-viewport] [role=option]"
+  ]
+ },
+ {
+  "name": "F3 Select options with a long word (phone sheet form at 390, popover at 1440)",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-select]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=select-content]",
+   "[data-slot=select-viewport]",
+   "[data-slot=select-viewport] [role=option]"
+  ]
+ },
+ {
+  "name": "F3 Select options with a long word (phone sheet form at 390, popover at 1440)",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-select]",
+   "wait:1200"
+  ],
+  "sel": [
+   "[data-slot=select-content]",
+   "[data-slot=select-viewport]",
+   "[data-slot=select-viewport] [role=option]"
+  ]
+ },
+ {
+  "name": "F3 narrow column: Command row, Accordion trigger, Chip, ToggleGroup, SegmentedTabs",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [],
+  "sel": [
+   "[data-testid=ovf-narrow]",
+   "[data-testid=ovf-narrow] [data-slot=command-list]",
+   "[data-testid=ovf-narrow] [data-slot=command-item]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-trigger]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-content]",
+   "[data-testid=ovf-narrow] .glass-chip",
+   "[data-testid=ovf-narrow] [data-slot=toggle-group]",
+   "[data-testid=ovf-narrow] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F3 narrow column: Command row, Accordion trigger, Chip, ToggleGroup, SegmentedTabs",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [],
+  "sel": [
+   "[data-testid=ovf-narrow]",
+   "[data-testid=ovf-narrow] [data-slot=command-list]",
+   "[data-testid=ovf-narrow] [data-slot=command-item]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-trigger]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-content]",
+   "[data-testid=ovf-narrow] .glass-chip",
+   "[data-testid=ovf-narrow] [data-slot=toggle-group]",
+   "[data-testid=ovf-narrow] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F3 narrow column: Command row, Accordion trigger, Chip, ToggleGroup, SegmentedTabs",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [],
+  "sel": [
+   "[data-testid=ovf-narrow]",
+   "[data-testid=ovf-narrow] [data-slot=command-list]",
+   "[data-testid=ovf-narrow] [data-slot=command-item]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-trigger]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-content]",
+   "[data-testid=ovf-narrow] .glass-chip",
+   "[data-testid=ovf-narrow] [data-slot=toggle-group]",
+   "[data-testid=ovf-narrow] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F3 narrow column: Command row, Accordion trigger, Chip, ToggleGroup, SegmentedTabs",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [],
+  "sel": [
+   "[data-testid=ovf-narrow]",
+   "[data-testid=ovf-narrow] [data-slot=command-list]",
+   "[data-testid=ovf-narrow] [data-slot=command-item]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-trigger]",
+   "[data-testid=ovf-narrow] [data-slot=accordion-content]",
+   "[data-testid=ovf-narrow] .glass-chip",
+   "[data-testid=ovf-narrow] [data-slot=toggle-group]",
+   "[data-testid=ovf-narrow] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "F3 ToggleGroup item with a long word in a demo stage",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/forms/toggle",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main [data-slot=toggle-group]",
+   "main [data-slot=toggle-group-item]"
+  ]
+ },
+ {
+  "name": "F3 ToggleGroup item with a long word in a demo stage",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/forms/toggle",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main [data-slot=toggle-group]",
+   "main [data-slot=toggle-group-item]"
+  ]
+ },
+ {
+  "name": "F3 Button with a long word in a demo stage",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/display/buttons",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main .buttons-stage button\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .buttons-stage",
+   "main .buttons-stage button"
+  ]
+ },
+ {
+  "name": "F3 Button with a long word in a demo stage",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/display/buttons",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main .buttons-stage button\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .buttons-stage",
+   "main .buttons-stage button"
+  ]
+ },
+ {
+  "name": "F3 Label with a long word over an Input",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/forms/inputs",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=label]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .inputs-stage",
+   "main .inputs-stage-field",
+   "main [data-slot=label]",
+   "main [data-slot=input]"
+  ]
+ },
+ {
+  "name": "F3 Label with a long word over an Input",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/forms/inputs",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=label]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .inputs-stage",
+   "main .inputs-stage-field",
+   "main [data-slot=label]",
+   "main [data-slot=input]"
+  ]
+ },
+ {
+  "name": "R ExpandableContainer holding a Table with a long cell",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/containers/expandable-container",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main td\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .expandable-stage",
+   "main .expandable-container",
+   "main [data-slot=table-container]",
+   "main [data-slot=table]"
+  ]
+ },
+ {
+  "name": "R ExpandableContainer holding a Table with a long cell",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/containers/expandable-container",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main td\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "main .expandable-stage",
+   "main .expandable-container",
+   "main [data-slot=table-container]",
+   "main [data-slot=table]"
+  ]
+ },
+ {
+  "name": "F4 Timeline end marks past the plate",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/data/timeline",
+  "do": [
+   "eval:(()=>{const tl=document.querySelector('.tl');const r=tl.getBoundingClientRect();let o=0;for(const s of tl.querySelectorAll('.tl__mark-seat')){const q=s.getBoundingClientRect();o=Math.max(o,r.left-q.left,q.right-r.right)}return {overhang:Math.round(o*10)/10,tlW:Math.round(r.width)}})()"
+  ],
+  "sel": [
+   "main .tl",
+   "main .tl__marks",
+   "main .tl__track"
+  ]
+ },
+ {
+  "name": "F4 Timeline end marks past the plate",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/data/timeline",
+  "do": [
+   "eval:(()=>{const tl=document.querySelector('.tl');const r=tl.getBoundingClientRect();let o=0;for(const s of tl.querySelectorAll('.tl__mark-seat')){const q=s.getBoundingClientRect();o=Math.max(o,r.left-q.left,q.right-r.right)}return {overhang:Math.round(o*10)/10,tlW:Math.round(r.width)}})()"
+  ],
+  "sel": [
+   "main .tl",
+   "main .tl__marks",
+   "main .tl__track"
+  ]
+ },
+ {
+  "name": "F4 Timeline end marks past the plate",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/data/timeline",
+  "do": [
+   "eval:(()=>{const tl=document.querySelector('.tl');const r=tl.getBoundingClientRect();let o=0;for(const s of tl.querySelectorAll('.tl__mark-seat')){const q=s.getBoundingClientRect();o=Math.max(o,r.left-q.left,q.right-r.right)}return {overhang:Math.round(o*10)/10,tlW:Math.round(r.width)}})()"
+  ],
+  "sel": [
+   "main .tl",
+   "main .tl__marks",
+   "main .tl__track"
+  ]
+ },
+ {
+  "name": "F4 Timeline end marks past the plate",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/data/timeline",
+  "do": [
+   "eval:(()=>{const tl=document.querySelector('.tl');const r=tl.getBoundingClientRect();let o=0;for(const s of tl.querySelectorAll('.tl__mark-seat')){const q=s.getBoundingClientRect();o=Math.max(o,r.left-q.left,q.right-r.right)}return {overhang:Math.round(o*10)/10,tlW:Math.round(r.width)}})()"
+  ],
+  "sel": [
+   "main .tl",
+   "main .tl__marks",
+   "main .tl__track"
+  ]
+ },
+ {
+  "name": "F3 Toast with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-toast]",
+   "wait:1500"
+  ],
+  "sel": [
+   "[data-slot=toast]",
+   "[data-slot=toast] *"
+  ]
+ },
+ {
+  "name": "F3 Toast with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-toast]",
+   "wait:1500"
+  ],
+  "sel": [
+   "[data-slot=toast]",
+   "[data-slot=toast] *"
+  ]
+ },
+ {
+  "name": "F3 Toast with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-toast]",
+   "wait:1500"
+  ],
+  "sel": [
+   "[data-slot=toast]",
+   "[data-slot=toast] *"
+  ]
+ },
+ {
+  "name": "F3 Toast with a long word",
+  "tree": "cure",
+  "port": 5392,
+  "cell": "1440-light",
+  "url": "/ovf.html",
+  "do": [
+   "tap:[data-testid=ovf-open-toast]",
+   "wait:1500"
+  ],
+  "sel": [
+   "[data-slot=toast]",
+   "[data-slot=toast] *"
+  ]
+ }
+]

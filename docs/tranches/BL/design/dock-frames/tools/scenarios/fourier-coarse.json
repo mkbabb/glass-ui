@@ -1,0 +1,299 @@
+{
+ "name": "fourier-coarse",
+ "about": "fourier.babb.dev/w (Visualize), the top dock",
+ "url": "https://fourier.babb.dev/w",
+ "cells": [
+  {
+   "tag": "390-coarse-light",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "light"
+  },
+  {
+   "tag": "390-coarse-dark",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "dark"
+  }
+ ],
+ "ready": ".glass-dock >> visible=true",
+ "warmMs": 2500,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-df=dock]",
+   "attrs": [
+    "class",
+    "data-morphing",
+    "aria-label"
+   ],
+   "props": [
+    "--dock-t",
+    "--dock-morph-t"
+   ],
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "plate",
+   "sel": "[data-df=dock] .dock-plate",
+   "props": [
+    "--dock-t"
+   ],
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "summary",
+   "sel": "[data-df=dock] .dock-layer--summary",
+   "chain": true,
+   "colors": []
+  },
+  {
+   "as": "run",
+   "sel": "[data-df=dock] .dock-layer--full",
+   "chain": true,
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "seat",
+   "sel": "[data-df=dock] [data-glass-dock-seat]",
+   "all": true,
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "theme",
+   "sel": "[data-df=theme]",
+   "attrs": [
+    "aria-pressed",
+    "title",
+    "aria-label",
+    "data-state"
+   ],
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "icon",
+   "sel": "[data-df=theme] svg",
+   "styles": [
+    "width"
+   ],
+   "colors": []
+  },
+  {
+   "as": "tip",
+   "sel": "[role=tooltip]",
+   "all": true,
+   "attrs": [
+    "data-side",
+    "data-state"
+   ],
+   "colors": []
+  },
+  {
+   "as": "popper",
+   "sel": "[data-reka-popper-content-wrapper]",
+   "all": true,
+   "colors": []
+  },
+  {
+   "as": "html",
+   "sel": "html",
+   "attrs": [
+    "class",
+    "data-theme"
+   ],
+   "colors": []
+  },
+  {
+   "as": "rest",
+   "sel": "#df-rest",
+   "attrs": [
+    "data-at"
+   ],
+   "colors": []
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "before": [
+  {
+   "do": "eval",
+   "js": "(() => {\n  const want = [\"header .glass-dock\"], wantTheme = [\".sun-moon-toggle\"];\n  const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };\n  let dock = null;\n  for (const s of want) { dock = [...document.querySelectorAll(s)].find(vis) || dock; if (dock) break; }\n  const docks = [...document.querySelectorAll('.glass-dock')].filter(vis);\n  if (!dock) dock = docks.find((d) => d.classList.contains('collapsed')) || docks.find((d) => !d.classList.contains('always-expanded')) || docks[0] || null;\n  if (false && dock) { dock.scrollIntoView({ block: 'center' }); }\n  if (dock) dock.setAttribute('data-df', 'dock');\n  const nm = (e) => (e.getAttribute('aria-label') || '') + ' ' + (e.getAttribute('title') || '') + ' ' + (typeof e.className === 'string' ? e.className : '');\n  const isTheme = (e) => /dark|light mode|theme|scheme|sun-moon/i.test(nm(e));\n  let theme = null;\n  for (const s of wantTheme) { theme = document.querySelector(s); if (theme) break; }\n  if (!theme && dock) theme = [...dock.querySelectorAll('button, a, [role=button], [data-glass-dock-seat]')].find(isTheme) || null;\n  if (!theme) theme = [...document.querySelectorAll('.glass-dock button, .glass-dock [role=button]')].find(isTheme) || null;\n  if (theme) theme.setAttribute('data-df', 'theme');\n  // the rest point: inert, outside every dock and popper, away from the dock\n  const db = dock ? dock.getBoundingClientRect() : { left: 0, right: 0, top: 0, bottom: 0 };\n  const bad = (e) => !e || e.closest('a, button, input, select, textarea, label, summary, [role=button], [role=link], [role=slider], [role=tab], [contenteditable], .glass-dock, [data-reka-popper-content-wrapper], [role=dialog], iframe');\n  const W = innerWidth, H = innerHeight; let pick = null, canvasPick = null;\n  const ys = [0.62, 0.55, 0.7, 0.48, 0.78, 0.4, 0.85, 0.33, 0.9];\n  const xs = [0.5, 0.42, 0.58, 0.3, 0.7, 0.2, 0.8, 0.1, 0.9];\n  outer: for (const fy of ys) for (const fx of xs) {\n    const x = Math.round(W * fx), y = Math.round(H * fy);\n    if (x > db.left - 60 && x < db.right + 60 && y > db.top - 60 && y < db.bottom + 60) continue;\n    const e = document.elementFromPoint(x, y);\n    if (bad(e)) continue;\n    if (e.tagName === 'CANVAS' || e.closest('svg')) { canvasPick ||= [x, y, e.tagName]; continue; }\n    pick = [x, y, e.tagName + (e.className && typeof e.className === 'string' ? '.' + e.className.split(' ')[0] : '')]; break outer;\n  }\n  pick ||= canvasPick || [Math.round(W / 2), Math.round(H * 0.62), 'fallback'];\n  let m = document.getElementById('df-rest');\n  if (!m) { m = document.createElement('div'); m.id = 'df-rest'; document.documentElement.appendChild(m); }\n  m.style.cssText = 'position:fixed;width:2px;height:2px;left:' + (pick[0] - 1) + 'px;top:' + (pick[1] - 1) + 'px;pointer-events:none;opacity:0;z-index:2147483647';\n  m.setAttribute('data-at', pick.join(' '));\n  let sc = document.elementFromPoint(pick[0], pick[1]);\n  while (sc && sc !== document.documentElement) { const cs = getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 4) break; sc = sc.parentElement; }\n  (sc && sc !== document.documentElement ? sc : document.scrollingElement).setAttribute('data-df-scroller', '');\n  window.__df = { dock: dock && (dock.getAttribute('aria-label') || dock.className), theme: theme && nm(theme), rest: pick };\n})()"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "move",
+   "to": {
+    "sel": "#df-rest"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "open-tap"
+  },
+  {
+   "do": "click",
+   "sel": "[data-df=dock] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 4000,
+   "afterChange": true
+  },
+  {
+   "do": "mark",
+   "name": "theme-press"
+  },
+  {
+   "do": "clickIf",
+   "sel": "[data-df=theme]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 4000,
+   "afterChange": false
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "mark",
+   "name": "theme-press-back"
+  },
+  {
+   "do": "clickIf",
+   "sel": "[data-df=theme]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 4000,
+   "afterChange": false
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector(\"[data-df=dock] .dock-layer--full\"); if (e) { if (!e.contains(document.activeElement)) e.querySelector('[data-glass-dock-seat], button')?.focus(); } })()"
+  },
+  {
+   "do": "mark",
+   "name": "close-escape"
+  },
+  {
+   "do": "key",
+   "key": "Escape"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "open-tap-2"
+  },
+  {
+   "do": "click",
+   "sel": "[data-df=dock] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 4000,
+   "afterChange": true
+  },
+  {
+   "do": "mark",
+   "name": "close-outside"
+  },
+  {
+   "do": "click",
+   "to": {
+    "sel": "#df-rest"
+   }
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 4000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "open-tap-3"
+  },
+  {
+   "do": "click",
+   "sel": "[data-df=dock] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 4000,
+   "afterChange": true
+  },
+  {
+   "do": "mark",
+   "name": "close-scroll"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector(\"[data-df-scroller]\"); if (e) { e.scrollBy(0, 600); } })()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 2500,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "scroll-back"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector(\"[data-df-scroller]\"); if (e) { e.scrollBy(0, -600); } })()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 450,
+   "maxMs": 2500,
+   "afterChange": false
+  }
+ ]
+}

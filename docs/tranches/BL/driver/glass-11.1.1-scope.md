@@ -4,6 +4,11 @@
 
 11.1.1 is the patch after 11.1.0. The release that cuts it reads this file. It carries five defect cures that the restraint audit found and that break nothing: no export or token is removed and no default a consumer chose is changed. They were booked to 12.0.0 with the deletions; holding them there would leave consumers on local overrides for five releases, which the precept forbids (C-16). The ruling is `review/fable-2026-11-10/plans.md` item 3.
 
+
+> **First row of 11.1.2 (orchestrator, 2026-11-23, O-419: the owner, "the dropdowns scroll the entire screen when using them ... the filter drawer scrolls the entire screen, too, on mobile").** A gesture begun on any glass plate never moves the page behind it: the phone Select and Command sheets, Sheet (a filter drawer included), Dialog and Popover, one cure at the root for all (O-348 (2), R-096). Its root cause is read on the 11.1.1 tip in `docs/tranches/BL/audit/phone-scroll/` before the 11.1.2 build starts; the build takes that record's cure. Witness: by touch at 390 in Playwright WebKit and Chromium, per surface, the page's scroll position unchanged through open, a swipe on the plate, a swipe on its list (the list scrolls, the page does not) and close, RED on 11.1.1 and GREEN after; the owner's iPhone reads it in Safari.
+
+> **11.1.2's first row, after its first round (2026-11-23).** `audit/phone-scroll/` ROOT.md + cure.patch were judged "holds after fixes" (VERIFY.md B1 to B4). The second round folds those four with atlas's touch measurements (INBOUND O-423): the detented list that a finger cannot scroll from its top, the outside tap that presses through, the dismissal that WebKit's tap never sends (B2: the hold ships only with it), and the detented scrim's 0.28 floor (B3). The build takes the second round's patch, not the first.
+
 ## Rules
 
 - **Cut:** `release/11.1.1` from master, after 11.1.0 has published and merged (11.1.0 itself does not tag until `v11.0.1` is merged into it).
@@ -202,3 +207,64 @@ Readings, citations and witnesses in `docs/tranches/BL/audit/triage-1119/PLACED.
   - **First paint must not change:** the box, the posture, `--dock-collapsed-px` and `--dock-expanded-px`, `data-run-fits` and `--dock-run-room-block` on a dock resting expanded with a run, and `--dock-plate-cross-px` all read the same in the first rAF as on v11.1.0.
   - **Merge:** it meets wi8's deletion of the file as a modify/delete conflict; keep the deletion.
   - **Also read:** `HandMark.vue:497` reads `document.fonts.ready` too. Check whether it runs in a mount task and takes the same cure.
+
+## 2026-11-23: value.js's Select and CardHeader profiles (O-425)
+
+- **CardHeader arms its scroll trigger only when `shrink` is set.** Today a header without `shrink` passes a null root (`card/CardHeader.vue:55`), which the reader resolves to the document (`motion/scroll/scrollReader.ts:43-54`): a `window.scrollY` read at mount that forces style and layout mid-commit (106 ms of style over 1,587 elements at 4x CPU on color.babb.dev) and a document scroll listener per header. Witness: vitest, a CardHeader without `shrink` mounts with no scroll listener and no scroll read.
+- **A Select opens within 100 ms to its first frame at 390 with 4x CPU (18 rows, sheet form).** Today 192 ms at the median. Keep the list's content mounted between opens, and in the sheet form (screen-wide, `data-form="sheet"`) place it without floating-ui. The view select's close (floating-ui isRTL/getCssDimensions in the press, 42 to 94 ms) is read in the same row. Built after the phone-overlay cure, which also changes `SelectContent.vue`. Witness: one Chromium cell on a built bundle at 390, 4x CPU, the first frame after the press under 100 ms over five opens, and no floating-ui call in the sheet form.
+
+## 2026-11-23: the pointer light leaves cards too (O-422 (3), O-427 (4))
+
+- **The specular ruling widens to every surface.** atlas (the "radial artifact" on glass cards) and Home Assistant (a light band on a hovered card) show the same thing: the card's `::before` catch-light (`styles/glass/material.css:138`, intensity on hover and press at :334 and :347). The specular ruling that removes the pointer light from controls in 11.1.2 (`bl/specular/proto`) takes it off `.glass-card` and the material rungs as well: no pointer-following light on any surface. Witness: static over the built CSS, no `radial-gradient` and no `--specular-*` read on any surface's `::before`; one Chromium cell, a hovered card's top band equal to the unhovered card's within 1 % luminance, light and dark.
+
+## 2026-11-23: the owner on glass.babb.dev (O-428)
+
+- **The floating Configurator takes the card's radius.** The detached form is `rounded-card` and the floating one `rounded-panel` (`--radius-xl`) (`configurator/Configurator.vue:212`, `:236`); the owner reads the floating panel as not rounded enough. Both take `--radius-card`, and the sections keep deriving their corners from it (the concentric rule at `:321-325`). Witness: one Chromium cell, the floating panel's computed corner equals a card's, and each section's corner equals the panel's less its inset.
+- **The demo (deploys with this release):** a real icon set (an SVG favicon, a 180 px apple-touch-icon and a manifest, flat and coloured per O-290) in place of `data:,`, with missing asset paths answering 404 rather than the page's HTML; and the Substrates tile (`demo/stories/substrates/aurora.tile.vue`) takes the card's inner radius on the corners it bleeds to.
+
+## 2026-11-24: atlas's legislative-mode and phone rows (O-429)
+
+atlas's list of 2026-11-23 (GL-1 to GL-19) asks for a release before December 9, when its legislative mode's second stage builds. Each row is placed below, with the facts read on master.
+
+**Into 11.1.2 (fixes; no new API).**
+- **GL-6, print.** Under `@media print`, glass hides its floating chrome (GlassDock, Popover, Tooltip, Toast) and flattens every surface to paper: no backdrop filter, no frost, no shadow. Dialog and Sheet print flat rather than hidden, so a modal's content can still be printed. Today glass hides only the paper grain (`styles/paper.css:137`, `:175`).
+- **GL-7, the toggle's name.** One pattern: a fixed name, "Dark mode", with `aria-pressed`. Today the name changes with the state and `aria-pressed` is set as well (`dark-mode-toggle/DarkModeToggle.vue:29-30`). The face redesign (O-428 (4)) is separate.
+- **GL-8, PopoverTrigger's `aria-controls`.** The trigger names its content only while the content is mounted.
+- **GL-11, Dialog and Sheet bodies.** `overscroll-behavior: contain` on the body; the page lock keeps the scrollbar's gutter, so the page does not shift; the page's scroll position is untouched on close. The Sheet half joins the phone-scroll cure.
+- **GL-12, stacking.** One witness first: a Dialog opened from inside a Dialog, a Sheet, a Drawer and an ExpandableContainer. It stacks above the lower surface, Escape closes only the top, the lower surface keeps its lock, focus returns inside the lower surface, and the enlarged layer's Escape yields to a Dialog above it. Fix whichever cell fails (Dialog and Sheet are reka dialogs, so most should hold already).
+- **GL-13.** A Sheet at detent [1] fills the height under the safe-area top inset. It goes in with the phone-scroll cure's detent work.
+- **GL-14.** Read first. On master and on 10.1.2, `--control-h-sm` is `max(2.25rem × --ui-scale, --control-floor)`, and the floor lifts to 44 px under `(pointer: coarse)` (`tokens/sizing.css:27`, `tokens/light-dark.css:17-20`). So a small Button should already be 36 px on a fine pointer and 44 px on a coarse one. One cell at 390 with touch confirms it; if it reads 36, find what overrides the floor.
+- **GL-16.** A dock run that does not overflow lets a vertical swipe through. It takes `touch-action: pan-x pan-y`, or `auto`, in place of `pan-x` (`dock/styles/run.css:276`). This joins the overflow cure's item 1.
+- **GL-17.** The Select's close moves focus with `preventScroll` while the list leaves. It joins the O-425 Select row.
+- **GL-18.** `useSelectionGroup` scrolls only its own run to the chosen item, never an outer scroller (`composables/motion/morph/useSelectionGroup.ts:200`). The dock-frames cure does not touch this call.
+- **GL-5 (e).** DataTable's header text at the small step, 14 px or more.
+- **GL-5, the sort buttons (atlas's second note, 2026-11-24).** Each header's sort button is a target at the control height: 36 px on a fine pointer and 44 px on a coarse one, through `--control-floor`. Its focus ring is drawn inset, so a sticky head can't clip it. Without this, atlas's reading tables ship unsorted.
+
+**The date that matters.** atlas's legislative mode builds on 8 December, tags on the 9th and deploys on the 10th. 11.1.2 reaches it only if it publishes before atlas's integration on the 9th, so it has to be on npm by 8 December. If it lands later, the mode ships on 10.1.x and these rows stay open.
+
+**New API, into the first minor after 11.1.2.**
+- **GL-5 (a), the sticky head.** A sticky header and first column inside the table's own viewport. Today `table/styles.css:22` gives the wrapper `overflow: auto`, so a head can stick only when the wrapper is the vertical scroller too. So DataTable owns its viewport (it fills its host's block size), and a host's virtualizer reads that viewport.
+- **GL-5 (b), the column-fit report.** It says which columns fit the viewport's width. The card projection (`responsive`, `cardBreakpoint` 640) is glass's answer below 640 px; the report is the answer above it.
+- **GL-5 (d).** A caption slot (Table already has `TableCaption`, `table/TableCaption.vue`) and a row-header column (`<th scope="row">`).
+- **GL-10.** The Dialog enters from, and returns to, the rect of the element that opened it, on glass's springs (the panel in, no overshoot out), fading under reduced motion.
+
+**The order of minors.** A minor takes its number in the order it ships. If the dock redesign (with the toggle's new face) isn't ready when atlas's minor is, atlas's ships first as 11.2.0, and the dock takes the next number. Sites are told when the numbers are fixed.
+
+**Not before December 9.**
+- **GL-9.** Whether a GlassDock folds the seats that do not fit into a menu instead of panning goes to the dock's ninth rulings as a question. Until then a long run pans, and from 11.1.2 only under a horizontal gesture (GL-16).
+- **GL-15.** On master the thumb sets no hit area past the track; atlas's 12 px came from its own line. The finger-size target comes with the Slider's expanded view (O-426), which grows inside the slider's own box, in BM's tranche. Whether R-298's thumbless slider stays is for BM's final fold.
+
+## 2026-11-24: value.js's four-site dock study (O-430)
+
+Placed item by item in `design/dock-frames/inbound/value-js-2026-11-24-four-sites.md`.
+- **Already covered by the dock-frames cure:** items 1, 4, 5 and 7.
+- **Added to 11.1.2, for the cure's second challenge to fix and read:**
+  - 2: the crossfade clip reads `--dock-expand-t`.
+  - 6: every spring easing's sampled duration runs until it has settled within 0.1 %, fixed in the generator.
+  - 8: a 120 to 150 ms fade in place under reduced motion.
+  - 9: the dock's words and glyph change on the plate's clock.
+  - 10: the collapsed face fades in changed content.
+  - 11 (b) and (d): the Tooltip over a popover trigger, and the seat-to-seat grace.
+  - 13: Aurora keeps its context through a leave and fades in on its first frame.
+- **To the dock-redesign minor:** 3, 11 (a) and (c), and 12.
+- **fourier's own:** 14.

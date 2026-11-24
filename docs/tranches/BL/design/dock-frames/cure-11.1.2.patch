@@ -1,0 +1,989 @@
+diff --git a/src/components/_shared/overlay/participation.ts b/src/components/_shared/overlay/participation.ts
+index 1eb7c81..0617b11 100644
+--- a/src/components/_shared/overlay/participation.ts
++++ b/src/components/_shared/overlay/participation.ts
+@@ -9,7 +9,7 @@ import {
+     type Ref,
+ } from "vue";
+ import {
+-    useInDockFace,
++    useDockFace,
+     useOptionalDockContext,
+     type DockHoldKind,
+ } from "../../dock/composables/dockContext";
+@@ -110,22 +110,24 @@ export function useDockParticipation(o?: {
+     hold?: MaybeRefOrGetter<boolean>;
+     kind?: DockHoldKind;
+     /**
+-     * Close this overlay. Called on the dock's COLLAPSE edge, so a dropdown or
+-     * popover a seat of the FACE opened never outlives the posture it was opened
+-     * from. The collapse owns the close: the overlay states how it closes, the dock
+-     * says when. Outside the face (a `#persistent` control, whose trigger stays
+-     * painted and live when collapsed) and outside a dock it is never called.
++     * Close this overlay. Called on the posture edge that hides its trigger: the
++     * COLLAPSE for an overlay a seat of the FACE opened, the EXPAND for one opened
++     * from `#collapsed`. So an overlay never outlives the posture it was opened from.
++     * The dock owns the close: the overlay states how it closes, the dock says when.
++     * Outside both faces (a `#persistent` control, whose trigger stays painted and
++     * live in both postures) and outside a dock it is never called.
+      */
+     close?: () => void;
+ }): DockParticipation {
+     const dock = useOptionalDockContext();
+     const token = useHoldToken(() => dock, o?.kind);
+ 
+-    const inFace = !!dock && useInDockFace();
++    const face = dock ? useDockFace() : null;
++    const inFace = face === "expanded";
+     const close = o?.close;
+-    if (dock && inFace && close) {
++    if (dock && face && close) {
+         watch(dock.expanded, (expanded, was) => {
+-            if (was && !expanded) close();
++            if (face === "expanded" ? was && !expanded : !was && expanded) close();
+         });
+     }
+ 
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index 858f484..f3150fd 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -580,7 +580,7 @@ defineExpose({
+                 @keydown="onSummaryKeydown"
+                 @click="onClickCollapsed"
+             >
+-                <slot name="collapsed" />
++                <DockFace collapsed><slot name="collapsed" /></DockFace>
+             </div>
+ 
+             <!--
+diff --git a/src/components/dock/composables/dockContext.ts b/src/components/dock/composables/dockContext.ts
+index d3baced..7bc66b9 100644
+--- a/src/components/dock/composables/dockContext.ts
++++ b/src/components/dock/composables/dockContext.ts
+@@ -101,18 +101,33 @@ export const useOptionalDockContext = ctx.useOptional;
+  * from them is not the collapse's to close (O-102 (3) names the expanded UI's
+  * dropdowns). Where a control was authored is a fact of the component tree, so it is
+  * read by injection, the way the dock context itself is, and never off the DOM.
++ *
++ * THE COLLAPSED FACE. `#collapsed` is the face the expand takes away: `<GlassDock>`
++ * renders it inside `<DockFace collapsed>`. An overlay opened from it closes on the
++ * expand, as one opened from the face closes on the collapse.
++ * [2026-11-23 · 11.1.2 · O-420] keyframes' collapsed seal kept its tooltip open through
++ * a hover open, and the tooltip then followed the hidden seal 142 to 145 px along the
++ * open dock (Playwright WebKit).
+  */
+-const DOCK_FACE_KEY: InjectionKey<boolean> = Symbol("glass-dock-face");
++export type DockFaceName = "expanded" | "collapsed";
++
++const DOCK_FACE_KEY: InjectionKey<DockFaceName> = Symbol("glass-dock-face");
+ 
+ export const DockFace = defineComponent({
+     name: "DockFace",
+-    setup(_, { slots }) {
+-        provide(DOCK_FACE_KEY, true);
++    props: { collapsed: { type: Boolean, default: false } },
++    setup(props, { slots }) {
++        provide(DOCK_FACE_KEY, props.collapsed ? "collapsed" : "expanded");
+         return () => slots.default?.();
+     },
+ });
+ 
++/** The face a descendant was authored in, or null outside both. */
++export function useDockFace(): DockFaceName | null {
++    return inject(DOCK_FACE_KEY, null);
++}
++
+ /** `true` for a descendant of the dock's face, the region the collapse takes away. */
+ export function useInDockFace(): boolean {
+-    return inject(DOCK_FACE_KEY, false);
++    return useDockFace() === "expanded";
+ }
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 46a62f8..65a9903 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -7,7 +7,19 @@ type Axis = "horizontal" | "vertical";
+ function getSize(el: HTMLElement, axis: Axis): number {
+     // Endpoints are layout border boxes. `getBoundingClientRect()` includes the dock's
+     // live scale and can expose one stale transformed frame as the morph flag clears.
+-    return axis === "vertical" ? el.offsetHeight : el.offsetWidth;
++    // The box is read to the fraction, from the used size: `offset*` rounds to a whole
++    // pixel, so an endpoint landed up to half a pixel off its rest at the settle, and a
++    // pane's shift, a percentage of its size, missed by the rounding times the travel
++    // (fourier's seal, 40.69 px read as 41: 2.5 px at the settle, O-420).
++    const cs = getComputedStyle(el);
++    const vertical = axis === "vertical";
++    const size = Number.parseFloat(vertical ? cs.height : cs.width);
++    if (!Number.isFinite(size)) return vertical ? el.offsetHeight : el.offsetWidth;
++    if (cs.boxSizing === "border-box") return size;
++    const px = (value: string) => Number.parseFloat(value) || 0;
++    return vertical
++        ? size + px(cs.paddingTop) + px(cs.paddingBottom) + px(cs.borderTopWidth) + px(cs.borderBottomWidth)
++        : size + px(cs.paddingLeft) + px(cs.paddingRight) + px(cs.borderLeftWidth) + px(cs.borderRightWidth);
+ }
+ 
+ type Override = readonly [el: HTMLElement, property: string, value: string];
+@@ -151,6 +163,7 @@ type FirstBoxes = Map<Element, Span>;
+ 
+ const ORIGIN = "--dock-morph-origin";
+ const PANE_SHIFT = "--dock-pane-shift";
++const REGION_SHIFT = "--dock-region-shift";
+ /** Two whole-pixel reads of one box under an ancestor `zoom` differ by up to 2 px. */
+ const ENDPOINT_BAND_PX = 2;
+ 
+@@ -627,6 +640,7 @@ export function useDockExpandedSize(
+         const root = rootEl.value;
+         if (!root) return;
+         for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
++        for (const region of rigidRegions(root)) region.style.removeProperty(REGION_SHIFT);
+         for (const pane of panes()) pane.style.removeProperty(PANE_SHIFT);
+         // At a settle (the morph flag already cleared) the run is at rest again.
+         if (expandedEl.value) publishYield(root, expandedEl.value);
+@@ -737,6 +751,14 @@ export function useDockExpandedSize(
+                 ORIGIN,
+                 percent((held === null ? origin : origin - held) - toLocal(now.start), size),
+             );
++            // An unscaled start holds the rest, and at scale 1 no origin moves the region,
++            // so the first frame would paint the new posture's layout, a pad's difference
++            // from the box it painted. The shift carries that difference out along the
++            // scalar (shape.css).
++            const was = boxes.get(region);
++            if (target === end && was && was.size > 0) {
++                region.style.setProperty(REGION_SHIFT, percent((was.start - now.start) / k, size));
++            }
+         }
+ 
+         const layersSize = getSize(layers, a);
+diff --git a/src/components/dock/composables/useDockMorph.ts b/src/components/dock/composables/useDockMorph.ts
+index 1297582..7536ee2 100644
+--- a/src/components/dock/composables/useDockMorph.ts
++++ b/src/components/dock/composables/useDockMorph.ts
+@@ -95,6 +95,14 @@ export function useDockMorphOrchestrator(
+             inheritVelocityScale: reversing ? -1 : 1,
+             onFrame: (value) => {
+                 root()?.style.setProperty("--dock-morph-t", `${value}`);
++                // THE MORPH LANDS WHERE IT IS SEEN TO LAND. Every channel the scalar
++                // drives is clamped at 1 (the size blend, the reveal, the leaving pane's
++                // fade), so nothing moves after the spring first reaches its target. Its
++                // own settle waits for |v| < 1e-3/s and came 280 to 300 ms later, with the
++                // reserved box and the scale held through that pause, then stepped
++                // (O-420). A live spring only: under reduced motion it has settled
++                // already and `onSettle` lands it.
++                if (value >= 1 && dockSpring.live) settle();
+             },
+             onSettle: settle,
+         });
+diff --git a/src/components/dock/composables/useDockRun.ts b/src/components/dock/composables/useDockRun.ts
+index f3f1e26..91bc95e 100644
+--- a/src/components/dock/composables/useDockRun.ts
++++ b/src/components/dock/composables/useDockRun.ts
+@@ -189,6 +189,12 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         return [start, start + (vertical() ? seat.offsetHeight : seat.offsetWidth)];
+     }
+ 
++    /** Whether the run clips and scrolls on its scroll axis (run.css). */
++    function isPort(run: HTMLElement): boolean {
++        const style = getComputedStyle(run);
++        return (vertical() ? style.overflowY : style.overflowX) !== "visible";
++    }
++
+     /** The run's reserve: its leading padding on the scroll axis (run.css `--dock-run-reserve-*`). */
+     function reserveOf(run: HTMLElement): number {
+         const style = getComputedStyle(run);
+@@ -213,11 +219,21 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+      * RESERVE on the scroll axis: the reserve is room for a seat's ink (its ring), never
+      * room for the seat. The layout box, never the transformed rect: a seat's own press
+      * scale is not reach.
++     *
++     * THE RESERVE COUNTS ONLY WHERE A RING PAINTS (`ring`). A seat pressed by pointer or
++     * touch draws no ring, so it is occluded only when its own box is cut. A press on
++     * fourier's theme seat, whole in the port but with its ring's room cut by the run's
++     * end, reached for the ring and moved every seat in the dock (O-420).
++     *
++     * `pos` is the scroll offset to read the seat against: now, or where a running
++     * glide lands.
+      */
+-    function occluded(run: HTMLElement, seat: HTMLElement): boolean {
+-        const pos = scrollPos(run);
++    function occluded(run: HTMLElement, seat: HTMLElement, ring = true, pos = scrollPos(run)): boolean {
++        // A run that is no scroll port cuts no seat: a horizontal run whose seats all
++        // show (run.css, A RUN WHOSE SEATS ALL SHOW IS NOT A SCROLL PORT).
++        if (!isPort(run)) return false;
+         const port = vertical() ? run.clientHeight : run.clientWidth;
+-        const reserve = reserveOf(run);
++        const reserve = ring ? reserveOf(run) : 0;
+         const [start, end] = extentOf(run, seat);
+         // Sub-pixel tolerance: the scroll offset can be fractional while `offset*` rounds
+         // to whole pixels, and reaching for a seat that is flush within that would glide
+@@ -245,23 +261,53 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         if (name) status.textContent = name;
+     }
+ 
+-    function reach(seat: HTMLElement): void {
++    /**
++     * The glide owns the scroll offset while it runs. The run is a `mandatory` snap
++     * container, and the engine snaps every scroll offset written into one, so a glide
++     * written frame by frame landed as one jump to the next snap position, the frame it
++     * passed the midpoint (fourier's theme seat: 4 px at 1440, 12 to 14 px at 390, in one
++     * frame, both engines, O-420). Snapping is lifted for the glide and handed back where
++     * it ends, on the snap position `anchorFor` read, so the hand-back moves nothing.
++     */
++    function holdSnap(run: HTMLElement | null, on: boolean): void {
++        if (!run) return;
++        if (on) run.style.setProperty("scroll-snap-type", "none");
++        else run.style.removeProperty("scroll-snap-type");
++    }
++
++    /** Where the running glide lands, or null when none runs. */
++    let glideTo: number | null = null;
++
++    function stopGlide(): void {
++        glide.dispose();
++        glideTo = null;
++        holdSnap(runEl.value, false);
++    }
++
++    function reach(seat: HTMLElement, ring = true): void {
+         const run = runEl.value;
+         if (!run) return;
+         announce(seat);
+-        // The latest reach owns the travel. A seat already in view (the engine's own
+-        // focus scroll can bring it there before `focusin`) stops a glide still running
+-        // toward an earlier seat, which would otherwise carry this one back out of view.
+-        if (!occluded(run, seat)) {
+-            glide.dispose();
++        // The latest reach owns the travel, and a reach that needs none leaves it alone. A
++        // glide still running keeps its course when it lands with this seat in view, so it
++        // ends on the snap position it set out for and hands the snap back there; with no
++        // glide, a seat in view needs no travel. A glide that would leave this seat out of
++        // view (the engine's own focus scroll can bring it into view before `focusin`) is
++        // taken over by this reach.
++        // [2026-11-23 · 11.1.2 · O-420] ~~A seat in view stops a running glide~~: with the
++        // snap held for the glide, a glide stopped mid-way handed the snap back off a snap
++        // position, and the engine re-snapped in one frame.
++        if (glideTo !== null ? !occluded(run, seat, ring, glideTo) : !occluded(run, seat, ring)) {
+             return;
+         }
+         const from = scrollPos(run);
+         const to = anchorFor(run, seat);
+         if (Math.abs(to - from) < 1) {
+-            glide.dispose();
++            stopGlide();
+             return;
+         }
++        glideTo = to;
++        holdSnap(run, true);
+         // The spring writes a 0→1 progress; the position is the lerp. `useDockSpring` is
+         // armed `respectReducedMotion: true`, so under `reduce` this JUMPS in one frame
+         // — the destination is identical, only the travel is removed.
+@@ -270,6 +316,10 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+                 const el = runEl.value;
+                 if (el) writeScroll(el, from + (to - from) * t);
+             },
++            onSettle: () => {
++                glideTo = null;
++                holdSnap(runEl.value, false);
++            },
+         });
+     }
+ 
+@@ -403,7 +453,10 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         const run = runEl.value;
+         if (!run) return;
+         const seat = seatHolding(run, event.target as Node);
+-        if (seat) reach(seat);
++        // A ring paints only for a focus the engine marks visible (a key's); a click,
++        // a tap and a pointer's focus draw none.
++        const ring = event.type === "focusin" && (event.target as Element).matches?.(":focus-visible") === true;
++        if (seat) reach(seat, ring);
+     }
+ 
+     /**
+@@ -476,7 +529,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         run?.removeEventListener("click", onActivate, { capture: true });
+         run?.removeEventListener("focusin", onActivate, { capture: true });
+         mo?.disconnect();
+-        glide.dispose();
++        stopGlide();
+     });
+ 
+     // A vertical dock and a horizontal one take different arrow pairs and different
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 8075640..0d95426 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -129,6 +129,17 @@
+     initial-value: 0px;
+ }
+ 
++/* A persistent region's shift on the morph axis, written by `anchor` for a morph that
++   starts unscaled (a collapse from rest): from where the new posture lays the region out
++   to the box it painted, as a percentage of its own box. The region carries it scaled by
++   `1 - --dock-morph-t`, so it paints that box at the first frame and its rest at the
++   end. Non-inheriting, `0px` where none is written. */
++@property --dock-region-shift {
++    syntax: "<length-percentage>";
++    inherits: false;
++    initial-value: 0px;
++}
++
+ /* The plate scalar the `clip-path` visible-extent morph reads. `inherits: false` is
+    LOAD-BEARING (the opposite of `--dock-morph-t`, which MUST inherit to its descendant
+    readers): the plate scalar has NO descendant reader, so un-inherited is correct.
+diff --git a/src/components/dock/styles/layers.css b/src/components/dock/styles/layers.css
+index 6ec4dad..ffc9a70 100644
+--- a/src/components/dock/styles/layers.css
++++ b/src/components/dock/styles/layers.css
+@@ -8,7 +8,7 @@
+  * `--dock-collapsed-px`, BOUNDED by construction off the ONE `--dock-morph-t`
+  * scalar; NO per-swap `from/to` ratio, NO per-frame layout-axis lerp), the unified
+  * `.is-active` / `.is-leaving` 3-state crossfade + hit-test contract (the
+- * a11y-006 anchor), and the per-child reveal stagger (the `--dock-stagger-*` ramp).
++ * a11y-006 anchor), and the two faces' fade (`--dock-fade-window`).
+  * The `.dock-layer-group` / switcher / stack live in dock/layer-group.css.
+  *
+  * ~~and the `layout="grid"` 2D tile-grid arrangement~~ — [2026-08-12 · BK #47 W1
+@@ -176,31 +176,47 @@
+         opacity: 1;
+         visibility: visible;
+         pointer-events: auto;
+-        /* The active pane is STATICALLY opacity:1, REVEALED by the clip
+-           aperture (the box is the reveal mechanism), never faded. There is ZERO
+-           opacity authority on the active pane — the aperture uncovers a layout
+-           that is laid out ONCE at natural size behind it. Only `visibility 0s`
+-           survives (the active layer must paint at once, no fade-in delay — the
+-           governing rule). The leaving pane fades on the scalar below. */
++        /* At rest the active pane is opaque. While the dock morphs it is the
++           entering face and fades in on the morph's scalar (THE TWO FACES, below).
++           ~~The active pane is STATICALLY opacity:1, REVEALED by the clip aperture,
++           never faded. There is ZERO opacity authority on the active pane~~
++           [2026-11-23 · 11.1.2 · O-420] the pane is the one box every entering seat is
++           in, so it carries the entering fade. Only `visibility 0s` survives here: the
++           active layer paints at once, and its opacity is the scalar's, never a
++           transition's. */
+         transition: visibility 0s;
+     }
+ 
+-    /* The leaving pane fades on the ONE `--dock-morph-t` scalar (the
+-       single clock the box rides), gated on `[data-morphing]`. At rest (no morph)
+-       the leaving class is already gone, so the scalar-fade is only authored DURING
+-       the morph. `opacity: calc(1 - var(--dock-morph-t))` runs 1→0 as the box
+-       morphs, in perfect lockstep — no ghost, no flash, no second timer. The pane
+-       stays painted (visibility:visible) + untouchable (pointer-events:none) through
+-       the fade; the base-rule `visibility 0s linear var(--duration-normal)` hold
+-       flips it hidden once the morph state clears on spring-settle. */
++    /* The leaving pane is painted and untouchable through the morph
++       (visibility:visible, pointer-events:none); the base-rule `visibility 0s linear
++       var(--duration-normal)` hold flips it hidden once the morph state clears at the
++       settle. At rest the leaving class is already gone. */
+     :where(.glass-dock, .dock-layer-group) .dock-layer.is-leaving {
+         opacity: 0;
+         visibility: visible;
+         pointer-events: none;
+     }
+ 
++    /* THE TWO FACES, OUT THEN IN, on the ONE `--dock-morph-t` scalar `p` (0 → 1 in
++       both directions) and one window `w = --dock-fade-window`: the leaving face reads
++       `clamp(0, 1 − p / w, 1)` and the entering face `clamp(0, 1 − (1 − p) / w, 1)`.
++       With w 0.55 the leaving face is gone by 55 % of the travel and the entering face
++       starts at 45 %, so the two are never at strength together (each 0.09 at the
++       middle), and on the dock spring each fade lasts about 80 ms or more with no 60 Hz
++       step above 0.25. The entering face is the pane, the one box every seat it brings
++       is in, whatever the host authored inside it. At rest neither rule applies, so a
++       settle changes no opacity. Under reduced motion the scalar lands in one frame and
++       the panes' own fade (above) carries the change.
++       [2026-11-23 · 11.1.2 · O-420] ~~`opacity: calc(1 - var(--dock-morph-t))` on the
++       leaving pane~~ and ~~the per-child reveal~~ (below): the leaving face held 0.7
++       while the entering face reached 0.6 in the same frame, and the entering seats went
++       from 0 to 1 in about 55 ms. */
+     .glass-dock[data-morphing] .dock-layer.is-leaving {
+-        opacity: calc(1 - var(--dock-morph-t));
++        opacity: clamp(0, calc(1 - var(--dock-morph-t) / var(--dock-fade-window)), 1);
++    }
++
++    .glass-dock[data-morphing] > .dock-controls > .dock-layers > .dock-layer.is-active {
++        opacity: clamp(0, calc(1 - (1 - var(--dock-morph-t)) / var(--dock-fade-window)), 1);
+     }
+ 
+     /* Each pane paints the box it holds (O-110): `anchor` writes the shift from where
+@@ -234,9 +250,8 @@
+         pointer-events: auto;
+     }
+ 
+-    /* Opacity now has ONE owner: the `--dock-morph-t` scalar (the leaving
+-       pane via `calc(1 - t)`, the entering pane revealed by the clip aperture +
+-       child stagger off the SAME scalar). Visibility keeps ONE owner: the delayed
++    /* Opacity now has ONE owner: the `--dock-morph-t` scalar, read by the two
++       panes through one window (THE TWO FACES, above). Visibility keeps ONE owner: the delayed
+        `visibility 0s linear var(--duration-normal)` hold of the 3-state fork above
+        (the a11y-006 hit-test anchor, LOAD-BEARING) released on spring-settle. ONE
+        clock, every axis — the single-scalar thesis FINISHED for opacity. */
+@@ -274,106 +289,17 @@
+         inset: 0;
+     }
+ 
+-    /* The spring-keyed child stagger, now off the SINGLE morph scalar.
+-       The driver writes `--dock-morph-t` to the `.glass-dock` root and arms
+-       `[data-morphing]` while the spring runs; `--dock-expand-t` (the inheriting
+-       directional expanded-ness derived above — 0 collapsed, 1 expanded) cascades
+-       to the active pane's children. Each direct child reveals when `--dock-expand-t`
+-       crosses its per-child onset, so the controls cascade IN ON the physical morph
+-       — symmetric in both directions (expand fades them in outer→in, collapse fades
+-       them back out) and an interrupted morph carries the cascade with it (no
+-       orphaned timers). The active PANE stays statically opacity:1 (revealed by the
+-       clip aperture); only its CHILDREN ride this per-child onset (the
+-       clip-reveal contract is NOT regressed).
+-
+-       The reveal is a pure `calc` ramp: `opacity = clamp(0, (expand-t − onset) /
+-       window, 1)`. Gated on the root `[data-morphing]` so at REST the children
+-       carry no opacity authority (default cascade → 1). Under PRM the spring's
+-       `respectReducedMotion` jumps `--dock-morph-t` 0→1 in one frame → `--dock-expand-t`
+-       lands at the endpoint → the cascade collapses to 0 stagger frames; the
+-       global PRM gate strips `translate` so the rise snaps too. */
+-    .glass-dock[data-morphing] .dock-layer.is-active > :not(.dock-run-mark) {
+-        --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
+-        --dock-stagger-onset: 0;
+-        /* Factor the reveal ramp into ONE named var so opacity AND
+-           the center-coupled scale read the SAME clamp (fade coupled to
+-           transform). */
+-        --child-reveal: clamp(
+-            0,
+-            calc(
+-                (var(--dock-expand-t) - var(--dock-stagger-onset)) /
+-                    var(--dock-stagger-window)
+-            ),
+-            1
+-        );
+-        opacity: var(--child-reveal);
+-        /* The rise is a center-coupled SCALE pop (0.82 → 1 on the
+-           reveal ramp, transform-origin center), NOT an independent `translate: 0
+-           4px` vertical hop. The children inherit the SAME center-anchored read as the box
+-           — a small inertial pop FROM the center, coupled to opacity. The global PRM gate
+-           strips `scale` → snap. */
+-        scale: calc(0.82 + 0.18 * var(--child-reveal));
+-        transform-origin: center;
+-        /* The morph writes this opacity and scale every frame. A seat keeps its own
+-           transition list at rest (run.css), and a list that tweens `opacity` or
+-           `scale` would trail each frame's value by its own duration, so the seat
+-           would hold full strength into the first frames of an unfold. While the
+-           dock morphs, its seats run on the morph's clock alone. */
+-        transition: none;
+-    }
+-
+-    /* Per-child onsets off the ONE `--dock-stagger-step` token. The hand-typed
+-       0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets derive from the single
+-       token, so retuning the cascade beat is a one-token override.
+-       ~~Each successive control starts `step` later than the one before it (`onset =
+-       step × (childIndex − 1)`) … capped at the 6th child (`nth-child(n + 6)` holds
+-       at `step × 5`).~~ — [2026-09-22 · O-32 §4.3 L-23] no rule on disk has matched
+-       that description; the ladder below is what paints.
+-       ~~The SYMMETRIC center-out stagger … center pair = onset 0 via the base rule,
+-       then ±1, ±2 … the reveal radiates center-out~~ — [2026-09-22 · O-32 §4.3 L-23]
+-       the paint was always edge-in, and edge-in is the intent: the controls reveal
+-       OUTER→IN (the edge pair at onset 0, the middle last), as the reveal note above
+-       says; collapse rewinds the same ramp, so the middle fades first and the edges last.
+-
+-       THE LADDER. A control's onset is `step × min(distance from the nearer edge, 3)`,
+-       counted over CONTROLS ONLY: `nth-child(… of :not(.dock-separator, .dock-run-mark))`. A
+-       DockSeparator is a sibling child of the layer, so counting `of *` gave each
+-       hairline a rung and shifted every control past it (O-32 L-23, fourier's
+-       CanvasControlsDock). Each rung is bounded from BOTH ends — ±1 is 2nd from one
+-       edge and at least 2nd from the other, ±2 likewise at 3rd, the deep middle at
+-       least 4th from both — so the rungs are disjoint and the ladder is symmetric at
+-       every length (3 controls → 0 1 0, 5 → 0 1 2 1 0, 10 → 0 1 2 3 3 3 3 2 1 0).
+-       Separators take no rung: they hold the base onset 0. The run's mark
+-       (`.dock-run-mark`, run.css) is no control and no seat: it takes no rung and no
+-       reveal. A long row finishes
+-       within the morph window because the deep middle holds at `step × 3`.
+-       (`sibling-index()` would collapse this to one declaration, but it is not yet
+-       Baseline across Safari/Firefox; `nth-child(… of S)` is Safari 16.4+ /
+-       Chrome 111+ / Firefox 113+.) */
+-    /* ring ±1 — 2nd control from the nearer edge */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(2 of :not(.dock-separator, .dock-run-mark)):nth-last-child(n + 2 of :not(.dock-separator, .dock-run-mark)),
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-last-child(2 of :not(.dock-separator, .dock-run-mark)):nth-child(n + 2 of :not(.dock-separator, .dock-run-mark)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
+-    }
+-    /* ring ±2 — 3rd control from the nearer edge */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(3 of :not(.dock-separator, .dock-run-mark)):nth-last-child(n + 3 of :not(.dock-separator, .dock-run-mark)),
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-last-child(3 of :not(.dock-separator, .dock-run-mark)):nth-child(n + 3 of :not(.dock-separator, .dock-run-mark)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
+-    }
+-    /* ring ±3 — the deep middle, 4th or further from BOTH edges (a long row finishes in-window) */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(n + 4 of :not(.dock-separator, .dock-run-mark)):nth-last-child(n + 4 of :not(.dock-separator, .dock-run-mark)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
+-    }
++    /* [2026-11-23 · 11.1.2 · O-420] ~~The spring-keyed child stagger: each direct child
++       of the active pane revealed on its own onset, edge-in, with a 0.82 → 1 scale pop
++       about its centre~~ DELETED, with its knobs `--dock-stagger-window-size` and
++       `--dock-stagger-step`. A pane's direct child is whatever the host authored. A
++       `display: contents` group (fourier's account seat, glass's bottom dock) has no box,
++       so its opacity and scale paint nothing: its seats stood at full strength from the
++       first frame of an open while every other seat was at 0. A group with a box was one
++       rung, and the pop scaled it about its own centre, sliding its end seats along the
++       dock (31.6 px on color's dock, 49.6 px on glass's bottom dock, 8 px on fourier's
++       page seats). The entering face now fades as the pane (THE TWO FACES, above), and
++       the seats stand where they rest while the plate's edge uncovers them. */
+ 
+     /* The at-rest clip-lift moved to `.expanded:not([data-morphing])` /
+        `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
+diff --git a/src/components/dock/styles/morph.css b/src/components/dock/styles/morph.css
+index 0d41a11..ef6042f 100644
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -92,8 +92,9 @@
+        siblings — the page content jumped as the dock animated (the user's 13:27
+        audit item 1). The fix holds `padding-block` PINNED at the expanded value in
+        BOTH states (no `--dock-expand-t` interpolation on the block axis) so the
+-       outer block-size is constant; ONLY `padding-inline` morphs to tighten the
+-       collapsed pill inline. The collapsed circle is unaffected — its diameter is
++       outer block-size is constant; ~~ONLY `padding-inline` morphs to tighten the
++       collapsed pill inline~~ [2026-11-23 · 11.1.2 · O-420] the inline pad takes each
++       posture's own value and does not morph (below). The collapsed circle is unaffected — its diameter is
+        owned by the summary pane's own symmetric `block-size` + `aspect-ratio:1`
+        (the `.collapsed .dock-layer--summary` rule below), CENTRED on the dock's
+        stable-height plate by the root `align-items:center`, not by the root pad. So
+@@ -116,11 +117,18 @@
+            layout-isolation contract above): the inline aperture morphs, the block
+            axis is pinned so the outer height never changes → 0px container reflow. */
+         padding-block: var(--dock-padding-block, 0.375rem);
+-        padding-inline: calc(
+-            var(--dock-pad-collapsed) +
+-                (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
+-        );
++        /* The inline pad is the posture's own, from the first frame of a morph: the
++           posture class is already the end state then. It is not lerped on
++           `--dock-expand-t`. The morph's visible size is the root's `scale` over a
++           reserved box (layers.css), so a lerped pad moved only the content inside that
++           box, 4 px at the house density, under origins `anchor` had read once: every
++           seat and the seal slid sideways through the morph, and a persistent region
++           landed s x 4 px off its rest and stepped at the settle (O-420). */
++        padding-inline: var(--dock-padding-inline, 0.5rem);
++    }
++
++    .glass-dock.collapsed:not(.vertical) {
++        padding-inline: var(--dock-pad-collapsed);
+     }
+ 
+     /* The VERTICAL padding interp is the AXIS-INVERSE
+@@ -129,8 +137,9 @@
+        layers.css), so the CROSS (inline) axis MUST be invariant across the morph —
+        else the dock's outer WIDTH changes on collapse and reflows its horizontal
+        siblings (the §1 contract, mirrored onto the vertical axis). So `padding-
+-       inline` is PINNED at the expanded inline value in BOTH states, and ONLY
+-       `padding-block` morphs to tighten the collapsed pill on the morph axis. The
++       inline` is PINNED at the expanded inline value in BOTH states, and ~~ONLY
++       `padding-block` morphs~~ [2026-11-23 · 11.1.2 · O-420] `padding-block` takes each
++       posture's own value, to tighten the collapsed pill on the morph axis. The
+        collapsed block-pad endpoint is the EXPANDED inline pad (max'd with the
+        consumer `--dock-collapsed-padding` handle) so the height-pinned-cross collapsed
+        pill is SYMMETRIC. Specificity 0,2,0 source-order after shell.css's static
+@@ -147,11 +156,12 @@
+         /* inline padding is INVARIANT — the cross axis, pinned both states so the
+            outer inline-size never changes → 0px horizontal sibling reflow. */
+         padding-inline: var(--dock-padding-inline, 0.5rem);
+-        padding-block: calc(
+-            var(--dock-pad-collapsed) +
+-                (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
+-        );
++        /* The block pad is the posture's own, as the horizontal inline pad above. */
++        padding-block: var(--dock-padding-block, 0.375rem);
++    }
++
++    .glass-dock.collapsed.vertical {
++        padding-block: var(--dock-pad-collapsed);
+     }
+ 
+     /* The collapsed padding / background / border-color are RETIRED here
+@@ -231,17 +241,16 @@
+     }
+ 
+     /* The collapsed/summary glyph appears WITH the pill, no added
+-       delay. The `--summary` pane is the INCOMING pane on collapse, but the shared
+-       stagger ramp reads `--dock-expand-t` which runs 1→0 on collapse — keying the
+-       summary glyph to it would fade it OUT over the back half of the morph and pop it
+-       in only at settle (the "shrunken icon does not appear for a while" defect). Keying the
+-       summary pane's stagger scalar to `--dock-morph-t` directly (the per-swap
+-       incoming-ness, 0→1) reveals it as the box settles — appearing WITH the pill.
+-       The summary is a single front-loaded glyph (onset 0), so this lands it at full
+-       opacity by the morph's tail. The `--dock-expand-t` directional scalar stays
+-       the right driver for the box CHROME (bg/border/padding/radius interpolate
+-       between the collapsed↔expanded endpoints); only the summary pane's CONTENT
+-       reveal is decoupled onto the incoming scalar. */
++       delay. The `--summary` pane is the INCOMING pane on collapse, while the dock's
++       `--dock-expand-t` runs 1→0, so content inside the summary that read it would fade
++       OUT over the back half of the morph and pop in only at settle (the "shrunken icon
++       does not appear for a while" defect). Inside the summary pane it is the per-swap
++       incoming-ness `--dock-morph-t` (0→1). The `--dock-expand-t` directional scalar
++       stays the driver for the box CHROME (bg/border/padding/radius interpolate between
++       the collapsed↔expanded endpoints).
++       [2026-11-23 · 11.1.2 · O-420] ~~Keying the summary pane's stagger scalar~~: the
++       summary's own fade is the entering face's (layers.css, THE TWO FACES), which reads
++       `--dock-morph-t` itself; this keeps the summary's content on the same clock. */
+     .glass-dock[data-morphing] .dock-layer--summary {
+         --dock-expand-t: var(--dock-morph-t);
+     }
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index 37e587a..de1f22e 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -439,6 +439,20 @@
+         margin-inline-start: calc(-1 * var(--dock-run-gap));
+     }
+ 
++    /* A RUN WHOSE SEATS ALL SHOW IS NOT A SCROLL PORT, on a horizontal dock. Its yielded
++       reserve boxes stop at the ring's reach, so a run that fits can still overflow its
++       port by up to twice that reach (fourier at 1440: 696 px of content in a 692 px
++       port), and a reach to its end seat scrolled the whole row 4 px, on a press and on
++       a key's focus alike (O-420). Here the run neither clips nor scrolls: every seat
++       stands where it rests, and the end seat's ring paints into the dock's own padding.
++       A vertical run keeps its port: its reserve yields as padding, so a run whose seats
++       fit has nothing to scroll, and `pan-y` on a non-scroller would hand a swipe on the
++       column to the page (THE VERTICAL DOCK, below). The redesign's rule covers both
++       axes (W-I.8 RU-52). */
++    .glass-dock[data-run-fits]:not(.vertical) :where(.dock-layers) > .dock-run {
++        overflow: visible;
++    }
++
+     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
+        a seat that grows is a seat that is no longer an integer number of pitches, and
+        the lattice dies quietly the moment one does. `start` alignment is what the
+diff --git a/src/components/dock/styles/shape.css b/src/components/dock/styles/shape.css
+index db2a71a..94d6888 100644
+--- a/src/components/dock/styles/shape.css
++++ b/src/components/dock/styles/shape.css
+@@ -143,6 +143,17 @@
+         will-change: transform;
+     }
+ 
++    /* A collapse from rest starts unscaled, where no origin moves a region, and each
++       posture lays its own pad out (morph.css), so the region's laid box is not the box
++       it painted. `anchor` writes that difference, and the region carries it out along
++       the scalar: the box it painted at the first frame, its rest at the end. */
++    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent {
++        translate: calc(var(--dock-region-shift) * (1 - var(--dock-morph-t))) 0;
++    }
++    .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent {
++        translate: 0 calc(var(--dock-region-shift) * (1 - var(--dock-morph-t)));
++    }
++
+     /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
+        The dock pins `--motion-weight: 1` on its own scope so the descendant control
+        motion (the glass-atom / btn cartoon-press punch recipes, which read
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index 1ddfa80..8277645 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -81,36 +81,14 @@
+            instant the morph it preceded began. `--scale-hover-dock` itself is a
+            tokens-file name whose last readers (the icon and tab hover lifts) went at
+            U/B8r I-2, so the token is deleted with them. */
+-        /* The spring-keyed child stagger knobs. `--dock-stagger-window-size`
+-           is the fraction of the morph each child reveals over. Consumers retune the
+-           cascade feel per instance.
+-
+-           `--dock-stagger-step` is the per-child onset BEAT: each
+-           successive control's reveal starts this fraction-of-morph later than the
+-           one before it, so the row fills edge-in. ONE token × the child's distance
+-           from its nearer edge replaces the hand-typed 0.08/0.16/0.24/0.32/0.4 onset
+-           ladder [2026-09-22 · O-32 §4.3 L-23: the onset is `step × min(distance from
+-           the nearer edge, 3)`, maximum 0.24, both ends bounded — the
+-           `step × (childIndex − 1)` / `step × 5` sentences are struck; the ladder
+-           itself lives in layers.css]. 0.08 = ~5% of the
+-           ~0.32s morph between items — inside Emil Kowalski's 30–60ms stagger band,
+-           never the >100ms "slideshow" register. The onset rides the NORMALIZED
+-           morph progress (`--dock-expand-t`), NOT a wall-clock timer, so a fast
+-           flick and a slow hover-open both choreograph correctly and an interrupted
+-           morph orphans no timers.
+-
+-           The window is 0.4. The per-child onset peaks at
+-           `step × 3 = 0.24` (the deep middle), so with the 0.4 window the LAST detail
+-           child finishes at `0.24 + 0.4 = 0.64` [2026-09-22 · L-23: was `0.40 + 0.4 =
+-           0.80` under the struck index ladder] (the iOS front-loaded register: stagger
+-           the EXPANDING detail, never the persistent/summary glyph). A wider 0.55
+-           window would push the middle child to `0.24 + 0.55 = 0.79` of the morph —
+-           barely visible until four fifths through (the "shrunken icon does not appear
+-           for a while" tail). The step (0.08, Kowalski's band) is the beat; the window is the tuned
+-           span. The summary/persistent glyph is front-loaded
+-           structurally (onset 0, scalar-keyed below). */
+-        --dock-stagger-window-size: 0.4;
+-        --dock-stagger-step: 0.08;
++        /* The two faces' fade window (layers.css, THE TWO FACES): on a posture change
++           the leaving face is gone by this fraction of the morph and the entering face
++           starts at one minus it. 0.55 is the redesign's window (W-I.8 R-3): out, then
++           in, each face 0.09 at the middle, each fade about 80 ms or more on the dock
++           spring with no 60 Hz step above 0.25.
++           [2026-11-23 · 11.1.2 · O-420] ~~`--dock-stagger-window-size` and
++           `--dock-stagger-step`, the per-child onset knobs~~ deleted with the stagger. */
++        --dock-fade-window: 0.55;
+         /* The big-dock card-shell radius (default --radius-dock-card =
+            --radius-3xl). ~~`--dock-tile-min` is the grid tile minimum (auto-fill
+            track floor)~~ — [2026-08-12 · BK #47 W1 SURFACE] struck with the `layout`
+diff --git a/src/components/tooltip/TooltipContent.vue b/src/components/tooltip/TooltipContent.vue
+index d078e9f..665c7fb 100644
+--- a/src/components/tooltip/TooltipContent.vue
++++ b/src/components/tooltip/TooltipContent.vue
+@@ -47,11 +47,15 @@ const placementProps = computed(() => ({
+    dock-anchored icon's own tooltip read as "the pointer left the dock" and
+    collapsed the thing the pointer was still pointing at. The hint takes no HOLD
+    — a hint is not a hand and must not pin the dock open — only the stamp, so
+-   click-away and pointer-out can tell a dock's own overlay from the page. */
+-const dock = useDockParticipation();
++   click-away and pointer-out can tell a dock's own overlay from the page, and the
++   close: the posture edge that hides its trigger closes it through reka's root.
++   [2026-11-23 · 11.1.2 · O-420] A hint passed no close, so one opened from the
++   collapsed seal stayed open through a hover open and followed the hidden seal along
++   the open dock (Playwright WebKit). */
++const tooltipRoot = injectTooltipRootContext();
++const dock = useDockParticipation({ close: () => tooltipRoot.onClose() });
+ 
+ /* Once the exit has finished, the hint says so (`_shared/overlay/leave-finished.ts`). */
+-const tooltipRoot = injectTooltipRootContext();
+ const leave = useLeaveFinished({
+     kind: "tooltip",
+     open: () => tooltipRoot.open.value,
+diff --git a/tests-visual/release-11-0-2.spec.ts b/tests-visual/release-11-0-2.spec.ts
+index 3ecdca9..c654890 100644
+--- a/tests-visual/release-11-0-2.spec.ts
++++ b/tests-visual/release-11-0-2.spec.ts
+@@ -1444,8 +1444,8 @@ test("transition · a control slotted into a dock's run keeps its own transition
+ // where those clip, against the plate's painted box; and each item's effective opacity
+ // (the product of its own and its ancestors'). No visible item stands outside the plate,
+ // and between two frames no item's opacity moves faster than the morph itself: by more
+-// than the reveal ramp's slope (one over the dock's `--dock-stagger-window-size`) times
+-// the change in `--dock-expand-t`, plus 0.05. A frame the engine drops moves t further and allows a larger step; a drop from
++// than the faces' fade slope (one over the dock's `--dock-fade-window`, layers.css THE TWO
++// FACES) times the change in `--dock-expand-t`, plus 0.05. A frame the engine drops moves t further and allows a larger step; a drop from
+ // 1 to 0 while t barely moves does not pass.
+ async function foldFrames(page: Page, dir: "expand" | "collapse") {
+     await page.evaluate(() => {
+@@ -1463,7 +1463,7 @@ async function foldFrames(page: Page, dir: "expand" | "collapse") {
+             const d = dock.getBoundingClientRect();
+             const raw = cs.getPropertyValue("--dock-expand-t").trim();
+             const n = parseFloat(raw.replace(/^calc\(1 - /, ""));
+-            const ramp = parseFloat(cs.getPropertyValue("--dock-stagger-window-size")) || 0.55;
++            const ramp = parseFloat(cs.getPropertyValue("--dock-fade-window")) || 0.55;
+             const f: F = { morphing: dock.hasAttribute("data-morphing"), t: raw.startsWith("calc(1 - ") ? 1 - n : n, window: ramp, items: [] };
+             for (const el of items) {
+                 let o = getComputedStyle(el).visibility === "hidden" ? 0 : 1;
+diff --git a/tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts b/tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts
+index fdd236a..f33c1a9 100644
+--- a/tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts
++++ b/tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts
+@@ -17,6 +17,12 @@ import {
+     DropdownMenuItem,
+ } from "@glass/components/menu";
+ import { Popover, PopoverContent } from "@glass/components/popover";
++import {
++    Tooltip,
++    TooltipContent,
++    TooltipProvider,
++    TooltipTrigger,
++} from "@glass/components/tooltip";
+ import {
+     Select,
+     SelectContent,
+@@ -212,4 +218,77 @@ describe("GlassDock — the collapse closes what its seats opened", () => {
+         expect(popOpen.value).toBe(true);
+         expect(document.activeElement).toBe(input);
+     });
++
++    // 11.1.2 · O-420 — `#collapsed` is the face the expand takes away, so what it opened
++    // closes on the expand. RED on 11.1.1: nothing closed an overlay opened from the
++    // collapsed face, and a tooltip passed no close at all, so keyframes' seal kept its
++    // tooltip open through a hover open (Playwright WebKit).
++    it("a popover opened from #collapsed closes on expand()", async () => {
++        const dock = ref<InstanceType<typeof GlassDock> | null>(null);
++        const popOpen = ref(false);
++        const Host = defineComponent(() => () =>
++            h(GlassDock, { ref: dock, collapse: "closed" }, {
++                default: () => [h(DockControl, { "aria-label": "Seat" }, () => "S")],
++                collapsed: () =>
++                    h(
++                        Popover,
++                        { open: popOpen.value, "onUpdate:open": (v: boolean) => (popOpen.value = v) },
++                        () => [
++                            h(DockTrigger, { for: "popover", "aria-label": "Seal" }, () => "S"),
++                            h(PopoverContent, { "aria-label": "Seal" }, () => "panel"),
++                        ],
++                    ),
++            }),
++        );
++        mounted.push(mount(Host, { attachTo: document.body }));
++        await settle();
++        popOpen.value = true;
++        await settle();
++        expect(dock.value!.expanded).toBe(false);
++        expect(popOpen.value).toBe(true);
++
++        dock.value!.expand();
++        await settle();
++        expect(dock.value!.expanded).toBe(true);
++        expect(popOpen.value).toBe(false);
++    });
++
++    it("a tooltip closes on the edge that hides its trigger: #collapsed on expand(), a seat on collapse()", async () => {
++        const dock = ref<InstanceType<typeof GlassDock> | null>(null);
++        const sealTip = ref(false);
++        const seatTip = ref(false);
++        const tip = (open: typeof sealTip, label: string) =>
++            h(
++                Tooltip,
++                { open: open.value, "onUpdate:open": (v: boolean) => (open.value = v) },
++                () => [
++                    h(TooltipTrigger, { asChild: true }, () => h(DockControl, { "aria-label": label }, () => label)),
++                    h(TooltipContent, {}, () => label),
++                ],
++            );
++        const Host = defineComponent(() => () =>
++            h(TooltipProvider, { delayDuration: 0 }, () =>
++                h(GlassDock, { ref: dock, collapse: "closed" }, {
++                    default: () => [tip(seatTip, "Seat")],
++                    collapsed: () => tip(sealTip, "Seal"),
++                }),
++            ),
++        );
++        mounted.push(mount(Host, { attachTo: document.body }));
++        await settle();
++        sealTip.value = true;
++        await settle();
++        expect(sealTip.value).toBe(true);
++
++        dock.value!.expand();
++        await settle();
++        expect(sealTip.value).toBe(false);
++
++        seatTip.value = true;
++        await settle();
++        expect(seatTip.value).toBe(true);
++        dock.value!.collapse();
++        await settle();
++        expect(seatTip.value).toBe(false);
++    });
+ });
+diff --git a/tests/components/custom/dock/GlassDock.stagger.browser.test.ts b/tests/components/custom/dock/GlassDock.stagger.browser.test.ts
+deleted file mode 100644
+index 42a1a23..0000000
+--- a/tests/components/custom/dock/GlassDock.stagger.browser.test.ts
++++ /dev/null
+@@ -1,108 +0,0 @@
+-// O-32 §4.3 L-23—the reveal stagger is an edge-in ladder over the CONTROLS.
+-//
+-// Each control's `--dock-stagger-onset` is `step × min(distance from the nearer edge,
+-// 3)`: the two edge controls reveal first and the middle last, symmetric at every row
+-// length. A DockSeparator is a sibling child of the layer but takes no rung, so a
+-// hairline neither shifts the ladder nor delays itself. The rungs count with
+-// `nth-child(… of :not(.dock-separator))` and each is bounded from BOTH ends, so no
+-// rung can match a child that is nearer the other edge.
+-//
+-// A REAL ENGINE: the ladder lives inside `@layer components`, which happy-dom drops.
+-// The rows are real GlassDock / DockControl / DockSeparator mounts (happy-dom renders
+-// the markup); Playwright's bundled Chromium resolves the source bytes of
+-// `layers.css` over that markup. The one instrument is a `<number>` registration of
+-// `--dock-stagger-onset` with `--dock-stagger-step: 1`, so the computed onset IS the
+-// rung index.
+-
+-import { readFileSync } from "node:fs";
+-import { mount } from "@vue/test-utils";
+-import { chromium, type Browser, type Page } from "playwright";
+-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+-import { defineComponent, h } from "vue";
+-
+-import DockControl from "@glass/components/dock/DockControl.vue";
+-import DockSeparator from "@glass/components/dock/DockSeparator.vue";
+-import GlassDock from "@glass/components/dock/GlassDock.vue";
+-
+-const LAYERS = readFileSync("src/components/dock/styles/layers.css", "utf8");
+-
+-const INSTRUMENT = `
+-@property --dock-stagger-onset { syntax: "<number>"; inherits: false; initial-value: 0; }
+-.glass-dock { --dock-stagger-step: 1; }`;
+-
+-/** `c` a DockControl, `s` a DockSeparator. */
+-const ROWS = ["cc", "csccccsc", "ccscccscc", "ccc", "cccc", "ccccc", "ccccccc", "cccccccccc"];
+-
+-/** Mounted GlassDock markup for one row, marked mid-morph. */
+-function dockHtml(row: string): string {
+-    const Host = defineComponent({
+-        setup: () => () =>
+-            h(GlassDock, { collapse: "open", "data-row": row }, () =>
+-                [...row].map((kind, i) =>
+-                    kind === "s"
+-                        ? h(DockSeparator)
+-                        : h(DockControl, { "aria-label": `c${i}` }, () => "•"),
+-                ),
+-            ),
+-    });
+-    const wrapper = mount(Host);
+-    const dock = wrapper.get(".glass-dock").element as HTMLElement;
+-    dock.setAttribute("data-morphing", "");
+-    const html = dock.outerHTML;
+-    wrapper.unmount();
+-    return html;
+-}
+-
+-let browser: Browser;
+-let page: Page;
+-
+-beforeAll(async () => {
+-    const docks = ROWS.map(dockHtml).join("\n");
+-    browser = await chromium.launch();
+-    page = await browser.newPage();
+-    await page.setContent(
+-        `<style>${LAYERS}</style><style>${INSTRUMENT}</style>${docks}`,
+-    );
+-}, 60_000);
+-
+-afterAll(async () => {
+-    await browser?.close();
+-});
+-
+-/** The computed onset of every child of the row's active layer, tagged c/s. */
+-async function onsets(row: string) {
+-    return page.evaluate((key) => {
+-        const layer = document.querySelector(
+-            `.glass-dock[data-row="${key}"] .dock-layer.is-active`,
+-        )!;
+-        return [...layer.children].map((child) => ({
+-            kind: child.classList.contains("dock-separator") ? "s" : "c",
+-            onset: Number(
+-                getComputedStyle(child).getPropertyValue("--dock-stagger-onset"),
+-            ),
+-        }));
+-    }, row);
+-}
+-
+-describe("GlassDock reveal stagger—the edge-in ladder over controls", () => {
+-    it("mounts every child of the row into the active layer", async () => {
+-        for (const row of ROWS) {
+-            expect((await onsets(row)).map((c) => c.kind).join("")).toBe(row);
+-        }
+-    });
+-
+-    it.each(ROWS)(
+-        "row %s: controls ladder edge-in, symmetric; separators take no rung",
+-        async (row) => {
+-            const children = await onsets(row);
+-            const controls = children.filter((c) => c.kind === "c").map((c) => c.onset);
+-            const n = controls.length;
+-            const ladder = controls.map((_, i) => Math.min(i, n - 1 - i, 3));
+-
+-            expect(controls).toEqual(ladder);
+-            expect(children.filter((c) => c.kind === "s").map((c) => c.onset)).toEqual(
+-                children.filter((c) => c.kind === "s").map(() => 0),
+-            );
+-        },
+-    );
+-});

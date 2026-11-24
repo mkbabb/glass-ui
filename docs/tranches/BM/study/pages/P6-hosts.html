@@ -1,0 +1,410 @@
+<title>Glass Mark Hosts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* BM pass 6 (the mark in every host: Q5, Q21, and the choice's sign from the fold of B5-1). Three sections, each with
+   its letters side by side. The mark is the one selection mark of DESIGN §7 as amended in pass 6: a plain capsule
+   moved by translate, a tap sends it on the dock row (response 0.30 s, damping 0.88) played as keyframes sampled from
+   the spring and ending within half a pixel of its rest, a drag follows the finger from where the mark is drawn, and
+   a release settles on the seat under the finger with the mark's own speed, capped (pass-6/fold/fold.json). The level
+   in section 3 is a window over its fill (DESIGN §6.3): the window's translate sets the moving end and the fill's
+   sets the fixed one. Numbers: pass-6/hosts/hosts.json, pass-6/fold/fold.json.
+   Corrected in pass 7's fold (pass-6/fold.md): section 3 rebuilt (A the follow and settle, B the step travel on the
+   press row, C a one-step mark); the fill is one translate clipped by the track's own round end, and the dots lie still
+   under it (A6-1, A6-3, B6-4); no source is named for a letter (A6-4); section 2 draws each host's own edge, and B's
+   edge as a 1 px border (A6-8); every option has its own plate, light on hover and the press tone on press (A6-11);
+   no link-callout suppression (A6-6). Under Reduce Motion a level's length tweens over 150 ms and a mark dips (A6-7). */
+:root {
+  --bg: hsl(40 30% 98%);
+  --fg: hsl(24 10% 10%);
+  --muted: hsl(30 26% 35%);
+  --line: hsl(30 14% 84%);
+  --ask-bg: hsl(36 88% 90%);
+  --focus: hsl(24 70% 42%);
+  --card: hsl(30 85% 96%);
+  --track: oklch(0.28 0.035 70 / 0.1);
+  --mark: hsl(24 10% 10% / 0.12);
+  --icon: hsl(24 10% 10% / 0.8);
+  --edge: hsl(24 10% 10% / 0.48);
+  --dot: hsl(24 10% 10% / 0.34);
+  --level: hsl(24 10% 10% / 0.82);
+  --plate: hsl(24 10% 10% / 0.16);
+  --host-edge: hsl(24 10% 10% / 0.08);
+  --font: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+    --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+    --track: oklch(0.17 0.03 70 / 0.14); --mark: hsl(30 14% 90% / 0.12); --icon: hsl(30 14% 90% / 0.8);
+    --edge: hsl(30 14% 90% / 0.48); --dot: hsl(30 14% 90% / 0.34); --level: hsl(30 14% 90% / 0.86);
+    --plate: hsl(30 14% 90% / 0.16); --host-edge: hsl(30 14% 90% / 0.08);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: hsl(24 9% 4%); --fg: hsl(30 14% 90%); --muted: hsl(34 16% 72%); --line: hsl(26 12% 22%);
+  --ask-bg: hsl(30 40% 15%); --focus: hsl(30 80% 66%); --card: hsl(26 22% 17%);
+  --track: oklch(0.17 0.03 70 / 0.14); --mark: hsl(30 14% 90% / 0.12); --icon: hsl(30 14% 90% / 0.8);
+  --edge: hsl(30 14% 90% / 0.48); --dot: hsl(30 14% 90% / 0.34); --level: hsl(30 14% 90% / 0.86);
+    --plate: hsl(30 14% 90% / 0.16); --host-edge: hsl(30 14% 90% / 0.08);
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-block: 16px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1040px; margin-inline: auto; display: grid; gap: 14px; }
+.ask { background: var(--ask-bg); border-radius: 14px; padding: 14px 16px; font-size: 17px; margin: 0; }
+.env { font: 13px/1.4 var(--mono); color: var(--muted); margin: 0; }
+section { display: grid; gap: 10px; padding-block: 6px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); align-items: start; }
+section > :not(.letter) { grid-column: 1 / -1; }
+h2 { font: 600 17px/1.3 var(--font); margin: 10px 0 0; }
+.how { margin: 0; font-size: 15px; color: var(--muted); }
+.letter { background: var(--card); border-radius: 18px; padding: 12px 14px 14px; display: grid; gap: 10px; justify-items: start; min-width: 0; }
+.letter p { margin: 0; font-size: 15px; color: var(--muted); }
+.letter p b { color: var(--fg); font-weight: 600; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* A run of seats: a quiet well; the mark lives in the run's own box, so a run that scrolls carries it natively. */
+.port { max-width: 100%; border-radius: 25px; background: var(--track); user-select: none; -webkit-user-select: none; }
+.port[data-mode="fits"] { touch-action: pan-y; }
+.port[data-mode="scrolls"], .port[data-mode="hold"] {
+  inline-size: 267px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding-inline: 24px;
+  overscroll-behavior-x: contain; touch-action: pan-x; scrollbar-width: none;
+}
+.port::-webkit-scrollbar { display: none; }
+.run { position: relative; isolation: isolate; display: flex; gap: 4px; padding: 3px; inline-size: max-content; }
+.seat {
+  position: relative; z-index: 1; inline-size: 44px; block-size: 44px; border: 0; border-radius: 22px; padding: 0; background: none; cursor: pointer;
+  display: grid; place-items: center; color: var(--icon); scroll-snap-align: start; -webkit-tap-highlight-color: transparent;
+  transition: color 180ms ease-out;
+}
+.seat[aria-current="page"] { color: var(--fg); }
+.seat i { inline-size: 18px; block-size: 18px; border-radius: 6px; background: currentColor; display: block; }
+.word { position: relative; z-index: 1; border: 0; background: none; min-height: 44px; padding: 0 12px; border-radius: 22px; font: 500 15px var(--font); color: var(--muted); cursor: pointer; white-space: nowrap; transition: color 180ms ease-out; -webkit-tap-highlight-color: transparent; }
+.word[aria-selected="true"] { color: var(--fg); }
+.strip { position: relative; isolation: isolate; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 3px; border-radius: 25px; background: var(--track); max-width: 100%; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.mark { position: absolute; inset-block: 3px; left: 0; border-radius: 22px; background: var(--mark); z-index: 0; pointer-events: none; }
+.mark[data-edge] { box-sizing: border-box; border: 1px solid var(--edge); }
+/* Each option's own plate: the light strength on hover (fine pointer), the press tone while pressed; on the chosen
+   option it shows through the mark. It stands down once a slide moves the mark. */
+.seat::before, .word::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--plate); opacity: 0; transition: opacity 120ms ease-out; z-index: -1; }
+@media (hover: hover) and (pointer: fine) { .seat:hover::before, .word:hover::before { opacity: 0.31; } }
+.seat.pressing::before, .word.pressing::before { opacity: 0.5; }
+/* Section 2: each host carries its own edge, on both letters, so B's edge is seen beside the one already there. */
+section[data-q="sign"] .strip, section[data-q="sign"] .port { box-sizing: border-box; border: 1px solid var(--host-edge); }
+
+/* A level: five positions on one well, the dots between them. */
+.level { position: relative; isolation: isolate; overflow: clip; inline-size: min(100%, 300px); block-size: 50px; border-radius: 25px; background: var(--track); touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.level::before { content: ""; position: absolute; inset: 0; background: var(--plate); opacity: 0; transition: opacity 120ms ease-out; }
+@media (hover: hover) and (pointer: fine) { .level:hover::before { opacity: 0.31; } }
+.level.pressing::before { opacity: 0.5; }
+.level .dot { position: absolute; top: 50%; inline-size: 8px; block-size: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--dot); z-index: 1; }
+/* The fill is as long as the track and as tall; one translate sets its moving end, and the track's own round end
+   clips its other end, so both ends are round with nothing added (R-9's form). It covers the dots it reaches. */
+.level .fill { position: absolute; inset-block: 0; left: 0; border-radius: 25px; background: var(--level); z-index: 2; pointer-events: none; }
+.level .pill { position: absolute; inset-block: 3px; left: 0; border-radius: 22px; background: var(--level); z-index: 2; pointer-events: none; }
+.level:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.note { color: var(--muted); font-size: 15px; margin: 0; }
+.rm { display: none; }
+@media (prefers-reduced-motion: reduce) { .rm { display: block; } }
+</style>
+
+<main>
+  <p class="ask"><strong>Three sections, each with its letters side by side (one under another on a phone): try every letter and send back one letter per section.</strong> In the second, look again with the phone in Dark before you pick.</p>
+  <p class="env" id="env">Reading your Safari version…</p>
+  <p class="note rm">Reduce Motion is on in your settings. Turn it off for this reading: the motion is what you are looking at.</p>
+
+  <section data-q="runs">
+    <h2>1 · A dock that scrolls</h2>
+    <p class="how">Some docks hold more seats than they have room for, and a slide scrolls them. Tap seats, slide, and try to move the highlight in each.</p>
+    <div class="letter" data-v="a">
+      <p><b>A</b> · Where the seats fit, press the chosen one and slide to move it, as on a strip:</p>
+      <div class="port" data-mode="fits"><div class="run" data-seats="4"></div></div>
+      <p>Where they do not fit, a slide only scrolls, and a tap moves the highlight:</p>
+      <div class="port" data-mode="scrolls"><div class="run" data-seats="9"></div></div>
+    </div>
+    <div class="letter" data-v="b">
+      <p><b>B</b> · Hold a seat for a moment to pick the highlight up, then slide; near either end the dock scrolls by itself. A quick slide still scrolls.</p>
+      <div class="port" data-mode="hold"><div class="run" data-seats="9"></div></div>
+    </div>
+  </section>
+
+  <section data-q="sign">
+    <h2>2 · Which one is chosen</h2>
+    <p class="how">Glance at each, in Light and in Dark: can you tell at once which option is chosen? Tap to move it.</p>
+    <div class="letter" data-v="a">
+      <p><b>A</b> · A soft fill, and the chosen word or icon at full ink. Today’s.</p>
+      <div class="strip" data-items="Library,For You,Browse,Radio"></div>
+      <div class="port" data-mode="fits"><div class="run" data-seats="5"></div></div>
+    </div>
+    <div class="letter" data-v="b">
+      <p><b>B</b> · The same, with one thin edge round the fill.</p>
+      <div class="strip" data-items="Library,For You,Browse,Radio" data-edge></div>
+      <div class="port" data-mode="fits"><div class="run" data-seats="5" data-edge></div></div>
+    </div>
+  </section>
+
+  <section data-q="level">
+    <h2>3 · A level</h2>
+    <p class="how">A control that sets how much of something, in five steps. Tap a step, or slide along it. Today a stepped slider’s fill jumps a whole step each time your finger crosses into the next; each letter here moves instead.</p>
+    <div class="letter" data-v="a">
+      <p><b>A</b> · The fill follows your finger and settles on the step you let go over. The dots ahead of it stay; the ones it reaches lie under it.</p>
+      <div class="level" data-kind="follow" role="slider" tabindex="0" aria-label="Level, letter A" aria-valuemin="1" aria-valuemax="5"></div>
+    </div>
+    <div class="letter" data-v="b">
+      <p><b>B</b> · The fill moves a step at a time: each time your finger crosses into the next step, it travels there.</p>
+      <div class="level" data-kind="travel" role="slider" tabindex="0" aria-label="Level, letter B" aria-valuemin="1" aria-valuemax="5"></div>
+    </div>
+    <div class="letter" data-v="c">
+      <p><b>C</b> · A highlight one step wide moves to the step, as on a strip of options.</p>
+      <div class="level" data-kind="mark" role="slider" tabindex="0" aria-label="Level, letter C" aria-valuemin="1" aria-valuemax="5"></div>
+    </div>
+  </section>
+
+  <p class="note">Everything here is a model of the design, drawn by this page alone. With Reduce Motion on, every highlight would fade from place to place instead of moving, and a level’s fill would grow or shrink quickly instead.</p>
+</main>
+
+<script>
+(() => {
+  const ua = navigator.userAgent;
+  const safari = (ua.match(/Version\/([\d.]+)/) || [])[1];
+  // Safari 26 and later freeze the OS token in the user agent, so the iOS version is not printed.
+  document.getElementById("env").textContent = safari ? "Safari " + safari : "Browser: " + ((ua.match(/(Chrome|Firefox)\/[\d.]+/) || ["unknown"])[0]);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+
+  // ── The rows, closed form, from a displacement d0 (px from the target) and a speed v0 (px/s): the dock row for a
+  //    settle (response 0.30 s, damping 0.88), the press row for a step's travel (0.20 s, 0.80; R-9's --spring-press) ──
+  const DOCK = { r: 0.3, z: 0.88 }, PRESS = { r: 0.2, z: 0.8 };
+  const stateR = (row, d0, v0, t) => {
+    const w = (2 * Math.PI) / row.r, a = row.z * w, wd = w * Math.sqrt(1 - row.z * row.z), A = d0, B = (v0 + a * d0) / wd;
+    const e = Math.exp(-a * t), c = Math.cos(wd * t), s = Math.sin(wd * t);
+    return [e * (A * c + B * s), e * ((-a * A + B * wd) * c + (-a * B - A * wd) * s)];
+  };
+  const state = (d0, v0, t) => stateR(DOCK, d0, v0, t);
+  const settleT = (d0, v0, row = DOCK) => { let last = 0; for (let t = 0; t < 3; t += 1 / 240) if (Math.abs(stateR(row, d0, v0, t)[0]) > 0.5) last = t; return Math.max(last + 1 / 240, 1 / 30); };
+  const passBy = (dist, v) => { let m = 0; for (let t = 0; t < 1.2; t += 1 / 600) m = Math.max(m, state(-dist, v, t)[0]); return m; };
+  const seed = (d, v) => {
+    if (!d || Math.sign(v) !== Math.sign(d)) return 0;
+    const dist = Math.abs(d), limit = passBy(dist, 0) + 0.25;
+    let lo = 0, hi = Math.abs(v);
+    if (passBy(dist, hi) <= limit) return v;
+    for (let i = 0; i < 20; i++) { const m = (lo + hi) / 2; if (passBy(dist, m) <= limit) lo = m; else hi = m; }
+    return Math.sign(d) * lo;
+  };
+
+  // One body moved by translate, on one row. A retarget starts again from where the body is drawn, with its speed.
+  // Under Reduce Motion a choice's mark dips (out, landed while hidden, in); a quantity's length tweens over 150 ms.
+  function Mover(el, opts = {}) {
+    const row = opts.row || DOCK;
+    let x = 0, play = null;
+    const set = (v) => { el.style.translate = v + "px 0"; };
+    const now = () => (play ? play.at(play.el()) : x);
+    const vel = () => (play ? play.v(play.el()) : 0);
+    const cancel = () => { if (play) { play.a.cancel(); play = null; } };
+    const stop = () => { const cur = now(); cancel(); x = cur; set(x); };
+    const jump = (v) => { cancel(); x = v; set(v); };
+    const reduced = (x1) => {
+      const x0 = now(); cancel();
+      if (opts.length) { x = x1; set(x1); el.animate([{ translate: x0 + "px 0" }, { translate: x1 + "px 0" }], { duration: 150, easing: "ease-out" }); return; }
+      const out = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: "ease-in", fill: "forwards" });
+      out.onfinish = () => { x = x1; set(x1); el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 100, easing: "ease-out" }); out.cancel(); };
+    };
+    const to = (x1, v0 = 0) => {
+      const x0 = now(), v = play ? vel() : v0; cancel();
+      if (reduce.matches) { reduced(x1); return; }
+      const T = settleT(x0 - x1, v, row);
+      const at = (t) => (t >= T ? x1 : x1 + stateR(row, x0 - x1, v, t)[0]);
+      const n = Math.max(2, Math.ceil(T * 120)), fa = [];
+      for (let i = 0; i <= n; i++) fa.push({ translate: at((T * i) / n) + "px 0", offset: i / n });
+      const a = el.animate(fa, { duration: T * 1000, easing: "linear" });
+      const t0 = performance.now();
+      const me = { a, at, v: (t) => (t >= T ? 0 : stateR(row, x0 - x1, v, t)[1]), el: () => Math.min(T, (performance.now() - t0) / 1000) };
+      play = me;
+      a.onfinish = () => { if (play === me) { play = null; x = x1; set(x1); } };
+      x = x1; set(x1);
+    };
+    return { to, jump, stop, now };
+  }
+
+  // ── A run of seats or a strip of words, with one mark ──
+  function Group(root, opts) {
+    const words = root.classList.contains("strip");
+    const items = words ? root.dataset.items.split(",") : Array.from({ length: +root.dataset.seats }, (_, i) => "Seat " + (i + 1));
+    const opt = items.map((label, i) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = words ? "word" : "seat";
+      if (words) { b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(i === 0)); b.textContent = label; }
+      else { b.setAttribute("aria-label", label); if (i === 0) b.setAttribute("aria-current", "page"); b.appendChild(document.createElement("i")); }
+      b.tabIndex = i ? -1 : 0;
+      return b;
+    });
+    if (words) root.setAttribute("role", "tablist");
+    const mark = document.createElement("div"); mark.className = "mark"; mark.setAttribute("aria-hidden", "true");
+    if (root.hasAttribute("data-edge")) mark.dataset.edge = "";
+    root.append(mark, ...opt);
+    root.setAttribute("aria-label", opts.label);
+    const m = Mover(mark);
+    let sel = 0;
+    const box = (i) => [opt[i].offsetLeft, opt[i].offsetLeft + opt[i].offsetWidth];
+    const at = (x) => { for (let k = 0; k < opt.length; k++) { const [a, b] = box(k); if (x >= a - 2 && x < b + 2) return k; } return x < box(0)[0] ? 0 : opt.length - 1; };
+    const commit = (i) => {
+      sel = i;
+      opt.forEach((b, k) => { if (words) b.setAttribute("aria-selected", String(k === i)); else if (k === i) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); b.tabIndex = k === i ? 0 : -1; });
+    };
+    const place = () => { const [a, b] = box(sel); mark.style.width = b - a + "px"; m.jump(a); };
+    const port = opts.port;
+    // The press tone: the pressed option's own plate, until it lets go or the slide takes the mark.
+    const unpress = () => opt.forEach((b) => b.classList.remove("pressing"));
+    root.addEventListener("pointerdown", (e) => { const b = e.target.closest(".word, .seat"); if (b) b.classList.add("pressing"); });
+    for (const t of ["pointerup", "pointercancel", "lostpointercapture"]) root.addEventListener(t, unpress);
+    if (port) port.addEventListener("scroll", unpress, { passive: true });
+    const localX = (e) => e.clientX - root.getBoundingClientRect().left; // the run's own box, which scrolls with it
+
+    root.addEventListener("click", (e) => { const b = e.target.closest(".word, .seat"); if (!b) return; const i = opt.indexOf(b); if (i !== sel) { commit(i); m.to(box(i)[0]); } });
+    root.addEventListener("keydown", (e) => {
+      const k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!k) return;
+      e.preventDefault(); const i = (sel + k + opt.length) % opt.length; commit(i); m.to(box(i)[0]); opt[i].focus();
+    });
+
+    // The follow (rule 3) and the release (rule 2): from where the mark is drawn, its own speed seeding the settle.
+    let drag = null;
+    const follow = (x) => {
+      if (drag.grab === undefined) { drag.grab = x - m.now(); m.stop(); unpress(); }
+      const [lo] = box(0), hi = box(opt.length - 1)[0];
+      const l = Math.min(hi, Math.max(lo, x - drag.grab));
+      m.jump(l);
+      const t = performance.now(); drag.pts.push([t, l]); while (drag.pts.length > 2 && t - drag.pts[0][0] > 80) drag.pts.shift();
+    };
+    const settle = (x) => {
+      const p = drag.pts, v = p.length > 1 ? ((p[p.length - 1][1] - p[0][1]) / Math.max(1, p[p.length - 1][0] - p[0][0])) * 1000 : 0;
+      const i = at(x); if (i !== sel) commit(i);
+      const l1 = box(i)[0], from = m.now();
+      m.to(l1, seed(l1 - from, v));
+    };
+
+    if (opts.mode === "fits") {
+      root.addEventListener("pointerdown", (e) => {
+        const b = e.target.closest(".word, .seat"); if (!b || opt.indexOf(b) !== sel) return;
+        root.setPointerCapture(e.pointerId); drag = { x0: localX(e), moved: false, pts: [] };
+      });
+      root.addEventListener("pointermove", (e) => {
+        if (!drag) return; const x = localX(e);
+        if (!drag.moved) { if (Math.abs(x - drag.x0) < 6) return; drag.moved = true; }
+        follow(x);
+      });
+      const end = (e, cancel) => { if (!drag) return; const d = drag; if (d.moved) { if (cancel) { drag = null; m.to(box(sel)[0]); return; } settle(localX(e)); } drag = null; };
+      root.addEventListener("pointerup", (e) => end(e, false));
+      root.addEventListener("pointercancel", (e) => end(e, true));
+    }
+
+    if (opts.mode === "hold") {
+      // Hold 300 ms without moving to pick the mark up; then the slide is the mark's, and the run scrolls near its
+      // ends. Before that, a slide is the run's own scroll.
+      let timer = 0, raf = 0, fingerX = 0, last = 0;
+      const clear = () => { clearTimeout(timer); timer = 0; cancelAnimationFrame(raf); raf = 0; };
+      port.addEventListener("touchmove", (e) => { if (drag && drag.grabbed) e.preventDefault(); }, { passive: false });
+      root.addEventListener("pointerdown", (e) => {
+        const b = e.target.closest(".seat"); if (!b) return;
+        const i = opt.indexOf(b);
+        drag = { x0: e.clientX, y0: e.clientY, grabbed: false, pts: [], id: e.pointerId };
+        timer = setTimeout(() => {
+          drag.grabbed = true; root.setPointerCapture(drag.id);
+          if (i !== sel) m.to(box(i)[0]);
+          const edge = (now) => {
+            const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now;
+            const r = port.getBoundingClientRect(), near = 36;
+            const lean = fingerX < r.left + near ? -(r.left + near - fingerX) / near : fingerX > r.right - near ? (fingerX - (r.right - near)) / near : 0;
+            if (lean) { port.scrollLeft += lean * 360 * dt; follow(fingerX - root.getBoundingClientRect().left); }
+            raf = requestAnimationFrame(edge);
+          };
+          last = 0; raf = requestAnimationFrame(edge);
+        }, 300);
+        fingerX = e.clientX;
+      });
+      root.addEventListener("pointermove", (e) => {
+        if (!drag) return; fingerX = e.clientX;
+        if (!drag.grabbed) { if (Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) { clear(); drag = null; } return; }
+        follow(localX(e));
+      });
+      const end = (e, cancel) => {
+        if (!drag) return; const d = drag; clear();
+        if (d.grabbed) { if (cancel) { drag = null; m.to(box(sel)[0]); return; } if (d.grab === undefined) { drag = null; return; } settle(localX(e)); }
+        drag = null;
+      };
+      root.addEventListener("pointerup", (e) => end(e, false));
+      root.addEventListener("pointercancel", (e) => end(e, true));
+    }
+
+    place();
+    addEventListener("resize", () => { m.stop(); place(); });
+  }
+
+  // ── A level: five steps. "follow": the fill's end follows the finger and settles on the step let go over (dock row,
+  //    capped seed). "travel": each step boundary the finger crosses sends the fill there on the press row, from where it
+  //    is with its speed (R-9's one-step travel). "mark": a one-step highlight, the grammar of a choice. The fill is as
+  //    long as the track; its translate sets the moving end and the track's own round end clips the other. ──
+  function Level(root) {
+    const kind = root.dataset.kind, N = 5, mark = kind === "mark", PAD = mark ? 3 : 0;
+    const names = ["Lowest", "Low", "Medium", "High", "Highest"];
+    let W = 0, pitch = 0, sel = 2;
+    for (let k = 0; k < N; k++) { const d = document.createElement("span"); d.className = "dot"; root.appendChild(d); }
+    const dots = root.querySelectorAll(".dot");
+    const body = document.createElement("span"); body.className = mark ? "pill" : "fill"; body.setAttribute("aria-hidden", "true");
+    root.appendChild(body);
+    const m = Mover(body, { row: kind === "travel" ? PRESS : DOCK, length: !mark });
+    const xOf = (i) => (mark ? PAD + pitch * i : pitch * (i + 1) - W);
+    const layout = () => {
+      W = root.clientWidth; pitch = (W - 2 * PAD) / N;
+      body.style.width = (mark ? pitch : W) + "px";
+      dots.forEach((d, k) => { d.style.left = PAD + pitch * (k + 0.5) + "px"; });
+      m.jump(xOf(sel));
+    };
+    const commit = (i) => { sel = i; root.setAttribute("aria-valuenow", String(i + 1)); root.setAttribute("aria-valuetext", names[i]); };
+    const stepAt = (x) => Math.max(0, Math.min(N - 1, Math.floor((x - PAD) / pitch)));
+    let drag = null;
+    const localX = (e) => e.clientX - root.getBoundingClientRect().left;
+    root.addEventListener("pointerdown", (e) => { root.setPointerCapture(e.pointerId); root.classList.add("pressing"); drag = { x0: localX(e), moved: false, pts: [], start: sel }; });
+    root.addEventListener("pointermove", (e) => {
+      if (!drag) return; const x = localX(e);
+      if (!drag.moved) { if (Math.abs(x - drag.x0) < 6) return; drag.moved = true; if (kind !== "travel") m.stop(); }
+      if (kind === "travel") { const k = stepAt(x); if (k !== sel) { commit(k); m.to(xOf(k)); } return; }
+      const lo = xOf(0), hi = xOf(N - 1);
+      const p = Math.min(hi, Math.max(lo, mark ? x - pitch / 2 : x - W));
+      m.jump(p);
+      const t = performance.now(); drag.pts.push([t, p]); while (drag.pts.length > 2 && t - drag.pts[0][0] > 80) drag.pts.shift();
+    });
+    const end = (e, cancel) => {
+      root.classList.remove("pressing");
+      if (!drag) return; const d = drag; drag = null;
+      if (cancel) { commit(d.start); m.to(xOf(d.start)); return; }
+      const i = stepAt(localX(e));
+      if (!d.moved) { if (i !== sel) { commit(i); m.to(xOf(i)); } return; }
+      if (kind === "travel") return; // already travelling to the step under the finger
+      const p = d.pts, v = p.length > 1 ? ((p[p.length - 1][1] - p[0][1]) / Math.max(1, p[p.length - 1][0] - p[0][0])) * 1000 : 0;
+      commit(i); m.to(xOf(i), seed(xOf(i) - m.now(), v));
+    };
+    root.addEventListener("pointerup", (e) => end(e, false));
+    root.addEventListener("pointercancel", (e) => end(e, true));
+    root.addEventListener("keydown", (e) => {
+      const k = e.key === "ArrowRight" || e.key === "ArrowUp" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : 0; if (!k) return;
+      e.preventDefault(); const i = Math.max(0, Math.min(N - 1, sel + k)); if (i !== sel) { commit(i); m.to(xOf(i)); }
+    });
+    commit(sel); layout();
+    addEventListener("resize", () => { m.stop(); layout(); });
+  }
+
+  for (const section of document.querySelectorAll("section[data-q]")) {
+    const q = section.dataset.q;
+    for (const row of section.querySelectorAll(".letter")) {
+      const v = row.dataset.v.toUpperCase();
+      for (const port of row.querySelectorAll(".port")) Group(port.querySelector(".run"), { mode: port.dataset.mode, port, label: (q === "runs" ? "Dock" : "Dock seats") + ", letter " + v });
+      for (const strip of row.querySelectorAll(".strip")) Group(strip, { mode: "fits", label: "Options, letter " + v });
+      for (const level of row.querySelectorAll(".level")) Level(level);
+    }
+  }
+})();
+</script>

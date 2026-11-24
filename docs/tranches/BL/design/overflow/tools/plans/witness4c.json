@@ -1,0 +1,182 @@
+[
+ {
+  "name": "B2c the eight-tab strip inside a wrapper in a 267 px flex row",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const box=document.querySelector('[data-testid=fold-tabs8]');const strip=box.querySelector('.segmented-tabs');const row=document.createElement('div');row.setAttribute('data-testid','fold-wrap-row');row.style.cssText='display:flex;inline-size:267px';const w=document.createElement('div');w.setAttribute('data-testid','fold-wrap');row.append(w);box.after(row);w.append(strip);return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()",
+   "eval:(()=>{document.querySelector('[data-testid=fold-wrap]').style.minInlineSize='0';return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {minInlineSize0:true,row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-wrap-row]",
+   "[data-testid=fold-wrap]"
+  ]
+ },
+ {
+  "name": "B2c the eight-tab strip inside a wrapper in a 267 px flex row",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const box=document.querySelector('[data-testid=fold-tabs8]');const strip=box.querySelector('.segmented-tabs');const row=document.createElement('div');row.setAttribute('data-testid','fold-wrap-row');row.style.cssText='display:flex;inline-size:267px';const w=document.createElement('div');w.setAttribute('data-testid','fold-wrap');row.append(w);box.after(row);w.append(strip);return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()",
+   "eval:(()=>{document.querySelector('[data-testid=fold-wrap]').style.minInlineSize='0';return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {minInlineSize0:true,row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-wrap-row]",
+   "[data-testid=fold-wrap]"
+  ]
+ },
+ {
+  "name": "B2c the eight-tab strip inside a wrapper in a 267 px flex row",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const box=document.querySelector('[data-testid=fold-tabs8]');const strip=box.querySelector('.segmented-tabs');const row=document.createElement('div');row.setAttribute('data-testid','fold-wrap-row');row.style.cssText='display:flex;inline-size:267px';const w=document.createElement('div');w.setAttribute('data-testid','fold-wrap');row.append(w);box.after(row);w.append(strip);return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()",
+   "eval:(()=>{document.querySelector('[data-testid=fold-wrap]').style.minInlineSize='0';return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {minInlineSize0:true,row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-wrap-row]",
+   "[data-testid=fold-wrap]"
+  ]
+ },
+ {
+  "name": "B2c the eight-tab strip inside a wrapper in a 267 px flex row",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const box=document.querySelector('[data-testid=fold-tabs8]');const strip=box.querySelector('.segmented-tabs');const row=document.createElement('div');row.setAttribute('data-testid','fold-wrap-row');row.style.cssText='display:flex;inline-size:267px';const w=document.createElement('div');w.setAttribute('data-testid','fold-wrap');row.append(w);box.after(row);w.append(strip);return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()",
+   "eval:(()=>{document.querySelector('[data-testid=fold-wrap]').style.minInlineSize='0';return 'ok'})()",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=fold-wrap-row]'),w=r.firstElementChild,s=w.querySelector('.segmented-tabs');return {minInlineSize0:true,row:r.scrollWidth+'/'+r.clientWidth,wrapper:Math.round(w.getBoundingClientRect().width),strip:s.scrollWidth+'/'+s.clientWidth}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-wrap-row]",
+   "[data-testid=fold-wrap]"
+  ]
+ },
+ {
+  "name": "L1 Label with a long word, the stage's field given a 0 floor",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/forms/inputs",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=label]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "eval:(()=>{for(const f of document.querySelectorAll('main .inputs-stage-field'))f.style.gridTemplateColumns='minmax(0, 1fr)';return 'ok'})()",
+   "wait:600",
+   "eval:[...document.querySelectorAll(\"main [data-slot=label]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "main .inputs-stage",
+   "main .inputs-stage-field",
+   "main [data-slot=label]"
+  ]
+ },
+ {
+  "name": "L1 Label with a long word, the stage's field given a 0 floor",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/forms/inputs",
+  "do": [
+   "eval:(()=>{const e=document.querySelectorAll(\"main [data-slot=label]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "eval:(()=>{for(const f of document.querySelectorAll('main .inputs-stage-field'))f.style.gridTemplateColumns='minmax(0, 1fr)';return 'ok'})()",
+   "wait:600",
+   "eval:[...document.querySelectorAll(\"main [data-slot=label]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "main .inputs-stage",
+   "main .inputs-stage-field",
+   "main [data-slot=label]"
+  ]
+ },
+ {
+  "name": "M4b EasingPicker, CarouselPager and DockLayerGroup in a 200 px column",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const b=document.querySelector('[data-testid=fold-m4]');b.style.inlineSize='200px';b.scrollIntoView({block:'start'});return 'ok'})()",
+   "wait:900",
+   "eval:(()=>{const box=document.querySelector(\"[data-testid=fold-m4]\");if(!box)return 'none';const R=box.getBoundingClientRect();const o=[];for(const e of box.querySelectorAll('*')){const c=getComputedStyle(e);if(c.display==='none')continue;const r=e.getBoundingClientRect();if(!r.width)continue;const past=Math.max(R.left-r.left,r.right-R.right);const inner=e.scrollWidth-e.clientWidth;if((past>0.5||(e.clientWidth>0&&inner>1&&!/^(INPUT|TEXTAREA)$/.test(e.tagName)))&&o.length<8)o.push((e.getAttribute('data-slot')||e.className.toString().split(' ')[0]||e.tagName)+' past '+Math.round(past*10)/10+' sw-cw '+inner+' ox '+c.overflowX)}return {box:box.scrollWidth+'/'+box.clientWidth,n:o.length,o}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-m4]",
+   "[data-testid=fold-m4] [data-slot=carousel-pager]",
+   "[data-testid=fold-m4] .glass-dock"
+  ]
+ },
+ {
+  "name": "M4b EasingPicker, CarouselPager and DockLayerGroup in a 200 px column",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const b=document.querySelector('[data-testid=fold-m4]');b.style.inlineSize='200px';b.scrollIntoView({block:'start'});return 'ok'})()",
+   "wait:900",
+   "eval:(()=>{const box=document.querySelector(\"[data-testid=fold-m4]\");if(!box)return 'none';const R=box.getBoundingClientRect();const o=[];for(const e of box.querySelectorAll('*')){const c=getComputedStyle(e);if(c.display==='none')continue;const r=e.getBoundingClientRect();if(!r.width)continue;const past=Math.max(R.left-r.left,r.right-R.right);const inner=e.scrollWidth-e.clientWidth;if((past>0.5||(e.clientWidth>0&&inner>1&&!/^(INPUT|TEXTAREA)$/.test(e.tagName)))&&o.length<8)o.push((e.getAttribute('data-slot')||e.className.toString().split(' ')[0]||e.tagName)+' past '+Math.round(past*10)/10+' sw-cw '+inner+' ox '+c.overflowX)}return {box:box.scrollWidth+'/'+box.clientWidth,n:o.length,o}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-m4]",
+   "[data-testid=fold-m4] [data-slot=carousel-pager]",
+   "[data-testid=fold-m4] .glass-dock"
+  ]
+ },
+ {
+  "name": "M4b EasingPicker, CarouselPager and DockLayerGroup in a 200 px column",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const b=document.querySelector('[data-testid=fold-m4]');b.style.inlineSize='200px';b.scrollIntoView({block:'start'});return 'ok'})()",
+   "wait:900",
+   "eval:(()=>{const box=document.querySelector(\"[data-testid=fold-m4]\");if(!box)return 'none';const R=box.getBoundingClientRect();const o=[];for(const e of box.querySelectorAll('*')){const c=getComputedStyle(e);if(c.display==='none')continue;const r=e.getBoundingClientRect();if(!r.width)continue;const past=Math.max(R.left-r.left,r.right-R.right);const inner=e.scrollWidth-e.clientWidth;if((past>0.5||(e.clientWidth>0&&inner>1&&!/^(INPUT|TEXTAREA)$/.test(e.tagName)))&&o.length<8)o.push((e.getAttribute('data-slot')||e.className.toString().split(' ')[0]||e.tagName)+' past '+Math.round(past*10)/10+' sw-cw '+inner+' ox '+c.overflowX)}return {box:box.scrollWidth+'/'+box.clientWidth,n:o.length,o}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-m4]",
+   "[data-testid=fold-m4] [data-slot=carousel-pager]",
+   "[data-testid=fold-m4] .glass-dock"
+  ]
+ },
+ {
+  "name": "M4b EasingPicker, CarouselPager and DockLayerGroup in a 200 px column",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:(()=>{const b=document.querySelector('[data-testid=fold-m4]');b.style.inlineSize='200px';b.scrollIntoView({block:'start'});return 'ok'})()",
+   "wait:900",
+   "eval:(()=>{const box=document.querySelector(\"[data-testid=fold-m4]\");if(!box)return 'none';const R=box.getBoundingClientRect();const o=[];for(const e of box.querySelectorAll('*')){const c=getComputedStyle(e);if(c.display==='none')continue;const r=e.getBoundingClientRect();if(!r.width)continue;const past=Math.max(R.left-r.left,r.right-R.right);const inner=e.scrollWidth-e.clientWidth;if((past>0.5||(e.clientWidth>0&&inner>1&&!/^(INPUT|TEXTAREA)$/.test(e.tagName)))&&o.length<8)o.push((e.getAttribute('data-slot')||e.className.toString().split(' ')[0]||e.tagName)+' past '+Math.round(past*10)/10+' sw-cw '+inner+' ox '+c.overflowX)}return {box:box.scrollWidth+'/'+box.clientWidth,n:o.length,o}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-m4]",
+   "[data-testid=fold-m4] [data-slot=carousel-pager]",
+   "[data-testid=fold-m4] .glass-dock"
+  ]
+ }
+]

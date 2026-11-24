@@ -1,0 +1,296 @@
+[
+ {
+  "name": "B2 vertical swipes on the eight-tab strip",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-tabs8] .segmented-tabs').scrollLeft=60",
+   "wait:300",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@0@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@16@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8]\")?.scrollLeft",
+   "eval:document.querySelectorAll('[data-testid=fold-tabs8] .segmented-tab')[7].click()",
+   "wait:900",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:(()=>{const s=document.querySelector('[data-testid=fold-tabs8] .segmented-tabs');const t=s.querySelectorAll('.segmented-tab')[7].getBoundingClientRect();const r=s.getBoundingClientRect();const i=s.querySelector('.segmented-indicator').getBoundingClientRect();return {lastTabInView:t.left>=r.left-0.5&&t.right<=r.right+0.5,indicatorOnTab:Math.abs(i.left-t.left)<1.5&&Math.abs(i.width-t.width)<1.5}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-tabs8] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "B2 vertical swipes on the eight-tab strip",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-tabs8] .segmented-tabs').scrollLeft=60",
+   "wait:300",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@0@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@16@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:scrollTo(0,0)",
+   "wait:400",
+   "swipe:[data-testid=fold-tabs8] .segmented-tabs@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8]\")?.scrollLeft",
+   "eval:document.querySelectorAll('[data-testid=fold-tabs8] .segmented-tab')[7].click()",
+   "wait:900",
+   "eval:document.querySelector(\"[data-testid=fold-tabs8] .segmented-tabs\")?.scrollLeft",
+   "eval:(()=>{const s=document.querySelector('[data-testid=fold-tabs8] .segmented-tabs');const t=s.querySelectorAll('.segmented-tab')[7].getBoundingClientRect();const r=s.getBoundingClientRect();const i=s.querySelector('.segmented-indicator').getBoundingClientRect();return {lastTabInView:t.left>=r.left-0.5&&t.right<=r.right+0.5,indicatorOnTab:Math.abs(i.left-t.left)<1.5&&Math.abs(i.width-t.width)<1.5}})()"
+  ],
+  "sel": [
+   "[data-testid=fold-tabs8] .segmented-tabs"
+  ]
+ },
+ {
+  "name": "M3 three-seat dock whose seats all show",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const d=document.querySelector('[data-testid=fold-dock3] .glass-dock');const r=d.querySelector('.dock-run');return {fits:d.hasAttribute('data-run-fits'),run:r.scrollWidth+'/'+r.clientWidth}})()",
+   "swipe:[data-testid=fold-dock3] .dock-run@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=fold-dock3] .dock-run').scrollLeft=0",
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=fold-dock3] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=fold-dock3] .dock-run",
+   "[data-testid=fold-dock3] .glass-dock"
+  ]
+ },
+ {
+  "name": "M3 three-seat dock whose seats all show",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const d=document.querySelector('[data-testid=fold-dock3] .glass-dock');const r=d.querySelector('.dock-run');return {fits:d.hasAttribute('data-run-fits'),run:r.scrollWidth+'/'+r.clientWidth}})()",
+   "swipe:[data-testid=fold-dock3] .dock-run@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=fold-dock3] .dock-run').scrollLeft=0",
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=fold-dock3] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=fold-dock3] .dock-run",
+   "[data-testid=fold-dock3] .glass-dock"
+  ]
+ },
+ {
+  "name": "M3 three-seat dock whose seats all show",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const d=document.querySelector('[data-testid=fold-dock3] .glass-dock');const r=d.querySelector('.dock-run');return {fits:d.hasAttribute('data-run-fits'),run:r.scrollWidth+'/'+r.clientWidth}})()",
+   "swipe:[data-testid=fold-dock3] .dock-run@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=fold-dock3] .dock-run').scrollLeft=0",
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=fold-dock3] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=fold-dock3] .dock-run",
+   "[data-testid=fold-dock3] .glass-dock"
+  ]
+ },
+ {
+  "name": "M3 three-seat dock whose seats all show",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const d=document.querySelector('[data-testid=fold-dock3] .glass-dock');const r=d.querySelector('.dock-run');return {fits:d.hasAttribute('data-run-fits'),run:r.scrollWidth+'/'+r.clientWidth}})()",
+   "swipe:[data-testid=fold-dock3] .dock-run@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=fold-dock3] .dock-run').scrollLeft=0",
+   "eval:document.querySelector('[data-testid=fold-dock3]').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=fold-dock3] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=fold-dock3] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=fold-dock3] .dock-run",
+   "[data-testid=fold-dock3] .glass-dock"
+  ]
+ },
+ {
+  "name": "M3b a long dock run under vertical swipes that begin on it",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=ovf-narrow] .dock-run');return {run:r.scrollWidth+'/'+r.clientWidth,ta:getComputedStyle(r).touchAction}})()",
+   "swipe:[data-testid=ovf-narrow] .dock-run@0@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=ovf-narrow] .dock-run@16@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=ovf-narrow] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-narrow] .dock-run"
+  ]
+ },
+ {
+  "name": "M3b a long dock run under vertical swipes that begin on it",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html",
+  "do": [
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:600",
+   "eval:(()=>{const r=document.querySelector('[data-testid=ovf-narrow] .dock-run');return {run:r.scrollWidth+'/'+r.clientWidth,ta:getComputedStyle(r).touchAction}})()",
+   "swipe:[data-testid=ovf-narrow] .dock-run@0@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=ovf-narrow] .dock-run@16@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft",
+   "eval:document.querySelector('[data-testid=ovf-narrow] .glass-dock').scrollIntoView({block:'center'})",
+   "wait:400",
+   "swipe:[data-testid=ovf-narrow] .dock-run@48@-200@start",
+   "eval:document.querySelector(\"[data-testid=ovf-narrow] .dock-run\")?.scrollLeft"
+  ],
+  "sel": [
+   "[data-testid=ovf-narrow] .dock-run"
+  ]
+ },
+ {
+  "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "tap:[data-testid=fold-open-atlas]",
+   "wait:2500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Per-pupil expenditure by funding source, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:[data-testid=fold-atlas-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-atlas-body]\")?.scrollLeft",
+   "eval:[...document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "[data-testid=fold-atlas-body]",
+   "[data-testid=fold-atlas-toggle]",
+   "[data-testid=fold-atlas] [data-slot=toggle-group-item]"
+  ]
+ },
+ {
+  "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "390t-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "tap:[data-testid=fold-open-atlas]",
+   "wait:2500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Per-pupil expenditure by funding source, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:[data-testid=fold-atlas-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-atlas-body]\")?.scrollLeft",
+   "eval:[...document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "[data-testid=fold-atlas-body]",
+   "[data-testid=fold-atlas-toggle]",
+   "[data-testid=fold-atlas] [data-slot=toggle-group-item]"
+  ]
+ },
+ {
+  "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "tap:[data-testid=fold-open-atlas]",
+   "wait:2500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Per-pupil expenditure by funding source, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:[data-testid=fold-atlas-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-atlas-body]\")?.scrollLeft",
+   "eval:[...document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "[data-testid=fold-atlas-body]",
+   "[data-testid=fold-atlas-toggle]",
+   "[data-testid=fold-atlas] [data-slot=toggle-group-item]"
+  ]
+ },
+ {
+  "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+  "tree": "cure4",
+  "port": 5395,
+  "cell": "1440-light",
+  "url": "/ovf.html?fold",
+  "do": [
+   "tap:[data-testid=fold-open-atlas]",
+   "wait:2500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"Per-pupil expenditure by funding source, all years\";return 'ok'})()",
+   "wait:600",
+   "swipe:[data-testid=fold-atlas-body]@-150@0",
+   "eval:document.querySelector(\"[data-testid=fold-atlas-body]\")?.scrollLeft",
+   "eval:[...document.querySelectorAll(\"[data-testid=fold-atlas] [data-slot=toggle-group-item]\")].map(e=>{const r=document.createRange();r.selectNodeContents(e);const t=new Set();for(const q of r.getClientRects())if(q.width>0.5&&q.height>4)t.add(Math.round(q.top));const b=e.getBoundingClientRect();return e.textContent.trim().slice(0,14)+' w'+Math.round(b.width*10)/10+' L'+t.size})"
+  ],
+  "sel": [
+   "[data-testid=fold-atlas-body]",
+   "[data-testid=fold-atlas-toggle]",
+   "[data-testid=fold-atlas] [data-slot=toggle-group-item]"
+  ]
+ }
+]

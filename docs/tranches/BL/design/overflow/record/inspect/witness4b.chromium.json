@@ -1,0 +1,1109 @@
+{
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "port": 5391,
+ "jobs": [
+  {
+   "name": "B2 vertical swipes on the eight-tab strip",
+   "tree": "base",
+   "port": 5391,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: 60",
+    "eval: 0",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 0,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 16,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 48,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs -150,0: ok",
+    "eval: 0",
+    "eval: 205",
+    "eval: undefined",
+    "eval: 0",
+    "eval: {\"lastTabInView\":false,\"indicatorOnTab\":true}"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-tabs8] .segmented-tabs",
+     "els": [
+      {
+       "x": -372,
+       "w": 267,
+       "right": -105,
+       "sw": 651,
+       "cw": 267,
+       "sl": 0,
+       "display": "grid",
+       "width": "267px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "81.0938px 88.2188px 84.6719px 83.2344px 71.8594px 101.938px ",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "B2 vertical swipes on the eight-tab strip",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: 60",
+    "eval: 60",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 0,-200 from start: ok",
+    "eval: 60",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 16,-200 from start: ok",
+    "eval: 60",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs 48,-200 from start: ok",
+    "eval: 60",
+    "eval: undefined",
+    "swipe [data-testid=fold-tabs8] .segmented-tabs -150,0: ok",
+    "eval: 265",
+    "eval: 0",
+    "eval: undefined",
+    "eval: 384",
+    "eval: {\"lastTabInView\":true,\"indicatorOnTab\":true}"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-tabs8] .segmented-tabs",
+     "els": [
+      {
+       "x": 12,
+       "w": 267,
+       "right": 279,
+       "sw": 654,
+       "cw": 267,
+       "sl": 384,
+       "display": "grid",
+       "width": "267px",
+       "minW": "auto",
+       "maxW": "100%",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "auto",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "81.0938px 88.2188px 84.6719px 83.2344px 71.8594px 101.938px ",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M3 three-seat dock whose seats all show",
+   "tree": "base",
+   "port": 5391,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: undefined",
+    "eval: {\"fits\":true,\"run\":\"196/192\"}",
+    "swipe [data-testid=fold-dock3] .dock-run -150,0: ok",
+    "eval: 4",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-dock3] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-dock3] .dock-run",
+     "els": [
+      {
+       "x": 64.2,
+       "w": 191.6,
+       "right": 255.8,
+       "sw": 196,
+       "cw": 192,
+       "sl": 0,
+       "display": "flex",
+       "width": "187.625px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-dock3] .glass-dock",
+     "els": [
+      {
+       "x": 56.2,
+       "w": 211.6,
+       "right": 267.8,
+       "sw": 212,
+       "cw": 212,
+       "sl": 0,
+       "display": "flex",
+       "width": "211.625px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "layout style",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "44.1875px",
+       "mr": "44.1875px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M3 three-seat dock whose seats all show",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: undefined",
+    "eval: {\"fits\":true,\"run\":\"196/192\"}",
+    "swipe [data-testid=fold-dock3] .dock-run -150,0: ok",
+    "eval: 4",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-dock3] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-dock3] .dock-run",
+     "els": [
+      {
+       "x": 64.2,
+       "w": 191.6,
+       "right": 255.8,
+       "sw": 196,
+       "cw": 192,
+       "sl": 0,
+       "display": "flex",
+       "width": "187.625px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-dock3] .glass-dock",
+     "els": [
+      {
+       "x": 56.2,
+       "w": 211.6,
+       "right": 267.8,
+       "sw": 212,
+       "cw": 212,
+       "sl": 0,
+       "display": "flex",
+       "width": "211.625px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "layout style",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "44.1875px",
+       "mr": "44.1875px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M3 three-seat dock whose seats all show",
+   "tree": "base",
+   "port": 5391,
+   "cell": "1440-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: undefined",
+    "eval: {\"fits\":true,\"run\":\"213/209\"}",
+    "swipe [data-testid=fold-dock3] .dock-run -150,0: ok",
+    "eval: 4",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-dock3] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-dock3] .dock-run",
+     "els": [
+      {
+       "x": 375.6,
+       "w": 208.7,
+       "right": 584.4,
+       "sw": 213,
+       "cw": 209,
+       "sl": 0,
+       "display": "flex",
+       "width": "204.734px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-dock3] .glass-dock",
+     "els": [
+      {
+       "x": 367.6,
+       "w": 228.7,
+       "right": 596.4,
+       "sw": 229,
+       "cw": 229,
+       "sl": 0,
+       "display": "flex",
+       "width": "228.734px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "layout style",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "35.625px",
+       "mr": "35.625px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 1440
+  },
+  {
+   "name": "M3 three-seat dock whose seats all show",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "1440-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: undefined",
+    "eval: {\"fits\":true,\"run\":\"213/209\"}",
+    "swipe [data-testid=fold-dock3] .dock-run -150,0: ok",
+    "eval: 4",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=fold-dock3] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-dock3] .dock-run",
+     "els": [
+      {
+       "x": 375.6,
+       "w": 208.7,
+       "right": 584.4,
+       "sw": 213,
+       "cw": 209,
+       "sl": 0,
+       "display": "flex",
+       "width": "204.734px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-dock3] .glass-dock",
+     "els": [
+      {
+       "x": 367.6,
+       "w": 228.7,
+       "right": 596.4,
+       "sw": 229,
+       "cw": 229,
+       "sl": 0,
+       "display": "flex",
+       "width": "228.734px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "layout style",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "35.625px",
+       "mr": "35.625px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 1440
+  },
+  {
+   "name": "M3b a long dock run under vertical swipes that begin on it",
+   "tree": "base",
+   "port": 5391,
+   "cell": "390t-light",
+   "url": "/ovf.html",
+   "log": [
+    "eval: undefined",
+    "eval: {\"run\":\"817/180\",\"ta\":\"pan-x\"}",
+    "swipe [data-testid=ovf-narrow] .dock-run 0,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=ovf-narrow] .dock-run 16,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=ovf-narrow] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=ovf-narrow] .dock-run",
+     "els": [
+      {
+       "x": 20,
+       "w": 180,
+       "right": 200,
+       "sw": 817,
+       "cw": 180,
+       "sl": 0,
+       "display": "flex",
+       "width": "176px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 487
+  },
+  {
+   "name": "M3b a long dock run under vertical swipes that begin on it",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "390t-light",
+   "url": "/ovf.html",
+   "log": [
+    "eval: undefined",
+    "eval: {\"run\":\"817/180\",\"ta\":\"pan-x\"}",
+    "swipe [data-testid=ovf-narrow] .dock-run 0,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=ovf-narrow] .dock-run 16,-200 from start: ok",
+    "eval: 0",
+    "eval: undefined",
+    "swipe [data-testid=ovf-narrow] .dock-run 48,-200 from start: ok",
+    "eval: 0"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=ovf-narrow] .dock-run",
+     "els": [
+      {
+       "x": 20,
+       "w": 180,
+       "right": 200,
+       "sw": 817,
+       "cw": 180,
+       "sl": 0,
+       "display": "flex",
+       "width": "176px",
+       "minW": "0px",
+       "maxW": "none",
+       "flex": "0 1 auto",
+       "ox": "auto",
+       "oy": "hidden",
+       "contain": "none",
+       "ws": "nowrap",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "-4px",
+       "mr": "-4px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+   "tree": "base",
+   "port": 5391,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: \"ok\"",
+    "swipe [data-testid=fold-atlas-body] -150,0: ok",
+    "eval: 56",
+    "eval: [\"Per-pupil expe w306.6 L1\",\"Share of state w195.1 L1\",\"Change from th w189.4 L1\"]"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-atlas-body]",
+     "els": [
+      {
+       "x": 110.5,
+       "w": 266.5,
+       "right": 377,
+       "sw": 323,
+       "cw": 267,
+       "sl": 56,
+       "display": "block",
+       "width": "266.5px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "1 1 auto",
+       "ox": "auto",
+       "oy": "auto",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas-toggle]",
+     "els": [
+      {
+       "x": 70.5,
+       "w": 234.5,
+       "right": 305,
+       "sw": 307,
+       "cw": 235,
+       "sl": 0,
+       "display": "flex",
+       "width": "234.5px",
+       "minW": "auto",
+       "maxW": "100%",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas] [data-slot=toggle-group-item]",
+     "els": [
+      {
+       "x": 70.5,
+       "w": 306.6,
+       "right": 377.1,
+       "sw": 305,
+       "cw": 305,
+       "sl": 0,
+       "display": "flex",
+       "width": "306.625px",
+       "minW": "60px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 70.5,
+       "w": 195.1,
+       "right": 265.6,
+       "sw": 193,
+       "cw": 193,
+       "sl": 0,
+       "display": "flex",
+       "width": "195.078px",
+       "minW": "60px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 70.5,
+       "w": 189.4,
+       "right": 259.9,
+       "sw": 187,
+       "cw": 187,
+       "sl": 0,
+       "display": "flex",
+       "width": "189.406px",
+       "minW": "60px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "390t-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: \"ok\"",
+    "swipe [data-testid=fold-atlas-body] -150,0: ok",
+    "eval: 0",
+    "eval: [\"Per-pupil expe w234.5 L2\",\"Share of state w195.1 L1\",\"Change from th w189.4 L1\"]"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-atlas-body]",
+     "els": [
+      {
+       "x": 110.5,
+       "w": 266.5,
+       "right": 377,
+       "sw": 267,
+       "cw": 267,
+       "sl": 0,
+       "display": "block",
+       "width": "266.5px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "1 1 auto",
+       "ox": "auto",
+       "oy": "auto",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas-toggle]",
+     "els": [
+      {
+       "x": 126.5,
+       "w": 234.5,
+       "right": 361,
+       "sw": 235,
+       "cw": 235,
+       "sl": 0,
+       "display": "flex",
+       "width": "234.5px",
+       "minW": "auto",
+       "maxW": "100%",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas] [data-slot=toggle-group-item]",
+     "els": [
+      {
+       "x": 126.5,
+       "w": 234.5,
+       "right": 361,
+       "sw": 233,
+       "cw": 233,
+       "sl": 0,
+       "display": "flex",
+       "width": "234.5px",
+       "minW": "60px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 126.5,
+       "w": 195.1,
+       "right": 321.6,
+       "sw": 193,
+       "cw": 193,
+       "sl": 0,
+       "display": "flex",
+       "width": "195.078px",
+       "minW": "60px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 126.5,
+       "w": 189.4,
+       "right": 315.9,
+       "sw": 187,
+       "cw": 187,
+       "sl": 0,
+       "display": "flex",
+       "width": "189.406px",
+       "minW": "60px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 390
+  },
+  {
+   "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+   "tree": "base",
+   "port": 5391,
+   "cell": "1440-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: \"ok\"",
+    "swipe [data-testid=fold-atlas-body] -150,0: ok",
+    "eval: 32",
+    "eval: [\"Per-pupil expe w357.6 L1\",\"Share of state w225.8 L1\",\"Change from th w219.1 L1\"]"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-atlas-body]",
+     "els": [
+      {
+       "x": 1077,
+       "w": 342,
+       "right": 1419,
+       "sw": 374,
+       "cw": 342,
+       "sl": 32,
+       "display": "block",
+       "width": "342px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "1 1 auto",
+       "ox": "auto",
+       "oy": "auto",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas-toggle]",
+     "els": [
+      {
+       "x": 1061,
+       "w": 310,
+       "right": 1371,
+       "sw": 358,
+       "cw": 310,
+       "sl": 0,
+       "display": "flex",
+       "width": "310px",
+       "minW": "auto",
+       "maxW": "100%",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas] [data-slot=toggle-group-item]",
+     "els": [
+      {
+       "x": 1061,
+       "w": 357.6,
+       "right": 1418.6,
+       "sw": 356,
+       "cw": 356,
+       "sl": 0,
+       "display": "flex",
+       "width": "357.562px",
+       "minW": "40px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 1061,
+       "w": 225.8,
+       "right": 1286.8,
+       "sw": 224,
+       "cw": 224,
+       "sl": 0,
+       "display": "flex",
+       "width": "225.766px",
+       "minW": "40px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 1061,
+       "w": 219.1,
+       "right": 1280.1,
+       "sw": 217,
+       "cw": 217,
+       "sl": 0,
+       "display": "flex",
+       "width": "219.062px",
+       "minW": "40px",
+       "maxW": "none",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "normal",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 1440
+  },
+  {
+   "name": "M1b atlas's Filters drawer, a toggle label longer than the field",
+   "tree": "cure4",
+   "port": 5395,
+   "cell": "1440-light",
+   "url": "/ovf.html?fold",
+   "log": [
+    "eval: \"ok\"",
+    "swipe [data-testid=fold-atlas-body] -150,0: ok",
+    "eval: 0",
+    "eval: [\"Per-pupil expe w310 L2\",\"Share of state w225.8 L1\",\"Change from th w219.1 L1\"]"
+   ],
+   "read": [
+    {
+     "sel": "[data-testid=fold-atlas-body]",
+     "els": [
+      {
+       "x": 1077,
+       "w": 342,
+       "right": 1419,
+       "sw": 342,
+       "cw": 342,
+       "sl": 0,
+       "display": "block",
+       "width": "342px",
+       "minW": "auto",
+       "maxW": "none",
+       "flex": "1 1 auto",
+       "ox": "auto",
+       "oy": "auto",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas-toggle]",
+     "els": [
+      {
+       "x": 1093,
+       "w": 310,
+       "right": 1403,
+       "sw": 310,
+       "cw": 310,
+       "sl": 0,
+       "display": "flex",
+       "width": "310px",
+       "minW": "auto",
+       "maxW": "100%",
+       "flex": "0 1 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    },
+    {
+     "sel": "[data-testid=fold-atlas] [data-slot=toggle-group-item]",
+     "els": [
+      {
+       "x": 1093,
+       "w": 310,
+       "right": 1403,
+       "sw": 308,
+       "cw": 308,
+       "sl": 0,
+       "display": "flex",
+       "width": "310px",
+       "minW": "40px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 1093,
+       "w": 225.8,
+       "right": 1318.8,
+       "sw": 224,
+       "cw": 224,
+       "sl": 0,
+       "display": "flex",
+       "width": "225.766px",
+       "minW": "40px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      },
+      {
+       "x": 1093,
+       "w": 219.1,
+       "right": 1312.1,
+       "sw": 217,
+       "cw": 217,
+       "sl": 0,
+       "display": "flex",
+       "width": "219.062px",
+       "minW": "40px",
+       "maxW": "100%",
+       "flex": "0 0 auto",
+       "ox": "visible",
+       "oy": "visible",
+       "contain": "none",
+       "ws": "normal",
+       "wrap": "break-word",
+       "to": "clip",
+       "gtc": "none",
+       "ml": "0px",
+       "mr": "0px",
+       "translate": "none"
+      }
+     ]
+    }
+   ],
+   "docSW": 1440
+  }
+ ]
+}

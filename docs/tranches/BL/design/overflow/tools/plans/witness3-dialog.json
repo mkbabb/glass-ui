@@ -1,0 +1,70 @@
+[
+ {
+  "name": "F2b Dialog description with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "390t-light",
+  "url": "/containers/dialog",
+  "do": [
+   "wait:1500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-slot=dialog-description]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "[data-slot=dialog-content]",
+   "[data-slot=dialog-header]",
+   "[data-slot=dialog-description]"
+  ]
+ },
+ {
+  "name": "F2b Dialog description with a long word",
+  "tree": "cure3",
+  "port": 5394,
+  "cell": "390t-light",
+  "url": "/containers/dialog",
+  "do": [
+   "wait:1500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-slot=dialog-description]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "[data-slot=dialog-content]",
+   "[data-slot=dialog-header]",
+   "[data-slot=dialog-description]"
+  ]
+ },
+ {
+  "name": "F2b Dialog description with a long word",
+  "tree": "base",
+  "port": 5391,
+  "cell": "1440-light",
+  "url": "/containers/dialog",
+  "do": [
+   "wait:1500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-slot=dialog-description]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "[data-slot=dialog-content]",
+   "[data-slot=dialog-header]",
+   "[data-slot=dialog-description]"
+  ]
+ },
+ {
+  "name": "F2b Dialog description with a long word",
+  "tree": "cure3",
+  "port": 5394,
+  "cell": "1440-light",
+  "url": "/containers/dialog",
+  "do": [
+   "wait:1500",
+   "eval:(()=>{const e=document.querySelectorAll(\"[data-slot=dialog-description]\")[0];if(!e)return 'none';const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let t,best=null;while((t=w.nextNode()))if(t.textContent.trim().length>1&&(!best||t.textContent.length>best.textContent.length))best=t;if(best)best.textContent=\"district_enrollment_by_program_quarterly_2019-2026.csv\";return 'ok'})()",
+   "wait:600"
+  ],
+  "sel": [
+   "[data-slot=dialog-content]",
+   "[data-slot=dialog-header]",
+   "[data-slot=dialog-description]"
+  ]
+ }
+]
