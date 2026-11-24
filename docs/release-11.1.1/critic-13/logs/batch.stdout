@@ -1,0 +1,7 @@
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/batch.sh: line 37:  4199 Terminated: 15          $G --exclusive webkit --timeout 90 -- bash -c "
+    for p in webkit-phone webkit-desktop; do for n in 0 1 2 3; do $J part tip \$p \$n tip-\$p-\$n; done; done
+    for p in webkit-phone webkit-desktop; do for n in 0 1 2 3; do $J part red \$p \$n red-\$p-\$n; done; done
+    for p in webkit-phone webkit-desktop; do $J part pre \$p CommandDialog pre-\$p; done
+    $J probe cmd tip webkit-desktop cmd-tip-wd
+    $J probe cmd red webkit-desktop cmd-red-wd
+  " > $L/batch-2.log 2>&1

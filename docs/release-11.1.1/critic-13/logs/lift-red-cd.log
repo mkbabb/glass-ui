@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+READING {"project":"chromium-desktop","cls":"scale-on-hover","rules":[],"rest":"none","after":"none"}
+  ✘  1 [chromium-desktop] › critic13-lift/lift.probe.ts:8:1 › lift · the scale-on-hover tile carries the utility's rule (2.3s)
+
+
+  1) [chromium-desktop] › critic13-lift/lift.probe.ts:8:1 › lift · the scale-on-hover tile carries the utility's rule 
+
+    Error: the page carries a rule for .scale-on-hover {"project":"chromium-desktop","cls":"scale-on-hover","rules":[],"rest":"none","after":"none"}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      40 |     console.log("READING", JSON.stringify(reading));
+      41 |     await info.attach("reading", { body: JSON.stringify(reading), contentType: "application/json" });
+    > 42 |     expect(rules.length, `the page carries a rule for .scale-on-hover ${JSON.stringify(reading)}`).toBeGreaterThan(0);
+         |                                                                                                    ^
+      43 | });
+      44 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-lift/lift.probe.ts:42:100
+
+    Error Context: test-results/lift.probe.ts-lift-·-the-s-e7449--carries-the-utility-s-rule-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › critic13-lift/lift.probe.ts:8:1 › lift · the scale-on-hover tile carries the utility's rule 

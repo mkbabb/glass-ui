@@ -1,0 +1,2154 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "standing · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/tip-webkit-phone-2.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5069,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:17.681Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTIxLCJ0cmF2ZWwiOjIwOSwidHJhdmVsU2hhcmUiOjAuMDk4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzUsMV0sWzE1LDFdLFsyOCwxXSxbMzMsMV0sWzM4LDFdLFs0NywxXSxbNTgsMV0sWzY3LDFdLFs2OCwxXSxbMTE0LDAuOTM2XSxbMTYzLDAuNTc5XSxbMTc3LDAuNDhdLFsxODgsMC40MTRdLFsxOTEsMC4zODhdLFsyMTYsMC4yNDVdLFsyMjEsMC4yMjVdLFsyMzQsMC4xNjZdLFsyNDEsMC4xMzVdLFsyNTAsMC4xMDRdLFsyNjQsMC4wNjddLFsyNzksMC4wMzNdLFsyODYsMC4wMjRdLFsyOTMsMC4wMTZdLFszMDIsMC4wMDhdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dcac1b30273ec27c2107",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 559,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:23.798Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2453126ebec08f09c819",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:24.368Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTI1LCJ0cmF2ZWwiOjIxMCwidHJhdmVsU2hhcmUiOjAuMDk4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEzLDFdLFsxLDFdLFsyMSwxXSxbMzAsMC45M10sWzQyLDAuODQ1XSxbNDYsMC44MTZdLFs1NCwwLjc1XSxbNjUsMC42NzVdLFs3NSwwLjYwMV0sWzg0LDAuNTM2XSxbOTMsMC40NjddLFsxMDUsMC4zOTRdLFsxMTcsMC4zMThdLFsxMjQsMC4yODJdLFsxMzYsMC4yMl0sWzE0NiwwLjE3XSxbMTU2LDAuMTMzXSxbMTY3LDAuMV0sWzE3NywwLjA2OV0sWzE4NiwwLjA0OF0sWzE5NywwLjAyOV0sWzIwOSwwLjAxNF0sWzIxOCwwLjAwN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5820d46c23f9656723b7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:28.857Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-734ca923cb1de4c372df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:29.339Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzQsMV0sWzE1LDFdLFsyNywxXSxbMzksMV0sWzQ4LDFdLFs1NiwxXSxbNjksMV0sWzc3LDFdLFsxMDIsMV0sWzEyOSwwLjg5NV0sWzE0NCwwLjgzMV0sWzE1MCwwLjgwOF0sWzE1OCwwLjc0OV0sWzE2NywwLjY3Nl0sWzE3OSwwLjU4MV0sWzE4OSwwLjUxXSxbMjAwLDAuNDMyXSxbMjA4LDAuMzc1XSxbMjE4LDAuMzE0XSxbMjMwLDAuMjUxXSxbMjM5LDAuMjA2XSxbMjQ5LDAuMTU5XSxbMjYwLDAuMTE4XSxbMjY5LDAuMDg5XSxbMjgxLDAuMDU3XSxbMjkxLDAuMDM3XSxbMzAxLDAuMDIxXSxbMzA5LDAuMDExXSxbMzIxLDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e2bea2a00648bc761e61",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 713,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:33.381Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-40d6a8d426b47cc66659",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4399,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:34.116Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTM1LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzcsMV0sWzE4LDAuOTYxXSxbMjgsMC45MjNdLFszNywwLjg4N10sWzQ4LDAuODRdLFs1OSwwLjc4N10sWzY5LDAuNzA0XSxbNzksMC42MjRdLFs5MiwwLjUyOV0sWzEwMCwwLjQ2N10sWzEwOCwwLjQxMl0sWzExOCwwLjM0OF0sWzEzMCwwLjI3OF0sWzE0MCwwLjIyNV0sWzE1MSwwLjE3NV0sWzE2MSwwLjEzNF0sWzE3MiwwLjA5N10sWzE4MSwwLjA3MV0sWzE5MywwLjA0NF0sWzIwMiwwLjAyOF0sWzIxMSwwLjAxNV0sWzIyMiwwLjAwNF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-52ce2e0a86e4b67bd90c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:38.530Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a214896ef3beab8695e5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4545,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:39.173Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIwNywidHJhdmVsU2hhcmUiOjAuMDk1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTExLDFdLFsxLDFdLFsxMCwxXSxbMjAsMV0sWzMwLDFdLFs0MCwxXSxbNDIsMV0sWzUwLDFdLFs1NCwxXSxbMTA1LDAuOTc1XSxbMTIyLDAuODZdLFsxMzAsMC44MDJdLFsxMzYsMC43NTddLFsxNDgsMC42NjhdLFsxNTIsMC42MzhdLFsxNjQsMC41NTFdLFsxNzYsMC40NjddLFsxODgsMC4zODhdLFsxOTcsMC4zMzNdLFsyMDksMC4yNjZdLFsyMTYsMC4yM10sWzIyNiwwLjE4M10sWzIzNiwwLjE0Ml0sWzI0NiwwLjEwN10sWzI1NiwwLjA3N10sWzI2NiwwLjA1M10sWzI3NywwLjAzMl0sWzI4NSwwLjAyXSxbMjk2LDAuMDA5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-43b3db79276013d42f40",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:43.746Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4d4061dbafe035408993",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4166,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:44.249Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMSwidHJhdmVsU2hhcmUiOjAuMDk3LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTgsMV0sWzE4LDFdLFsyNywwLjkzNl0sWzM1LDAuODc0XSxbNDEsMC44MzhdLFs1MywwLjc1XSxbNjIsMC42ODNdLFs3MiwwLjYwOV0sWzgyLDAuNTM2XSxbOTQsMC40NDddLFsxMDIsMC4zOTRdLFsxMTMsMC4zMzNdLFsxMjEsMC4yODddLFsxMzMsMC4yMl0sWzE0MywwLjE3OV0sWzE1NCwwLjEzMV0sWzE2MywwLjEwNF0sWzE3NSwwLjA2OV0sWzE4MywwLjA1XSxbMTkzLDAuMDMyXSxbMjA1LDAuMDE3XSxbMjE3LDAuMDA2XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dc9b69728df7c8b542ff",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 512,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:48.429Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-38b6466befc027900241",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4455,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:48.963Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDgsInRyYXZlbCI6OCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMTMsMV0sWzIsMV0sWzEyLDFdLFsyMSwwLjk3MV0sWzM1LDAuOTI2XSxbNDMsMC44OTRdLFs1MywwLjg2XSxbNjMsMC44MjFdLFs3MSwwLjc4NF0sWzg0LDAuNzMzXSxbOTUsMC42ODVdLFsxMDMsMC42NDVdLFsxMTMsMC42XSxbMTIzLDAuNTU5XSxbMTM1LDAuNTA1XSxbMTQzLDAuNDYzXSxbMTU1LDAuNDEzXSxbMTY2LDAuMzY0XSxbMTc2LDAuMzE5XSxbMTg2LDAuMjc1XSxbMTk2LDAuMjI5XSxbMjA1LDAuMTk1XSxbMjE1LDAuMTU1XSxbMjI3LDAuMTFdLFsyMzksMC4wNjRdLFsyNDcsMC4wNDFdLFsyNTcsMC4wMTFdLFsyNjksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a09688c674e5d26679c7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:53.431Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f960bf04cccfa338583e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by focus: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4195,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:53.961Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMDg0LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzQsMV0sWzE2LDFdLFsyNSwwLjk3MV0sWzM2LDAuOTI5XSxbNDYsMC44OThdLFs1NSwwLjg2NF0sWzY3LDAuODE3XSxbNzksMC43NjNdLFs4NiwwLjczN10sWzk2LDAuNjk0XSxbMTExLDAuNjMyXSxbMTE4LDAuNTk2XSxbMTI5LDAuNTQxXSxbMTQyLDAuNDkxXSxbMTQ5LDAuNDU0XSxbMTYyLDAuNF0sWzE3MSwwLjM1OV0sWzE3OCwwLjMyNF0sWzE5NSwwLjI1XSxbMjAwLDAuMjMzXSxbMjE1LDAuMTY3XSxbMjQxLDAuMDcxXSxbMjQ4LDAuMDQ3XSxbMjU1LDAuMDI5XSxbMjYyLDAuMDA4XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8a68728e96b49341371d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1973,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:58.170Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1973,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3f646513d678a988b7bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by away: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1973,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 473,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:58.682Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1973,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8aff4300aa950788534c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1973,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:59.165Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1973,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f52b3f352981ae68f9e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3904,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:08:59.551Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo5Miwic2hhcmUiOjAuMTM4LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzYsMV0sWzE2LDFdLFsyNSwxXSxbMzcsMV0sWzQ3LDFdLFs1NywxXSxbNjcsMV0sWzc3LDFdLFs4NiwxXSxbMTAxLDFdLFsxMDgsMV0sWzExNywxXSxbMTI4LDFdLFsxMzcsMV0sWzE0OSwxXSxbMTU5LDFdLFsxNjksMV0sWzE4MCwxXSxbMTg5LDFdLFsyMDEsMV0sWzIxMSwxXSxbMjIwLDFdLFsyMjksMV0sWzI0MSwxXSxbMjUxLDFdLFsyNjEsMV0sWzI3MywxXSxbMjgzLDFdLFsyOTMsMV0sWzMwMCwxXSxbMzEwLDFdLFszMjMsMV0sWzMzMywxXSxbMzQyLDFdLFszNTMsMV0sWzM2MiwxXSxbMzc0LDFdLFszODQsMV0sWzM5NCwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-400698e7532cd1f643eb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5208,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:03.466Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTI3LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzEsMV0sWzExLDFdLFsyMSwxXSxbMzUsMV0sWzQwLDFdLFs0NCwxXSxbNTIsMV0sWzU4LDFdLFs4MSwxXSxbOTksMV0sWzExNCwwLjkyMl0sWzEyMCwwLjg0XSxbMTI0LDAuODA1XSxbMTM0LDAuNzgxXSxbMTQ0LDAuNzE5XSxbMTU2LDAuNjU2XSxbMTY0LDAuNThdLFsxNzYsMC41MjhdLFsxODUsMC40NTJdLFsxOTUsMC4zOTZdLFsyMDcsMC4zMzRdLFsyMTYsMC4yNjRdLFsyMjcsMC4yMTNdLFsyMzYsMC4xNTRdLFsyNDgsMC4xMDldLFsyNTcsMC4wNTVdLFsyNzAsMC4wMTldLFsyODcsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-deb240d7052506505f71",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 523,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:08.687Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53923c0feb00349512aa",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4047,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:09.223Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMCwic2hhcmUiOjAuMTEyLCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzcsMV0sWzE4LDFdLFszMCwxXSxbMzgsMC45NDZdLFs0OSwwLjkwNV0sWzU5LDAuODQ0XSxbNjgsMC43ODVdLFs3OSwwLjczXSxbODksMC42NjFdLFs5OSwwLjU5N10sWzEwOSwwLjUzM10sWzExOCwwLjQ2OV0sWzEzMCwwLjQxMl0sWzEzOSwwLjMzOV0sWzE1MCwwLjI4NV0sWzE2MiwwLjIyMl0sWzE3MSwwLjE1N10sWzE4MCwwLjExMl0sWzE5MiwwLjA3XSxbMjAyLDAuMDIxXSxbMjIwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c9514071645de7be2f21",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:13.296Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDg2LCJ0cmF2ZWwiOjI4OSwidHJhdmVsU2hhcmUiOjAuMDg3LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzMsMV0sWzEzLDFdLFsyMiwxXSxbMjQsMV0sWzMzLDFdLFszNCwxXSxbNTEsMV0sWzEwMCwxXSxbMTEwLDAuOTUxXSxbMTE4LDAuOTE3XSxbMTI2LDAuODg4XSxbMTM0LDAuODU4XSxbMTQ3LDAuODI2XSxbMTU2LDAuNzczXSxbMTY3LDAuNzM0XSxbMTc3LDAuNjg3XSxbMTg1LDAuNjQyXSxbMTk2LDAuNjA2XSxbMjA4LDAuNTU2XSxbMjE3LDAuNTAxXSxbMjI3LDAuNDZdLFsyMzYsMC40MTVdLFsyNTIsMC4zNzRdLFsyNTksMC4zMDNdLFsyNjcsMC4yNzJdLFsyNzksMC4yMzhdLFsyOTYsMC4xODhdLFszMDIsMC4xMjNdLFszMTMsMC4xMDFdLFszMjEsMC4wNjJdLFszMjksMC4wMzZdLFszNDAsMC4wMTJdLFszNTQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8fee6b4a0a2637d70f1b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:17.694Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8b23ec4e978f40113f9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:18.300Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMDg1LCJ0cmF2ZWwiOjI4OSwidHJhdmVsU2hhcmUiOjAuMDg2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTgsMV0sWzE3LDFdLFszNywxXSxbNDcsMC45NTFdLFs1NiwwLjkxN10sWzY2LDAuODg0XSxbNzAsMC44NDZdLFs4MiwwLjgzXSxbOTEsMC43ODFdLFsxMDMsMC43NDNdLFsxMTIsMC42OTFdLFsxMjEsMC42NTFdLFsxMzMsMC42MTFdLFsxNDQsMC41NTZdLFsxNTUsMC41MDZdLFsxNjUsMC40NTZdLFsxNzQsMC40MV0sWzE4NCwwLjM2OV0sWzE5NSwwLjMyNV0sWzIwNywwLjI3Nl0sWzIxNSwwLjIyNV0sWzIyNCwwLjE5Ml0sWzIzNiwwLjE1Nl0sWzI0NiwwLjExXSxbMjU2LDAuMDc1XSxbMjY2LDAuMDQxXSxbMjc5LDAuMDExXSxbMjk2LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f008b612d324655bd7ec",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:22.540Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDk2LCJ0cmF2ZWwiOjg3LCJ0cmF2ZWxTaGFyZSI6MC4wOTgsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNiwxXSxbMTMsMV0sWzIwLDFdLFszMSwxXSxbMzMsMV0sWzQyLDFdLFs0MywxXSxbNjMsMV0sWzgxLDFdLFs4OSwwLjk1XSxbOTgsMC45MjRdLFsxMDIsMC44OTFdLFsxMTMsMC44NzddLFsxMjIsMC44MzRdLFsxMzQsMC43OTddLFsxNDQsMC43NDddLFsxNTUsMC43MDRdLFsxNjgsMC42NTVdLFsxNzgsMC41OTddLFsxODYsMC41NTFdLFsxOTUsMC41MTRdLFsyMDUsMC40NzNdLFsyMTYsMC40MjhdLFsyMjQsMC4zNzhdLFsyMzYsMC4zNDJdLFsyNDcsMC4yODldLFsyNTUsMC4yNDFdLFsyNjYsMC4yMDhdLFsyNzUsMC4xNjNdLFsyODUsMC4xMjhdLFsyOTcsMC4wOTFdLFszMDksMC4wNV0sWzMxOCwwLjAxM10sWzMzOCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-83a4d66494d4daa890fe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:26.684Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-186ee4e19a3713f86c63",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4217,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:27.316Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMDkyLCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4wOTMsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbMjAsMV0sWzQ2LDFdLFs1OSwwLjk1XSxbNjksMC45MDZdLFs3NiwwLjg2OV0sWzgxLDAuODQyXSxbOTEsMC44MjJdLFsxMDEsMC43ODFdLFsxMTEsMC43MzhdLFsxMjEsMC42OTVdLFsxMzIsMC42NTFdLFsxNDIsMC42MDFdLFsxNTAsMC41NTZdLFsxNjIsMC41MTldLFsxNzMsMC40NjRdLFsxODEsMC40MTRdLFsxOTIsMC4zNzhdLFsyMDIsMC4zMjhdLFsyMTMsMC4yODRdLFsyMjEsMC4yMzddLFsyMzIsMC4yMDRdLFsyNDMsMC4xNTldLFsyNTUsMC4xMTddLFsyNjQsMC4wNzRdLFsyNzYsMC4wNDRdLFsyODYsMC4wMDddXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9de0a274f4c078dd6126",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:31.547Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDkyLCJ0cmF2ZWwiOjg3LCJ0cmF2ZWxTaGFyZSI6MC4wOTQsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbMTEsMV0sWzIwLDFdLFsyOSwxXSxbNDIsMV0sWzQ0LDFdLFs1MiwxXSxbNjAsMV0sWzYxLDFdLFs4NywxXSxbMTEwLDFdLFsxMjAsMC45NV0sWzEzMCwwLjkxN10sWzEzNiwwLjg4XSxbMTQzLDAuODU3XSxbMTUzLDAuODNdLFsxNjYsMC43ODldLFsxNzUsMC43MzRdLFsxODMsMC42OTVdLFsxOTQsMC42Nl0sWzIwNiwwLjYxXSxbMjE1LDAuNTU2XSxbMjI1LDAuNTE0XSxbMjM1LDAuNDY5XSxbMjQ2LDAuNDIzXSxbMjU1LDAuMzczXSxbMjY2LDAuMzMzXSxbMjc2LDAuMjg0XSxbMjg2LDAuMjQxXSxbMjk2LDAuMTk5XSxbMzA1LDAuMTU5XSxbMzE3LDAuMTI0XSxbMzI1LDAuMDhdLFszMzcsMC4wNTNdLFszNDcsMC4wMTZdLFszNjYsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eb21f93a10bca3eddc15",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 468,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:35.728Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c35a3ad1208ca2c404aa",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:36.203Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMDg5LCJ0cmF2ZWwiOjg3LCJ0cmF2ZWxTaGFyZSI6MC4wOTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNywxXSxbMSwxXSxbMTUsMV0sWzI4LDFdLFszNywwLjk2Ml0sWzQ0LDAuOTMzXSxbNTIsMC45MDhdLFs2MywwLjg3OV0sWzczLDAuODM3XSxbODIsMC43OTZdLFs5NCwwLjc1OF0sWzEwNCwwLjcwN10sWzExMiwwLjY2M10sWzEyMywwLjYyN10sWzEzMywwLjU3N10sWzE0NCwwLjUzMV0sWzE1NiwwLjQ4MV0sWzE2NSwwLjQyNl0sWzE3NSwwLjM4NV0sWzE4NiwwLjM0XSxbMTk0LDAuMjkyXSxbMjA0LDAuMjU3XSxbMjE2LDAuMjE1XSxbMjI3LDAuMTY2XSxbMjM1LDAuMTIzXSxbMjQ3LDAuMDk0XSxbMjU3LDAuMDUyXSxbMjY4LDAuMDIxXSxbMjg1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a0008e4238b83ed1b576",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:40.399Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDg1LCJ0cmF2ZWwiOjI4OSwidHJhdmVsU2hhcmUiOjAuMDg2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzYsMV0sWzIwLDFdLFsyOCwxXSxbMzcsMV0sWzQ2LDFdLFs0OCwxXSxbNTYsMV0sWzYxLDFdLFs4NiwxXSxbMTE0LDFdLFsxMjYsMC45NTFdLFsxMzUsMC45MV0sWzE0MSwwLjg3N10sWzE1MCwwLjg1NF0sWzE2MSwwLjgxOF0sWzE2OSwwLjc3M10sWzE4MSwwLjczOV0sWzE5MSwwLjY4N10sWzIwMCwwLjY0Ml0sWzIxMSwwLjYwMl0sWzIyMSwwLjU1Ml0sWzIzMSwwLjUwNl0sWzI0MCwwLjQ2XSxbMjUwLDAuNDE5XSxbMjYyLDAuMzc0XSxbMjczLDAuMzJdLFsyODMsMC4yNzJdLFsyOTMsMC4yM10sWzMwMywwLjE4OF0sWzMxMywwLjE0OF0sWzMyMywwLjExXSxbMzMzLDAuMDc1XSxbMzQzLDAuMDQxXSxbMzU0LDAuMDExXSxbMzczLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-34b9385d9ed83c7ea8e2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 434,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:44.575Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7a43c4839e9b44c6854",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:45.017Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMDksInRyYXZlbCI6Mjg4LCJ0cmF2ZWxTaGFyZSI6MC4wOTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNywxXSxbMiwxXSxbMjIsMV0sWzQ5LDFdLFs4MCwwLjk1MV0sWzEwMCwwLjg5M10sWzEwOCwwLjgyOV0sWzEyMiwwLjc5Nl0sWzEzNSwwLjczN10sWzE0NCwwLjY4MV0sWzE1MywwLjY0MV0sWzE2NywwLjZdLFsxNzcsMC41MzZdLFsxODgsMC40OTFdLFsxOTksMC40NF0sWzIwOCwwLjM5XSxbMjE2LDAuMzVdLFsyMjYsMC4zMTRdLFsyMzcsMC4yNzFdLFsyNDYsMC4yMjRdLFsyNTgsMC4xODddLFsyNjksMC4xMzldLFsyODEsMC4wOThdLFsyOTQsMC4wNTddLFszMDIsMC4wMTZdLFszMjAsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4995dcc4999e61b180ce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 468,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:49.242Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9e1278c4a9a7e4093d86",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4216,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:49.717Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMTA3LCJ0cmF2ZWwiOjQxOCwidHJhdmVsU2hhcmUiOjAuMTA4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTE2LDFdLFsxNCwxXSxbMjMsMC45NzNdLFszNSwwLjk0MV0sWzQ3LDAuODg3XSxbNTksMC44MjJdLFs2OSwwLjc1M10sWzc5LDAuNjk1XSxbOTAsMC42MzZdLFsxMDEsMC41NzNdLFsxMTMsMC41MTNdLFsxMjMsMC40NTFdLFsxMzUsMC40MDRdLFsxNDQsMC4zNTFdLFsxNTUsMC4zMTRdLFsxNjYsMC4yNzNdLFsxNzcsMC4yMzddLFsxODYsMC4yMDRdLFsxOTUsMC4xOF0sWzIwNiwwLjE1OF0sWzIxNiwwLjEzNF0sWzIyNywwLjExNV0sWzIzNiwwLjA5N10sWzI0OCwwLjA4NF0sWzI1NywwLjA2OF0sWzI2OCwwLjA1OF0sWzI3NiwwLjA0OF0sWzI4OCwwLjA0MV0sWzI5OCwwLjAzM10sWzMwOCwwLjAyN10sWzMyMCwwLjAyMl0sWzMyOSwwLjAxNl0sWzM0MSwwLjAxM10sWzM0OSwwLjAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cb8aebda3c4c863c30d8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Toast by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5826,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:53.940Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTM5LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzUsMV0sWzE3LDFdLFsyNiwxXSxbMjgsMV0sWzM0LDFdLFszNywxXSxbNTIsMC45MDFdLFs2OSwwLjc3N10sWzgwLDAuNjk4XSxbODgsMC42MjZdLFsxMDAsMC41MzFdLFsxMTIsMC40NDFdLFsxMTksMC4zOTJdLFsxMjksMC4zMzddLFsxMzksMC4yOTFdLFsxNDksMC4yNjVdLFsxNTgsMC4yMzhdLFsxNzEsMC4xOThdLFsxODAsMC4xNjddLFsxOTAsMC4xMzJdLFsyMDAsMC4wOTRdLFsyMTEsMC4wNjFdLFsyMjAsMC4wMzFdLFsyMzMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1f4bc1bdb6baccc3b66e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5980,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:09:59.776Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTcsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbMTEsMV0sWzIxLDFdLFszMiwxXSxbMzQsMV0sWzQyLDFdLFs0NCwxXSxbNTIsMV0sWzY3LDAuOTNdLFs3MiwwLjg4N10sWzEwMSwwLjU5Ml0sWzEyOSwwLjM1NV0sWzE0MywwLjI2OF0sWzE2MywwLjE3NV0sWzE3NSwwLjEzNV0sWzE4OSwwLjA5OF0sWzE5NywwLjA4Ml0sWzIwNSwwLjA2OF0sWzIxNSwwLjA1NF0sWzIyNSwwLjA0Ml0sWzIzNSwwLjAzM10sWzI0NiwwLjAyNl0sWzI1NSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ec8d9a0e4aab42153ab8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · Accordion by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:05.776Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMSwic2hhcmUiOjAuMTY5LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTExLDFdLFszLDFdLFsxMiwxXSxbMjUsMV0sWzM5LDFdLFs1MSwxXSxbNTQsMV0sWzY2LDFdLFs3NywxXSxbODYsMV0sWzkxLDFdLFsxMTAsMV0sWzExNCwwLjk5NF0sWzEyOSwwLjg5Nl0sWzE1OSwwLjU5Ml0sWzE5MCwwLjMzNV0sWzIxOCwwLjE4N10sWzI0MiwwLjExXSxbMjUwLDAuMDkyXSxbMjc3LDAuMDQ5XSxbMjg3LDAuMDM5XSxbMzA3LDAuMDE4XSxbMzIxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-624fdccac921267d019f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:10.491Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOSwic2hhcmUiOjAuMTY5LCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4xNiwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy05LDFdLFs5LDFdLFsxOSwxXSxbMzIsMV0sWzMzLDFdLFs0MCwxXSxbNDQsMV0sWzY3LDFdLFs3MywwLjk0Ml0sWzgxLDAuODY5XSxbOTMsMC43NDldLFsxMDEsMC42NjhdLFsxMTIsMC41NTddLFsxMjIsMC40Nl0sWzEzMSwwLjM3OF0sWzE0MywwLjI4Nl0sWzE1MywwLjIwM10sWzE2MiwwLjE0M10sWzE3MywwLjA4XSxbMTgzLDAuMDMzXSxbMTkzLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7326abcfaab2b3e95f80",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:15.087Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNCwic2hhcmUiOjAuMTc3LCJ0cmF2ZWwiOjg5LCJ0cmF2ZWxTaGFyZSI6MC4xNywiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy02LDFdLFs0LDFdLFsyOSwxXSxbMzcsMC45MjVdLFs0NiwwLjg0OV0sWzU0LDAuNzZdLFs2NiwwLjYzN10sWzc1LDAuNTU3XSxbODcsMC40MzJdLFs5OSwwLjMxOF0sWzEwNywwLjI2Ml0sWzExNywwLjE4Ml0sWzEyNywwLjEyNV0sWzEzNiwwLjA3NV0sWzE0OCwwLjAyNV0sWzE2MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a1641832dc7bdef65af8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6006,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:19.274Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTI3LCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy04LDFdLFsxLDFdLFsxMywxXSxbMjMsMV0sWzMzLDFdLFszNywxXSxbNDQsMV0sWzUzLDFdLFs1OSwxXSxbNjQsMV0sWzExNCwxXSxbMTU0LDFdLFsxNzgsMC45MjJdLFsxOTMsMC44M10sWzIwMywwLjc0XSxbMjEzLDAuNjc3XSxbMjIxLDAuNjE0XSxbMjMwLDAuNTYzXSxbMjM4LDAuNTA1XSxbMjQ4LDAuNDU0XSxbMjU3LDAuMzkyXSxbMjY3LDAuMzM3XSxbMjc4LDAuMjc3XSxbMjg5LDAuMjE0XSxbMjk5LDAuMTU2XSxbMzA4LDAuMTA2XSxbMzE5LDAuMDY1XSxbMzI5LDAuMDJdLFszNjMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6256aa1b07006fb3f0e1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1974,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:25.287Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1974,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ccf750a8885657c89a0e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5793,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:25.668Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNiwic2hhcmUiOjAuMTQ1LCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy00LDFdLFsyNiwxXSxbNTIsMV0sWzY5LDAuOTIyXSxbNzgsMC44M10sWzg3LDAuNzc3XSxbMTAyLDAuNzIxXSxbMTEzLDAuNjI3XSxbMTIxLDAuNTU2XSxbMTMxLDAuNTA1XSxbMTQxLDAuNDQyXSxbMTU2LDAuMzc5XSxbMTc0LDAuMjg5XSxbMTg1LDAuMTk0XSxbMTk5LDAuMTM3XSxbMjA5LDAuMDddLFsyMTcsMC4wMjldLFsyNDEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a3743bdc926ff4c4acc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1971,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T00:08:11.284Z",
+    "duration": 140357.55,
+    "expected": 27,
+    "skipped": 17,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

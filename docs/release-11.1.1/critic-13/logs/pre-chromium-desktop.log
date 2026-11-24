@@ -1,0 +1,55 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.8s)
+  ✓  2 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.5s)
+  ✓  3 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.3s)
+  ✘  4 [chromium-desktop] › release-11-1-1.spec.ts:1971:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.8s)
+  ✓  5 [chromium-desktop] › release-11-1-1.spec.ts:1971:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.9s)
+  ✓  6 [chromium-desktop] › release-11-1-1.spec.ts:1971:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.9s)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the plate keeps its box through its exit {"rest":[512,435],"box":[[3,512,435],[12,512,435],[20,512,435],[29,512,119],[35,512,119],[45,512,119],[52,512,119],[61,512,119],[70,512,119],[78,512,119],[87,512,119],[95,512,119],[104,512,119],[112,512,119],[119,512,119],[129,512,119],[137,512,119],[145,512,119],[154,512,119],[162,512,119],[170,512,119],[178,512,119],[186,512,119],[195,512,119],[204,512,119],[210,512,119]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    316
+
+      619 |             const box = held.map((f) => [Math.round(f.t - film.mark), f.lw, f.lh]);
+      620 |             const drift = Math.max(...held.map((f) => Math.max(Math.abs(f.lw! - read.rest.lw!), Math.abs(f.lh! - read.rest.lh!))));
+    > 621 |             expect(drift, `the plate keeps its box through its exit ${JSON.stringify({ rest: [read.rest.lw, read.rest.lh], box })}`).toBeLessThanOrEqual(1);
+          |                                                                                                                                      ^
+      622 |         }
+      623 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      624 |             if (!f.present) continue;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-pre/tree/tests-visual/release-11-1-1.spec.ts:621:134
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1.spec.ts:1971:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":25,"share":0.726,"travel":161,"travelShare":0.982,"gone":true,"frames":[[-4,1],[5,1],[13,1],[21,1],[29,0.274],[38,0.274],[46,0.262],[55,0.251],[63,0.238],[71,0.225],[80,0.212],[88,0.198],[96,0.183],[105,0.169],[113,0.154],[121,0.14],[130,0.125],[137,0.111],[146,0.098],[155,0.083],[163,0.07],[171,0.057],[180,0.045],[188,0.033],[196,0.022],[205,0.013],[213,0.004]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.726
+
+      2014 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      2015 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 2016 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2017 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2018 |         });
+      2019 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-pre/tree/tests-visual/release-11-1-1.spec.ts:2016:92
+
+    Error Context: test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-chromium-desktop/error-context.md
+
+  2 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [chromium-desktop] › release-11-1-1.spec.ts:1971:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+  4 passed (25.6s)

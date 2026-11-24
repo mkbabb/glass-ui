@@ -1,0 +1,21 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 104ms
+     × the dist-demo it measures is NEWER than every source it is built from 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-23T18:37:42.536Z, newest source 2026-11-23T18:47:46.296Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1795459062536.79 to be greater than 1795459666296.349
+ ❯ tests/gates/boot-graph.test.ts:549:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  13:47:47
+   Duration  749ms (transform 76ms, setup 61ms, import 235ms, tests 104ms, environment 188ms)
+

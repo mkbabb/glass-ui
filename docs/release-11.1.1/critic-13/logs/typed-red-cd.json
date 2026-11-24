@@ -1,0 +1,348 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic13-cmd/probe.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/typed-red-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "typed.probe.ts",
+      "file": "typed.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "typed palette · \"se\" then tap: the plate keeps its box through the exit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60023,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                        "column": 62,
+                        "line": 14
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\\'Search commands\\')') to be visible\u001b[22m\n\u001b[2m    2 × waiting for\" http://localhost:5356/containers/command\" navigation to finish...\u001b[22m\n\u001b[2m      - navigated to \"http://localhost:5356/containers/command\"\u001b[22m\n\n\n  12 | async function openPalette(page: Page, project: string): Promise<void> {\n  13 |     await pressOn(page, project, \"button:has-text('In a dialog')\");\n> 14 |     await page.locator(\"button:has-text('Search commands')\").waitFor();\n     |                                                              ^\n  15 |     await page.waitForTimeout(600);\n  16 |     await pressOn(page, project, \"button:has-text('Search commands')\");\n  17 | }\n    at openPalette (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:14:62)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:23:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:33:49.853Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/typed.probe.ts-typed-palet-b2a24-ps-its-box-through-the-exit-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-a89ddc02c81500969100",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "typed palette · \"se\" then enter: the plate keeps its box through the exit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4158,
+                  "error": {
+                    "message": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m",
+                    "stack": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:56:67",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                      "column": 67,
+                      "line": 56
+                    },
+                    "snippet": "  54 |         await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  55 |         console.log(\"READING\", JSON.stringify(reading));\n> 56 |         expect(drift, `the plate keeps its box through its exit`).toBeLessThanOrEqual(1);\n     |                                                                   ^\n  57 |     });\n  58 | }\n  59 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                        "column": 67,
+                        "line": 56
+                      },
+                      "message": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n\n  54 |         await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  55 |         console.log(\"READING\", JSON.stringify(reading));\n> 56 |         expect(drift, `the plate keeps its box through its exit`).toBeLessThanOrEqual(1);\n     |                                                                   ^\n  57 |     });\n  58 | }\n  59 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:56:67"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"enter\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[512,251],\"drift\":200,\"seenDrift\":200,\"box\":[[8,512,51,1],[16,512,51,0.917],[24,512,51,0.842],[32,512,51,0.756],[40,512,51,0.668],[49,512,51,0.595],[57,512,51,0.505],[66,512,51,0.435],[74,512,51,0.371],[82,512,51,0.315],[90,512,51,0.269],[99,512,51,0.228],[107,512,51,0.186],[116,512,51,0.155],[123,512,51,0.129],[132,512,51,0.11],[141,512,51,0.089],[148,512,51,0.073],[158,512,51,0.062],[166,512,51,0.049],[172,512,51,0.041],[181,512,51,0.035],[190,512,51,0.028],[199,512,51,0.023],[207,512,51,0.018],[216,512,51,0.015],[223,512,51,0.012],[232,512,51,0.01],[241,512,51,0.008],[249,512,51,0.006],[257,512,51,0.005],[266,512,51,0.004],[274,512,51,0.003],[282,512,51,0.003],[289,512,51,0.002],[299,512,51,0.002],[307,512,51,0.001],[315,512,51,0.001]],\"rows\":[[-12,4],[-4,4],[9,0],[14,0],[22,0],[31,0],[38,0],[47,0],[56,0],[64,0],[72,0],[80,0],[88,0],[97,0],[106,0],[114,0],[121,0],[131,0],[139,0],[146,0],[156,0],[164,0],[171,0],[180,0],[188,0],[197,0],[206,0],[214,0],[221,0],[231,0],[239,0],[247,0],[255,0],[264,0],[272,0],[281,0],[287,0],[298,0],[306,0],[313,0],[323,-1],[331,-1],[339,-1],[346,-1],[355,-1],[364,-1],[372,-1],[381,-1],[388,-1],[398,-1],[406,-1],[414,-1],[422,-1],[431,-1],[439,-1],[447,-1],[456,-1],[463,-1],[471,-1],[480,-1],[488,-1],[497,-1],[505,-1],[512,-1],[522,-1],[531,-1],[538,-1],[546,-1],[556,-1],[563,-1],[572,-1],[581,-1],[588,-1],[598,-1],[605,-1],[614,-1],[622,-1],[631,-1],[639,-1],[647,-1],[656,-1],[664,-1],[672,-1],[681,-1],[689,-1],[697,-1],[706,-1],[714,-1],[721,-1],[730,-1],[739,-1],[747,-1],[756,-1],[764,-1],[771,-1],[781,-1],[789,-1],[797,-1],[805,-1],[813,-1],[822,-1],[829,-1],[839,-1],[847,-1],[856,-1],[863,-1],[872,-1],[879,-1],[889,-1],[897,-1],[906,-1],[914,-1],[922,-1],[929,-1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:34:50.414Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVudGVyIiwibGFiZWxzIjpbIlNlYXJjaCBldmVyeXdoZXJlXG7ijJhLIiwiQWNjb3VudCBzZXR0aW5nc1xu4oyYLCIsIkdlbmVyYWwgc2V0dGluZ3MiLCJDbG9zZSB0YWJcbuKMmFciXSwicmVzdCI6WzUxMiwyNTFdLCJkcmlmdCI6MjAwLCJzZWVuRHJpZnQiOjIwMCwiYm94IjpbWzgsNTEyLDUxLDFdLFsxNiw1MTIsNTEsMC45MTddLFsyNCw1MTIsNTEsMC44NDJdLFszMiw1MTIsNTEsMC43NTZdLFs0MCw1MTIsNTEsMC42NjhdLFs0OSw1MTIsNTEsMC41OTVdLFs1Nyw1MTIsNTEsMC41MDVdLFs2Niw1MTIsNTEsMC40MzVdLFs3NCw1MTIsNTEsMC4zNzFdLFs4Miw1MTIsNTEsMC4zMTVdLFs5MCw1MTIsNTEsMC4yNjldLFs5OSw1MTIsNTEsMC4yMjhdLFsxMDcsNTEyLDUxLDAuMTg2XSxbMTE2LDUxMiw1MSwwLjE1NV0sWzEyMyw1MTIsNTEsMC4xMjldLFsxMzIsNTEyLDUxLDAuMTFdLFsxNDEsNTEyLDUxLDAuMDg5XSxbMTQ4LDUxMiw1MSwwLjA3M10sWzE1OCw1MTIsNTEsMC4wNjJdLFsxNjYsNTEyLDUxLDAuMDQ5XSxbMTcyLDUxMiw1MSwwLjA0MV0sWzE4MSw1MTIsNTEsMC4wMzVdLFsxOTAsNTEyLDUxLDAuMDI4XSxbMTk5LDUxMiw1MSwwLjAyM10sWzIwNyw1MTIsNTEsMC4wMThdLFsyMTYsNTEyLDUxLDAuMDE1XSxbMjIzLDUxMiw1MSwwLjAxMl0sWzIzMiw1MTIsNTEsMC4wMV0sWzI0MSw1MTIsNTEsMC4wMDhdLFsyNDksNTEyLDUxLDAuMDA2XSxbMjU3LDUxMiw1MSwwLjAwNV0sWzI2Niw1MTIsNTEsMC4wMDRdLFsyNzQsNTEyLDUxLDAuMDAzXSxbMjgyLDUxMiw1MSwwLjAwM10sWzI4OSw1MTIsNTEsMC4wMDJdLFsyOTksNTEyLDUxLDAuMDAyXSxbMzA3LDUxMiw1MSwwLjAwMV0sWzMxNSw1MTIsNTEsMC4wMDFdXSwicm93cyI6W1stMTIsNF0sWy00LDRdLFs5LDBdLFsxNCwwXSxbMjIsMF0sWzMxLDBdLFszOCwwXSxbNDcsMF0sWzU2LDBdLFs2NCwwXSxbNzIsMF0sWzgwLDBdLFs4OCwwXSxbOTcsMF0sWzEwNiwwXSxbMTE0LDBdLFsxMjEsMF0sWzEzMSwwXSxbMTM5LDBdLFsxNDYsMF0sWzE1NiwwXSxbMTY0LDBdLFsxNzEsMF0sWzE4MCwwXSxbMTg4LDBdLFsxOTcsMF0sWzIwNiwwXSxbMjE0LDBdLFsyMjEsMF0sWzIzMSwwXSxbMjM5LDBdLFsyNDcsMF0sWzI1NSwwXSxbMjY0LDBdLFsyNzIsMF0sWzI4MSwwXSxbMjg3LDBdLFsyOTgsMF0sWzMwNiwwXSxbMzEzLDBdLFszMjMsLTFdLFszMzEsLTFdLFszMzksLTFdLFszNDYsLTFdLFszNTUsLTFdLFszNjQsLTFdLFszNzIsLTFdLFszODEsLTFdLFszODgsLTFdLFszOTgsLTFdLFs0MDYsLTFdLFs0MTQsLTFdLFs0MjIsLTFdLFs0MzEsLTFdLFs0MzksLTFdLFs0NDcsLTFdLFs0NTYsLTFdLFs0NjMsLTFdLFs0NzEsLTFdLFs0ODAsLTFdLFs0ODgsLTFdLFs0OTcsLTFdLFs1MDUsLTFdLFs1MTIsLTFdLFs1MjIsLTFdLFs1MzEsLTFdLFs1MzgsLTFdLFs1NDYsLTFdLFs1NTYsLTFdLFs1NjMsLTFdLFs1NzIsLTFdLFs1ODEsLTFdLFs1ODgsLTFdLFs1OTgsLTFdLFs2MDUsLTFdLFs2MTQsLTFdLFs2MjIsLTFdLFs2MzEsLTFdLFs2MzksLTFdLFs2NDcsLTFdLFs2NTYsLTFdLFs2NjQsLTFdLFs2NzIsLTFdLFs2ODEsLTFdLFs2ODksLTFdLFs2OTcsLTFdLFs3MDYsLTFdLFs3MTQsLTFdLFs3MjEsLTFdLFs3MzAsLTFdLFs3MzksLTFdLFs3NDcsLTFdLFs3NTYsLTFdLFs3NjQsLTFdLFs3NzEsLTFdLFs3ODEsLTFdLFs3ODksLTFdLFs3OTcsLTFdLFs4MDUsLTFdLFs4MTMsLTFdLFs4MjIsLTFdLFs4MjksLTFdLFs4MzksLTFdLFs4NDcsLTFdLFs4NTYsLTFdLFs4NjMsLTFdLFs4NzIsLTFdLFs4NzksLTFdLFs4ODksLTFdLFs4OTcsLTFdLFs5MDYsLTFdLFs5MTQsLTFdLFs5MjIsLTFdLFs5MjksLTFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/typed.probe.ts-typed-palet-88253-ps-its-box-through-the-exit-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                    "column": 67,
+                    "line": 56
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-d582788f1d786fc74a2d",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "typed palette · \"se\" then escape: the plate keeps its box through the exit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4069,
+                  "error": {
+                    "message": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m",
+                    "stack": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:56:67",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                      "column": 67,
+                      "line": 56
+                    },
+                    "snippet": "  54 |         await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  55 |         console.log(\"READING\", JSON.stringify(reading));\n> 56 |         expect(drift, `the plate keeps its box through its exit`).toBeLessThanOrEqual(1);\n     |                                                                   ^\n  57 |     });\n  58 | }\n  59 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                        "column": 67,
+                        "line": 56
+                      },
+                      "message": "Error: the plate keeps its box through its exit\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m200\u001b[39m\n\n  54 |         await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  55 |         console.log(\"READING\", JSON.stringify(reading));\n> 56 |         expect(drift, `the plate keeps its box through its exit`).toBeLessThanOrEqual(1);\n     |                                                                   ^\n  57 |     });\n  58 | }\n  59 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts:56:67"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"escape\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[512,251],\"drift\":200,\"seenDrift\":200,\"box\":[[7,512,51,1],[14,512,51,0.917],[23,512,51,0.849],[31,512,51,0.755],[39,512,51,0.673],[49,512,51,0.597],[56,512,51,0.503],[64,512,51,0.442],[72,512,51,0.379],[80,512,51,0.323],[90,512,51,0.273],[98,512,51,0.22],[107,512,51,0.187],[115,512,51,0.155],[122,512,51,0.129],[130,512,51,0.11],[140,512,51,0.091],[148,512,51,0.072],[157,512,51,0.06],[165,512,51,0.049],[173,512,51,0.041],[182,512,51,0.033],[190,512,51,0.027],[198,512,51,0.022],[207,512,51,0.018],[215,512,51,0.015],[223,512,51,0.012],[231,512,51,0.01],[239,512,51,0.008],[248,512,51,0.007],[257,512,51,0.005],[265,512,51,0.004],[273,512,51,0.003],[282,512,51,0.003],[290,512,51,0.002],[298,512,51,0.002],[307,512,51,0.001],[315,512,51,0.001]],\"rows\":[[-13,4],[-4,4],[8,0],[13,0],[22,0],[30,0],[37,0],[47,0],[55,0],[63,0],[71,0],[79,0],[89,0],[97,0],[106,0],[114,0],[121,0],[129,0],[139,0],[147,0],[156,0],[164,0],[172,0],[180,0],[189,0],[197,0],[206,0],[214,0],[222,0],[229,0],[238,0],[246,0],[256,0],[264,0],[272,0],[281,0],[289,0],[297,0],[306,0],[314,0],[323,-1],[331,-1],[339,-1],[347,-1],[356,-1],[364,-1],[371,-1],[381,-1],[389,-1],[396,-1],[405,-1],[414,-1],[422,-1],[431,-1],[439,-1],[447,-1],[456,-1],[464,-1],[472,-1],[481,-1],[489,-1],[496,-1],[506,-1],[514,-1],[522,-1],[531,-1],[539,-1],[547,-1],[555,-1],[564,-1],[572,-1],[580,-1],[589,-1],[596,-1],[606,-1],[614,-1],[622,-1],[631,-1],[639,-1],[647,-1],[656,-1],[664,-1],[671,-1],[681,-1],[688,-1],[697,-1],[706,-1],[713,-1],[722,-1],[731,-1],[739,-1],[746,-1],[754,-1],[764,-1],[772,-1],[780,-1],[789,-1],[796,-1],[804,-1],[814,-1],[822,-1],[829,-1],[839,-1],[846,-1],[855,-1],[863,-1],[871,-1],[879,-1],[889,-1],[897,-1],[905,-1],[912,-1],[921,-1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:34:55.170Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVzY2FwZSIsImxhYmVscyI6WyJTZWFyY2ggZXZlcnl3aGVyZVxu4oyYSyIsIkFjY291bnQgc2V0dGluZ3NcbuKMmCwiLCJHZW5lcmFsIHNldHRpbmdzIiwiQ2xvc2UgdGFiXG7ijJhXIl0sInJlc3QiOls1MTIsMjUxXSwiZHJpZnQiOjIwMCwic2VlbkRyaWZ0IjoyMDAsImJveCI6W1s3LDUxMiw1MSwxXSxbMTQsNTEyLDUxLDAuOTE3XSxbMjMsNTEyLDUxLDAuODQ5XSxbMzEsNTEyLDUxLDAuNzU1XSxbMzksNTEyLDUxLDAuNjczXSxbNDksNTEyLDUxLDAuNTk3XSxbNTYsNTEyLDUxLDAuNTAzXSxbNjQsNTEyLDUxLDAuNDQyXSxbNzIsNTEyLDUxLDAuMzc5XSxbODAsNTEyLDUxLDAuMzIzXSxbOTAsNTEyLDUxLDAuMjczXSxbOTgsNTEyLDUxLDAuMjJdLFsxMDcsNTEyLDUxLDAuMTg3XSxbMTE1LDUxMiw1MSwwLjE1NV0sWzEyMiw1MTIsNTEsMC4xMjldLFsxMzAsNTEyLDUxLDAuMTFdLFsxNDAsNTEyLDUxLDAuMDkxXSxbMTQ4LDUxMiw1MSwwLjA3Ml0sWzE1Nyw1MTIsNTEsMC4wNl0sWzE2NSw1MTIsNTEsMC4wNDldLFsxNzMsNTEyLDUxLDAuMDQxXSxbMTgyLDUxMiw1MSwwLjAzM10sWzE5MCw1MTIsNTEsMC4wMjddLFsxOTgsNTEyLDUxLDAuMDIyXSxbMjA3LDUxMiw1MSwwLjAxOF0sWzIxNSw1MTIsNTEsMC4wMTVdLFsyMjMsNTEyLDUxLDAuMDEyXSxbMjMxLDUxMiw1MSwwLjAxXSxbMjM5LDUxMiw1MSwwLjAwOF0sWzI0OCw1MTIsNTEsMC4wMDddLFsyNTcsNTEyLDUxLDAuMDA1XSxbMjY1LDUxMiw1MSwwLjAwNF0sWzI3Myw1MTIsNTEsMC4wMDNdLFsyODIsNTEyLDUxLDAuMDAzXSxbMjkwLDUxMiw1MSwwLjAwMl0sWzI5OCw1MTIsNTEsMC4wMDJdLFszMDcsNTEyLDUxLDAuMDAxXSxbMzE1LDUxMiw1MSwwLjAwMV1dLCJyb3dzIjpbWy0xMyw0XSxbLTQsNF0sWzgsMF0sWzEzLDBdLFsyMiwwXSxbMzAsMF0sWzM3LDBdLFs0NywwXSxbNTUsMF0sWzYzLDBdLFs3MSwwXSxbNzksMF0sWzg5LDBdLFs5NywwXSxbMTA2LDBdLFsxMTQsMF0sWzEyMSwwXSxbMTI5LDBdLFsxMzksMF0sWzE0NywwXSxbMTU2LDBdLFsxNjQsMF0sWzE3MiwwXSxbMTgwLDBdLFsxODksMF0sWzE5NywwXSxbMjA2LDBdLFsyMTQsMF0sWzIyMiwwXSxbMjI5LDBdLFsyMzgsMF0sWzI0NiwwXSxbMjU2LDBdLFsyNjQsMF0sWzI3MiwwXSxbMjgxLDBdLFsyODksMF0sWzI5NywwXSxbMzA2LDBdLFszMTQsMF0sWzMyMywtMV0sWzMzMSwtMV0sWzMzOSwtMV0sWzM0NywtMV0sWzM1NiwtMV0sWzM2NCwtMV0sWzM3MSwtMV0sWzM4MSwtMV0sWzM4OSwtMV0sWzM5NiwtMV0sWzQwNSwtMV0sWzQxNCwtMV0sWzQyMiwtMV0sWzQzMSwtMV0sWzQzOSwtMV0sWzQ0NywtMV0sWzQ1NiwtMV0sWzQ2NCwtMV0sWzQ3MiwtMV0sWzQ4MSwtMV0sWzQ4OSwtMV0sWzQ5NiwtMV0sWzUwNiwtMV0sWzUxNCwtMV0sWzUyMiwtMV0sWzUzMSwtMV0sWzUzOSwtMV0sWzU0NywtMV0sWzU1NSwtMV0sWzU2NCwtMV0sWzU3MiwtMV0sWzU4MCwtMV0sWzU4OSwtMV0sWzU5NiwtMV0sWzYwNiwtMV0sWzYxNCwtMV0sWzYyMiwtMV0sWzYzMSwtMV0sWzYzOSwtMV0sWzY0NywtMV0sWzY1NiwtMV0sWzY2NCwtMV0sWzY3MSwtMV0sWzY4MSwtMV0sWzY4OCwtMV0sWzY5NywtMV0sWzcwNiwtMV0sWzcxMywtMV0sWzcyMiwtMV0sWzczMSwtMV0sWzczOSwtMV0sWzc0NiwtMV0sWzc1NCwtMV0sWzc2NCwtMV0sWzc3MiwtMV0sWzc4MCwtMV0sWzc4OSwtMV0sWzc5NiwtMV0sWzgwNCwtMV0sWzgxNCwtMV0sWzgyMiwtMV0sWzgyOSwtMV0sWzgzOSwtMV0sWzg0NiwtMV0sWzg1NSwtMV0sWzg2MywtMV0sWzg3MSwtMV0sWzg3OSwtMV0sWzg4OSwtMV0sWzg5NywtMV0sWzkwNSwtMV0sWzkxMiwtMV0sWzkyMSwtMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/typed.probe.ts-typed-palet-92172-ps-its-box-through-the-exit-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/typed.probe.ts",
+                    "column": 67,
+                    "line": 56
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-f673cf6bb2c1acfb9d33",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T20:33:48.093Z",
+    "duration": 71340.686,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

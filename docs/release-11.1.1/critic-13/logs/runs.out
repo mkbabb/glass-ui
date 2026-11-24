@@ -1,0 +1,79 @@
+trees built 13:04:49 head 4f1fa667e v11.1.0 e73f09f10 red src: same 678 of 678; differ 0; extra 0; rest: same 915 of 915; differ 0; extra 0; red  16M pre  16M
+13:10:49 cmd-tip-cd probe tip chromium-desktop exit 1 191s load={ 11.97 16.35 24.99 }  1 failed  3 passed (1.2m) 
+13:12:35 cmd-tip-cd probe tip chromium-desktop exit 1 68s load={ 13.61 15.50 23.64 }  1 failed  3 passed (20.9s) 
+13:14:08 cmd-red-cd probe red chromium-desktop exit 1 82s load={ 12.69 15.39 22.78 }  2 failed  2 passed (21.5s) 
+CHAIN-START 13:15:29 from step 1 head 4f1fa667e load { 28.00 20.09 23.93 }
+14:02:26 floor-green exit 0 516s load { 21.00 20.78 24.81 } -> { 37.23 27.83 26.34 }
+14:55:48 floor-planted exit 0 3202s load { 37.23 27.83 26.34 } -> { 30.60 58.95 63.97 }
+15:08:05 floor-flood exit 0 737s load { 30.60 58.95 63.97 } -> { 35.86 36.81 48.16 }
+15:08:05 extra start
+15:14:03 typed-tip-cd probe tip chromium-desktop exit 0 358s load={ 32.35 43.85 49.13 }  3 passed (13.9s) 
+15:28:11 chain stopped by its PID (58089) during the extra's red probe, still waiting for headroom; restructured as batch.sh
+BATCH-START 15:28:55 from 1 head 4f1fa667e load { 33.94 37.89 40.57 }
+15:34:59 typed-red-cd probe typed red chromium-desktop exit 1 72s load-at-start={ 15.53 23.68 33.20 } load-end={ 16.61 22.43 31.94 }  3 failed 
+15:35:16 typed-pre-cd probe typed pre chromium-desktop exit 1 17s load-at-start={ 16.61 22.43 31.94 } load-end={ 16.33 22.09 31.64 }  3 failed 
+15:35:31 typed-tip-cp probe typed tip chromium-phone exit 0 15s load-at-start={ 16.33 22.09 31.64 } load-end={ 17.11 21.97 31.44 }  3 passed (14.0s) 
+15:39:08 tip-chromium-phone-0 tip chromium-phone [0] exit 0 217s load-at-start={ 17.11 21.97 31.44 } load-end={ 19.19 20.75 28.80 }  3 skipped  38 passed (3.6m) 
+15:40:53 tip-chromium-phone-1 tip chromium-phone [1] exit 0 105s load-at-start={ 19.19 20.75 28.80 } load-end={ 30.39 23.02 28.67 }  11 skipped  33 passed (1.7m) 
+15:43:11 tip-chromium-phone-2 tip chromium-phone [2] exit 0 137s load-at-start={ 30.39 23.02 28.67 } load-end={ 38.54 28.28 29.86 }  3 skipped  41 passed (2.3m) 
+15:44:13 tip-chromium-phone-3 tip chromium-phone [3] exit 0 61s load-at-start={ 38.54 28.28 29.86 } load-end={ 58.27 34.72 32.08 }  1 skipped  17 passed (1.0m) 
+15:45:33 tip-chromium-desktop-0 tip chromium-desktop [0] exit 0 80s load-at-start={ 58.27 34.72 32.08 } load-end={ 32.08 33.24 31.85 }  13 skipped  28 passed (1.3m) 
+15:47:47 tip-chromium-desktop-1 tip chromium-desktop [1] exit 0 134s load-at-start={ 32.08 33.24 31.85 } load-end={ 18.17 27.32 29.67 }  1 skipped  43 passed (2.2m) 
+15:50:38 tip-chromium-desktop-2 tip chromium-desktop [2] exit 0 171s load-at-start={ 18.17 27.32 29.67 } load-end={ 67.60 38.97 33.64 }  44 passed (2.8m) 
+15:51:42 tip-chromium-desktop-3 tip chromium-desktop [3] exit 0 64s load-at-start={ 67.60 38.97 33.64 } load-end={ 49.16 40.66 34.77 }  18 passed (1.0m) 
+15:55:34 red-chromium-phone-0 red chromium-phone [0] exit 1 232s load-at-start={ 49.16 40.66 34.77 } load-end={ 14.62 26.20 29.79 }  34 failed  3 skipped  4 passed (3.9m) 
+15:57:32 red-chromium-phone-1 red chromium-phone [1] exit 1 118s load-at-start={ 14.62 26.20 29.79 } load-end={ 15.29 22.74 27.96 }  27 failed  11 skipped  6 passed (2.0m) 
+15:59:58 red-chromium-phone-2 red chromium-phone [2] exit 1 146s load-at-start={ 15.29 22.74 27.96 } load-end={ 17.35 21.07 26.48 }  24 failed  3 skipped  17 passed (2.4m) 
+16:01:06 red-chromium-phone-3 red chromium-phone [3] exit 1 68s load-at-start={ 17.35 21.07 26.48 } load-end={ 22.16 21.77 26.31 }  16 failed  1 skipped  1 passed (1.1m) 
+16:02:38 red-chromium-desktop-0 red chromium-desktop [0] exit 1 92s load-at-start={ 22.16 21.77 26.31 } load-end={ 18.45 21.27 25.71 }  19 failed  13 skipped  9 passed (1.5m) 
+16:05:05 red-chromium-desktop-1 red chromium-desktop [1] exit 1 147s load-at-start={ 18.45 21.27 25.71 } load-end={ 11.38 17.16 23.31 }  36 failed  1 skipped  7 passed (2.4m) 
+16:07:39 red-chromium-desktop-2 red chromium-desktop [2] exit 1 154s load-at-start={ 11.38 17.16 23.31 } load-end={ 18.01 17.63 22.48 }  27 failed  17 passed (2.6m) 
+16:08:47 red-chromium-desktop-3 red chromium-desktop [3] exit 1 68s load-at-start={ 18.01 17.63 22.48 } load-end={ 24.43 19.38 22.74 }  17 failed  1 passed (1.1m) 
+16:09:13 pre-chromium-phone pre chromium-phone [CommandDialog] exit 1 26s load-at-start={ 24.43 19.38 22.74 } load-end={ 22.72 19.44 22.67 }  2 failed  4 passed (25.3s) 
+16:09:40 pre-chromium-desktop pre chromium-desktop [CommandDialog] exit 1 27s load-at-start={ 22.72 19.44 22.67 } load-end={ 23.77 20.12 22.81 }  2 failed  4 passed (25.6s) 
+16:10:03 cmd-pre-cd probe cmd pre chromium-desktop exit 1 23s load-at-start={ 23.77 20.12 22.81 } load-end={ 26.28 20.91 23.03 }  1 failed  3 passed (21.6s) 
+16:10:08 batch 1 done
+16:33:44 batch 2 done
+16:34:04 note: the 'batch 2 done' line above is false: batch 2 was stopped by its PID (4199) at 16:33 after 23 min waiting for the webkit lock, before any job ran; batch 3 runs now, batch 2 after batch 4 (batch2.sh)
+17:24:43 batch 3 done
+18:14:46 lift-tip-cd lift tip chromium-desktop exit 1 13s load-at-start={ 45.11 40.60 41.46 } load-end={ 48.53 41.55 41.79 }  1 failed 
+18:14:56 lift-red-cd lift red chromium-desktop exit 1 10s load-at-start={ 48.53 41.55 41.79 } load-end={ 56.12 43.42 42.45 }  1 failed 
+18:15:04 lift-tip-cp lift tip chromium-phone exit 1 8s load-at-start={ 56.12 43.42 42.45 } load-end={ 53.71 43.13 42.35 }  1 failed 
+18:15:11 lift-red-cp lift red chromium-phone exit 1 7s load-at-start={ 53.71 43.13 42.35 } load-end={ 55.60 43.84 42.61 }  1 failed 
+18:17:48 e-tip e tip webkit [fix 12, coarse phone x3] exit 0 157s load-at-start={ 55.60 43.84 42.61 } load-end={ 42.53 40.36 41.22 }  3 passed (2.6m) 
+18:20:19 e-red e red webkit [fix 12, coarse phone x3] exit 0 151s load-at-start={ 42.53 40.36 41.22 } load-end={ 33.76 37.24 39.84 }  3 passed (2.5m) 
+18:23:24 batch 4 done
+BATCH-DONE 18:23:24 load { 45.47 42.06 41.31 }
+BATCH2-START 18:23:54 head 4f1fa667e load { 34.12 39.71 40.49 }
+18:57:43 d1-tip-a d1 tip webkit [release-10-1-3 390 D-1, three anchors x5] exit 1 82s load-at-start={ 33.60 36.98 36.41 } load-end={ 44.83 38.64 37.03 }  4 failed  11 passed (1.4m) 
+18:59:21 d1-red-a d1 red webkit [release-10-1-3 390 D-1, three anchors x5] exit 1 98s load-at-start={ 44.83 38.64 37.03 } load-end={ 55.95 44.23 39.38 }  8 failed  7 passed (1.6m) 
+19:00:52 d1-tip-b d1 tip webkit [release-10-1-3 390 D-1, three anchors x5] exit 1 91s load-at-start={ 55.95 44.23 39.38 } load-end={ 51.12 46.19 40.66 }  8 failed  7 passed (1.5m) 
+19:02:17 d1-red-b d1 red webkit [release-10-1-3 390 D-1, three anchors x5] exit 1 84s load-at-start={ 51.12 46.19 40.66 } load-end={ 40.45 45.08 40.83 }  3 failed  12 passed (1.3m) 
+19:05:50 tip-webkit-phone-0 tip webkit-phone [0] exit 0 213s load-at-start={ 40.45 45.08 40.83 } load-end={ 56.66 46.66 42.11 }  16 skipped  25 passed (3.5m) 
+19:08:08 tip-webkit-phone-1 tip webkit-phone [1] exit 1 138s load-at-start={ 56.66 46.66 42.11 } load-end={ 35.62 40.81 40.40 }  2 failed  11 skipped  31 passed (2.3m) 
+19:11:33 rev-tip-wp rev tip webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 1 62s load-at-start={ 61.18 49.56 44.02 } load-end={ 66.32 53.25 45.78 }  5 failed  1 passed (58.9s) 
+19:12:24 tip-webkit-phone-3 tip webkit-phone [3] exit 0 51s load-at-start={ 66.32 53.25 45.78 } load-end={ 44.80 49.27 44.72 }  2 skipped  16 passed (50.1s) 
+19:10:30 tip-webkit-phone-2 tip webkit-phone [2] (line written by hand: job.sh was edited while this job ran and its closing echo was lost; the log is whole) 17 skipped 27 passed (2.3m)
+19:14:02 tip-webkit-desktop-0 tip webkit-desktop [0] exit 0 98s load-at-start={ 44.80 49.27 44.72 } load-end={ 26.61 41.28 42.08 }  13 skipped  28 passed (1.6m) 
+19:16:58 tip-webkit-desktop-1 tip webkit-desktop [1] exit 1 176s load-at-start={ 26.61 41.28 42.08 } load-end={ 46.35 42.23 42.13 }  1 failed  1 skipped  42 passed (2.9m) 
+19:20:10 tip-webkit-desktop-2 tip webkit-desktop [2] exit 0 192s load-at-start={ 46.35 42.23 42.13 } load-end={ 37.24 41.07 41.88 }  44 passed (3.2m) 
+19:21:06 leave-tip-wd leave tip webkit-desktop x10 exit 0 56s load-at-start={ 37.24 41.07 41.88 } load-end={ 36.98 40.51 41.63 }  10 passed (53.7s) 
+19:22:13 tip-webkit-desktop-3 tip webkit-desktop [3] exit 0 67s load-at-start={ 36.98 40.51 41.63 } load-end={ 44.96 40.65 41.51 }  18 passed (1.1m) 
+19:26:23 red-webkit-phone-0 red webkit-phone [0] exit 1 250s load-at-start={ 44.96 40.65 41.51 } load-end={ 48.00 44.58 43.36 }  23 failed  16 skipped  2 passed (4.1m) 
+19:29:23 red-webkit-phone-1 red webkit-phone [1] exit 1 180s load-at-start={ 48.00 44.58 43.36 } load-end={ 49.65 44.04 43.27 }  27 failed  11 skipped  6 passed (3.0m) 
+19:31:45 red-webkit-phone-2 red webkit-phone [2] exit 1 142s load-at-start={ 49.65 44.04 43.27 } load-end={ 29.22 41.08 42.42 }  16 failed  17 skipped  11 passed (2.3m) 
+19:32:21 rev-tip-wp2 rev tip webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 1 36s load-at-start={ 29.22 41.08 42.42 } load-end={ 35.23 40.96 42.31 }  1 failed  5 passed (35.0s) 
+19:34:13 red-webkit-phone-3 red webkit-phone [3] exit 1 112s load-at-start={ 35.23 40.96 42.31 } load-end={ 60.17 47.93 44.87 }  15 failed  2 skipped  1 passed (1.8m) 
+19:34:52 rev-tip-wp3 rev tip webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 1 39s load-at-start={ 60.17 47.93 44.87 } load-end={ 57.03 49.10 45.47 }  1 failed  5 passed (34.8s) 
+19:35:19 rev-red-wp3 rev red webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 1 27s load-at-start={ 57.03 49.10 45.47 } load-end={ 43.93 46.68 44.70 }  6 failed 
+19:35:47 rev-tip-wp4 rev tip webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 0 28s load-at-start={ 43.93 46.68 44.70 } load-end={ 40.45 45.62 44.39 }  6 passed (26.9s) 
+19:36:13 rev-red-wp4 rev red webkit-phone [a Select or DropdownMenu closed while it opens x3] exit 1 26s load-at-start={ 40.45 45.62 44.39 } load-end={ 33.20 43.47 43.65 }  6 failed 
+19:38:49 red-webkit-desktop-0 red webkit-desktop [0] exit 1 156s load-at-start={ 33.20 43.47 43.65 } load-end={ 52.38 51.40 47.02 }  19 failed  13 skipped  9 passed (2.6m) 
+19:42:22 red-webkit-desktop-1 red webkit-desktop [1] exit 1 213s load-at-start={ 52.38 51.40 47.02 } load-end={ 33.79 43.38 44.52 }  36 failed  1 skipped  7 passed (3.5m) 
+19:45:59 red-webkit-desktop-2 red webkit-desktop [2] exit 1 217s load-at-start={ 33.79 43.38 44.52 } load-end={ 31.11 42.95 44.48 }  27 failed  17 passed (3.6m) 
+19:47:46 red-webkit-desktop-3 red webkit-desktop [3] exit 1 107s load-at-start={ 31.11 42.95 44.48 } load-end={ 33.74 41.18 43.65 }  17 failed  1 passed (1.8m) 
+19:48:09 pre-webkit-phone pre webkit-phone [CommandDialog] exit 1 23s load-at-start={ 33.74 41.18 43.65 } load-end={ 29.55 39.75 43.09 }  2 failed  2 skipped  2 passed (21.6s) 
+19:48:44 pre-webkit-desktop pre webkit-desktop [CommandDialog] exit 1 35s load-at-start={ 29.55 39.75 43.09 } load-end={ 30.36 38.69 42.56 }  2 failed  4 passed (34.1s) 
+19:49:17 cmd-tip-wd probe cmd tip webkit-desktop exit 1 32s load-at-start={ 30.36 38.69 42.56 } load-end={ 39.32 39.99 42.87 }  2 failed  2 passed (30.7s) 
+19:49:51 cmd-red-wd probe cmd red webkit-desktop exit 1 33s load-at-start={ 39.32 39.99 42.87 } load-end={ 36.30 39.35 42.53 }  2 failed  2 passed (30.9s) 
+BATCH2-DONE 19:49:59 load { 34.19 38.87 42.34 }

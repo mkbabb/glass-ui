@@ -1,0 +1,36 @@
+== dist/components/_shared/overlay/index.d.ts: -0 +2
+== dist/components/dialog/DialogContent.vue.d.ts: -0 +2
+== dist/components/dialog/ModalScrim.vue.d.ts: -1 +3
+    - * long as reka's lock held it: while the scrim is present.
+== dist/components/fourier-field/constants.d.ts: -8 +0
+    -/**
+    - * The three mark-stroke rungs in CSS px. Three rungs, three visibly distinct pictures.
+    - * Deliberately OFF the `/fourier-field` barrel: nothing clamps `markStroke` to it, and no
+    - * consumer reads it. The two in-repo readers (the studio story's segmented control and
+    - * the smoke battery) deep-import this module, which is the house idiom for a module-level
+    - * constant with in-repo readers and no consumer need.
+    - */
+    -export declare const FOURIER_STROKE_RUNGS: readonly [4, 8, 12];
+== dist/components/menu/DropdownMenuContent.vue.d.ts: -0 +3
+== dist/components/popover/PopoverContent.vue.d.ts: -0 +3
+== dist/components/select/SelectContent.vue.d.ts: -0 +3
+== dist/components/sheet/SheetContent.vue.d.ts: -2 +4
+    -declare var __VLS_28: {};
+    -    default?: (props: typeof __VLS_28) => any;
+== dist/components/sheet/detents/use.d.ts: -1 +10
+    -    /** Mount hold — true until the dismissing spring reaches 0. */
+== dist/components/toast/Toast.vue.d.ts: -2 +7
+    -declare var __VLS_8: {};
+    -    default?: (props: typeof __VLS_8) => any;
+== dist/components/tooltip/TooltipContent.vue.d.ts: -0 +3
+== dist/composables/glass/backdropLuminanceSample.d.ts: -7 +0
+    -/** Library convention marking the single shell
+    - *  field canvas (the recessive shell `<Aurora>` the demo chassis mounts behind every
+    - *  non-focal route; also the BACKDROP-SAMPLE marker). A glass surface that does
+    - *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
+    - *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
+    - *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
+    -export declare const SHELL_FIELD_CANVAS_SELECTOR = "[data-glass-field-canvas] canvas, canvas[data-glass-field-canvas]";
+== dist/composables/motion/spring/useLiquidPress.d.ts: -1 +2
+    -     * reciprocal X/Y `scale` (engaged only past `engageThreshold`) AND the `pressVar`
+declaration files 571 574 changed 13

@@ -1,0 +1,2536 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "--project=webkit-2311",
+      "release-11-0-2.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/reg-branch-r1102b-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":113,\"clientWidth\":113},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:04:37.562Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":113,\"clientWidth\":113},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-dbb0660a58154de13b20",
+          "file": "release-11-0-2.spec.ts",
+          "line": 158,
+          "column": 5
+        },
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":113,\"clientWidth\":113},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2913,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:04:41.031Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":113,\"clientWidth\":113},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d65e5bdaff037107f94c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 158,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493399999999987,\"fill\":null,\"track\":246.92380000000023},{\"where\":\"light default @50\",\"thumb\":25.493399999999987,\"fill\":216.66939999999994,\"track\":246.92380000000023},{\"where\":\"light default @100\",\"thumb\":25.493399999999987,\"fill\":216.66939999999994,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493399999999987,\"fill\":null,\"track\":246.92380000000023},{\"where\":\"light violet @50\",\"thumb\":25.493399999999987,\"fill\":111.64340000000018,\"track\":246.92380000000023},{\"where\":\"light violet @100\",\"thumb\":25.493399999999987,\"fill\":111.64340000000018,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34899999999962,\"fill\":null,\"track\":19.20859999999998},{\"where\":\"dark default @50\",\"thumb\":230.34899999999962,\"fill\":59.493400000000044,\"track\":19.20859999999998},{\"where\":\"dark default @100\",\"thumb\":230.34899999999962,\"fill\":59.493400000000044,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34899999999962,\"fill\":null,\"track\":19.20859999999998},{\"where\":\"dark violet @50\",\"thumb\":230.34899999999962,\"fill\":83.85599999999982,\"track\":19.20859999999998},{\"where\":\"dark violet @100\",\"thumb\":230.34899999999962,\"fill\":83.85599999999982,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6915,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:04:43.956Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493399999999987,\"fill\":null,\"track\":246.92380000000023},{\"where\":\"light default @50\",\"thumb\":25.493399999999987,\"fill\":216.66939999999994,\"track\":246.92380000000023},{\"where\":\"light default @100\",\"thumb\":25.493399999999987,\"fill\":216.66939999999994,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493399999999987,\"fill\":null,\"track\":246.92380000000023},{\"where\":\"light violet @50\",\"thumb\":25.493399999999987,\"fill\":111.64340000000018,\"track\":246.92380000000023},{\"where\":\"light violet @100\",\"thumb\":25.493399999999987,\"fill\":111.64340000000018,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34899999999962,\"fill\":null,\"track\":19.20859999999998},{\"where\":\"dark default @50\",\"thumb\":230.34899999999962,\"fill\":59.493400000000044,\"track\":19.20859999999998},{\"where\":\"dark default @100\",\"thumb\":230.34899999999962,\"fill\":59.493400000000044,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34899999999962,\"fill\":null,\"track\":19.20859999999998},{\"where\":\"dark violet @50\",\"thumb\":230.34899999999962,\"fill\":83.85599999999982,\"track\":19.20859999999998},{\"where\":\"dark violet @100\",\"thumb\":230.34899999999962,\"fill\":83.85599999999982,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-54a0d13dbf7598ddfc80",
+          "file": "release-11-0-2.spec.ts",
+          "line": 232,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000065,\"fill\":null,\"track\":246.92379999999864},{\"where\":\"light default @50\",\"thumb\":25.493400000000065,\"fill\":216.66939999999929,\"track\":246.92379999999864},{\"where\":\"light default @100\",\"thumb\":25.493400000000065,\"fill\":216.66939999999929,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000065,\"fill\":null,\"track\":246.92379999999864},{\"where\":\"light violet @50\",\"thumb\":25.493400000000065,\"fill\":111.64340000000058,\"track\":246.92379999999864},{\"where\":\"light violet @100\",\"thumb\":25.493400000000065,\"fill\":111.64340000000058,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34900000000044,\"fill\":null,\"track\":19.208599999999954},{\"where\":\"dark default @50\",\"thumb\":230.34900000000044,\"fill\":59.493399999999774,\"track\":19.208599999999954},{\"where\":\"dark default @100\",\"thumb\":230.34900000000044,\"fill\":59.493399999999774,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34900000000044,\"fill\":null,\"track\":19.208599999999954},{\"where\":\"dark violet @50\",\"thumb\":230.34900000000044,\"fill\":83.8559999999998,\"track\":19.208599999999954},{\"where\":\"dark violet @100\",\"thumb\":230.34900000000044,\"fill\":83.8559999999998,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7247,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:04:50.893Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000065,\"fill\":null,\"track\":246.92379999999864},{\"where\":\"light default @50\",\"thumb\":25.493400000000065,\"fill\":216.66939999999929,\"track\":246.92379999999864},{\"where\":\"light default @100\",\"thumb\":25.493400000000065,\"fill\":216.66939999999929,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000065,\"fill\":null,\"track\":246.92379999999864},{\"where\":\"light violet @50\",\"thumb\":25.493400000000065,\"fill\":111.64340000000058,\"track\":246.92379999999864},{\"where\":\"light violet @100\",\"thumb\":25.493400000000065,\"fill\":111.64340000000058,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34900000000044,\"fill\":null,\"track\":19.208599999999954},{\"where\":\"dark default @50\",\"thumb\":230.34900000000044,\"fill\":59.493399999999774,\"track\":19.208599999999954},{\"where\":\"dark default @100\",\"thumb\":230.34900000000044,\"fill\":59.493399999999774,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34900000000044,\"fill\":null,\"track\":19.208599999999954},{\"where\":\"dark violet @50\",\"thumb\":230.34900000000044,\"fill\":83.8559999999998,\"track\":19.208599999999954},{\"where\":\"dark violet @100\",\"thumb\":230.34900000000044,\"fill\":83.8559999999998,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-f87220999c57e6c43843",
+          "file": "release-11-0-2.spec.ts",
+          "line": 232,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493399999999866,\"fill\":null,\"track\":246.92380000000108},{\"where\":\"light default @50\",\"thumb\":25.493399999999866,\"fill\":216.6693999999991,\"track\":246.92380000000108},{\"where\":\"light default @100\",\"thumb\":25.493399999999866,\"fill\":216.6693999999991,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493399999999866,\"fill\":null,\"track\":246.92380000000108},{\"where\":\"light violet @50\",\"thumb\":25.493399999999866,\"fill\":111.6434000000007,\"track\":246.92380000000108},{\"where\":\"light violet @100\",\"thumb\":25.493399999999866,\"fill\":111.6434000000007,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34900000000115,\"fill\":null,\"track\":19.208599999999944},{\"where\":\"dark default @50\",\"thumb\":230.34900000000115,\"fill\":59.493399999999596,\"track\":19.208599999999944},{\"where\":\"dark default @100\",\"thumb\":230.34900000000115,\"fill\":59.493399999999596,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34900000000115,\"fill\":null,\"track\":19.208599999999944},{\"where\":\"dark violet @50\",\"thumb\":230.34900000000115,\"fill\":83.85599999999978,\"track\":19.208599999999944},{\"where\":\"dark violet @100\",\"thumb\":230.34900000000115,\"fill\":83.85599999999978,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7953,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:04:58.154Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493399999999866,\"fill\":null,\"track\":246.92380000000108},{\"where\":\"light default @50\",\"thumb\":25.493399999999866,\"fill\":216.6693999999991,\"track\":246.92380000000108},{\"where\":\"light default @100\",\"thumb\":25.493399999999866,\"fill\":216.6693999999991,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493399999999866,\"fill\":null,\"track\":246.92380000000108},{\"where\":\"light violet @50\",\"thumb\":25.493399999999866,\"fill\":111.6434000000007,\"track\":246.92380000000108},{\"where\":\"light violet @100\",\"thumb\":25.493399999999866,\"fill\":111.6434000000007,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":230.34900000000115,\"fill\":null,\"track\":19.208599999999944},{\"where\":\"dark default @50\",\"thumb\":230.34900000000115,\"fill\":59.493399999999596,\"track\":19.208599999999944},{\"where\":\"dark default @100\",\"thumb\":230.34900000000115,\"fill\":59.493399999999596,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":230.34900000000115,\"fill\":null,\"track\":19.208599999999944},{\"where\":\"dark violet @50\",\"thumb\":230.34900000000115,\"fill\":83.85599999999978,\"track\":19.208599999999944},{\"where\":\"dark violet @100\",\"thumb\":230.34900000000115,\"fill\":83.85599999999978,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-da53817a23a7b0d8f41c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 232,
+          "column": 5
+        },
+        {
+          "title": "slider · the thumb paints --foreground by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1148,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:06.117Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-eb0115a4ce40733e2a17",
+          "file": "release-11-0-2.spec.ts",
+          "line": 253,
+          "column": 1
+        },
+        {
+          "title": "lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "lens",
+                  "description": "{\"held\":true,\"lens\":0,\"veil\":0,\"opacity\":1,\"rest\":0.5642172480158966,\"grasped\":0.5642172480158966,\"change\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:07.274Z",
+                  "annotations": [
+                    {
+                      "type": "lens",
+                      "description": "{\"held\":true,\"lens\":0,\"veil\":0,\"opacity\":1,\"rest\":0.5642172480158966,\"grasped\":0.5642172480158966,\"change\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-af54e0b13ed6db67b5f0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 276,
+          "column": 1
+        },
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:09.821Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b1f40c2710a5aa407574",
+          "file": "release-11-0-2.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                    "line": 338,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 469,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:12.392Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                        "line": 338,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-620a1bbd21a12bcf617d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 337,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1613,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:12.872Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d7262a1968abfaa8ac8e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-dock colours the expanded edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1628,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:14.503Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-95afb4a2dec1cea95559",
+          "file": "release-11-0-2.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"half\":\"color(srgb 0.691305 0.013517 0.012414 / 0.29)\"},\"held\":{\"collapsed\":\"rgba(200, 0, 0, 0.5)\",\"expanded\":\"rgba(200, 0, 0, 0.5)\"},\"statik\":{\"collapsed\":\"rgba(200, 0, 0, 0.5)\",\"expanded\":\"rgba(200, 0, 0, 0.5)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.315)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1578,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:16.143Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"half\":\"color(srgb 0.691305 0.013517 0.012414 / 0.29)\"},\"held\":{\"collapsed\":\"rgba(200, 0, 0, 0.5)\",\"expanded\":\"rgba(200, 0, 0, 0.5)\"},\"statik\":{\"collapsed\":\"rgba(200, 0, 0, 0.5)\",\"expanded\":\"rgba(200, 0, 0, 0.5)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.315)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1e0b7a2b921f979418c2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 490,
+          "column": 1
+        },
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:17.734Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-554d8542d786d86d14b9",
+          "file": "release-11-0-2.spec.ts",
+          "line": 581,
+          "column": 5
+        },
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5606,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:23.363Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8cae969757360ec03c5b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 581,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (static)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.021033132017247883,\"selected\":0.04899559847919966,\"selectedTab\":0.055318470876572726,\"restingTab\":0.021033132017247883,\"hover\":0.03487491066712339,\"press\":0.03770862919757704}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:28.983Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.021033132017247883,\"selected\":0.04899559847919966,\"selectedTab\":0.055318470876572726,\"restingTab\":0.021033132017247883,\"hover\":0.03487491066712339,\"press\":0.03770862919757704}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3f0f44017275b84d81f0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 631,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (live)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.025343391524793125,\"selected\":0.05480256508820189,\"selectedTab\":0.06142889575215117,\"restingTab\":0.02533609344618001,\"hover\":0.04046961688493736,\"press\":0.04260540485565576}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:32.027Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.025343391524793125,\"selected\":0.05480256508820189,\"selectedTab\":0.06142889575215117,\"restingTab\":0.02533609344618001,\"hover\":0.04046961688493736,\"press\":0.04260540485565576}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8e586872a5ea33110f6b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 631,
+          "column": 5
+        },
+        {
+          "title": "fill · the light scheme's seat fills are the plate rungs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"hover\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"resting\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"selectedTab\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"floating\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:34.978Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"hover\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"resting\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"selectedTab\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"floating\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8516ab1ece65a56abf6b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 667,
+          "column": 1
+        },
+        {
+          "title": "fold · an idle fold lays out once per morph frame on a scrolling page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "layouts are counted over CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                    "line": 703,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:37.495Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "layouts are counted over CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                        "line": 703,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-61feba74d12d90a63f9d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 702,
+          "column": 1
+        },
+        {
+          "title": "hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hold",
+                  "description": "{\"opened\":{\"expanded\":true,\"open\":true},\"held\":{\"expanded\":true,\"open\":true},\"folded\":{\"expanded\":false,\"open\":false}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:37.777Z",
+                  "annotations": [
+                    {
+                      "type": "hold",
+                      "description": "{\"opened\":{\"expanded\":true,\"open\":true},\"held\":{\"expanded\":true,\"open\":true},\"folded\":{\"expanded\":false,\"open\":false}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-5938fc597d6860c1398d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 744,
+          "column": 1
+        },
+        {
+          "title": "static · a live dock's active control keeps its capsule lens",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:48.961Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8c288d4c07a10f4e05ca",
+          "file": "release-11-0-2.spec.ts",
+          "line": 777,
+          "column": 1
+        },
+        {
+          "title": "blob · through a sweep, a drag and a release the body's drawn reach stays inside its box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "blob",
+                  "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":127},\"peak\":0.2857282914332766,\"draws\":342}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:50.308Z",
+                  "annotations": [
+                    {
+                      "type": "blob",
+                      "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":127},\"peak\":0.2857282914332766,\"draws\":342}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aef48d4864b7ac95a78c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 790,
+          "column": 1
+        },
+        {
+          "title": "blob · from 100 ms after a sweep and release the body stays a bead, not a filled box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "one Chromium cell, as the row asks",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                    "line": 852,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 448,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:54.541Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "one Chromium cell, as the row asks",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-2.spec.ts",
+                        "line": 852,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-dce903cc33f88e3de060",
+          "file": "release-11-0-2.spec.ts",
+          "line": 851,
+          "column": 1
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[28,28,28,28],\"clip\":\"inset(0px)\",\"box\":[164,56],\"runOverflow\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3107,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:55.004Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[28,28,28,28],\"clip\":\"inset(0px)\",\"box\":[164,56],\"runOverflow\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-42911a145cd783e197d3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 909,
+          "column": 5
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[28,28,28,28],\"clip\":\"inset(0px)\",\"box\":[164,56],\"runOverflow\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3035,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:05:58.124Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[28,28,28,28],\"clip\":\"inset(0px)\",\"box\":[164,56],\"runOverflow\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ce28cebd11da90aa05ee",
+          "file": "release-11-0-2.spec.ts",
+          "line": 909,
+          "column": 5
+        },
+        {
+          "title": "pager · a neighbour hop paints a neck no wider than the pitch plus a dot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "pager",
+                  "description": "{\"geo\":{\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"to\":1,\"frames\":25,\"widest\":18.776405334472656},{\"to\":2,\"frames\":24,\"widest\":18.794403076171875},{\"to\":1,\"frames\":24,\"widest\":18.76800537109375},{\"to\":0,\"frames\":24,\"widest\":18.7991943359375}]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:01.170Z",
+                  "annotations": [
+                    {
+                      "type": "pager",
+                      "description": "{\"geo\":{\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"to\":1,\"frames\":25,\"widest\":18.776405334472656},{\"to\":2,\"frames\":24,\"widest\":18.794403076171875},{\"to\":1,\"frames\":24,\"widest\":18.76800537109375},{\"to\":0,\"frames\":24,\"widest\":18.7991943359375}]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cbffffb8d7a1414110b2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 943,
+          "column": 1
+        },
+        {
+          "title": "pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "pager",
+                  "description": "{\"geo\":{\"count\":8,\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"from\":0,\"to\":1,\"frames\":24,\"widest\":18.811195373535156},{\"from\":1,\"to\":4,\"frames\":27,\"widest\":46.20001220703125},{\"from\":4,\"to\":7,\"frames\":27,\"widest\":46.20001220703125},{\"from\":7,\"to\":0,\"frames\":29,\"widest\":84}]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:05.568Z",
+                  "annotations": [
+                    {
+                      "type": "pager",
+                      "description": "{\"geo\":{\"count\":8,\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"from\":0,\"to\":1,\"frames\":24,\"widest\":18.811195373535156},{\"from\":1,\"to\":4,\"frames\":27,\"widest\":46.20001220703125},{\"from\":4,\"to\":7,\"frames\":27,\"widest\":46.20001220703125},{\"from\":7,\"to\":0,\"frames\":29,\"widest\":84}]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ac924728d066deef674e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 984,
+          "column": 1
+        },
+        {
+          "title": "wheel · a vertical wheel over a horizontal dock's run scrolls the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "wheel",
+                  "description": "{\"css\":{\"overflow\":452,\"x\":\"contain\",\"y\":\"auto\"},\"moved\":300}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1292,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:09.913Z",
+                  "annotations": [
+                    {
+                      "type": "wheel",
+                      "description": "{\"css\":{\"overflow\":452,\"x\":\"contain\",\"y\":\"auto\"},\"moved\":300}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-260bf635821f6660e4a7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1027,
+          "column": 1
+        },
+        {
+          "title": "wheel · a vertical dock's run contains its own axis and passes the other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "wheel",
+                  "description": "{\"x\":\"auto\",\"y\":\"contain\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:11.209Z",
+                  "annotations": [
+                    {
+                      "type": "wheel",
+                      "description": "{\"x\":\"auto\",\"y\":\"contain\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-25887bdd9c8998ed2dfb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1053,
+          "column": 1
+        },
+        {
+          "title": "rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rail",
+                  "description": "{\"rest\":[20,20,96,446],\"frames\":[[1,20,20,68,446,28],[1,20,20,68,427,28],[1,20,20,68,384,29],[1,20,20,68,353,30],[1,20,20,68,318,30],[1,20,20,68,287,31],[1,20,20,68,258,31],[1,20,20,68,231,31],[1,20,20,68,201,32],[1,20,20,68,181,32],[1,20,20,68,162,32],[1,20,20,68,145,32],[1,20,20,68,130,32],[1,20,20,68,117,32],[1,20,20,68,109,32],[1,20,20,68,99,32],[1,20,20,68,92,33],[1,20,20,68,86,33],[1,20,20,68,82,33],[1,20,20,68,78,33],[1,20,20,68,75,33],[1,20,20,68,72,33],[1,20,20,68,71,33],[1,20,20,68,69,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2601,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:11.537Z",
+                  "annotations": [
+                    {
+                      "type": "rail",
+                      "description": "{\"rest\":[20,20,96,446],\"frames\":[[1,20,20,68,446,28],[1,20,20,68,427,28],[1,20,20,68,384,29],[1,20,20,68,353,30],[1,20,20,68,318,30],[1,20,20,68,287,31],[1,20,20,68,258,31],[1,20,20,68,231,31],[1,20,20,68,201,32],[1,20,20,68,181,32],[1,20,20,68,162,32],[1,20,20,68,145,32],[1,20,20,68,130,32],[1,20,20,68,117,32],[1,20,20,68,109,32],[1,20,20,68,99,32],[1,20,20,68,92,33],[1,20,20,68,86,33],[1,20,20,68,82,33],[1,20,20,68,78,33],[1,20,20,68,75,33],[1,20,20,68,72,33],[1,20,20,68,71,33],[1,20,20,68,69,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32]]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-545c58eaec805b05d4cf",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1100,
+          "column": 1
+        },
+        {
+          "title": "rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rail",
+                  "description": "{\"disc\":[32,32],\"frames\":[[20,20,96,68,32,[32,366,72,88]],[20,20,96,87,32,[32,366,72,88]],[20,20,96,116,32,[32,366,72,88]],[20,20,96,152,32,[32,366,72,88]],[20,20,96,183,32,[32,366,72,88]],[20,20,96,220,31,[32,367,72,88]],[20,20,96,247,31,[32,367,72,88]],[20,20,96,275,31,[32,367,72,88]],[20,20,96,301,30,[32,368,72,88]],[20,20,96,324,30,[32,368,72,88]],[20,20,96,343,30,[32,368,72,88]],[20,20,96,364,29,[32,369,72,88]],[20,20,96,378,29,[32,369,72,88]],[20,20,96,394,29,[32,369,72,88]],[20,20,96,403,29,[32,369,72,88]],[20,20,96,412,29,[32,369,72,88]],[20,20,96,419,29,[32,369,72,88]],[20,20,96,426,28,[32,370,72,88]],[20,20,96,431,28,[32,370,72,88]],[20,20,96,435,28,[32,370,72,88]],[20,20,96,439,28,[32,370,72,88]],[20,20,96,441,28,[32,370,72,88]],[20,20,96,443,28,[32,370,72,88]],[20,20,96,444,28,[32,370,72,88]],[20,20,96,445,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1635,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:14.142Z",
+                  "annotations": [
+                    {
+                      "type": "rail",
+                      "description": "{\"disc\":[32,32],\"frames\":[[20,20,96,68,32,[32,366,72,88]],[20,20,96,87,32,[32,366,72,88]],[20,20,96,116,32,[32,366,72,88]],[20,20,96,152,32,[32,366,72,88]],[20,20,96,183,32,[32,366,72,88]],[20,20,96,220,31,[32,367,72,88]],[20,20,96,247,31,[32,367,72,88]],[20,20,96,275,31,[32,367,72,88]],[20,20,96,301,30,[32,368,72,88]],[20,20,96,324,30,[32,368,72,88]],[20,20,96,343,30,[32,368,72,88]],[20,20,96,364,29,[32,369,72,88]],[20,20,96,378,29,[32,369,72,88]],[20,20,96,394,29,[32,369,72,88]],[20,20,96,403,29,[32,369,72,88]],[20,20,96,412,29,[32,369,72,88]],[20,20,96,419,29,[32,369,72,88]],[20,20,96,426,28,[32,370,72,88]],[20,20,96,431,28,[32,370,72,88]],[20,20,96,435,28,[32,370,72,88]],[20,20,96,439,28,[32,370,72,88]],[20,20,96,441,28,[32,370,72,88]],[20,20,96,443,28,[32,370,72,88]],[20,20,96,444,28,[32,370,72,88]],[20,20,96,445,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]],[20,20,96,446,28,[32,370,72,88]]]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-6c3200ddfa6f05ffd8d5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1126,
+          "column": 1
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"icon\",\"frames\":170,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":171,\"moved\":[]},{\"seat\":\"tab\",\"frames\":171,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":171,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":171,\"moved\":[]},{\"seat\":\"button\",\"frames\":171,\"moved\":[]},{\"seat\":\"link\",\"frames\":171,\"moved\":[]},{\"seat\":\"popover\",\"frames\":172,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":171,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:15.780Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"icon\",\"frames\":170,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":171,\"moved\":[]},{\"seat\":\"tab\",\"frames\":171,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":171,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":171,\"moved\":[]},{\"seat\":\"button\",\"frames\":171,\"moved\":[]},{\"seat\":\"link\",\"frames\":171,\"moved\":[]},{\"seat\":\"popover\",\"frames\":172,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":171,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c5de3fca8d6d6f45b7e4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5331,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:39.977Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-499ca1705edf7895fecc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"icon\",\"frames\":172,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab\",\"frames\":172,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":172,\"moved\":[]},{\"seat\":\"button\",\"frames\":171,\"moved\":[]},{\"seat\":\"link\",\"frames\":179,\"moved\":[]},{\"seat\":\"popover\",\"frames\":171,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24414,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:06:45.313Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"icon\",\"frames\":172,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab\",\"frames\":172,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":172,\"moved\":[]},{\"seat\":\"button\",\"frames\":171,\"moved\":[]},{\"seat\":\"link\",\"frames\":179,\"moved\":[]},{\"seat\":\"popover\",\"frames\":171,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-5039d11f0bec9d217cb2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":176,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5772,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:07:09.733Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":176,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cd9d7ec85f43231637eb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":173,\"moved\":[]},{\"seat\":\"icon\",\"frames\":173,\"moved\":[]},{\"seat\":\"label\",\"frames\":173,\"moved\":[]},{\"seat\":\"compact\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab\",\"frames\":173,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":176,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":171,\"moved\":[]},{\"seat\":\"background\",\"frames\":174,\"moved\":[]},{\"seat\":\"button\",\"frames\":172,\"moved\":[]},{\"seat\":\"link\",\"frames\":172,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":173,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25292,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:07:15.514Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":173,\"moved\":[]},{\"seat\":\"icon\",\"frames\":173,\"moved\":[]},{\"seat\":\"label\",\"frames\":173,\"moved\":[]},{\"seat\":\"compact\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab\",\"frames\":173,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":176,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":171,\"moved\":[]},{\"seat\":\"background\",\"frames\":174,\"moved\":[]},{\"seat\":\"button\",\"frames\":172,\"moved\":[]},{\"seat\":\"link\",\"frames\":172,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":173,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0357b2e0e96433221b2b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6078,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:07:40.821Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":172,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b7cc040a83fa76fc02f7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":173,\"moved\":[]},{\"seat\":\"icon\",\"frames\":176,\"moved\":[]},{\"seat\":\"label\",\"frames\":171,\"moved\":[]},{\"seat\":\"compact\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab\",\"frames\":174,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":172,\"moved\":[]},{\"seat\":\"button\",\"frames\":172,\"moved\":[]},{\"seat\":\"link\",\"frames\":174,\"moved\":[]},{\"seat\":\"popover\",\"frames\":172,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25315,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:07:46.912Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":173,\"moved\":[]},{\"seat\":\"icon\",\"frames\":176,\"moved\":[]},{\"seat\":\"label\",\"frames\":171,\"moved\":[]},{\"seat\":\"compact\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab\",\"frames\":174,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":172,\"moved\":[]},{\"seat\":\"button\",\"frames\":172,\"moved\":[]},{\"seat\":\"link\",\"frames\":174,\"moved\":[]},{\"seat\":\"popover\",\"frames\":172,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d68f49f3919f3220e7a4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5735,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:08:12.238Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c7cc610fdfcf86559404",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"icon\",\"frames\":174,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab\",\"frames\":172,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":173,\"moved\":[]},{\"seat\":\"button\",\"frames\":173,\"moved\":[]},{\"seat\":\"link\",\"frames\":176,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24967,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:08:17.982Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"icon\",\"frames\":174,\"moved\":[]},{\"seat\":\"label\",\"frames\":172,\"moved\":[]},{\"seat\":\"compact\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab\",\"frames\":172,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":172,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":173,\"moved\":[]},{\"seat\":\"button\",\"frames\":173,\"moved\":[]},{\"seat\":\"link\",\"frames\":176,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2937679e18b2959da2d1",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:08:42.956Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":172,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ef2c0204a716803ed1e5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"icon\",\"frames\":175,\"moved\":[]},{\"seat\":\"label\",\"frames\":174,\"moved\":[]},{\"seat\":\"compact\",\"frames\":176,\"moved\":[]},{\"seat\":\"tab\",\"frames\":177,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":176,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":176,\"moved\":[]},{\"seat\":\"button\",\"frames\":173,\"moved\":[]},{\"seat\":\"link\",\"frames\":172,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:08:52.242Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":174,\"moved\":[]},{\"seat\":\"icon\",\"frames\":175,\"moved\":[]},{\"seat\":\"label\",\"frames\":174,\"moved\":[]},{\"seat\":\"compact\",\"frames\":176,\"moved\":[]},{\"seat\":\"tab\",\"frames\":177,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":176,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":172,\"moved\":[]},{\"seat\":\"background\",\"frames\":176,\"moved\":[]},{\"seat\":\"button\",\"frames\":173,\"moved\":[]},{\"seat\":\"link\",\"frames\":172,\"moved\":[]},{\"seat\":\"popover\",\"frames\":173,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":173,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":171,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1678d671704af32e54b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":177,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":173,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7752,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:09:17.752Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":177,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":173,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-66e7ff6e9adc0324dfea",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"tab-0\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab-1\",\"frames\":176,\"moved\":[]},{\"seat\":\"tab-2\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab-3\",\"frames\":177,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:09:25.514Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"tab-0\",\"frames\":174,\"moved\":[]},{\"seat\":\"tab-1\",\"frames\":176,\"moved\":[]},{\"seat\":\"tab-2\",\"frames\":172,\"moved\":[]},{\"seat\":\"tab-3\",\"frames\":177,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":174,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cc43b84b810dfe08da8a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1228,
+          "column": 1
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[233,224,215],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":506.703125,\"y\":730.046875,\"w\":68.109375,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[77.00000000000001,54.555555555555586,63.56790123456789,41.80246913580249],\"measured\":59.231481481481495,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":658.953125,\"y\":729,\"w\":67.703125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[96.85365853658587,57.85365853658596,96.15853658536633,57.15853658536638],\"measured\":77.00609756097613,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":797.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":82,\"areas\":[63.365853658536956,49.134146341463826,63.353658536585634,49.15853658536617],\"measured\":56.25304878048814,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":582.8125,\"y\":730.046875,\"w\":68.140625,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[84.59803921568623,54.18627450980391,70.98039215686275,41.42156862745099],\"measured\":62.79656862745097,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":734.65625,\"y\":729,\"w\":54.625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[86.9215686274509,56.18627450980389,86.6078431372548,55.93137254901959],\"measured\":71.41176470588229,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":845.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":102,\"areas\":[61.882352941176464,47.41176470588235,62.058823529411754,47.61764705882353],\"measured\":54.74264705882352,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":889.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":102,\"areas\":[61.882352941176464,47.41176470588235,62.058823529411754,47.61764705882353],\"measured\":54.74264705882352,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9848,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:09:40.767Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[233,224,215],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":506.703125,\"y\":730.046875,\"w\":68.109375,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[77.00000000000001,54.555555555555586,63.56790123456789,41.80246913580249],\"measured\":59.231481481481495,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":658.953125,\"y\":729,\"w\":67.703125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[96.85365853658587,57.85365853658596,96.15853658536633,57.15853658536638],\"measured\":77.00609756097613,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":797.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":82,\"areas\":[63.365853658536956,49.134146341463826,63.353658536585634,49.15853658536617],\"measured\":56.25304878048814,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":582.8125,\"y\":730.046875,\"w\":68.140625,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[84.59803921568623,54.18627450980391,70.98039215686275,41.42156862745099],\"measured\":62.79656862745097,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":734.65625,\"y\":729,\"w\":54.625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[86.9215686274509,56.18627450980389,86.6078431372548,55.93137254901959],\"measured\":71.41176470588229,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":845.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":102,\"areas\":[61.882352941176464,47.41176470588235,62.058823529411754,47.61764705882353],\"measured\":54.74264705882352,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":889.28125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":102,\"areas\":[61.882352941176464,47.41176470588235,62.058823529411754,47.61764705882353],\"measured\":54.74264705882352,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-02771ef3cf344bc57605",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1298,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[233,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[56.456790123457125,44.3950617283954,56.45679012345707,44.40740740740768],\"measured\":50.42901234567932,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":149.640625,\"y\":729,\"w\":61.3125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[89.7777777777771,65.22222222222206,89.04938271604887,64.48148148148165],\"measured\":77.13271604938241,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":277.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":81,\"areas\":[56.24691358024725,56.28395061728429,56.23456790123485,56.29629629629658],\"measured\":56.26543209876574,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.8125,\"y\":732,\"w\":60.828125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[69.93069306930693,37.16831683168318,70.14851485148515,37.34653465346536],\"measured\":53.64851485148515,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.953125,\"y\":729,\"w\":50.140625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[95.7623762376237,62.07920792079206,95.44554455445537,61.80198019801979],\"measured\":78.77227722772273,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":325.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":101,\"areas\":[54.4752475247525,54.45544554455447,54.683168316831704,54.64356435643566],\"measured\":54.56435643564358,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":334.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":101,\"areas\":[54.44554455445546,54.4752475247525,54.63366336633665,54.683168316831704],\"measured\":54.559405940594075,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:09:50.633Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[233,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[56.456790123457125,44.3950617283954,56.45679012345707,44.40740740740768],\"measured\":50.42901234567932,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":149.640625,\"y\":729,\"w\":61.3125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[89.7777777777771,65.22222222222206,89.04938271604887,64.48148148148165],\"measured\":77.13271604938241,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":277.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":81,\"areas\":[56.24691358024725,56.28395061728429,56.23456790123485,56.29629629629658],\"measured\":56.26543209876574,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.8125,\"y\":732,\"w\":60.828125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[69.93069306930693,37.16831683168318,70.14851485148515,37.34653465346536],\"measured\":53.64851485148515,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.953125,\"y\":729,\"w\":50.140625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[95.7623762376237,62.07920792079206,95.44554455445537,61.80198019801979],\"measured\":78.77227722772273,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":325.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":101,\"areas\":[54.4752475247525,54.45544554455447,54.683168316831704,54.64356435643566],\"measured\":54.56435643564358,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":334.09375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"content-box\",\"radius\":20},\"span\":101,\"areas\":[54.44554455445546,54.4752475247525,54.63366336633665,54.683168316831704],\"measured\":54.559405940594075,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ed02d940e47e7d13e5c8",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1298,
+          "column": 5
+        },
+        {
+          "title": "geometry · the Slider's thumb fills the band and its ends are concentric (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"worst\":{\"diameter-inline\":0,\"diameter-block\":0,\"on the line between the end centres\":0.015000000000000568,\"cross centre\":0,\"concentric with the fill's cap\":0.25,\"fill height\":0},\"fails\":[],\"count\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:02.090Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"worst\":{\"diameter-inline\":0,\"diameter-block\":0,\"on the line between the end centres\":0.015000000000000568,\"cross centre\":0,\"concentric with the fill's cap\":0.25,\"fill height\":0},\"fails\":[],\"count\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-db5702eafd525ec3a9ae",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1345,
+          "column": 5
+        },
+        {
+          "title": "geometry · the Slider's thumb fills the band and its ends are concentric (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"worst\":{\"diameter-inline\":0,\"diameter-block\":0,\"on the line between the end centres\":0.015000000000000568,\"cross centre\":0,\"concentric with the fill's cap\":0.25,\"fill height\":0},\"fails\":[],\"count\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4925,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:07.724Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"worst\":{\"diameter-inline\":0,\"diameter-block\":0,\"on the line between the end centres\":0.015000000000000568,\"cross centre\":0,\"concentric with the fill's cap\":0.25,\"fill height\":0},\"fails\":[],\"count\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-646a2bfc89ed3162cbc6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1345,
+          "column": 5
+        },
+        {
+          "title": "transition · a control slotted into a dock's run keeps its own transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "transition",
+                  "description": "{\"inside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"outside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"icon\":{\"property\":\"background-color, color, scale, opacity, box-shadow, inline-size, block-size\",\"duration\":\"0.2s, 0.2s, 0.12s, 0.2s, 0.2s, 0.21s, 0.21s\"},\"tween\":{\"inside\":\"rgb(102, 99, 158)\",\"outside\":\"rgb(98, 101, 162)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3760,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:12.657Z",
+                  "annotations": [
+                    {
+                      "type": "transition",
+                      "description": "{\"inside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"outside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"icon\":{\"property\":\"background-color, color, scale, opacity, box-shadow, inline-size, block-size\",\"duration\":\"0.2s, 0.2s, 0.12s, 0.2s, 0.2s, 0.21s, 0.21s\"},\"tween\":{\"inside\":\"rgb(102, 99, 158)\",\"outside\":\"rgb(98, 101, 162)\"}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aa106dba1b5b50fb083d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1407,
+          "column": 1
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":-0.049998999999999905},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11986,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:16.424Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":-0.049998999999999905},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d81783c6961120d97a74",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1501,
+          "column": 9
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":-0.04999899999999996},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12163,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:28.421Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":-0.04999899999999996},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-bca30e50b3d1cefc186a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1501,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":-0.049999499999999863},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12376,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:40.595Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":-0.049999499999999863},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0535b2b429196056f7b5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1501,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":-0.049999499999999975},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12276,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T23:10:52.982Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":-0.049999499999999975},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-702c15cd7f938345cec4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1501,
+          "column": 9
+        }
+      ],
+      "suites": [
+        {
+          "title": "dark · useGlobalDark",
+          "file": "release-11-0-2.spec.ts",
+          "line": 84,
+          "column": 6,
+          "specs": [
+            {
+              "title": "dark · a fresh key opens on initialValue while the default key holds auto",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-2311",
+                  "projectName": "webkit-2311",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1161,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T23:04:34.453Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6be085e04bfac81dcd8c-1f6c6004bcc73360b983",
+              "file": "release-11-0-2.spec.ts",
+              "line": 85,
+              "column": 5
+            },
+            {
+              "title": "dark · night chosen twice on a dark system stays night when the system turns light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-2311",
+                  "projectName": "webkit-2311",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 839,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T23:04:36.711Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6be085e04bfac81dcd8c-4e1ab723be6eb5eed1d3",
+              "file": "release-11-0-2.spec.ts",
+              "line": 102,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T23:04:31.018Z",
+    "duration": 394316.208,
+    "expected": 51,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

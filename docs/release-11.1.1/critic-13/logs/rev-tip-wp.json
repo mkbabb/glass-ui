@@ -1,0 +1,528 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "reverse · a (Select|DropdownMenu) closed while it opens",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/rev-tip-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7601,
+                  "error": {
+                    "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.424,\"turnedAt\":0.571,\"share\":0.106,\"end\":0,\"hole\":37,\"frames\":[[0,0.424],[21,0.557],[29,0.566],[42,0.571],[53,0.56],[58,0.55],[63,0.543],[74,0.502],[82,0.471],[93,0.424],[104,0.367],[114,0.325],[124,0.277],[133,0.235],[143,0.181],[154,0.138],[164,0.107],[177,0.072],[189,0.044],[195,0.032],[205,0.019],[215,0.009],[226,0.002],[238,0],[247,0],[319,0],[328,0],[338,0],[348,0],[358,0],[369,0],[377,0],[390,0],[399,0],[410,0],[423,0],[429,0],[442,0],[450,0],[460,0],[470,0],[481,0],[492,0],[501,0],[511,0],[522,0],[534,0],[546,0],[556,0],[565,0],[573,0],[583,0],[592,0],[604,0],[613,0],[629,0],[633,0],[647,0],[657,0],[666,0],[674,0],[684,0],[698,0],[707,0],[716,0],[725,0],[738,0],[746,0],[758,0],[769,0],[776,0],[786,0],[799,0],[807,0],[818,0],[827,0],[838,0],[848,0],[860,0],[867,0],[880,0],[887,0],[899,0],[910,0],[921,0],[933,0],[940,0],[950,0],[960,0],[969,0],[981,0],[991,0],[1002,0],[1010,0],[1022,0],[1032,0],[1044,0],[1053,0],[1063,0],[1072,0],[1083,0],[1094,0],[1103,0],[1112,0],[1123,0],[1136,0],[1147,0],[1154,0],[1166,0],[1174,0],[1185,0],[1194,0],[1206,0],[1215,0],[1224,0],[1236,0],[1247,0],[1256,0],[1265,0],[1275,0],[1287,0],[1297,0],[1307,0],[1319,0],[1328,0],[1338,0],[1348,0],[1356,0],[1369,0],[1377,0],[1390,0],[1399,0],[1409,0],[1418,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m37\u001b[39m",
+                    "stack": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.424,\"turnedAt\":0.571,\"share\":0.106,\"end\":0,\"hole\":37,\"frames\":[[0,0.424],[21,0.557],[29,0.566],[42,0.571],[53,0.56],[58,0.55],[63,0.543],[74,0.502],[82,0.471],[93,0.424],[104,0.367],[114,0.325],[124,0.277],[133,0.235],[143,0.181],[154,0.138],[164,0.107],[177,0.072],[189,0.044],[195,0.032],[205,0.019],[215,0.009],[226,0.002],[238,0],[247,0],[319,0],[328,0],[338,0],[348,0],[358,0],[369,0],[377,0],[390,0],[399,0],[410,0],[423,0],[429,0],[442,0],[450,0],[460,0],[470,0],[481,0],[492,0],[501,0],[511,0],[522,0],[534,0],[546,0],[556,0],[565,0],[573,0],[583,0],[592,0],[604,0],[613,0],[629,0],[633,0],[647,0],[657,0],[666,0],[674,0],[684,0],[698,0],[707,0],[716,0],[725,0],[738,0],[746,0],[758,0],[769,0],[776,0],[786,0],[799,0],[807,0],[818,0],[827,0],[838,0],[848,0],[860,0],[867,0],[880,0],[887,0],[899,0],[910,0],[921,0],[933,0],[940,0],[950,0],[960,0],[969,0],[981,0],[991,0],[1002,0],[1010,0],[1022,0],[1032,0],[1044,0],[1053,0],[1063,0],[1072,0],[1083,0],[1094,0],[1103,0],[1112,0],[1123,0],[1136,0],[1147,0],[1154,0],[1166,0],[1174,0],[1185,0],[1194,0],[1206,0],[1215,0],[1224,0],[1236,0],[1247,0],[1256,0],[1265,0],[1275,0],[1287,0],[1297,0],[1307,0],[1319,0],[1328,0],[1338,0],[1348,0],[1356,0],[1369,0],[1377,0],[1390,0],[1399,0],[1409,0],[1418,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m37\u001b[39m\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 148,
+                      "line": 1109
+                    },
+                    "snippet": "  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 148,
+                        "line": 1109
+                      },
+                      "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.424,\"turnedAt\":0.571,\"share\":0.106,\"end\":0,\"hole\":37,\"frames\":[[0,0.424],[21,0.557],[29,0.566],[42,0.571],[53,0.56],[58,0.55],[63,0.543],[74,0.502],[82,0.471],[93,0.424],[104,0.367],[114,0.325],[124,0.277],[133,0.235],[143,0.181],[154,0.138],[164,0.107],[177,0.072],[189,0.044],[195,0.032],[205,0.019],[215,0.009],[226,0.002],[238,0],[247,0],[319,0],[328,0],[338,0],[348,0],[358,0],[369,0],[377,0],[390,0],[399,0],[410,0],[423,0],[429,0],[442,0],[450,0],[460,0],[470,0],[481,0],[492,0],[501,0],[511,0],[522,0],[534,0],[546,0],[556,0],[565,0],[573,0],[583,0],[592,0],[604,0],[613,0],[629,0],[633,0],[647,0],[657,0],[666,0],[674,0],[684,0],[698,0],[707,0],[716,0],[725,0],[738,0],[746,0],[758,0],[769,0],[776,0],[786,0],[799,0],[807,0],[818,0],[827,0],[838,0],[848,0],[860,0],[867,0],[880,0],[887,0],[899,0],[910,0],[921,0],[933,0],[940,0],[950,0],[960,0],[969,0],[981,0],[991,0],[1002,0],[1010,0],[1022,0],[1032,0],[1044,0],[1053,0],[1063,0],[1072,0],[1083,0],[1094,0],[1103,0],[1112,0],[1123,0],[1136,0],[1147,0],[1154,0],[1166,0],[1174,0],[1185,0],[1194,0],[1206,0],[1215,0],[1224,0],[1236,0],[1247,0],[1256,0],[1265,0],[1275,0],[1287,0],[1297,0],[1307,0],[1319,0],[1328,0],[1338,0],[1348,0],[1356,0],[1369,0],[1377,0],[1390,0],[1399,0],[1409,0],[1418,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m37\u001b[39m\n\n  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:41.139Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjU1LCJ0dXJuZWRBdCI6MC42NTUsInNoYXJlIjowLjA5LCJlbmQiOjAsImhvbGUiOjk1LCJmcmFtZXMiOltbMCwwLjY1NV0sWzMyLDAuNjEyXSxbNTEsMC41NDNdLFs2NCwwLjQ4Ml0sWzg3LDAuMzU4XSxbOTUsMC4zMjFdLFsxMDEsMC4yODddLFsxMTAsMC4yNF0sWzEyMiwwLjE3OV0sWzEzNSwwLjEzMV0sWzE0MywwLjFdLFsxNTEsMC4wOF0sWzE2MiwwLjA1XSxbMTcyLDAuMDMzXSxbMTgxLDAuMDJdLFsxOTIsMC4wMDldLFsyMDEsMC4wMDRdLFsyMTMsMF0sWzIyNiwwXSxbMzA2LDBdLFszMTQsMF0sWzMyMywwXSxbMzM1LDBdLFszNDYsMF0sWzM1NSwwXSxbMzY1LDBdLFszNzYsMF0sWzM4NSwwXSxbMzk2LDBdLFs0MDYsMF0sWzQxNSwwXSxbNDI3LDBdLFs0MzcsMF0sWzQ0NSwwXSxbNDU3LDBdLFs0NjgsMF0sWzQ3NywwXSxbNDg4LDBdLFs0OTgsMF0sWzUwOSwwXSxbNTE5LDBdLFs1MjksMF0sWzUzOSwwXSxbNTUxLDBdLFs1NTksMF0sWzU2OSwwXSxbNTgwLDBdLFs1ODksMF0sWzYwMSwwXSxbNjEwLDBdLFs2MTksMF0sWzYzMSwwXSxbNjQxLDBdLFs2NTAsMF0sWzY2MiwwXSxbNjcyLDBdLFs2ODIsMF0sWzY5NSwwXSxbNzAzLDBdLFs3MTEsMF0sWzcyMSwwXSxbNzM0LDBdLFs3NDMsMF0sWzc1MywwXSxbNzY0LDBdLFs3NzMsMF0sWzc4NCwwXSxbNzk0LDBdLFs4MDQsMF0sWzgxNCwwXSxbODIzLDBdLFs4MzUsMF0sWzg0NSwwXSxbODU0LDBdLFs4NjUsMF0sWzg3NiwwXSxbODkxLDBdLFs4OTYsMF0sWzkwNiwwXSxbOTE3LDBdLFs5MjcsMF0sWzkzNSwwXSxbOTQ3LDBdLFs5NTYsMF0sWzk2OCwwXSxbOTc3LDBdLFs5ODcsMF0sWzk5OSwwXSxbMTAwNywwXSxbMTAxOSwwXSxbMTAyOCwwXSxbMTA0MCwwXSxbMTA0OCwwXSxbMTA2MCwwXSxbMTA3MCwwXSxbMTA3OCwwXSxbMTA5MCwwXSxbMTEwMSwwXSxbMTExMCwwXSxbMTEyMSwwXSxbMTEzMCwwXSxbMTE0MiwwXSxbMTE1MSwwXSxbMTE2MywwXSxbMTE3MiwwXSxbMTE4MiwwXSxbMTE5NCwwXSxbMTIwMSwwXSxbMTIxMywwXSxbMTIyMywwXSxbMTIzMywwXSxbMTI0MywwXSxbMTI1MywwXSxbMTI2NiwwXSxbMTI3NCwwXSxbMTI4MywwXSxbMTI5NiwwXSxbMTMwMiwwXSxbMTMxNSwwXSxbMTMyNSwwXSxbMTMzNCwwXSxbMTM0NiwwXSxbMTM1NSwwXSxbMTM2NSwwXSxbMTM3NCwwXSxbMTM4OCwwXSxbMTM5NiwwXSxbMTQwNSwwXSxbMTQxNywwXSxbMTQyOSwwXSxbMTQzNywwXSxbMTQ0OSwwXSxbMTQ1OCwwXV19"
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDI0LCJ0dXJuZWRBdCI6MC41NzEsInNoYXJlIjowLjEwNiwiZW5kIjowLCJob2xlIjozNywiZnJhbWVzIjpbWzAsMC40MjRdLFsyMSwwLjU1N10sWzI5LDAuNTY2XSxbNDIsMC41NzFdLFs1MywwLjU2XSxbNTgsMC41NV0sWzYzLDAuNTQzXSxbNzQsMC41MDJdLFs4MiwwLjQ3MV0sWzkzLDAuNDI0XSxbMTA0LDAuMzY3XSxbMTE0LDAuMzI1XSxbMTI0LDAuMjc3XSxbMTMzLDAuMjM1XSxbMTQzLDAuMTgxXSxbMTU0LDAuMTM4XSxbMTY0LDAuMTA3XSxbMTc3LDAuMDcyXSxbMTg5LDAuMDQ0XSxbMTk1LDAuMDMyXSxbMjA1LDAuMDE5XSxbMjE1LDAuMDA5XSxbMjI2LDAuMDAyXSxbMjM4LDBdLFsyNDcsMF0sWzMxOSwwXSxbMzI4LDBdLFszMzgsMF0sWzM0OCwwXSxbMzU4LDBdLFszNjksMF0sWzM3NywwXSxbMzkwLDBdLFszOTksMF0sWzQxMCwwXSxbNDIzLDBdLFs0MjksMF0sWzQ0MiwwXSxbNDUwLDBdLFs0NjAsMF0sWzQ3MCwwXSxbNDgxLDBdLFs0OTIsMF0sWzUwMSwwXSxbNTExLDBdLFs1MjIsMF0sWzUzNCwwXSxbNTQ2LDBdLFs1NTYsMF0sWzU2NSwwXSxbNTczLDBdLFs1ODMsMF0sWzU5MiwwXSxbNjA0LDBdLFs2MTMsMF0sWzYyOSwwXSxbNjMzLDBdLFs2NDcsMF0sWzY1NywwXSxbNjY2LDBdLFs2NzQsMF0sWzY4NCwwXSxbNjk4LDBdLFs3MDcsMF0sWzcxNiwwXSxbNzI1LDBdLFs3MzgsMF0sWzc0NiwwXSxbNzU4LDBdLFs3NjksMF0sWzc3NiwwXSxbNzg2LDBdLFs3OTksMF0sWzgwNywwXSxbODE4LDBdLFs4MjcsMF0sWzgzOCwwXSxbODQ4LDBdLFs4NjAsMF0sWzg2NywwXSxbODgwLDBdLFs4ODcsMF0sWzg5OSwwXSxbOTEwLDBdLFs5MjEsMF0sWzkzMywwXSxbOTQwLDBdLFs5NTAsMF0sWzk2MCwwXSxbOTY5LDBdLFs5ODEsMF0sWzk5MSwwXSxbMTAwMiwwXSxbMTAxMCwwXSxbMTAyMiwwXSxbMTAzMiwwXSxbMTA0NCwwXSxbMTA1MywwXSxbMTA2MywwXSxbMTA3MiwwXSxbMTA4MywwXSxbMTA5NCwwXSxbMTEwMywwXSxbMTExMiwwXSxbMTEyMywwXSxbMTEzNiwwXSxbMTE0NywwXSxbMTE1NCwwXSxbMTE2NiwwXSxbMTE3NCwwXSxbMTE4NSwwXSxbMTE5NCwwXSxbMTIwNiwwXSxbMTIxNSwwXSxbMTIyNCwwXSxbMTIzNiwwXSxbMTI0NywwXSxbMTI1NiwwXSxbMTI2NSwwXSxbMTI3NSwwXSxbMTI4NywwXSxbMTI5NywwXSxbMTMwNywwXSxbMTMxOSwwXSxbMTMyOCwwXSxbMTMzOCwwXSxbMTM0OCwwXSxbMTM1NiwwXSxbMTM2OSwwXSxbMTM3NywwXSxbMTM5MCwwXSxbMTM5OSwwXSxbMTQwOSwwXSxbMTQxOCwwXSxbMTQzMCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 148,
+                    "line": 1109
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7658,
+                  "error": {
+                    "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.404,\"turnedAt\":0.564,\"share\":0.106,\"end\":0,\"hole\":46,\"frames\":[[0,0.404],[24,0.557],[33,0.563],[46,0.561],[53,0.564],[63,0.539],[73,0.516],[85,0.471],[92,0.436],[103,0.38],[112,0.343],[124,0.286],[136,0.23],[144,0.192],[156,0.146],[163,0.117],[176,0.08],[184,0.062],[196,0.037],[205,0.023],[215,0.011],[226,0.004],[236,0.001],[244,0],[255,0],[303,0],[305,0],[316,0],[328,0],[338,0],[348,0],[360,0],[368,0],[379,0],[388,0],[399,0],[483,0],[491,0],[501,0],[511,0],[523,0],[532,0],[544,0],[552,0],[562,0],[573,0],[583,0],[592,0],[604,0],[614,0],[624,0],[634,0],[643,0],[654,0],[663,0],[675,0],[685,0],[693,0],[705,0],[716,0],[725,0],[737,0],[746,0],[758,0],[767,0],[778,0],[787,0],[799,0],[807,0],[817,0],[828,0],[838,0],[847,0],[859,0],[871,0],[880,0],[889,0],[899,0],[910,0],[920,0],[930,0],[940,0],[953,0],[960,0],[970,0],[983,0],[992,0],[1002,0],[1012,0],[1020,0],[1033,0],[1042,0],[1052,0],[1062,0],[1074,0],[1083,0],[1097,0],[1104,0],[1112,0],[1125,0],[1133,0],[1145,0],[1154,0],[1165,0],[1175,0],[1184,0],[1196,0],[1204,0],[1216,0],[1228,0],[1236,0],[1245,0],[1258,0],[1265,0],[1278,0],[1289,0],[1297,0],[1308,0],[1318,0],[1329,0],[1338,0],[1347,0],[1357,0],[1369,0],[1378,0],[1388,0],[1400,0],[1409,0],[1419,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m46\u001b[39m",
+                    "stack": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.404,\"turnedAt\":0.564,\"share\":0.106,\"end\":0,\"hole\":46,\"frames\":[[0,0.404],[24,0.557],[33,0.563],[46,0.561],[53,0.564],[63,0.539],[73,0.516],[85,0.471],[92,0.436],[103,0.38],[112,0.343],[124,0.286],[136,0.23],[144,0.192],[156,0.146],[163,0.117],[176,0.08],[184,0.062],[196,0.037],[205,0.023],[215,0.011],[226,0.004],[236,0.001],[244,0],[255,0],[303,0],[305,0],[316,0],[328,0],[338,0],[348,0],[360,0],[368,0],[379,0],[388,0],[399,0],[483,0],[491,0],[501,0],[511,0],[523,0],[532,0],[544,0],[552,0],[562,0],[573,0],[583,0],[592,0],[604,0],[614,0],[624,0],[634,0],[643,0],[654,0],[663,0],[675,0],[685,0],[693,0],[705,0],[716,0],[725,0],[737,0],[746,0],[758,0],[767,0],[778,0],[787,0],[799,0],[807,0],[817,0],[828,0],[838,0],[847,0],[859,0],[871,0],[880,0],[889,0],[899,0],[910,0],[920,0],[930,0],[940,0],[953,0],[960,0],[970,0],[983,0],[992,0],[1002,0],[1012,0],[1020,0],[1033,0],[1042,0],[1052,0],[1062,0],[1074,0],[1083,0],[1097,0],[1104,0],[1112,0],[1125,0],[1133,0],[1145,0],[1154,0],[1165,0],[1175,0],[1184,0],[1196,0],[1204,0],[1216,0],[1228,0],[1236,0],[1245,0],[1258,0],[1265,0],[1278,0],[1289,0],[1297,0],[1308,0],[1318,0],[1329,0],[1338,0],[1347,0],[1357,0],[1369,0],[1378,0],[1388,0],[1400,0],[1409,0],[1419,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m46\u001b[39m\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 148,
+                      "line": 1109
+                    },
+                    "snippet": "  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 148,
+                        "line": 1109
+                      },
+                      "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.404,\"turnedAt\":0.564,\"share\":0.106,\"end\":0,\"hole\":46,\"frames\":[[0,0.404],[24,0.557],[33,0.563],[46,0.561],[53,0.564],[63,0.539],[73,0.516],[85,0.471],[92,0.436],[103,0.38],[112,0.343],[124,0.286],[136,0.23],[144,0.192],[156,0.146],[163,0.117],[176,0.08],[184,0.062],[196,0.037],[205,0.023],[215,0.011],[226,0.004],[236,0.001],[244,0],[255,0],[303,0],[305,0],[316,0],[328,0],[338,0],[348,0],[360,0],[368,0],[379,0],[388,0],[399,0],[483,0],[491,0],[501,0],[511,0],[523,0],[532,0],[544,0],[552,0],[562,0],[573,0],[583,0],[592,0],[604,0],[614,0],[624,0],[634,0],[643,0],[654,0],[663,0],[675,0],[685,0],[693,0],[705,0],[716,0],[725,0],[737,0],[746,0],[758,0],[767,0],[778,0],[787,0],[799,0],[807,0],[817,0],[828,0],[838,0],[847,0],[859,0],[871,0],[880,0],[889,0],[899,0],[910,0],[920,0],[930,0],[940,0],[953,0],[960,0],[970,0],[983,0],[992,0],[1002,0],[1012,0],[1020,0],[1033,0],[1042,0],[1052,0],[1062,0],[1074,0],[1083,0],[1097,0],[1104,0],[1112,0],[1125,0],[1133,0],[1145,0],[1154,0],[1165,0],[1175,0],[1184,0],[1196,0],[1204,0],[1216,0],[1228,0],[1236,0],[1245,0],[1258,0],[1265,0],[1278,0],[1289,0],[1297,0],[1308,0],[1318,0],[1329,0],[1338,0],[1347,0],[1357,0],[1369,0],[1378,0],[1388,0],[1400,0],[1409,0],[1419,0],[1430,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m46\u001b[39m\n\n  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:59.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjYsInR1cm5lZEF0IjowLjc3OCwic2hhcmUiOjAuMTIyLCJlbmQiOjAsImhvbGUiOjc4LCJmcmFtZXMiOltbMCwwLjY2XSxbMjQsMC43NzhdLFszMCwwLjc2OV0sWzQxLDAuNzQyXSxbNDYsMC43MjddLFs1MSwwLjcwOV0sWzYyLDAuNjYzXSxbNzQsMC42MDJdLFs4MiwwLjU1MV0sWzkzLDAuNTAxXSxbMTAzLDAuNDI3XSxbMTExLDAuMzY5XSxbMTIyLDAuMzFdLFsxMzQsMC4yNV0sWzE0NCwwLjE5N10sWzE1NCwwLjE1NF0sWzE2MywwLjEyXSxbMTczLDAuMDg4XSxbMTgzLDAuMDYzXSxbMTk1LDAuMDM3XSxbMjA1LDAuMDIyXSxbMjE3LDAuMDA5XSxbMjI2LDAuMDA0XSxbMjM2LDAuMDAxXSxbMjQ1LDBdLFsyNTcsMF0sWzMxOSwwXSxbMzI2LDBdLFszMzgsMF0sWzM0NywwXSxbMzYwLDBdLFszNjgsMF0sWzM4MSwwXSxbMzg5LDBdLFszOTksMF0sWzQwOCwwXSxbNDE4LDBdLFs0MzAsMF0sWzQ0MywwXSxbNDUwLDBdLFs0NTksMF0sWzQ3MCwwXSxbNDgwLDBdLFs0OTEsMF0sWzUwMCwwXSxbNTEyLDBdLFs1MjAsMF0sWzUzMiwwXSxbNTQyLDBdLFs1NTAsMF0sWzU2MiwwXSxbNTc0LDBdLFs1ODMsMF0sWzU5NSwwXSxbNjA0LDBdLFs2MTMsMF0sWzYyNSwwXSxbNjM1LDBdLFs2NDcsMF0sWzY1NSwwXSxbNjYzLDBdLFs2NzUsMF0sWzY4NSwwXSxbNjk1LDBdLFs3MDUsMF0sWzcxNCwwXSxbNzI3LDBdLFs3MzYsMF0sWzc0NSwwXSxbNzU3LDBdLFs3NjcsMF0sWzc3NiwwXSxbNzg4LDBdLFs3OTYsMF0sWzgwNywwXSxbODE4LDBdLFs4MzQsMF0sWzgzNywwXSxbODQ5LDBdLFs4NTksMF0sWzg3MSwwXSxbODgxLDBdLFs4ODksMF0sWzkwMCwwXSxbOTEwLDBdLFs5MjEsMF0sWzkyOSwwXSxbOTQxLDBdLFs5NTEsMF0sWzk2MCwwXSxbOTY5LDBdLFs5ODAsMF0sWzEwMDUsMF0sWzEwMDYsMF0sWzEwMTEsMF0sWzEwMjEsMF0sWzEwMzMsMF0sWzEwNDYsMF0sWzEwNTEsMF0sWzEwNjQsMF0sWzEwNzMsMF0sWzEwODUsMF0sWzEwOTQsMF0sWzExMDQsMF0sWzExMjAsMF0sWzExMjMsMF0sWzExMzYsMF0sWzExNDYsMF0sWzExNTcsMF0sWzExNjUsMF0sWzExNzcsMF0sWzExODksMF0sWzExOTQsMF0sWzEyMDcsMF0sWzEyMTYsMF0sWzEyMjcsMF0sWzEyMzksMF0sWzEyNDUsMF0sWzEyNTUsMF0sWzEyNjgsMF0sWzEyNzYsMF0sWzEyODksMF0sWzEyOTYsMF0sWzEzMDcsMF0sWzEzMTksMF0sWzEzMjgsMF0sWzEzMzgsMF0sWzEzNDksMF0sWzEzNTksMF0sWzEzNzAsMF0sWzEzNzksMF0sWzEzOTAsMF0sWzE0MDAsMF0sWzE0MTIsMF0sWzE0MjEsMF0sWzE0MjksMF0sWzE0NDQsMF1dfQ=="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDA0LCJ0dXJuZWRBdCI6MC41NjQsInNoYXJlIjowLjEwNiwiZW5kIjowLCJob2xlIjo0NiwiZnJhbWVzIjpbWzAsMC40MDRdLFsyNCwwLjU1N10sWzMzLDAuNTYzXSxbNDYsMC41NjFdLFs1MywwLjU2NF0sWzYzLDAuNTM5XSxbNzMsMC41MTZdLFs4NSwwLjQ3MV0sWzkyLDAuNDM2XSxbMTAzLDAuMzhdLFsxMTIsMC4zNDNdLFsxMjQsMC4yODZdLFsxMzYsMC4yM10sWzE0NCwwLjE5Ml0sWzE1NiwwLjE0Nl0sWzE2MywwLjExN10sWzE3NiwwLjA4XSxbMTg0LDAuMDYyXSxbMTk2LDAuMDM3XSxbMjA1LDAuMDIzXSxbMjE1LDAuMDExXSxbMjI2LDAuMDA0XSxbMjM2LDAuMDAxXSxbMjQ0LDBdLFsyNTUsMF0sWzMwMywwXSxbMzA1LDBdLFszMTYsMF0sWzMyOCwwXSxbMzM4LDBdLFszNDgsMF0sWzM2MCwwXSxbMzY4LDBdLFszNzksMF0sWzM4OCwwXSxbMzk5LDBdLFs0ODMsMF0sWzQ5MSwwXSxbNTAxLDBdLFs1MTEsMF0sWzUyMywwXSxbNTMyLDBdLFs1NDQsMF0sWzU1MiwwXSxbNTYyLDBdLFs1NzMsMF0sWzU4MywwXSxbNTkyLDBdLFs2MDQsMF0sWzYxNCwwXSxbNjI0LDBdLFs2MzQsMF0sWzY0MywwXSxbNjU0LDBdLFs2NjMsMF0sWzY3NSwwXSxbNjg1LDBdLFs2OTMsMF0sWzcwNSwwXSxbNzE2LDBdLFs3MjUsMF0sWzczNywwXSxbNzQ2LDBdLFs3NTgsMF0sWzc2NywwXSxbNzc4LDBdLFs3ODcsMF0sWzc5OSwwXSxbODA3LDBdLFs4MTcsMF0sWzgyOCwwXSxbODM4LDBdLFs4NDcsMF0sWzg1OSwwXSxbODcxLDBdLFs4ODAsMF0sWzg4OSwwXSxbODk5LDBdLFs5MTAsMF0sWzkyMCwwXSxbOTMwLDBdLFs5NDAsMF0sWzk1MywwXSxbOTYwLDBdLFs5NzAsMF0sWzk4MywwXSxbOTkyLDBdLFsxMDAyLDBdLFsxMDEyLDBdLFsxMDIwLDBdLFsxMDMzLDBdLFsxMDQyLDBdLFsxMDUyLDBdLFsxMDYyLDBdLFsxMDc0LDBdLFsxMDgzLDBdLFsxMDk3LDBdLFsxMTA0LDBdLFsxMTEyLDBdLFsxMTI1LDBdLFsxMTMzLDBdLFsxMTQ1LDBdLFsxMTU0LDBdLFsxMTY1LDBdLFsxMTc1LDBdLFsxMTg0LDBdLFsxMTk2LDBdLFsxMjA0LDBdLFsxMjE2LDBdLFsxMjI4LDBdLFsxMjM2LDBdLFsxMjQ1LDBdLFsxMjU4LDBdLFsxMjY1LDBdLFsxMjc4LDBdLFsxMjg5LDBdLFsxMjk3LDBdLFsxMzA4LDBdLFsxMzE4LDBdLFsxMzI5LDBdLFsxMzM4LDBdLFsxMzQ3LDBdLFsxMzU3LDBdLFsxMzY5LDBdLFsxMzc4LDBdLFsxMzg4LDBdLFsxNDAwLDBdLFsxNDA5LDBdLFsxNDE5LDBdLFsxNDMwLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 148,
+                    "line": 1109
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6993,
+                  "error": {
+                    "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":1,\"turnedAt\":1,\"share\":0.128,\"end\":0,\"hole\":58,\"frames\":[[0,1],[34,1],[56,0.831],[76,0.683],[82,0.634],[92,0.565],[106,0.467],[120,0.369],[126,0.339],[133,0.293],[144,0.24],[154,0.192],[163,0.154],[173,0.117],[184,0.082],[196,0.053],[206,0.033],[216,0.019],[225,0.01],[237,0.003],[250,0],[258,0],[344,0],[351,0],[358,0],[369,0],[379,0],[391,0],[400,0],[409,0],[421,0],[428,0],[441,0],[450,0],[459,0],[468,0],[480,0],[490,0],[501,0],[512,0],[521,0],[533,0],[542,0],[552,0],[562,0],[573,0],[582,0],[593,0],[604,0],[611,0],[623,0],[633,0],[644,0],[655,0],[664,0],[673,0],[685,0],[695,0],[705,0],[714,0],[725,0],[747,0],[751,0],[755,0],[768,0],[776,0],[785,0],[796,0],[808,0],[816,0],[828,0],[836,0],[848,0],[858,0],[868,0],[878,0],[888,0],[901,0],[910,0],[922,0],[930,0],[942,0],[951,0],[965,0],[971,0],[983,0],[992,0],[1006,0],[1010,0],[1022,0],[1034,0],[1042,0],[1052,0],[1062,0],[1071,0],[1083,0],[1093,0],[1105,0],[1113,0],[1123,0],[1134,0],[1143,0],[1153,0],[1164,0],[1174,0],[1185,0],[1195,0],[1203,0],[1215,0],[1226,0],[1236,0],[1245,0],[1257,0],[1265,0],[1275,0],[1288,0],[1297,0],[1306,0],[1318,0],[1327,0],[1339,0],[1348,0],[1358,0],[1370,0],[1378,0],[1389,0],[1399,0],[1411,0],[1419,0],[1431,0],[1440,0],[1451,0],[1463,0],[1471,0],[1481,0],[1491,0],[1502,0],[1512,0],[1522,0],[1532,0],[1540,0],[1552,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m58\u001b[39m",
+                    "stack": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":1,\"turnedAt\":1,\"share\":0.128,\"end\":0,\"hole\":58,\"frames\":[[0,1],[34,1],[56,0.831],[76,0.683],[82,0.634],[92,0.565],[106,0.467],[120,0.369],[126,0.339],[133,0.293],[144,0.24],[154,0.192],[163,0.154],[173,0.117],[184,0.082],[196,0.053],[206,0.033],[216,0.019],[225,0.01],[237,0.003],[250,0],[258,0],[344,0],[351,0],[358,0],[369,0],[379,0],[391,0],[400,0],[409,0],[421,0],[428,0],[441,0],[450,0],[459,0],[468,0],[480,0],[490,0],[501,0],[512,0],[521,0],[533,0],[542,0],[552,0],[562,0],[573,0],[582,0],[593,0],[604,0],[611,0],[623,0],[633,0],[644,0],[655,0],[664,0],[673,0],[685,0],[695,0],[705,0],[714,0],[725,0],[747,0],[751,0],[755,0],[768,0],[776,0],[785,0],[796,0],[808,0],[816,0],[828,0],[836,0],[848,0],[858,0],[868,0],[878,0],[888,0],[901,0],[910,0],[922,0],[930,0],[942,0],[951,0],[965,0],[971,0],[983,0],[992,0],[1006,0],[1010,0],[1022,0],[1034,0],[1042,0],[1052,0],[1062,0],[1071,0],[1083,0],[1093,0],[1105,0],[1113,0],[1123,0],[1134,0],[1143,0],[1153,0],[1164,0],[1174,0],[1185,0],[1195,0],[1203,0],[1215,0],[1226,0],[1236,0],[1245,0],[1257,0],[1265,0],[1275,0],[1288,0],[1297,0],[1306,0],[1318,0],[1327,0],[1339,0],[1348,0],[1358,0],[1370,0],[1378,0],[1389,0],[1399,0],[1411,0],[1419,0],[1431,0],[1440,0],[1451,0],[1463,0],[1471,0],[1481,0],[1491,0],[1502,0],[1512,0],[1522,0],[1532,0],[1540,0],[1552,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m58\u001b[39m\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 148,
+                      "line": 1109
+                    },
+                    "snippet": "  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 148,
+                        "line": 1109
+                      },
+                      "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":1,\"turnedAt\":1,\"share\":0.128,\"end\":0,\"hole\":58,\"frames\":[[0,1],[34,1],[56,0.831],[76,0.683],[82,0.634],[92,0.565],[106,0.467],[120,0.369],[126,0.339],[133,0.293],[144,0.24],[154,0.192],[163,0.154],[173,0.117],[184,0.082],[196,0.053],[206,0.033],[216,0.019],[225,0.01],[237,0.003],[250,0],[258,0],[344,0],[351,0],[358,0],[369,0],[379,0],[391,0],[400,0],[409,0],[421,0],[428,0],[441,0],[450,0],[459,0],[468,0],[480,0],[490,0],[501,0],[512,0],[521,0],[533,0],[542,0],[552,0],[562,0],[573,0],[582,0],[593,0],[604,0],[611,0],[623,0],[633,0],[644,0],[655,0],[664,0],[673,0],[685,0],[695,0],[705,0],[714,0],[725,0],[747,0],[751,0],[755,0],[768,0],[776,0],[785,0],[796,0],[808,0],[816,0],[828,0],[836,0],[848,0],[858,0],[868,0],[878,0],[888,0],[901,0],[910,0],[922,0],[930,0],[942,0],[951,0],[965,0],[971,0],[983,0],[992,0],[1006,0],[1010,0],[1022,0],[1034,0],[1042,0],[1052,0],[1062,0],[1071,0],[1083,0],[1093,0],[1105,0],[1113,0],[1123,0],[1134,0],[1143,0],[1153,0],[1164,0],[1174,0],[1185,0],[1195,0],[1203,0],[1215,0],[1226,0],[1236,0],[1245,0],[1257,0],[1265,0],[1275,0],[1288,0],[1297,0],[1306,0],[1318,0],[1327,0],[1339,0],[1348,0],[1358,0],[1370,0],[1378,0],[1389,0],[1399,0],[1411,0],[1419,0],[1431,0],[1440,0],[1451,0],[1463,0],[1471,0],[1481,0],[1491,0],[1502,0],[1512,0],[1522,0],[1532,0],[1540,0],[1552,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m58\u001b[39m\n\n  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:11:17.292Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzcsInR1cm5lZEF0IjowLjU3Niwic2hhcmUiOjAuMTA3LCJlbmQiOjAsImhvbGUiOjEwOSwiZnJhbWVzIjpbWzAsMC4zN10sWzI5LDAuNTU3XSxbMzUsMC41NjNdLFs0MiwwLjU2Nl0sWzUwLDAuNTc2XSxbNjIsMC41NjFdLFs3MiwwLjUzNF0sWzc5LDAuNTEzXSxbOTEsMC40NjFdLFsxMDIsMC40MjVdLFsxMDksMC4zODddLFsxMjIsMC4zM10sWzEzMSwwLjI4Ml0sWzE0MiwwLjIzNV0sWzE1MiwwLjE4OF0sWzE2MiwwLjE0Ml0sWzE3NCwwLjFdLFsxODMsMC4wNzRdLFsxOTIsMC4wNTNdLFsyMDQsMC4wMzJdLFsyMTMsMC4wMTddLFsyMjIsMC4wMDldLFsyMzQsMC4wMDNdLFsyNDQsMF0sWzI1NywwXSxbMzI3LDBdLFszMjgsMF0sWzMzNiwwXSxbMzQ2LDBdLFszNTgsMF0sWzM2NywwXSxbMzc3LDBdLFszODYsMF0sWzM5NywwXSxbNDA4LDBdLFs0MTgsMF0sWzQyOCwwXSxbNDM4LDBdLFs0NDksMF0sWzQ1OCwwXSxbNDY4LDBdLFs0NzgsMF0sWzQ4OSwwXSxbNDk5LDBdLFs1MDksMF0sWzUxOCwwXSxbNTMwLDBdLFs1NDAsMF0sWzU1MSwwXSxbNTU4LDBdLFs1NzEsMF0sWzU4MSwwXSxbNTkxLDBdLFs2MDEsMF0sWzYxMiwwXSxbNjIwLDBdLFs2MzIsMF0sWzY0MiwwXSxbNjUzLDBdLFs2NjMsMF0sWzY3MywwXSxbNjgyLDBdLFs2OTMsMF0sWzcwMywwXSxbNzEzLDBdLFs3MjQsMF0sWzczMywwXSxbNzQ1LDBdLFs3NTUsMF0sWzc2NCwwXSxbNzc0LDBdLFs3ODcsMF0sWzc5NSwwXSxbODA1LDBdLFs4MTYsMF0sWzgyNSwwXSxbODM0LDBdLFs4NDYsMF0sWzg1NSwwXSxbODY4LDBdLFs4NzUsMF0sWzg4NywwXSxbODk3LDBdLFs5MDcsMF0sWzkxOCwwXSxbOTI4LDBdLFs5MzcsMF0sWzk0OSwwXSxbOTU4LDBdLFs5NzAsMF0sWzk3OSwwXSxbOTg4LDBdLFs5OTgsMF0sWzEwMDgsMF0sWzEwMTgsMF0sWzEwMjksMF0sWzEwMzgsMF0sWzEwNTAsMF0sWzEwNjAsMF0sWzEwNzMsMF0sWzEwNzksMF0sWzEwOTEsMF0sWzExMDAsMF0sWzExMTMsMF0sWzExMjMsMF0sWzExMzMsMF0sWzExNDIsMF0sWzExNTIsMF0sWzExNjUsMF0sWzExNzEsMF0sWzExODMsMF0sWzExOTIsMF0sWzEyMDQsMF0sWzEyMTQsMF0sWzEyMjIsMF0sWzEyMzMsMF0sWzEyNDUsMF0sWzEyNTQsMF0sWzEyNjYsMF0sWzEyNzUsMF0sWzEyODcsMF0sWzEyOTUsMF0sWzEzMDgsMF0sWzEzMTgsMF0sWzEzMjcsMF0sWzEzMzUsMF0sWzEzNDcsMF0sWzEzNTcsMF0sWzEzNjYsMF0sWzEzNzYsMF0sWzEzODcsMF0sWzEzOTcsMF0sWzE0MDgsMF0sWzE0MTcsMF0sWzE0MjksMF0sWzE0MzgsMF1dfQ=="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjEsInR1cm5lZEF0IjoxLCJzaGFyZSI6MC4xMjgsImVuZCI6MCwiaG9sZSI6NTgsImZyYW1lcyI6W1swLDFdLFszNCwxXSxbNTYsMC44MzFdLFs3NiwwLjY4M10sWzgyLDAuNjM0XSxbOTIsMC41NjVdLFsxMDYsMC40NjddLFsxMjAsMC4zNjldLFsxMjYsMC4zMzldLFsxMzMsMC4yOTNdLFsxNDQsMC4yNF0sWzE1NCwwLjE5Ml0sWzE2MywwLjE1NF0sWzE3MywwLjExN10sWzE4NCwwLjA4Ml0sWzE5NiwwLjA1M10sWzIwNiwwLjAzM10sWzIxNiwwLjAxOV0sWzIyNSwwLjAxXSxbMjM3LDAuMDAzXSxbMjUwLDBdLFsyNTgsMF0sWzM0NCwwXSxbMzUxLDBdLFszNTgsMF0sWzM2OSwwXSxbMzc5LDBdLFszOTEsMF0sWzQwMCwwXSxbNDA5LDBdLFs0MjEsMF0sWzQyOCwwXSxbNDQxLDBdLFs0NTAsMF0sWzQ1OSwwXSxbNDY4LDBdLFs0ODAsMF0sWzQ5MCwwXSxbNTAxLDBdLFs1MTIsMF0sWzUyMSwwXSxbNTMzLDBdLFs1NDIsMF0sWzU1MiwwXSxbNTYyLDBdLFs1NzMsMF0sWzU4MiwwXSxbNTkzLDBdLFs2MDQsMF0sWzYxMSwwXSxbNjIzLDBdLFs2MzMsMF0sWzY0NCwwXSxbNjU1LDBdLFs2NjQsMF0sWzY3MywwXSxbNjg1LDBdLFs2OTUsMF0sWzcwNSwwXSxbNzE0LDBdLFs3MjUsMF0sWzc0NywwXSxbNzUxLDBdLFs3NTUsMF0sWzc2OCwwXSxbNzc2LDBdLFs3ODUsMF0sWzc5NiwwXSxbODA4LDBdLFs4MTYsMF0sWzgyOCwwXSxbODM2LDBdLFs4NDgsMF0sWzg1OCwwXSxbODY4LDBdLFs4NzgsMF0sWzg4OCwwXSxbOTAxLDBdLFs5MTAsMF0sWzkyMiwwXSxbOTMwLDBdLFs5NDIsMF0sWzk1MSwwXSxbOTY1LDBdLFs5NzEsMF0sWzk4MywwXSxbOTkyLDBdLFsxMDA2LDBdLFsxMDEwLDBdLFsxMDIyLDBdLFsxMDM0LDBdLFsxMDQyLDBdLFsxMDUyLDBdLFsxMDYyLDBdLFsxMDcxLDBdLFsxMDgzLDBdLFsxMDkzLDBdLFsxMTA1LDBdLFsxMTEzLDBdLFsxMTIzLDBdLFsxMTM0LDBdLFsxMTQzLDBdLFsxMTUzLDBdLFsxMTY0LDBdLFsxMTc0LDBdLFsxMTg1LDBdLFsxMTk1LDBdLFsxMjAzLDBdLFsxMjE1LDBdLFsxMjI2LDBdLFsxMjM2LDBdLFsxMjQ1LDBdLFsxMjU3LDBdLFsxMjY1LDBdLFsxMjc1LDBdLFsxMjg4LDBdLFsxMjk3LDBdLFsxMzA2LDBdLFsxMzE4LDBdLFsxMzI3LDBdLFsxMzM5LDBdLFsxMzQ4LDBdLFsxMzU4LDBdLFsxMzcwLDBdLFsxMzc4LDBdLFsxMzg5LDBdLFsxMzk5LDBdLFsxNDExLDBdLFsxNDE5LDBdLFsxNDMxLDBdLFsxNDQwLDBdLFsxNDUxLDBdLFsxNDYzLDBdLFsxNDcxLDBdLFsxNDgxLDBdLFsxNDkxLDBdLFsxNTAyLDBdLFsxNTEyLDBdLFsxNTIyLDBdLFsxNTMyLDBdLFsxNTQwLDBdLFsxNTUyLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 148,
+                    "line": 1109
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5517915e1cb906c4014b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1202,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6082,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:10:52.083Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDYxLCJ0dXJuZWRBdCI6MC40NjEsInNoYXJlIjowLjA0OSwiZW5kIjowLCJob2xlIjo1NywiZnJhbWVzIjpbWzAsMC40NjFdLFsxNCwwLjQ1OV0sWzIwLDAuNDQ0XSxbMzIsMC40MTZdLFs0MiwwLjM4OV0sWzUwLDAuMzY3XSxbNjIsMC4zMzFdLFs3MiwwLjMwM10sWzgyLDAuMjc2XSxbOTEsMC4yNV0sWzEwMywwLjIxN10sWzExMiwwLjE5NF0sWzEyNSwwLjE2NF0sWzEzMywwLjE0Nl0sWzE0MiwwLjEyNl0sWzE1NCwwLjFdLFsxNjMsMC4wODVdLFsxNzMsMC4wNjhdLFsxODYsMC4wNDddLFsxOTUsMC4wMzZdLFsyMDUsMC4wMjVdLFsyMTYsMC4wMTRdLFsyMjQsMC4wMDhdLFsyMzUsMF0sWzI0NCwwXSxbMjYxLDBdLFsyNjUsMF0sWzI3NiwwXSxbMjg4LDBdLFsyOTcsMF0sWzMwNiwwXSxbMzE3LDBdLFszMjYsMF0sWzMzOCwwXSxbMzQ4LDBdLFszNTcsMF0sWzM2OCwwXSxbMzgwLDBdLFszODgsMF0sWzQwMCwwXSxbNDA4LDBdLFs0MTgsMF0sWzQzMCwwXSxbNDQwLDBdLFs0NDksMF0sWzQ1OCwwXSxbNDcwLDBdLFs0ODAsMF0sWzQ4OSwwXSxbNTAxLDBdLFs1MTMsMF0sWzUyMSwwXSxbNTMwLDBdLFs1NDIsMF0sWzU1NSwwXSxbNTYyLDBdLFs1NzMsMF0sWzU4MiwwXSxbNTkxLDBdLFs2MDMsMF0sWzYxMSwwXSxbNjIzLDBdLFs2MzEsMF0sWzY0NSwwXSxbNjUzLDBdLFs2NjUsMF0sWzY3NCwwXSxbNjg2LDBdLFs2OTUsMF0sWzcwNiwwXSxbNzE1LDBdLFs3MjUsMF0sWzczNSwwXSxbNzQ2LDBdLFs3NTUsMF0sWzc2NSwwXSxbNzc2LDBdLFs3ODgsMF0sWzc5NywwXSxbODA5LDBdLFs4MTcsMF0sWzgzMSwwXSxbODQxLDBdLFs4NDksMF0sWzg2MSwwXSxbODY5LDBdLFs4NzgsMF0sWzg4OCwwXSxbODk3LDBdLFs5MDcsMF0sWzkxOSwwXSxbOTI5LDBdLFs5NDIsMF0sWzk1OCwwXSxbOTYyLDBdLFs5NzEsMF0sWzk4NSwwXSxbOTkwLDBdLFsxMDAzLDBdLFsxMDEyLDBdLFsxMDI0LDBdLFsxMDM0LDBdLFsxMDQzLDBdLFsxMDUxLDBdLFsxMDY0LDBdLFsxMDcxLDBdLFsxMDgzLDBdLFsxMDkzLDBdLFsxMTAxLDBdLFsxMTEzLDBdLFsxMTIzLDBdLFsxMTM0LDBdLFsxMTQ2LDBdLFsxMTU0LDBdLFsxMTY2LDBdLFsxMTczLDBdLFsxMTg0LDBdLFsxMTk0LDBdLFsxMjE3LDBdLFsxMjM3LDBdLFsxMjQxLDBdLFsxMjQ2LDBdLFsxMjU4LDBdLFsxMjY2LDBdLFsxMjc4LDBdLFsxMjg3LDBdLFsxMjk5LDBdLFsxMzA1LDBdLFsxMzE3LDBdLFsxMzMwLDBdLFsxMzM3LDBdLFsxMzQ3LDBdLFsxMzYzLDBdLFsxMzc4LDBdLFsxMzgzLDBdLFsxMzg5LDBdLFsxNDAxLDBdLFsxNDA5LDBdLFsxNDE5LDBdLFsxNDI4LDBdXX0="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDU0LCJ0dXJuZWRBdCI6MC40NTQsInNoYXJlIjowLjA0NywiZW5kIjowLCJob2xlIjoyOCwiZnJhbWVzIjpbWzAsMC40NTRdLFsxNiwwLjQ1M10sWzE5LDAuNDQ2XSxbMzAsMC40Ml0sWzQxLDAuMzkyXSxbNTEsMC4zNjNdLFs2MywwLjMzXSxbNzIsMC4zMDZdLFs4MSwwLjI3OV0sWzkzLDAuMjQ4XSxbMTAyLDAuMjI0XSxbMTE1LDAuMTldLFsxMjIsMC4xNzNdLFsxMzIsMC4xNTFdLFsxNDQsMC4xMjVdLFsxNTIsMC4xMDddLFsxNjUsMC4wODRdLFsxNzMsMC4wNzFdLFsxODMsMC4wNTVdLFsxOTMsMC4wNDJdLFsyMDUsMC4wMjZdLFsyMTUsMC4wMTddLFsyMjMsMC4wMDldLFsyMzUsMC4wMDFdLFsyNDUsMF0sWzI1NywwXSxbMjY3LDBdLFsyNzUsMF0sWzI4NiwwXSxbMjk2LDBdLFszMDQsMF0sWzMxNywwXSxbMzI3LDBdLFszMzcsMF0sWzM0NywwXSxbMzU2LDBdLFszNjgsMF0sWzM3OCwwXSxbMzg4LDBdLFszOTgsMF0sWzQwNywwXSxbNDE5LDBdLFs0MjgsMF0sWzQzOCwwXSxbNDQ4LDBdLFs0NTksMF0sWzQ2OCwwXSxbNDc4LDBdLFs0OTAsMF0sWzQ5OSwwXSxbNTEwLDBdLFs1MTksMF0sWzUzMSwwXSxbNTQxLDBdLFs1NTEsMF0sWzU2MSwwXSxbNTcyLDBdLFs1ODIsMF0sWzU5MiwwXSxbNjAyLDBdLFs2MTIsMF0sWzYyMywwXSxbNjMzLDBdLFs2NDMsMF0sWzY1NSwwXSxbNjYyLDBdLFs2NzMsMF0sWzY4NSwwXSxbNjk0LDBdLFs3MDUsMF0sWzcxNCwwXSxbNzI1LDBdLFs3MzUsMF0sWzc0NCwwXSxbNzU2LDBdLFs3NjUsMF0sWzc3NiwwXSxbNzg3LDBdLFs3OTYsMF0sWzgwNiwwXSxbODE4LDBdLFs4MjcsMF0sWzgzNywwXSxbODQ2LDBdLFs4NTcsMF0sWzg2OCwwXSxbODc2LDBdLFs4ODksMF0sWzkwMCwwXSxbOTA4LDBdLFs5MTgsMF0sWzkzMCwwXSxbOTM5LDBdLFs5NDksMF0sWzk2MCwwXSxbOTY5LDBdLFs5ODEsMF0sWzk5MCwwXSxbMTAwMCwwXSxbMTAxMCwwXSxbMTAyMiwwXSxbMTAzMSwwXSxbMTA0MSwwXSxbMTA1MSwwXSxbMTA2MCwwXSxbMTA3MiwwXSxbMTA4MSwwXSxbMTA5MywwXSxbMTEwMywwXSxbMTExMiwwXSxbMTEyMywwXSxbMTEzMywwXSxbMTE0NCwwXSxbMTE1MiwwXSxbMTE2MiwwXSxbMTE3NCwwXSxbMTE4NiwwXSxbMTE5NCwwXSxbMTIwNiwwXSxbMTIxNSwwXSxbMTIyNCwwXSxbMTIzNiwwXSxbMTI0OCwwXSxbMTI1MywwXSxbMTI2NSwwXSxbMTI3NywwXSxbMTI4NiwwXSxbMTI5NiwwXSxbMTMwNiwwXSxbMTMxNywwXSxbMTMyNywwXSxbMTMzNywwXSxbMTM0NywwXSxbMTM1NSwwXSxbMTM2NywwXSxbMTM4MCwwXSxbMTM4OCwwXSxbMTM5NywwXSxbMTQwOCwwXSxbMTQxOCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6180,
+                  "error": {
+                    "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.475,\"turnedAt\":0.475,\"share\":0.052,\"end\":0,\"hole\":35,\"frames\":[[0,0.475],[20,0.469],[31,0.441],[41,0.415],[51,0.389],[60,0.361],[69,0.332],[83,0.293],[94,0.261],[103,0.236],[112,0.214],[126,0.176],[133,0.159],[144,0.135],[153,0.114],[162,0.095],[197,0.038],[205,0.029],[214,0.02],[230,0.005],[246,0],[270,0],[277,0],[283,0],[294,0],[306,0],[316,0],[326,0],[337,0],[348,0],[358,0],[366,0],[377,0],[387,0],[396,0],[408,0],[418,0],[428,0],[438,0],[448,0],[457,0],[469,0],[481,0],[490,0],[500,0],[510,0],[522,0],[528,0],[540,0],[549,0],[562,0],[571,0],[581,0],[591,0],[601,0],[612,0],[623,0],[632,0],[640,0],[653,0],[665,0],[672,0],[683,0],[694,0],[704,0],[714,0],[726,0],[734,0],[744,0],[754,0],[764,0],[777,0],[786,0],[794,0],[806,0],[815,0],[825,0],[836,0],[848,0],[857,0],[867,0],[877,0],[888,0],[898,0],[908,0],[917,0],[928,0],[938,0],[949,0],[959,0],[969,0],[981,0],[988,0],[1000,0],[1009,0],[1019,0],[1031,0],[1040,0],[1049,0],[1061,0],[1070,0],[1082,0],[1091,0],[1103,0],[1112,0],[1122,0],[1132,0],[1141,0],[1157,0],[1161,0],[1173,0],[1182,0],[1194,0],[1204,0],[1214,0],[1226,0],[1234,0],[1247,0],[1255,0],[1265,0],[1275,0],[1286,0],[1296,0],[1304,0],[1315,0],[1327,0],[1336,0],[1347,0],[1357,0],[1367,0],[1377,0],[1386,0],[1399,0],[1407,0],[1419,0],[1428,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m35\u001b[39m",
+                    "stack": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.475,\"turnedAt\":0.475,\"share\":0.052,\"end\":0,\"hole\":35,\"frames\":[[0,0.475],[20,0.469],[31,0.441],[41,0.415],[51,0.389],[60,0.361],[69,0.332],[83,0.293],[94,0.261],[103,0.236],[112,0.214],[126,0.176],[133,0.159],[144,0.135],[153,0.114],[162,0.095],[197,0.038],[205,0.029],[214,0.02],[230,0.005],[246,0],[270,0],[277,0],[283,0],[294,0],[306,0],[316,0],[326,0],[337,0],[348,0],[358,0],[366,0],[377,0],[387,0],[396,0],[408,0],[418,0],[428,0],[438,0],[448,0],[457,0],[469,0],[481,0],[490,0],[500,0],[510,0],[522,0],[528,0],[540,0],[549,0],[562,0],[571,0],[581,0],[591,0],[601,0],[612,0],[623,0],[632,0],[640,0],[653,0],[665,0],[672,0],[683,0],[694,0],[704,0],[714,0],[726,0],[734,0],[744,0],[754,0],[764,0],[777,0],[786,0],[794,0],[806,0],[815,0],[825,0],[836,0],[848,0],[857,0],[867,0],[877,0],[888,0],[898,0],[908,0],[917,0],[928,0],[938,0],[949,0],[959,0],[969,0],[981,0],[988,0],[1000,0],[1009,0],[1019,0],[1031,0],[1040,0],[1049,0],[1061,0],[1070,0],[1082,0],[1091,0],[1103,0],[1112,0],[1122,0],[1132,0],[1141,0],[1157,0],[1161,0],[1173,0],[1182,0],[1194,0],[1204,0],[1214,0],[1226,0],[1234,0],[1247,0],[1255,0],[1265,0],[1275,0],[1286,0],[1296,0],[1304,0],[1315,0],[1327,0],[1336,0],[1347,0],[1357,0],[1367,0],[1377,0],[1386,0],[1399,0],[1407,0],[1419,0],[1428,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m35\u001b[39m\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 148,
+                      "line": 1109
+                    },
+                    "snippet": "  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 148,
+                        "line": 1109
+                      },
+                      "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.475,\"turnedAt\":0.475,\"share\":0.052,\"end\":0,\"hole\":35,\"frames\":[[0,0.475],[20,0.469],[31,0.441],[41,0.415],[51,0.389],[60,0.361],[69,0.332],[83,0.293],[94,0.261],[103,0.236],[112,0.214],[126,0.176],[133,0.159],[144,0.135],[153,0.114],[162,0.095],[197,0.038],[205,0.029],[214,0.02],[230,0.005],[246,0],[270,0],[277,0],[283,0],[294,0],[306,0],[316,0],[326,0],[337,0],[348,0],[358,0],[366,0],[377,0],[387,0],[396,0],[408,0],[418,0],[428,0],[438,0],[448,0],[457,0],[469,0],[481,0],[490,0],[500,0],[510,0],[522,0],[528,0],[540,0],[549,0],[562,0],[571,0],[581,0],[591,0],[601,0],[612,0],[623,0],[632,0],[640,0],[653,0],[665,0],[672,0],[683,0],[694,0],[704,0],[714,0],[726,0],[734,0],[744,0],[754,0],[764,0],[777,0],[786,0],[794,0],[806,0],[815,0],[825,0],[836,0],[848,0],[857,0],[867,0],[877,0],[888,0],[898,0],[908,0],[917,0],[928,0],[938,0],[949,0],[959,0],[969,0],[981,0],[988,0],[1000,0],[1009,0],[1019,0],[1031,0],[1040,0],[1049,0],[1061,0],[1070,0],[1082,0],[1091,0],[1103,0],[1112,0],[1122,0],[1132,0],[1141,0],[1157,0],[1161,0],[1173,0],[1182,0],[1194,0],[1204,0],[1214,0],[1226,0],[1234,0],[1247,0],[1255,0],[1265,0],[1275,0],[1286,0],[1296,0],[1304,0],[1315,0],[1327,0],[1336,0],[1347,0],[1357,0],[1367,0],[1377,0],[1386,0],[1399,0],[1407,0],[1419,0],[1428,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m35\u001b[39m\n\n  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:11:09.287Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTQ5LCJ0dXJuZWRBdCI6MC41NDksInNoYXJlIjowLjA1OSwiZW5kIjowLCJob2xlIjo0OSwiZnJhbWVzIjpbWzAsMC41NDldLFsyMCwwLjU0OV0sWzI0LDAuNTM2XSxbMzYsMC41XSxbNTAsMC40NTNdLFs1OSwwLjQyMl0sWzY4LDAuMzkxXSxbNzgsMC4zNTZdLFs5MCwwLjMxMl0sWzk5LDAuMjg0XSxbMTA4LDAuMjU1XSxbMTIwLDAuMjE2XSxbMTI5LDAuMTldLFsxMzksMC4xNjJdLFsxNDgsMC4xMzldLFsxNjAsMC4xMTFdLFsxNjksMC4wOTJdLFsxODEsMC4wN10sWzE4OSwwLjA1NV0sWzIwMSwwLjAzOV0sWzIxMSwwLjAyNV0sWzIyMywwLjAxM10sWzIzMSwwLjAwNl0sWzI0MCwwXSxbMjUwLDBdLFsyNjMsMF0sWzI3MiwwXSxbMjgyLDBdLFsyOTIsMF0sWzMwMywwXSxbMzEzLDBdLFszMjMsMF0sWzMzMywwXSxbMzQyLDBdLFszNTgsMF0sWzM3MSwwXSxbMzc1LDBdLFszODQsMF0sWzM5MywwXSxbNDA1LDBdLFs0MTUsMF0sWzQyNSwwXSxbNDM1LDBdLFs0NDUsMF0sWzQ1NywwXSxbNDY2LDBdLFs0NzQsMF0sWzQ4NiwwXSxbNDk2LDBdLFs1MDksMF0sWzUxNSwwXSxbNTI4LDBdLFs1MzcsMF0sWzU0NiwwXSxbNTU3LDBdLFs1NjksMF0sWzU3OCwwXSxbNTg3LDBdLFs1OTgsMF0sWzYwOSwwXSxbNjE3LDBdLFs2MjksMF0sWzY0MCwwXSxbNjQ5LDBdLFs2NjMsMF0sWzY3MCwwXSxbNjgwLDBdLFs2ODksMF0sWzY5OSwwXSxbNzExLDBdLFs3MjAsMF0sWzczMiwwXSxbNzQ0LDBdLFs3NTAsMF0sWzc2MiwwXSxbNzcyLDBdLFs3ODIsMF0sWzc5MiwwXSxbODAxLDBdLFs4MTMsMF0sWzgyMiwwXSxbODM0LDBdLFs4NDQsMF0sWzg1MywwXSxbODY1LDBdLFs4NzQsMF0sWzg4NCwwXSxbODk1LDBdLFs5MDQsMF0sWzkxNiwwXSxbOTI1LDBdLFs5MzUsMF0sWzk0NywwXSxbOTU0LDBdLFs5NjYsMF0sWzk3NSwwXSxbOTg2LDBdLFs5OTYsMF0sWzEwMDksMF0sWzEwMTcsMF0sWzEwMjcsMF0sWzEwMzksMF0sWzEwNDcsMF0sWzEwNTksMF0sWzEwNjgsMF0sWzEwNzcsMF0sWzEwODcsMF0sWzEwOTksMF0sWzExMDcsMF0sWzExMTcsMF0sWzExMjksMF0sWzExMzgsMF0sWzExNDgsMF0sWzExNTgsMF0sWzExNzAsMF0sWzExODAsMF0sWzExOTEsMF0sWzEyMDEsMF0sWzEyMTEsMF0sWzEyMjMsMF0sWzEyMzEsMF0sWzEyNDEsMF0sWzEyNTAsMF0sWzEyNjIsMF0sWzEyNzAsMF0sWzEyODIsMF0sWzEyOTQsMF0sWzEzMDMsMF0sWzEzMTMsMF0sWzEzMjUsMF0sWzEzMzMsMF0sWzEzNDMsMF0sWzEzNTQsMF0sWzEzNjQsMF0sWzEzNzQsMF0sWzEzODQsMF0sWzEzOTUsMF0sWzE0MDYsMF0sWzE0MTQsMF0sWzE0MjUsMF0sWzE0MzMsMF0sWzE0NDUsMF0sWzE0NTcsMF1dfQ=="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDc1LCJ0dXJuZWRBdCI6MC40NzUsInNoYXJlIjowLjA1MiwiZW5kIjowLCJob2xlIjozNSwiZnJhbWVzIjpbWzAsMC40NzVdLFsyMCwwLjQ2OV0sWzMxLDAuNDQxXSxbNDEsMC40MTVdLFs1MSwwLjM4OV0sWzYwLDAuMzYxXSxbNjksMC4zMzJdLFs4MywwLjI5M10sWzk0LDAuMjYxXSxbMTAzLDAuMjM2XSxbMTEyLDAuMjE0XSxbMTI2LDAuMTc2XSxbMTMzLDAuMTU5XSxbMTQ0LDAuMTM1XSxbMTUzLDAuMTE0XSxbMTYyLDAuMDk1XSxbMTk3LDAuMDM4XSxbMjA1LDAuMDI5XSxbMjE0LDAuMDJdLFsyMzAsMC4wMDVdLFsyNDYsMF0sWzI3MCwwXSxbMjc3LDBdLFsyODMsMF0sWzI5NCwwXSxbMzA2LDBdLFszMTYsMF0sWzMyNiwwXSxbMzM3LDBdLFszNDgsMF0sWzM1OCwwXSxbMzY2LDBdLFszNzcsMF0sWzM4NywwXSxbMzk2LDBdLFs0MDgsMF0sWzQxOCwwXSxbNDI4LDBdLFs0MzgsMF0sWzQ0OCwwXSxbNDU3LDBdLFs0NjksMF0sWzQ4MSwwXSxbNDkwLDBdLFs1MDAsMF0sWzUxMCwwXSxbNTIyLDBdLFs1MjgsMF0sWzU0MCwwXSxbNTQ5LDBdLFs1NjIsMF0sWzU3MSwwXSxbNTgxLDBdLFs1OTEsMF0sWzYwMSwwXSxbNjEyLDBdLFs2MjMsMF0sWzYzMiwwXSxbNjQwLDBdLFs2NTMsMF0sWzY2NSwwXSxbNjcyLDBdLFs2ODMsMF0sWzY5NCwwXSxbNzA0LDBdLFs3MTQsMF0sWzcyNiwwXSxbNzM0LDBdLFs3NDQsMF0sWzc1NCwwXSxbNzY0LDBdLFs3NzcsMF0sWzc4NiwwXSxbNzk0LDBdLFs4MDYsMF0sWzgxNSwwXSxbODI1LDBdLFs4MzYsMF0sWzg0OCwwXSxbODU3LDBdLFs4NjcsMF0sWzg3NywwXSxbODg4LDBdLFs4OTgsMF0sWzkwOCwwXSxbOTE3LDBdLFs5MjgsMF0sWzkzOCwwXSxbOTQ5LDBdLFs5NTksMF0sWzk2OSwwXSxbOTgxLDBdLFs5ODgsMF0sWzEwMDAsMF0sWzEwMDksMF0sWzEwMTksMF0sWzEwMzEsMF0sWzEwNDAsMF0sWzEwNDksMF0sWzEwNjEsMF0sWzEwNzAsMF0sWzEwODIsMF0sWzEwOTEsMF0sWzExMDMsMF0sWzExMTIsMF0sWzExMjIsMF0sWzExMzIsMF0sWzExNDEsMF0sWzExNTcsMF0sWzExNjEsMF0sWzExNzMsMF0sWzExODIsMF0sWzExOTQsMF0sWzEyMDQsMF0sWzEyMTQsMF0sWzEyMjYsMF0sWzEyMzQsMF0sWzEyNDcsMF0sWzEyNTUsMF0sWzEyNjUsMF0sWzEyNzUsMF0sWzEyODYsMF0sWzEyOTYsMF0sWzEzMDQsMF0sWzEzMTUsMF0sWzEzMjcsMF0sWzEzMzYsMF0sWzEzNDcsMF0sWzEzNTcsMF0sWzEzNjcsMF0sWzEzNzcsMF0sWzEzODYsMF0sWzEzOTksMF0sWzE0MDcsMF0sWzE0MTksMF0sWzE0MjgsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 148,
+                    "line": 1109
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6226,
+                  "error": {
+                    "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.412,\"turnedAt\":0.412,\"share\":0.043,\"end\":0,\"hole\":34,\"frames\":[[0,0.412],[18,0.409],[26,0.391],[32,0.38],[44,0.351],[51,0.336],[62,0.309],[71,0.286],[80,0.262],[92,0.234],[101,0.211],[114,0.181],[127,0.154],[133,0.142],[143,0.12],[153,0.101],[166,0.081],[172,0.07],[184,0.053],[194,0.04],[207,0.026],[213,0.02],[225,0.008],[235,0.001],[245,0],[261,0],[267,0],[275,0],[287,0],[296,0],[304,0],[317,0],[326,0],[336,0],[349,0],[357,0],[370,0],[377,0],[389,0],[398,0],[410,0],[419,0],[429,0],[438,0],[450,0],[459,0],[470,0],[481,0],[490,0],[503,0],[508,0],[520,0],[530,0],[541,0],[550,0],[562,0],[572,0],[581,0],[592,0],[605,0],[612,0],[622,0],[633,0],[646,0],[653,0],[663,0],[675,0],[683,0],[696,0],[704,0],[714,0],[724,0],[733,0],[743,0],[755,0],[765,0],[775,0],[787,0],[799,0],[807,0],[819,0],[827,0],[838,0],[848,0],[861,0],[866,0],[878,0],[888,0],[897,0],[908,0],[917,0],[928,0],[938,0],[950,0],[959,0],[969,0],[978,0],[990,0],[1000,0],[1010,0],[1020,0],[1029,0],[1039,0],[1051,0],[1061,0],[1071,0],[1082,0],[1090,0],[1102,0],[1112,0],[1121,0],[1133,0],[1142,0],[1154,0],[1163,0],[1172,0],[1184,0],[1194,0],[1204,0],[1214,0],[1225,0],[1235,0],[1243,0],[1255,0],[1265,0],[1274,0],[1286,0],[1296,0],[1304,0],[1316,0],[1328,0],[1335,0],[1347,0],[1355,0],[1367,0],[1379,0],[1386,0],[1398,0],[1406,0],[1416,0],[1429,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m34\u001b[39m",
+                    "stack": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.412,\"turnedAt\":0.412,\"share\":0.043,\"end\":0,\"hole\":34,\"frames\":[[0,0.412],[18,0.409],[26,0.391],[32,0.38],[44,0.351],[51,0.336],[62,0.309],[71,0.286],[80,0.262],[92,0.234],[101,0.211],[114,0.181],[127,0.154],[133,0.142],[143,0.12],[153,0.101],[166,0.081],[172,0.07],[184,0.053],[194,0.04],[207,0.026],[213,0.02],[225,0.008],[235,0.001],[245,0],[261,0],[267,0],[275,0],[287,0],[296,0],[304,0],[317,0],[326,0],[336,0],[349,0],[357,0],[370,0],[377,0],[389,0],[398,0],[410,0],[419,0],[429,0],[438,0],[450,0],[459,0],[470,0],[481,0],[490,0],[503,0],[508,0],[520,0],[530,0],[541,0],[550,0],[562,0],[572,0],[581,0],[592,0],[605,0],[612,0],[622,0],[633,0],[646,0],[653,0],[663,0],[675,0],[683,0],[696,0],[704,0],[714,0],[724,0],[733,0],[743,0],[755,0],[765,0],[775,0],[787,0],[799,0],[807,0],[819,0],[827,0],[838,0],[848,0],[861,0],[866,0],[878,0],[888,0],[897,0],[908,0],[917,0],[928,0],[938,0],[950,0],[959,0],[969,0],[978,0],[990,0],[1000,0],[1010,0],[1020,0],[1029,0],[1039,0],[1051,0],[1061,0],[1071,0],[1082,0],[1090,0],[1102,0],[1112,0],[1121,0],[1133,0],[1142,0],[1154,0],[1163,0],[1172,0],[1184,0],[1194,0],[1204,0],[1214,0],[1225,0],[1235,0],[1243,0],[1255,0],[1265,0],[1274,0],[1286,0],[1296,0],[1304,0],[1316,0],[1328,0],[1335,0],[1347,0],[1355,0],[1367,0],[1379,0],[1386,0],[1398,0],[1406,0],[1416,0],[1429,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m34\u001b[39m\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 148,
+                      "line": 1109
+                    },
+                    "snippet": "  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 148,
+                        "line": 1109
+                      },
+                      "message": "Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {\"atTurn\":0.412,\"turnedAt\":0.412,\"share\":0.043,\"end\":0,\"hole\":34,\"frames\":[[0,0.412],[18,0.409],[26,0.391],[32,0.38],[44,0.351],[51,0.336],[62,0.309],[71,0.286],[80,0.262],[92,0.234],[101,0.211],[114,0.181],[127,0.154],[133,0.142],[143,0.12],[153,0.101],[166,0.081],[172,0.07],[184,0.053],[194,0.04],[207,0.026],[213,0.02],[225,0.008],[235,0.001],[245,0],[261,0],[267,0],[275,0],[287,0],[296,0],[304,0],[317,0],[326,0],[336,0],[349,0],[357,0],[370,0],[377,0],[389,0],[398,0],[410,0],[419,0],[429,0],[438,0],[450,0],[459,0],[470,0],[481,0],[490,0],[503,0],[508,0],[520,0],[530,0],[541,0],[550,0],[562,0],[572,0],[581,0],[592,0],[605,0],[612,0],[622,0],[633,0],[646,0],[653,0],[663,0],[675,0],[683,0],[696,0],[704,0],[714,0],[724,0],[733,0],[743,0],[755,0],[765,0],[775,0],[787,0],[799,0],[807,0],[819,0],[827,0],[838,0],[848,0],[861,0],[866,0],[878,0],[888,0],[897,0],[908,0],[917,0],[928,0],[938,0],[950,0],[959,0],[969,0],[978,0],[990,0],[1000,0],[1010,0],[1020,0],[1029,0],[1039,0],[1051,0],[1061,0],[1071,0],[1082,0],[1090,0],[1102,0],[1112,0],[1121,0],[1133,0],[1142,0],[1154,0],[1163,0],[1172,0],[1184,0],[1194,0],[1204,0],[1214,0],[1225,0],[1235,0],[1243,0],[1255,0],[1265,0],[1274,0],[1286,0],[1296,0],[1304,0],[1316,0],[1328,0],[1335,0],[1347,0],[1355,0],[1367,0],[1379,0],[1386,0],[1398,0],[1406,0],[1416,0],[1429,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m34\u001b[39m\n\n  1107 |     }\n  1108 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n> 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);\n       |                                                                                                                                                    ^\n  1110 |     return read;\n  1111 | }\n  1112 |\n    at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:11:26.993Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDY4LCJ0dXJuZWRBdCI6MC40NjgsInNoYXJlIjowLjA0OSwiZW5kIjowLCJob2xlIjozNiwiZnJhbWVzIjpbWzAsMC40NjhdLFsxNSwwLjQ2NV0sWzIwLDAuNDUzXSxbMzMsMC40MjJdLFs0MywwLjM5NV0sWzUyLDAuMzY5XSxbNjEsMC4zNDJdLFs3MiwwLjMxMl0sWzg0LDAuMjc1XSxbOTQsMC4yNDddLFsxMDMsMC4yMjRdLFsxMTIsMC4xOTldLFsxMjQsMC4xNjldLFsxMzcsMC4xNF0sWzE0NCwwLjEyM10sWzE1NCwwLjEwNV0sWzE2MywwLjA4OF0sWzE3NSwwLjA2N10sWzE4NSwwLjA1MV0sWzE5NiwwLjAzNl0sWzIwNiwwLjAyNV0sWzIxNywwLjAxNF0sWzIyNiwwLjAwN10sWzIzOCwwXSxbMjU0LDBdLFsyNTcsMF0sWzI2OSwwXSxbMjc3LDBdLFsyODcsMF0sWzI5NywwXSxbMzA3LDBdLFszMTksMF0sWzMyNywwXSxbMzM4LDBdLFszNTEsMF0sWzM1OCwwXSxbMzcwLDBdLFszNzcsMF0sWzM4OSwwXSxbMzk5LDBdLFs0MDksMF0sWzQyMSwwXSxbNDI4LDBdLFs0NDAsMF0sWzQ0OSwwXSxbNDYxLDBdLFs0NzEsMF0sWzQ4MCwwXSxbNDg5LDBdLFs1MDEsMF0sWzUxMCwwXSxbNTIyLDBdLFs1MzEsMF0sWzU0MiwwXSxbNTUyLDBdLFs1NjIsMF0sWzU3MSwwXSxbNTgzLDBdLFs1OTMsMF0sWzYwMSwwXSxbNjE0LDBdLFs2MjQsMF0sWzYzNCwwXSxbNjQzLDBdLFs2NTUsMF0sWzY2NSwwXSxbNjc1LDBdLFs2ODUsMF0sWzY5NiwwXSxbNzA0LDBdLFs3MTYsMF0sWzcyOSwwXSxbNzM1LDBdLFs3NDYsMF0sWzc1OCwwXSxbNzY3LDBdLFs3NzgsMF0sWzc4NywwXSxbNzk3LDBdLFs4MDksMF0sWzgxOCwwXSxbODMxLDBdLFs4MzcsMF0sWzg0OCwwXSxbODU4LDBdLFs4NjksMF0sWzg3OSwwXSxbODkxLDBdLFs4OTcsMF0sWzkwOSwwXSxbOTE5LDBdLFs5MzEsMF0sWzkzOSwwXSxbOTUxLDBdLFs5NjAsMF0sWzk3MSwwXSxbOTg1LDBdLFs5OTEsMF0sWzEwMDQsMF0sWzEwMTEsMF0sWzEwMjIsMF0sWzEwMzIsMF0sWzEwNDIsMF0sWzEwNTEsMF0sWzEwNjMsMF0sWzEwNzMsMF0sWzEwODMsMF0sWzEwOTIsMF0sWzExMDMsMF0sWzExMTMsMF0sWzExMjUsMF0sWzExMzcsMF0sWzExNDUsMF0sWzExNTQsMF0sWzExNjMsMF0sWzExNzUsMF0sWzExODcsMF0sWzExOTksMF0sWzEyMDYsMF0sWzEyMTcsMF0sWzEyMjcsMF0sWzEyMzYsMF0sWzEyNDYsMF0sWzEyNTgsMF0sWzEyNjgsMF0sWzEyNzcsMF0sWzEyODcsMF0sWzEyOTgsMF0sWzEzMDcsMF0sWzEzMjAsMF0sWzEzMjYsMF0sWzEzMzksMF0sWzEzNDcsMF0sWzEzNTksMF0sWzEzNjgsMF0sWzEzNzksMF0sWzEzODksMF0sWzEzOTksMF0sWzE0MTIsMF0sWzE0MTksMF1dfQ=="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDEyLCJ0dXJuZWRBdCI6MC40MTIsInNoYXJlIjowLjA0MywiZW5kIjowLCJob2xlIjozNCwiZnJhbWVzIjpbWzAsMC40MTJdLFsxOCwwLjQwOV0sWzI2LDAuMzkxXSxbMzIsMC4zOF0sWzQ0LDAuMzUxXSxbNTEsMC4zMzZdLFs2MiwwLjMwOV0sWzcxLDAuMjg2XSxbODAsMC4yNjJdLFs5MiwwLjIzNF0sWzEwMSwwLjIxMV0sWzExNCwwLjE4MV0sWzEyNywwLjE1NF0sWzEzMywwLjE0Ml0sWzE0MywwLjEyXSxbMTUzLDAuMTAxXSxbMTY2LDAuMDgxXSxbMTcyLDAuMDddLFsxODQsMC4wNTNdLFsxOTQsMC4wNF0sWzIwNywwLjAyNl0sWzIxMywwLjAyXSxbMjI1LDAuMDA4XSxbMjM1LDAuMDAxXSxbMjQ1LDBdLFsyNjEsMF0sWzI2NywwXSxbMjc1LDBdLFsyODcsMF0sWzI5NiwwXSxbMzA0LDBdLFszMTcsMF0sWzMyNiwwXSxbMzM2LDBdLFszNDksMF0sWzM1NywwXSxbMzcwLDBdLFszNzcsMF0sWzM4OSwwXSxbMzk4LDBdLFs0MTAsMF0sWzQxOSwwXSxbNDI5LDBdLFs0MzgsMF0sWzQ1MCwwXSxbNDU5LDBdLFs0NzAsMF0sWzQ4MSwwXSxbNDkwLDBdLFs1MDMsMF0sWzUwOCwwXSxbNTIwLDBdLFs1MzAsMF0sWzU0MSwwXSxbNTUwLDBdLFs1NjIsMF0sWzU3MiwwXSxbNTgxLDBdLFs1OTIsMF0sWzYwNSwwXSxbNjEyLDBdLFs2MjIsMF0sWzYzMywwXSxbNjQ2LDBdLFs2NTMsMF0sWzY2MywwXSxbNjc1LDBdLFs2ODMsMF0sWzY5NiwwXSxbNzA0LDBdLFs3MTQsMF0sWzcyNCwwXSxbNzMzLDBdLFs3NDMsMF0sWzc1NSwwXSxbNzY1LDBdLFs3NzUsMF0sWzc4NywwXSxbNzk5LDBdLFs4MDcsMF0sWzgxOSwwXSxbODI3LDBdLFs4MzgsMF0sWzg0OCwwXSxbODYxLDBdLFs4NjYsMF0sWzg3OCwwXSxbODg4LDBdLFs4OTcsMF0sWzkwOCwwXSxbOTE3LDBdLFs5MjgsMF0sWzkzOCwwXSxbOTUwLDBdLFs5NTksMF0sWzk2OSwwXSxbOTc4LDBdLFs5OTAsMF0sWzEwMDAsMF0sWzEwMTAsMF0sWzEwMjAsMF0sWzEwMjksMF0sWzEwMzksMF0sWzEwNTEsMF0sWzEwNjEsMF0sWzEwNzEsMF0sWzEwODIsMF0sWzEwOTAsMF0sWzExMDIsMF0sWzExMTIsMF0sWzExMjEsMF0sWzExMzMsMF0sWzExNDIsMF0sWzExNTQsMF0sWzExNjMsMF0sWzExNzIsMF0sWzExODQsMF0sWzExOTQsMF0sWzEyMDQsMF0sWzEyMTQsMF0sWzEyMjUsMF0sWzEyMzUsMF0sWzEyNDMsMF0sWzEyNTUsMF0sWzEyNjUsMF0sWzEyNzQsMF0sWzEyODYsMF0sWzEyOTYsMF0sWzEzMDQsMF0sWzEzMTYsMF0sWzEzMjgsMF0sWzEzMzUsMF0sWzEzNDcsMF0sWzEzNTUsMF0sWzEzNjcsMF0sWzEzNzksMF0sWzEzODYsMF0sWzEzOTgsMF0sWzE0MDYsMF0sWzE0MTYsMF0sWzE0MjksMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 148,
+                    "line": 1109
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a7e3ae2d055667c9533f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1202,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T00:10:34.872Z",
+    "duration": 58915.855,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,537 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "reverse · a (Select|DropdownMenu) closed while it opens",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/rev-red-wp3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5068,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.397,\"turnedAt\":1,\"share\":0.314,\"end\":0,\"hole\":32,\"frames\":[[0,0.397],[32,1],[45,0.816],[50,0.729],[58,0.612],[71,0.464],[81,0.376],[89,0.319],[101,0.251],[111,0.209],[122,0.175],[132,0.155],[142,0.06],[152,0],[181,0],[183,0],[191,0],[204,0],[214,0],[222,0],[234,0],[244,0],[254,0],[264,0],[276,0],[285,0],[297,0],[306,0],[316,0],[326,0],[335,0],[348,0],[356,0],[368,0],[377,0],[385,0],[398,0],[406,0],[418,0],[427,0],[439,0],[448,0],[458,0],[471,0],[479,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.314\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.397,\"turnedAt\":1,\"share\":0.314,\"end\":0,\"hole\":32,\"frames\":[[0,0.397],[32,1],[45,0.816],[50,0.729],[58,0.612],[71,0.464],[81,0.376],[89,0.319],[101,0.251],[111,0.209],[122,0.175],[132,0.155],[142,0.06],[152,0],[181,0],[183,0],[191,0],[204,0],[214,0],[222,0],[234,0],[244,0],[254,0],[264,0],[276,0],[285,0],[297,0],[306,0],[316,0],[326,0],[335,0],[348,0],[356,0],[368,0],[377,0],[385,0],[398,0],[406,0],[418,0],[427,0],[439,0],[448,0],[458,0],[471,0],[479,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.314\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.397,\"turnedAt\":1,\"share\":0.314,\"end\":0,\"hole\":32,\"frames\":[[0,0.397],[32,1],[45,0.816],[50,0.729],[58,0.612],[71,0.464],[81,0.376],[89,0.319],[101,0.251],[111,0.209],[122,0.175],[132,0.155],[142,0.06],[152,0],[181,0],[183,0],[191,0],[204,0],[214,0],[222,0],[234,0],[244,0],[254,0],[264,0],[276,0],[285,0],[297,0],[306,0],[316,0],[326,0],[335,0],[348,0],[356,0],[368,0],[377,0],[385,0],[398,0],[406,0],[418,0],[427,0],[439,0],[448,0],[458,0],[471,0],[479,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.314\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:34:55.162Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzk3LCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuMzM1LCJlbmQiOjAsImhvbGUiOjM4LCJmcmFtZXMiOltbMCwwLjM5N10sWzMwLDFdLFs0MywwLjgxNl0sWzUyLDAuNjY4XSxbNjMsMC41MjddLFs3MSwwLjQ0NV0sWzg0LDAuMzM5XSxbOTIsMC4yODhdLFsxMDEsMC4yNDJdLFsxMTMsMC4xOTVdLFsxMjMsMC4xNjhdLFsxMzMsMC4xNV0sWzE0MywwLjAyM10sWzE1NiwwXSxbMTg4LDBdLFsxOTQsMF0sWzIwNiwwXSxbMjE0LDBdLFsyMjQsMF0sWzIzOSwwXSxbMjQ0LDBdLFsyNTYsMF0sWzI2NiwwXSxbMjc2LDBdLFsyODYsMF0sWzI5NSwwXSxbMzA2LDBdLFszMTgsMF0sWzMyNywwXSxbMzM3LDBdLFszNDcsMF0sWzM2MCwwXSxbMzY4LDBdLFszODEsMF0sWzM4OSwwXSxbMzk5LDBdLFs0MDksMF0sWzQxOSwwXSxbNDI5LDBdLFs0MzksMF0sWzQ1MCwwXSxbNDU5LDBdLFs0NzAsMF0sWzQ4MCwwXSxbNDkyLDBdLFs1MDEsMF0sWzUwOSwwXSxbNTIxLDBdLFs1MzEsMF0sWzU0MywwXSxbNTUzLDBdLFs1NjIsMF0sWzU3MywwXSxbNTgyLDBdLFs1OTIsMF0sWzYwMSwwXSxbNjEzLDBdLFs2MjMsMF0sWzYzMiwwXSxbNjQ0LDBdLFs2NTQsMF0sWzY2NCwwXSxbNjczLDBdLFs2ODUsMF0sWzY5NCwwXSxbNzA0LDBdLFs3MTYsMF0sWzcyNiwwXSxbNzM1LDBdLFs3NDUsMF0sWzc1NiwwXSxbNzY2LDBdLFs3NzYsMF0sWzc4NiwwXSxbNzk3LDBdLFs4MDUsMF0sWzgxNywwXSxbODI3LDBdLFs4MzUsMF0sWzg0NywwXSxbODU5LDBdLFs4NjgsMF0sWzg3NywwXSxbODg5LDBdLFs4OTksMF0sWzkwOSwwXSxbOTE5LDBdLFs5MjksMF0sWzkzOSwwXSxbOTUwLDBdLFs5NjEsMF0sWzk3MCwwXSxbOTgwLDBdLFs5OTIsMF0sWzEwMDEsMF0sWzEwMTAsMF0sWzEwMjIsMF0sWzEwMzAsMF0sWzEwNDIsMF0sWzEwNTAsMF0sWzEwNjIsMF0sWzEwNzIsMF0sWzEwODQsMF0sWzEwOTIsMF0sWzExMDQsMF0sWzExMTIsMF0sWzExMjMsMF0sWzExMzMsMF0sWzExNDMsMF0sWzExNTMsMF0sWzExNjQsMF0sWzExNzMsMF0sWzExODUsMF0sWzExOTQsMF0sWzEyMDUsMF0sWzEyMTUsMF0sWzEyMjYsMF0sWzEyMzUsMF0sWzEyNDYsMF0sWzEyNTUsMF0sWzEyNjgsMF0sWzEyNzYsMF0sWzEyODUsMF0sWzEyOTcsMF0sWzEzMDcsMF0sWzEzMTcsMF0sWzEzMjcsMF0sWzEzMzcsMF0sWzEzNDYsMF0sWzEzNTksMF0sWzEzNjcsMF0sWzEzNzcsMF0sWzEzODksMF0sWzEzOTksMF0sWzE0MDksMF0sWzE0MTksMF0sWzE0MjksMF1dfQ=="
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzk3LCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuMzE0LCJlbmQiOjAsImhvbGUiOjMyLCJmcmFtZXMiOltbMCwwLjM5N10sWzMyLDFdLFs0NSwwLjgxNl0sWzUwLDAuNzI5XSxbNTgsMC42MTJdLFs3MSwwLjQ2NF0sWzgxLDAuMzc2XSxbODksMC4zMTldLFsxMDEsMC4yNTFdLFsxMTEsMC4yMDldLFsxMjIsMC4xNzVdLFsxMzIsMC4xNTVdLFsxNDIsMC4wNl0sWzE1MiwwXSxbMTgxLDBdLFsxODMsMF0sWzE5MSwwXSxbMjA0LDBdLFsyMTQsMF0sWzIyMiwwXSxbMjM0LDBdLFsyNDQsMF0sWzI1NCwwXSxbMjY0LDBdLFsyNzYsMF0sWzI4NSwwXSxbMjk3LDBdLFszMDYsMF0sWzMxNiwwXSxbMzI2LDBdLFszMzUsMF0sWzM0OCwwXSxbMzU2LDBdLFszNjgsMF0sWzM3NywwXSxbMzg1LDBdLFszOTgsMF0sWzQwNiwwXSxbNDE4LDBdLFs0MjcsMF0sWzQzOSwwXSxbNDQ4LDBdLFs0NTgsMF0sWzQ3MSwwXSxbNDc5LDBdLFs0ODksMF0sWzQ5OCwwXSxbNTEwLDBdLFs1MjAsMF0sWzUyOSwwXSxbNTQwLDBdLFs1NTAsMF0sWzU2NSwwXSxbNTcxLDBdLFs1ODEsMF0sWzU5MCwwXSxbNjAyLDBdLFs2MTEsMF0sWzYyMCwwXSxbNjMwLDBdLFs2NDQsMF0sWzY1MSwwXSxbNjYzLDBdLFs2NzMsMF0sWzY4MywwXSxbNjkyLDBdLFs3MDQsMF0sWzcxMywwXSxbNzI2LDBdLFs3MzQsMF0sWzc0NCwwXSxbNzU2LDBdLFs3NjQsMF0sWzc3NiwwXSxbNzg1LDBdLFs3OTMsMF0sWzgwNiwwXSxbODE2LDBdLFs4MjQsMF0sWzgzNSwwXSxbODQ2LDBdLFs4NTYsMF0sWzg2NywwXSxbODc3LDBdLFs4ODcsMF0sWzg5NywwXSxbOTA2LDBdLFs5MTgsMF0sWzkyNiwwXSxbOTM5LDBdLFs5NDgsMF0sWzk1NywwXSxbOTY5LDBdLFs5NzksMF0sWzk4OSwwXSxbOTk4LDBdLFsxMDEwLDBdLFsxMDIwLDBdLFsxMDMwLDBdLFsxMDQwLDBdLFsxMDUwLDBdLFsxMDYwLDBdLFsxMDcwLDBdLFsxMDgwLDBdLFsxMDkxLDBdLFsxMTAxLDBdLFsxMTEwLDBdLFsxMTIyLDBdLFsxMTMyLDBdLFsxMTQzLDBdLFsxMTUyLDBdLFsxMTYyLDBdLFsxMTczLDBdLFsxMTgzLDBdLFsxMTkzLDBdLFsxMjAyLDBdLFsxMjE0LDBdLFsxMjIzLDBdLFsxMjM1LDBdLFsxMjQ0LDBdLFsxMjU0LDBdLFsxMjY1LDBdLFsxMjc1LDBdLFsxMjg1LDBdLFsxMjk1LDBdLFsxMzA1LDBdLFsxMzE2LDBdLFsxMzI2LDBdLFsxMzM4LDBdLFsxMzQ4LDBdLFsxMzU2LDBdLFsxMzY1LDBdLFsxMzc3LDBdLFsxMzg3LDBdLFsxMzk3LDBdLFsxNDA3LDBdLFsxNDE4LDBdLFsxNDI4LDBdLFsxNDM4LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2728,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.323,\"turnedAt\":1,\"share\":0.434,\"end\":0,\"hole\":28,\"frames\":[[0,0.323],[26,1],[36,0.875],[42,0.762],[52,0.612],[61,0.505],[72,0.4],[82,0.325],[92,0.266],[103,0.216],[113,0.183],[123,0.16],[133,0.145],[143,0.002],[155,0],[180,0],[185,0],[194,0],[204,0],[216,0],[225,0],[236,0],[244,0],[255,0],[265,0],[276,0],[288,0],[297,0],[307,0],[315,0],[327,0],[337,0],[348,0],[356,0],[368,0],[378,0],[389,0],[397,0],[409,0],[419,0],[429,0],[438,0],[450,0],[460,0],[470,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.434\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.323,\"turnedAt\":1,\"share\":0.434,\"end\":0,\"hole\":28,\"frames\":[[0,0.323],[26,1],[36,0.875],[42,0.762],[52,0.612],[61,0.505],[72,0.4],[82,0.325],[92,0.266],[103,0.216],[113,0.183],[123,0.16],[133,0.145],[143,0.002],[155,0],[180,0],[185,0],[194,0],[204,0],[216,0],[225,0],[236,0],[244,0],[255,0],[265,0],[276,0],[288,0],[297,0],[307,0],[315,0],[327,0],[337,0],[348,0],[356,0],[368,0],[378,0],[389,0],[397,0],[409,0],[419,0],[429,0],[438,0],[450,0],[460,0],[470,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.434\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.323,\"turnedAt\":1,\"share\":0.434,\"end\":0,\"hole\":28,\"frames\":[[0,0.323],[26,1],[36,0.875],[42,0.762],[52,0.612],[61,0.505],[72,0.4],[82,0.325],[92,0.266],[103,0.216],[113,0.183],[123,0.16],[133,0.145],[143,0.002],[155,0],[180,0],[185,0],[194,0],[204,0],[216,0],[225,0],[236,0],[244,0],[255,0],[265,0],[276,0],[288,0],[297,0],[307,0],[315,0],[327,0],[337,0],[348,0],[356,0],[368,0],[378,0],[389,0],[397,0],[409,0],[419,0],[429,0],[438,0],[450,0],[460,0],[470,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.434\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:35:04.559Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzIzLCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuNDM0LCJlbmQiOjAsImhvbGUiOjI4LCJmcmFtZXMiOltbMCwwLjMyM10sWzI2LDFdLFszNiwwLjg3NV0sWzQyLDAuNzYyXSxbNTIsMC42MTJdLFs2MSwwLjUwNV0sWzcyLDAuNF0sWzgyLDAuMzI1XSxbOTIsMC4yNjZdLFsxMDMsMC4yMTZdLFsxMTMsMC4xODNdLFsxMjMsMC4xNl0sWzEzMywwLjE0NV0sWzE0MywwLjAwMl0sWzE1NSwwXSxbMTgwLDBdLFsxODUsMF0sWzE5NCwwXSxbMjA0LDBdLFsyMTYsMF0sWzIyNSwwXSxbMjM2LDBdLFsyNDQsMF0sWzI1NSwwXSxbMjY1LDBdLFsyNzYsMF0sWzI4OCwwXSxbMjk3LDBdLFszMDcsMF0sWzMxNSwwXSxbMzI3LDBdLFszMzcsMF0sWzM0OCwwXSxbMzU2LDBdLFszNjgsMF0sWzM3OCwwXSxbMzg5LDBdLFszOTcsMF0sWzQwOSwwXSxbNDE5LDBdLFs0MjksMF0sWzQzOCwwXSxbNDUwLDBdLFs0NjAsMF0sWzQ3MCwwXSxbNDgxLDBdLFs0OTAsMF0sWzUwMSwwXSxbNTExLDBdLFs1MjAsMF0sWzUzMCwwXSxbNTQyLDBdLFs1NTIsMF0sWzU2MiwwXSxbNTcyLDBdLFs1ODMsMF0sWzU5MywwXSxbNjAzLDBdLFs2MTMsMF0sWzYyMywwXSxbNjM0LDBdLFs2NDMsMF0sWzY1MywwXSxbNjY0LDBdLFs2NzQsMF0sWzY4NSwwXSxbNjk1LDBdLFs3MDUsMF0sWzcxNSwwXSxbNzI1LDBdLFs3MzYsMF0sWzc0NiwwXSxbNzU2LDBdLFs3NjYsMF0sWzc3NiwwXSxbNzg3LDBdLFs3OTcsMF0sWzgwNywwXSxbODE3LDBdLFs4MjgsMF0sWzgzOCwwXSxbODQ3LDBdLFs4NTksMF0sWzg2NywwXSxbODc5LDBdLFs4ODcsMF0sWzg5OSwwXSxbOTA5LDBdLFs5MTksMF0sWzkzMCwwXSxbOTQwLDBdLFs5NTAsMF0sWzk2MCwwXSxbOTcwLDBdLFs5ODAsMF0sWzk5MiwwXSxbMTAwMSwwXSxbMTAwOSwwXSxbMTAyMSwwXSxbMTAzNCwwXSxbMTA0MiwwXSxbMTA1MSwwXSxbMTA2MSwwXSxbMTA3MiwwXSxbMTA4NCwwXSxbMTA5MywwXSxbMTEwMiwwXSxbMTExMiwwXSxbMTEyNCwwXSxbMTEzNCwwXSxbMTE0NCwwXSxbMTE1NCwwXSxbMTE2NCwwXSxbMTE3NCwwXSxbMTE4NSwwXSxbMTE5NSwwXSxbMTIwNSwwXSxbMTIxNSwwXSxbMTIyNSwwXSxbMTIzNiwwXSxbMTI0NSwwXSxbMTI1NiwwXSxbMTI2NiwwXSxbMTI3NywwXSxbMTI4NywwXSxbMTI5NywwXSxbMTMwNiwwXSxbMTMxOCwwXSxbMTMyNiwwXSxbMTMzOCwwXSxbMTM0OCwwXSxbMTM1OCwwXSxbMTM2OCwwXSxbMTM3OSwwXSxbMTM4OSwwXSxbMTM5OSwwXSxbMTQwOSwwXSxbMTQxOSwwXSxbMTQzMCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4863,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.377,\"turnedAt\":1,\"share\":0.577,\"end\":0,\"hole\":22,\"frames\":[[0,0.377],[18,1],[26,0.918],[30,0.835],[40,0.668],[51,0.527],[61,0.426],[71,0.346],[80,0.288],[92,0.228],[102,0.192],[112,0.166],[122,0.149],[132,0.015],[143,0],[166,0],[173,0],[182,0],[194,0],[204,0],[214,0],[226,0],[234,0],[245,0],[255,0],[267,0],[275,0],[285,0],[296,0],[306,0],[316,0],[326,0],[336,0],[347,0],[357,0],[367,0],[377,0],[388,0],[397,0],[409,0],[416,0],[428,0],[439,0],[449,0],[457,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.577\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.377,\"turnedAt\":1,\"share\":0.577,\"end\":0,\"hole\":22,\"frames\":[[0,0.377],[18,1],[26,0.918],[30,0.835],[40,0.668],[51,0.527],[61,0.426],[71,0.346],[80,0.288],[92,0.228],[102,0.192],[112,0.166],[122,0.149],[132,0.015],[143,0],[166,0],[173,0],[182,0],[194,0],[204,0],[214,0],[226,0],[234,0],[245,0],[255,0],[267,0],[275,0],[285,0],[296,0],[306,0],[316,0],[326,0],[336,0],[347,0],[357,0],[367,0],[377,0],[388,0],[397,0],[409,0],[416,0],[428,0],[439,0],[449,0],[457,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.577\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.377,\"turnedAt\":1,\"share\":0.577,\"end\":0,\"hole\":22,\"frames\":[[0,0.377],[18,1],[26,0.918],[30,0.835],[40,0.668],[51,0.527],[61,0.426],[71,0.346],[80,0.288],[92,0.228],[102,0.192],[112,0.166],[122,0.149],[132,0.015],[143,0],[166,0],[173,0],[182,0],[194,0],[204,0],[214,0],[226,0],[234,0],[245,0],[255,0],[267,0],[275,0],[285,0],[296,0],[306,0],[316,0],[326,0],[336,0],[347,0],[357,0],[367,0],[377,0],[388,0],[397,0],[409,0],[416,0],[428,0],[439,0],[449,0],[457,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.577\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:35:11.230Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "unread",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzMsInR1cm5lZEF0IjoxLCJzaGFyZSI6MC4zNiwiZW5kIjowLCJob2xlIjozNiwiZnJhbWVzIjpbWzAsMC4zM10sWzMxLDFdLFs0NCwwLjgxNl0sWzUxLDAuNjk4XSxbNjEsMC41NjJdLFs3MywwLjQzNV0sWzgyLDAuMzYxXSxbOTEsMC4zXSxbMTAzLDAuMjM3XSxbMTEzLDAuMTk4XSxbMTI0LDAuMTY4XSxbMTMzLDAuMTUyXSxbMTQzLDAuMDMyXSxbMTUzLDBdLFsxODgsMF0sWzE5NCwwXSxbMjA1LDBdLFsyMTQsMF0sWzIyNCwwXSxbMjM2LDBdLFsyNDUsMF0sWzI1NSwwXSxbMjY2LDBdLFsyNzYsMF0sWzI4NiwwXSxbMjk2LDBdLFszMDcsMF0sWzMxNywwXSxbMzI3LDBdLFszMzgsMF0sWzM0NywwXSxbMzU2LDBdLFszNjgsMF0sWzM3NywwXSxbMzg3LDBdLFszOTcsMF0sWzQwOSwwXSxbNDE5LDBdLFs0MjksMF0sWzQ0MCwwXSxbNDQ5LDBdLFs0NjEsMF0sWzQ3MCwwXSxbNDc5LDBdLFs0ODgsMF0sWzQ5OSwwXSxbNTExLDBdLFs1MjEsMF0sWzUzMSwwXSxbNTQxLDBdLFs1NTEsMF0sWzU2MiwwXSxbNTcyLDBdLFs1ODIsMF0sWzU5MSwwXSxbNjAyLDBdLFs2MTEsMF0sWzYyNCwwXSxbNjMzLDBdLFs2NDMsMF0sWzY1MywwXSxbNjY0LDBdLFs2NzQsMF0sWzY4NCwwXSxbNjk0LDBdLFs3MDMsMF0sWzcxNSwwXSxbNzI1LDBdLFs3MzUsMF0sWzc0NSwwXSxbNzU2LDBdLFs3NjYsMF0sWzc3NiwwXSxbNzg1LDBdLFs3OTcsMF0sWzgwNSwwXSxbODE3LDBdLFs4MjcsMF0sWzgzNywwXSxbODQ5LDBdLFs4NTYsMF0sWzg2OCwwXSxbODc4LDBdLFs4OTAsMF0sWzg5OCwwXSxbOTA4LDBdLFs5MTksMF0sWzkyOSwwXSxbOTM5LDBdLFs5NDksMF0sWzk1OCwwXSxbOTcwLDBdLFs5ODAsMF0sWzk5MCwwXSxbMTAwMCwwXSxbMTAxMSwwXSxbMTAyMSwwXSxbMTAzMSwwXSxbMTA0MSwwXSxbMTA1MywwXSxbMTA2MiwwXSxbMTA3MiwwXSxbMTA4MiwwXSxbMTA5MiwwXSxbMTEwMywwXSxbMTExMSwwXSxbMTEyMywwXSxbMTEzMywwXSxbMTE0MywwXSxbMTE1NCwwXSxbMTE2MywwXSxbMTE3NCwwXSxbMTE4MywwXSxbMTE5NCwwXSxbMTIwNSwwXSxbMTIxNSwwXSxbMTIyNSwwXSxbMTIzNSwwXSxbMTI0NSwwXSxbMTI1NiwwXSxbMTI2NCwwXSxbMTI3NiwwXSxbMTI4NiwwXSxbMTI5NiwwXSxbMTMwNywwXSxbMTMxNSwwXSxbMTMyNywwXSxbMTMzOCwwXSxbMTM0NywwXSxbMTM1OCwwXSxbMTM2NiwwXSxbMTM3NiwwXSxbMTM4OCwwXSxbMTM5OCwwXSxbMTQwOSwwXSxbMTQxOSwwXSxbMTQyOSwwXV19"
+                    },
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzc3LCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuNTc3LCJlbmQiOjAsImhvbGUiOjIyLCJmcmFtZXMiOltbMCwwLjM3N10sWzE4LDFdLFsyNiwwLjkxOF0sWzMwLDAuODM1XSxbNDAsMC42NjhdLFs1MSwwLjUyN10sWzYxLDAuNDI2XSxbNzEsMC4zNDZdLFs4MCwwLjI4OF0sWzkyLDAuMjI4XSxbMTAyLDAuMTkyXSxbMTEyLDAuMTY2XSxbMTIyLDAuMTQ5XSxbMTMyLDAuMDE1XSxbMTQzLDBdLFsxNjYsMF0sWzE3MywwXSxbMTgyLDBdLFsxOTQsMF0sWzIwNCwwXSxbMjE0LDBdLFsyMjYsMF0sWzIzNCwwXSxbMjQ1LDBdLFsyNTUsMF0sWzI2NywwXSxbMjc1LDBdLFsyODUsMF0sWzI5NiwwXSxbMzA2LDBdLFszMTYsMF0sWzMyNiwwXSxbMzM2LDBdLFszNDcsMF0sWzM1NywwXSxbMzY3LDBdLFszNzcsMF0sWzM4OCwwXSxbMzk3LDBdLFs0MDksMF0sWzQxNiwwXSxbNDI4LDBdLFs0MzksMF0sWzQ0OSwwXSxbNDU3LDBdLFs0NjcsMF0sWzQ3OSwwXSxbNDg5LDBdLFs0OTgsMF0sWzUwOCwwXSxbNTE4LDBdLFs1MzAsMF0sWzU0MSwwXSxbNTUxLDBdLFs1NjEsMF0sWzU3MSwwXSxbNTgxLDBdLFs1OTIsMF0sWzYwMiwwXSxbNjEyLDBdLFs2MjIsMF0sWzYzMiwwXSxbNjQxLDBdLFs2NTEsMF0sWzY2MywwXSxbNjcxLDBdLFs2ODQsMF0sWzY5MywwXSxbNzAzLDBdLFs3MTUsMF0sWzcyNCwwXSxbNzM1LDBdLFs3NDQsMF0sWzc1NiwwXSxbNzY1LDBdLFs3NzQsMF0sWzc4NywwXSxbNzk2LDBdLFs4MDUsMF0sWzgxNSwwXSxbODI2LDBdLFs4MzUsMF0sWzg0NywwXSxbODU3LDBdLFs4NjYsMF0sWzg3OCwwXSxbODg4LDBdLFs4OTcsMF0sWzkwOCwwXSxbOTE3LDBdLFs5MjgsMF0sWzk0MSwwXSxbOTQ5LDBdLFs5NTksMF0sWzk2OSwwXSxbOTgwLDBdLFs5OTAsMF0sWzEwMDAsMF0sWzEwMTAsMF0sWzEwMjEsMF0sWzEwMzAsMF0sWzEwNDEsMF0sWzEwNTEsMF0sWzEwNjEsMF0sWzEwNzEsMF0sWzEwODIsMF0sWzEwOTIsMF0sWzExMDIsMF0sWzExMTIsMF0sWzExMjIsMF0sWzExMzEsMF0sWzExNDMsMF0sWzExNTEsMF0sWzExNjMsMF0sWzExNzMsMF0sWzExODIsMF0sWzExOTQsMF0sWzEyMDQsMF0sWzEyMTQsMF0sWzEyMjQsMF0sWzEyMzUsMF0sWzEyNDUsMF0sWzEyNTYsMF0sWzEyNjUsMF0sWzEyNzUsMF0sWzEyODYsMF0sWzEyOTYsMF0sWzEzMDQsMF0sWzEzMTcsMF0sWzEzMjYsMF0sWzEzMzYsMF0sWzEzNDUsMF0sWzEzNTcsMF0sWzEzNjcsMF0sWzEzNzgsMF0sWzEzODcsMF0sWzEzOTksMF0sWzE0MDgsMF0sWzE0MTcsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5517915e1cb906c4014b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1202,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2972,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.492,\"turnedAt\":1,\"share\":0.508,\"end\":0,\"hole\":27,\"frames\":[[0,0.492],[14,1],[21,1],[30,0.826],[40,0.675],[52,0.537],[62,0.447],[72,0.376],[82,0.319],[92,0.276],[102,0.244],[113,0.22],[122,0.153],[134,0],[144,0],[152,0],[164,0],[174,0],[186,0],[194,0],[205,0],[215,0],[223,0],[236,0],[245,0],[256,0],[266,0],[277,0],[286,0],[296,0],[308,0],[315,0],[327,0],[337,0],[348,0],[358,0],[368,0],[380,0],[388,0],[401,0],[409,0],[419,0],[429,0],[440,0],[448,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.508\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.492,\"turnedAt\":1,\"share\":0.508,\"end\":0,\"hole\":27,\"frames\":[[0,0.492],[14,1],[21,1],[30,0.826],[40,0.675],[52,0.537],[62,0.447],[72,0.376],[82,0.319],[92,0.276],[102,0.244],[113,0.22],[122,0.153],[134,0],[144,0],[152,0],[164,0],[174,0],[186,0],[194,0],[205,0],[215,0],[223,0],[236,0],[245,0],[256,0],[266,0],[277,0],[286,0],[296,0],[308,0],[315,0],[327,0],[337,0],[348,0],[358,0],[368,0],[380,0],[388,0],[401,0],[409,0],[419,0],[429,0],[440,0],[448,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.508\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.492,\"turnedAt\":1,\"share\":0.508,\"end\":0,\"hole\":27,\"frames\":[[0,0.492],[14,1],[21,1],[30,0.826],[40,0.675],[52,0.537],[62,0.447],[72,0.376],[82,0.319],[92,0.276],[102,0.244],[113,0.22],[122,0.153],[134,0],[144,0],[152,0],[164,0],[174,0],[186,0],[194,0],[205,0],[215,0],[223,0],[236,0],[245,0],[256,0],[266,0],[277,0],[286,0],[296,0],[308,0],[315,0],[327,0],[337,0],[348,0],[358,0],[368,0],[380,0],[388,0],[401,0],[409,0],[419,0],[429,0],[440,0],[448,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.508\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:35:00.935Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDkyLCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuNTA4LCJlbmQiOjAsImhvbGUiOjI3LCJmcmFtZXMiOltbMCwwLjQ5Ml0sWzE0LDFdLFsyMSwxXSxbMzAsMC44MjZdLFs0MCwwLjY3NV0sWzUyLDAuNTM3XSxbNjIsMC40NDddLFs3MiwwLjM3Nl0sWzgyLDAuMzE5XSxbOTIsMC4yNzZdLFsxMDIsMC4yNDRdLFsxMTMsMC4yMl0sWzEyMiwwLjE1M10sWzEzNCwwXSxbMTQ0LDBdLFsxNTIsMF0sWzE2NCwwXSxbMTc0LDBdLFsxODYsMF0sWzE5NCwwXSxbMjA1LDBdLFsyMTUsMF0sWzIyMywwXSxbMjM2LDBdLFsyNDUsMF0sWzI1NiwwXSxbMjY2LDBdLFsyNzcsMF0sWzI4NiwwXSxbMjk2LDBdLFszMDgsMF0sWzMxNSwwXSxbMzI3LDBdLFszMzcsMF0sWzM0OCwwXSxbMzU4LDBdLFszNjgsMF0sWzM4MCwwXSxbMzg4LDBdLFs0MDEsMF0sWzQwOSwwXSxbNDE5LDBdLFs0MjksMF0sWzQ0MCwwXSxbNDQ4LDBdLFs0NjAsMF0sWzQ2OCwwXSxbNDgwLDBdLFs0ODgsMF0sWzUwMSwwXSxbNTEzLDBdLFs1MjAsMF0sWzUzMSwwXSxbNTQxLDBdLFs1NTIsMF0sWzU2MSwwXSxbNTcyLDBdLFs1ODEsMF0sWzU5MywwXSxbNjAzLDBdLFs2MTIsMF0sWzYyMywwXSxbNjMzLDBdLFs2NDMsMF0sWzY1NCwwXSxbNjY0LDBdLFs2NzQsMF0sWzY4NCwwXSxbNjk0LDBdLFs3MDQsMF0sWzcxNiwwXSxbNzI1LDBdLFs3MzUsMF0sWzc0NSwwXSxbNzU2LDBdLFs3NjgsMF0sWzc3NiwwXSxbNzg1LDBdLFs3OTcsMF0sWzgwNiwwXSxbODE4LDBdLFs4MjcsMF0sWzgzOSwwXSxbODQ4LDBdLFs4NTgsMF0sWzg2OCwwXSxbODc4LDBdLFs4ODksMF0sWzg5OSwwXSxbOTA5LDBdLFs5MTksMF0sWzkyOCwwXSxbOTM5LDBdLFs5NDgsMF0sWzk2MCwwXSxbOTcwLDBdLFs5NzgsMF0sWzk5MCwwXSxbMTAwMSwwXSxbMTAxMSwwXSxbMTAyMSwwXSxbMTAzMSwwXSxbMTA0MSwwXSxbMTA1MCwwXSxbMTA2MiwwXSxbMTA3MiwwXSxbMTA4MiwwXSxbMTA5MiwwXSxbMTEwMywwXSxbMTExMywwXSxbMTEyMiwwXSxbMTEzNCwwXSxbMTE0NCwwXSxbMTE1NCwwXSxbMTE2NCwwXSxbMTE3MywwXSxbMTE4NSwwXSxbMTE5NSwwXSxbMTIwNSwwXSxbMTIxNCwwXSxbMTIyNiwwXSxbMTIzNSwwXSxbMTI0NSwwXSxbMTI1NiwwXSxbMTI2NiwwXSxbMTI3NywwXSxbMTI4NSwwXSxbMTI5NywwXSxbMTMwNSwwXSxbMTMxOCwwXSxbMTMyNywwXSxbMTMzOCwwXSxbMTM0OCwwXSxbMTM1NiwwXSxbMTM2OCwwXSxbMTM3OCwwXSxbMTM4OCwwXSxbMTM5OCwwXSxbMTQxMCwwXSxbMTQxOSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2711,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.522,\"turnedAt\":1,\"share\":0.478,\"end\":0,\"hole\":22,\"frames\":[[0,0.522],[10,1],[20,0.939],[30,0.761],[41,0.613],[51,0.508],[61,0.424],[70,0.363],[82,0.3],[92,0.262],[102,0.233],[112,0.215],[123,0.033],[133,0],[143,0],[153,0],[163,0],[173,0],[182,0],[195,0],[204,0],[213,0],[225,0],[233,0],[246,0],[255,0],[265,0],[276,0],[286,0],[296,0],[305,0],[317,0],[325,0],[337,0],[347,0],[357,0],[367,0],[378,0],[388,0],[398,0],[408,0],[417,0],[429,0],[439,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.478\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.522,\"turnedAt\":1,\"share\":0.478,\"end\":0,\"hole\":22,\"frames\":[[0,0.522],[10,1],[20,0.939],[30,0.761],[41,0.613],[51,0.508],[61,0.424],[70,0.363],[82,0.3],[92,0.262],[102,0.233],[112,0.215],[123,0.033],[133,0],[143,0],[153,0],[163,0],[173,0],[182,0],[195,0],[204,0],[213,0],[225,0],[233,0],[246,0],[255,0],[265,0],[276,0],[286,0],[296,0],[305,0],[317,0],[325,0],[337,0],[347,0],[357,0],[367,0],[378,0],[388,0],[398,0],[408,0],[417,0],[429,0],[439,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.478\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.522,\"turnedAt\":1,\"share\":0.478,\"end\":0,\"hole\":22,\"frames\":[[0,0.522],[10,1],[20,0.939],[30,0.761],[41,0.613],[51,0.508],[61,0.424],[70,0.363],[82,0.3],[92,0.262],[102,0.233],[112,0.215],[123,0.033],[133,0],[143,0],[153,0],[163,0],[173,0],[182,0],[195,0],[204,0],[213,0],[225,0],[233,0],[246,0],[255,0],[265,0],[276,0],[286,0],[296,0],[305,0],[317,0],[325,0],[337,0],[347,0],[357,0],[367,0],[378,0],[388,0],[398,0],[408,0],[417,0],[429,0],[439,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.478\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:35:07.898Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTIyLCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuNDc4LCJlbmQiOjAsImhvbGUiOjIyLCJmcmFtZXMiOltbMCwwLjUyMl0sWzEwLDFdLFsyMCwwLjkzOV0sWzMwLDAuNzYxXSxbNDEsMC42MTNdLFs1MSwwLjUwOF0sWzYxLDAuNDI0XSxbNzAsMC4zNjNdLFs4MiwwLjNdLFs5MiwwLjI2Ml0sWzEwMiwwLjIzM10sWzExMiwwLjIxNV0sWzEyMywwLjAzM10sWzEzMywwXSxbMTQzLDBdLFsxNTMsMF0sWzE2MywwXSxbMTczLDBdLFsxODIsMF0sWzE5NSwwXSxbMjA0LDBdLFsyMTMsMF0sWzIyNSwwXSxbMjMzLDBdLFsyNDYsMF0sWzI1NSwwXSxbMjY1LDBdLFsyNzYsMF0sWzI4NiwwXSxbMjk2LDBdLFszMDUsMF0sWzMxNywwXSxbMzI1LDBdLFszMzcsMF0sWzM0NywwXSxbMzU3LDBdLFszNjcsMF0sWzM3OCwwXSxbMzg4LDBdLFszOTgsMF0sWzQwOCwwXSxbNDE3LDBdLFs0MjksMF0sWzQzOSwwXSxbNDQ5LDBdLFs0NTgsMF0sWzQ3MCwwXSxbNDgwLDBdLFs0OTAsMF0sWzUwMCwwXSxbNTA5LDBdLFs1MjEsMF0sWzUzMSwwXSxbNTQwLDBdLFs1NTIsMF0sWzU2MSwwXSxbNTcyLDBdLFs1ODIsMF0sWzU5MiwwXSxbNjAyLDBdLFs2MTIsMF0sWzYyMywwXSxbNjMzLDBdLFs2NDMsMF0sWzY1MywwXSxbNjYzLDBdLFs2NzQsMF0sWzY4NCwwXSxbNjkyLDBdLFs3MDQsMF0sWzcxNCwwXSxbNzI1LDBdLFs3MzMsMF0sWzc0NCwwXSxbNzU3LDBdLFs3NjUsMF0sWzc3NSwwXSxbNzg3LDBdLFs3OTYsMF0sWzgwNiwwXSxbODE2LDBdLFs4MjUsMF0sWzgzNywwXSxbODQ3LDBdLFs4NTcsMF0sWzg2NiwwXSxbODc5LDBdLFs4ODgsMF0sWzg5OCwwXSxbOTA4LDBdLFs5MTcsMF0sWzkyOSwwXSxbOTM5LDBdLFs5NDksMF0sWzk1OSwwXSxbOTY4LDBdLFs5ODAsMF0sWzk5MCwwXSxbMTAwMCwwXSxbMTAwOSwwXSxbMTAyMSwwXSxbMTAzMSwwXSxbMTA0MSwwXSxbMTA1MSwwXSxbMTA2MSwwXSxbMTA3MSwwXSxbMTA4MywwXSxbMTA5MSwwXSxbMTEwNCwwXSxbMTExMiwwXSxbMTEyNCwwXSxbMTEzMywwXSxbMTE0MywwXSxbMTE1MywwXSxbMTE2MywwXSxbMTE3NCwwXSxbMTE4MiwwXSxbMTE5NSwwXSxbMTIwNCwwXSxbMTIxNCwwXSxbMTIyNSwwXSxbMTIzNSwwXSxbMTI0NSwwXSxbMTI1NSwwXSxbMTI2NiwwXSxbMTI3NiwwXSxbMTI4NiwwXSxbMTI5NiwwXSxbMTMwNiwwXSxbMTMxNiwwXSxbMTMyNywwXSxbMTMzNywwXSxbMTM0NywwXSxbMTM1NywwXSxbMTM2OSwwXSxbMTM3OCwwXSxbMTM4OCwwXSxbMTM5NiwwXSxbMTQwOCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2723,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.504,\"turnedAt\":1,\"share\":0.496,\"end\":0,\"hole\":21,\"frames\":[[0,0.504],[11,1],[20,0.96],[31,0.761],[42,0.613],[51,0.517],[61,0.432],[73,0.351],[83,0.3],[93,0.262],[103,0.233],[114,0.214],[124,0.047],[134,0],[144,0],[154,0],[165,0],[175,0],[185,0],[195,0],[205,0],[216,0],[226,0],[236,0],[246,0],[256,0],[267,0],[277,0],[287,0],[297,0],[307,0],[318,0],[328,0],[337,0],[348,0],[358,0],[369,0],[379,0],[388,0],[398,0],[409,0],[420,0],[429,0],[438,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.496\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.504,\"turnedAt\":1,\"share\":0.496,\"end\":0,\"hole\":21,\"frames\":[[0,0.504],[11,1],[20,0.96],[31,0.761],[42,0.613],[51,0.517],[61,0.432],[73,0.351],[83,0.3],[93,0.262],[103,0.233],[114,0.214],[124,0.047],[134,0],[144,0],[154,0],[165,0],[175,0],[185,0],[195,0],[205,0],[216,0],[226,0],[236,0],[246,0],[256,0],[267,0],[277,0],[287,0],[297,0],[307,0],[318,0],[328,0],[337,0],[348,0],[358,0],[369,0],[379,0],[388,0],[398,0],[409,0],[420,0],[429,0],[438,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.496\u001b[39m\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 1121
+                    },
+                    "snippet": "  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 1121
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.504,\"turnedAt\":1,\"share\":0.496,\"end\":0,\"hole\":21,\"frames\":[[0,0.504],[11,1],[20,0.96],[31,0.761],[42,0.613],[51,0.517],[61,0.432],[73,0.351],[83,0.3],[93,0.262],[103,0.233],[114,0.214],[124,0.047],[134,0],[144,0],[154,0],[165,0],[175,0],[185,0],[195,0],[205,0],[216,0],[226,0],[236,0],[246,0],[256,0],[267,0],[277,0],[287,0],[297,0],[307,0],[318,0],[328,0],[337,0],[348,0],[358,0],[369,0],[379,0],[388,0],[398,0],[409,0],[420,0],[429,0],[438,0],[449,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.496\u001b[39m\n\n  1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                 ^\n  1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);\n  1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);\n  1124 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n    at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:35:16.739Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTA0LCJ0dXJuZWRBdCI6MSwic2hhcmUiOjAuNDk2LCJlbmQiOjAsImhvbGUiOjIxLCJmcmFtZXMiOltbMCwwLjUwNF0sWzExLDFdLFsyMCwwLjk2XSxbMzEsMC43NjFdLFs0MiwwLjYxM10sWzUxLDAuNTE3XSxbNjEsMC40MzJdLFs3MywwLjM1MV0sWzgzLDAuM10sWzkzLDAuMjYyXSxbMTAzLDAuMjMzXSxbMTE0LDAuMjE0XSxbMTI0LDAuMDQ3XSxbMTM0LDBdLFsxNDQsMF0sWzE1NCwwXSxbMTY1LDBdLFsxNzUsMF0sWzE4NSwwXSxbMTk1LDBdLFsyMDUsMF0sWzIxNiwwXSxbMjI2LDBdLFsyMzYsMF0sWzI0NiwwXSxbMjU2LDBdLFsyNjcsMF0sWzI3NywwXSxbMjg3LDBdLFsyOTcsMF0sWzMwNywwXSxbMzE4LDBdLFszMjgsMF0sWzMzNywwXSxbMzQ4LDBdLFszNTgsMF0sWzM2OSwwXSxbMzc5LDBdLFszODgsMF0sWzM5OCwwXSxbNDA5LDBdLFs0MjAsMF0sWzQyOSwwXSxbNDM4LDBdLFs0NDksMF0sWzQ2MCwwXSxbNDY5LDBdLFs0ODEsMF0sWzQ5MSwwXSxbNTAxLDBdLFs1MTIsMF0sWzUyMSwwXSxbNTMzLDBdLFs1NDIsMF0sWzU1MiwwXSxbNTYzLDBdLFs1NzIsMF0sWzU4NCwwXSxbNTkzLDBdLFs2MDMsMF0sWzYxMywwXSxbNjIyLDBdLFs2MzIsMF0sWzY0MywwXSxbNjU1LDBdLFs2NjUsMF0sWzY3NSwwXSxbNjg1LDBdLFs2OTcsMF0sWzcwNSwwXSxbNzE1LDBdLFs3MjUsMF0sWzczNywwXSxbNzQ2LDBdLFs3NTUsMF0sWzc2NywwXSxbNzc3LDBdLFs3ODcsMF0sWzc5NywwXSxbODA3LDBdLFs4MTgsMF0sWzgyOCwwXSxbODM4LDBdLFs4NDgsMF0sWzg1OSwwXSxbODY3LDBdLFs4NzksMF0sWzg4OCwwXSxbOTAxLDBdLFs5MTAsMF0sWzkyMCwwXSxbOTMwLDBdLFs5NDAsMF0sWzk1MCwwXSxbOTU5LDBdLFs5NzEsMF0sWzk4MSwwXSxbOTkxLDBdLFsxMDAwLDBdLFsxMDEzLDBdLFsxMDIyLDBdLFsxMDMyLDBdLFsxMDQyLDBdLFsxMDUzLDBdLFsxMDYzLDBdLFsxMDczLDBdLFsxMDgzLDBdLFsxMDkzLDBdLFsxMTAzLDBdLFsxMTE0LDBdLFsxMTI0LDBdLFsxMTM0LDBdLFsxMTQ1LDBdLFsxMTUzLDBdLFsxMTY1LDBdLFsxMTc1LDBdLFsxMTg1LDBdLFsxMTk0LDBdLFsxMjA2LDBdLFsxMjE2LDBdLFsxMjI2LDBdLFsxMjM1LDBdLFsxMjQ2LDBdLFsxMjU3LDBdLFsxMjY3LDBdLFsxMjc3LDBdLFsxMjg3LDBdLFsxMjk3LDBdLFsxMzA4LDBdLFsxMzE2LDBdLFsxMzI4LDBdLFsxMzM4LDBdLFsxMzQ3LDBdLFsxMzU5LDBdLFsxMzY4LDBdLFsxMzc3LDBdLFsxMzg5LDBdLFsxMzk5LDBdLFsxNDEwLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 1121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a7e3ae2d055667c9533f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1202,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T00:34:53.271Z",
+    "duration": 26458.189,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

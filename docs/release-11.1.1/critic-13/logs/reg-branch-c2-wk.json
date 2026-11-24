@@ -1,0 +1,539 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-1-critic-2.config.ts",
+      "--project=webkit",
+      "release-11-0-1-critic-2.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-0-1-critic-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-1.spec.ts",
+          "release-11-0-1-daraksha.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-11-0-1-critic-1.spec.ts",
+          "release-11-0-1-critic-1b.spec.ts",
+          "release-11-0-1-fix-2.spec.ts",
+          "release-11-0-1-critic-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/reg-branch-c2-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-2.spec.ts",
+      "file": "release-11-0-1-critic-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k a press-only dock stays folded when Tab reaches its summary, and Enter opens it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3657,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "c2 {\"cell\":\"wk press-only\",\"reached\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterTab\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterEnter\":{\"collapsed\":false,\"morphing\":false,\"active\":\"button.dock-icon-button glass-specular-track glass-capsule-hover\",\"onSummary\":false,\"focusVisible\":true,\"label\":\"One\"}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T22:55:56.229Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d6a71fc737357e66268e-562236474eaf637f46a5",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 157,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "critic 2 light-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 109,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7799,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk expand\",\"frames\":12,\"morphFrames\":3,\"off\":0,\"rows\":[{\"i\":0,\"t\":107,\"morph\":true,\"scale\":\"0.50632 1\",\"main\":213.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":402,\"morph\":true,\"scale\":\"1\",\"main\":308,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":2,\"t\":617,\"morph\":true,\"scale\":\"1\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":897,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":1039,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":1150,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":1280,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":1486,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1635,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":1929,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":2187,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":2322,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk collapse\",\"frames\":12,\"morphFrames\":3,\"off\":0,\"rows\":[{\"i\":0,\"t\":110,\"morph\":true,\"scale\":\"0.941534 1\",\"main\":247.33333333333334,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":1,\"t\":361,\"morph\":true,\"scale\":\"0.482444 1\",\"main\":148,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":2,\"t\":651,\"morph\":true,\"scale\":\"0.480519 1\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":881,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":1051,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":1221,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":1377,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":1524,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1753,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":1892,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":2132,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":2311,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:09.789Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-2ebc0d1becfb49c56b47",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 116,
+              "column": 13
+            },
+            {
+              "title": "s light-1440f: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7400,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":93,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":308,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":493,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":673,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":857,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":1041,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":1213,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":1416,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1632,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":1814,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":2109,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":2382,\"morph\":false,\"scale\":\"none\",\"main\":164,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":92,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":335,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":547,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":808,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":1041,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":1323,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":1584,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":1732,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1877,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":2054,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":2256,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":2393,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:18.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-994735f62977fbdd8d3d",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 130,
+              "column": 17
+            },
+            {
+              "title": "v light-1440f: a vertical dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5676,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk v-expand\",\"frames\":12,\"morphFrames\":3,\"off\":0,\"rows\":[{\"i\":0,\"t\":100,\"morph\":true,\"scale\":\"1 0.325263\",\"main\":119.33333333333333,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":1,\"t\":320,\"morph\":true,\"scale\":\"1 0.992319\",\"main\":200,\"cross\":64,\"worst\":-0.11,\"at\":\"start-a@0.1 inset 17.7 want 17.8\"},{\"i\":2,\"t\":513,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.11,\"at\":\"start-a@0.1 inset 17.7 want 17.8\"},{\"i\":3,\"t\":643,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":4,\"t\":802,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":5,\"t\":962,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":6,\"t\":1116,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":7,\"t\":1227,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":8,\"t\":1351,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":9,\"t\":1452,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":10,\"t\":1561,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":11,\"t\":1675,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f wk v-collapse\",\"frames\":12,\"morphFrames\":6,\"off\":0,\"rows\":[{\"i\":0,\"t\":73,\"morph\":true,\"scale\":\"1 0.964737\",\"main\":169.33333333333334,\"cross\":58,\"worst\":-0.49,\"at\":\"start-a@0.1 inset 15.7 want 16.2\"},{\"i\":1,\"t\":167,\"morph\":true,\"scale\":\"1 0.400745\",\"main\":73.33333333333333,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":2,\"t\":273,\"morph\":true,\"scale\":\"1 0.297681\",\"main\":58,\"cross\":58,\"worst\":-0.32,\"at\":\"start-a@0.3 inset 8.0 want 8.3\"},{\"i\":3,\"t\":373,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":4,\"t\":474,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":5,\"t\":603,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":6,\"t\":710,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":7,\"t\":815,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":8,\"t\":916,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":9,\"t\":1034,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":10,\"t\":1177,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":11,\"t\":1341,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:25.568Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-ae7f8a9212be465a011a",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 140,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "title": "critic 2 light-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 109,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4476,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-390c wk expand\",\"frames\":12,\"morphFrames\":7,\"off\":0,\"rows\":[{\"i\":0,\"t\":55,\"morph\":true,\"scale\":\"0.527821 1\",\"main\":193.33333333333334,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":154,\"morph\":true,\"scale\":\"0.833948 1\",\"main\":290,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":2,\"t\":240,\"morph\":true,\"scale\":\"0.976856 1\",\"main\":314.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":3,\"t\":321,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":414,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":505,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":607,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":708,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":791,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":873,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":949,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":1033,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-390c wk collapse\",\"frames\":12,\"morphFrames\":8,\"off\":0,\"rows\":[{\"i\":0,\"t\":47,\"morph\":true,\"scale\":\"0.975323 1\",\"main\":310,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":131,\"morph\":true,\"scale\":\"0.734461 1\",\"main\":204,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":220,\"morph\":true,\"scale\":\"0.542633 1\",\"main\":164.66666666666666,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":287,\"morph\":true,\"scale\":\"0.504985 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":358,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":431,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":501,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":594,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":663,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":731,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":792,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":849,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:31.267Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-b9f34ece706a708e616c",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 116,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 109,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6283,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f wk expand\",\"frames\":12,\"morphFrames\":2,\"off\":0,\"rows\":[{\"i\":0,\"t\":115,\"morph\":true,\"scale\":\"0.50632 1\",\"main\":207.33333333333334,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":1,\"t\":611,\"morph\":true,\"scale\":\"1\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":938,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":1135,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":1269,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":1392,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":1537,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":1648,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1758,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":1868,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":1998,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":2120,\"morph\":false,\"scale\":\"none\",\"main\":308,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f wk collapse\",\"frames\":12,\"morphFrames\":5,\"off\":0,\"rows\":[{\"i\":0,\"t\":82,\"morph\":true,\"scale\":\"0.974199 1\",\"main\":272.6666666666667,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":1,\"t\":223,\"morph\":true,\"scale\":\"0.538431 1\",\"main\":157.33333333333334,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":2,\"t\":364,\"morph\":true,\"scale\":\"0.480519 1\",\"main\":148,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":3,\"t\":481,\"morph\":true,\"scale\":\"0.480519 1\",\"main\":148,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":4,\"t\":593,\"morph\":true,\"scale\":\"0.480519 1\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":696,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":797,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":911,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":1059,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":1213,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":1372,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":1463,\"morph\":false,\"scale\":\"none\",\"main\":148,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:35.764Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-83465df33a8937f701f7",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 116,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 109,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4232,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk expand\",\"frames\":12,\"morphFrames\":7,\"off\":0,\"rows\":[{\"i\":0,\"t\":63,\"morph\":true,\"scale\":\"0.527821 1\",\"main\":194.66666666666666,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":146,\"morph\":true,\"scale\":\"0.821987 1\",\"main\":286,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":233,\"morph\":true,\"scale\":\"0.974813 1\",\"main\":314.6666666666667,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":312,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":392,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":469,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":569,\"morph\":true,\"scale\":\"1\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":636,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":706,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":768,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":829,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":901,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk collapse\",\"frames\":12,\"morphFrames\":8,\"off\":0,\"rows\":[{\"i\":0,\"t\":51,\"morph\":true,\"scale\":\"0.975323 1\",\"main\":310,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":152,\"morph\":true,\"scale\":\"0.73807 1\",\"main\":196,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":231,\"morph\":true,\"scale\":\"0.530508 1\",\"main\":164,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":318,\"morph\":true,\"scale\":\"0.504114 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":395,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":463,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":523,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":603,\"morph\":true,\"scale\":\"0.503145 1\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":660,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":736,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":793,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":848,\"morph\":false,\"scale\":\"none\",\"main\":160,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:42.085Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-cff423fd0f3a74b889d8",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 116,
+              "column": 13
+            },
+            {
+              "title": "s dark-390c: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4252,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":69,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":136,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":208,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":309,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":430,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":513,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":581,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":636,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":711,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":767,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":815,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":895,\"morph\":false,\"scale\":\"none\",\"main\":176,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":47,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":101,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":160,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":213,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":274,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":338,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":401,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":476,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":554,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":622,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":685,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":746,\"morph\":false,\"scale\":\"none\",\"main\":318,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:46.340Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-16aa2c5ac98988bbf2ce",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 130,
+              "column": 17
+            },
+            {
+              "title": "v dark-390c: a vertical dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5593,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk v-expand\",\"frames\":12,\"morphFrames\":6,\"off\":0,\"rows\":[{\"i\":0,\"t\":75,\"morph\":true,\"scale\":\"1 0.318047\",\"main\":101.66666666666667,\"cross\":68,\"worst\":-0.32,\"at\":\"end-a@0.1 inset 19.0 want 19.3\"},{\"i\":1,\"t\":195,\"morph\":true,\"scale\":\"1 0.892815\",\"main\":203.33333333333334,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":2,\"t\":298,\"morph\":true,\"scale\":\"1 0.999956\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":3,\"t\":386,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":4,\"t\":496,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":5,\"t\":592,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":6,\"t\":671,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":7,\"t\":745,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":8,\"t\":816,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":9,\"t\":900,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":10,\"t\":988,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":11,\"t\":1073,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c wk v-collapse\",\"frames\":12,\"morphFrames\":5,\"off\":0,\"rows\":[{\"i\":0,\"t\":69,\"morph\":true,\"scale\":\"1 0.96436\",\"main\":208,\"cross\":61.333333333333336,\"worst\":-0.44,\"at\":\"start-a@0.1 inset 17.0 want 17.4\"},{\"i\":1,\"t\":167,\"morph\":true,\"scale\":\"1 0.46807\",\"main\":84,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":2,\"t\":290,\"morph\":true,\"scale\":\"1 0.287405\",\"main\":60.666666666666664,\"cross\":61.333333333333336,\"worst\":-0.18,\"at\":\"start-a@0.1 inset 17.0 want 17.2\"},{\"i\":3,\"t\":438,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61.333333333333336,\"worst\":-0.18,\"at\":\"start-a@0.1 inset 17.0 want 17.2\"},{\"i\":4,\"t\":591,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61.333333333333336,\"worst\":-0.18,\"at\":\"start-a@0.1 inset 17.0 want 17.2\"},{\"i\":5,\"t\":726,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":6,\"t\":915,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":7,\"t\":1292,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":8,\"t\":1472,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":9,\"t\":1611,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":10,\"t\":1713,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"},{\"i\":11,\"t\":1810,\"morph\":false,\"scale\":\"none\",\"main\":61.333333333333336,\"cross\":61.333333333333336,\"worst\":-0.1,\"at\":\"start-a@0.1 inset 17.3 want 17.4\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-23T22:55:50.615Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-6cee637548e5c30e15ba",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 140,
+              "column": 17
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T22:55:05.502Z",
+    "duration": 54455.914,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

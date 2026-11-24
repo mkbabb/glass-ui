@@ -1,0 +1,831 @@
+
+Running 44 tests using 1 worker
+
+  ✘   1 [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (2.3s)
+  ✘   2 [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Select reopened while it closes turns from where it is (3.1s)
+  ✘   3 [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✘   5 [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✘   6 [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Popover reopened while it closes turns from where it is (3.1s)
+  ✘   7 [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Toast closed while it opens turns from where it is (2.1s)
+  ✘   8 [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Tooltip closed while it opens turns from where it is (2.1s)
+  ✘   9 [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.1s)
+  ✓  10 [chromium-desktop] › release-11-1-1.spec.ts:1234:1 › reverse · a disclosure reopened while it closes finishes its reopen (4.9s)
+[WebServer] 4:03:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  11 [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (4.0s)
+[WebServer] 4:03:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  12 [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (4.0s)
+  ✘  13 [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (4.1s)
+[WebServer] 4:03:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  14 [chromium-desktop] › release-11-1-1.spec.ts:1294:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+  ✘  15 [chromium-desktop] › release-11-1-1.spec.ts:1382:1 › tooltip · a hint keeps its size as it comes and goes (2.1s)
+  ✘  16 [chromium-desktop] › release-11-1-1.spec.ts:1415:1 › tooltip · a Tooltip enters on a tween (1.5s)
+  ✘  17 [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, incoming (2.1s)
+  ✘  18 [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.1s)
+  ✓  19 [chromium-desktop] › release-11-1-1.spec.ts:1525:1 › expand · an ExpandableContainer enters on a tween (3.7s)
+  ✘  20 [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by exit (4.5s)
+  ✘  21 [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by escape (4.6s)
+  ✘  22 [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by open (4.6s)
+  ✘  23 [chromium-desktop] › release-11-1-1.spec.ts:1563:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.7s)
+  ✘  24 [chromium-desktop] › release-11-1-1.spec.ts:1580:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.6s)
+  ✓  25 [chromium-desktop] › release-11-1-1.spec.ts:1596:1 › expand · Escape is live from the entrance's first frame (1.4s)
+[WebServer] 4:04:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  26 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 4:04:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  27 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.5s)
+[WebServer] 4:04:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  28 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.8s)
+[WebServer] 4:04:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  29 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.5s)
+  ✘  30 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.8s)
+  ✓  31 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Popover closed and reopened mid-exit says nothing (2.5s)
+  ✘  32 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  33 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.4s)
+  ✘  34 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✘  35 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Select closed and reopened mid-exit says nothing (2.4s)
+  ✘  36 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (2.8s)
+  ✓  37 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.5s)
+  ✘  38 [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.8s)
+  -  39 [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✘  40 [chromium-desktop] › release-11-1-1.spec.ts:1759:1 › leave · a Popover inside a shadow root says so to its host (3.4s)
+  ✘  41 [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.1s)
+  ✘  42 [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.1s)
+  ✘  43 [chromium-desktop] › release-11-1-1.spec.ts:1801:1 › leave · a hover card says once that its leave has finished (3.3s)
+[WebServer] 4:05:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  44 [chromium-desktop] › release-11-1-1.spec.ts:1819:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.1s)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.379,"turnedAt":1,"share":0.621,"end":0,"hole":33,"frames":[[0,0.379],[8,1],[17,0.915],[25,0.759],[33,0.634],[42,0.534],[50,0.45],[58,0.381],[67,0.324],[75,0.278],[83,0.24],[92,0.21],[100,0.187],[108,0.171],[116,0.162],[125,0.007],[133,0],[142,0],[150,0],[158,0],[167,0],[175,0],[183,0],[192,0],[200,0],[208,0],[217,0],[225,0],[234,0],[242,0],[250,0],[258,0],[266,0],[275,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[366,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.621
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Select reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.324,"turnedAt":0,"share":0.324,"end":0,"hole":9,"frames":[[0,0.324],[8,0],[17,0],[25,0],[33,0],[42,0],[49,0],[58,0],[67,0],[75,0],[83,0],[92,0],[100,0],[108,0],[117,0],[125,0],[133,0],[142,0],[150,0],[158,0],[167,0],[175,0],[183,0],[192,0],[200,0],[208,0],[217,0],[225,0],[233,0],[242,0],[250,0],[258,0],[267,0],[275,0],[283,0],[291,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.324
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1225:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-c9729-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.449,"turnedAt":1,"share":0.551,"end":0,"hole":25,"frames":[[0,0.449],[8,1],[16,0.976],[25,0.817],[33,0.698],[41,0.604],[50,0.519],[58,0.448],[67,0.392],[75,0.346],[83,0.309],[92,0.28],[100,0.257],[108,0.242],[116,0.233],[125,0.008],[133,0],[142,0],[150,0],[158,0],[167,0],[175,0],[183,0],[192,0],[200,0],[208,0],[217,0],[225,0],[233,0],[242,0],[250,0],[258,0],[267,0],[274,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[366,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.551
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Popover closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.503,"turnedAt":1,"share":0.497,"end":0,"hole":26,"frames":[[0,0.503],[8,1],[18,0.793],[26,0.659],[34,0.549],[43,0.456],[51,0.376],[59,0.309],[68,0.251],[76,0.2],[84,0.157],[93,0.12],[101,0.09],[109,0.064],[118,0.043],[126,0.027],[134,0.014],[143,0.006],[151,0.001],[159,0],[168,0],[176,0],[184,0],[193,0],[201,0],[209,0],[218,0],[226,0],[234,0],[243,0],[251,0],[259,0],[268,0],[276,0],[284,0],[292,0],[301,0],[309,0],[318,0],[326,0],[334,0],[343,0],[351,0],[359,0],[368,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.497
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-2861f-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Popover reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.256,"turnedAt":0.256,"share":0.744,"end":1,"hole":17,"frames":[[0,0.256],[8,1],[17,1],[25,1],[33,1],[42,1],[50,1],[58,1],[67,1],[74,1],[83,1],[92,1],[100,1],[108,1],[117,1],[125,1],[133,1],[141,1],[150,1],[158,1],[167,1],[175,1],[183,1],[191,1],[200,1],[208,1],[217,1],[225,1],[233,1],[241,1],[250,1],[258,1],[266,1],[275,1],[283,1],[292,1],[299,1],[308,1],[317,1],[325,1],[333,1],[342,1],[350,1],[358,1],[366,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.744
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1225:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ebf48-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.194,"turnedAt":1,"share":0.806,"end":0,"hole":16,"frames":[[0,0.194],[8,1],[16,1],[25,0.818],[33,0.685],[42,0.591],[50,0.518],[58,0.458],[67,0.411],[75,0.373],[83,0.345],[92,0.324],[100,0.31],[108,0.302],[117,0.295],[124,0.221],[133,0.163],[142,0.122],[150,0.09],[158,0.065],[167,0.045],[175,0.029],[183,0.017],[191,0.009],[200,0.003],[208,0.001],[217,0],[225,0],[233,0],[241,0],[250,0],[258,0],[266,0],[275,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.806
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Tooltip closed while it opens turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":1,"turnedAt":1,"share":0.55,"end":0,"hole":17,"frames":[[0,1],[8,1],[16,0.687],[25,0.449],[33,0.299],[42,0.19],[50,0.11],[58,0.055],[67,0.02],[74,0.004],[83,0],[91,0],[100,0],[108,0],[117,0],[125,0],[133,0],[142,0],[150,0],[158,0],[167,0],[175,0],[183,0],[192,0],[200,0],[208,0],[217,0],[225,0],[233,0],[242,0],[250,0],[258,0],[267,0],[275,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.96
+    Received:   1
+
+      1118 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+    > 1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+           |                                                                    ^
+      1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1120:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-1ab4d-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  8) [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":0.003,"turnedAt":0.003,"share":0.997,"end":1,"hole":9,"frames":[[0,0.003],[8,1],[17,1],[25,1],[33,1],[42,1],[50,1],[58,1],[67,1],[75,1],[83,1],[92,1],[100,1],[108,1],[117,1],[125,1],[133,1],[142,1],[150,1],[158,1],[167,1],[174,1],[183,1],[192,1],[200,1],[208,1],[217,1],[225,1],[233,1],[242,1],[250,1],[258,1],[267,1],[275,1],[283,1],[292,1],[300,1],[308,1],[316,1],[325,1],[333,1],[342,1],[350,1],[358,1],[367,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.04
+    Received:   0.003
+
+      1117 | function expectTurn(read: TurnRead, ends: "gone" | "open"): void {
+      1118 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+    > 1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+           |                                                                    ^
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+      1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1119:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1225:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-e5622-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  9) [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is 
+
+    Error: it turns short of the end it was heading for {"atTurn":0.502,"turnedAt":0,"share":0.134,"end":0,"hole":9,"frames":[[0,0.502],[8,0.431],[17,0.368],[25,0.311],[33,0.263],[42,0.223],[50,0.185],[58,0.155],[67,0.129],[75,0.106],[83,0.088],[92,0.073],[100,0.06],[108,0.049],[117,0.04],[125,0.033],[133,0.027],[142,0.022],[150,0.018],[158,0.015],[167,0.012],[175,0.01],[183,0.008],[192,0.006],[200,0.005],[208,0.004],[217,0.003],[225,0.003],[233,0.002],[242,0.002],[250,0.001],[258,0.001],[267,0],[275,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+      1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    > 1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+           |                                                                                 ^
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      1125 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1122:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1289:9
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ff9dd-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  10) [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is 
+
+    Error: it turns short of the end it was heading for {"atTurn":0.734,"turnedAt":0,"share":0.118,"end":0,"hole":9,"frames":[[0,0.734],[8,0.674],[17,0.615],[24,0.555],[33,0.504],[42,0.442],[50,0.389],[58,0.339],[67,0.292],[75,0.248],[83,0.208],[92,0.172],[100,0.139],[108,0.109],[117,0.083],[125,0.06],[133,0.04],[142,0.022],[150,0.008],[158,0],[167,0],[175,0],[183,0],[192,0],[200,0],[208,0],[217,0],[224,0],[233,0],[242,0],[250,0],[258,0],[266,0],[275,0],[283,0],[292,0],[300,0],[308,0],[317,0],[325,0],[333,0],[342,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+      1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    > 1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+           |                                                                                 ^
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      1125 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1122:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1289:9
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-9f4cc-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  11) [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Select's trigger reopens it from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.388,"turnedAt":0,"share":0.388,"end":0,"hole":17,"frames":[[0,0.388],[9,0],[18,0],[26,0],[34,0],[42,0],[51,0],[59,0],[67,0],[76,0],[84,0],[93,0],[101,0],[109,0],[117,0],[126,0],[134,0],[142,0],[151,0],[159,0],[168,0],[176,0],[184,0],[193,0],[201,0],[209,0],[218,0],[226,0],[234,0],[243,0],[251,0],[259,0],[267,0],[276,0],[284,0],[292,0],[301,0],[309,0],[318,0],[326,0],[334,0],[343,0],[351,0],[359,0],[367,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.388
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1289:9
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-dd297-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  12) [chromium-desktop] › release-11-1-1.spec.ts:1294:1 › reverse · a press on the page while a sheet leaves reaches the page 
+
+    Error: the press reached the page
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "1"
+    Received: "0"
+
+      1309 |     await page.waitForTimeout(600);
+      1310 |     expect(during, "the sheet was still leaving when the press landed").toBe(1);
+    > 1311 |     expect(await count.getAttribute("data-presses"), "the press reached the page").toBe("1");
+           |                                                                                    ^
+      1312 | });
+      1313 |
+      1314 | // ── tooltip ────────────────────────────────────────────────────────────────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1311:84
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-aba4f-eet-leaves-reaches-the-page-chromium-desktop/error-context.md
+
+  13) [chromium-desktop] › release-11-1-1.spec.ts:1382:1 › tooltip · a hint keeps its size as it comes and goes 
+
+    Error: it arrives from gone: its first frame is a fade's first {"enter":{"frames":109,"scale":0,"box":0,"filters":[],"first":[[31,1,"none","none",55.8,36.7],[39,1,"none","none",55.8,36.7],[47,1,"none","none",55.8,36.7],[56,1,"none","none",55.8,36.7],[63,1,"none","none",55.8,36.7],[72,1,"none","none",55.8,36.7]]},"exit":{"frames":16,"scale":0.0833,"box":3.06,"filters":[],"first":[[3,1,"none","none",55.8,36.7],[11,1,"1","none",55.8,36.7],[19,0.662,"1.00642 0.981034","none",56.1,36],[27,0.451,"1.01091 0.967763","none",56.4,35.5],[36,0.299,"1.01449 0.957186","none",56.6,35.1],[44,0.19,"1.01736 0.948677","none",56.7,34.8]]},"firstOp":1,"between":0,"gone":true}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.1
+    Received:    1
+
+      1406 |     await info.attach("size", { body: JSON.stringify(read), contentType: "application/json" });
+      1407 |     const at = JSON.stringify(read);
+    > 1408 |     expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);
+           |                                                                                           ^
+      1409 |     expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+      1410 |     expectWhole(read.enter, "in");
+      1411 |     expect(read.gone, `it is gone ${at}`).toBe(true);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1408:91
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-ec1fa-s-size-as-it-comes-and-goes-chromium-desktop/error-context.md
+
+  14) [chromium-desktop] › release-11-1-1.spec.ts:1415:1 › tooltip · a Tooltip enters on a tween ───
+
+    Error: more than two frames between gone and whole {"between":0,"share":1,"end":1,"frames":[[2,0],[11,0],[19,0],[27,0],[35,1],[52,1],[60,1],[69,1],[77,1],[85,1],[94,1],[102,1],[111,1],[118,1],[126,1],[135,1],[143,1],[152,1],[161,1],[169,1],[177,1],[185,1],[194,1],[202,1],[211,1],[218,1],[227,1],[236,1],[244,1],[252,1],[260,1],[269,1],[277,1],[285,1],[294,1],[302,1],[310,1],[319,1],[327,1],[336,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1423 |     await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+      1424 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
+    > 1425 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
+           |                                                                                                 ^
+      1426 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+      1427 |     expectWhole(judgeSize(film, film.mark), "in");
+      1428 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1425:97
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md
+
+  15) [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: more than two frames between gone and whole {"between":0,"share":1,"end":1,"frames":[[10,0],[18,0],[26,0],[34,0],[43,1],[51,1],[60,1],[67,1],[76,1],[85,1],[93,1],[101,1],[110,1],[118,1],[127,1],[134,1],[143,1],[152,1],[160,1],[168,1],[176,1],[185,1],[193,1],[202,1],[210,1],[218,1],[227,1],[234,1],[243,1],[252,1],[259,1],[267,1],[277,1],[285,1],[293,1],[301,1],[310,1],[318,1],[326,1],[335,1]],"states":["x-tooltip2-content:instant-open"]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1452 |         if (dir === "incoming") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);
+      1453 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+    > 1454 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+           |                                                                                   ^
+      1455 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1456 |         expectWhole(judgeSize(film, film.mark), dir === "incoming" ? "in" : "out");
+      1457 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1454:83
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-chromium-desktop/error-context.md
+
+  16) [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, outgoing 
+
+    Error: no frame carries more than a fifth {"between":7,"share":0.475,"end":0,"frames":[[10,1],[18,1],[27,1],[35,1],[43,0.661],[52,0.451],[59,0.313],[68,0.194],[77,0.109],[85,0.055],[93,0.02],[102,0.003],[109,0],[118,0],[126,0],[135,0],[143,0],[152,0],[160,0],[168,0],[177,0],[185,0],[193,0],[201,0],[209,0],[218,0],[227,0],[235,0],[243,0],[252,0],[259,0],[268,0],[276,0],[284,0],[293,0],[302,0],[309,0],[318,0],[327,0],[334,0]],"states":["x-tooltip-content:instant-open"]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.475
+
+      1453 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+      1454 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    > 1455 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                        ^
+      1456 |         expectWhole(judgeSize(film, film.mark), dir === "incoming" ? "in" : "out");
+      1457 |     });
+      1458 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1455:72
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-d62c6-ts-neighbour-fades-outgoing-chromium-desktop/error-context.md
+
+  17) [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by exit 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":1,"end":0,"frames":[[-12,1],[5,1],[14,1],[22,0],[31,0],[39,0],[47,0],[56,0],[63,0],[73,0],[81,0],[89,0],[98,0],[106,0],[114,0],[123,0],[131,0],[139,0],[148,0],[156,0],[164,0],[172,0],[181,0],[189,0],[197,0],[205,0],[214,0],[222,0],[231,0],[239,0],[247,0],[256,0],[264,0],[273,0],[280,0],[288,0],[297,0],[306,0],[314,0],[322,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1556 |         const at = JSON.stringify(read);
+      1557 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 1558 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+           |                                                                                   ^
+      1559 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1560 |     });
+      1561 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1558:83
+
+    Error Context: test-results/release-11-1-1-expand-·-an-73b18-r-leaves-on-a-tween-by-exit-chromium-desktop/error-context.md
+
+  18) [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by escape 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":1,"end":0,"frames":[[-10,1],[7,0],[14,0],[23,0],[31,0],[40,0],[48,0],[57,0],[65,0],[73,0],[82,0],[90,0],[98,0],[106,0],[114,0],[123,0],[132,0],[140,0],[148,0],[157,0],[164,0],[173,0],[182,0],[190,0],[198,0],[207,0],[215,0],[223,0],[232,0],[240,0],[248,0],[257,0],[265,0],[273,0],[282,0],[290,0],[298,0],[307,0],[315,0],[323,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1556 |         const at = JSON.stringify(read);
+      1557 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 1558 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+           |                                                                                   ^
+      1559 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1560 |     });
+      1561 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1558:83
+
+    Error Context: test-results/release-11-1-1-expand-·-an-bf114-leaves-on-a-tween-by-escape-chromium-desktop/error-context.md
+
+  19) [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by open 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.998,"end":0,"frames":[[-11,1],[6,0],[14,0],[23,0],[31,0],[39,0],[47,0],[56,0],[64,0],[73,0],[81,0],[89,0],[98,0],[106,0],[114,0],[123,0],[131,0],[139,0],[148,0],[156,0],[164,0],[173,0],[181,0],[189,0],[198,0],[206,0],[214,0],[223,0],[231,0],[239,0],[248,0],[256,0],[264,0],[272,0],[281,0],[289,0],[297,0],[306,0],[314,0],[323,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      1556 |         const at = JSON.stringify(read);
+      1557 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 1558 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+           |                                                                                   ^
+      1559 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1560 |     });
+      1561 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1558:83
+
+    Error Context: test-results/release-11-1-1-expand-·-an-475d1-r-leaves-on-a-tween-by-open-chromium-desktop/error-context.md
+
+  20) [chromium-desktop] › release-11-1-1.spec.ts:1563:1 › expand · an ExpandableContainer closed while it enters turns from where it is 
+
+    Error: no frame carries more than a fifth {"top":1,"atTurn":0.278,"between":1,"share":0.278,"end":0,"frames":[[-5,0.278],[4,0],[11,0],[20,0],[29,0],[37,0],[45,0],[53,0],[61,0],[70,0],[78,0],[87,0],[95,0],[103,0],[112,0],[120,0],[129,0],[137,0],[145,0],[153,0],[161,0],[170,0],[179,0],[187,0],[194,0],[204,0],[212,0],[220,0],[228,0],[237,0],[245,0],[253,0],[262,0],[270,0],[279,0],[287,0],[295,0],[304,0],[312,0],[320,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.278
+
+      1575 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);
+      1576 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 1577 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                    ^
+      1578 | });
+      1579 |
+      1580 | test("expand · an ExpandableContainer reopened while it leaves turns from where it is", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1577:68
+
+    Error Context: test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  21) [chromium-desktop] › release-11-1-1.spec.ts:1580:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+
+    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":23,"share":0.123,"end":1,"frames":[[-3,0],[5,0],[13,0],[22,0],[30,0.008],[38,0.031],[47,0.065],[54,0.103],[63,0.158],[72,0.213],[80,0.273],[88,0.334],[97,0.396],[105,0.458],[113,0.514],[122,0.574],[130,0.627],[138,0.677],[146,0.717],[155,0.763],[163,0.8],[172,0.832],[180,0.861],[188,0.886],[197,0.907],[205,0.925],[213,0.941],[222,0.954],[230,0.986],[238,1],[247,1],[255,1],[263,1],[272,1],[280,1],[288,1],[297,1],[305,1],[313,1],[322,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1589 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+      1590 |     const at = JSON.stringify(read);
+    > 1591 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+           |                                                            ^
+      1592 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+      1593 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1594 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1591:60
+
+    Error Context: test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  22) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Dialog says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":318,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-D-61c17-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  23) [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Dialog closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1696 |         await page.waitForTimeout(900);
+      1697 |         const { events, emitted } = await readLeaves(page);
+    > 1698 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1699 |         expect(events, "no leave-finished event").toEqual([]);
+      1700 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1701 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1698:100
+
+    Error Context: test-results/release-11-1-1-leave-·-a-D-f945c-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  24) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Sheet says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":203,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-S-cc728-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  25) [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Sheet closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1696 |         await page.waitForTimeout(900);
+      1697 |         const { events, emitted } = await readLeaves(page);
+    > 1698 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1699 |         expect(events, "no leave-finished event").toEqual([]);
+      1700 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1701 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1698:100
+
+    Error Context: test-results/release-11-1-1-leave-·-a-S-b80f3-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  26) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Popover says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":149,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-P-8f2d5-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  27) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":126,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-D-81c57-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  28) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Select says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":123,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-S-a0a11-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  29) [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Select closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1696 |         await page.waitForTimeout(900);
+      1697 |         const { events, emitted } = await readLeaves(page);
+    > 1698 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1699 |         expect(events, "no leave-finished event").toEqual([]);
+      1700 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1701 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1698:100
+
+    Error Context: test-results/release-11-1-1-leave-·-a-S-9d71c-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  30) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":72,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-T-10ce7-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  31) [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Toast says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":264,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1675 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      1676 |         const at = JSON.stringify(read);
+    > 1677 |         expect(events.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1678 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      1679 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1680 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1677:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-T-faac0-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  32) [chromium-desktop] › release-11-1-1.spec.ts:1759:1 › leave · a Popover inside a shadow root says so to its host 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2323.4,"mounted":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1750 |
+      1751 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1752 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1753 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1754 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1755 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1752:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1779:5
+
+    Error Context: test-results/release-11-1-1-leave-·-a-P-3423b-ow-root-says-so-to-its-host-chromium-desktop/error-context.md
+
+  33) [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by escape 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2176.9}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1750 |
+      1751 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1752 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1753 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1754 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1755 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1752:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1797:9
+
+    Error Context: test-results/release-11-1-1-leave-·-a-C-e6861-eave-has-finished-by-escape-chromium-desktop/error-context.md
+
+  34) [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by pick 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2168.2}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1750 |
+      1751 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1752 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1753 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1754 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1755 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1752:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1797:9
+
+    Error Context: test-results/release-11-1-1-leave-·-a-C-3448a--leave-has-finished-by-pick-chromium-desktop/error-context.md
+
+  35) [chromium-desktop] › release-11-1-1.spec.ts:1801:1 › leave · a hover card says once that its leave has finished 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2174.2}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1750 |
+      1751 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1752 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1753 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1754 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1755 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1752:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1816:5
+
+    Error Context: test-results/release-11-1-1-leave-·-a-h-c9754-that-its-leave-has-finished-chromium-desktop/error-context.md
+
+  36) [chromium-desktop] › release-11-1-1.spec.ts:1819:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 
+
+    Error: one event {"window":[],"host":[],"emits":{},"cut":2195.60000000149}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1838 |     await info.attach("leave", { body: at, contentType: "application/json" });
+      1839 |     expect(await page.locator('[data-testid="l-dialog-content"]').count(), "the dialog is gone").toBe(0);
+    > 1840 |     expect(log.window.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1841 |     expect(log.window[0].kind, `its kind ${at}`).toBe("dialog");
+      1842 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.
+      1843 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1840:50
+
+    Error Context: test-results/release-11-1-1-leave-·-a-D-e96bd-says-so-once-at-the-unmount-chromium-desktop/error-context.md
+
+  36 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Select reopened while it closes turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Popover closed while it opens turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Popover reopened while it closes turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Toast closed while it opens turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1202:9 › reverse · a Tooltip closed while it opens turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1214:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Select's trigger reopens it from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1294:1 › reverse · a press on the page while a sheet leaves reaches the page 
+    [chromium-desktop] › release-11-1-1.spec.ts:1382:1 › tooltip · a hint keeps its size as it comes and goes 
+    [chromium-desktop] › release-11-1-1.spec.ts:1415:1 › tooltip · a Tooltip enters on a tween ─────
+    [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, incoming 
+    [chromium-desktop] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, outgoing 
+    [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by exit 
+    [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by escape 
+    [chromium-desktop] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by open 
+    [chromium-desktop] › release-11-1-1.spec.ts:1563:1 › expand · an ExpandableContainer closed while it enters turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1580:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Dialog says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Dialog closed and reopened mid-exit says nothing 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Sheet says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Sheet closed and reopened mid-exit says nothing 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Popover says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Select says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1684:5 › leave · a Select closed and reopened mid-exit says nothing 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1655:5 › leave · a Toast says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › release-11-1-1.spec.ts:1759:1 › leave · a Popover inside a shadow root says so to its host 
+    [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by escape 
+    [chromium-desktop] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by pick 
+    [chromium-desktop] › release-11-1-1.spec.ts:1801:1 › leave · a hover card says once that its leave has finished 
+    [chromium-desktop] › release-11-1-1.spec.ts:1819:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 
+  1 skipped
+  7 passed (2.4m)

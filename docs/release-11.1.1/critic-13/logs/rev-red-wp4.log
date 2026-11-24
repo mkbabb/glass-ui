@@ -1,0 +1,144 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (2.8s)
+  ✘  2 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.7s)
+  ✘  3 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (2.8s)
+  ✘  4 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.8s)
+  ✘  5 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (5.6s)
+  ✘  6 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (3.0s)
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.357,"turnedAt":1,"share":0.383,"end":0,"hole":33,"frames":[[0,0.357],[28,1],[40,0.835],[44,0.762],[51,0.653],[61,0.527],[71,0.426],[83,0.332],[91,0.282],[102,0.228],[112,0.192],[123,0.164],[133,0.148],[142,0.015],[152,0],[178,0],[183,0],[193,0],[204,0],[215,0],[225,0],[234,0],[246,0],[255,0],[265,0],[276,0],[285,0],[295,0],[306,0],[316,0],[327,0],[337,0],[347,0],[357,0],[367,0],[379,0],[388,0],[398,0],[408,0],[417,0],[429,0],[438,0],[450,0],[459,0],[470,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.383
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.522,"turnedAt":1,"share":0.478,"end":0,"hole":22,"frames":[[0,0.522],[10,1],[20,0.939],[30,0.761],[41,0.613],[49,0.527],[60,0.432],[71,0.357],[83,0.296],[92,0.262],[102,0.233],[112,0.215],[122,0.047],[132,0],[141,0],[153,0],[162,0],[175,0],[182,0],[194,0],[204,0],[212,0],[224,0],[233,0],[245,0],[255,0],[265,0],[275,0],[284,0],[296,0],[306,0],[316,0],[325,0],[337,0],[345,0],[358,0],[367,0],[377,0],[388,0],[398,0],[408,0],[418,0],[429,0],[439,0],[449,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.478
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone/error-context.md
+
+  3) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.317,"turnedAt":1,"share":0.356,"end":0,"hole":32,"frames":[[0,0.317],[32,1],[43,0.855],[51,0.713],[61,0.574],[73,0.445],[81,0.376],[91,0.306],[102,0.246],[113,0.202],[123,0.172],[133,0.153],[143,0.045],[153,0],[179,0],[184,0],[194,0],[205,0],[215,0],[225,0],[235,0],[244,0],[257,0],[266,0],[274,0],[286,0],[296,0],[307,0],[317,0],[326,0],[338,0],[347,0],[358,0],[367,0],[378,0],[388,0],[398,0],[409,0],[419,0],[429,0],[439,0],[449,0],[458,0],[470,0],[480,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.356
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  4) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.533,"turnedAt":0.918,"share":0.385,"end":0,"hole":26,"frames":[[0,0.533],[11,0.918],[21,0.746],[31,0.613],[41,0.508],[51,0.424],[62,0.351],[71,0.305],[84,0.255],[91,0.236],[102,0.215],[113,0.047],[122,0],[134,0],[143,0],[154,0],[164,0],[173,0],[185,0],[194,0],[205,0],[215,0],[225,0],[235,0],[247,0],[256,0],[266,0],[276,0],[286,0],[296,0],[308,0],[317,0],[326,0],[338,0],[347,0],[358,0],[368,0],[378,0],[388,0],[398,0],[410,0],[419,0],[429,0],[439,0],[449,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.385
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  5) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.337,"turnedAt":1,"share":0.252,"end":0,"hole":60,"frames":[[0,0.337],[59,1],[78,0.713],[87,0.586],[94,0.505],[104,0.409],[114,0.332],[125,0.266],[133,0.228],[146,0.183],[155,0.162],[165,0.147],[176,0.002],[193,0],[256,0],[257,0],[268,0],[278,0],[288,0],[300,0],[310,0],[319,0],[329,0],[339,0],[347,0],[359,0],[370,0],[380,0],[390,0],[400,0],[409,0],[421,0],[430,0],[442,0],[451,0],[461,0],[474,0],[482,0],[491,0],[501,0],[513,0],[522,0],[533,0],[543,0],[555,0],[564,0],[574,0],[584,0],[594,0],[605,0],[614,0],[625,0],[635,0],[644,0],[655,0],[665,0],[676,0],[686,0],[696,0],[708,0],[717,0],[727,0],[737,0],[747,0],[757,0],[766,0],[778,0],[788,0],[798,0],[808,0],[817,0],[829,0],[839,0],[849,0],[859,0],[868,0],[880,0],[888,0],[900,0],[909,0],[921,0],[930,0],[940,0],[952,0],[962,0],[970,0],[982,0],[992,0],[1001,0],[1013,0],[1023,0],[1033,0],[1043,0],[1053,0],[1064,0],[1074,0],[1084,0],[1093,0],[1105,0],[1115,0],[1124,0],[1136,0],[1145,0],[1154,0],[1166,0],[1177,0],[1184,0],[1197,0],[1206,0],[1218,0],[1227,0],[1237,0],[1247,0],[1259,0],[1267,0],[1277,0],[1288,0],[1298,0],[1309,0],[1319,0],[1329,0],[1339,0],[1349,0],[1359,0],[1371,0],[1380,0],[1389,0],[1401,0],[1410,0],[1421,0],[1431,0],[1441,0],[1451,0],[1463,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    60
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  6) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.504,"turnedAt":1,"share":0.496,"end":0,"hole":33,"frames":[[0,0.504],[12,1],[22,0.939],[32,0.761],[43,0.613],[51,0.527],[62,0.432],[70,0.376],[83,0.305],[91,0.272],[101,0.241],[113,0.216],[122,0.087],[134,0],[143,0],[154,0],[164,0],[174,0],[183,0],[195,0],[205,0],[215,0],[227,0],[236,0],[248,0],[256,0],[264,0],[277,0],[285,0],[296,0],[306,0],[317,0],[326,0],[337,0],[349,0],[357,0],[369,0],[379,0],[388,0],[399,0],[408,0],[420,0],[430,0],[438,0],[450,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.496
+
+      1119 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      1120 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 1121 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                 ^
+      1122 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      1123 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      1124 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1121:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/release-11-1-1.spec.ts:1210:13
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  6 failed
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 

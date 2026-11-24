@@ -1,0 +1,123 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (7.6s)
+  ✓  2 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (6.1s)
+  ✘  3 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (7.7s)
+  ✘  4 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (6.2s)
+  ✘  5 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (7.0s)
+  ✘  6 [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (6.2s)
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.424,"turnedAt":0.571,"share":0.106,"end":0,"hole":37,"frames":[[0,0.424],[21,0.557],[29,0.566],[42,0.571],[53,0.56],[58,0.55],[63,0.543],[74,0.502],[82,0.471],[93,0.424],[104,0.367],[114,0.325],[124,0.277],[133,0.235],[143,0.181],[154,0.138],[164,0.107],[177,0.072],[189,0.044],[195,0.032],[205,0.019],[215,0.009],[226,0.002],[238,0],[247,0],[319,0],[328,0],[338,0],[348,0],[358,0],[369,0],[377,0],[390,0],[399,0],[410,0],[423,0],[429,0],[442,0],[450,0],[460,0],[470,0],[481,0],[492,0],[501,0],[511,0],[522,0],[534,0],[546,0],[556,0],[565,0],[573,0],[583,0],[592,0],[604,0],[613,0],[629,0],[633,0],[647,0],[657,0],[666,0],[674,0],[684,0],[698,0],[707,0],[716,0],[725,0],[738,0],[746,0],[758,0],[769,0],[776,0],[786,0],[799,0],[807,0],[818,0],[827,0],[838,0],[848,0],[860,0],[867,0],[880,0],[887,0],[899,0],[910,0],[921,0],[933,0],[940,0],[950,0],[960,0],[969,0],[981,0],[991,0],[1002,0],[1010,0],[1022,0],[1032,0],[1044,0],[1053,0],[1063,0],[1072,0],[1083,0],[1094,0],[1103,0],[1112,0],[1123,0],[1136,0],[1147,0],[1154,0],[1166,0],[1174,0],[1185,0],[1194,0],[1206,0],[1215,0],[1224,0],[1236,0],[1247,0],[1256,0],[1265,0],[1275,0],[1287,0],[1297,0],[1307,0],[1319,0],[1328,0],[1338,0],[1348,0],[1356,0],[1369,0],[1377,0],[1390,0],[1399,0],[1409,0],[1418,0],[1430,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    37
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.404,"turnedAt":0.564,"share":0.106,"end":0,"hole":46,"frames":[[0,0.404],[24,0.557],[33,0.563],[46,0.561],[53,0.564],[63,0.539],[73,0.516],[85,0.471],[92,0.436],[103,0.38],[112,0.343],[124,0.286],[136,0.23],[144,0.192],[156,0.146],[163,0.117],[176,0.08],[184,0.062],[196,0.037],[205,0.023],[215,0.011],[226,0.004],[236,0.001],[244,0],[255,0],[303,0],[305,0],[316,0],[328,0],[338,0],[348,0],[360,0],[368,0],[379,0],[388,0],[399,0],[483,0],[491,0],[501,0],[511,0],[523,0],[532,0],[544,0],[552,0],[562,0],[573,0],[583,0],[592,0],[604,0],[614,0],[624,0],[634,0],[643,0],[654,0],[663,0],[675,0],[685,0],[693,0],[705,0],[716,0],[725,0],[737,0],[746,0],[758,0],[767,0],[778,0],[787,0],[799,0],[807,0],[817,0],[828,0],[838,0],[847,0],[859,0],[871,0],[880,0],[889,0],[899,0],[910,0],[920,0],[930,0],[940,0],[953,0],[960,0],[970,0],[983,0],[992,0],[1002,0],[1012,0],[1020,0],[1033,0],[1042,0],[1052,0],[1062,0],[1074,0],[1083,0],[1097,0],[1104,0],[1112,0],[1125,0],[1133,0],[1145,0],[1154,0],[1165,0],[1175,0],[1184,0],[1196,0],[1204,0],[1216,0],[1228,0],[1236,0],[1245,0],[1258,0],[1265,0],[1278,0],[1289,0],[1297,0],[1308,0],[1318,0],[1329,0],[1338,0],[1347,0],[1357,0],[1369,0],[1378,0],[1388,0],[1400,0],[1409,0],[1419,0],[1430,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    46
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  3) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.475,"turnedAt":0.475,"share":0.052,"end":0,"hole":35,"frames":[[0,0.475],[20,0.469],[31,0.441],[41,0.415],[51,0.389],[60,0.361],[69,0.332],[83,0.293],[94,0.261],[103,0.236],[112,0.214],[126,0.176],[133,0.159],[144,0.135],[153,0.114],[162,0.095],[197,0.038],[205,0.029],[214,0.02],[230,0.005],[246,0],[270,0],[277,0],[283,0],[294,0],[306,0],[316,0],[326,0],[337,0],[348,0],[358,0],[366,0],[377,0],[387,0],[396,0],[408,0],[418,0],[428,0],[438,0],[448,0],[457,0],[469,0],[481,0],[490,0],[500,0],[510,0],[522,0],[528,0],[540,0],[549,0],[562,0],[571,0],[581,0],[591,0],[601,0],[612,0],[623,0],[632,0],[640,0],[653,0],[665,0],[672,0],[683,0],[694,0],[704,0],[714,0],[726,0],[734,0],[744,0],[754,0],[764,0],[777,0],[786,0],[794,0],[806,0],[815,0],[825,0],[836,0],[848,0],[857,0],[867,0],[877,0],[888,0],[898,0],[908,0],[917,0],[928,0],[938,0],[949,0],[959,0],[969,0],[981,0],[988,0],[1000,0],[1009,0],[1019,0],[1031,0],[1040,0],[1049,0],[1061,0],[1070,0],[1082,0],[1091,0],[1103,0],[1112,0],[1122,0],[1132,0],[1141,0],[1157,0],[1161,0],[1173,0],[1182,0],[1194,0],[1204,0],[1214,0],[1226,0],[1234,0],[1247,0],[1255,0],[1265,0],[1275,0],[1286,0],[1296,0],[1304,0],[1315,0],[1327,0],[1336,0],[1347,0],[1357,0],[1367,0],[1377,0],[1386,0],[1399,0],[1407,0],[1419,0],[1428,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    35
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  4) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":1,"turnedAt":1,"share":0.128,"end":0,"hole":58,"frames":[[0,1],[34,1],[56,0.831],[76,0.683],[82,0.634],[92,0.565],[106,0.467],[120,0.369],[126,0.339],[133,0.293],[144,0.24],[154,0.192],[163,0.154],[173,0.117],[184,0.082],[196,0.053],[206,0.033],[216,0.019],[225,0.01],[237,0.003],[250,0],[258,0],[344,0],[351,0],[358,0],[369,0],[379,0],[391,0],[400,0],[409,0],[421,0],[428,0],[441,0],[450,0],[459,0],[468,0],[480,0],[490,0],[501,0],[512,0],[521,0],[533,0],[542,0],[552,0],[562,0],[573,0],[582,0],[593,0],[604,0],[611,0],[623,0],[633,0],[644,0],[655,0],[664,0],[673,0],[685,0],[695,0],[705,0],[714,0],[725,0],[747,0],[751,0],[755,0],[768,0],[776,0],[785,0],[796,0],[808,0],[816,0],[828,0],[836,0],[848,0],[858,0],[868,0],[878,0],[888,0],[901,0],[910,0],[922,0],[930,0],[942,0],[951,0],[965,0],[971,0],[983,0],[992,0],[1006,0],[1010,0],[1022,0],[1034,0],[1042,0],[1052,0],[1062,0],[1071,0],[1083,0],[1093,0],[1105,0],[1113,0],[1123,0],[1134,0],[1143,0],[1153,0],[1164,0],[1174,0],[1185,0],[1195,0],[1203,0],[1215,0],[1226,0],[1236,0],[1245,0],[1257,0],[1265,0],[1275,0],[1288,0],[1297,0],[1306,0],[1318,0],[1327,0],[1339,0],[1348,0],[1358,0],[1370,0],[1378,0],[1389,0],[1399,0],[1411,0],[1419,0],[1431,0],[1440,0],[1451,0],[1463,0],[1471,0],[1481,0],[1491,0],[1502,0],[1512,0],[1522,0],[1532,0],[1540,0],[1552,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    58
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  5) [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.412,"turnedAt":0.412,"share":0.043,"end":0,"hole":34,"frames":[[0,0.412],[18,0.409],[26,0.391],[32,0.38],[44,0.351],[51,0.336],[62,0.309],[71,0.286],[80,0.262],[92,0.234],[101,0.211],[114,0.181],[127,0.154],[133,0.142],[143,0.12],[153,0.101],[166,0.081],[172,0.07],[184,0.053],[194,0.04],[207,0.026],[213,0.02],[225,0.008],[235,0.001],[245,0],[261,0],[267,0],[275,0],[287,0],[296,0],[304,0],[317,0],[326,0],[336,0],[349,0],[357,0],[370,0],[377,0],[389,0],[398,0],[410,0],[419,0],[429,0],[438,0],[450,0],[459,0],[470,0],[481,0],[490,0],[503,0],[508,0],[520,0],[530,0],[541,0],[550,0],[562,0],[572,0],[581,0],[592,0],[605,0],[612,0],[622,0],[633,0],[646,0],[653,0],[663,0],[675,0],[683,0],[696,0],[704,0],[714,0],[724,0],[733,0],[743,0],[755,0],[765,0],[775,0],[787,0],[799,0],[807,0],[819,0],[827,0],[838,0],[848,0],[861,0],[866,0],[878,0],[888,0],[897,0],[908,0],[917,0],[928,0],[938,0],[950,0],[959,0],[969,0],[978,0],[990,0],[1000,0],[1010,0],[1020,0],[1029,0],[1039,0],[1051,0],[1061,0],[1071,0],[1082,0],[1090,0],[1102,0],[1112,0],[1121,0],[1133,0],[1142,0],[1154,0],[1163,0],[1172,0],[1184,0],[1194,0],[1204,0],[1214,0],[1225,0],[1235,0],[1243,0],[1255,0],[1265,0],[1274,0],[1286,0],[1296,0],[1304,0],[1316,0],[1328,0],[1335,0],[1347,0],[1355,0],[1367,0],[1379,0],[1386,0],[1398,0],[1406,0],[1416,0],[1429,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    34
+
+      1107 |     }
+      1108 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 1109 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                                                    ^
+      1110 |     return read;
+      1111 | }
+      1112 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1109:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1205:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  5 failed
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+  1 passed (58.9s)

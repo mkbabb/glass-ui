@@ -1,0 +1,380 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic13-cmd/probe.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/cmd-red-wd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "cmd.probe.ts",
+      "file": "cmd.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "palette a · typed \"se\", closed by pick: the next open starts empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5960,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"id\":\"a\",\"route\":\"pick\",\"typed\":\"se\",\"typedRows\":1,\"closeAt\":2443,\"afterExit\":{\"query\":\"General settings\",\"log\":[[1359,\"\",true],[1417,\"\",true],[1960,\"s\",true],[2046,\"se\",true],[2458,\"General settings\",false],[2461,\"General settings\",false],[2464,\"General settings\",false],[2464,\"General settings\",false]]},\"mountedAfter\":1,\"reopenAt\":4029,\"nextValue\":\"\",\"nextRows\":9,\"afterOpen\":{\"query\":\"\",\"log\":[[1359,\"\",true],[1417,\"\",true],[1960,\"s\",true],[2046,\"se\",true],[2458,\"General settings\",false],[2461,\"General settings\",false],[2464,\"General settings\",false],[2464,\"General settings\",false],[4075,\"\",true],[4106,\"\",true]]},\"heightsWhileShown\":[435],\"frames\":[[10,1,0,0],[20,1,0,0],[30,1,0,0],[33,1,0,0],[34,1,0,0],[40,1,0,0],[88,1,435,0],[117,1,435,0.083],[130,1,435,0.375],[138,1,435,0.499],[144,1,435,0.567],[153,1,435,0.614],[164,1,435,0.677],[175,1,435,0.741],[182,1,435,0.795],[193,1,435,0.824],[204,1,435,0.861],[213,1,435,0.892],[225,1,435,0.912],[235,1,435,0.933],[246,1,435,0.947],[254,1,435,0.959],[264,1,435,0.966],[276,1,435,0.973],[285,1,435,0.98],[297,1,435,0.984],[307,1,435,0.988],[320,1,435,0.991],[326,1,435,0.993],[336,1,435,0.994],[347,1,435,0.996],[359,1,435,0.997],[367,1,435,0.998],[378,1,435,0.998],[387,1,435,0.998],[397,1,435,0.999],[408,1,435,0.999],[418,1,435,0.999],[429,1,435,0.999],[438,1,435,1],[447,1,435,1],[458,1,435,1],[468,1,435,1],[480,1,435,1],[490,1,435,1],[499,1,435,1],[509,1,435,1],[522,1,435,1],[540,1,435,1],[551,1,435,1],[552,1,435,1],[561,1,435,1],[571,1,435,1],[581,1,435,1],[591,1,435,1],[601,1,435,1],[613,1,435,1],[622,1,435,1],[634,1,435,1],[643,1,435,1],[653,1,435,1],[664,1,435,1],[674,1,435,1],[688,1,435,1],[696,1,435,1],[705,1,435,1],[714,1,435,1],[726,1,435,1],[735,1,435,1],[744,1,435,1],[754,1,435,1],[766,1,435,1],[775,1,435,1],[786,1,435,1],[796,1,435,1],[806,1,435,1],[816,1,435,1],[829,1,435,1],[837,1,435,1],[847,1,435,1],[860,1,435,1],[867,1,435,1],[878,1,435,1],[888,1,435,1],[898,1,435,1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:49:26.914Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJpZCI6ImEiLCJyb3V0ZSI6InBpY2siLCJ0eXBlZCI6InNlIiwidHlwZWRSb3dzIjoxLCJjbG9zZUF0IjoyNDQzLCJhZnRlckV4aXQiOnsicXVlcnkiOiJHZW5lcmFsIHNldHRpbmdzIiwibG9nIjpbWzEzNTksIiIsdHJ1ZV0sWzE0MTcsIiIsdHJ1ZV0sWzE5NjAsInMiLHRydWVdLFsyMDQ2LCJzZSIsdHJ1ZV0sWzI0NTgsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXSxbMjQ2MSwiR2VuZXJhbCBzZXR0aW5ncyIsZmFsc2VdLFsyNDY0LCJHZW5lcmFsIHNldHRpbmdzIixmYWxzZV0sWzI0NjQsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXV19LCJtb3VudGVkQWZ0ZXIiOjEsInJlb3BlbkF0Ijo0MDI5LCJuZXh0VmFsdWUiOiIiLCJuZXh0Um93cyI6OSwiYWZ0ZXJPcGVuIjp7InF1ZXJ5IjoiIiwibG9nIjpbWzEzNTksIiIsdHJ1ZV0sWzE0MTcsIiIsdHJ1ZV0sWzE5NjAsInMiLHRydWVdLFsyMDQ2LCJzZSIsdHJ1ZV0sWzI0NTgsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXSxbMjQ2MSwiR2VuZXJhbCBzZXR0aW5ncyIsZmFsc2VdLFsyNDY0LCJHZW5lcmFsIHNldHRpbmdzIixmYWxzZV0sWzI0NjQsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXSxbNDA3NSwiIix0cnVlXSxbNDEwNiwiIix0cnVlXV19LCJoZWlnaHRzV2hpbGVTaG93biI6WzQzNV0sImZyYW1lcyI6W1sxMCwxLDAsMF0sWzIwLDEsMCwwXSxbMzAsMSwwLDBdLFszMywxLDAsMF0sWzM0LDEsMCwwXSxbNDAsMSwwLDBdLFs4OCwxLDQzNSwwXSxbMTE3LDEsNDM1LDAuMDgzXSxbMTMwLDEsNDM1LDAuMzc1XSxbMTM4LDEsNDM1LDAuNDk5XSxbMTQ0LDEsNDM1LDAuNTY3XSxbMTUzLDEsNDM1LDAuNjE0XSxbMTY0LDEsNDM1LDAuNjc3XSxbMTc1LDEsNDM1LDAuNzQxXSxbMTgyLDEsNDM1LDAuNzk1XSxbMTkzLDEsNDM1LDAuODI0XSxbMjA0LDEsNDM1LDAuODYxXSxbMjEzLDEsNDM1LDAuODkyXSxbMjI1LDEsNDM1LDAuOTEyXSxbMjM1LDEsNDM1LDAuOTMzXSxbMjQ2LDEsNDM1LDAuOTQ3XSxbMjU0LDEsNDM1LDAuOTU5XSxbMjY0LDEsNDM1LDAuOTY2XSxbMjc2LDEsNDM1LDAuOTczXSxbMjg1LDEsNDM1LDAuOThdLFsyOTcsMSw0MzUsMC45ODRdLFszMDcsMSw0MzUsMC45ODhdLFszMjAsMSw0MzUsMC45OTFdLFszMjYsMSw0MzUsMC45OTNdLFszMzYsMSw0MzUsMC45OTRdLFszNDcsMSw0MzUsMC45OTZdLFszNTksMSw0MzUsMC45OTddLFszNjcsMSw0MzUsMC45OThdLFszNzgsMSw0MzUsMC45OThdLFszODcsMSw0MzUsMC45OThdLFszOTcsMSw0MzUsMC45OTldLFs0MDgsMSw0MzUsMC45OTldLFs0MTgsMSw0MzUsMC45OTldLFs0MjksMSw0MzUsMC45OTldLFs0MzgsMSw0MzUsMV0sWzQ0NywxLDQzNSwxXSxbNDU4LDEsNDM1LDFdLFs0NjgsMSw0MzUsMV0sWzQ4MCwxLDQzNSwxXSxbNDkwLDEsNDM1LDFdLFs0OTksMSw0MzUsMV0sWzUwOSwxLDQzNSwxXSxbNTIyLDEsNDM1LDFdLFs1NDAsMSw0MzUsMV0sWzU1MSwxLDQzNSwxXSxbNTUyLDEsNDM1LDFdLFs1NjEsMSw0MzUsMV0sWzU3MSwxLDQzNSwxXSxbNTgxLDEsNDM1LDFdLFs1OTEsMSw0MzUsMV0sWzYwMSwxLDQzNSwxXSxbNjEzLDEsNDM1LDFdLFs2MjIsMSw0MzUsMV0sWzYzNCwxLDQzNSwxXSxbNjQzLDEsNDM1LDFdLFs2NTMsMSw0MzUsMV0sWzY2NCwxLDQzNSwxXSxbNjc0LDEsNDM1LDFdLFs2ODgsMSw0MzUsMV0sWzY5NiwxLDQzNSwxXSxbNzA1LDEsNDM1LDFdLFs3MTQsMSw0MzUsMV0sWzcyNiwxLDQzNSwxXSxbNzM1LDEsNDM1LDFdLFs3NDQsMSw0MzUsMV0sWzc1NCwxLDQzNSwxXSxbNzY2LDEsNDM1LDFdLFs3NzUsMSw0MzUsMV0sWzc4NiwxLDQzNSwxXSxbNzk2LDEsNDM1LDFdLFs4MDYsMSw0MzUsMV0sWzgxNiwxLDQzNSwxXSxbODI5LDEsNDM1LDFdLFs4MzcsMSw0MzUsMV0sWzg0NywxLDQzNSwxXSxbODYwLDEsNDM1LDFdLFs4NjcsMSw0MzUsMV0sWzg3OCwxLDQzNSwxXSxbODg4LDEsNDM1LDFdLFs4OTgsMSw0MzUsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3e5e367b3c90196519a-d460e0db34b619eef898",
+          "file": "cmd.probe.ts",
+          "line": 21,
+          "column": 9
+        },
+        {
+          "title": "palette a · typed \"se\", closed by escape: the next open starts empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5689,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"id\":\"a\",\"route\":\"escape\",\"typed\":\"se\",\"typedRows\":1,\"closeAt\":2444,\"afterExit\":{\"query\":\"\",\"log\":[[1399,\"\",true],[1431,\"\",true],[1963,\"s\",true],[2046,\"se\",true],[2462,\"\",false],[2463,\"\",false]]},\"mountedAfter\":1,\"reopenAt\":3997,\"nextValue\":\"\",\"nextRows\":9,\"afterOpen\":{\"query\":\"\",\"log\":[[1399,\"\",true],[1431,\"\",true],[1963,\"s\",true],[2046,\"se\",true],[2462,\"\",false],[2463,\"\",false],[4036,\"\",true],[4062,\"\",true]]},\"heightsWhileShown\":[435],\"frames\":[[8,1,0,0],[18,1,0,0],[19,1,0,0],[20,1,0,0],[29,1,0,0],[74,1,435,0],[107,1,435,0.083],[119,1,435,0.415],[131,1,435,0.526],[140,1,435,0.621],[151,1,435,0.683],[161,1,435,0.747],[171,1,435,0.795],[181,1,435,0.835],[192,1,435,0.867],[202,1,435,0.896],[212,1,435,0.918],[222,1,435,0.935],[233,1,435,0.948],[243,1,435,0.96],[253,1,435,0.969],[263,1,435,0.975],[272,1,435,0.981],[282,1,435,0.984],[294,1,435,0.988],[304,1,435,0.991],[312,1,435,0.993],[323,1,435,0.994],[335,1,435,0.996],[345,1,435,0.997],[357,1,435,0.998],[365,1,435,0.998],[374,1,435,0.999],[384,1,435,0.999],[396,1,435,0.999],[406,1,435,0.999],[417,1,435,0.999],[426,1,435,1],[435,1,435,1],[446,1,435,1],[457,1,435,1],[468,1,435,1],[478,1,435,1],[488,1,435,1],[498,1,435,1],[507,1,435,1],[518,1,435,1],[535,1,435,1],[539,1,435,1],[549,1,435,1],[560,1,435,1],[568,1,435,1],[580,1,435,1],[590,1,435,1],[601,1,435,1],[610,1,435,1],[621,1,435,1],[629,1,435,1],[642,1,435,1],[651,1,435,1],[661,1,435,1],[671,1,435,1],[680,1,435,1],[692,1,435,1],[702,1,435,1],[714,1,435,1],[721,1,435,1],[733,1,435,1],[743,1,435,1],[752,1,435,1],[761,1,435,1],[774,1,435,1],[784,1,435,1],[794,1,435,1],[804,1,435,1],[813,1,435,1],[823,1,435,1],[835,1,435,1],[845,1,435,1],[855,1,435,1],[865,1,435,1],[874,1,435,1],[886,1,435,1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:49:33.237Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJpZCI6ImEiLCJyb3V0ZSI6ImVzY2FwZSIsInR5cGVkIjoic2UiLCJ0eXBlZFJvd3MiOjEsImNsb3NlQXQiOjI0NDQsImFmdGVyRXhpdCI6eyJxdWVyeSI6IiIsImxvZyI6W1sxMzk5LCIiLHRydWVdLFsxNDMxLCIiLHRydWVdLFsxOTYzLCJzIix0cnVlXSxbMjA0Niwic2UiLHRydWVdLFsyNDYyLCIiLGZhbHNlXSxbMjQ2MywiIixmYWxzZV1dfSwibW91bnRlZEFmdGVyIjoxLCJyZW9wZW5BdCI6Mzk5NywibmV4dFZhbHVlIjoiIiwibmV4dFJvd3MiOjksImFmdGVyT3BlbiI6eyJxdWVyeSI6IiIsImxvZyI6W1sxMzk5LCIiLHRydWVdLFsxNDMxLCIiLHRydWVdLFsxOTYzLCJzIix0cnVlXSxbMjA0Niwic2UiLHRydWVdLFsyNDYyLCIiLGZhbHNlXSxbMjQ2MywiIixmYWxzZV0sWzQwMzYsIiIsdHJ1ZV0sWzQwNjIsIiIsdHJ1ZV1dfSwiaGVpZ2h0c1doaWxlU2hvd24iOls0MzVdLCJmcmFtZXMiOltbOCwxLDAsMF0sWzE4LDEsMCwwXSxbMTksMSwwLDBdLFsyMCwxLDAsMF0sWzI5LDEsMCwwXSxbNzQsMSw0MzUsMF0sWzEwNywxLDQzNSwwLjA4M10sWzExOSwxLDQzNSwwLjQxNV0sWzEzMSwxLDQzNSwwLjUyNl0sWzE0MCwxLDQzNSwwLjYyMV0sWzE1MSwxLDQzNSwwLjY4M10sWzE2MSwxLDQzNSwwLjc0N10sWzE3MSwxLDQzNSwwLjc5NV0sWzE4MSwxLDQzNSwwLjgzNV0sWzE5MiwxLDQzNSwwLjg2N10sWzIwMiwxLDQzNSwwLjg5Nl0sWzIxMiwxLDQzNSwwLjkxOF0sWzIyMiwxLDQzNSwwLjkzNV0sWzIzMywxLDQzNSwwLjk0OF0sWzI0MywxLDQzNSwwLjk2XSxbMjUzLDEsNDM1LDAuOTY5XSxbMjYzLDEsNDM1LDAuOTc1XSxbMjcyLDEsNDM1LDAuOTgxXSxbMjgyLDEsNDM1LDAuOTg0XSxbMjk0LDEsNDM1LDAuOTg4XSxbMzA0LDEsNDM1LDAuOTkxXSxbMzEyLDEsNDM1LDAuOTkzXSxbMzIzLDEsNDM1LDAuOTk0XSxbMzM1LDEsNDM1LDAuOTk2XSxbMzQ1LDEsNDM1LDAuOTk3XSxbMzU3LDEsNDM1LDAuOTk4XSxbMzY1LDEsNDM1LDAuOTk4XSxbMzc0LDEsNDM1LDAuOTk5XSxbMzg0LDEsNDM1LDAuOTk5XSxbMzk2LDEsNDM1LDAuOTk5XSxbNDA2LDEsNDM1LDAuOTk5XSxbNDE3LDEsNDM1LDAuOTk5XSxbNDI2LDEsNDM1LDFdLFs0MzUsMSw0MzUsMV0sWzQ0NiwxLDQzNSwxXSxbNDU3LDEsNDM1LDFdLFs0NjgsMSw0MzUsMV0sWzQ3OCwxLDQzNSwxXSxbNDg4LDEsNDM1LDFdLFs0OTgsMSw0MzUsMV0sWzUwNywxLDQzNSwxXSxbNTE4LDEsNDM1LDFdLFs1MzUsMSw0MzUsMV0sWzUzOSwxLDQzNSwxXSxbNTQ5LDEsNDM1LDFdLFs1NjAsMSw0MzUsMV0sWzU2OCwxLDQzNSwxXSxbNTgwLDEsNDM1LDFdLFs1OTAsMSw0MzUsMV0sWzYwMSwxLDQzNSwxXSxbNjEwLDEsNDM1LDFdLFs2MjEsMSw0MzUsMV0sWzYyOSwxLDQzNSwxXSxbNjQyLDEsNDM1LDFdLFs2NTEsMSw0MzUsMV0sWzY2MSwxLDQzNSwxXSxbNjcxLDEsNDM1LDFdLFs2ODAsMSw0MzUsMV0sWzY5MiwxLDQzNSwxXSxbNzAyLDEsNDM1LDFdLFs3MTQsMSw0MzUsMV0sWzcyMSwxLDQzNSwxXSxbNzMzLDEsNDM1LDFdLFs3NDMsMSw0MzUsMV0sWzc1MiwxLDQzNSwxXSxbNzYxLDEsNDM1LDFdLFs3NzQsMSw0MzUsMV0sWzc4NCwxLDQzNSwxXSxbNzk0LDEsNDM1LDFdLFs4MDQsMSw0MzUsMV0sWzgxMywxLDQzNSwxXSxbODIzLDEsNDM1LDFdLFs4MzUsMSw0MzUsMV0sWzg0NSwxLDQzNSwxXSxbODU1LDEsNDM1LDFdLFs4NjUsMSw0MzUsMV0sWzg3NCwxLDQzNSwxXSxbODg2LDEsNDM1LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3e5e367b3c90196519a-c3a5ead8862d72b69e86",
+          "file": "cmd.probe.ts",
+          "line": 21,
+          "column": 9
+        },
+        {
+          "title": "palette b · typed \"se\", closed by pick: the next open starts empty",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5655,
+                  "error": {
+                    "message": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"General settings\"\u001b[39m",
+                    "stack": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"General settings\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts:54:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                      "column": 65,
+                      "line": 54
+                    },
+                    "snippet": "  52 |             await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  53 |             console.log(\"READING\", JSON.stringify(reading));\n> 54 |             expect(nextValue, `the next open's query is empty`).toBe(\"\");\n     |                                                                 ^\n  55 |             expect(nextRows, `the next open shows every row`).toBe(9);\n  56 |             expect(heights.length, `the next open's plate holds one height while it is seen ${JSON.stringify(heights)}`).toBe(1);\n  57 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                        "column": 65,
+                        "line": 54
+                      },
+                      "message": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"General settings\"\u001b[39m\n\n  52 |             await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  53 |             console.log(\"READING\", JSON.stringify(reading));\n> 54 |             expect(nextValue, `the next open's query is empty`).toBe(\"\");\n     |                                                                 ^\n  55 |             expect(nextRows, `the next open shows every row`).toBe(9);\n  56 |             expect(heights.length, `the next open's plate holds one height while it is seen ${JSON.stringify(heights)}`).toBe(1);\n  57 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts:54:65"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "READING {\"id\":\"b\",\"route\":\"pick\",\"typed\":\"se\",\"typedRows\":1,\"closeAt\":2403,\"afterExit\":{\"query\":\"General settings\",\"log\":[[437,\"\",false],[458,\"\",false],[1936,\"s\",true],[2023,\"se\",true],[2411,\"General settings\",false],[2413,\"General settings\",false],[2415,\"General settings\",false],[2415,\"General settings\",false]]},\"mountedAfter\":1,\"reopenAt\":3971,\"nextValue\":\"General settings\",\"nextRows\":1,\"afterOpen\":{\"query\":\"General settings\",\"log\":[[437,\"\",false],[458,\"\",false],[1936,\"s\",true],[2023,\"se\",true],[2411,\"General settings\",false],[2413,\"General settings\",false],[2415,\"General settings\",false],[2415,\"General settings\",false]]},\"heightsWhileShown\":[119],\"frames\":[[0,1,0,0],[11,1,0,0],[23,1,0,0],[25,1,0,0],[27,1,0,0],[32,1,0,0],[67,1,119,0],[94,1,119,0.083],[102,1,119,0.354],[115,1,119,0.434],[123,1,119,0.551],[133,1,119,0.614],[142,1,119,0.683],[152,1,119,0.736],[164,1,119,0.786],[179,1,119,0.835],[184,1,119,0.881],[194,1,119,0.894],[205,1,119,0.916],[215,1,119,0.935],[224,1,119,0.948],[235,1,119,0.958],[245,1,119,0.968],[256,1,119,0.975],[264,1,119,0.981],[276,1,119,0.984],[285,1,119,0.988],[299,1,119,0.991],[306,1,119,0.993],[315,1,119,0.994],[327,1,119,0.996],[337,1,119,0.997],[347,1,119,0.997],[357,1,119,0.998],[367,1,119,0.998],[376,1,119,0.999],[387,1,119,0.999],[399,1,119,0.999],[409,1,119,0.999],[420,1,119,1],[427,1,119,1],[439,1,119,1],[449,1,119,1],[459,1,119,1],[470,1,119,1],[481,1,119,1],[490,1,119,1],[502,1,119,1],[517,1,119,1],[521,1,119,1],[533,1,119,1],[541,1,119,1],[551,1,119,1],[562,1,119,1],[570,1,119,1],[581,1,119,1],[593,1,119,1],[605,1,119,1],[613,1,119,1],[623,1,119,1],[635,1,119,1],[643,1,119,1],[654,1,119,1],[664,1,119,1],[673,1,119,1],[686,1,119,1],[695,1,119,1],[707,1,119,1],[713,1,119,1],[725,1,119,1],[735,1,119,1],[747,1,119,1],[756,1,119,1],[766,1,119,1],[778,1,119,1],[787,1,119,1],[796,1,119,1],[808,1,119,1],[817,1,119,1],[829,1,119,1],[838,1,119,1],[846,1,119,1],[858,1,119,1],[870,1,119,1],[881,1,119,1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:49:38.935Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJpZCI6ImIiLCJyb3V0ZSI6InBpY2siLCJ0eXBlZCI6InNlIiwidHlwZWRSb3dzIjoxLCJjbG9zZUF0IjoyNDAzLCJhZnRlckV4aXQiOnsicXVlcnkiOiJHZW5lcmFsIHNldHRpbmdzIiwibG9nIjpbWzQzNywiIixmYWxzZV0sWzQ1OCwiIixmYWxzZV0sWzE5MzYsInMiLHRydWVdLFsyMDIzLCJzZSIsdHJ1ZV0sWzI0MTEsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXSxbMjQxMywiR2VuZXJhbCBzZXR0aW5ncyIsZmFsc2VdLFsyNDE1LCJHZW5lcmFsIHNldHRpbmdzIixmYWxzZV0sWzI0MTUsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXV19LCJtb3VudGVkQWZ0ZXIiOjEsInJlb3BlbkF0IjozOTcxLCJuZXh0VmFsdWUiOiJHZW5lcmFsIHNldHRpbmdzIiwibmV4dFJvd3MiOjEsImFmdGVyT3BlbiI6eyJxdWVyeSI6IkdlbmVyYWwgc2V0dGluZ3MiLCJsb2ciOltbNDM3LCIiLGZhbHNlXSxbNDU4LCIiLGZhbHNlXSxbMTkzNiwicyIsdHJ1ZV0sWzIwMjMsInNlIix0cnVlXSxbMjQxMSwiR2VuZXJhbCBzZXR0aW5ncyIsZmFsc2VdLFsyNDEzLCJHZW5lcmFsIHNldHRpbmdzIixmYWxzZV0sWzI0MTUsIkdlbmVyYWwgc2V0dGluZ3MiLGZhbHNlXSxbMjQxNSwiR2VuZXJhbCBzZXR0aW5ncyIsZmFsc2VdXX0sImhlaWdodHNXaGlsZVNob3duIjpbMTE5XSwiZnJhbWVzIjpbWzAsMSwwLDBdLFsxMSwxLDAsMF0sWzIzLDEsMCwwXSxbMjUsMSwwLDBdLFsyNywxLDAsMF0sWzMyLDEsMCwwXSxbNjcsMSwxMTksMF0sWzk0LDEsMTE5LDAuMDgzXSxbMTAyLDEsMTE5LDAuMzU0XSxbMTE1LDEsMTE5LDAuNDM0XSxbMTIzLDEsMTE5LDAuNTUxXSxbMTMzLDEsMTE5LDAuNjE0XSxbMTQyLDEsMTE5LDAuNjgzXSxbMTUyLDEsMTE5LDAuNzM2XSxbMTY0LDEsMTE5LDAuNzg2XSxbMTc5LDEsMTE5LDAuODM1XSxbMTg0LDEsMTE5LDAuODgxXSxbMTk0LDEsMTE5LDAuODk0XSxbMjA1LDEsMTE5LDAuOTE2XSxbMjE1LDEsMTE5LDAuOTM1XSxbMjI0LDEsMTE5LDAuOTQ4XSxbMjM1LDEsMTE5LDAuOTU4XSxbMjQ1LDEsMTE5LDAuOTY4XSxbMjU2LDEsMTE5LDAuOTc1XSxbMjY0LDEsMTE5LDAuOTgxXSxbMjc2LDEsMTE5LDAuOTg0XSxbMjg1LDEsMTE5LDAuOTg4XSxbMjk5LDEsMTE5LDAuOTkxXSxbMzA2LDEsMTE5LDAuOTkzXSxbMzE1LDEsMTE5LDAuOTk0XSxbMzI3LDEsMTE5LDAuOTk2XSxbMzM3LDEsMTE5LDAuOTk3XSxbMzQ3LDEsMTE5LDAuOTk3XSxbMzU3LDEsMTE5LDAuOTk4XSxbMzY3LDEsMTE5LDAuOTk4XSxbMzc2LDEsMTE5LDAuOTk5XSxbMzg3LDEsMTE5LDAuOTk5XSxbMzk5LDEsMTE5LDAuOTk5XSxbNDA5LDEsMTE5LDAuOTk5XSxbNDIwLDEsMTE5LDFdLFs0MjcsMSwxMTksMV0sWzQzOSwxLDExOSwxXSxbNDQ5LDEsMTE5LDFdLFs0NTksMSwxMTksMV0sWzQ3MCwxLDExOSwxXSxbNDgxLDEsMTE5LDFdLFs0OTAsMSwxMTksMV0sWzUwMiwxLDExOSwxXSxbNTE3LDEsMTE5LDFdLFs1MjEsMSwxMTksMV0sWzUzMywxLDExOSwxXSxbNTQxLDEsMTE5LDFdLFs1NTEsMSwxMTksMV0sWzU2MiwxLDExOSwxXSxbNTcwLDEsMTE5LDFdLFs1ODEsMSwxMTksMV0sWzU5MywxLDExOSwxXSxbNjA1LDEsMTE5LDFdLFs2MTMsMSwxMTksMV0sWzYyMywxLDExOSwxXSxbNjM1LDEsMTE5LDFdLFs2NDMsMSwxMTksMV0sWzY1NCwxLDExOSwxXSxbNjY0LDEsMTE5LDFdLFs2NzMsMSwxMTksMV0sWzY4NiwxLDExOSwxXSxbNjk1LDEsMTE5LDFdLFs3MDcsMSwxMTksMV0sWzcxMywxLDExOSwxXSxbNzI1LDEsMTE5LDFdLFs3MzUsMSwxMTksMV0sWzc0NywxLDExOSwxXSxbNzU2LDEsMTE5LDFdLFs3NjYsMSwxMTksMV0sWzc3OCwxLDExOSwxXSxbNzg3LDEsMTE5LDFdLFs3OTYsMSwxMTksMV0sWzgwOCwxLDExOSwxXSxbODE3LDEsMTE5LDFdLFs4MjksMSwxMTksMV0sWzgzOCwxLDExOSwxXSxbODQ2LDEsMTE5LDFdLFs4NTgsMSwxMTksMV0sWzg3MCwxLDExOSwxXSxbODgxLDEsMTE5LDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/cmd.probe.ts-palette-b-·-t-3b16d--the-next-open-starts-empty-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                    "column": 65,
+                    "line": 54
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b3e5e367b3c90196519a-166db13db5250f715632",
+          "file": "cmd.probe.ts",
+          "line": 21,
+          "column": 9
+        },
+        {
+          "title": "palette b · typed \"se\", closed by escape: the next open starts empty",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5976,
+                  "error": {
+                    "message": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"se\"\u001b[39m",
+                    "stack": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"se\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts:54:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                      "column": 65,
+                      "line": 54
+                    },
+                    "snippet": "  52 |             await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  53 |             console.log(\"READING\", JSON.stringify(reading));\n> 54 |             expect(nextValue, `the next open's query is empty`).toBe(\"\");\n     |                                                                 ^\n  55 |             expect(nextRows, `the next open shows every row`).toBe(9);\n  56 |             expect(heights.length, `the next open's plate holds one height while it is seen ${JSON.stringify(heights)}`).toBe(1);\n  57 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                        "column": 65,
+                        "line": 54
+                      },
+                      "message": "Error: the next open's query is empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\"\u001b[39m\nReceived: \u001b[31m\"se\"\u001b[39m\n\n  52 |             await info.attach(\"reading\", { body: JSON.stringify(reading), contentType: \"application/json\" });\n  53 |             console.log(\"READING\", JSON.stringify(reading));\n> 54 |             expect(nextValue, `the next open's query is empty`).toBe(\"\");\n     |                                                                 ^\n  55 |             expect(nextRows, `the next open shows every row`).toBe(9);\n  56 |             expect(heights.length, `the next open's plate holds one height while it is seen ${JSON.stringify(heights)}`).toBe(1);\n  57 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts:54:65"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "READING {\"id\":\"b\",\"route\":\"escape\",\"typed\":\"se\",\"typedRows\":1,\"closeAt\":2361,\"afterExit\":{\"query\":\"se\",\"log\":[[369,\"\",false],[381,\"\",false],[1870,\"s\",true],[1955,\"se\",true]]},\"mountedAfter\":1,\"reopenAt\":3939,\"nextValue\":\"se\",\"nextRows\":4,\"afterOpen\":{\"query\":\"se\",\"log\":[[369,\"\",false],[381,\"\",false],[1870,\"s\",true],[1955,\"se\",true]]},\"heightsWhileShown\":[251],\"frames\":[[6,1,0,0],[16,1,0,0],[24,1,0,0],[26,1,0,0],[27,1,0,0],[71,1,251,0],[93,1,251,0.083],[100,1,251,0.303],[110,1,251,0.375],[118,1,251,0.472],[126,1,251,0.543],[138,1,251,0.607],[148,1,251,0.689],[158,1,251,0.747],[170,1,251,0.795],[181,1,251,0.842],[188,1,251,0.876],[200,1,251,0.894],[209,1,251,0.919],[221,1,251,0.935],[230,1,251,0.951],[242,1,251,0.96],[250,1,251,0.97],[261,1,251,0.975],[271,1,251,0.981],[283,1,251,0.985],[291,1,251,0.989],[302,1,251,0.991],[312,1,251,0.993],[322,1,251,0.995],[332,1,251,0.996],[343,1,251,0.997],[353,1,251,0.998],[363,1,251,0.998],[374,1,251,0.999],[383,1,251,0.999],[395,1,251,0.999],[404,1,251,0.999],[413,1,251,0.999],[424,1,251,1],[433,1,251,1],[443,1,251,1],[453,1,251,1],[466,1,251,1],[477,1,251,1],[484,1,251,1],[495,1,251,1],[507,1,251,1],[516,1,251,1],[525,1,251,1],[537,1,251,1],[547,1,251,1],[557,1,251,1],[567,1,251,1],[579,1,251,1],[588,1,251,1],[596,1,251,1],[608,1,251,1],[618,1,251,1],[630,1,251,1],[638,1,251,1],[648,1,251,1],[660,1,251,1],[669,1,251,1],[681,1,251,1],[690,1,251,1],[700,1,251,1],[710,1,251,1],[721,1,251,1],[731,1,251,1],[741,1,251,1],[751,1,251,1],[760,1,251,1],[771,1,251,1],[783,1,251,1],[792,1,251,1],[802,1,251,1],[812,1,251,1],[821,1,251,1],[832,1,251,1],[843,1,251,1],[851,1,251,1],[863,1,251,1],[873,1,251,1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:49:45.414Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJpZCI6ImIiLCJyb3V0ZSI6ImVzY2FwZSIsInR5cGVkIjoic2UiLCJ0eXBlZFJvd3MiOjEsImNsb3NlQXQiOjIzNjEsImFmdGVyRXhpdCI6eyJxdWVyeSI6InNlIiwibG9nIjpbWzM2OSwiIixmYWxzZV0sWzM4MSwiIixmYWxzZV0sWzE4NzAsInMiLHRydWVdLFsxOTU1LCJzZSIsdHJ1ZV1dfSwibW91bnRlZEFmdGVyIjoxLCJyZW9wZW5BdCI6MzkzOSwibmV4dFZhbHVlIjoic2UiLCJuZXh0Um93cyI6NCwiYWZ0ZXJPcGVuIjp7InF1ZXJ5Ijoic2UiLCJsb2ciOltbMzY5LCIiLGZhbHNlXSxbMzgxLCIiLGZhbHNlXSxbMTg3MCwicyIsdHJ1ZV0sWzE5NTUsInNlIix0cnVlXV19LCJoZWlnaHRzV2hpbGVTaG93biI6WzI1MV0sImZyYW1lcyI6W1s2LDEsMCwwXSxbMTYsMSwwLDBdLFsyNCwxLDAsMF0sWzI2LDEsMCwwXSxbMjcsMSwwLDBdLFs3MSwxLDI1MSwwXSxbOTMsMSwyNTEsMC4wODNdLFsxMDAsMSwyNTEsMC4zMDNdLFsxMTAsMSwyNTEsMC4zNzVdLFsxMTgsMSwyNTEsMC40NzJdLFsxMjYsMSwyNTEsMC41NDNdLFsxMzgsMSwyNTEsMC42MDddLFsxNDgsMSwyNTEsMC42ODldLFsxNTgsMSwyNTEsMC43NDddLFsxNzAsMSwyNTEsMC43OTVdLFsxODEsMSwyNTEsMC44NDJdLFsxODgsMSwyNTEsMC44NzZdLFsyMDAsMSwyNTEsMC44OTRdLFsyMDksMSwyNTEsMC45MTldLFsyMjEsMSwyNTEsMC45MzVdLFsyMzAsMSwyNTEsMC45NTFdLFsyNDIsMSwyNTEsMC45Nl0sWzI1MCwxLDI1MSwwLjk3XSxbMjYxLDEsMjUxLDAuOTc1XSxbMjcxLDEsMjUxLDAuOTgxXSxbMjgzLDEsMjUxLDAuOTg1XSxbMjkxLDEsMjUxLDAuOTg5XSxbMzAyLDEsMjUxLDAuOTkxXSxbMzEyLDEsMjUxLDAuOTkzXSxbMzIyLDEsMjUxLDAuOTk1XSxbMzMyLDEsMjUxLDAuOTk2XSxbMzQzLDEsMjUxLDAuOTk3XSxbMzUzLDEsMjUxLDAuOTk4XSxbMzYzLDEsMjUxLDAuOTk4XSxbMzc0LDEsMjUxLDAuOTk5XSxbMzgzLDEsMjUxLDAuOTk5XSxbMzk1LDEsMjUxLDAuOTk5XSxbNDA0LDEsMjUxLDAuOTk5XSxbNDEzLDEsMjUxLDAuOTk5XSxbNDI0LDEsMjUxLDFdLFs0MzMsMSwyNTEsMV0sWzQ0MywxLDI1MSwxXSxbNDUzLDEsMjUxLDFdLFs0NjYsMSwyNTEsMV0sWzQ3NywxLDI1MSwxXSxbNDg0LDEsMjUxLDFdLFs0OTUsMSwyNTEsMV0sWzUwNywxLDI1MSwxXSxbNTE2LDEsMjUxLDFdLFs1MjUsMSwyNTEsMV0sWzUzNywxLDI1MSwxXSxbNTQ3LDEsMjUxLDFdLFs1NTcsMSwyNTEsMV0sWzU2NywxLDI1MSwxXSxbNTc5LDEsMjUxLDFdLFs1ODgsMSwyNTEsMV0sWzU5NiwxLDI1MSwxXSxbNjA4LDEsMjUxLDFdLFs2MTgsMSwyNTEsMV0sWzYzMCwxLDI1MSwxXSxbNjM4LDEsMjUxLDFdLFs2NDgsMSwyNTEsMV0sWzY2MCwxLDI1MSwxXSxbNjY5LDEsMjUxLDFdLFs2ODEsMSwyNTEsMV0sWzY5MCwxLDI1MSwxXSxbNzAwLDEsMjUxLDFdLFs3MTAsMSwyNTEsMV0sWzcyMSwxLDI1MSwxXSxbNzMxLDEsMjUxLDFdLFs3NDEsMSwyNTEsMV0sWzc1MSwxLDI1MSwxXSxbNzYwLDEsMjUxLDFdLFs3NzEsMSwyNTEsMV0sWzc4MywxLDI1MSwxXSxbNzkyLDEsMjUxLDFdLFs4MDIsMSwyNTEsMV0sWzgxMiwxLDI1MSwxXSxbODIxLDEsMjUxLDFdLFs4MzIsMSwyNTEsMV0sWzg0MywxLDI1MSwxXSxbODUxLDEsMjUxLDFdLFs4NjMsMSwyNTEsMV0sWzg3MywxLDI1MSwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/test-results/cmd.probe.ts-palette-b-·-t-05264--the-next-open-starts-empty-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic13-red/tree/tests-visual/critic13-cmd/cmd.probe.ts",
+                    "column": 65,
+                    "line": 54
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b3e5e367b3c90196519a-9748ed60970305da34c3",
+          "file": "cmd.probe.ts",
+          "line": 21,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T00:49:21.013Z",
+    "duration": 30892.05,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,58 @@
+
+Running 44 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Select closed while it opens turns from where it is (2.3s)
+  ✓   2 [chromium-phone] › release-11-1-1.spec.ts:1214:9 › reverse · a Select reopened while it closes turns from where it is (3.0s)
+  ✓   3 [chromium-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-phone] › release-11-1-1.spec.ts:1214:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✓   6 [chromium-phone] › release-11-1-1.spec.ts:1214:9 › reverse · a Popover reopened while it closes turns from where it is (2.9s)
+  ✓   7 [chromium-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Toast closed while it opens turns from where it is (2.0s)
+  -   8 [chromium-phone] › release-11-1-1.spec.ts:1202:9 › reverse · a Tooltip closed while it opens turns from where it is
+  -   9 [chromium-phone] › release-11-1-1.spec.ts:1214:9 › reverse · a Tooltip reopened while it closes turns from where it is
+  ✓  10 [chromium-phone] › release-11-1-1.spec.ts:1234:1 › reverse · a disclosure reopened while it closes finishes its reopen (4.9s)
+[WebServer] 3:39:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [chromium-phone] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.1s)
+[WebServer] 3:39:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [chromium-phone] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.1s)
+  ✓  13 [chromium-phone] › release-11-1-1.spec.ts:1270:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.1s)
+[WebServer] 3:39:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-phone] › release-11-1-1.spec.ts:1294:1 › reverse · a press on the page while a sheet leaves reaches the page (2.3s)
+  ✓  15 [chromium-phone] › release-11-1-1.spec.ts:1382:1 › tooltip · a hint keeps its size as it comes and goes (2.1s)
+  -  16 [chromium-phone] › release-11-1-1.spec.ts:1415:1 › tooltip · a Tooltip enters on a tween
+  -  17 [chromium-phone] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  18 [chromium-phone] › release-11-1-1.spec.ts:1431:5 › tooltip · a hint handed to its neighbour fades, outgoing
+  ✓  19 [chromium-phone] › release-11-1-1.spec.ts:1525:1 › expand · an ExpandableContainer enters on a tween (3.6s)
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by exit (4.6s)
+  ✓  21 [chromium-phone] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by escape (4.6s)
+  ✓  22 [chromium-phone] › release-11-1-1.spec.ts:1540:5 › expand · an ExpandableContainer leaves on a tween by open (4.5s)
+  ✓  23 [chromium-phone] › release-11-1-1.spec.ts:1563:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.7s)
+  ✓  24 [chromium-phone] › release-11-1-1.spec.ts:1580:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.6s)
+  ✓  25 [chromium-phone] › release-11-1-1.spec.ts:1596:1 › expand · Escape is live from the entrance's first frame (1.3s)
+[WebServer] 3:40:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 3:40:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.5s)
+[WebServer] 3:40:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 3:40:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.5s)
+  ✓  30 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  31 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Popover closed and reopened mid-exit says nothing (2.4s)
+  ✓  32 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  33 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.5s)
+  ✓  34 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  35 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Select closed and reopened mid-exit says nothing (2.5s)
+  -  36 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame
+  -  37 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Tooltip closed and reopened mid-exit says nothing
+  ✓  38 [chromium-phone] › release-11-1-1.spec.ts:1655:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.7s)
+  -  39 [chromium-phone] › release-11-1-1.spec.ts:1684:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  40 [chromium-phone] › release-11-1-1.spec.ts:1759:1 › leave · a Popover inside a shadow root says so to its host (5.7s)
+  -  41 [chromium-phone] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  42 [chromium-phone] › release-11-1-1.spec.ts:1783:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  43 [chromium-phone] › release-11-1-1.spec.ts:1801:1 › leave · a hover card says once that its leave has finished
+[WebServer] 3:40:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  44 [chromium-phone] › release-11-1-1.spec.ts:1819:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.0s)
+
+  11 skipped
+  33 passed (1.7m)

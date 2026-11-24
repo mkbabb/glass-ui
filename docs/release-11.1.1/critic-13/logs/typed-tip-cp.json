@@ -1,0 +1,278 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic13-cmd/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic13-cmd",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/typed-tip-cp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "typed.probe.ts",
+      "file": "typed.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "typed palette · \"se\" then tap: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4308,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"tap\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[6,350,251,1],[14,350,251,1],[23,350,251,1],[31,350,251,1],[39,350,251,1],[48,350,251,1],[56,350,251,1],[65,350,251,0.969],[71,350,251,0.928],[81,350,251,0.896],[90,350,251,0.847],[96,350,251,0.796],[105,350,251,0.757],[113,350,251,0.708],[121,350,251,0.656],[131,350,251,0.606],[139,350,251,0.542],[147,350,251,0.49],[155,350,251,0.439],[164,350,251,0.392],[172,350,251,0.338],[181,350,251,0.285],[189,350,251,0.232],[196,350,251,0.185],[206,350,251,0.146],[214,350,251,0.094],[222,350,251,0.056],[230,350,251,0.023]],\"rows\":[[-3,4],[5,4],[14,4],[22,4],[30,4],[39,4],[48,4],[55,4],[64,4],[70,4],[80,4],[89,4],[95,4],[104,4],[112,4],[120,4],[130,4],[139,4],[147,4],[154,4],[163,4],[171,4],[180,4],[189,4],[196,4],[206,4],[214,4],[221,4],[229,4],[238,-1],[246,-1],[256,-1],[262,-1],[272,-1],[280,-1],[289,-1],[297,-1],[304,-1],[314,-1],[322,-1],[330,-1],[337,-1],[346,-1],[355,-1],[363,-1],[372,-1],[379,-1],[387,-1],[397,-1],[405,-1],[414,-1],[422,-1],[430,-1],[439,-1],[447,-1],[455,-1],[462,-1],[472,-1],[479,-1],[487,-1],[497,-1],[505,-1],[514,-1],[522,-1],[530,-1],[537,-1],[547,-1],[555,-1],[563,-1],[572,-1],[580,-1],[589,-1],[597,-1],[605,-1],[613,-1],[622,-1],[629,-1],[639,-1],[647,-1],[655,-1],[662,-1],[672,-1],[681,-1],[687,-1],[695,-1],[706,-1],[712,-1],[721,-1],[730,-1],[739,-1],[747,-1],[755,-1],[763,-1],[772,-1],[780,-1],[789,-1],[795,-1],[804,-1],[814,-1],[821,-1],[830,-1],[839,-1],[847,-1],[855,-1],[864,-1],[872,-1],[880,-1],[889,-1],[895,-1],[904,-1],[914,-1],[922,-1],[929,-1],[939,-1],[947,-1],[955,-1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:35:19.376Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6InRhcCIsImxhYmVscyI6WyJTZWFyY2ggZXZlcnl3aGVyZVxu4oyYSyIsIkFjY291bnQgc2V0dGluZ3NcbuKMmCwiLCJHZW5lcmFsIHNldHRpbmdzIiwiQ2xvc2UgdGFiXG7ijJhXIl0sInJlc3QiOlszNTAsMjUxXSwiZHJpZnQiOjAsInNlZW5EcmlmdCI6MCwiYm94IjpbWzYsMzUwLDI1MSwxXSxbMTQsMzUwLDI1MSwxXSxbMjMsMzUwLDI1MSwxXSxbMzEsMzUwLDI1MSwxXSxbMzksMzUwLDI1MSwxXSxbNDgsMzUwLDI1MSwxXSxbNTYsMzUwLDI1MSwxXSxbNjUsMzUwLDI1MSwwLjk2OV0sWzcxLDM1MCwyNTEsMC45MjhdLFs4MSwzNTAsMjUxLDAuODk2XSxbOTAsMzUwLDI1MSwwLjg0N10sWzk2LDM1MCwyNTEsMC43OTZdLFsxMDUsMzUwLDI1MSwwLjc1N10sWzExMywzNTAsMjUxLDAuNzA4XSxbMTIxLDM1MCwyNTEsMC42NTZdLFsxMzEsMzUwLDI1MSwwLjYwNl0sWzEzOSwzNTAsMjUxLDAuNTQyXSxbMTQ3LDM1MCwyNTEsMC40OV0sWzE1NSwzNTAsMjUxLDAuNDM5XSxbMTY0LDM1MCwyNTEsMC4zOTJdLFsxNzIsMzUwLDI1MSwwLjMzOF0sWzE4MSwzNTAsMjUxLDAuMjg1XSxbMTg5LDM1MCwyNTEsMC4yMzJdLFsxOTYsMzUwLDI1MSwwLjE4NV0sWzIwNiwzNTAsMjUxLDAuMTQ2XSxbMjE0LDM1MCwyNTEsMC4wOTRdLFsyMjIsMzUwLDI1MSwwLjA1Nl0sWzIzMCwzNTAsMjUxLDAuMDIzXV0sInJvd3MiOltbLTMsNF0sWzUsNF0sWzE0LDRdLFsyMiw0XSxbMzAsNF0sWzM5LDRdLFs0OCw0XSxbNTUsNF0sWzY0LDRdLFs3MCw0XSxbODAsNF0sWzg5LDRdLFs5NSw0XSxbMTA0LDRdLFsxMTIsNF0sWzEyMCw0XSxbMTMwLDRdLFsxMzksNF0sWzE0Nyw0XSxbMTU0LDRdLFsxNjMsNF0sWzE3MSw0XSxbMTgwLDRdLFsxODksNF0sWzE5Niw0XSxbMjA2LDRdLFsyMTQsNF0sWzIyMSw0XSxbMjI5LDRdLFsyMzgsLTFdLFsyNDYsLTFdLFsyNTYsLTFdLFsyNjIsLTFdLFsyNzIsLTFdLFsyODAsLTFdLFsyODksLTFdLFsyOTcsLTFdLFszMDQsLTFdLFszMTQsLTFdLFszMjIsLTFdLFszMzAsLTFdLFszMzcsLTFdLFszNDYsLTFdLFszNTUsLTFdLFszNjMsLTFdLFszNzIsLTFdLFszNzksLTFdLFszODcsLTFdLFszOTcsLTFdLFs0MDUsLTFdLFs0MTQsLTFdLFs0MjIsLTFdLFs0MzAsLTFdLFs0MzksLTFdLFs0NDcsLTFdLFs0NTUsLTFdLFs0NjIsLTFdLFs0NzIsLTFdLFs0NzksLTFdLFs0ODcsLTFdLFs0OTcsLTFdLFs1MDUsLTFdLFs1MTQsLTFdLFs1MjIsLTFdLFs1MzAsLTFdLFs1MzcsLTFdLFs1NDcsLTFdLFs1NTUsLTFdLFs1NjMsLTFdLFs1NzIsLTFdLFs1ODAsLTFdLFs1ODksLTFdLFs1OTcsLTFdLFs2MDUsLTFdLFs2MTMsLTFdLFs2MjIsLTFdLFs2MjksLTFdLFs2MzksLTFdLFs2NDcsLTFdLFs2NTUsLTFdLFs2NjIsLTFdLFs2NzIsLTFdLFs2ODEsLTFdLFs2ODcsLTFdLFs2OTUsLTFdLFs3MDYsLTFdLFs3MTIsLTFdLFs3MjEsLTFdLFs3MzAsLTFdLFs3MzksLTFdLFs3NDcsLTFdLFs3NTUsLTFdLFs3NjMsLTFdLFs3NzIsLTFdLFs3ODAsLTFdLFs3ODksLTFdLFs3OTUsLTFdLFs4MDQsLTFdLFs4MTQsLTFdLFs4MjEsLTFdLFs4MzAsLTFdLFs4MzksLTFdLFs4NDcsLTFdLFs4NTUsLTFdLFs4NjQsLTFdLFs4NzIsLTFdLFs4ODAsLTFdLFs4ODksLTFdLFs4OTUsLTFdLFs5MDQsLTFdLFs5MTQsLTFdLFs5MjIsLTFdLFs5MjksLTFdLFs5MzksLTFdLFs5NDcsLTFdLFs5NTUsLTFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-37474c3a80229ed07dd1",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "typed palette · \"se\" then enter: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3893,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"enter\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[6,350,251,1],[13,350,251,1],[23,350,251,0.974],[31,350,251,0.927],[40,350,251,0.889],[46,350,251,0.843],[56,350,251,0.805],[64,350,251,0.747],[73,350,251,0.703],[81,350,251,0.646],[88,350,251,0.597],[97,350,251,0.551],[105,350,251,0.496],[115,350,251,0.444],[122,350,251,0.382],[131,350,251,0.334],[138,350,251,0.282],[148,350,251,0.24],[156,350,251,0.182],[164,350,251,0.139],[173,350,251,0.098],[181,350,251,0.055],[189,350,251,0.019]],\"rows\":[[-3,4],[10,4],[12,4],[22,4],[30,4],[38,4],[45,4],[56,4],[63,4],[72,4],[80,4],[87,4],[96,4],[104,4],[114,4],[121,4],[130,4],[137,4],[147,4],[155,4],[163,4],[172,4],[180,4],[188,4],[197,-1],[205,-1],[212,-1],[222,-1],[230,-1],[238,-1],[245,-1],[255,-1],[262,-1],[272,-1],[278,-1],[289,-1],[297,-1],[305,-1],[313,-1],[321,-1],[329,-1],[337,-1],[345,-1],[354,-1],[363,-1],[372,-1],[380,-1],[388,-1],[397,-1],[405,-1],[413,-1],[421,-1],[429,-1],[437,-1],[446,-1],[455,-1],[464,-1],[470,-1],[480,-1],[487,-1],[497,-1],[503,-1],[513,-1],[521,-1],[529,-1],[538,-1],[545,-1],[555,-1],[563,-1],[572,-1],[580,-1],[588,-1],[597,-1],[605,-1],[613,-1],[622,-1],[630,-1],[638,-1],[646,-1],[655,-1],[663,-1],[671,-1],[680,-1],[688,-1],[697,-1],[705,-1],[713,-1],[722,-1],[730,-1],[738,-1],[747,-1],[755,-1],[762,-1],[772,-1],[780,-1],[788,-1],[797,-1],[805,-1],[813,-1],[822,-1],[828,-1],[838,-1],[847,-1],[854,-1],[862,-1],[872,-1],[880,-1],[888,-1],[896,-1],[904,-1],[913,-1],[922,-1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:35:23.802Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVudGVyIiwibGFiZWxzIjpbIlNlYXJjaCBldmVyeXdoZXJlXG7ijJhLIiwiQWNjb3VudCBzZXR0aW5nc1xu4oyYLCIsIkdlbmVyYWwgc2V0dGluZ3MiLCJDbG9zZSB0YWJcbuKMmFciXSwicmVzdCI6WzM1MCwyNTFdLCJkcmlmdCI6MCwic2VlbkRyaWZ0IjowLCJib3giOltbNiwzNTAsMjUxLDFdLFsxMywzNTAsMjUxLDFdLFsyMywzNTAsMjUxLDAuOTc0XSxbMzEsMzUwLDI1MSwwLjkyN10sWzQwLDM1MCwyNTEsMC44ODldLFs0NiwzNTAsMjUxLDAuODQzXSxbNTYsMzUwLDI1MSwwLjgwNV0sWzY0LDM1MCwyNTEsMC43NDddLFs3MywzNTAsMjUxLDAuNzAzXSxbODEsMzUwLDI1MSwwLjY0Nl0sWzg4LDM1MCwyNTEsMC41OTddLFs5NywzNTAsMjUxLDAuNTUxXSxbMTA1LDM1MCwyNTEsMC40OTZdLFsxMTUsMzUwLDI1MSwwLjQ0NF0sWzEyMiwzNTAsMjUxLDAuMzgyXSxbMTMxLDM1MCwyNTEsMC4zMzRdLFsxMzgsMzUwLDI1MSwwLjI4Ml0sWzE0OCwzNTAsMjUxLDAuMjRdLFsxNTYsMzUwLDI1MSwwLjE4Ml0sWzE2NCwzNTAsMjUxLDAuMTM5XSxbMTczLDM1MCwyNTEsMC4wOThdLFsxODEsMzUwLDI1MSwwLjA1NV0sWzE4OSwzNTAsMjUxLDAuMDE5XV0sInJvd3MiOltbLTMsNF0sWzEwLDRdLFsxMiw0XSxbMjIsNF0sWzMwLDRdLFszOCw0XSxbNDUsNF0sWzU2LDRdLFs2Myw0XSxbNzIsNF0sWzgwLDRdLFs4Nyw0XSxbOTYsNF0sWzEwNCw0XSxbMTE0LDRdLFsxMjEsNF0sWzEzMCw0XSxbMTM3LDRdLFsxNDcsNF0sWzE1NSw0XSxbMTYzLDRdLFsxNzIsNF0sWzE4MCw0XSxbMTg4LDRdLFsxOTcsLTFdLFsyMDUsLTFdLFsyMTIsLTFdLFsyMjIsLTFdLFsyMzAsLTFdLFsyMzgsLTFdLFsyNDUsLTFdLFsyNTUsLTFdLFsyNjIsLTFdLFsyNzIsLTFdLFsyNzgsLTFdLFsyODksLTFdLFsyOTcsLTFdLFszMDUsLTFdLFszMTMsLTFdLFszMjEsLTFdLFszMjksLTFdLFszMzcsLTFdLFszNDUsLTFdLFszNTQsLTFdLFszNjMsLTFdLFszNzIsLTFdLFszODAsLTFdLFszODgsLTFdLFszOTcsLTFdLFs0MDUsLTFdLFs0MTMsLTFdLFs0MjEsLTFdLFs0MjksLTFdLFs0MzcsLTFdLFs0NDYsLTFdLFs0NTUsLTFdLFs0NjQsLTFdLFs0NzAsLTFdLFs0ODAsLTFdLFs0ODcsLTFdLFs0OTcsLTFdLFs1MDMsLTFdLFs1MTMsLTFdLFs1MjEsLTFdLFs1MjksLTFdLFs1MzgsLTFdLFs1NDUsLTFdLFs1NTUsLTFdLFs1NjMsLTFdLFs1NzIsLTFdLFs1ODAsLTFdLFs1ODgsLTFdLFs1OTcsLTFdLFs2MDUsLTFdLFs2MTMsLTFdLFs2MjIsLTFdLFs2MzAsLTFdLFs2MzgsLTFdLFs2NDYsLTFdLFs2NTUsLTFdLFs2NjMsLTFdLFs2NzEsLTFdLFs2ODAsLTFdLFs2ODgsLTFdLFs2OTcsLTFdLFs3MDUsLTFdLFs3MTMsLTFdLFs3MjIsLTFdLFs3MzAsLTFdLFs3MzgsLTFdLFs3NDcsLTFdLFs3NTUsLTFdLFs3NjIsLTFdLFs3NzIsLTFdLFs3ODAsLTFdLFs3ODgsLTFdLFs3OTcsLTFdLFs4MDUsLTFdLFs4MTMsLTFdLFs4MjIsLTFdLFs4MjgsLTFdLFs4MzgsLTFdLFs4NDcsLTFdLFs4NTQsLTFdLFs4NjIsLTFdLFs4NzIsLTFdLFs4ODAsLTFdLFs4ODgsLTFdLFs4OTYsLTFdLFs5MDQsLTFdLFs5MTMsLTFdLFs5MjIsLTFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-27942a3e4893e30b0cdf",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "typed palette · \"se\" then escape: the plate keeps its box through the exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3917,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "READING {\"route\":\"escape\",\"labels\":[\"Search everywhere\\n⌘K\",\"Account settings\\n⌘,\",\"General settings\",\"Close tab\\n⌘W\"],\"rest\":[350,251],\"drift\":0,\"seenDrift\":0,\"box\":[[7,350,251,1],[16,350,251,1],[24,350,251,0.967],[32,350,251,0.93],[41,350,251,0.889],[47,350,251,0.843],[57,350,251,0.806],[66,350,251,0.749],[73,350,251,0.699],[83,350,251,0.651],[91,350,251,0.594],[98,350,251,0.543],[108,350,251,0.496],[116,350,251,0.436],[124,350,251,0.384],[132,350,251,0.332],[141,350,251,0.286],[149,350,251,0.231],[157,350,251,0.185],[165,350,251,0.141],[174,350,251,0.101],[182,350,251,0.055],[191,350,251,0.019]],\"rows\":[[-3,4],[9,4],[15,4],[23,4],[32,4],[40,4],[47,4],[57,4],[65,4],[73,4],[82,4],[90,4],[97,4],[107,4],[115,4],[123,4],[131,4],[140,4],[148,4],[156,4],[164,4],[173,4],[182,4],[190,4],[198,-1],[205,-1],[215,-1],[222,-1],[230,-1],[240,-1],[248,-1],[255,-1],[265,-1],[273,-1],[282,-1],[290,-1],[298,-1],[306,-1],[315,-1],[323,-1],[332,-1],[340,-1],[348,-1],[357,-1],[365,-1],[373,-1],[382,-1],[389,-1],[398,-1],[407,-1],[415,-1],[423,-1],[432,-1],[440,-1],[448,-1],[455,-1],[465,-1],[473,-1],[482,-1],[490,-1],[498,-1],[507,-1],[515,-1],[523,-1],[532,-1],[540,-1],[548,-1],[557,-1],[565,-1],[573,-1],[582,-1],[590,-1],[597,-1],[607,-1],[615,-1],[623,-1],[632,-1],[640,-1],[648,-1],[657,-1],[665,-1],[673,-1],[682,-1],[690,-1],[698,-1],[706,-1],[715,-1],[723,-1],[732,-1],[740,-1],[748,-1],[757,-1],[765,-1],[773,-1],[782,-1],[790,-1],[798,-1],[807,-1],[815,-1],[823,-1],[832,-1],[840,-1],[848,-1],[857,-1],[865,-1],[873,-1],[882,-1],[889,-1],[897,-1],[906,-1],[915,-1]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-23T20:35:27.701Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reading",
+                      "contentType": "application/json",
+                      "body": "eyJyb3V0ZSI6ImVzY2FwZSIsImxhYmVscyI6WyJTZWFyY2ggZXZlcnl3aGVyZVxu4oyYSyIsIkFjY291bnQgc2V0dGluZ3NcbuKMmCwiLCJHZW5lcmFsIHNldHRpbmdzIiwiQ2xvc2UgdGFiXG7ijJhXIl0sInJlc3QiOlszNTAsMjUxXSwiZHJpZnQiOjAsInNlZW5EcmlmdCI6MCwiYm94IjpbWzcsMzUwLDI1MSwxXSxbMTYsMzUwLDI1MSwxXSxbMjQsMzUwLDI1MSwwLjk2N10sWzMyLDM1MCwyNTEsMC45M10sWzQxLDM1MCwyNTEsMC44ODldLFs0NywzNTAsMjUxLDAuODQzXSxbNTcsMzUwLDI1MSwwLjgwNl0sWzY2LDM1MCwyNTEsMC43NDldLFs3MywzNTAsMjUxLDAuNjk5XSxbODMsMzUwLDI1MSwwLjY1MV0sWzkxLDM1MCwyNTEsMC41OTRdLFs5OCwzNTAsMjUxLDAuNTQzXSxbMTA4LDM1MCwyNTEsMC40OTZdLFsxMTYsMzUwLDI1MSwwLjQzNl0sWzEyNCwzNTAsMjUxLDAuMzg0XSxbMTMyLDM1MCwyNTEsMC4zMzJdLFsxNDEsMzUwLDI1MSwwLjI4Nl0sWzE0OSwzNTAsMjUxLDAuMjMxXSxbMTU3LDM1MCwyNTEsMC4xODVdLFsxNjUsMzUwLDI1MSwwLjE0MV0sWzE3NCwzNTAsMjUxLDAuMTAxXSxbMTgyLDM1MCwyNTEsMC4wNTVdLFsxOTEsMzUwLDI1MSwwLjAxOV1dLCJyb3dzIjpbWy0zLDRdLFs5LDRdLFsxNSw0XSxbMjMsNF0sWzMyLDRdLFs0MCw0XSxbNDcsNF0sWzU3LDRdLFs2NSw0XSxbNzMsNF0sWzgyLDRdLFs5MCw0XSxbOTcsNF0sWzEwNyw0XSxbMTE1LDRdLFsxMjMsNF0sWzEzMSw0XSxbMTQwLDRdLFsxNDgsNF0sWzE1Niw0XSxbMTY0LDRdLFsxNzMsNF0sWzE4Miw0XSxbMTkwLDRdLFsxOTgsLTFdLFsyMDUsLTFdLFsyMTUsLTFdLFsyMjIsLTFdLFsyMzAsLTFdLFsyNDAsLTFdLFsyNDgsLTFdLFsyNTUsLTFdLFsyNjUsLTFdLFsyNzMsLTFdLFsyODIsLTFdLFsyOTAsLTFdLFsyOTgsLTFdLFszMDYsLTFdLFszMTUsLTFdLFszMjMsLTFdLFszMzIsLTFdLFszNDAsLTFdLFszNDgsLTFdLFszNTcsLTFdLFszNjUsLTFdLFszNzMsLTFdLFszODIsLTFdLFszODksLTFdLFszOTgsLTFdLFs0MDcsLTFdLFs0MTUsLTFdLFs0MjMsLTFdLFs0MzIsLTFdLFs0NDAsLTFdLFs0NDgsLTFdLFs0NTUsLTFdLFs0NjUsLTFdLFs0NzMsLTFdLFs0ODIsLTFdLFs0OTAsLTFdLFs0OTgsLTFdLFs1MDcsLTFdLFs1MTUsLTFdLFs1MjMsLTFdLFs1MzIsLTFdLFs1NDAsLTFdLFs1NDgsLTFdLFs1NTcsLTFdLFs1NjUsLTFdLFs1NzMsLTFdLFs1ODIsLTFdLFs1OTAsLTFdLFs1OTcsLTFdLFs2MDcsLTFdLFs2MTUsLTFdLFs2MjMsLTFdLFs2MzIsLTFdLFs2NDAsLTFdLFs2NDgsLTFdLFs2NTcsLTFdLFs2NjUsLTFdLFs2NzMsLTFdLFs2ODIsLTFdLFs2OTAsLTFdLFs2OTgsLTFdLFs3MDYsLTFdLFs3MTUsLTFdLFs3MjMsLTFdLFs3MzIsLTFdLFs3NDAsLTFdLFs3NDgsLTFdLFs3NTcsLTFdLFs3NjUsLTFdLFs3NzMsLTFdLFs3ODIsLTFdLFs3OTAsLTFdLFs3OTgsLTFdLFs4MDcsLTFdLFs4MTUsLTFdLFs4MjMsLTFdLFs4MzIsLTFdLFs4NDAsLTFdLFs4NDgsLTFdLFs4NTcsLTFdLFs4NjUsLTFdLFs4NzMsLTFdLFs4ODIsLTFdLFs4ODksLTFdLFs4OTcsLTFdLFs5MDYsLTFdLFs5MTUsLTFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "25a2d31354bbcf42e5f7-69339f8ffc0032f12edc",
+          "file": "typed.probe.ts",
+          "line": 20,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-23T20:35:17.709Z",
+    "duration": 13969.172999999999,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

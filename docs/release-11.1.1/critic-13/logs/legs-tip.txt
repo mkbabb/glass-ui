@@ -1,0 +1,604 @@
+== tip-chromium-desktop-0.json
+  skip round · a compact SegmentedTabs strip is round-ended on to 
+  skip round · a wide SegmentedTabs strip is round-ended on touch 
+  pass weight · selecting a word-labelled ToggleGroupItem moves n 
+  skip lift · a scale-on-hover element returns to rest after a ta 
+  pass form · a dock Select leaves in the form it opened in · pic 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · out 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · esc 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · tri 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · cur 
+  skip form · a dock DropdownMenu keeps its material through the  
+  skip glass · a phone Select is glass with its rows at 4.5:1 ove 
+  skip glass · a phone Select is glass with its rows at 4.5:1 ove 
+  skip glass · a phone Select is solid under reduced transparency 
+  skip glass · a phone dock DropdownMenu is glass with its rows a 
+  skip glass · a phone dock DropdownMenu is glass with its rows a 
+  skip glass · a phone dock DropdownMenu is solid under reduced t 
+  pass exit · Select leaves on the exit curve, shorter than it en travel=0
+  pass exit · DropdownMenu leaves on the exit curve, shorter than travel=0
+  pass exit · Popover leaves on the exit curve, shorter than it e travel=8
+  pass exit · Tooltip leaves on the exit curve, shorter than it e travel=0
+  pass exit · Dialog leaves on the exit curve, shorter than it en travel=13
+  pass exit · Sheet right leaves on the exit curve, shorter than  travel=374
+  pass exit · Sheet bottom leaves on the exit curve, shorter than travel=115
+  pass exit · a Popover enters and leaves on opacity and its slid 
+  pass exit · a Tooltip leaves on opacity and its slide alone     
+  pass routes · a detented Sheet leaves whole by escape           
+  pass routes · a detented Sheet leaves whole by outside          
+  pass routes · a detented Sheet dragged off leaves from where th 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a press on an open Select's trigger closes it onc 
+  pass routes · a press on an open DropdownMenu's trigger closes  
+  pass routes · a press on an open Popover's trigger closes it on 
+  skip sheet · a detented Sheet rises into place at its rung's si 
+  skip sheet · a detented Sheet dragged up and let go at speed sp 
+  skip sheet · a detented Sheet dragged up and let go at rest spr 
+== tip-chromium-desktop-1.json
+  pass reverse · a Select closed while it opens turns from where  
+  pass reverse · a Select reopened while it closes turns from whe 
+  pass reverse · a DropdownMenu closed while it opens turns from  
+  pass reverse · a DropdownMenu reopened while it closes turns fr 
+  pass reverse · a Popover closed while it opens turns from where 
+  pass reverse · a Popover reopened while it closes turns from wh 
+  pass reverse · a Toast closed while it opens turns from where i 
+  pass reverse · a Tooltip closed while it opens turns from where 
+  pass reverse · a Tooltip reopened while it closes turns from wh 
+  pass reverse · a disclosure reopened while it closes finishes i 
+  pass reverse · a press on a leaving Dialog's trigger reopens it 
+  pass reverse · a press on a leaving Sheet's trigger reopens it  
+  pass reverse · a press on a leaving Select's trigger reopens it 
+  pass reverse · a press on the page while a sheet leaves reaches 
+  pass tooltip · a hint keeps its size as it comes and goes       
+  pass tooltip · a Tooltip enters on a tween                      
+  pass tooltip · a hint handed to its neighbour fades, incoming   
+  pass tooltip · a hint handed to its neighbour fades, outgoing   
+  pass expand · an ExpandableContainer enters on a tween          
+  pass expand · an ExpandableContainer leaves on a tween by exit  
+  pass expand · an ExpandableContainer leaves on a tween by escap 
+  pass expand · an ExpandableContainer leaves on a tween by open  
+  pass expand · an ExpandableContainer closed while it enters tur 
+  pass expand · an ExpandableContainer reopened while it leaves t 
+  pass expand · Escape is live from the entrance's first frame    
+  pass leave · a Dialog says once that its leave has finished, af 
+  pass leave · a Dialog closed and reopened mid-exit says nothing 
+  pass leave · a Sheet says once that its leave has finished, aft 
+  pass leave · a Sheet closed and reopened mid-exit says nothing  
+  pass leave · a Popover says once that its leave has finished, a 
+  pass leave · a Popover closed and reopened mid-exit says nothin 
+  pass leave · a DropdownMenu says once that its leave has finish 
+  pass leave · a DropdownMenu closed and reopened mid-exit says n 
+  pass leave · a Select says once that its leave has finished, af 
+  pass leave · a Select closed and reopened mid-exit says nothing 
+  pass leave · a Tooltip says once that its leave has finished, a 
+  pass leave · a Tooltip closed and reopened mid-exit says nothin 
+  pass leave · a Toast says once that its leave has finished, aft 
+  skip leave · a Toast closed and reopened mid-exit says nothing  
+  pass leave · a Popover inside a shadow root says so to its host 
+  pass leave · a ContextMenu says once that its leave has finishe 
+  pass leave · a ContextMenu says once that its leave has finishe 
+  pass leave · a hover card says once that its leave has finished 
+  pass leave · a Dialog unmounted mid-exit says so once, at the u 
+== tip-chromium-desktop-2.json
+  pass standing · Select by pick: no exit in under two frames, no travel=10
+  pass standing · Select by outside: no exit in under two frames, travel=0
+  pass standing · Select by escape: no exit in under two frames,  travel=0
+  pass standing · Select by trigger: no exit in under two frames, travel=0
+  pass standing · DropdownMenu by pick: no exit in under two fram travel=0
+  pass standing · DropdownMenu by outside: no exit in under two f travel=0
+  pass standing · DropdownMenu by escape: no exit in under two fr travel=0
+  pass standing · DropdownMenu by trigger: no exit in under two f travel=0
+  pass standing · plain Select by pick: no exit in under two fram travel=0
+  pass standing · plain Select by outside: no exit in under two f travel=0
+  pass standing · plain Select by escape: no exit in under two fr travel=0
+  pass standing · Popover by outside: no exit in under two frames travel=8
+  pass standing · Popover by escape: no exit in under two frames, travel=8
+  pass standing · Popover by trigger: no exit in under two frames travel=8
+  pass standing · Popover by focus: no exit in under two frames,  travel=8
+  pass standing · Tooltip by escape: no exit in under two frames, travel=0
+  pass standing · Tooltip by away: no exit in under two frames, n travel=0
+  pass standing · Tooltip by trigger: no exit in under two frames travel=0
+  pass standing · brief Toast by timeout: no exit in under two fr travel=0
+  pass standing · Dialog by close: no exit in under two frames, n travel=13
+  pass standing · Dialog by outside: no exit in under two frames, travel=13
+  pass standing · Dialog by escape: no exit in under two frames,  travel=13
+  pass standing · Sheet right by close: no exit in under two fram travel=376
+  pass standing · Sheet right by outside: no exit in under two fr travel=384
+  pass standing · Sheet right by escape: no exit in under two fra travel=376
+  pass standing · Sheet bottom by close: no exit in under two fra travel=117
+  pass standing · Sheet bottom by outside: no exit in under two f travel=117
+  pass standing · Sheet bottom by escape: no exit in under two fr travel=115
+  pass standing · Sheet top by close: no exit in under two frames travel=115
+  pass standing · Sheet top by outside: no exit in under two fram travel=117
+  pass standing · Sheet top by escape: no exit in under two frame travel=115
+  pass standing · Sheet left by close: no exit in under two frame travel=384
+  pass standing · Sheet left by outside: no exit in under two fra travel=375
+  pass standing · Sheet left by escape: no exit in under two fram travel=377
+  pass standing · detented Sheet by outside: no exit in under two travel=446
+  pass standing · detented Sheet by escape: no exit in under two  travel=446
+  pass standing · Toast by close: no exit in under two frames, no travel=0
+  pass standing · Collapsible by trigger: no exit in under two fr travel=0
+  pass standing · Accordion by trigger: no exit in under two fram travel=0
+  pass standing · ExpandableContainer by close: no exit in under  travel=94
+  pass standing · ExpandableContainer by escape: no exit in under travel=98
+  pass standing · CommandDialog by pick: no exit in under two fra travel=13
+  pass standing · CommandDialog by outside: no exit in under two  travel=12
+  pass standing · CommandDialog by escape: no exit in under two f travel=13
+== tip-chromium-desktop-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=16 span=142 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[18]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[10]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[18]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=23 span=193 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[19]
+  pass fade · a Tooltip appears and leaves on a fade              in.fading=23 span=192 boxSteps=0 0->1 | out.fading=14 span=117 boxSteps=0 1->0 | leave=[10]
+  pass fade · a Dialog appears and leaves on a fade               in.fading=19 span=167 boxSteps=0 0->1 | out.fading=20 span=175 boxSteps=0 1->0 | leave=[3]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=22 span=183 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[5] | frost.in.leg.fading=22 span=183 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=22 span=183 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[14] | frost.in.leg.fading=22 span=183 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=22 span=183 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[4] | frost.in.leg.fading=22 span=183 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=23 span=192 boxSteps=0 0->1 | out.fading=18 span=150 boxSteps=0 1->0 | leave=[59]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=193 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=14 span=117 boxSteps=0 0->1 | out.fading=13 span=115 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=23 span=192 boxSteps=0 0->1 | unfold.out.fading=23 span=192 boxSteps=0 1->0 | fold.in.fading=23 span=192 boxSteps=0 0->1 | fold.out.fading=23 span=192 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=23 span=192 boxSteps=0 0->0.18 | out.fading=23 span=192 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-chromium-phone-0.json
+  pass round · a compact SegmentedTabs strip is round-ended on to 
+  pass round · a wide SegmentedTabs strip is round-ended on touch 
+  pass weight · selecting a word-labelled ToggleGroupItem moves n 
+  pass lift · a scale-on-hover element returns to rest after a ta 
+  pass form · a dock Select leaves in the form it opened in · pic 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · out 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · esc 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · tri 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · cur 
+  skip form · a dock DropdownMenu keeps its material through the  
+  pass glass · a phone Select is glass with its rows at 4.5:1 ove 
+  pass glass · a phone Select is glass with its rows at 4.5:1 ove 
+  pass glass · a phone Select is solid under reduced transparency 
+  pass glass · a phone dock DropdownMenu is glass with its rows a 
+  pass glass · a phone dock DropdownMenu is glass with its rows a 
+  pass glass · a phone dock DropdownMenu is solid under reduced t 
+  pass exit · Select leaves on the exit curve, shorter than it en travel=204
+  pass exit · DropdownMenu leaves on the exit curve, shorter than travel=0
+  pass exit · Popover leaves on the exit curve, shorter than it e travel=8
+  skip exit · Tooltip leaves on the exit curve, shorter than it e 
+  pass exit · Dialog leaves on the exit curve, shorter than it en travel=9
+  pass exit · Sheet right leaves on the exit curve, shorter than  travel=286
+  pass exit · Sheet bottom leaves on the exit curve, shorter than travel=86
+  pass exit · a Popover enters and leaves on opacity and its slid 
+  skip exit · a Tooltip leaves on opacity and its slide alone     
+  pass routes · a detented Sheet leaves whole by escape           
+  pass routes · a detented Sheet leaves whole by outside          
+  pass routes · a detented Sheet dragged off leaves from where th 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a press on an open Select's trigger closes it onc 
+  pass routes · a press on an open DropdownMenu's trigger closes  
+  pass routes · a press on an open Popover's trigger closes it on 
+  pass sheet · a detented Sheet rises into place at its rung's si 
+  pass sheet · a detented Sheet dragged up and let go at speed sp 
+  pass sheet · a detented Sheet dragged up and let go at rest spr 
+== tip-chromium-phone-1.json
+  pass reverse · a Select closed while it opens turns from where  
+  pass reverse · a Select reopened while it closes turns from whe 
+  pass reverse · a DropdownMenu closed while it opens turns from  
+  pass reverse · a DropdownMenu reopened while it closes turns fr 
+  pass reverse · a Popover closed while it opens turns from where 
+  pass reverse · a Popover reopened while it closes turns from wh 
+  pass reverse · a Toast closed while it opens turns from where i 
+  skip reverse · a Tooltip closed while it opens turns from where 
+  skip reverse · a Tooltip reopened while it closes turns from wh 
+  pass reverse · a disclosure reopened while it closes finishes i 
+  pass reverse · a press on a leaving Dialog's trigger reopens it 
+  pass reverse · a press on a leaving Sheet's trigger reopens it  
+  pass reverse · a press on a leaving Select's trigger reopens it 
+  pass reverse · a press on the page while a sheet leaves reaches 
+  pass tooltip · a hint keeps its size as it comes and goes       
+  skip tooltip · a Tooltip enters on a tween                      
+  skip tooltip · a hint handed to its neighbour fades, incoming   
+  skip tooltip · a hint handed to its neighbour fades, outgoing   
+  pass expand · an ExpandableContainer enters on a tween          
+  pass expand · an ExpandableContainer leaves on a tween by exit  
+  pass expand · an ExpandableContainer leaves on a tween by escap 
+  pass expand · an ExpandableContainer leaves on a tween by open  
+  pass expand · an ExpandableContainer closed while it enters tur 
+  pass expand · an ExpandableContainer reopened while it leaves t 
+  pass expand · Escape is live from the entrance's first frame    
+  pass leave · a Dialog says once that its leave has finished, af 
+  pass leave · a Dialog closed and reopened mid-exit says nothing 
+  pass leave · a Sheet says once that its leave has finished, aft 
+  pass leave · a Sheet closed and reopened mid-exit says nothing  
+  pass leave · a Popover says once that its leave has finished, a 
+  pass leave · a Popover closed and reopened mid-exit says nothin 
+  pass leave · a DropdownMenu says once that its leave has finish 
+  pass leave · a DropdownMenu closed and reopened mid-exit says n 
+  pass leave · a Select says once that its leave has finished, af 
+  pass leave · a Select closed and reopened mid-exit says nothing 
+  skip leave · a Tooltip says once that its leave has finished, a 
+  skip leave · a Tooltip closed and reopened mid-exit says nothin 
+  pass leave · a Toast says once that its leave has finished, aft 
+  skip leave · a Toast closed and reopened mid-exit says nothing  
+  pass leave · a Popover inside a shadow root says so to its host 
+  skip leave · a ContextMenu says once that its leave has finishe 
+  skip leave · a ContextMenu says once that its leave has finishe 
+  skip leave · a hover card says once that its leave has finished 
+  pass leave · a Dialog unmounted mid-exit says so once, at the u 
+== tip-chromium-phone-2.json
+  pass standing · Select by pick: no exit in under two frames, no travel=213
+  pass standing · Select by outside: no exit in under two frames, travel=211
+  pass standing · Select by escape: no exit in under two frames,  travel=212
+  pass standing · Select by trigger: no exit in under two frames, travel=212
+  pass standing · DropdownMenu by pick: no exit in under two fram travel=0
+  pass standing · DropdownMenu by outside: no exit in under two f travel=0
+  pass standing · DropdownMenu by escape: no exit in under two fr travel=0
+  pass standing · DropdownMenu by trigger: no exit in under two f travel=1
+  pass standing · plain Select by pick: no exit in under two fram travel=211
+  pass standing · plain Select by outside: no exit in under two f travel=212
+  pass standing · plain Select by escape: no exit in under two fr travel=211
+  pass standing · Popover by outside: no exit in under two frames travel=8
+  pass standing · Popover by escape: no exit in under two frames, travel=8
+  pass standing · Popover by trigger: no exit in under two frames travel=8
+  pass standing · Popover by focus: no exit in under two frames,  travel=8
+  skip standing · Tooltip by escape: no exit in under two frames, 
+  skip standing · Tooltip by away: no exit in under two frames, n 
+  skip standing · Tooltip by trigger: no exit in under two frames 
+  pass standing · brief Toast by timeout: no exit in under two fr travel=0
+  pass standing · Dialog by close: no exit in under two frames, n travel=9
+  pass standing · Dialog by outside: no exit in under two frames, travel=9
+  pass standing · Dialog by escape: no exit in under two frames,  travel=9
+  pass standing · Sheet right by close: no exit in under two fram travel=285
+  pass standing · Sheet right by outside: no exit in under two fr travel=292
+  pass standing · Sheet right by escape: no exit in under two fra travel=292
+  pass standing · Sheet bottom by close: no exit in under two fra travel=89
+  pass standing · Sheet bottom by outside: no exit in under two f travel=86
+  pass standing · Sheet bottom by escape: no exit in under two fr travel=88
+  pass standing · Sheet top by close: no exit in under two frames travel=88
+  pass standing · Sheet top by outside: no exit in under two fram travel=86
+  pass standing · Sheet top by escape: no exit in under two frame travel=87
+  pass standing · Sheet left by close: no exit in under two frame travel=292
+  pass standing · Sheet left by outside: no exit in under two fra travel=292
+  pass standing · Sheet left by escape: no exit in under two fram travel=286
+  pass standing · detented Sheet by outside: no exit in under two travel=419
+  pass standing · detented Sheet by escape: no exit in under two  travel=419
+  pass standing · Toast by close: no exit in under two frames, no travel=0
+  pass standing · Collapsible by trigger: no exit in under two fr travel=0
+  pass standing · Accordion by trigger: no exit in under two fram travel=0
+  pass standing · ExpandableContainer by close: no exit in under  travel=92
+  pass standing · ExpandableContainer by escape: no exit in under travel=92
+  pass standing · CommandDialog by pick: no exit in under two fra travel=11
+  pass standing · CommandDialog by outside: no exit in under two  travel=11
+  pass standing · CommandDialog by escape: no exit in under two f travel=11
+== tip-chromium-phone-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=16 span=143 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[19]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[20]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[9]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=23 span=193 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[9]
+  skip fade · a Tooltip appears and leaves on a fade              
+  pass fade · a Dialog appears and leaves on a fade               in.fading=21 span=175 boxSteps=0 0->1 | out.fading=21 span=174 boxSteps=0 1->0 | leave=[2]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[2] | frost.in.leg.fading=23 span=192 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[12] | frost.in.leg.fading=23 span=192 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=23 span=191 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=23 span=191 boxSteps=0 0->1 | frost.out.leg.fading=23 span=192 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=23 span=192 boxSteps=0 0->1 | out.fading=18 span=150 boxSteps=0 1->0 | leave=[51]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=23 span=193 boxSteps=0 0->1 | out.fading=23 span=191 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=23 span=192 boxSteps=0 0->1 | out.fading=23 span=192 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=14 span=118 boxSteps=0 0->1 | out.fading=13 span=117 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=23 span=191 boxSteps=0 0->1 | unfold.out.fading=23 span=191 boxSteps=0 1->0 | fold.in.fading=23 span=191 boxSteps=0 0->1 | fold.out.fading=23 span=191 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=23 span=192 boxSteps=0 0->0.18 | out.fading=23 span=192 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-webkit-desktop-0.json
+  skip round · a compact SegmentedTabs strip is round-ended on to 
+  skip round · a wide SegmentedTabs strip is round-ended on touch 
+  pass weight · selecting a word-labelled ToggleGroupItem moves n 
+  skip lift · a scale-on-hover element returns to rest after a ta 
+  pass form · a dock Select leaves in the form it opened in · pic 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · out 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · esc 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · tri 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · cur 
+  skip form · a dock DropdownMenu keeps its material through the  
+  skip glass · a phone Select is glass with its rows at 4.5:1 ove 
+  skip glass · a phone Select is glass with its rows at 4.5:1 ove 
+  skip glass · a phone Select is solid under reduced transparency 
+  skip glass · a phone dock DropdownMenu is glass with its rows a 
+  skip glass · a phone dock DropdownMenu is glass with its rows a 
+  skip glass · a phone dock DropdownMenu is solid under reduced t 
+  pass exit · Select leaves on the exit curve, shorter than it en travel=0
+  pass exit · DropdownMenu leaves on the exit curve, shorter than travel=0
+  pass exit · Popover leaves on the exit curve, shorter than it e travel=8
+  pass exit · Tooltip leaves on the exit curve, shorter than it e travel=0
+  pass exit · Dialog leaves on the exit curve, shorter than it en travel=12
+  pass exit · Sheet right leaves on the exit curve, shorter than  travel=372
+  pass exit · Sheet bottom leaves on the exit curve, shorter than travel=114
+  pass exit · a Popover enters and leaves on opacity and its slid 
+  pass exit · a Tooltip leaves on opacity and its slide alone     
+  pass routes · a detented Sheet leaves whole by escape           
+  pass routes · a detented Sheet leaves whole by outside          
+  pass routes · a detented Sheet dragged off leaves from where th 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a press on an open Select's trigger closes it onc 
+  pass routes · a press on an open DropdownMenu's trigger closes  
+  pass routes · a press on an open Popover's trigger closes it on 
+  skip sheet · a detented Sheet rises into place at its rung's si 
+  skip sheet · a detented Sheet dragged up and let go at speed sp 
+  skip sheet · a detented Sheet dragged up and let go at rest spr 
+== tip-webkit-desktop-1.json
+  pass reverse · a Select closed while it opens turns from where  
+  pass reverse · a Select reopened while it closes turns from whe 
+  pass reverse · a DropdownMenu closed while it opens turns from  
+  pass reverse · a DropdownMenu reopened while it closes turns fr 
+  pass reverse · a Popover closed while it opens turns from where 
+  pass reverse · a Popover reopened while it closes turns from wh 
+  pass reverse · a Toast closed while it opens turns from where i 
+  pass reverse · a Tooltip closed while it opens turns from where 
+  pass reverse · a Tooltip reopened while it closes turns from wh 
+  pass reverse · a disclosure reopened while it closes finishes i 
+  pass reverse · a press on a leaving Dialog's trigger reopens it 
+  pass reverse · a press on a leaving Sheet's trigger reopens it  
+  pass reverse · a press on a leaving Select's trigger reopens it 
+  pass reverse · a press on the page while a sheet leaves reaches 
+  pass tooltip · a hint keeps its size as it comes and goes       
+  pass tooltip · a Tooltip enters on a tween                      
+  pass tooltip · a hint handed to its neighbour fades, incoming   
+  pass tooltip · a hint handed to its neighbour fades, outgoing   
+  pass expand · an ExpandableContainer enters on a tween          
+  pass expand · an ExpandableContainer leaves on a tween by exit  
+  pass expand · an ExpandableContainer leaves on a tween by escap 
+  pass expand · an ExpandableContainer leaves on a tween by open  
+  pass expand · an ExpandableContainer closed while it enters tur 
+  pass expand · an ExpandableContainer reopened while it leaves t 
+  pass expand · Escape is live from the entrance's first frame    
+  pass leave · a Dialog says once that its leave has finished, af 
+  fail leave · a Dialog closed and reopened mid-exit says nothing 
+  pass leave · a Sheet says once that its leave has finished, aft 
+  pass leave · a Sheet closed and reopened mid-exit says nothing  
+  pass leave · a Popover says once that its leave has finished, a 
+  pass leave · a Popover closed and reopened mid-exit says nothin 
+  pass leave · a DropdownMenu says once that its leave has finish 
+  pass leave · a DropdownMenu closed and reopened mid-exit says n 
+  pass leave · a Select says once that its leave has finished, af 
+  pass leave · a Select closed and reopened mid-exit says nothing 
+  pass leave · a Tooltip says once that its leave has finished, a 
+  pass leave · a Tooltip closed and reopened mid-exit says nothin 
+  pass leave · a Toast says once that its leave has finished, aft 
+  skip leave · a Toast closed and reopened mid-exit says nothing  
+  pass leave · a Popover inside a shadow root says so to its host 
+  pass leave · a ContextMenu says once that its leave has finishe 
+  pass leave · a ContextMenu says once that its leave has finishe 
+  pass leave · a hover card says once that its leave has finished 
+  pass leave · a Dialog unmounted mid-exit says so once, at the u 
+== tip-webkit-desktop-2.json
+  pass standing · Select by pick: no exit in under two frames, no travel=11
+  pass standing · Select by outside: no exit in under two frames, travel=0
+  pass standing · Select by escape: no exit in under two frames,  travel=0
+  pass standing · Select by trigger: no exit in under two frames, travel=0
+  pass standing · DropdownMenu by pick: no exit in under two fram travel=0
+  pass standing · DropdownMenu by outside: no exit in under two f travel=0
+  pass standing · DropdownMenu by escape: no exit in under two fr travel=0
+  pass standing · DropdownMenu by trigger: no exit in under two f travel=0
+  pass standing · plain Select by pick: no exit in under two fram travel=0
+  pass standing · plain Select by outside: no exit in under two f travel=0
+  pass standing · plain Select by escape: no exit in under two fr travel=0
+  pass standing · Popover by outside: no exit in under two frames travel=8
+  pass standing · Popover by escape: no exit in under two frames, travel=8
+  pass standing · Popover by trigger: no exit in under two frames travel=8
+  pass standing · Popover by focus: no exit in under two frames,  travel=8
+  pass standing · Tooltip by escape: no exit in under two frames, travel=0
+  pass standing · Tooltip by away: no exit in under two frames, n travel=0
+  pass standing · Tooltip by trigger: no exit in under two frames travel=0
+  pass standing · brief Toast by timeout: no exit in under two fr travel=0
+  pass standing · Dialog by close: no exit in under two frames, n travel=12
+  pass standing · Dialog by outside: no exit in under two frames, travel=12
+  pass standing · Dialog by escape: no exit in under two frames,  travel=12
+  pass standing · Sheet right by close: no exit in under two fram travel=378
+  pass standing · Sheet right by outside: no exit in under two fr travel=372
+  pass standing · Sheet right by escape: no exit in under two fra travel=379
+  pass standing · Sheet bottom by close: no exit in under two fra travel=114
+  pass standing · Sheet bottom by outside: no exit in under two f travel=116
+  pass standing · Sheet bottom by escape: no exit in under two fr travel=115
+  pass standing · Sheet top by close: no exit in under two frames travel=114
+  pass standing · Sheet top by outside: no exit in under two fram travel=115
+  pass standing · Sheet top by escape: no exit in under two frame travel=114
+  pass standing · Sheet left by close: no exit in under two frame travel=380
+  pass standing · Sheet left by outside: no exit in under two fra travel=376
+  pass standing · Sheet left by escape: no exit in under two fram travel=378
+  pass standing · detented Sheet by outside: no exit in under two travel=446
+  pass standing · detented Sheet by escape: no exit in under two  travel=446
+  pass standing · Toast by close: no exit in under two frames, no travel=0
+  pass standing · Collapsible by trigger: no exit in under two fr travel=0
+  pass standing · Accordion by trigger: no exit in under two fram travel=0
+  pass standing · ExpandableContainer by close: no exit in under  travel=96
+  pass standing · ExpandableContainer by escape: no exit in under travel=98
+  pass standing · CommandDialog by pick: no exit in under two fra travel=13
+  pass standing · CommandDialog by outside: no exit in under two  travel=12
+  pass standing · CommandDialog by escape: no exit in under two f travel=12
+== tip-webkit-desktop-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=14 span=142 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=19 span=198 boxSteps=0 0->1 | out.fading=19 span=194 boxSteps=0 1->0 | leave=[10]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=20 span=194 boxSteps=0 0->1 | out.fading=18 span=194 boxSteps=0 1->0 | leave=[12]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=19 span=199 boxSteps=0 0->1 | out.fading=19 span=196 boxSteps=0 1->0 | leave=[14]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=20 span=194 boxSteps=0 0->1 | out.fading=19 span=194 boxSteps=0 1->0 | leave=[25]
+  pass fade · a Tooltip appears and leaves on a fade              in.fading=19 span=194 boxSteps=0 0->1 | out.fading=11 span=112 boxSteps=0 1->0 | leave=[14]
+  pass fade · a Dialog appears and leaves on a fade               in.fading=17 span=184 boxSteps=0 0->1 | out.fading=16 span=172 boxSteps=0 1->0 | leave=[3]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=19 span=195 boxSteps=0 0->1 | out.fading=18 span=194 boxSteps=0 1->0 | leave=[2] | frost.in.leg.fading=19 span=195 boxSteps=0 0->1 | frost.out.leg.fading=18 span=194 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=19 span=195 boxSteps=0 0->1 | out.fading=19 span=193 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=19 span=195 boxSteps=0 0->1 | frost.out.leg.fading=19 span=193 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=19 span=206 boxSteps=0 0->1 | out.fading=19 span=206 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=19 span=206 boxSteps=0 0->1 | frost.out.leg.fading=19 span=206 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=19 span=193 boxSteps=0 0->1 | out.fading=14 span=156 boxSteps=0 1->0 | leave=[63]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=19 span=192 boxSteps=0 0->1 | out.fading=19 span=194 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=19 span=192 boxSteps=0 0->1 | out.fading=19 span=195 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=12 span=112 boxSteps=0 0->1 | out.fading=12 span=120 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=18 span=204 boxSteps=0 0->1 | unfold.out.fading=18 span=204 boxSteps=0 1->0 | fold.in.fading=19 span=187 boxSteps=0 0->1 | fold.out.fading=19 span=187 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=19 span=190 boxSteps=0 0->0.18 | out.fading=19 span=190 boxSteps=0 0.18->0 | travel=0
+  pass press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          
+== tip-webkit-phone-0.json
+  pass round · a compact SegmentedTabs strip is round-ended on to 
+  pass round · a wide SegmentedTabs strip is round-ended on touch 
+  pass weight · selecting a word-labelled ToggleGroupItem moves n 
+  pass lift · a scale-on-hover element returns to rest after a ta 
+  pass form · a dock Select leaves in the form it opened in · pic 
+  pass form · a dock DropdownMenu keeps its material through the  
+  skip form · a dock Select leaves in the form it opened in · out 
+  skip form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · esc 
+  pass form · a dock DropdownMenu keeps its material through the  
+  skip form · a dock Select leaves in the form it opened in · tri 
+  pass form · a dock DropdownMenu keeps its material through the  
+  pass form · a dock Select leaves in the form it opened in · cur 
+  skip form · a dock DropdownMenu keeps its material through the  
+  pass glass · a phone Select is glass with its rows at 4.5:1 ove 
+  pass glass · a phone Select is glass with its rows at 4.5:1 ove 
+  skip glass · a phone Select is solid under reduced transparency 
+  pass glass · a phone dock DropdownMenu is glass with its rows a 
+  pass glass · a phone dock DropdownMenu is glass with its rows a 
+  skip glass · a phone dock DropdownMenu is solid under reduced t 
+  pass exit · Select leaves on the exit curve, shorter than it en travel=202
+  pass exit · DropdownMenu leaves on the exit curve, shorter than travel=0
+  pass exit · Popover leaves on the exit curve, shorter than it e travel=8
+  skip exit · Tooltip leaves on the exit curve, shorter than it e 
+  pass exit · Dialog leaves on the exit curve, shorter than it en travel=8
+  pass exit · Sheet right leaves on the exit curve, shorter than  travel=282
+  pass exit · Sheet bottom leaves on the exit curve, shorter than travel=87
+  pass exit · a Popover enters and leaves on opacity and its slid 
+  skip exit · a Tooltip leaves on opacity and its slide alone     
+  pass routes · a detented Sheet leaves whole by escape           
+  skip routes · a detented Sheet leaves whole by outside          
+  skip routes · a detented Sheet dragged off leaves from where th 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  pass routes · a CommandDialog keeps its list through its exit b 
+  skip routes · a CommandDialog keeps its list through its exit b 
+  skip routes · a press on an open Select's trigger closes it onc 
+  skip routes · a press on an open DropdownMenu's trigger closes  
+  skip routes · a press on an open Popover's trigger closes it on 
+  pass sheet · a detented Sheet rises into place at its rung's si 
+  skip sheet · a detented Sheet dragged up and let go at speed sp 
+  skip sheet · a detented Sheet dragged up and let go at rest spr 
+== tip-webkit-phone-1.json
+  fail reverse · a Select closed while it opens turns from where  
+  pass reverse · a Select reopened while it closes turns from whe 
+  fail reverse · a DropdownMenu closed while it opens turns from  
+  pass reverse · a DropdownMenu reopened while it closes turns fr 
+  pass reverse · a Popover closed while it opens turns from where 
+  pass reverse · a Popover reopened while it closes turns from wh 
+  pass reverse · a Toast closed while it opens turns from where i 
+  skip reverse · a Tooltip closed while it opens turns from where 
+  skip reverse · a Tooltip reopened while it closes turns from wh 
+  pass reverse · a disclosure reopened while it closes finishes i 
+  pass reverse · a press on a leaving Dialog's trigger reopens it 
+  pass reverse · a press on a leaving Sheet's trigger reopens it  
+  pass reverse · a press on a leaving Select's trigger reopens it 
+  pass reverse · a press on the page while a sheet leaves reaches 
+  pass tooltip · a hint keeps its size as it comes and goes       
+  skip tooltip · a Tooltip enters on a tween                      
+  skip tooltip · a hint handed to its neighbour fades, incoming   
+  skip tooltip · a hint handed to its neighbour fades, outgoing   
+  pass expand · an ExpandableContainer enters on a tween          
+  pass expand · an ExpandableContainer leaves on a tween by exit  
+  pass expand · an ExpandableContainer leaves on a tween by escap 
+  pass expand · an ExpandableContainer leaves on a tween by open  
+  pass expand · an ExpandableContainer closed while it enters tur 
+  pass expand · an ExpandableContainer reopened while it leaves t 
+  pass expand · Escape is live from the entrance's first frame    
+  pass leave · a Dialog says once that its leave has finished, af 
+  pass leave · a Dialog closed and reopened mid-exit says nothing 
+  pass leave · a Sheet says once that its leave has finished, aft 
+  pass leave · a Sheet closed and reopened mid-exit says nothing  
+  pass leave · a Popover says once that its leave has finished, a 
+  pass leave · a Popover closed and reopened mid-exit says nothin 
+  pass leave · a DropdownMenu says once that its leave has finish 
+  pass leave · a DropdownMenu closed and reopened mid-exit says n 
+  pass leave · a Select says once that its leave has finished, af 
+  pass leave · a Select closed and reopened mid-exit says nothing 
+  skip leave · a Tooltip says once that its leave has finished, a 
+  skip leave · a Tooltip closed and reopened mid-exit says nothin 
+  pass leave · a Toast says once that its leave has finished, aft 
+  skip leave · a Toast closed and reopened mid-exit says nothing  
+  pass leave · a Popover inside a shadow root says so to its host 
+  skip leave · a ContextMenu says once that its leave has finishe 
+  skip leave · a ContextMenu says once that its leave has finishe 
+  skip leave · a hover card says once that its leave has finished 
+  pass leave · a Dialog unmounted mid-exit says so once, at the u 
+== tip-webkit-phone-2.json
+  pass standing · Select by pick: no exit in under two frames, no travel=209
+  skip standing · Select by outside: no exit in under two frames, 
+  pass standing · Select by escape: no exit in under two frames,  travel=210
+  skip standing · Select by trigger: no exit in under two frames, 
+  pass standing · DropdownMenu by pick: no exit in under two fram travel=0
+  skip standing · DropdownMenu by outside: no exit in under two f 
+  pass standing · DropdownMenu by escape: no exit in under two fr travel=0
+  skip standing · DropdownMenu by trigger: no exit in under two f 
+  pass standing · plain Select by pick: no exit in under two fram travel=207
+  skip standing · plain Select by outside: no exit in under two f 
+  pass standing · plain Select by escape: no exit in under two fr travel=211
+  skip standing · Popover by outside: no exit in under two frames 
+  pass standing · Popover by escape: no exit in under two frames, travel=8
+  skip standing · Popover by trigger: no exit in under two frames 
+  pass standing · Popover by focus: no exit in under two frames,  travel=8
+  skip standing · Tooltip by escape: no exit in under two frames, 
+  skip standing · Tooltip by away: no exit in under two frames, n 
+  skip standing · Tooltip by trigger: no exit in under two frames 
+  pass standing · brief Toast by timeout: no exit in under two fr travel=0
+  pass standing · Dialog by close: no exit in under two frames, n travel=9
+  skip standing · Dialog by outside: no exit in under two frames, 
+  pass standing · Dialog by escape: no exit in under two frames,  travel=9
+  pass standing · Sheet right by close: no exit in under two fram travel=289
+  skip standing · Sheet right by outside: no exit in under two fr 
+  pass standing · Sheet right by escape: no exit in under two fra travel=289
+  pass standing · Sheet bottom by close: no exit in under two fra travel=87
+  skip standing · Sheet bottom by outside: no exit in under two f 
+  pass standing · Sheet bottom by escape: no exit in under two fr travel=88
+  pass standing · Sheet top by close: no exit in under two frames travel=87
+  skip standing · Sheet top by outside: no exit in under two fram 
+  pass standing · Sheet top by escape: no exit in under two frame travel=87
+  pass standing · Sheet left by close: no exit in under two frame travel=289
+  skip standing · Sheet left by outside: no exit in under two fra 
+  pass standing · Sheet left by escape: no exit in under two fram travel=288
+  skip standing · detented Sheet by outside: no exit in under two 
+  pass standing · detented Sheet by escape: no exit in under two  travel=418
+  pass standing · Toast by close: no exit in under two frames, no travel=0
+  pass standing · Collapsible by trigger: no exit in under two fr travel=0
+  pass standing · Accordion by trigger: no exit in under two fram travel=0
+  pass standing · ExpandableContainer by close: no exit in under  travel=88
+  pass standing · ExpandableContainer by escape: no exit in under travel=89
+  pass standing · CommandDialog by pick: no exit in under two fra travel=11
+  skip standing · CommandDialog by outside: no exit in under two  
+  pass standing · CommandDialog by escape: no exit in under two f travel=11
+== tip-webkit-phone-3.json
+  pass site · a site's own opacity fade keeps its clock under red fading=13 span=144 boxSteps=0 1->0
+  pass fade · a Popover appears and leaves on a fade              in.fading=20 span=196 boxSteps=0 0->1 | out.fading=18 span=194 boxSteps=0 1->0 | leave=[22]
+  pass fade · a DropdownMenu appears and leaves on a fade         in.fading=20 span=199 boxSteps=0 0->1 | out.fading=18 span=204 boxSteps=0 1->0 | leave=[11]
+  pass fade · a dock Select appears and leaves on a fade          in.fading=19 span=185 boxSteps=0 0->1 | out.fading=18 span=203 boxSteps=0 1->0 | leave=[14]
+  pass fade · a plain Select appears and leaves on a fade         in.fading=14 span=150 boxSteps=0 0->1 | out.fading=19 span=195 boxSteps=0 1->0 | leave=[14]
+  skip fade · a Tooltip appears and leaves on a fade              
+  pass fade · a Dialog appears and leaves on a fade               in.fading=17 span=173 boxSteps=0 0->1 | out.fading=16 span=173 boxSteps=0 1->0 | leave=[3]
+  pass fade · a Sheet right appears and leaves on a fade          in.fading=18 span=196 boxSteps=0 0->1 | out.fading=18 span=192 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=18 span=196 boxSteps=0 0->1 | frost.out.leg.fading=18 span=192 boxSteps=0 1->0
+  pass fade · a Sheet bottom appears and leaves on a fade         in.fading=19 span=202 boxSteps=0 0->1 | out.fading=19 span=194 boxSteps=0 1->0 | leave=[3] | frost.in.leg.fading=19 span=202 boxSteps=0 0->1 | frost.out.leg.fading=19 span=194 boxSteps=0 1->0
+  pass fade · a detented Sheet appears and leaves on a fade       in.fading=19 span=194 boxSteps=0 0->1 | out.fading=19 span=193 boxSteps=0 1->0 | leave=[4] | frost.in.leg.fading=19 span=194 boxSteps=0 0->1 | frost.out.leg.fading=19 span=193 boxSteps=0 1->0
+  pass fade · a Toast appears and leaves on a fade                in.fading=20 span=195 boxSteps=0 0->1 | out.fading=15 span=148 boxSteps=0 1->0 | leave=[60]
+  pass fade · a Collapsible appears and leaves on a fade          in.fading=18 span=190 boxSteps=0 0->1 | out.fading=18 span=192 boxSteps=0 1->0 | leave=[]
+  pass fade · a Accordion appears and leaves on a fade            in.fading=19 span=197 boxSteps=0 0->1 | out.fading=19 span=194 boxSteps=0 1->0 | leave=[]
+  pass fade · a ExpandableContainer appears and leaves on a fade  in.fading=12 span=125 boxSteps=0 0->1 | out.fading=11 span=113 boxSteps=0 1->0 | leave=[]
+  pass fold · a dock unfolds and folds by cross-fading its faces, unfold.in.fading=19 span=196 boxSteps=0 0->1 | unfold.out.fading=19 span=196 boxSteps=0 1->0 | fold.in.fading=19 span=191 boxSteps=0 0->1 | fold.out.fading=19 span=191 boxSteps=0 1->0
+  pass mark · a run's selected plate moves to a new seat by a cro in.fading=18 span=204 boxSteps=0 0->0.18 | out.fading=18 span=204 boxSteps=0 0.18->0 | travel=0
+  skip press · a pressed control shows its press by colour, not b 
+  pass still · a Slider holds still under reduced motion          

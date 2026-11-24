@@ -1,0 +1,876 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "(site|fade|fold|mark|press|still) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-13/logs/tip-webkit-desktop-3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "site · a site's own opacity fade keeps its clock under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1837,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:08.958Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "site",
+                      "contentType": "application/json",
+                      "body": "eyJkdXJhdGlvbiI6IjAuMTQ0cyIsImZhZGluZyI6MTQsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTQyLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-a1e4f27a1b7d0f01cd9a",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 132,
+          "column": 1
+        },
+        {
+          "title": "fade · a Popover appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:11.013Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTBdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-6dc356db79ee48578ab0",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a DropdownMenu appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2967,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:14.134Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIwLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE4LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTJdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-913c10559cfedc2d69a5",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a dock Select appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2936,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:17.107Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTRdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-407b937570dc0cfaaf4e",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a plain Select appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2988,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:20.051Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIwLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMjVdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-b8df081a89e7bbff2c83",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Tooltip appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:23.043Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjExLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjExMiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTRdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-51f8f62c250db7e569d2",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Dialog appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3031,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:26.145Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE3LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE3MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-79efae4f5f0cb8b2d281",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3049,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:29.183Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE4LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImJhcmUiOjAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJiYXJlIjowLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxLCJwbGF0ZUxhc3QiOjAuMDEsImxlZyI6eyJmYWRpbmciOjE4LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-9552bae32e988289f851",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3058,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:32.239Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImJhcmUiOjAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJiYXJlIjowLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyMSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkzLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-8ef6478344b822cf0b69",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a detented Sheet appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3071,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:35.302Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImJhcmUiOjAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA2LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIyLCJiYXJlIjowLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxLCJwbGF0ZUxhc3QiOjAuMDEsImxlZyI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-d8d328209351a6cc65df",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Toast appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:38.378Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE1NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbNjNdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-79f9ada4380482201f36",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Collapsible appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3206,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:41.456Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-8dc2ed3df6f626ea3956",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Accordion appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3235,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:44.669Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-b66f7ffe001e01b0b38b",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a ExpandableContainer appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3495,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:47.910Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjEyLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjExMiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjEyLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjEyMCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-c9729d3821b54081887a",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fold · a dock unfolds and folds by cross-fading its faces, its box landing at once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:51.412Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fold",
+                      "contentType": "application/json",
+                      "body": "eyJ1bmZvbGQiOnsiaW4iOnsiZmFkaW5nIjoxOCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjoyMDQsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9LCJvdXQiOnsiZmFkaW5nIjoxOCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjoyMDQsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fSwiZm9sZCI6eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4NywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4NywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-70e7d6215c0b6b73781e",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 285,
+          "column": 1
+        },
+        {
+          "title": "mark · a run's selected plate moves to a new seat by a cross-fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3165,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:55.258Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "mark",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MC4xOH0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLjE4LCJ0byI6MH0sInRyYXZlbCI6MH0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-42f165bfa096daa75dc1",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 304,
+          "column": 1
+        },
+        {
+          "title": "press · a pressed control shows its press by colour, not by size, under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:21:58.431Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJCdXR0b24iOnsicmVzdCI6NjkuNDIsImFjdGl2ZSI6MzEsInNjYWxlcyI6WyIxIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls2OS40Ml0sImZpbGwiOlsib2tsYWIoMC42NzM0NDMgMC4wMjEwOTMgMC4wNzQ2NjIgLyAwLjI0NCkgbm9uZSIsIm9rbGFiKDAuNjI1ODIxIDAuMDE5OTg5IDAuMDY5NjA2IC8gMC4yNzc2KSBub25lIl0sInBhaW50ZWQiOjAuNzAzfSwiaWNvbiBzZWF0Ijp7InJlc3QiOjQwLCJhY3RpdmUiOjMwLCJzY2FsZXMiOlsiMSJdLCJ0cmFuc2Zvcm1zIjpbIm5vbmUiXSwid2lkdGhzIjpbNDBdLCJmaWxsIjpbImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTQpIG5vbmUiLCJva2xhYigwLjI1NzY2NyAwLjAwOTAwNiAwLjAyMzIwMiAvIDAuMjAwMikgbm9uZSJdLCJwYWludGVkIjowLjQxfSwidGFiIHNlYXQiOnsicmVzdCI6NTEuNzcsImFjdGl2ZSI6MzAsInNjYWxlcyI6WyIxIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls1MS43N10sImZpbGwiOlsiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xNCkgbm9uZSIsIm9rbGFiKDAuMjU3NjY3IDAuMDA5MDA2IDAuMDIzMjAyIC8gMC4yMDAyKSBub25lIl0sInBhaW50ZWQiOjAuNjc0fSwicHJlc3NhYmxlIENhcmQiOnsicmVzdCI6NzguOTEsImFjdGl2ZSI6MzAsInNjYWxlcyI6WyIxIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls3OC45MV0sImZpbGwiOlsiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xNCkgbGluZWFyLWdyYWRpZW50KG9rbGNoKDAuMjE2MTI5IDAuMDA2MjQ5IDU2LjAzNTU5MSAvIDAuMDUpLCBva2xjaCgwLjIxNjEyOSAwLjAwNjI0OSA1Ni4wMzU1OTEgLyAwLjA1KSkiLCJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE0KSBsaW5lYXItZ3JhZGllbnQob2tsY2goMC4yMTYxMjkgMC4wMDYyNDkgNTYuMDM1NTkxIC8gMC4xKSwgb2tsY2goMC4yMTYxMjkgMC4wMDYyNDkgNTYuMDM1NTkxIC8gMC4xKSkiXSwicGFpbnRlZCI6MC44MjN9LCJTb3J0YWJsZUxpc3QgaGFuZGxlIjp7InJlc3QiOjMyLCJhY3RpdmUiOjMwLCJzY2FsZXMiOlsibm9uZSIsIjEiXSwidHJhbnNmb3JtcyI6WyJub25lIl0sIndpZHRocyI6WzMyXSwiZmlsbCI6WyJyZ2JhKDAsIDAsIDAsIDApIG5vbmUiLCJva2xjaCgwLjIxNjEyOSAwLjAwNjI0OSA1Ni4wMzU1OTEgLyAwLjEyKSBub25lIl0sInBhaW50ZWQiOjAuNjA1fSwibWVudSByb3ciOnsicmVzdCI6MTAyLCJhY3RpdmUiOjMxLCJzY2FsZXMiOlsiMSJdLCJ0cmFuc2Zvcm1zIjpbIm5vbmUiXSwid2lkdGhzIjpbMTAyXSwiZmlsbCI6WyJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjEpIG5vbmUiLCJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE0KSBub25lIl0sInBhaW50ZWQiOjAuNDc2fSwiRGlhbG9nIGNsb3NlIHBsYXRlIjp7InJlc3QiOjQ0LCJhY3RpdmUiOjMwLCJzY2FsZXMiOlsiMSJdLCJ0cmFuc2Zvcm1zIjpbIm5vbmUiXSwid2lkdGhzIjpbNDRdLCJmaWxsIjpbIm9rbGFiKDAuMjE2MTI5IDAuMDAzNDkxIDAuMDA1MTgyIC8gMC4wNSkgbm9uZSIsIm9rbGFiKDAuMjE2MTI5IDAuMDAzNDkxIDAuMDA1MTgyIC8gMC4xMikgbm9uZSJdLCJwYWludGVkIjowLjYzNX19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-7c94c4c015f40129e479",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 442,
+          "column": 1
+        },
+        {
+          "title": "still · a Slider holds still under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T00:22:11.113Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "still",
+                      "contentType": "application/json",
+                      "body": "eyJjbG9ja3MiOnsicm9vdCI6IjBzIiwidHJhY2siOiIwcyIsImZpbGwiOiIwcyIsInRodW1iIjoiMHMifSwicnVucyI6W3sidmFsdWUiOiJub25lIiwiZnJhbWVzIjozfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTcsIDAsIDApIiwiZnJhbWVzIjo1MX0seyJ2YWx1ZSI6Im5vbmUiLCJmcmFtZXMiOjYwfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-4709eeef56ff56e89a2a",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 481,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T00:21:07.170Z",
+    "duration": 66583.708,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

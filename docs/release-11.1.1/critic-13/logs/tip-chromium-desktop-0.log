@@ -1,0 +1,53 @@
+
+Running 41 tests using 1 worker
+
+  -   1 [chromium-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -   2 [chromium-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✓   3 [chromium-desktop] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.6s)
+  -   4 [chromium-desktop] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap
+  ✓   5 [chromium-desktop] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · pick (2.5s)
+  ✓   6 [chromium-desktop] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   7 [chromium-desktop] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · outside (2.4s)
+  ✓   8 [chromium-desktop] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✓   9 [chromium-desktop] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · escape (2.4s)
+  ✓  10 [chromium-desktop] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  ✓  11 [chromium-desktop] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · trigger (2.3s)
+  ✓  12 [chromium-desktop] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.3s)
+  ✓  13 [chromium-desktop] › release-11-1-1.spec.ts:77:5 › form · a dock Select leaves in the form it opened in · current (2.3s)
+  -  14 [chromium-desktop] › release-11-1-1.spec.ts:110:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  -  15 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  16 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  17 [chromium-desktop] › release-11-1-1.spec.ts:250:5 › glass · a phone Select is solid under reduced transparency
+  -  18 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  19 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  20 [chromium-desktop] › release-11-1-1.spec.ts:250:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✓  21 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Select leaves on the exit curve, shorter than it entered (3.3s)
+  ✓  22 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.3s)
+  ✓  23 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  24 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 3:44:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 3:44:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 3:44:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-desktop] › release-11-1-1.spec.ts:319:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  28 [chromium-desktop] › release-11-1-1.spec.ts:448:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.2s)
+  ✓  29 [chromium-desktop] › release-11-1-1.spec.ts:448:5 › exit · a Tooltip leaves on opacity and its slide alone (1.6s)
+[WebServer] 3:45:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-desktop] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by escape (3.4s)
+[WebServer] 3:45:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-desktop] › release-11-1-1.spec.ts:506:5 › routes · a detented Sheet leaves whole by outside (3.4s)
+[WebServer] 3:45:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-desktop] › release-11-1-1.spec.ts:532:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.7s)
+  ✓  33 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.4s)
+  ✓  34 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.2s)
+  ✓  35 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.2s)
+  ✓  36 [chromium-desktop] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Select's trigger closes it once (2.3s)
+  ✓  37 [chromium-desktop] › release-11-1-1.spec.ts:647:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.3s)
+  ✓  38 [chromium-desktop] › release-11-1-1.spec.ts:647:5 › routes · a press on an open Popover's trigger closes it once (2.3s)
+  -  39 [chromium-desktop] › release-11-1-1.spec.ts:752:1 › sheet · a detented Sheet rises into place at its rung's size
+  -  40 [chromium-desktop] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it
+  -  41 [chromium-desktop] › release-11-1-1.spec.ts:935:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it
+
+  13 skipped
+  28 passed (1.3m)
