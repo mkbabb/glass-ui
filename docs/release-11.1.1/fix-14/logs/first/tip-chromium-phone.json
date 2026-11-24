@@ -1,0 +1,1021 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "--repeat-each=3",
+      "-g",
+      "(round|weight|lift) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-14/logs/tip-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-controls.spec.ts",
+      "file": "release-11-1-1-controls.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "round · a compact SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:07.360Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 656,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:21.249Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:37.549Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-a89dbaae0d3692a7ba94",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "round · a wide SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:08.381Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:22.052Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 742,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:38.606Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-6f94a9baeb02bf07d684",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "weight · selecting a word-labelled ToggleGroupItem moves no item box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:09.005Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9uIjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9mZiI6W1sxMiw5Ny43XSxbMTEzLjcsNjBdLFsxNzcuNywxMjcuNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1493,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:22.680Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9uIjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9mZiI6W1sxMiw5Ny43XSxbMTEzLjcsNjBdLFsxNzcuNywxMjcuNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2051,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:39.360Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9uIjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9mZiI6W1sxMiw5Ny43XSxbMTEzLjcsNjBdLFsxNzcuNywxMjcuNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-671317f03a034c2c97e3",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "lift · a scale-on-hover element returns to rest after a tap",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1525,
+                  "error": {
+                    "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 106,
+                      "line": 91
+                    },
+                    "snippet": "  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 106,
+                        "line": 91
+                      },
+                      "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:10.507Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-controls-li-8367a-returns-to-rest-after-a-tap-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 106,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1568,
+                  "error": {
+                    "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 106,
+                      "line": 91
+                    },
+                    "snippet": "  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 106,
+                        "line": 91
+                      },
+                      "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:24.180Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-controls-li-8367a-returns-to-rest-after-a-tap-chromium-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 106,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1704,
+                  "error": {
+                    "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 106,
+                      "line": 91
+                    },
+                    "snippet": "  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 106,
+                        "line": 91
+                      },
+                      "message": "Error: a mouse hover at 1440 lifts the tile to --scale-hover {\"scale\":\"1\",\"token\":\"1.08\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  89 |         });\n  90 |         const lifted = Number(hover.token) > 1 && Math.abs(Number(hover.scale) - Number(hover.token)) < 0.001;\n> 91 |         expect(lifted, `a mouse hover at 1440 lifts the tile to --scale-hover ${JSON.stringify(hover)}`).toBe(true);\n     |                                                                                                          ^\n  92 |     } finally {\n  93 |         await desk.close();\n  94 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts:91:106"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:41.422Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-controls-li-8367a-returns-to-rest-after-a-tap-chromium-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 106,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-54b1539fdea2d6786977",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 70,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2299,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:12.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6MTAuMzk3NDAyNDYxMDU1MTk3LCJpbmsiOlsyOCwyNSwyMywyNTVdfSx7ImlkIjoieC1vcHQtUGlja2VyIiwiaGkiOmZhbHNlLCJyYXRpbyI6MTIuNDczODk2MTQ4NDUwOTMsImluayI6WzI4LDI1LDIzLDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:26.395Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6MTAuMzk3NDAyNDYxMDU1MTk3LCJpbmsiOlsyOCwyNSwyMywyNTVdfSx7ImlkIjoieC1vcHQtUGlja2VyIiwiaGkiOmZhbHNlLCJyYXRpbyI6MTIuNDczODk2MTQ4NDUwOTMsImluayI6WzI4LDI1LDIzLDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:45.233Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6MTAuMzk3NDAyNDYxMDU1MTk3LCJpbmsiOlsyOCwyNSwyMywyNTVdfSx7ImlkIjoieC1vcHQtUGlja2VyIiwiaGkiOmZhbHNlLCJyYXRpbyI6MTIuNDczODk2MTQ4NDUwOTMsImluayI6WzI4LDI1LDIzLDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9f8488d106daa6154cf2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2184,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:14.905Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ni4zMzI5OTI2MzYxMTA5MjEsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjMxODIzOTcyMzY2MDAxLCJpbmsiOlsyMzMsMjMwLDIyNiwyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:29.073Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ni4zMzI5OTI2MzYxMTA5MjEsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjMxODIzOTcyMzY2MDAxLCJpbmsiOlsyMzMsMjMwLDIyNiwyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:48.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ni4zMzI5OTI2MzYxMTA5MjEsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjMxODIzOTcyMzY2MDAxLCJpbmsiOlsyMzMsMjMwLDIyNiwyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5963f59a1eeb4007a099",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1876,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:17.097Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6OS4xMzAzNDYxNTkzMjIwMzQsImluayI6WzI4LDI1LDIzLDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjoxMC4wNDU5NjcyODU0OTgzNDIsImluayI6WzI4LDI1LDIzLDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:31.459Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6OS4wOTAxODUzNjY1NjMzMjIsImluayI6WzI4LDI1LDIzLDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjoxMS45Mjc2ODY2MzU4Nzk3OTUsImluayI6WzI4LDI1LDIzLDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:50.950Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6OS4wNjczMjYyMjMxODY4NDUsImluayI6WzI4LDI1LDIzLDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjoxMC41ODA1NTk5OTExNzI5NCwiaW5rIjpbMjgsMjUsMjMsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b1fd6120727c6b2e160e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1854,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:18.980Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6Ny40MDU2MDgyOTA1MDA3NzUsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjI3NzE0MTQyNzAyMzQzMSwiaW5rIjpbMjMzLDIzMCwyMjYsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2109,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:33.744Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6Ny40MDU2MDgyOTA1MDA3NzUsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjU0MTUxMDI0ODc4NjQ0OCwiaW5rIjpbMjMzLDIzMCwyMjYsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:03:53.025Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6Ny40MDU2MDgyOTA1MDA3NzUsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjUzMjU2MjQyODI0NjE2NSwiaW5rIjpbMjMzLDIzMCwyMjYsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2561a2df8587c69226f4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T01:03:05.472Z",
+    "duration": 50226.36,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

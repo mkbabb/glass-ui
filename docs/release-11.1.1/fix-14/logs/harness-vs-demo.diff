@@ -1,0 +1,16 @@
+# GET /demo/demo.css?direct and /tests-visual/release-11-1-1/controls-harness.css?direct on one dev server (5351, 19:59), split at each } and diffed
+# demo-direct.css: 364141 B, sha1 51876484e957, 'scale-on-hover' 0 times, fira-code-latin-ext url: url("/src/fonts/fira-code/fira-code-latin-ext.woff2")
+# harness-direct.css: 364344 B, sha1 fe91c4c88573, 'scale-on-hover' 1 times, fira-code-latin-ext url: url("/src/fonts/fira-code/fira-code-latin-ext.woff2")
+881a882,893
+>   .scale-on-hover {
+>     scale: 1;
+>     transition: scale var(--spring-press-duration) var(--spring-press);
+>     @media (hover: hover) {
+>       &:hover {
+>         scale: var(--scale-hover);
+>       
+> 
+>     
+> 
+>   
+> 

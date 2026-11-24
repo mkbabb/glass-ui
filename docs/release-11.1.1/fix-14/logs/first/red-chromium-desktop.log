@@ -1,0 +1,148 @@
+
+Running 24 tests using 1 worker
+
+  -   1 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -   2 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✘   3 [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.6s)
+  -   4 [chromium-desktop] › release-11-1-1-controls.spec.ts:70:1 › lift · a scale-on-hover element returns to rest after a tap
+  -   5 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -   6 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -   7 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -   8 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -   9 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -  10 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✘  11 [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.4s)
+  -  12 [chromium-desktop] › release-11-1-1-controls.spec.ts:70:1 › lift · a scale-on-hover element returns to rest after a tap
+  -  13 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  14 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  15 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  16 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  17 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -  18 [chromium-desktop] › release-11-1-1-controls.spec.ts:23:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✘  19 [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.5s)
+  -  20 [chromium-desktop] › release-11-1-1-controls.spec.ts:70:1 › lift · a scale-on-hover element returns to rest after a tap
+  -  21 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  22 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  23 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  24 [chromium-desktop] › release-11-1-1.spec.ts:213:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+
+
+  1) [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     99.1,
+    +     101,
+        ],
+        Array [
+    -     119.1,
+    +     121,
+          60.1,
+        ],
+        Array [
+    -     187.2,
+    +     189.1,
+          129.5,
+        ],
+      ]
+
+      64 |     const off = await boxes();
+      65 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 66 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      67 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      68 | });
+      69 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53
+
+    Error Context: test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     99.1,
+    +     101,
+        ],
+        Array [
+    -     119.1,
+    +     121,
+          60.1,
+        ],
+        Array [
+    -     187.2,
+    +     189.1,
+          129.5,
+        ],
+      ]
+
+      64 |     const off = await boxes();
+      65 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 66 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      67 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      68 | });
+      69 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53
+
+    Error Context: test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop-repeat1/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     99.1,
+    +     101,
+        ],
+        Array [
+    -     119.1,
+    +     121,
+          60.1,
+        ],
+        Array [
+    -     187.2,
+    +     189.1,
+          129.5,
+        ],
+      ]
+
+      64 |     const off = await boxes();
+      65 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 66 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      67 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      68 | });
+      69 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53
+
+    Error Context: test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop-repeat2/error-context.md
+
+  3 failed
+    [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+    [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+    [chromium-desktop] › release-11-1-1-controls.spec.ts:47:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+  21 skipped

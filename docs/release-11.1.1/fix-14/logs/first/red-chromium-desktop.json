@@ -1,0 +1,1330 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "--repeat-each=3",
+      "-g",
+      "(round|weight|lift) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-14/logs/red-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-controls.spec.ts",
+      "file": "release-11-1-1-controls.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "round · a compact SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 46,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:29.936Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.552Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 51,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:35.025Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-0bda5c2cab54f3308b31",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "round · a wide SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:30.075Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 34,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.677Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 24,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:35.174Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 24,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-8cb774ca451b0b5a9c28",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 23,
+          "column": 5
+        },
+        {
+          "title": "weight · selecting a word-labelled ToggleGroupItem moves no item box",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1624,
+                  "error": {
+                    "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 53,
+                      "line": 66
+                    },
+                    "snippet": "  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 53,
+                        "line": 66
+                      },
+                      "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:30.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk5LjFdLFsxMTkuMSw2MC4xXSxbMTg3LjIsMTI5LjVdXSwib24iOltbMTIsMTAxXSxbMTIxLDYwLjFdLFsxODkuMSwxMjkuNV1dLCJvZmYiOltbMTIsOTkuMV0sWzExOS4xLDYwLjFdLFsxODcuMiwxMjkuNV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 53,
+                    "line": 66
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1427,
+                  "error": {
+                    "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 53,
+                      "line": 66
+                    },
+                    "snippet": "  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 53,
+                        "line": 66
+                      },
+                      "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.717Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk5LjFdLFsxMTkuMSw2MC4xXSxbMTg3LjIsMTI5LjVdXSwib24iOltbMTIsMTAxXSxbMTIxLDYwLjFdLFsxODkuMSwxMjkuNV1dLCJvZmYiOltbMTIsOTkuMV0sWzExOS4xLDYwLjFdLFsxODcuMiwxMjkuNV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 53,
+                    "line": 66
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1452,
+                  "error": {
+                    "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 53,
+                      "line": 66
+                    },
+                    "snippet": "  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 53,
+                        "line": 66
+                      },
+                      "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     99.1,\u001b[39m\n\u001b[31m+     101,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     119.1,\u001b[39m\n\u001b[31m+     121,\u001b[39m\n\u001b[2m      60.1,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     187.2,\u001b[39m\n\u001b[31m+     189.1,\u001b[39m\n\u001b[2m      129.5,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  64 |     const off = await boxes();\n  65 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 66 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  67 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  68 | });\n  69 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts:66:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:35.221Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk5LjFdLFsxMTkuMSw2MC4xXSxbMTg3LjIsMTI5LjVdXSwib24iOltbMTIsMTAxXSxbMTIxLDYwLjFdLFsxODkuMSwxMjkuNV1dLCJvZmYiOltbMTIsOTkuMV0sWzExOS4xLDYwLjFdLFsxODcuMiwxMjkuNV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-chromium-desktop-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 53,
+                    "line": 66
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-591083b28a878a89c5c4",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "lift · a scale-on-hover element returns to rest after a tap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a tap is a touch claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 71,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:31.991Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a tap is a touch claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 71,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a tap is a touch claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 71,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 52,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:34.403Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a tap is a touch claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 71,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a tap is a touch claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 71,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:36.991Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a tap is a touch claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 71,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-2ddace0a27bff746b547",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 70,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.135Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:34.566Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:37.143Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7fb78fc43053d1a1b648",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 33,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.174Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:34.612Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 33,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:37.184Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1ff87f99486a15caf90e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.211Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:34.659Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 32,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:37.221Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f21f535ed160fe508f2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 31,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:32.249Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:34.707Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 215,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 31,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-24T01:05:37.258Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix14-red/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 215,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7c4e0b9ab64e50780956",
+          "file": "release-11-1-1.spec.ts",
+          "line": 213,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T01:05:28.356Z",
+    "duration": 8969.731,
+    "expected": 0,
+    "skipped": 21,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}
