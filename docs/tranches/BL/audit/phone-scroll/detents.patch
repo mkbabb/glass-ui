@@ -1,0 +1,222 @@
+--- a/src/components/sheet/detents/use.ts
++++ b/src/components/sheet/detents/use.ts
+@@ -74,15 +74,23 @@
+     snapTo(fraction: number): void;
+     /** Bind on the sheet root; decides for itself whether the press is a drag. */
+     onPointerdown(event: PointerEvent): void;
++    /** Bind on the sheet root, not passive: keeps the browser's pan off a press the
++     *  sheet takes. */
++    onTouchmove(event: TouchEvent): void;
+ }
+ 
+ /** Controls own their gestures; a drag never starts on one. */
+ const INTERACTIVE = "button, a[href], input, select, textarea, [contenteditable=true]";
+ /** The two surfaces that drag unconditionally: the grip, and the header above it. */
+ const DRAG_HANDLES = '[data-slot="sheet-detent-handle"], [data-slot="dialog-header"]';
++/** How far a press in the body travels, in CSS px, before the sheet starts to follow it. */
++const DRAG_SLOP = 6;
+ 
+ /** Toward-open is a sign on one axis; a `bottom` sheet opens as the pointer rises. */
+-function axisCoord(side: SidePlacement, event: PointerEvent): number {
++function axisCoord(
++    side: SidePlacement,
++    event: { clientX: number; clientY: number },
++): number {
+     switch (side) {
+         case "bottom":
+             return -event.clientY;
+@@ -95,6 +103,14 @@
+     }
+ }
+ 
++/** The coordinate across the drag axis; only the size of its change is read. */
++function crossCoord(
++    side: SidePlacement,
++    event: { clientX: number; clientY: number },
++): number {
++    return side === "left" || side === "right" ? event.clientY : event.clientX;
++}
++
+ /**
+  * One fraction of travel in pixels. `t` is a fraction OF THE VIEWPORT, so the span is
+  * the viewport — constant for the gesture, identical at every rung, and never measured
+@@ -107,9 +123,10 @@
+ }
+ 
+ /**
+- * Whether a press inside the body may drag the sheet. It may when the body is already
+- * at its leading edge — the iOS contract: pull a settled list and the sheet follows,
+- * pull a scrolled one and the list scrolls.
++ * Whether a press inside the body may become a drag of the sheet. It may when the body
++ * is at its leading edge — the iOS contract: pull a settled list and the sheet follows,
++ * pull a scrolled one and the list scrolls. Which of the two it becomes is the first
++ * move's (`onPointerdown`).
+  */
+ function scrollIsAtLeadingEdge(from: EventTarget | null, root: HTMLElement): boolean {
+     let node = from instanceof Element ? from : null;
+@@ -250,24 +267,128 @@
+     let lastTime = 0;
+     let velocity = 0; // fraction/s, toward-open positive
+     let span = 1;
++    // A press in the body at its leading edge that has not started a drag. Its first
++    // move with a direction decides whether it is the sheet's (`pendingTakes`).
++    let pendingId: number | null = null;
++    let pendingHost: HTMLElement | null = null;
++    let pendingDoc: Document | null = null;
++    let pendingAlong = 0;
++    let pendingAcross = 0;
++    let pendingTakes = false;
+ 
++    /**
++     * Whether a press that has moved `along` the axis (toward-open positive) and
++     * `across` it is the sheet's. A move mostly across the axis is not: it belongs to
++     * whatever pans that way, a row of chips for one. Along the axis, toward dismissal it
++     * is; toward expansion it is while the sheet is below its top rung, and at the top
++     * rung it is the list's, which scrolls.
++     */
++    function sheetTakes(along: number, across: number): boolean {
++        if (Math.abs(along) <= Math.abs(across)) return false;
++        if (along < 0) return true;
++        const rungs = ladder();
++        return t.value < rungs[rungs.length - 1]! - 1e-3;
++    }
++
++    /**
++     * The grip and the header drag at once (`touch-action: none`). A press in the body
++     * at its leading edge is pending: its first move with a direction decides, as on an
++     * iPhone sheet, between a drag of the sheet and a pan of what lies under the finger
++     * (`sheetTakes`), and a press the sheet takes drags once it has travelled `DRAG_SLOP`
++     * along the axis. A body that is not at its leading edge always scrolls.
++     *
++     * The body keeps `touch-action: auto`, so the browser may pan it, and the hand-over
++     * is the touchmove's (`onTouchmove`): once the press is the sheet's, every touchmove
++     * is cancelled, so the browser never starts its pan; a press that is not the sheet's
++     * is let go, the browser pans the list or the row, and the `pointercancel` it sends
++     * ends the press. Chromium waits for its own touch slop before it pans, and each
++     * touchmove until then can be cancelled. WebKit may start its pan on any touchmove
++     * that is not cancelled, so the first move decides and the slop only delays the
++     * sheet's following.
++     *
++     * The pending press is followed on the document, not the sheet: a mouse has no
++     * implicit capture, and a press lifted outside the sheet must still end.
++     */
+     function onPointerdown(event: PointerEvent) {
+-        if (event.button !== 0 || pointerId !== null) return;
++        if (event.button !== 0 || pointerId !== null || pendingId !== null) return;
+         const host = event.currentTarget as HTMLElement | null;
+         if (!host) return;
+         const from = event.target instanceof Element ? event.target : null;
+         if (!from) return;
+-        if (from.closest(INTERACTIVE) && !from.closest(DRAG_HANDLES)) return;
+-        if (!from.closest(DRAG_HANDLES) && !scrollIsAtLeadingEdge(from, host)) return;
++        const handle = from.closest(DRAG_HANDLES) !== null;
++        if (from.closest(INTERACTIVE) && !handle) return;
++        if (handle) {
++            beginDrag(host, event, axisCoord(side(), event));
++            return;
++        }
++        if (!scrollIsAtLeadingEdge(from, host)) return;
++        pendingId = event.pointerId;
++        pendingHost = host;
++        pendingDoc = host.ownerDocument;
++        pendingAlong = axisCoord(side(), event);
++        pendingAcross = crossCoord(side(), event);
++        pendingTakes = false;
++        pendingDoc.addEventListener("pointermove", onPendingMove, true);
++        pendingDoc.addEventListener("pointerup", onPendingEnd, true);
++        pendingDoc.addEventListener("pointercancel", onPendingEnd, true);
++    }
+ 
++    /** The first move with a direction decides; a press that is not the sheet's ends. */
++    function judge(point: { clientX: number; clientY: number }) {
++        if (pendingTakes) return;
++        const along = axisCoord(side(), point) - pendingAlong;
++        const across = crossCoord(side(), point) - pendingAcross;
++        if (along === 0 && across === 0) return;
++        if (sheetTakes(along, across)) pendingTakes = true;
++        else clearPending();
++    }
++
++    function onPendingMove(event: PointerEvent) {
++        if (event.pointerId !== pendingId) return;
++        judge(event);
++        const host = pendingHost;
++        if (!pendingTakes || !host) return;
++        const coord = axisCoord(side(), event);
++        if (Math.abs(coord - pendingAlong) < DRAG_SLOP) return;
++        clearPending();
++        beginDrag(host, event, coord);
++    }
++
++    function onPendingEnd(event: PointerEvent) {
++        if (event.pointerId === pendingId) clearPending();
++    }
++
++    function clearPending() {
++        pendingDoc?.removeEventListener("pointermove", onPendingMove, true);
++        pendingDoc?.removeEventListener("pointerup", onPendingEnd, true);
++        pendingDoc?.removeEventListener("pointercancel", onPendingEnd, true);
++        pendingId = null;
++        pendingHost = null;
++        pendingDoc = null;
++        pendingTakes = false;
++    }
++
++    function onTouchmove(event: TouchEvent) {
++        if (!event.cancelable) return;
++        if (!dragging.value) {
++            const touch = event.touches[0];
++            if (pendingId === null || !touch) return;
++            judge(touch);
++            if (!pendingTakes) return;
++        }
++        event.preventDefault();
++    }
++
++    /** The drag starts where the pointer is now, so the sheet does not jump to it. */
++    function beginDrag(host: HTMLElement, event: PointerEvent, coord: number) {
+         spring?.stop();
+         rising.value = null;
+         root = host;
+         pointerId = event.pointerId;
+         dragging.value = true;
+         span = dragSpan(side());
+-        startCoord = axisCoord(side(), event);
+-        lastCoord = startCoord;
++        startCoord = coord;
++        lastCoord = coord;
+         lastTime = event.timeStamp;
+         startT = t.value;
+         velocity = 0;
+@@ -342,6 +463,7 @@
+                 return;
+             }
+             if (!present.value) return;
++            clearPending();
+             releaseDrag();
+             if (!spring) {
+                 clearFade();
+@@ -365,11 +487,12 @@
+     });
+ 
+     onScopeDispose(() => {
++        clearPending();
+         releaseDrag();
+         stopFade();
+         spring?.dispose();
+         spring = null;
+     });
+ 
+-    return { t, size, opacity, present, dragging, snapTo, onPointerdown };
++    return { t, size, opacity, present, dragging, snapTo, onPointerdown, onTouchmove };
+ }
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -368,6 +368,7 @@
+                 inert: closingInert,
+                 disableOutsidePointerEvents: exitPress.blockOutside.value,
+                 ...leave.attrs,
++                ...(detented ? { onTouchmove: sheetDetents.onTouchmove } : {}),
+             }"
+             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
+             :force-mount="contentForceMount"

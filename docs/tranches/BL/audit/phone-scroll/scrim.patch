@@ -1,0 +1,88 @@
+--- a/src/components/sheet/motion.ts
++++ b/src/components/sheet/motion.ts
+@@ -50,8 +50,8 @@
+     return Math.min(1, Math.max(0, 1 - p));
+ }
+ 
+-/** The dismissed floor and the committed span of the detent scrim law. */
+-const SCRIM_DETENT_FLOOR = 0.28;
++/** The base and the committed span of the detent scrim law at its rungs. */
++const SCRIM_DETENT_BASE = 0.28;
+ const SCRIM_DETENT_SPAN = 0.44;
+ 
+ /**
+@@ -64,7 +64,15 @@
+  * stylesheet with one consumer and an `@import` lane of its own. Here it is a pure
+  * function beside the slide law it is the sibling of, and it is CONDITIONAL: a sheet
+  * with no ladder keeps `scrimOpacity`, so nothing pays for a rung it does not have.
++ *
++ * Dismissed is 0. The law holds at and above the ladder's lowest rung above 0; below
++ * it the scrim scales down with `t` to 0, so it fades in as the sheet rises from 0 and
++ * out as the sheet travels back to 0, on the sheet's own scalar, and is never mounted or
++ * unmounted at 0.28.
+  */
+-export function scrimDetentOpacity(t: number): number {
+-    return SCRIM_DETENT_FLOOR + SCRIM_DETENT_SPAN * Math.min(1, Math.max(0, t));
++export function scrimDetentOpacity(t: number, ladder: readonly number[]): number {
++    const k = Math.min(1, Math.max(0, t));
++    const law = SCRIM_DETENT_BASE + SCRIM_DETENT_SPAN * k;
++    const lowest = Math.min(1, ...ladder.filter((rung) => rung > 0));
++    return law * Math.min(1, k / lowest);
+ }
+--- a/tests/components/sheet/sheet-motion.test.ts
++++ b/tests/components/sheet/sheet-motion.test.ts
+@@ -20,7 +20,12 @@
+ import { defineComponent, h, nextTick } from "vue";
+ import { describe, expect, it, vi } from "vitest";
+ 
+-import { sheetEntryShear, sheetSlideTransform, scrimOpacity } from "@glass/components/sheet/motion";
++import {
++    scrimDetentOpacity,
++    sheetEntryShear,
++    sheetSlideTransform,
++    scrimOpacity,
++} from "@glass/components/sheet/motion";
+ import * as springMountModule from "@glass/composables/motion/spring/useSpringMount";
+ import { SheetContent } from "@glass/components/sheet";
+ import {
+@@ -73,6 +78,28 @@
+     });
+ });
+ 
++describe("scrimDetentOpacity (rung scalar → opacity)", () => {
++    const ladder = [0.4, 0.7, 1];
++
++    it("is 0 at dismissal, so the scrim fades in and out on the sheet's travel", () => {
++        expect(scrimDetentOpacity(0, ladder)).toBe(0);
++        expect(scrimDetentOpacity(-0.02, ladder)).toBe(0);
++        expect(scrimDetentOpacity(0.2, ladder)).toBeCloseTo((0.28 + 0.44 * 0.2) / 2, 12);
++        expect(scrimDetentOpacity(0.01, [1])).toBeLessThan(0.01);
++    });
++
++    it("keeps the law at and above the lowest rung", () => {
++        for (const t of ladder) expect(scrimDetentOpacity(t, ladder)).toBeCloseTo(0.28 + 0.44 * t, 12);
++        expect(scrimDetentOpacity(1.03, ladder)).toBeCloseTo(0.72, 12);
++    });
++
++    it("ramps to the lowest rung above 0 when the ladder holds a rung at 0", () => {
++        expect(scrimDetentOpacity(0, [0, 0.5, 1])).toBe(0);
++        expect(scrimDetentOpacity(0.25, [0, 0.5, 1])).toBeCloseTo((0.28 + 0.44 * 0.25) / 2, 12);
++        expect(scrimDetentOpacity(0.5, [0, 0.5, 1])).toBeCloseTo(0.28 + 0.44 * 0.5, 12);
++    });
++});
++
+ function mountSheet(opts: { side?: "top" | "right" | "bottom" | "left"; motion?: "full" | "reduced" | "off" } = {}) {
+     const Host = defineComponent({
+         setup() {
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -228,7 +228,8 @@
+ const scrimAlpha = computed(() => {
+     if (!live.value) return null;
+     return detented.value
+-        ? scrimDetentOpacity(sheetDetents.t.value) * (sheetDetents.opacity.value ?? 1)
++        ? scrimDetentOpacity(sheetDetents.t.value, ladder.value) *
++              (sheetDetents.opacity.value ?? 1)
+         : scrimOpacity(springMount.position.value);
+ });
+ const scrimForceMount = computed(() =>

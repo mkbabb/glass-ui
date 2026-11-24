@@ -1,46 +1,354 @@
---- a/src/components/_shared/overlay/sheet-width.ts
-+++ b/src/components/_shared/overlay/sheet-width.ts
-@@ -1,4 +1,5 @@
- import { onBeforeUnmount, shallowRef, watch, type ShallowRef } from "vue";
+--- a/src/components/_shared/overlay/index.ts
++++ b/src/components/_shared/overlay/index.ts
+@@ -15,6 +15,7 @@
+ } from "./leave-finished";
+ export { returnFocusQuietly } from "./focus-return";
+ export { isTeleportedTarget } from "./isTeleportedTarget";
++export { answerTap, outsideAttrs, useOverlayOutside } from "./outside";
+ export {
+     useDockParticipation,
+     useHoldToken,
+--- a/src/components/_shared/overlay/outside.ts
++++ b/src/components/_shared/overlay/outside.ts
+@@ -0,0 +1,79 @@
++import { computed, type ComputedRef, type ShallowRef } from "vue";
++import type { DockPortalAttrs } from "./participation";
 +import { useRootScrollLock } from "./root-scroll-lock";
- 
- /**
-  * THE SHEET WIDTH (U/B7 D-6). Below 30rem an overlay has no width to sit beside
-@@ -14,10 +15,23 @@
-  * listener goes and the form stays: a surface leaves in the form it opened in, so its
-  * exit plays on the same box, side and material it entered on. The next open reads the
-  * query again.
++import { useSheetWidth } from "./sheet-width";
++
++/**
++ * THE PHONE'S OUTSIDE. Below 30rem (`useSheetWidth`) a gesture begun on an open glass
++ * surface never moves the page behind it.
 + *
-+ * A surface that covers the page holds the page. While an overlay is open at this width
-+ * the root scroll lock holds, so a swipe begun on the surface cannot move the page behind
-+ * it. The plate's own `overscroll-behavior: contain` cannot promise that: WebKit applies
-+ * it only to a box whose content overflows (webkit.org/b/243452), so a list that fits,
-+ * and any part of a plate outside its list, hands the swipe straight to the page. A modal
-+ * surface passes `modal`: it already holds the page (its scrim's root lock, or reka's
-+ * lock for a modal menu or popover), and a second lock on `body` under the root's would
-+ * make `body` the scroller. The hold ends at the close, so the page is live while the
-+ * surface leaves.
-  */
- const SHEET_QUERY = "(width < 30rem)";
- 
--export function useSheetWidth(open: () => boolean): Readonly<ShallowRef<boolean>> {
-+export function useSheetWidth(
++ * A modal surface has that already: its scrim holds the page through the root lock and
++ * takes the outside tap. A non-modal surface takes the root lock here for as long as it
++ * is open at this width. `overscroll-behavior: contain` on the plate cannot hold the
++ * page: WebKit applies it only to a box whose content overflows (webkit.org/b/243452),
++ * so a list that fits, and any part of a plate outside its list, hands a swipe to the
++ * page. With the root's `overflow: hidden` Chromium still runs its own pan, so there a
++ * touch that turns into a swipe ends in `pointercancel` and no control under the finger
++ * acts on it. iOS WebKit turns its page pan off while the root is `hidden`, so there the
++ * same swipe can end in `pointerup` on the control it began on, which reka's Select takes
++ * as a pick or an open. WebKit has no hold scoped to the plate in CSS, so the lock holds
++ * a swipe begun beside the surface as well.
++ *
++ * A Select, a menu and a click Popover also lay a clear layer under the plate
++ * (`outsideAttrs`), as an iPhone's menu and popover take the touch beside them: the tap
++ * that closes the surface lands on the layer and presses nothing under it. The layer
++ * stands at `--z-popover`, as the plate does, and a modal Dialog or Sheet stands above
++ * that rung: beside a menu or a popover opened in one, the tap lands on the modal plate
++ * and presses what is under it there. A `modal={false}` Sheet or Dialog lays no layer.
++ * The page beside it stays live to a tap, as the area beside an iPhone's nonmodal sheet
++ * does.
++ *
++ * The hold ends at the logical close, so the page is live while the surface leaves. The
++ * hover arm of a Popover is a hint a fine pointer opened and has no root here: it holds
++ * nothing.
++ */
++export function useOverlayOutside(
 +    open: () => boolean,
 +    modal: () => boolean = () => false,
-+): Readonly<ShallowRef<boolean>> {
-     const sheet = shallowRef(false);
-     let query: MediaQueryList | null = null;
-     const sync = () => {
-@@ -41,5 +55,6 @@
-         { immediate: true, flush: "sync" },
-     );
-     onBeforeUnmount(release);
-+    useRootScrollLock(() => open() && sheet.value && !modal());
-     return sheet;
++): { sheet: Readonly<ShallowRef<boolean>>; held: ComputedRef<boolean> } {
++    const sheet = useSheetWidth(open);
++    const held = computed(() => open() && sheet.value && !modal());
++    useRootScrollLock(() => held.value);
++    return { sheet, held };
++}
++
++/**
++ * The outside listens for click. On a touch, reka's outside press waits for the click
++ * that ends the tap (`DismissableLayer`), and WebKit sends that click only to an element
++ * that answers one. Apple's Safari Web Content Guide, Handling Events: "If the user taps
++ * a nonclickable element, no events are generated." With this listener the tap's click
++ * reaches the document, and reka closes the surface on it.
++ */
++export function answerTap(): void {}
++
++/**
++ * The clear layer, stacked at `zIndex` and authored before its plate in the same portal.
++ *
++ * It carries reka's layer marker, `data-dismissable-layer`. reka counts a press as
++ * inside a surface when the pressed element sits in that surface's layer or in a layer
++ * that comes after it in the document. The surface this layer belongs to comes after it,
++ * so a press on the layer is outside and closes it. A surface it was opened from comes
++ * before it, so the same press is inside that one, which stays open.
++ *
++ * A surface a dock opened passes its portal stamp (`useDockParticipation`): a pointer
++ * that moves onto the layer, or a tap on it, has not left the dock.
++ */
++export function outsideAttrs(
++    zIndex: string,
++    portal: DockPortalAttrs = {},
++): Record<string, unknown> {
++    return {
++        ...portal,
++        "data-slot": "overlay-outside",
++        "data-dismissable-layer": "",
++        "aria-hidden": "true",
++        class: "fixed inset-0",
++        style: { zIndex, pointerEvents: "auto" },
++        onClick: answerTap,
++    };
++}
+--- a/src/components/_shared/overlay/root-scroll-lock.ts
++++ b/src/components/_shared/overlay/root-scroll-lock.ts
+@@ -12,7 +12,8 @@
+  * Every glass surface that holds the page still (a modal scrim, ExpandableContainer)
+  * takes this one counted lock, so surfaces that close out of order can never restore
+  * each other's stale value (U-F04): the first acquire saves the root's inline value and
+- * the last release puts it back. */
++ * the last release puts it back. A non-modal overlay open below 30rem takes it too,
++ * through `useOverlayOutside`. */
+ let depth = 0;
+ let rootOverflowBefore: string | null = null;
+ 
+--- a/src/components/dialog/DialogContent.vue
++++ b/src/components/dialog/DialogContent.vue
+@@ -20,6 +20,7 @@
+     useExitPress,
+     useLeaveFinished,
+     useModalShortcutBarrier,
++    useOverlayOutside,
+ } from "../_shared/overlay";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+ 
+@@ -81,6 +82,13 @@
+ // page behind inert; a `modal={false}` dialog leaves the page operable and its
+ // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
+ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
++// A modal plate holds the page through its scrim. Below 30rem a `modal={false}` one
++// holds the page's scroll too, and the page beside it stays live to a tap
++// (`useOverlayOutside`).
++useOverlayOutside(
++    () => dialogRoot.open.value,
++    () => dialogRoot.modal.value,
++);
+ 
+ // ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
+ // is named here once and the consumer chooses nothing — and the knob that used to offer
+--- a/src/components/dialog/ModalScrim.vue
++++ b/src/components/dialog/ModalScrim.vue
+@@ -1,10 +1,10 @@
+ <script setup lang="ts">
+ import { injectDialogRootContext } from "reka-ui";
+-import { useRootScrollLock } from "../_shared/overlay";
++import { answerTap, useRootScrollLock } from "../_shared/overlay";
+ 
+ /**
+  * The scrim element under `ModalOverlay`'s presence. It is reka's `DialogOverlayImpl`
+- * less one line: reka's overlay takes `useBodyScrollLock`, which writes
++ * without its body lock: reka's overlay takes `useBodyScrollLock`, which writes
+  * `overflow: hidden` (and a padding compensation) onto `body`. Under a consumer root
+  * whose overflow is not `visible`, that turns `body` into the page's scroller while a
+  * modal is open, so sticky elements drop out of place and the page can jump when it
+@@ -13,6 +13,13 @@
+  * long as reka's lock held it: while the scrim is present. It takes presses only while
+  * the dialog is open: through the exit a press reaches the page, or the trigger that
+  * reopens the dialog.
++ *
++ * A tap on it closes the dialog in WebKit too. reka closes on the click that ends a
++ * touch (a mouse or a pen closes it on its `pointerdown`). reka's overlay prevents every
++ * `pointerdown`, and Playwright WebKit sends no click for a tap whose `pointerdown` was
++ * prevented. This scrim prevents its `mousedown` instead, which keeps focus where it was
++ * (a field in the dialog keeps it) and leaves the tap's click, and it listens for that
++ * click (`answerTap`).
+  */
+ const props = defineProps<{ present: boolean }>();
+ 
+@@ -24,7 +31,8 @@
+     <div
+         :data-state="root.open.value ? 'open' : 'closed'"
+         :style="{ pointerEvents: root.open.value ? 'auto' : 'none' }"
+-        @pointerdown.left.self.prevent
++        @mousedown.left.self.prevent
++        @click="answerTap"
+     >
+         <slot />
+     </div>
+--- a/src/components/menu/ContextMenu.vue
++++ b/src/components/menu/ContextMenu.vue
+@@ -4,8 +4,10 @@
+ export interface ContextMenuProps {
+     /** Logical reading direction for roving focus and submenu keys. */
+     dir?: Direction;
+-    /** Whether opening the menu makes outside content inert (and locks page scroll).
+-     *  Default `false`. */
++    /** Whether opening the menu makes outside content inert (and locks page scroll
++     *  through reka's lock). Default `false`: above 30rem the page stays operable and
++     *  scrolls; below it the open menu holds the page still and a tap beside it closes
++     *  the menu without pressing the page. */
+     modal?: boolean;
  }
+ 
+--- a/src/components/menu/DropdownMenu.vue
++++ b/src/components/menu/DropdownMenu.vue
+@@ -4,8 +4,10 @@
+ export interface DropdownMenuProps {
+     /** Logical reading direction for roving focus and submenu keys. */
+     dir?: Direction;
+-    /** Whether opening the menu makes outside content inert (and locks page scroll).
+-     *  Default `false`. */
++    /** Whether opening the menu makes outside content inert (and locks page scroll
++     *  through reka's lock). Default `false`: above 30rem the page stays operable and
++     *  scrolls; below it the open menu holds the page still and a tap beside it closes
++     *  the menu without pressing the page. */
+     modal?: boolean;
+     /** Controlled open state. */
+     open?: boolean;
+@@ -31,7 +33,8 @@
+        writes `overflow: hidden` onto `body`; under a root whose overflow is not
+        `visible` that makes `body` the scroll container, every sticky ancestor drops
+        to its in-flow position and the menu follows its trigger off screen. An action
+-       menu needs neither the lock nor the inert page. Pass `modal` for a menu that
++       menu needs neither that lock nor the inert page; below 30rem it holds the page
++       through the root lock instead (`useOverlayOutside`). Pass `modal` for a menu that
+        must make the page inert. */
+     modal: false,
+     open: undefined,
+--- a/src/components/menu/DropdownMenuContent.vue
++++ b/src/components/menu/DropdownMenuContent.vue
+@@ -5,11 +5,12 @@
+     PointerDownOutsideEvent,
+ } from "../_shared/interaction";
+ import {
++    outsideAttrs,
+     overlayContentAttrs,
+     useDockParticipation,
+     useLeaveFinished,
+     useModalShortcutBarrier,
+-    useSheetWidth,
++    useOverlayOutside,
+     type FloatingPlacementProps,
+ } from "../_shared/overlay";
+ import { useMenuFamily } from "./context";
+@@ -65,7 +66,7 @@
+ );
+ /* The root overhead publishes `open` and `modal`; the family reads its own reka root
+    context. `modal` is the measurement, as everywhere else: a `modal={false}` menu
+-   leaves the page operable and keeps its accelerators. */
++   leaves the page's keyboard live and keeps its accelerators. */
+ const menuRoot = family.injectRoot();
+ useModalShortcutBarrier(
+     () => (menuRoot?.open.value ?? false) && (menuRoot?.modal.value ?? false),
+@@ -82,8 +83,13 @@
+    page it sits over, as the Select's sheet form does, so it wears the firm plate. The
+    register decides from two facts it already holds (the dock stamp and the viewport);
+    the content carries no material prop (BK #66). An anchored menu outside a dock, or
+-   any menu above 30rem, keeps the floating plate. */
+-const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
++   any menu above 30rem, keeps the floating plate. At that width every open menu, a
++   context menu included, holds the page and takes the touch beside it
++   (`useOverlayOutside`); a modal menu holds it through reka's own lock. */
++const { sheet: sheetWidth, held: outsideHeld } = useOverlayOutside(
++    () => menuRoot?.open.value ?? false,
++    () => menuRoot?.modal.value ?? false,
++);
+ const firm = computed(
+     () => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value,
+ );
+@@ -109,6 +115,7 @@
+ 
+ <template>
+     <component :is="PortalComp">
++        <div v-if="outsideHeld" v-bind="outsideAttrs('var(--z-popover)', dock.portalAttrs.value)" />
+         <component
+             :is="ContentComp"
+             v-bind="{
+--- a/src/components/popover/Popover.vue
++++ b/src/components/popover/Popover.vue
+@@ -27,11 +27,13 @@
+      * THE A11Y AXIS — one fact, and the consequences that actually derive from
+      * it.
+      *
+-     * `false` (default): non-modal. Focus is never trapped and the page behind
+-     * stays operable. `true`: reka's modal discipline — focus trapped, outside
+-     * pointers disabled, the page behind inert — and the content stamps
+-     * `aria-modal` exactly then, because that is the one attribute this axis can
+-     * enforce.
++     * `false` (default): non-modal. Focus is never trapped and, above 30rem, the
++     * page behind stays operable. Below 30rem an open click popover holds the page
++     * still and a tap beside it closes the popover without pressing the page, as on an
++     * iPhone, which shows a popover at compact width as a sheet (`useOverlayOutside`).
++     * `true`: reka's modal discipline — focus trapped, outside pointers disabled, the
++     * page behind inert — and the content stamps `aria-modal` exactly then, because
++     * that is the one attribute this axis can enforce.
+      *
+      * THE ROLE IS NOT ON THIS AXIS. The click arm keeps reka's `role="dialog"`
+      * whether or not it is modal (`PopoverContent` writes it in its own
+--- a/src/components/popover/PopoverContent.vue
++++ b/src/components/popover/PopoverContent.vue
+@@ -10,10 +10,12 @@
+ } from "reka-ui";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+ import {
++    outsideAttrs,
+     overlayContentAttrs,
+     useDockParticipation,
+     useLeaveFinished,
+     useModalShortcutBarrier,
++    useOverlayOutside,
+     type FloatingPlacementProps,
+ } from "../_shared/overlay";
+ import { usePopoverUnion } from "./popoverContext";
+@@ -149,12 +151,19 @@
+ }));
+ 
+ /* The keyboard follows the SAME axis, and only it. A non-modal popover leaves the
+-   page operable, so the page keeps its accelerators; a modal one has the page inert
++   page's keyboard live, so the page keeps its accelerators; a modal one has the page inert
+    behind it and the accelerators go with it. The root context is injected with a
+    `null` fallback because the hover arm is under a HoverCardRoot instead — and a
+    hover preview is never modal, so the barrier is dead on that arm by construction. */
+ const popoverRoot = injectPopoverRootContext(null);
+ useModalShortcutBarrier(() => isModal.value && (popoverRoot?.open.value ?? false));
++/* Below 30rem an open click popover holds the page and takes the touch beside it
++   (`useOverlayOutside`). The hover arm is a hint a fine pointer opened: it holds nothing,
++   and the root it reads is a hover card's, never a popover's. */
++const { held: outsideHeld } = useOverlayOutside(
++    () => !usesHoverRoot.value && (popoverRoot?.open.value ?? false),
++    () => isModal.value,
++);
+ 
+ /* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
+    on the hover arm it is a hover card. */
+@@ -180,6 +189,7 @@
+ 
+ <template>
+     <component :is="PortalComp">
++        <div v-if="outsideHeld" v-bind="outsideAttrs('var(--z-popover)', dock.portalAttrs.value)" />
+         <component
+             :is="ContentComp"
+             v-bind="{
 --- a/src/components/select/SelectContent.vue
 +++ b/src/components/select/SelectContent.vue
-@@ -71,11 +71,11 @@
+@@ -26,10 +26,11 @@
+ import SelectScrollButton from "./SelectScrollButton.vue";
+ import { cn } from "../_shared/class-names";
+ import {
++    outsideAttrs,
+     useDockParticipation,
+     useExitPress,
+     useLeaveFinished,
+-    useSheetWidth,
++    useOverlayOutside,
+ } from "../_shared/overlay";
+ import { injectSelectOpenInput } from "./openInput";
+ 
+@@ -62,20 +63,23 @@
+  * trigger has no width to grow into and covers what the reader was choosing for, so
+  * it opens as a bottom sheet: anchored to a virtual edge at the foot of the viewport,
+  * opening upward, at full width, on the firm plate; the anchored form keeps the
+- * floating plate.
++ * floating plate. At that width the page behind it holds still and its outside takes
++ * the touch (`useOverlayOutside`).
+  * The reference reads the viewport on every call, so a resize or a URL-bar retraction
+  * re-anchors it through floating-ui's own update. */
+-const sheet = useSheetWidth(() => selectRoot?.open.value ?? false);
++const { sheet, held: outsideHeld } = useOverlayOutside(
++    () => selectRoot?.open.value ?? false,
++);
+ const viewportFoot = {
+     getBoundingClientRect: () =>
          new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),
  };
  
@@ -51,110 +359,55 @@
 - * contains overscroll, so the page behind it does not move. */
 +/* reka's body lock stays off. It writes `overflow: hidden` onto `body`; under a root
 + * whose overflow is not `visible` that turns `body` into the scroll container and drops
-+ * every sticky ancestor, and the listbox with it, to its in-flow position. The anchored
-+ * form leaves the page free; the sheet form covers the page and holds it through the
-+ * root lock (`useSheetWidth`). */
++ * every sticky ancestor, and the listbox with it, to its in-flow position. Below 30rem
++ * the root lock holds the page instead (`useOverlayOutside`); above it the anchored
++ * listbox leaves the page free. */
  const rootAttrs = computed(() => ({
      ...attrs,
      position: "popper" as const,
---- a/src/components/menu/DropdownMenuContent.vue
-+++ b/src/components/menu/DropdownMenuContent.vue
-@@ -83,7 +83,10 @@
-    register decides from two facts it already holds (the dock stamp and the viewport);
-    the content carries no material prop (BK #66). An anchored menu outside a dock, or
-    any menu above 30rem, keeps the floating plate. */
--const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
-+const sheetWidth = useSheetWidth(
-+    () => menuRoot?.open.value ?? false,
-+    () => menuRoot?.modal.value ?? false,
-+);
- const firm = computed(
-     () => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value,
- );
---- a/src/components/menu/DropdownMenu.vue
-+++ b/src/components/menu/DropdownMenu.vue
-@@ -31,7 +31,8 @@
-        writes `overflow: hidden` onto `body`; under a root whose overflow is not
-        `visible` that makes `body` the scroll container, every sticky ancestor drops
-        to its in-flow position and the menu follows its trigger off screen. An action
--       menu needs neither the lock nor the inert page. Pass `modal` for a menu that
-+       menu needs neither that lock nor the inert page; at sheet width it holds the page
-+       through the root lock instead (`useSheetWidth`). Pass `modal` for a menu that
-        must make the page inert. */
-     modal: false,
-     open: undefined,
---- a/src/components/popover/PopoverContent.vue
-+++ b/src/components/popover/PopoverContent.vue
-@@ -14,6 +14,7 @@
-     useDockParticipation,
-     useLeaveFinished,
-     useModalShortcutBarrier,
-+    useSheetWidth,
-     type FloatingPlacementProps,
- } from "../_shared/overlay";
- import { usePopoverUnion } from "./popoverContext";
-@@ -159,13 +160,15 @@
- /* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
-    on the hover arm it is a hover card. */
- const hoverRoot = injectHoverCardRootContext(null);
-+const panelOpen = () =>
-+    (usesHoverRoot.value ? hoverRoot?.open.value : popoverRoot?.open.value) ?? false;
- const leave = useLeaveFinished({
-     kind: () => (usesHoverRoot.value ? "hover-card" : "popover"),
--    open: () =>
--        (usesHoverRoot.value ? hoverRoot?.open.value : popoverRoot?.open.value) ??
--        false,
-+    open: panelOpen,
-     emit: () => emit("leaveFinished"),
- });
-+/* At sheet width the panel covers the page, so it holds the page while open. */
-+useSheetWidth(panelOpen, () => isModal.value);
+@@ -137,6 +141,7 @@
  
- const dock = useDockParticipation();
- const contentAttrs = computed(() =>
+ <template>
+     <RekaSelectPortal>
++        <div v-if="outsideHeld" v-bind="outsideAttrs('var(--z-popover)', dock.portalAttrs.value)" />
+         <!--
+       THE PLATE IS PRECOMPILED, and it has to be. Every rule that decides how this
+       listbox looks and how tall it may grow — the collision bound, the overlay
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -94,8 +94,9 @@
+     }
+ 
+     /* THE LIVE-BEHIND LAYER CONTRACT. `<Dialog :modal="false">` is reka's own non-modal arm
+-     * — it renders no overlay at all, so the page behind keeps focus and pointer events —
+-     * and the one thing the library owes it is a band: a sheet sharing the page's
++     * — it renders no overlay at all, so the page behind keeps focus and pointer events
++     * (below 30rem its scroll holds still while the sheet is open: `useOverlayOutside`)
++     * — and the one thing the library owes it is a band: a sheet sharing the page's
+      * interactive layer must never cover persistent dock chrome. There is no second mode
+      * enum for this, and the previous family's `mode="live-behind"` (which bundled
+      * `modal:false` with a stage and a ladder default) is not replaced by another name. */
 --- a/src/components/sheet/SheetContent.vue
 +++ b/src/components/sheet/SheetContent.vue
 @@ -19,6 +19,7 @@
      useExitPress,
      useLeaveFinished,
      useModalShortcutBarrier,
-+    useSheetWidth,
++    useOverlayOutside,
  } from "../_shared/overlay";
  import {
      scrimDetentOpacity,
-@@ -125,6 +126,12 @@
+@@ -125,6 +126,13 @@
  // does: while reka is enforcing modality, the app's accelerators are barriered off
  // and only what this sheet registers after this line answers a keystroke.
  useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
-+// A modal sheet holds the page through its scrim; at sheet width a non-modal one covers
-+// the page and holds it too.
-+useSheetWidth(
++// A modal sheet holds the page through its scrim. Below 30rem a `modal={false}` sheet
++// holds the page's scroll too, and the page beside it stays live to a tap
++// (`useOverlayOutside`).
++useOverlayOutside(
 +    () => dialogRoot.open.value,
 +    () => dialogRoot.modal.value,
 +);
  
  // ONE spring mount PER ARM, and the sheet has exactly one arm at a time. The slide's
  // panel spring is seated only on the SLIDING arm: a detented sheet is driven end to end
---- a/src/components/dialog/DialogContent.vue
-+++ b/src/components/dialog/DialogContent.vue
-@@ -20,6 +20,7 @@
-     useExitPress,
-     useLeaveFinished,
-     useModalShortcutBarrier,
-+    useSheetWidth,
- } from "../_shared/overlay";
- import type { DismissableContentEmits } from "../_shared/interaction";
- 
-@@ -81,6 +82,12 @@
- // page behind inert; a `modal={false}` dialog leaves the page operable and its
- // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
- useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
-+// A modal plate holds the page through its scrim; at sheet width a non-modal one covers
-+// the page and holds it too.
-+useSheetWidth(
-+    () => dialogRoot.open.value,
-+    () => dialogRoot.modal.value,
-+);
- 
- // ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
- // is named here once and the consumer chooses nothing — and the knob that used to offer

@@ -1,0 +1,136 @@
+[
+ {
+  "meta": {
+   "engine": "webkit",
+   "browser": "26.5",
+   "date": "2026-11-23T23:23:55.114Z"
+  }
+ },
+ {
+  "case": "doc-only",
+  "click": null,
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "own",
+  "click": "box",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "own-pd",
+  "click": null,
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "own-pd-mouse",
+  "click": "box",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "body-none",
+  "click": null,
+  "log": [
+   [
+    "pointerdown",
+    "HTML",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "HTML",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "body-none-layer",
+  "click": "layer",
+  "log": [
+   [
+    "pointerdown",
+    "layer",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "layer",
+    "touch"
+   ],
+   [
+    "click",
+    "layer",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "body-none-bare",
+  "click": null,
+  "log": [
+   [
+    "pointerdown",
+    "layer",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "layer",
+    "touch"
+   ]
+  ]
+ }
+]

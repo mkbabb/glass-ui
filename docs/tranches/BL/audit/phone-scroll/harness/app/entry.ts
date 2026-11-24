@@ -8,6 +8,7 @@ declare global {
     interface Window {
         __psReady?: boolean;
         __psError?: string;
+        __psPressed?: number;
     }
 }
 

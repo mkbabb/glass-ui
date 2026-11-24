@@ -1,0 +1,267 @@
+[
+ {
+  "meta": {
+   "engine": "webkit",
+   "browser": "26.5",
+   "date": "2026-11-24T07:00:18.137Z"
+  }
+ },
+ {
+  "case": "doc-only",
+  "click": null,
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "own",
+  "click": "box",
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "box",
+    ""
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "own-pd",
+  "click": null,
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "own-pd-mouse",
+  "click": "box",
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "box",
+    ""
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "body-none",
+  "click": null,
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "HTML",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "HTML",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "body-none-layer",
+  "click": "layer",
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "layer",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "layer",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "layer",
+    ""
+   ],
+   [
+    "click",
+    "layer",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "body-none-bare",
+  "click": null,
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "layer",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "layer",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "own-md",
+  "click": "box",
+  "focusBefore": "BODY",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "box",
+    ""
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "field-own",
+  "click": "box",
+  "focusBefore": "field",
+  "focusAfter": "BODY",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "box",
+    ""
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ },
+ {
+  "case": "field-own-pd",
+  "click": null,
+  "focusBefore": "field",
+  "focusAfter": "field",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ]
+  ]
+ },
+ {
+  "case": "field-own-md",
+  "click": "box",
+  "focusBefore": "field",
+  "focusAfter": "field",
+  "log": [
+   [
+    "pointerdown",
+    "box",
+    "touch"
+   ],
+   [
+    "pointerup",
+    "box",
+    "touch"
+   ],
+   [
+    "mousedown",
+    "box",
+    ""
+   ],
+   [
+    "click",
+    "box",
+    "mouse"
+   ]
+  ]
+ }
+]
