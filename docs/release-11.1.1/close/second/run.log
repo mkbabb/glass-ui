@@ -1,0 +1,20 @@
+2026-11-24 02:05:20 second close begins: HEAD b124a311a (master 0790239c4 merged), load { 44.14 62.95 59.83 }, zone inuse=10859435, disk 133G
+2026-11-24 02:35:56 archive-tip guarded exit 0
+2026-11-24 02:36:11 archive done; queue starts
+2026-11-24 05:19:10 queue exit 0
+2026-11-24 05:19:12 the first queue (PID 55532) and its guarded call for ch-part-aj..al (PID 56698) stopped by PID, to run WebKit next: the kernel zone grows about 650k an hour and reaches the guard's 13M refusal within about an hour
+2026-11-24 05:39:41 wk-proj+wk-rel ended rc=143: the orphan reaper's burst brake stopped it at 05:39:06 (zone +167,844 in 69 s to 13.24M, past the reaper's 13M brake; the guard admits to 16M since today), with 263 of wk-proj's tests read in its log and no report written; wk-rel never ran. Both run again after the queue.
+2026-11-24 10:24:22 second close resumed by a new seat (claude-opus-5-5): the first seat's session ended at 06:18 during ch-part-ak; master (f47cae25d, docs only) merged at 829fd7979; CHANGELOG cut date 2026-11-24 at 48ab5d94e; load  14.52 8.18 5.58 , zone inuse=14038003, disk 103G
+2026-11-24 10:24:22 archive-final queued
+2026-11-24 10:28:20 archive-final guarded exit 0
+2026-11-24 10:28:32 queue4 starts on 48ab5d94e
+2026-11-24 10:34:25 queue5 (PID 17198, waiting, nothing started) stopped by PID; the queue is reordered at the WebKit group's end (queue6.sh): coarse-touch before chunk aj's resolution and Chromium's ak and al, the zone rising about 11k a minute under this seat's runs (14.15M at 10:33)
+2026-11-24 10:49:37 queue4 (PID 15244), queue2 (PID 19625) and its guarded call for res-aj+ch-part-ak+ch-part-al (PID 80779) stopped by PID as res-aj+ch-part-ak+ch-part-al was queued; coarse-touch next
+2026-11-24 13:26:21 third seat (claude-opus-5-5) resumes after the reboot of 10:59: master (343e3e0e3, docs/tranches only) merged at b9b96cb76; the reboot cut co-rel (73 tests read, no report) and res-aj before its first test; their partial logs kept as *-reboot-cut*
+2026-11-24 13:26:27 queue7 starts on b9b96cb76, load  10.60 7.89 5.37 , zone inuse=1575, disk 113G
+2026-11-24 13:29:20 archive-resumed guarded exit 0
+2026-11-24 15:23:51 fourth seat (claude-opus-5-5) resumes: queue7's seat ended at 13:57 during co-rel (100 tests read, no report; kept as suite/co-rel-seatend-cut.log); master unmoved (343e3e0e3, merged at b9b96cb76); the head tree (b9b96cb76) and red tree kept; load  5.52 4.77 4.16 , zone inuse=1872, disk 112G
+2026-11-24 15:23:55 queue8 starts on b9b96cb76, load  5.48 4.77 4.17 , zone inuse=1872, disk 112G
+2026-11-24 15:27:12 the Mac entered clamshell sleep on battery (pmset log: "Entering Sleep state due to 'Clamshell Sleep' ... Using Batt (Charge:100%)"; AppleClamshellState Yes); from then on it slept 340 to 964 s at a time between dark wakes of seconds to a minute (15:30 964 s, 15:46 951 s, 16:02 605 s, 16:25 932 s, 16:42 678 s, 16:54 340 s)
+2026-11-24 16:54:23 co-rel ended rc=124: the guard's 90-minute wall-clock limit, the wall clock carrying the sleeps; 100 tests read, 7 failed at 1.4 s to 16.2 min each, no report. Kept as suite/co-rel-asleep-void.log; not a reading
+2026-11-24 17:18 queue8 (PID 7298), queue2 (PID 7310) and the guarded call for co-part-aa..ac (PID 22389) stopped by PID: co-part-aa had read 17 tests in 24 minutes, two at 5.7 and 15.4 min across sleeps (suite/co-part-aa-asleep-void.log, not a reading). No server or browser of this seat left; ports 5351 to 5356 free

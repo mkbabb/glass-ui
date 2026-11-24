@@ -1,0 +1,368 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/node_modules/.bin/playwright",
+      "test",
+      "substrate-paints-color.spec.ts",
+      "--project=chromium-headless-new"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": ".cache/pi-report-planted.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "substrate-paints-color.spec.ts",
+      "file": "substrate-paints-color.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "substrate-paints-color (π lane — fail-CLOSED)",
+          "file": "substrate-paints-color.spec.ts",
+          "line": 575,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12407,
+                      "error": {
+                        "message": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.0, setting-sun=2.0, dusk=2.0, sky=2.0, meadow=2.0, pastel=2.0, oil=2.0, vangogh=2.0, oil-pastel=2.0, crayon=2.0, metal=2.0 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"setting-sun\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"dusk\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"sky\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"meadow\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"pastel\",\u001b[39m\n\u001b[31m+     1.9544369029663147,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"vangogh\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil-pastel\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"crayon\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"metal\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.0, setting-sun=2.0, dusk=2.0, sky=2.0, meadow=2.0, pastel=2.0, oil=2.0, vangogh=2.0, oil-pastel=2.0, crayon=2.0, metal=2.0 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"setting-sun\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"dusk\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"sky\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"meadow\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"pastel\",\u001b[39m\n\u001b[31m+     1.9544369029663147,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"vangogh\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil-pastel\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"crayon\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"metal\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:659:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                          "column": 11,
+                          "line": 659
+                        },
+                        "snippet": "  657 |                 .map(([k, v]) => `${k}=${v.toFixed(1)}`)\n  658 |                 .join(\", \")} — the black-canvas class the CPU oracles miss`,\n> 659 |         ).toEqual([]);\n      |           ^\n  660 |     });\n  661 |\n  662 |     // [2026-09-22 · BK register wave N-1] ONE READBACK, TWO TESTS. The two blob bounds"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                            "column": 11,
+                            "line": 659
+                          },
+                          "message": "Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.0, setting-sun=2.0, dusk=2.0, sky=2.0, meadow=2.0, pastel=2.0, oil=2.0, vangogh=2.0, oil-pastel=2.0, crayon=2.0, metal=2.0 — the black-canvas class the CPU oracles miss\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"DEFAULT\",\u001b[39m\n\u001b[31m+     0,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"setting-sun\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"dusk\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"sky\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"meadow\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"pastel\",\u001b[39m\n\u001b[31m+     1.9544369029663147,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"vangogh\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"oil-pastel\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"crayon\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"metal\",\u001b[39m\n\u001b[31m+     1.9544290472599297,\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  657 |                 .map(([k, v]) => `${k}=${v.toFixed(1)}`)\n  658 |                 .join(\", \")} — the black-canvas class the CPU oracles miss`,\n> 659 |         ).toEqual([]);\n      |           ^\n  660 |     });\n  661 |\n  662 |     // [2026-09-22 · BK register wave N-1] ONE READBACK, TWO TESTS. The two blob bounds\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:659:11"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "PLANT black-aurora: fragment shaders forced to opaque black\n"
+                        },
+                        {
+                          "text": "PI aurora DEFAULT meanChannel=0.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora setting-sun meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora dusk meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora sky meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora meadow meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora pastel meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora oil meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora vangogh meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora oil-pastel meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora crayon meanChannel=2.0 floor=8\n"
+                        },
+                        {
+                          "text": "PI aurora metal meanChannel=2.0 floor=8\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T18:28:47.545Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/test-results/substrate-paints-color-sub-c617b-DEFAULT-every-preset-at-t-1-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                        "column": 11,
+                        "line": 659
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-5d0f96967b05e13ad1c2",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 576,
+              "column": 5
+            },
+            {
+              "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3455,
+                      "error": {
+                        "message": "Error: blob coverage 0.000 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                        "stack": "Error: blob coverage 0.000 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:761:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                          "column": 11,
+                          "line": 761
+                        },
+                        "snippet": "  759 |             coverage,\n  760 |             `blob coverage ${coverage.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,\n> 761 |         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);\n      |           ^\n  762 |     });\n  763 |\n  764 |     test(\"blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS\", async ({"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                            "column": 11,
+                            "line": 761
+                          },
+                          "message": "Error: blob coverage 0.000 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  759 |             coverage,\n  760 |             `blob coverage ${coverage.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,\n> 761 |         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);\n      |           ^\n  762 |     });\n  763 |\n  764 |     test(\"blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS\", async ({\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:761:11"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "PLANT blob-blank: canvas dropped from the composite\n"
+                        },
+                        {
+                          "text": "PI blob paintable=[0.000,0.099]-[1.000,0.901] paintableShareOfInterior=1.000\n"
+                        },
+                        {
+                          "text": "PI blob baseline groundMotion=0.000\n"
+                        },
+                        {
+                          "text": "PI blob coverage=0.000 floor=0.1 · paintedShare=0.000 ceil=0.7\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T18:29:00.296Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/test-results/substrate-paints-color-sub-c99ff-let-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts",
+                        "column": 11,
+                        "line": 761
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-762efb721c26cdc7e054",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 756,
+              "column": 5
+            },
+            {
+              "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3376,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "PLANT blob-blank: canvas dropped from the composite\n"
+                        },
+                        {
+                          "text": "PI blob paintable=[0.000,0.099]-[1.000,0.901] paintableShareOfInterior=1.000\n"
+                        },
+                        {
+                          "text": "PI blob baseline groundMotion=0.000\n"
+                        },
+                        {
+                          "text": "PI blob coverage=0.000 floor=0.1 · paintedShare=0.000 ceil=0.7\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-24T18:29:04.075Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c5333572f9452f84ffb5-51e0d8dfb44676be2826",
+              "file": "substrate-paints-color.spec.ts",
+              "line": 764,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-24T18:28:46.515Z",
+    "duration": 21046.812,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

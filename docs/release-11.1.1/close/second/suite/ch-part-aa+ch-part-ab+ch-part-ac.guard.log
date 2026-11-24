@@ -1,0 +1,13 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 49 > 36)
+2026-11-24 03:34:46 multi start: ch-part-aa ch-part-ab ch-part-ac
+2026-11-24 03:34:46 ch-part-aa start proj=chromium-headless-new files=15 head=b124a311a root=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree load=33.60 54.63 68.77
+2026-11-24 03:45:39 ch-part-aa rc=1 load=41.38 49.73 58.48  13 failed  40 passed (10.9m) 
+2026-11-24 03:45:39 ch-part-aa rc=0
+2026-11-24 03:45:39 ch-part-ab start proj=chromium-headless-new files=14 head=b124a311a root=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree load=41.38 49.73 58.48
+2026-11-24 04:01:58 ch-part-ab rc=1 load=32.08 33.91 40.83  72 failed  11 skipped  50 passed (16.3m) 
+2026-11-24 04:01:58 ch-part-ab rc=0
+2026-11-24 04:01:58 ch-part-ac start proj=chromium-headless-new files=12 head=b124a311a root=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree load=32.08 33.91 40.83
+2026-11-24 04:09:42 ch-part-ac rc=1 load=11.63 21.13 32.19  21 failed  7 passed (7.7m) 
+2026-11-24 04:09:43 ch-part-ac rc=0
+2026-11-24 04:09:43 multi done: ch-part-aa ch-part-ab ch-part-ac

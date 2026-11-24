@@ -1,0 +1,25 @@
+2026-11-24 02:36:11 ch-rel queued (disk 117G, inuse=11116603, load  39.22 53.42 62.54 )
+2026-11-24 03:25:28 ch-rel guard-rc=0 
+2026-11-24 03:25:29 ch-part-aa+ch-part-ab+ch-part-ac queued (disk 116G, inuse=11495643, load  107.30 79.42 84.34 )
+2026-11-24 04:10:03 ch-part-aa+ch-part-ab+ch-part-ac guard-rc=0 
+2026-11-24 04:10:03 ch-part-ad+ch-part-ae+ch-part-af queued (disk 112G, inuse=11945400, load  11.57 20.50 31.71 )
+2026-11-24 04:43:34 ch-part-ad+ch-part-ae+ch-part-af guard-rc=0 
+2026-11-24 04:43:34 ch-part-ag+ch-part-ah+ch-part-ai queued (disk 103G, inuse=12321268, load  15.75 26.53 29.09 )
+2026-11-24 05:19:05 ch-part-ag+ch-part-ah+ch-part-ai guard-rc=0 
+2026-11-24 05:19:05 ch-part-aj+ch-part-ak+ch-part-al queued (disk 100G, inuse=12761819, load  30.54 21.28 18.16 )
+2026-11-24 05:19:12 the first queue (PID 55532) and its guarded call for ch-part-aj..al (PID 56698) stopped by PID, to run WebKit next: the kernel zone grows about 650k an hour and reaches the guard's 13M refusal within about an hour
+2026-11-24 05:19:12 wk-proj+wk-rel queued (disk 100G, inuse=12761819, load  29.13 21.14 18.13 )
+2026-11-24 05:39:13 wk-proj+wk-rel guard-rc=143 
+2026-11-24 05:39:13 res-ch-n1+ch-part-aj+ch-part-ak+ch-part-al queued (disk 96G, inuse=, load  29.98 27.59 22.70 )
+2026-11-24 05:39:41 wk-proj+wk-rel ended rc=143: the orphan reaper's burst brake stopped it at 05:39:06 (zone +167,844 in 69 s to 13.24M, past the reaper's 13M brake; the guard admits to 16M since today), with 263 of wk-proj's tests read in its log and no report written; wk-rel never ran. Both run again after the queue.
+2026-11-24 10:28:32 wk-proj+wk-rel queued (disk 106G, inuse=14088733, load  16.81 16.50 10.26 )
+2026-11-24 10:49:33 wk-proj+wk-rel guard-rc=0 
+2026-11-24 10:49:33 res-aj+ch-part-ak+ch-part-al queued (disk 95G, inuse=14321093, load  9.61 10.59 11.97 )
+2026-11-24 10:49:37 queue4 (PID 15244), queue2 (PID 19625) and its guarded call for res-aj+ch-part-ak+ch-part-al (PID 80779) stopped by PID as res-aj+ch-part-ak+ch-part-al was queued; coarse-touch next
+2026-11-24 10:49:37 co-rel queued (disk 95G, inuse=14321093, load  9.16 10.48 11.92 )
+2026-11-24 13:30:10 res-aj+ch-part-ak+ch-part-al queued (disk 113G, inuse=1712, load  9.87 9.14 6.50 )
+2026-11-24 13:47:10 res-aj+ch-part-ak+ch-part-al guard-rc=0 
+2026-11-24 13:47:10 co-rel queued (disk 112G, inuse=1861, load  6.50 7.91 7.51 )
+2026-11-24 15:23:55 co-rel queued (disk 112G, inuse=1872, load  5.48 4.77 4.17 )
+2026-11-24 16:54:23 co-rel guard-rc=124 
+2026-11-24 16:54:23 co-part-aa+co-part-ab+co-part-ac queued (disk 112G, inuse=2001, load  30.16 18.61 11.01 )

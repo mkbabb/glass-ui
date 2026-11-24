@@ -4,6 +4,8 @@ Run by claude-opus-5-5 on `release/11.1.1` in `.claude/worktrees/release-11.1.1`
 following the 11.1.0 close's method (`docs/release-11.1.0/close.md`). Every orchestrator note in
 this folder was read first (fourteen). Nothing was tagged, pushed or published.
 
+The second close (2026-11-24) is recorded at the end of this file, under "The second close".
+
 **Verdict: not ready to tag.** The master merge the close begins with brings two failures into
 `scripts/release.sh`'s own gates, and `release.sh` stops at the first (it runs under `set -e`):
 
@@ -293,3 +295,136 @@ E. **Carried from critique 12** (A to N), unchanged: row B's WebKit drag, the Re
 - The earlier seats' untracked records committed (`1dca81ae4`).
 - No source, spec or CHANGELOG change. The CommandDialog restatement is a patch in this folder,
   not applied.
+
+## The second close (2026-11-24)
+
+Run by claude-opus-5-5 in four seats on 2026-11-24, after fix seat 13 built the note after the
+first close and critiques 13 and 14 read it. Every orchestrator note in this folder was read
+first (fifteen). Records in `second/`: `run.log` (each seat's own lines), `archive.sh`,
+`gates-archive-{tip,final,resumed}/`, `static-resumed/`, `scripts/` (`queue2.sh` to `queue8.sh`,
+`multi.sh`, `suite.sh`, `fulltree.sh`, `redtree.sh`, `sort.sh`, `errs.py`, `exits.sh`, `jobs/`),
+`suite/` (`queue.txt`, `runs.txt`, `trees.txt`, every chunk's log and report). Nothing was
+tagged, pushed or published.
+
+**Verdict: not ready to tag, because two reads are still owed: the coarse-touch project of the
+visual suite and `release.sh`'s exits gate.** All the checks that have been read hold on the tip. The
+release.yml battery and `release.sh`'s pixel floors are green on an archive of it. Every
+branch-only failure in Chromium and WebKit fails the same way on master's tip or passes alone
+and repeated on both trees. No row id is in `src`. The fourth seat stopped its queue at 17:18:
+the Mac had been in clamshell sleep on battery since 15:27, so its coarse-touch runs measured
+sleep, not frames (below).
+
+### Merges and commits
+
+1. `b124a311a`: master `0790239c4` merged (the first seat, 02:03).
+2. `829fd7979`: master `f47cae25d` merged (docs only, the second seat).
+3. `48ab5d94e`: the CHANGELOG cut date, 2026-11-24.
+4. `b9b96cb76`: master `343e3e0e3` merged (`docs/tranches` only, the third seat, after the
+   reboot of 10:59). Master has not moved since (read at 15:22).
+
+`git diff master -- .github scripts/dist-tag.mjs` is empty. Outside `docs/`, the tip differs
+from critique 14's tree `ca61ce5b6` only in the CHANGELOG's date line.
+
+### The battery and release.sh's browser half
+
+`archive.sh` on a `git archive` of the tip inside the worktree (`.cache/close-1111b`, deleted
+after), taking what release.yml's sparse checkout takes, three times:
+
+| step | `b124a311a` | `48ab5d94e` | `b9b96cb76` |
+|---|---|---|---|
+| version 11.1.1; `dist-tag.mjs 11.1.1 11.1.0` → `latest` | 0 | 0 | 0 |
+| `prepare`, `typecheck`, `build`, `dist/index.d.ts` | 0 | 0 | 0 |
+| `verify:package`: CLEAN, 197 claims, roster 292/292, ratchet equal at 3055590 | 0 | 0 | 0 |
+| `demo:dist:build` | 0 | 0 | 0 |
+| `CI=true npx vitest run --maxWorkers=2`: 282 files, 2524 passed, 5 expected fail, 1 skipped | 0 | 0 | 0 |
+| `test:browser`: 2 files, 12 passed | 0 | 0 | 0 |
+| `gate:pixel-floor`: GREEN, 3 floors on the live paint path | 0 | 0 | 0 |
+| `gate:pixel-floor:planted`: GREEN self-test, 2 floors RED on the plant | 0 | 0 | 0 |
+| `gate:pixel-floor:planted:flood`: GREEN self-test, the blob ceiling RED on the plant | 0 | 0 | 0 |
+
+The pack's unpacked size is 3055590, the ratchet's datum, so nothing was rebound. Every entry's
+gzipped import closure (`sizes.txt`) is identical in the three archives and equals the
+CHANGELOG's size lines (dock 40,533; root 108,751; command 18,978; and the rest).
+
+### The visual suite
+
+The 11.1.0 close's lists less the spec files master deleted (`lists/`), compared by title against
+the 11.1.0 close's branch sets. Each chunk ran on a full `git archive` tree of the tip with its
+docs (`.cache/close-full/head/tree`). The red tree is that tree with v11.1.0's `src` (678 files, no
+blob differing from v11.1.0's), so the two differ in the library alone. A branch-only title is
+sorted as the first close sorted them. If its first error, numbers and ports normalised, equals
+the one the same title gave on master's tip at the first close (11.1.0's source under the rebuilt
+demo, `suite/resolve/ch-master.json`, `wk-master.json`), it arrives with master's demo. Any other
+title runs alone and repeated on the head tree, the red tree and the head tree again.
+
+| project | read on | branch failing | 11.1.0 close failing | branch-only | sorted |
+|---|---|---|---|---|---|
+| Chromium release specs (`ch-rel`) | `b124a311a` | 1 (178 passed) | 0 | 1 | load flake |
+| chromium-headless-new, 12 chunks | aa to aj `b124a311a`, ak and al `b9b96cb76` | 438 | 450 | 123 | 121 master's demo, 2 load flakes |
+| WebKit 2287, 7 files (`wk-proj`) | `48ab5d94e` | 3 (265 passed, 12 skipped) | 4 | 2 | master's demo |
+| WebKit release specs (`wk-rel`) | `48ab5d94e` | 0 (11 passed) | 0 | 0 | |
+| coarse-touch release specs and 12 chunks | **not read** | | | | |
+
+- **Chromium.** `suite/ch-branch-only-all.txt`. 121 titles give master's tip's first error
+  (`ch-errs-vs-master.txt` for aa to ai, 93; `aj-`, 5; `ak-`, 12; `al-`, 11; none differs).
+  The other three pass alone, three times each on the head tree, the red tree and the head tree
+  again: `release-10-1-5` "critique 8, coarse phone › n1" (`resolve/n1-*`, 9 of 9), and from
+  chunk aj `release-10-1-2` "O-101 · vertical · reversal · the expanded endpoint follows the pane
+  (390->1440)" and `release-10-1-3` "390 · right-anchored · ancestor zoom 1.25 › D-1"
+  (`resolve/aj-*`, 18 of 18). They are load flakes.
+- **WebKit.** The two branch-only titles are `aurora-swraster` "fallback ground matches the
+  composite reference" (light, dark): the served-app sentinel finds no aurora surface on
+  `/substrates/aurora`, as on master's tip (`wk-errs-vs-master.txt`: same 2). The title the first
+  close left open, `release-10-1-5` "fix 12, coarse phone › t1 O-201 vertical", passes here,
+  as fix seat 13 (e) read it.
+- **Of the titles read, none fails on the branch that passes on v11.1.0's source.**
+
+### Coarse-touch: the reads that did not finish
+
+- `co-rel` from 10:49 on `48ab5d94e`: 73 tests, none failed, cut by the reboot at 10:59
+  (`co-rel-reboot-cut.log`).
+- `co-rel` from 13:47 on `b9b96cb76`: 100 tests, one failed (`release-10-1-5` "p2 a 1-2 px host
+  change across the fit edge", the project's own describe, 47.5 s), cut when the third seat's
+  session ended at 13:57 (`co-rel-seatend-cut.log`).
+- `co-rel` from 15:23 on `b9b96cb76`. At 15:27:12 the Mac entered clamshell sleep on battery
+  (pmset: "Entering Sleep state due to 'Clamshell Sleep' … Using Batt (Charge:100%)"; the lid
+  reads closed). From then on it slept for 340 to 964 s at a time, between dark wakes of a few
+  seconds to a minute. Tests that spanned a sleep took 2.3 to 16.2 minutes by the wall clock
+  and failed (7 of the 100 read). The guard ended the run at its 90-minute limit (exit 124,
+  16:54) with no report. `co-part-aa` then read 17 tests in 24 minutes, two of them taking 5.7
+  and 15.4 minutes. The seat stopped its queue by PID at 17:18. Neither run is a reading
+  (`co-rel-asleep-void.log`, `co-part-aa-asleep-void.log`).
+- The battery's charge did not stop anything, and no power hold was started (the owner's rule).
+  The runs stopped because the machine was asleep, and a frame measurement taken across a sleep
+  is not a measurement.
+
+### Row ids in `src` comments
+
+`scripts/rowid.sh` at `b9b96cb76` (`static-resumed/`), and again at 15:25 with identical
+output. `git diff v11.1.0 HEAD -- src` adds 1,273 lines, with 9 hits, all the code's own
+vocabulary (the dock's seats, a hidden `probe` element read for computed style, `:scope`). No line
+of `src` at the tip carries an id that v11.1.0's does not (`src-id-lines.head-only.txt` is
+empty).
+
+### CHANGELOG
+
+The cut date is 2026-11-24 (`48ab5d94e`). The 11.1.1 entry names no internal id, and no
+paragraph has more than one em dash (the heading's separates the version from the date). If the
+close finishes on a later day, the date moves to that day.
+
+### The tree
+
+- Clean after this record's commit (the earlier seats' records under `second/` are in it).
+- The head and red trees (`.cache/close-full`, 14 GB, ignored) are kept for the next seat. They
+  are deleted when the close ends.
+- No server or browser of this seat is left; ports 5351 to 5356 are free.
+
+### What the release needs before a tag
+
+1. **Coarse-touch read whole** with the machine awake: `co-rel` and the twelve chunks on the head
+   tree, the branch-only titles sorted as above. `second/scripts/queue8.sh` runs them, then the
+   WebKit pair's red-tree A/B (`res-wk-swr`), then the exits gate.
+2. **`release.sh`'s exits gate** on the tip, its sixteen parts (`scripts/exits.sh`). Critique 14
+   read it on `ca61ce5b6`, the same bytes outside the CHANGELOG. It found five failures under a
+   load of 16 to 140, and each read GREEN again at a lower load.
+3. Then the tag, from the commit that records them.

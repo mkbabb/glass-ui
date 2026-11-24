@@ -1,0 +1,9 @@
+311:+        /* Under reduced motion a press darkens the seat and does not shrink it, where
+352:+       seat paints the same plate itself. A change of destination cross-fades the two
+360:+        .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) [data-glass-dock-seat] * {
+391:+    const panel = root.querySelector(':scope > [data-part="panel"]');
+897:+    const probe = document.createElement("div");
+898:+    probe.style.cssText = `position:absolute;visibility:hidden;transition-duration:var(--spring-${row}-exit-duration);transition-timing-function:var(--exit-curve);animation-duration:var(--duration-fast)`;
+899:+    document.body.appendChild(probe);
+900:+    const cs = getComputedStyle(probe);
+904:+    probe.remove();

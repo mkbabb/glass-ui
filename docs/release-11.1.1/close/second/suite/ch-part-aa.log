@@ -1,0 +1,416 @@
+
+Running 53 tests using 1 worker
+
+CAPTURED 392158 bytes, 439 unique rules
+  ✓   1 [chromium-headless-new] › tests-visual/_capture_css.spec.ts:55:1 › capture union CSS (9.0s)
+  ✘   2 [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback (2.6s)
+  ✓   3 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 light (13.4s)
+  ✓   4 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 dark (9.4s)
+  ✓   5 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 light (10.7s)
+  ✓   6 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 dark (9.0s)
+BLOB canvas count: 1
+BUTTONS: ["","","","","","","","","","","","","","Calm","Serene","Excited","Playful","Shy","Plain","","","Character","Surface","Satellites","Blob","",""]
+blob default(calm): dims 596x597 bg=216,184,184 bodyN=3935 L=0.703 C=0.082 h=70.2
+excited tab count: 0
+blob excited: dims 596x597 bg=216,184,184 bodyN=3997 L=0.702 C=0.082 h=69.9
+shadow CONTRAST 374x373 bgL=0.806 castN=69938 peakContrast(top5%)=0.114
+  ✘   7 [chromium-headless-new] › tests-visual/_cohere-debug.spec.ts:33:1 › debug blob + constellation (22.2s)
+SHADOW light: 374x373 bg=216,184,168 bgL=0.806 castN=139502 peakContrast(top5%)=0.119
+  ✓   8 [chromium-headless-new] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow light › measure light (1.8s)
+SHADOW dark: 374x373 bg=40,24,24 bgL=0.230 castN=133133 peakContrast(top5%)=0.682
+  ✓   9 [chromium-headless-new] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow dark › measure dark (1.7s)
+  ✘  10 [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks (5.4s)
+[WebServer] 3:36:23 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  11 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (light) (2.0s)
+[WebServer] 3:36:27 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  12 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (dark) (2.0s)
+  ✘  13 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:45:1 › E4 empty-states mascot is mounted (light·mobile390) (2.0s)
+  ✓  14 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell light (11.0s)
+  ✓  15 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator light (3.2s)
+  ✓  16 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops light (11.0s)
+[WebServer] 3:36:59 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  17 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg light (11.0s)
+  ✓  18 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell dark (10.8s)
+  ✓  19 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator dark (3.1s)
+  ✓  20 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops dark (11.2s)
+[WebServer] 3:37:35 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  21 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg dark (11.2s)
+  ✘  22 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) (1.0m)
+  ✓  23 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · mobile390) › badge — dark destructive plate (light·mobile390) (1.6s)
+  ✓  24 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · mobile390) › checks — switch glass track (light·mobile390) (1.6s)
+  ✘  25 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) (1.0m)
+  ✓  26 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · desktop1280) › badge — dark destructive plate (light·desktop1280) (1.9s)
+  ✓  27 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · desktop1280) › checks — switch glass track (light·desktop1280) (1.6s)
+  ✘  28 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) (1.0m)
+  ✓  29 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · mobile390) › badge — dark destructive plate (dark·mobile390) (1.7s)
+  ✓  30 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · mobile390) › checks — switch glass track (dark·mobile390) (1.6s)
+  ✘  31 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) (1.0m)
+  ✓  32 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · desktop1280) › badge — dark destructive plate (dark·desktop1280) (1.8s)
+  ✓  33 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · desktop1280) › checks — switch glass track (dark·desktop1280) (1.6s)
+  ✘  34 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (mobile390) (1.0m)
+  ✘  35 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (desktop1280) (1.0m)
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:20 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 3:44:22 AM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+  ✘  36 [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) (1.0m)
+  ✓  37 [chromium-headless-new] › tests-visual/CommandDialog.b7c.spec.ts:34:1 › C3-1: the modal finder holds the page through the root and lets go without a jump (2.4s)
+  ✓  38 [chromium-headless-new] › tests-visual/CommandDialog.b7c.spec.ts:66:1 › C3-2: the short first group keeps its rows in view under its own heading (1.0s)
+  ✓  39 [chromium-headless-new] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › DropdownMenu: opening it keeps body scroll and the sticky row in place (862ms)
+  ✓  40 [chromium-headless-new] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › Select: opening it keeps body scroll and the sticky row in place (920ms)
+  ✓  41 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg (1.6s)
+  ✓  42 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg (1.6s)
+  ✓  43 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:115:1 › hover on an inactive tab changes its colour and nothing else (1.3s)
+  ✓  44 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab on its centre moves nothing (1.7s)
+  ✓  45 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing (1.9s)
+  ✓  46 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits (1.8s)
+  ✓  47 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 8 px drag out and back, released on its start, leaves the next hop gliding (2.0s)
+  ✓  48 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 24 px drag out and back, released on its start, leaves the next hop gliding (2.1s)
+  ✓  49 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:17:1 › a twelve-row list that fits the room shows whole (873ms)
+  ✓  50 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:35:1 › a short viewport bounds the list 16px from the edge and it scrolls inside (886ms)
+  ✓  51 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:53:1 › below 30rem the listbox is a bottom sheet at full width (795ms)
+  ✓  52 [chromium-headless-new] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (consumer layer) (1.0s)
+  ✓  53 [chromium-headless-new] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (unlayered) (1.1s)
+
+
+  1) [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+
+    Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.
+        at eval (eval at evaluate (:303:30), <anonymous>:9:17)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:9:17)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_cfg-readback.spec.ts:11:28
+
+    Error Context: tests-visual/test-results/_cfg-readback-configurator-8f397-ken-auth-shell-ink-readback-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/_cohere-debug.spec.ts:33:1 › debug blob + constellation 
+
+    TimeoutError: locator.waitFor: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="constellation-recession-full"] canvas').first() to be visible
+
+
+      88 |     const full = page.locator('[data-testid="constellation-recession-full"] canvas').first();
+      89 |     const dim = page.locator('[data-testid="constellation-recession-dim"] canvas').first();
+    > 90 |     await full.waitFor({state:"visible",timeout:20000});
+         |                ^
+      91 |     await page.waitForTimeout(800);
+      92 |     // Interior-inset summed darkness (exclude the rounded-card corners). At 0.4x
+      93 |     // alpha the painted pixels are ~0.4x as dark, so the summed interior darkness
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_cohere-debug.spec.ts:90:16
+
+    Error Context: tests-visual/test-results/_cohere-debug-debug-blob-constellation-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+
+    Error: bottom context group present on route A
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      94 |     // The binding assertion: the SHELL dock renders a DIFFERENT facet layer set on
+      95 |     // the two routes (route→layer determinism). Both shell docks must swap.
+    > 96 |     expect(bottomA.present, "bottom context group present on route A").toBe(true);
+         |                                                                        ^
+      97 |     expect(bottomB.present, "bottom context group present on route B").toBe(true);
+      98 |     expect(bottomA.railTabs.length, "route A has facet layers").toBeGreaterThan(0);
+      99 |     expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_dock-context-capture.spec.ts:96:72
+
+    Error Context: tests-visual/test-results/_dock-context-capture-AZ-W-28b46-yer-swap-on-the-shell-docks-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (light) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      34 |             document.body.textContent?.includes("Lost in the lattice"),
+      35 |         );
+    > 36 |         expect(has404).toBe(true);
+         |                        ^
+      37 |
+      38 |         await page.screenshot({
+      39 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_egg-capture.spec.ts:36:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-light--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (dark) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      34 |             document.body.textContent?.includes("Lost in the lattice"),
+      35 |         );
+    > 36 |         expect(has404).toBe(true);
+         |                        ^
+      37 |
+      38 |         await page.screenshot({
+      39 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_egg-capture.spec.ts:36:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-dark--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:45:1 › E4 empty-states mascot is mounted (light·mobile390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      53 |         return { present: !!el };
+      54 |     });
+    > 55 |     expect(mascot.present).toBe(true);
+         |                            ^
+      56 |
+      57 |     await page.screenshot({
+      58 |         path: `${OUT}/W-EGG-mascot-mobile390-light.png`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_egg-capture.spec.ts:55:28
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-empty-stat-e67ef-is-mounted-light·mobile390--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-cbdf2-d-specimen-light·mobile390--chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-a92fe-specimen-light·desktop1280--chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-ea2a4-ed-specimen-dark·mobile390--chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-217d0--specimen-dark·desktop1280--chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: /open|dialog/i }).first()
+        - locator resolved to <button type="button" data-v-2274dfab="" aria-current="page" aria-label="Dialog" data-glass-dock-seat="" class="dock-tab-button glass-specular-track">Dialog</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        108 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      134 |             .first();
+      135 |         await trigger.scrollIntoViewIfNeeded();
+    > 136 |         await trigger.click();
+          |                       ^
+      137 |         await page.waitForTimeout(500);
+      138 |         await page.screenshot({
+      139 |             path: `${OUT}/W-PRIM-POLISH-dialog-scrim-${vp.name}-dark.png`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:136:23
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-dialo-08e20-k-recedes-to-ink-mobile390--chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: /open|dialog/i }).first()
+        - locator resolved to <button type="button" data-v-2274dfab="" aria-current="page" aria-label="Dialog" data-glass-dock-seat="" class="dock-tab-button glass-specular-track">Dialog</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        108 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      134 |             .first();
+      135 |         await trigger.scrollIntoViewIfNeeded();
+    > 136 |         await trigger.click();
+          |                       ^
+      137 |         await page.waitForTimeout(500);
+      138 |         await page.screenshot({
+      139 |             path: `${OUT}/W-PRIM-POLISH-dialog-scrim-${vp.name}-dark.png`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_prim-polish-capture.spec.ts:136:23
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-dialo-6fcda-recedes-to-ink-desktop1280--chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.dropdown-menu-content').first() to be visible
+
+
+      188 |         await trigger.click();
+      189 |         const content = page.locator(".dropdown-menu-content").first();
+    > 190 |         await content.waitFor({ state: "visible" });
+          |                       ^
+      191 |         await page.waitForTimeout(250);
+      192 |         const padding = await content.evaluate((el) => {
+      193 |             const cs = getComputedStyle(el as HTMLElement);
+        at measureDropdown (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_r4-shell-config-capture.spec.ts:190:23)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/_r4-shell-config-capture.spec.ts:207:27
+
+    Error Context: tests-visual/test-results/_r4-shell-config-capture-A-3f756-y-rows-panel-padding-shell--chromium-headless-new/error-context.md
+
+  13 failed
+    [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+    [chromium-headless-new] › tests-visual/_cohere-debug.spec.ts:33:1 › debug blob + constellation ─
+    [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (light) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E4 404 paints the lattice (dark) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:45:1 › E4 empty-states mascot is mounted (light·mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (desktop1280) 
+    [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+  40 passed (10.9m)

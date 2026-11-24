@@ -1,0 +1,125 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor:planted
+> rm -f .cache/pi-report-planted.json; PI_PLANT=all PI_REPORT=.cache/pi-report-planted.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=planted-red --report=./.cache/pi-report-planted.json --floors=aurora,blob --plant=all
+
+
+Running 3 tests using 1 worker
+
+PLANT black-aurora: fragment shaders forced to opaque black
+PI aurora DEFAULT meanChannel=0.0 floor=8
+PI aurora setting-sun meanChannel=2.0 floor=8
+PI aurora dusk meanChannel=2.0 floor=8
+PI aurora sky meanChannel=2.0 floor=8
+PI aurora meadow meanChannel=2.0 floor=8
+PI aurora pastel meanChannel=2.0 floor=8
+PI aurora oil meanChannel=2.0 floor=8
+PI aurora vangogh meanChannel=2.0 floor=8
+PI aurora oil-pastel meanChannel=2.0 floor=8
+PI aurora crayon meanChannel=2.0 floor=8
+PI aurora metal meanChannel=2.0 floor=8
+  ✘  1 [chromium-headless-new] › substrate-paints-color.spec.ts:576:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (12.8s)
+PLANT blob-blank: canvas dropped from the composite
+PI blob paintable=[0.000,0.099]-[1.000,0.901] paintableShareOfInterior=1.000
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.000 floor=0.1 · paintedShare=0.000 ceil=0.7
+  ✘  2 [chromium-headless-new] › substrate-paints-color.spec.ts:756:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (3.7s)
+PLANT blob-blank: canvas dropped from the composite
+PI blob paintable=[0.000,0.099]-[1.000,0.901] paintableShareOfInterior=1.000
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.000 floor=0.1 · paintedShare=0.000 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:764:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (3.6s)
+
+
+  1) [chromium-headless-new] › substrate-paints-color.spec.ts:576:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 
+
+    Error: aurora painted a BLACK interior (mean channel <= 8) for: DEFAULT=0.0, setting-sun=2.0, dusk=2.0, sky=2.0, meadow=2.0, pastel=2.0, oil=2.0, vangogh=2.0, oil-pastel=2.0, crayon=2.0, metal=2.0 — the black-canvas class the CPU oracles miss
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 46
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "DEFAULT",
+    +     0,
+    +   ],
+    +   Array [
+    +     "setting-sun",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "dusk",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "sky",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "meadow",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "pastel",
+    +     1.9544369029663147,
+    +   ],
+    +   Array [
+    +     "oil",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "vangogh",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "oil-pastel",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "crayon",
+    +     1.9544290472599297,
+    +   ],
+    +   Array [
+    +     "metal",
+    +     1.9544290472599297,
+    +   ],
+    + ]
+
+      657 |                 .map(([k, v]) => `${k}=${v.toFixed(1)}`)
+      658 |                 .join(", ")} — the black-canvas class the CPU oracles miss`,
+    > 659 |         ).toEqual([]);
+          |           ^
+      660 |     });
+      661 |
+      662 |     // [2026-09-22 · BK register wave N-1] ONE READBACK, TWO TESTS. The two blob bounds
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:659:11
+
+    Error Context: test-results/substrate-paints-color-sub-c617b-DEFAULT-every-preset-at-t-1-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › substrate-paints-color.spec.ts:756:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS 
+
+    Error: blob coverage 0.000 is below the non-blank floor 0.1 — the blob did not paint (blank/black canvas)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.1
+    Received:    0
+
+      759 |             coverage,
+      760 |             `blob coverage ${coverage.toFixed(3)} is below the non-blank floor ${BLOB_COVERAGE_MIN} — the blob did not paint (blank/black canvas)`,
+    > 761 |         ).toBeGreaterThanOrEqual(BLOB_COVERAGE_MIN);
+          |           ^
+      762 |     });
+      763 |
+      764 |     test("blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS", async ({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-1111b/tree/tests-visual/substrate-paints-color.spec.ts:761:11
+
+    Error Context: test-results/substrate-paints-color-sub-c99ff-let-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › substrate-paints-color.spec.ts:576:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 
+    [chromium-headless-new] › substrate-paints-color.spec.ts:756:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS 
+  1 passed (23.1s)
+pixel-floor gate: GREEN (self-test, --plant=all) — 2 floors RED-ed on the planted defect, each on its own assertion; the floors bite.
