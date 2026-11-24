@@ -1,0 +1,10 @@
+== g1-linger [webkit] 2026-11-23 19:50:32 (load { 33.83 38.05 41.89 })
+OK   g1-linger
+applied g1-linger - G-1 (k) plant: the linger token ignored (master's fixed 3.6 s)
+-- webkit 19:50:36 (load { 33.36 37.88 41.81 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3610,"pass":false}}
+webkit rc=0
+reverted g1-linger
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:51:58

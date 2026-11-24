@@ -1,0 +1,17 @@
+== g1-frompress [chromium] 2026-11-23 19:08:36 (load { 43.60 42.24 40.94 })
+OK   g1-frompress
+applied g1-frompress - G-1 (f) (RU-73): the linger timed from the touch press, not the lift
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 29ms
+   → not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+   → not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+AssertionError: not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  2 failed | 20 skipped (22)
+unit rc=0
+reverted g1-frompress
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:08:56

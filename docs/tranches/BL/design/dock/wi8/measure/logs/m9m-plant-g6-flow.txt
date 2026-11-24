@@ -1,0 +1,16 @@
+== g6-flow [chromium] 2026-11-23 18:45:30 (load { 35.15 33.37 34.91 })
+OK   g6-flow
+applied g6-flow - G-6: a name put in flow on hover (the hovered seat 24 px wider)
+-- chromium 18:45:34 (load { 35.15 33.37 34.91 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":1294,"firstChange":260.8,"lastChange":9396.8,"screencast":null,"consoleErrors":0}
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.chromium.390-fine-light.rows.json","strips":[],"frames":1267,"firstChange":272.5,"lastChange":9236.2,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":433,"firstChange":127.4,"lastChange":493.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g6-flow
+tree clean: 677 src files equal HEAD
+-- judge
+FAIL p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1134, largest box change 24.00 px (dock row 161), folded rows 0
+FAIL p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1132, largest box change 24.00 px (seat#1 row 139), folded rows 0
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 321, largest box change 0.00 px (-), folded rows 0
+== done 2026-11-23 18:46:20

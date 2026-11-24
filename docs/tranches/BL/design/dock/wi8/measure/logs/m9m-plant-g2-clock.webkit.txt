@@ -1,0 +1,17 @@
+== g2-clock [webkit] 2026-11-23 20:35:51 (load { 18.72 27.90 31.83 })
+OK   g2-clock
+applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+-- webkit 20:35:55 (load { 17.78 27.55 31.69 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":173,"firstChange":234,"lastChange":1346,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-clock
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f29-f61 255ms | L 76px first 16% max 16% last 0.03px; R 76px first 16% max 16% last 0.03px | op60 0.41 | out 0px | FAIL: L from rest 16.0% > 2.0% at 9.5 ms; L step 16.0% > 9.1% (f30, 9.5 ms); R from rest 16.0% > 2.0% at 9.5 ms; R step 16.0% > 9.1% (f30, 9.5 ms); opacity 0.41 in 60 Hz at summary f29; summary fade lasts 56.3 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f126-f160 254ms | L 76px first 15.4% max 15.4% last 0.02px; R 76px first 15.4% max 15.4% last 0.01px | op60 0.36 | out 0px | FAIL: L from rest 15.4% > 1.5% at 8.0 ms; L step 15.4% > 7.7% (f127, 8.0 ms); R from rest 15.4% > 1.5% at 8.0 ms; R step 15.4% > 7.7% (f127, 8.0 ms); full fade lasts 57 ms interpolated (bound 66.7 ms); seat#0 fade lasts 57 ms interpolated (bound 66.7 ms) (+3)
+-- judge8 webkit
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 17.78/17.78 | f21-f45 247ms | L 76px first 16% max 16% last 0.14px; R 76px first 16% max 16% last 0.14px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 4.2% at 14.0 ms; L step 16.0% > 13.4% (f22, 14.0 ms); R from rest 16.0% > 4.2% at 14.0 ms; R step 16.0% > 13.4% (f22, 14.0 ms); summary fade lasts 60.4 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 17.78/17.78 | f96-f122 268ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 4.7% at 15.0 ms; L step 16.0% > 14.4% (f97, 15.0 ms); R from rest 16.0% > 4.7% at 15.0 ms; R step 16.0% > 14.4% (f97, 15.0 ms); full fade lasts 61.5 ms interpolated (bound 66.7 ms); seat#0 fade lasts 61.5 ms interpolated (bound 66.7 ms) (+3)
+== done 2026-11-23 20:36:04

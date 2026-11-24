@@ -1,0 +1,12 @@
+== s6-words [chromium] 2026-11-23 16:27:48 (load { 27.50 30.53 30.06 })
+OK   s6-words
+applied s6-words - RU-101 plant: the grown seat's width glide removed (no cut)
+-- chromium 16:27:52 (load { 27.06 30.39 30.02 })
+[guarded] waiting for headroom (load 42 > 36)
+{"cell":"1440-fine-light","rows":"p6-words-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":234,"firstChange":391.9,"lastChange":1453.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted s6-words
+tree clean: 677 src files equal HEAD
+-- judge
+p6-words-fine | chromium | 1440-fine-light | curve 0 | held 105.86 | overlap 98 | whole {"row":233,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":407.8,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 105.86 px in the window's first row (seat#1 row 138); two seats overlap by 98.00 px (seat#1 over seat#2 row 43)
+== done 2026-11-23 16:34:06

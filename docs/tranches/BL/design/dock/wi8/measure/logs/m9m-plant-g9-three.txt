@@ -1,0 +1,16 @@
+== g9-three [chromium] 2026-11-23 16:50:39 (load { 34.65 38.21 38.23 })
+OK   g9-three
+applied g9-three - RU-104 (C8-M17): the published progress compressed to three frames
+-- chromium 16:50:43 (load { 34.65 38.21 38.23 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":224,"firstChange":297.4,"lastChange":1456.2,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p9-tiers-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":221,"firstChange":287.7,"lastChange":1449.9,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g9-three
+tree clean: 677 src files equal HEAD
+-- judge
+-- op9 chromium
+p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (224 rows) | op60 0.25 at summary f38, shortest fade 74.9 ms | op60 0.26 at full f130, shortest fade 74.7 ms | root --dock-expand-t: 224 rows, largest 60 Hz move 1.000 at 278 ms, travels 0.02-0.98 15.9, 16.3 ms -> root clause FAIL
+p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.25 at summary f36, shortest fade 74.9 ms | op60 0.25 at full f131, shortest fade 74.3 ms | root --dock-expand-t: 221 rows, largest 60 Hz move 1.000 at 1063 ms, travels 0.02-0.98 16, 15 ms -> root clause FAIL
+-- op9 webkit
+== done 2026-11-23 16:51:11

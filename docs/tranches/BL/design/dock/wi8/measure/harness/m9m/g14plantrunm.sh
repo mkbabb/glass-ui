@@ -7,9 +7,16 @@
 # exit) and the tree's src checked against HEAD. Sites are the eighth's at the tip's line numbers (H4's restatements moved
 # release-10-1-3's by 5 and release-10-1-2's O-101 and O-101a cells), or a spec with a -g title. A plant bites in a project
 # when a site fails under it and passes on the tip's own G-14 run (logs/m9m-g14-tip-*). Log: logs/m9m-g14plant-<plant>.log.
+# After the reboot (2026-11-23), as m9m/plantrunm.sh: G14P_ENGINES=chromium (the runner's item; log as above) and
+# G14P_ENGINES=webkit inside m9m/wkbatch.py, which holds the WebKit lock and sets WK_HELD=1, so the WebKit runs go
+# through `guarded` without `--exclusive webkit` (log logs/m9m-g14plant-<plant>.webkit.log). Unset, both run as before.
+# A plant a killed run left applied is reverted and logged before this one is applied.
 set -u
 H="$(cd "$(dirname "$0")/.." && pwd)"; L="$H/../logs"; T=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip; G=~/.claude/guard/guarded
-p="$1"; log="$L/m9m-g14plant-$p.log"; tmp="$log.part"; PL="$H/m9m/plantm.py"
+p="$1"; ENGINES="${G14P_ENGINES:-chromium webkit}"; PL="$H/m9m/plantm.py"
+if [ "$ENGINES" = webkit ]; then log="$L/m9m-g14plant-$p.webkit.log"; else log="$L/m9m-g14plant-$p.log"; fi; tmp="$log.part"
+has() { case " $ENGINES " in *" $1 "*) return 0;; esac; return 1; }
+WX="--exclusive webkit"; [ "${WK_HELD:-0}" = 1 ] && WX=""
 # sites: "<spec> [<spec:line>...]" lines; GREP: a title pattern for the whole selection
 GREP=""
 case "$p" in
@@ -31,7 +38,8 @@ esac
 PLANT="$p"; [ "$p" = g14-lane-1501 ] && PLANT=g14-lane
 revert() { if [ -d "$T/.s9-orig/$PLANT" ]; then python3 "$PL" "$T" "$PLANT" revert >> "$tmp" 2>&1; fi; }
 trap revert EXIT INT TERM
-echo "== $p ($PLANT) $(date '+%F %T') (load $(sysctl -n vm.loadavg))" > "$tmp"
+echo "== $p ($PLANT) [$ENGINES] $(date '+%F %T') (load $(sysctl -n vm.loadavg))" > "$tmp"
+for d in "$T"/.s9-orig/*; do [ -d "$d" ] || continue; echo "-- a plant left applied: $(basename "$d"), reverted" >> "$tmp"; python3 "$PL" "$T" "$(basename "$d")" revert >> "$tmp" 2>&1; done
 python3 "$PL" "$T" "$PLANT" apply >> "$tmp" 2>&1 || { echo "apply failed" >> "$tmp"; mv "$tmp" "$log"; exit 0; }
 A=""; B=""; C=""
 for s in $S; do case "$s" in release-10-1-1*|release-10-1-2*) A="$A $s";; release-11-0-2*) C="$C $s";; *) B="$B $s";; esac; done
@@ -43,10 +51,12 @@ run() { # <label> <guard flags> <config> <projects> <sites>
   else (cd "$T" && GLASS_UI_DEMO_PORT=5484 $G $fl --timeout 45 -- npx playwright test -c tests-visual/$cfg $* $pr --workers=1 --reporter=list) >> "$tmp" 2>&1; fi
   local rc=$?; echo "$lab rc=$rc" >> "$tmp"; [ $rc = 75 ] && { echo "guard REFUSED" >> "$tmp"; revert; mv "$tmp" "$log"; exit 75; }
 }
-run chromium "" playwright.config.ts "--project=chromium-headless-new --project=coarse-touch" $S
-[ -n "$A" ] && run webkit-a "--exclusive webkit" webkit-2287.config.ts "--project=webkit --project=webkit-touch" $A
-[ -n "$B" ] && run webkit-b "--exclusive webkit" release-11-0-1.config.ts "--project=webkit --project=webkit-touch" $B
-[ -n "$C" ] && run webkit-c "--exclusive webkit" release-11-0-2.config.ts "--project=webkit --project=webkit-touch" $C
+has chromium && run chromium "" playwright.config.ts "--project=chromium-headless-new --project=coarse-touch" $S
+if has webkit; then
+[ -n "$A" ] && run webkit-a "$WX" webkit-2287.config.ts "--project=webkit --project=webkit-touch" $A
+[ -n "$B" ] && run webkit-b "$WX" release-11-0-1.config.ts "--project=webkit --project=webkit-touch" $B
+[ -n "$C" ] && run webkit-c "$WX" release-11-0-2.config.ts "--project=webkit --project=webkit-touch" $C
+fi
 revert
 python3 "$H/pm/clean.py" "$T" >> "$tmp" 2>&1 || { echo "TREE NOT CLEAN after $p" >> "$tmp"; mv "$tmp" "$log"; exit 3; }
 echo "== done $(date '+%F %T')" >> "$tmp"; mv "$tmp" "$log"

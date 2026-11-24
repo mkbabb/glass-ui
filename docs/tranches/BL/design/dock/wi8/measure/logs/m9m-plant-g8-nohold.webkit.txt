@@ -1,0 +1,11 @@
+== g8-nohold [webkit] 2026-11-23 19:54:47 (load { 35.46 35.36 39.69 })
+OK   g8-nohold
+applied g8-nohold - RU-114: the overlay hold ignored on a leave and when the linger runs out
+-- webkit 19:54:51 (load { 38.22 35.94 39.86 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 38 > 36)
+{"menu":{"restsFolded":true,"opened":true,"menuOpened":true,"after72s":{"dockOpen":false,"menuOpen":false},"pass":false}}
+webkit rc=0
+reverted g8-nohold
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:56:09

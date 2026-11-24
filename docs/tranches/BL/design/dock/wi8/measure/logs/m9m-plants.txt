@@ -1,0 +1,1237 @@
+=== dark
+  [chromium]
+    applied dark - C7-3: the dark blur arm back to `.dark .glass-dock` alone
+    chromium rc=0
+  [webkit]
+    applied dark - C7-3: the dark blur arm back to `.dark .glass-dock` alone
+    webkit rc=0
+=== facerule
+  [chromium]
+    applied facerule - RU-76: the folded face's glyph rule removed
+    figure-tools 1440 [["Revenue tools","folded","glyph",40,40,24,36,[102,56],"FAIL",7.67],["Headcount tools","folded","glyph",40,40,24,36,[102,56],"FAIL",7.67],["Churn tools","folded","glyph",40,40,24,36,[102,56],"FAIL",7.67]]
+    pill 1440 [["Pill","folded","glyph",40,40,24,36,[56,56],"pass",12.78]]
+    chrome 1440 [["App","folded","glyph",40,40,24,36,[56,56],"pass",12.78]]
+    w-pill 1440 [["pill","folded","glyph",40,40,24,36,[56,56],"pass",10.22]]
+    w-card 1440 [["card","folded","glyph",40,40,24,36,[56,56],"pass",10.22]]
+    figure-tools 390 [["Revenue tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",7.67],["Headcount tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",7.64],["Churn tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",7.64]]
+    pill 390 [["Pill","folded","glyph",44,44,24,39.59,[60,60],"pass",12.76]]
+    chrome 390 [["App","folded","glyph",44,44,24,39.59,[60,60],"pass",12.76]]
+    w-pill 390 [["pill","folded","glyph",44,44,24,39.59,[60,60],"pass",10.18]]
+    w-card 390 [["card","folded","glyph",44,44,24,39.59,[60,60],"pass",10.18]]
+    chromium rc=0
+  [webkit]
+    applied facerule - RU-76: the folded face's glyph rule removed
+    figure-tools 1440 [["Revenue tools","folded","glyph",40,40,24,36,[102,56],"FAIL",9.79],["Headcount tools","folded","glyph",40,40,24,36,[102,56],"FAIL",9.79],["Churn tools","folded","glyph",40,40,24,36,[102,56],"FAIL",9.79]]
+    pill 1440 [["Pill","folded","glyph",40,40,24,36,[56,56],"pass",12.78]]
+    chrome 1440 [["App","folded","glyph",40,40,24,36,[56,56],"pass",12.78]]
+    w-pill 1440 [["pill","folded","glyph",40,40,24,36,[56,56],"pass",5.26]]
+    w-card 1440 [["card","folded","glyph",40,40,24,36,[56,56],"pass",5.26]]
+    figure-tools 390 [["Revenue tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",9.79],["Headcount tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",9.79],["Churn tools","folded","glyph",44,44,24,39.59,[110,60],"FAIL",9.79]]
+    pill 390 [["Pill","folded","glyph",44,44,24,39.59,[60,60],"pass",12.76]]
+    chrome 390 [["App","folded","glyph",44,44,24,39.59,[60,60],"pass",12.76]]
+    w-pill 390 [["pill","folded","glyph",44,44,24,39.59,[60,60],"pass",5.07]]
+    w-card 390 [["card","folded","glyph",44,44,24,39.59,[60,60],"pass",5.07]]
+    webkit rc=0
+=== fold
+  [chromium]
+    applied fold - RU-79: the phone rule restored (no fold at 1440)
+    chromium rc=0
+  [webkit]
+    applied fold - RU-79: the phone rule restored (no fold at 1440)
+    webkit rc=0
+=== g1-afterseat
+  [chromium]
+    applied g1-afterseat - RU-89 plant (S6's s6-afterseat): the persistent seat's branch removed
+    {"k2":{"seat":"home","opened":true,"openAtLeave":true,"foldAfterLeaveMs":6009.4,"pass":false}}
+    chromium rc=0
+  [webkit]
+    applied g1-afterseat - RU-89 plant (S6's s6-afterseat): the persistent seat's branch removed
+    {"k2":{"seat":"home","opened":true,"openAtLeave":true,"foldAfterLeaveMs":6005,"pass":false}}
+    webkit rc=0
+=== g1-frompress
+  [chromium]
+    applied g1-frompress - G-1 (f) (RU-73): the linger timed from the touch press, not the lift
+     × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+     × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+     FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the s
+     FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+          Tests  2 failed | 20 skipped (22)
+    unit rc=0
+=== g1-lift
+  [chromium]
+    applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+     ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+     ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+     Test Files  1 passed (1)
+          Tests  2 passed | 20 skipped (22)
+    unit rc=0
+    chromium rc=0
+  [webkit]
+    applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+    webkit rc=0
+=== g1-linger
+  [chromium]
+    applied g1-linger - G-1 (k) plant: the linger token ignored (master's fixed 3.6 s)
+    {"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3612.6,"pass":false}}
+    chromium rc=0
+  [webkit]
+    applied g1-linger - G-1 (k) plant: the linger token ignored (master's fixed 3.6 s)
+    {"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3610,"pass":false}}
+    webkit rc=0
+=== g1-presshold
+  [chromium]
+    applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+     × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+     × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+     FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the s
+     FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+          Tests  2 failed | 20 skipped (22)
+    unit rc=0
+    {"finger":{"how":"CDP touchStart/touchEnd","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3007,"foldAfterLiftMs":null,"pass":false}}
+    chromium rc=0
+  [webkit]
+    applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+    {"finger":{"how":"dispatched pointerdown/pointerup, pointerType touch (WebKit 2287 has no held touch in Playwright)","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3008,"foldAfterLiftMs":null,"pass":false}}
+    webkit rc=0
+=== g10-rm
+  [chromium]
+    applied g10-rm - G-10: reduced motion's seat removed (geometry glides on the spring)
+    chromium rc=0
+    p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 33.71/33.71 | f29-f30 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 30 values over 223 ms; summary fade 30 values over 223 m
+    p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 33.71/33.71 | f134-f135 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 27 values over 219 ms; summary fade 28 values over 228
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f28-f29 8ms | L 103.5px first 100% max 100% last 103.53px; R 103.5px first 100% max 100% last 103.53px; T 26px first 100% max 100% last 26px; B 26px first 100% max 100% last 26px | op6
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f135-f136 8ms | L 6.1px first 100% max 100% last 6.09px; R 6.1px first 100% max 100% last 6.08px | op60 0.01 | out 0px | FAIL: face#0 fade 29 values over 209 ms; face#1 fade 29 values 
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f226-f240 104ms | L 5.4px first 5.2% max 5.2% last 5.4px; R 5.4px first 5.2% max 5.2% last 5.39px | op60 0.13 | out 0px | FAIL: face#1 still fading 210 ms after third; face#2 still fad
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f7-f8 8ms | T 17.8px first 100% max 100% last 17.75px; B 17.8px first 100% max 100% last 17.75px | op60 0 | out 0px | FAIL: face#0 fade 27 values over 220 ms; face#1 fade 27 values over 2
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f95-f96 8ms | L 6.6px first 100% max 100% last 6.64px; R 6.6px first 100% max 100% last 6.64px; T 26.6px first 100% max 100% last 26.62px; B 26.6px first 100% max 100% last 26.63px | op60
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f185-f200 112ms | L 7.4px first 70.5% max 70.5% last 2.17px; R 7.4px first 70.5% max 70.5% last 2.17px; T 17.8px first 66.7% max 66.7% last 8.88px; B 17.8px first 66.7% max 66.7% last 8.8
+  [webkit]
+    applied g10-rm - G-10: reduced motion's seat removed (geometry glides on the spring)
+    webkit rc=0
+    p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 33.71/33.71 | f29-f30 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 30 values over 223 ms; summary fade 30 values over 223 m
+    p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 33.71/33.71 | f134-f135 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 27 values over 219 ms; summary fade 28 values over 228
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f28-f29 8ms | L 103.5px first 100% max 100% last 103.53px; R 103.5px first 100% max 100% last 103.53px; T 26px first 100% max 100% last 26px; B 26px first 100% max 100% last 26px | op6
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f135-f136 8ms | L 6.1px first 100% max 100% last 6.09px; R 6.1px first 100% max 100% last 6.08px | op60 0.01 | out 0px | FAIL: face#0 fade 29 values over 209 ms; face#1 fade 29 values 
+    p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/32.3 | f226-f240 104ms | L 5.4px first 5.2% max 5.2% last 5.4px; R 5.4px first 5.2% max 5.2% last 5.39px | op60 0.13 | out 0px | FAIL: face#1 still fading 210 ms after third; face#2 still fad
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f7-f8 8ms | T 17.8px first 100% max 100% last 17.75px; B 17.8px first 100% max 100% last 17.75px | op60 0 | out 0px | FAIL: face#0 fade 27 values over 220 ms; face#1 fade 27 values over 2
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f95-f96 8ms | L 6.6px first 100% max 100% last 6.64px; R 6.6px first 100% max 100% last 6.64px; T 26.6px first 100% max 100% last 26.62px; B 26.6px first 100% max 100% last 26.63px | op60
+    p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 33.89/33.89 | f185-f200 112ms | L 7.4px first 70.5% max 70.5% last 2.17px; R 7.4px first 70.5% max 70.5% last 2.17px; T 17.8px first 66.7% max 66.7% last 8.88px; B 17.8px first 66.7% max 66.7% last 8.8
+    p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 24.96/24.96 | f21-f22 19ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 24 values over 228 ms; summary fade 24 values over 228 ms
+    p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 24.96/24.96 | f100-f101 15ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 23 values over 232 ms; summary fade 23 values over 232 
+    p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 23.33/23.33 | f19-f20 30ms | L 103.5px first 100% max 100% last 103.53px; R 103.5px first 100% max 100% last 103.53px; T 26px first 100% max 100% last 26px; B 26px first 100% max 100% last 26px | op6
+    p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 23.33/23.33 | f99-f100 18ms | L 6.1px first 100% max 100% last 6.09px; R 6.1px first 100% max 100% last 6.08px | op60 0.01 | out 0px | FAIL: face#0 fade 23 values over 230 ms; face#1 fade 23 values o
+    p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 23.33/23.33 | f168-f180 128ms | L 5.4px first 5.2% max 5.2% last 5.4px; R 5.4px first 5.2% max 5.2% last 5.39px | op60 0.08 | out 0px | FAIL: face#1 still fading 211 ms after third; face#2 still fadi
+    p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 24.49/24.49 | f4-f5 27ms | T 17.8px first 100% max 100% last 17.75px; B 17.8px first 100% max 100% last 17.75px | op60 0.01 | out 0px | FAIL: face#0 fade 23 values over 228 ms; face#1 fade 23 values over
+    p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 24.49/24.49 | f74-f75 15ms | L 6.6px first 100% max 100% last 6.64px; R 6.6px first 100% max 100% last 6.64px; T 26.6px first 100% max 100% last 26.62px; B 26.6px first 100% max 100% last 26.63px | op60 
+    p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 24.49/24.49 | f143-f155 129ms | L 7.4px first 70.5% max 70.5% last 2.17px; R 7.4px first 70.5% max 70.5% last 2.17px; T 17.8px first 66.7% max 66.7% last 8.88px; B 17.8px first 66.7% max 66.7% last 8.87p
+=== g11-rest
+  [chromium]
+    applied g11-rest - G-11: a loop left running at rest
+    chromium rc=0
+  [webkit]
+    applied g11-rest - G-11: a loop left running at rest
+    webkit rc=0
+=== g12-scale
+  [chromium]
+    pass · no scale on .glass-dock or its regions
+    pass · no clip-path on a plate at rest
+    pass · no box-shadow on .glass-dock
+    pass · one box-shadow value for the plate across both postures, reading --dock-shadow-color (and no --dock-halo) · src/components/dock/styles/dock.css: .dock-plate
+    pass · no filter: url(, <filter or feGaussianBlur under dock
+    pass · no size, margin or padding in a dock transition, @keyframes or .animate(
+    pass · no var(--dock-expand-t) or var(--dock-morph-t) in a size, padding, inset, radius or margin
+    pass · no border-radius on the plate in a scroll-timeline animation
+    pass · --dock-morph-origin, --dock-size-scale, --dock-pane-shift, --dock-rest-t absent
+    pass · no [data-glyph selector under dock
+    pass · no millisecond literal for the intent or the linger in useDockState.ts
+    pass · no rule of glass reads --dock-expanded-px, --dock-collapsed-px or --dock-plate-cross-px
+    pass · [data-morphing], --dock-morph-t and --dock-expand-t present
+    applied g12-scale - G-12: a scale on .glass-dock
+    FAIL · no scale on .glass-dock or its regions · src/components/dock/styles/shell.css: .glass-dock
+    pass · no clip-path on a plate at rest
+    pass · no box-shadow on .glass-dock
+    pass · one box-shadow value for the plate across both postures, reading --dock-shadow-color (and no --dock-halo) · src/components/dock/styles/dock.css: .dock-plate
+    pass · no filter: url(, <filter or feGaussianBlur under dock
+    pass · no size, margin or padding in a dock transition, @keyframes or .animate(
+    pass · no var(--dock-expand-t) or var(--dock-morph-t) in a size, padding, inset, radius or margin
+    pass · no border-radius on the plate in a scroll-timeline animation
+    pass · --dock-morph-origin, --dock-size-scale, --dock-pane-shift, --dock-rest-t absent
+    pass · no [data-glyph selector under dock
+    pass · no millisecond literal for the intent or the linger in useDockState.ts
+    pass · no rule of glass reads --dock-expanded-px, --dock-collapsed-px or --dock-plate-cross-px
+    pass · [data-morphing], --dock-morph-t and --dock-expand-t present
+=== g13-safe
+  [chromium]
+    applied g13-safe - G-13 (safe area): a viewport dock ignores the bottom inset
+    chromium rc=0
+=== g13-shown
+  [chromium]
+    applied g13-shown - RU-104 (C8-15): the hidden posture face shown and sized at rest (g13-box rewritten)
+    w-seat-1440 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":24,"outside":19,"worstPx":209,"where":["site 209.0px","Search 40.0px","svg 38.0px","path 33.5px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":false},"open"
+    w-seat-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":24,"outside":19,"worstPx":225,"where":["site 225.0px","Search 44.0px","svg 41.8px","path 36.8px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":false},"open":
+    w-ctl-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":18,"outside":15,"worstPx":156,"where":["Figure controls 156.0px","Filter 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":4,"seats":4,"overflowX":0,"overflowY":0,"openAtLoad":fals
+    daraksha-1440 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":31,"outside":20,"worstPx":208,"where":["Page controls 208.0px","Picker 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":tr
+    daraksha-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":31,"outside":20,"worstPx":208,"where":["Page controls 208.0px","Picker 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":tru
+    chromium rc=0
+  [webkit]
+    applied g13-shown - RU-104 (C8-15): the hidden posture face shown and sized at rest (g13-box rewritten)
+    w-seat-1440 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":24,"outside":19,"worstPx":209,"where":["site 209.0px","Search 40.0px","svg 38.0px","path 33.5px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":false},"open"
+    w-seat-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":24,"outside":19,"worstPx":225,"where":["site 225.0px","Search 44.0px","svg 41.8px","path 36.8px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":false},"open":
+    w-ctl-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":18,"outside":15,"worstPx":156,"where":["Figure controls 156.0px","Filter 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":4,"seats":4,"overflowX":0,"overflowY":0,"openAtLoad":fals
+    daraksha-1440 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":31,"outside":20,"worstPx":208,"where":["Page controls 208.0px","Picker 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":tr
+    daraksha-390 {"folded":{"open":false,"hiddenFaces":["dock-layer--full"],"rects":31,"outside":20,"worstPx":208,"where":["Page controls 208.0px","Picker 48.0px","svg 37.0px","path 35.2px"],"seatsWithRects":5,"seats":5,"overflowX":0,"overflowY":0,"openAtLoad":tru
+    webkit rc=0
+=== g13-tabsvg
+  [chromium]
+    applied g13-tabsvg - G-13 / RU-65, RU-87: the tab seat's glyph rule cut back to a direct svg
+    {"engine":"chromium","tag":"m9m-g13-tabsvg","pass":false,"bad":40,"first":["1440 fine share 0.5 w-glyphs-tab Image: seat 63.42 against control 40","1440 fine share 0.5 w-glyphs-tab Image (img, worded): glyph 49.42x49.42 against 24.6","1440 fine share 0.5 w-gly
+    chromium rc=0
+  [webkit]
+    applied g13-tabsvg - G-13 / RU-65, RU-87: the tab seat's glyph rule cut back to a direct svg
+    {"engine":"webkit","tag":"m9m-g13-tabsvg","pass":false,"bad":20,"first":["1440 fine share 0.5 w-glyphs-tab Image (img, worded): glyph 24x24 against 24.6","1440 fine share 0.5 w-glyphs-tab Picture (picture, worded): glyph 24x24 against 24.6","1440 fine share 0.
+    webkit rc=0
+=== g13-trigseat
+  [chromium]
+    applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+    {"engine":"chromium","tag":"m9m-g13-trigseat","pass":false,"trig":{"1440 fine":{"trigger":[66.23,35.91],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,32],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["tr
+    chromium rc=0
+  [webkit]
+    applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+    {"engine":"webkit","tag":"m9m-g13-trigseat","pass":false,"trig":{"1440 fine":{"trigger":[66.25,35.89],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,32],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig
+    webkit rc=0
+=== g14-fitmemory
+  [chromium]
+    applied g14-fitmemory - G-14 s2 / RU-54: the fit's memory removed (every sync decides again)
+    {"engine":"chromium","tag":"m9m-g14-fitmemory","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":6,"pass":true,"bad":[]}}
+    chromium rc=0
+  [webkit]
+    applied g14-fitmemory - G-14 s2 / RU-54: the fit's memory removed (every sync decides again)
+    {"engine":"webkit","tag":"m9m-g14-fitmemory","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":6,"pass":true,"bad":[]}}
+    webkit rc=0
+=== g14-fitsibs
+  [chromium]
+    applied g14-fitsibs - RU-54 (C6-M8): the root's other regions dropped from the key
+    {"engine":"chromium","tag":"m9m-g14-fitsibs","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":4,"pass":false,"bad":["364 long: 
+    chromium rc=0
+  [webkit]
+    applied g14-fitsibs - RU-54 (C6-M8): the root's other regions dropped from the key
+    {"engine":"webkit","tag":"m9m-g14-fitsibs","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":4,"pass":false,"bad":["364 long: fi
+    webkit rc=0
+=== g14-rmclock
+  [chromium]
+    applied g14-rmclock - G-14: reduced motion's clocks 300 ms, not 100 (a restated unit witness)
+     ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > a stray transitionend is INERT — only the spring's own settle clears the flag 346ms
+     ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle 100ms
+     ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > an exact-origin reversal does not fabricate a busy window 103ms
+     ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > reverses from the live plate position without reseating its expandedness 128ms
+     × tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred 145ms
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+     FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred
+          Tests  1 failed | 4 passed (5)
+    unit rc=0
+=== g15-baked
+  [chromium]
+    applied g15-baked - G-15 / RU-56: the :root-baked plates restored inside the dock (the ink-derived fills removed)
+    chromium rc=0
+  [webkit]
+    applied g15-baked - G-15 / RU-56: the :root-baked plates restored inside the dock (the ink-derived fills removed)
+    webkit rc=0
+=== g15-onestep
+  [chromium]
+    applied g15-onestep - G-15 (RU-68): the current step set equal to hover (10 % to 8 %)
+    chromium rc=0
+  [webkit]
+    applied g15-onestep - G-15 (RU-68): the current step set equal to hover (10 % to 8 %)
+    webkit rc=0
+=== g2-clock
+  [chromium]
+    applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+    chromium rc=0
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f29-f61 255ms | L 76px first 16% max 16% last 0.03px; R 76px first 16% max 16% last 0.03px | op60 0.41 | out 0px | FAIL: L from rest 16.0% > 2.0% at 9.5 ms; L step 16.0% > 9.1% (f30, 9.5
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f126-f160 254ms | L 76px first 15.4% max 15.4% last 0.02px; R 76px first 15.4% max 15.4% last 0.01px | op60 0.36 | out 0px | FAIL: L from rest 15.4% > 1.5% at 8.0 ms; L step 15.4% > 7.7%
+  [webkit]
+    applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+    webkit rc=0
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f29-f61 255ms | L 76px first 16% max 16% last 0.03px; R 76px first 16% max 16% last 0.03px | op60 0.41 | out 0px | FAIL: L from rest 16.0% > 2.0% at 9.5 ms; L step 16.0% > 9.1% (f30, 9.5
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 20.18/20.18 | f126-f160 254ms | L 76px first 15.4% max 15.4% last 0.02px; R 76px first 15.4% max 15.4% last 0.01px | op60 0.36 | out 0px | FAIL: L from rest 15.4% > 1.5% at 8.0 ms; L step 15.4% > 7.7%
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 17.78/17.78 | f21-f45 247ms | L 76px first 16% max 16% last 0.14px; R 76px first 16% max 16% last 0.14px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 4.2% at 14.0 ms; L step 16.0% > 13.4% (f22, 14.
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 17.78/17.78 | f96-f122 268ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 4.7% at 15.0 ms; L step 16.0% > 14.4% (f97, 15
+=== g2-curve
+  [chromium]
+    applied g2-curve - RU-91 plant (S1's s1-stadium): `--radius-dock` back on the root
+    chromium rc=0
+    p3-fold-flow-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 75 (rest))
+    p3-swap-layers-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 72 (rest))
+    p9-tall-dark | chromium | 1440-fine-dark | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+    p9-tall-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+  [webkit]
+    applied g2-curve - RU-91 plant (S1's s1-stadium): `--radius-dock` back on the root
+    webkit rc=0
+    p3-fold-flow-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 75 (rest))
+    p3-fold-flow-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+    p3-swap-layers-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 72 (rest))
+    p3-swap-layers-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 58 (rest))
+    p9-tall-dark | chromium | 1440-fine-dark | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+    p9-tall-dark | webkit | 1440-fine-dark | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 60 (rest))
+    p9-tall-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+    p9-tall-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+=== g2-facehalf
+  [chromium]
+    applied g2-facehalf - G-2/G-4 (RU-70): the content window halved, 0.55 to 0.275
+    chromium rc=0
+    p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 30.47/30.47 | f9-f56 393ms | L 156px first 1.7% max 7.3% last 0.25px | op60 0.47 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.47 in 60 Hz at summary f12; su
+    p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 30.47/30.47 | f109-f156 393ms | L 156px first 1.5% max 6.9% last 0.25px | op60 0.47 | out 0px | FAIL: no face showing for 65 ms (8 rows; bound 17 ms); opacity 0.47 in 60 Hz at full f112; f
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 32.58/31.73 | f29-f63 283ms | L 76px first 1.3% max 7.8% last 0.08px; R 76px first 1.3% max 7.7% last 0.08px | op60 0.44 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.44
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 32.58/31.73 | f125-f159 283ms | L 76px first 1.1% max 7.8% last 0.08px; R 76px first 1.1% max 7.8% last 0.08px | op60 0.37 | out 0px | FAIL: no face showing for 66 ms (8 rows; bound 17 ms); full fade 
+    p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 31.73/31.73 | f9-f43 283ms | L 82px first 1.3% max 7.2% last 0.09px; R 82px first 1.3% max 7.2% last 0.1px | op60 0.46 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.46
+    p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 31.73/31.73 | f104-f138 284ms | L 82px first 1.6% max 8.1% last 0.09px; R 82px first 1.6% max 8.1% last 0.1px | op60 0.47 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0
+  [webkit]
+    applied g2-facehalf - G-2/G-4 (RU-70): the content window halved, 0.55 to 0.275
+    webkit rc=0
+    p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 30.47/30.47 | f9-f56 393ms | L 156px first 1.7% max 7.3% last 0.25px | op60 0.47 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.47 in 60 Hz at summary f12; su
+    p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 30.47/30.47 | f109-f156 393ms | L 156px first 1.5% max 6.9% last 0.25px | op60 0.47 | out 0px | FAIL: no face showing for 65 ms (8 rows; bound 17 ms); opacity 0.47 in 60 Hz at full f112; f
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 32.58/31.73 | f29-f63 283ms | L 76px first 1.3% max 7.8% last 0.08px; R 76px first 1.3% max 7.7% last 0.08px | op60 0.44 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.44
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 32.58/31.73 | f125-f159 283ms | L 76px first 1.1% max 7.8% last 0.08px; R 76px first 1.1% max 7.8% last 0.08px | op60 0.37 | out 0px | FAIL: no face showing for 66 ms (8 rows; bound 17 ms); full fade 
+    p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 31.73/31.73 | f9-f43 283ms | L 82px first 1.3% max 7.2% last 0.09px; R 82px first 1.3% max 7.2% last 0.1px | op60 0.46 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0.46
+    p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 31.73/31.73 | f104-f138 284ms | L 82px first 1.6% max 8.1% last 0.09px; R 82px first 1.6% max 8.1% last 0.1px | op60 0.47 | out 0px | FAIL: no face showing for 67 ms (8 rows; bound 17 ms); opacity 0
+    p3-fold-ctl-te-parent-coarse | wi8 | webkit | 390-coarse-light | load 44.23/44.23 | f7-f45 388ms | L 156px first 1.9% max 11.9% last 0.27px | op60 0.36 | out 0px | FAIL: no face showing for 81 ms (8 rows; bound 17 ms); summary fade lasts 45.4 ms interpolated (
+    p3-fold-ctl-te-parent-coarse | wi8 | webkit | 390-coarse-light | load 44.23/44.23 | f87-f124 388ms | L 156px first 0.7% max 11.6% last 0.28px | op60 0.42 | out 0px | FAIL: no face showing for 74 ms (7 rows; bound 17 ms); opacity 0.42 in 60 Hz at full f89; full
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 35.91/39.2 | f23-f46 290ms | L 76px first 3.6% max 13.1% last 0.08px; R 76px first 3.6% max 13.1% last 0.08px | op60 0.39 | out 0px | FAIL: no face showing for 71 ms (7 rows; bound 17 ms); summary fade 
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 35.91/39.2 | f117-f145 285ms | L 76px first 1.9% max 12.3% last 0.08px; R 76px first 2% max 12.3% last 0.08px | op60 0.45 | out 0px | FAIL: no face showing for 73 ms (8 rows; bound 17 ms); opacity 0.45 
+    p3-fold-rim-coarse | wi8 | webkit | 390-coarse-light | load 40.94/40.94 | f6-f33 281ms | L 82px first 3.2% max 10.8% last 0.06px; R 82px first 3.2% max 10.8% last 0.07px | op60 0.34 | out 0px | FAIL: no face showing for 69 ms (7 rows; bound 17 ms); summary fad
+    p3-fold-rim-coarse | wi8 | webkit | 390-coarse-light | load 40.94/40.94 | f86-f113 282ms | L 82px first 1.9% max 12.4% last 0.06px; R 82px first 1.9% max 12.4% last 0.06px | op60 0.38 | out 0px | FAIL: no face showing for 71 ms (7 rows; bound 17 ms); full fade
+=== g2-fitwhole
+  [chromium]
+    applied g2-fitwhole - G-2/G-13 (RU-26): fitWhole restored as built (the window read as clientWidth less two reserves, the run capped by a length)
+    chromium rc=0
+    p3-fold-ctl6-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":119,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 119: a run that fits
+    p3-fold-pill-fine | chromium | 1440-fine-light | curve 32 | held 32 | whole {"row":130,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 r
+    p3-fold-transport-rm | chromium | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":97,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat
+  [webkit]
+    applied g2-fitwhole - G-2/G-13 (RU-26): fitWhole restored as built (the window read as clientWidth less two reserves, the run capped by a length)
+    webkit rc=0
+    p3-fold-ctl6-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":119,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 119: a run that fits
+    p3-fold-ctl6-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":87,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 87: a run that fits sho
+    p3-fold-pill-fine | chromium | 1440-fine-light | curve 32 | held 32 | whole {"row":130,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 r
+    p3-fold-pill-fine | webkit | 1440-fine-light | curve 32 | held 32 | whole {"row":100,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 row
+    p3-fold-transport-rm | chromium | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":97,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat
+    p3-fold-transport-rm | webkit | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":75,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#1
+=== g2-held
+  [chromium]
+    applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+    chromium rc=0
+    p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat
+  [webkit]
+    applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+    webkit rc=0
+    p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat
+    p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.02 | held 4 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0
+=== g2-lane
+  [chromium]
+    applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+    chromium rc=0
+    p3-region-fine | chromium | 1440-fine-light | curve 0.02 | held 15 | whole {"row":283,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#
+    p9-persist-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+  [webkit]
+    applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+    webkit rc=0
+    p3-region-fine | chromium | 1440-fine-light | curve 0.02 | held 15 | whole {"row":283,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#
+    p3-region-fine | webkit | 1440-fine-light | curve 0.02 | held 15 | whole {"row":235,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#3 
+    p9-persist-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+    p9-persist-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":121,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+=== g2-laneinset
+  [chromium]
+    applied g2-laneinset - G-2 (RU-25): a lane inset 12 px inside the plate's edge on a side with no neighbour
+    chromium rc=0
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f33-f67 281ms | L 76px first 1.6% max 7% last 0.06px; R 76px first 1.6% max 7% last 0.07px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 36 region-rows, up to 12.02 px
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f134-f170 278ms | L 76px first 1.2% max 6.9% last 0.03px; R 76px first 1.2% max 6.9% last 0.03px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 38 region-rows, up to 12
+  [webkit]
+    applied g2-laneinset - G-2 (RU-25): a lane inset 12 px inside the plate's edge on a side with no neighbour
+    webkit rc=0
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f33-f67 281ms | L 76px first 1.6% max 7% last 0.06px; R 76px first 1.6% max 7% last 0.07px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 36 region-rows, up to 12.02 px
+    p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f134-f170 278ms | L 76px first 1.2% max 6.9% last 0.03px; R 76px first 1.2% max 6.9% last 0.03px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 38 region-rows, up to 12
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 14.8/14.57 | f23-f51 284ms | L 76px first 1.6% max 9.4% last 0.08px; R 76px first 1.6% max 9.4% last 0.08px | op60 0.17 | out 0px | FAIL: a region's clip is off its lane in 30 region-rows, up to 12.02 p
+    p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 14.8/14.57 | f122-f150 286ms | L 76px first 2.3% max 10% last 0.08px; R 76px first 2.3% max 10% last 0.08px | op60 0.18 | out 0px | FAIL: a region's clip is off its lane in 30 region-rows, up to 12.01 p
+=== g2-nocut
+  [chromium]
+    applied g2-nocut - G-2 (RU-25): the neighbour cut removed (each lane is the plate's whole box)
+    chromium rc=0
+    p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f31-f66 282ms | L 80px first 3.6% max 7.4% last 0.08px; R 80px first 3.6% max 7.4% last 0.08px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 2
+    p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f131-f166 279ms | L 80px first 1.4% max 8% last 0.05px; R 80px first 1.4% max 8% last 0.04px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 256
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f28-f64 278ms | L 78px first 1.3% max 7.7% last 0.05px; R 78px first 1.3% max 7.7% last 0.04px | op60 0.24 | out 0px | FAIL: a region's clip is off its lane in 76 region-rows, up to 206.09 
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f131-f163 251ms | L 25px first 1.6% max 7.8% last 0.12px; R 25px first 1.6% max 7.8% last 0.13px | op60 0 | out 0px | pass
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f216-f247 246ms | L 25px first 1.4% max 7% last 0.19px; R 25px first 1.4% max 7% last 0.18px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 62 region-rows, up to 205.81 px (p
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f304-f338 284ms | L 78px first 1.3% max 8.5% last 0.08px; R 78px first 1.3% max 8.5% last 0.08px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 72 region-rows, up to 206.0
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f413-f444 247ms | L 23px first 1.2% max 6.8% last 0.14px; R 23px first 1.2% max 6.8% last 0.14px | op60 0 | out 0px | pass
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f497-f529 249ms | L 23px first 1.3% max 7.3% last 0.13px; R 23px first 1.3% max 7.3% last 0.12px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 64 region-rows, up to 53.86 px
+  [webkit]
+    applied g2-nocut - G-2 (RU-25): the neighbour cut removed (each lane is the plate's whole box)
+    webkit rc=0
+    p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f31-f66 282ms | L 80px first 3.6% max 7.4% last 0.08px; R 80px first 3.6% max 7.4% last 0.08px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 2
+    p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f131-f166 279ms | L 80px first 1.4% max 8% last 0.05px; R 80px first 1.4% max 8% last 0.04px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 256
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f28-f64 278ms | L 78px first 1.3% max 7.7% last 0.05px; R 78px first 1.3% max 7.7% last 0.04px | op60 0.24 | out 0px | FAIL: a region's clip is off its lane in 76 region-rows, up to 206.09 
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f131-f163 251ms | L 25px first 1.6% max 7.8% last 0.12px; R 25px first 1.6% max 7.8% last 0.13px | op60 0 | out 0px | pass
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f216-f247 246ms | L 25px first 1.4% max 7% last 0.19px; R 25px first 1.4% max 7% last 0.18px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 62 region-rows, up to 205.81 px (p
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f304-f338 284ms | L 78px first 1.3% max 8.5% last 0.08px; R 78px first 1.3% max 8.5% last 0.08px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 72 region-rows, up to 206.0
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f413-f444 247ms | L 23px first 1.2% max 6.8% last 0.14px; R 23px first 1.2% max 6.8% last 0.14px | op60 0 | out 0px | pass
+    p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f497-f529 249ms | L 23px first 1.3% max 7.3% last 0.13px; R 23px first 1.3% max 7.3% last 0.12px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 64 region-rows, up to 53.86 px
+    p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 13.95/13.95 | f22-f50 286ms | L 80px first 2.3% max 9.1% last 0.11px; R 80px first 2.3% max 9.1% last 0.11px | op60 0.17 | out 0px | FAIL: a region's clip is off its lane in 90 region-rows, up to 256.
+    p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 13.95/13.95 | f120-f148 282ms | L 80px first 1% max 10% last 0.06px; R 80px first 1% max 10% last 0.06px | op60 0.18 | out 0px | FAIL: a region's clip is off its lane in 90 region-rows, up to 256.00 p
+=== g2-rim
+  [chromium]
+    applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+    chromium rc=0
+    p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76
+  [webkit]
+    applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+    webkit rc=0
+    p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76
+    p3-fold-rim-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.0
+=== g2-room
+  [chromium]
+    applied g2-room - G-2 (RU-36): a room change put on the spring (the seated branch removed for it)
+    chromium rc=0
+    p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 20 | whole {"row":346,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 7 | cap plate 30 hidden 0 | FAIL: a unit moves 20.00 p
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f52-f103 375ms | L 124px first 0.6% max 7.3% last 0.25px; R 124px first 0.6% max 7.3% last 0.25px | op60 0.24 | out 0px | pass
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f160-f193 248ms | L 24px first 1.2% max 6.8% last 0.14px; R 24px first 1.2% max 6.7% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 33 rows
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f254-f286 250ms | L 24px first 0.7% max 7.4% last 0.14px; R 24px first 0.7% max 7.4% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 32 rows
+  [webkit]
+    applied g2-room - G-2 (RU-36): a room change put on the spring (the seated branch removed for it)
+    webkit rc=0
+    p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 20 | whole {"row":346,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 7 | cap plate 30 hidden 0 | FAIL: a unit moves 20.00 p
+    p5-many-lift-fine | webkit | 1440-fine-light | curve 0 | held 20 | whole {"row":279,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 5 | cap plate 23 hidden 0 | FAIL: a unit moves 20.00 px 
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f52-f103 375ms | L 124px first 0.6% max 7.3% last 0.25px; R 124px first 0.6% max 7.3% last 0.25px | op60 0.24 | out 0px | pass
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f160-f193 248ms | L 24px first 1.2% max 6.8% last 0.14px; R 24px first 1.2% max 6.7% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 33 rows
+    p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f254-f286 250ms | L 24px first 0.7% max 7.4% last 0.14px; R 24px first 0.7% max 7.4% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 32 rows
+    p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 13.11/13.26 | f41-f77 369ms | L 124px first 2.7% max 9.9% last 0.27px; R 124px first 2.7% max 9.9% last 0.26px | op60 0.18 | out 0px | pass
+    p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 13.11/13.26 | f119-f143 244ms | L 24px first 2.3% max 10.8% last 0.19px; R 24px first 2.4% max 10.8% last 0.18px | op60 0 | out 0px | FAIL: a resize moves the plate on 24 rows
+    p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 13.11/13.26 | f199-f223 244ms | L 24px first 1.6% max 9.5% last 0.22px; R 24px first 1.6% max 9.4% last 0.22px | op60 0 | out 0px | FAIL: a resize moves the plate on 24 rows
+=== g2-step
+  [chromium]
+    applied g2-step - RU-104 (C8-M8): a fade of at least 66.7 ms with a one-frame step of 0.6 inside it
+    chromium rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.67 at summary f35, shortest fade 94.0 ms FAIL: opacity 0.67 in 60 Hz at summary f35 | op60 0.67 at full f131, shortest fade 93.8 ms FAIL: opacity 0.67 in 60 Hz at full f131
+  [webkit]
+    applied g2-step - RU-104 (C8-M8): a fade of at least 66.7 ms with a one-frame step of 0.6 inside it
+    webkit rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.67 at summary f35, shortest fade 94.0 ms FAIL: opacity 0.67 in 60 Hz at summary f35 | op60 0.67 at full f131, shortest fade 93.8 ms FAIL: opacity 0.67 in 60 Hz at full f131
+    p3-fold-pill-fine webkit 1440-fine-light: sample interval 10.00 ms (192 rows) | op60 0.67 at summary f25, shortest fade 138.5 ms FAIL: opacity 0.67 in 60 Hz at summary f25 | op60 0.65 at full f117, shortest fade 94.7 ms FAIL: opacity 0.65 in 60 Hz at full f117
+=== g2-touch
+  [chromium]
+    applied g2-touch - G-2 (no folded face under touch): the rule removed
+    chromium rc=0
+    p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+  [webkit]
+    applied g2-touch - G-2 (no folded face under touch): the rule removed
+    webkit rc=0
+    p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+    p3-fold-transport-coarse | webkit | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+=== g2-whole-length
+  [chromium]
+    applied g2-whole-length - G-2 (RU-27): a length written in place of the percentage (the carrier caps the run at n pitches in px)
+    chromium rc=0
+    p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":608,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lift
+  [webkit]
+    applied g2-whole-length - G-2 (RU-27): a length written in place of the percentage (the carrier caps the run at n pitches in px)
+    webkit rc=0
+    p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":608,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lift
+    p5-many-lift-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":476,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted
+=== g2-whole-never
+  [chromium]
+    applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+    chromium rc=0
+    p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":110,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 110: a run that d
+    p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":117,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 117: a run that
+  [webkit]
+    applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+    webkit rc=0
+    p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":110,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 110: a run that d
+    p3-fold-many-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":84,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 84: a run that does 
+    p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":117,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 117: a run that
+    p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"row":84,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 84: a run that doe
+=== g3-hold
+  [chromium]
+    applied g3-hold - RU-104: a posture change mid-travel read 85 ms late (the plate goes on along its old travel), then turned
+    chromium rc=0
+    p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 29.07/29.07 | f26-f60 283ms | L 76px first 1.4% max 8.3% last 0.08px; R 76px first 1.4% max 8.3% last 0.08px | op60 0.25 | out 0px | pass
+    p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 29.07/29.07 | f123-f173 416ms | L 65.7px first 1.3% max 7% last 0.08px; R 65.7px first 1.3% max 7% last 0.08px | op60 0.25 | out 72px | FAIL: L leaves its path 92 ms after reverse-25; L reverses 99 m
+    p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 29.55/29.55 | f27-f61 284ms | L 76px first 1.8% max 8% last 0.09px; R 76px first 1.8% max 8% last 0.1px | op60 0.25 | out 0px | pass
+    p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 29.55/29.55 | f122-f176 450ms | L 70px first 1.4% max 7.7% last 0.03px; R 70px first 1.4% max 7.7% last 0.03px | op60 0.25 | out 72px | FAIL: L reverses 100 ms after reverse-50 (bound 30 ms; 12 rows 
+    p3-rev-unfold-50-out | wi8 | chromium | 1440-fine-light | load 29.55/33.99 | f28-f82 451ms | L 70.1px first 1.8% max 7% last 0.03px; R 70.1px first 1.8% max 7% last 0.03px | op60 0.25 | out 0px | FAIL: L reverses 98 ms after reverse-50 (bound 30 ms; 12 rows ag
+  [webkit]
+    applied g3-hold - RU-104: a posture change mid-travel read 85 ms late (the plate goes on along its old travel), then turned
+    webkit rc=0
+    p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 29.07/29.07 | f26-f60 283ms | L 76px first 1.4% max 8.3% last 0.08px; R 76px first 1.4% max 8.3% last 0.08px | op60 0.25 | out 0px | pass
+    p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 29.07/29.07 | f123-f173 416ms | L 65.7px first 1.3% max 7% last 0.08px; R 65.7px first 1.3% max 7% last 0.08px | op60 0.25 | out 72px | FAIL: L leaves its path 92 ms after reverse-25; L reverses 99 m
+    p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 29.55/29.55 | f27-f61 284ms | L 76px first 1.8% max 8% last 0.09px; R 76px first 1.8% max 8% last 0.1px | op60 0.25 | out 0px | pass
+    p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 29.55/29.55 | f122-f176 450ms | L 70px first 1.4% max 7.7% last 0.03px; R 70px first 1.4% max 7.7% last 0.03px | op60 0.25 | out 72px | FAIL: L reverses 100 ms after reverse-50 (bound 30 ms; 12 rows 
+    p3-rev-unfold-50-out | wi8 | chromium | 1440-fine-light | load 29.55/33.99 | f28-f82 451ms | L 70.1px first 1.8% max 7% last 0.03px; R 70.1px first 1.8% max 7% last 0.03px | op60 0.25 | out 0px | FAIL: L reverses 98 ms after reverse-50 (bound 30 ms; 12 rows ag
+    p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 33.49/33.49 | f20-f48 284ms | L 76px first 1.6% max 9.1% last 0.08px; R 76px first 1.6% max 9.1% last 0.08px | op60 0.17 | out 0px | pass
+    p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 33.49/33.49 | f98-f138 408ms | L 63.4px first 1.9% max 9.5% last 0.13px; R 63.4px first 2% max 9.5% last 0.12px | op60 0.17 | out 72px | FAIL: L leaves its path 83 ms after reverse-25; L reverses 92 ms
+    p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 31.37/31.37 | f21-f49 282ms | L 76px first 1% max 8.9% last 0.06px; R 76px first 1% max 8.9% last 0.07px | op60 0.16 | out 0px | pass
+    p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 31.37/31.37 | f101-f146 459ms | L 70.8px first 1.6% max 10% last 0.05px; R 70.8px first 1.6% max 10% last 0.04px | op60 0.18 | out 72px | FAIL: L reverses 92 ms after reverse-50 (bound 30 ms; 9 rows ag
+    p3-rev-unfold-50-out | wi8 | webkit | 1440-fine-light | load 31.37/30.78 | f21-f66 453ms | L 69.9px first 1.3% max 9.1% last 0.02px; R 69.9px first 1.3% max 9.1% last 0.01px | op60 0.16 | out 0px | FAIL: L reverses 92 ms after reverse-50 (bound 32 ms; 9 rows a
+=== g4-ghost
+  [chromium]
+    applied g4-ghost - G-4 (RU-81): a removed seat keeps painting at its own opacity through its exit and is cut at the landing
+    chromium rc=0
+    p3-seatset-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | overlap 18 | ghost {"rows":36,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 181ms out 8ms"} | whole {"row":323,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"
+    p3-seatset-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | overlap 27.84 | ghost {"rows":134,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 188ms out 8ms"} | whole {"row":452,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f10-f47 284ms | L 82px first 1.9% max 8.2% last 0.11px; R 82px first 1.9% max 8.2% last 0.11px | op60 0.25 | out 0px | pass
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f113-f145 246ms | L 26px first 0.9% max 6.6% last 0.17px; R 26px first 0.9% max 6.6% last 0.17px | op60 0.21 | out 0px | pass
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f232-f266 254ms | L 26px first 1% max 7.2% last 0.12px; R 26px first 1% max 7.2% last 0.13px | op60 0 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f30-f66 279ms | L 76px first 1% max 6.9% last 0.03px; R 76px first 1% max 6.9% last 0.03px | op60 0.25 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f134-f166 250ms | L 24px first 1.5% max 7% last 0.13px; R 24px first 1.5% max 7% last 0.12px | op60 0.22 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f247-f279 245ms | L 24px first 1.4% max 6.4% last 0.17px; R 24px first 1.4% max 6.4% last 0.17px | op60 0 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f338-f368 247ms | L 24px first 1.5% max 8.5% last 0.16px; R 24px first 1.5% max 8.5% last 0.15px | op60 0.2 | out 0px | pass
+  [webkit]
+    applied g4-ghost - G-4 (RU-81): a removed seat keeps painting at its own opacity through its exit and is cut at the landing
+    webkit rc=0
+    p3-seatset-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | overlap 18 | ghost {"rows":36,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 181ms out 8ms"} | whole {"row":323,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"
+    p3-seatset-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | overlap 18 | ghost {"rows":27,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 182ms out 12ms"} | whole {"row":220,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"r
+    p3-seatset-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | overlap 27.84 | ghost {"rows":134,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 188ms out 8ms"} | whole {"row":452,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,
+    p3-seatset-fine | webkit | 1440-fine-light | curve 0.02 | held 0 | overlap 27.46 | ghost {"rows":108,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 184ms out 10ms"} | whole {"row":342,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f10-f47 284ms | L 82px first 1.9% max 8.2% last 0.11px; R 82px first 1.9% max 8.2% last 0.11px | op60 0.25 | out 0px | pass
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f113-f145 246ms | L 26px first 0.9% max 6.6% last 0.17px; R 26px first 0.9% max 6.6% last 0.17px | op60 0.21 | out 0px | pass
+    p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f232-f266 254ms | L 26px first 1% max 7.2% last 0.12px; R 26px first 1% max 7.2% last 0.13px | op60 0 | out 0px | pass
+    p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 12.67/13.02 | f5-f33 280ms | L 82px first 0.5% max 9.8% last 0.03px; R 82px first 0.5% max 9.8% last 0.03px | op60 0.26 | out 0px | pass
+    p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 12.67/13.02 | f84-f109 254ms | L 26px first 1.6% max 9.2% last 0.13px; R 26px first 1.6% max 9.1% last 0.12px | op60 0.15 | out 0px | pass
+    p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 12.67/13.02 | f154-f178 246ms | L 26px first 1.6% max 10.2% last 0.22px; R 26px first 1.6% max 10.2% last 0.22px | op60 0 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f30-f66 279ms | L 76px first 1% max 6.9% last 0.03px; R 76px first 1% max 6.9% last 0.03px | op60 0.25 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f134-f166 250ms | L 24px first 1.5% max 7% last 0.13px; R 24px first 1.5% max 7% last 0.12px | op60 0.22 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f247-f279 245ms | L 24px first 1.4% max 6.4% last 0.17px; R 24px first 1.4% max 6.4% last 0.17px | op60 0 | out 0px | pass
+    p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f338-f368 247ms | L 24px first 1.5% max 8.5% last 0.16px; R 24px first 1.5% max 8.5% last 0.15px | op60 0.2 | out 0px | pass
+    p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 12.82/12.67 | f20-f48 284ms | L 76px first 3.2% max 9.1% last 0.08px; R 76px first 3.2% max 9.1% last 0.08px | op60 0.17 | out 0px | pass
+    p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 12.82/12.67 | f99-f123 243ms | L 24px first 1.3% max 10% last 0.22px; R 24px first 1.3% max 10% last 0.22px | op60 0.15 | out 0px | pass
+    p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 12.82/12.67 | f187-f211 243ms | L 24px first 2% max 9.1% last 0.22px; R 24px first 2% max 9.1% last 0.22px | op60 0 | out 0px | pass
+    p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 12.82/12.67 | f255-f279 243ms | L 24px first 1% max 8.5% last 0.22px; R 24px first 1% max 8.6% last 0.22px | op60 0.15 | out 0px | pass
+=== g4-groupframe
+  [chromium]
+    applied g4-groupframe - step 7: a role=group child of the run is a snap area again
+    {"engine":"chromium","tag":"m9m-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.23,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig
+    chromium rc=0
+  [webkit]
+    applied g4-groupframe - step 7: a role=group child of the run is a snap area again
+    {"engine":"webkit","tag":"m9m-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.25,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1
+    webkit rc=0
+=== g4-join
+  [chromium]
+    applied g4-join - G-4 (a control joins or leaves): the records ignored
+    chromium rc=0
+    p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 5ms out 8ms"} | whole {"row":391,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: jo
+  [webkit]
+    applied g4-join - G-4 (a control joins or leaves): the records ignored
+    webkit rc=0
+    p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 5ms out 8ms"} | whole {"row":391,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: jo
+    p3-seatset-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 10ms out 12ms"} | whole {"row":316,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: jo
+=== g4-openseat
+  [chromium]
+    applied g4-openseat - G-4 (RU-28): the open seat's width rule restored (three pitches)
+    chromium rc=0
+    p3-seat-fine | chromium | 1440-fine-light | curve 0.01 | held 96 | whole {"row":504,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's firs
+  [webkit]
+    applied g4-openseat - G-4 (RU-28): the open seat's width rule restored (three pitches)
+    webkit rc=0
+    p3-seat-fine | chromium | 1440-fine-light | curve 0.01 | held 96 | whole {"row":504,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's firs
+    p3-seat-fine | webkit | 1440-fine-light | curve 0 | held 96 | whole {"row":408,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row
+=== g4-scroll
+  [chromium]
+    applied g4-scroll - G-4 (the open seat changes in a compact scrolling run): the offset left to the run's reach
+    chromium rc=0
+    p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":260,"plateMovePx":0,"viol":["seat#0 from rest 20.0% > 1.7%","seat#0 step 20.0% > 8.4%","seat#0 
+    p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":502,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":52,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 502:
+  [webkit]
+    applied g4-scroll - G-4 (the open seat changes in a compact scrolling run): the offset left to the run's reach
+    webkit rc=0
+    p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":260,"plateMovePx":0,"viol":["seat#0 from rest 20.0% > 1.7%","seat#0 step 20.0% > 8.4%","seat#0 
+    p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":260,"plateMovePx":0,"viol":["seat#0 from rest 20.0% > 2.7%","seat#0 step 20.0% > 10.6%","seat#0 s
+    p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":502,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":52,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 502:
+    p3-seat-long-coarse | webkit | 390-coarse-light | curve 0.01 | held 0 | whole {"row":379,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":52,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 379
+=== g4-snap2
+  [chromium]
+    applied g4-snap2 - G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position
+    chromium rc=0
+    p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.0%","seat#0 last 8.68 px","seat#1 step 100.0% > 8.0%","seat#1 last 8.68 px","seat#2 step 100.0% > 8.0%","seat#2 last 8.
+    p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.8,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.7%","seat#0 last 8.75 px","seat#1 step 100.0% > 8.7%","seat#1 last 8.75 px","seat#2 step 100.0% > 8.7%","seat#2 l
+    p3-seat-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":500,"fits":true,"whole":4,"of":5,"partial":[22],"absent":0,"ext":326,"over":26,"room":374,"offset":26,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 115: a run
+    p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":489,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 113
+  [webkit]
+    applied g4-snap2 - G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position
+    webkit rc=0
+    p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.0%","seat#0 last 8.68 px","seat#1 step 100.0% > 8.0%","seat#1 last 8.68 px","seat#2 step 100.0% > 8.0%","seat#2 last 8.
+    p3-seat-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 11.5%","seat#0 last 8.74 px","seat#1 step 100.0% > 11.5%","seat#1 last 8.74 px","seat#2 step 100.0% > 11.5%","seat#2 last 8
+    p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.8,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.7%","seat#0 last 8.75 px","seat#1 step 100.0% > 8.7%","seat#1 last 8.75 px","seat#2 step 100.0% > 8.7%","seat#2 l
+    p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 10.6%","seat#0 last 8.74 px","seat#1 step 100.0% > 10.6%","seat#1 last 8.74 px","seat#2 step 100.0% > 10.6%","seat#2 
+    p3-seat-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":500,"fits":true,"whole":4,"of":5,"partial":[22],"absent":0,"ext":326,"over":26,"room":374,"offset":26,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 115: a run
+    p3-seat-coarse | webkit | 390-coarse-light | curve 0 | held 0 | whole {"row":376,"fits":true,"whole":4,"of":5,"partial":[19],"absent":0,"ext":326,"over":25,"room":374,"offset":0,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 86: a run tha
+    p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":489,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 113
+    p3-seat-long-coarse | webkit | 390-coarse-light | curve 0 | held 0 | whole {"row":361,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 86: a
+=== g6-flow
+  [chromium]
+    applied g6-flow - G-6: a name put in flow on hover (the hovered seat 24 px wider)
+    chromium rc=0
+    FAIL p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1134, largest box change 24.00 px (dock row 161), folded rows 0
+    FAIL p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1132, largest box change 24.00 px (seat#1 row 139), folded rows 0
+    pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 321, largest box change 0.00 px (-), folded rows 0
+  [webkit]
+    applied g6-flow - G-6: a name put in flow on hover (the hovered seat 24 px wider)
+    webkit rc=0
+    FAIL p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1134, largest box change 24.00 px (dock row 161), folded rows 0
+    FAIL p3-hover-fine.wi8.webkit.1440-fine-light.rows.json: rows 866, largest box change 24.00 px (dock row 108), folded rows 0
+    FAIL p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1132, largest box change 24.00 px (seat#1 row 139), folded rows 0
+    FAIL p4-hover-390.wi8.webkit.390-fine-light.rows.json: rows 866, largest box change 24.00 px (seat#1 row 109), folded rows 0
+    pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 321, largest box change 0.00 px (-), folded rows 0
+    pass p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 238, largest box change 0.00 px (-), folded rows 0
+=== g6-overflow
+  [chromium]
+    applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+    chromium rc=0
+    pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 292, largest box change 0.00 px (-), folded rows 0
+    FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 545 to the lift; largest box change 4.00 px (seat#4 row 606 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.00, marks
+  [webkit]
+    applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+    webkit rc=0
+    pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 292, largest box change 0.00 px (-), folded rows 0
+    FAIL p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 242, largest box change 4.00 px (seat#0 row 184), folded rows 0
+    FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 545 to the lift; largest box change 4.00 px (seat#4 row 606 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.00, marks
+    FAIL p9-press-fine.wi8.webkit.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 449 to the lift; largest box change 4.00 px (seat#4 row 503 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.01, marks 0
+=== g7-provide
+  [chromium]
+    applied g7-provide - G-7: the outlet's provide removed
+    chromium rc=0
+  [webkit]
+    applied g7-provide - G-7: the outlet's provide removed
+    webkit rc=0
+=== g8-exempt
+  [chromium]
+    applied g8-exempt - G-8 (RU-72): a press on the trigger of an open surface folds the dock (the trigger exemption removed)
+    {"engine":"chromium","tag":"m9m-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-t
+    chromium rc=0
+  [webkit]
+    applied g8-exempt - G-8 (RU-72): a press on the trigger of an open surface folds the dock (the trigger exemption removed)
+    {"engine":"webkit","tag":"m9m-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-tou
+    webkit rc=0
+=== g8-hold
+  [chromium]
+    applied g8-hold - G-8: the hold count consulted on a press outside
+    {"menu-esc":{"opened":true,"linger":{"stillOpen":true,"overlayStillOpen":true},"esc1":{"open":true,"focus":"w-g8-menu","focusInert":false,"focusSummary":false,"overlay":false},"esc2":{"open":false,"focus":"Expand dock","focusInert":false,"focusSummary":true}},
+    chromium rc=0
+  [webkit]
+    applied g8-hold - G-8: the hold count consulted on a press outside
+    {"menu-esc":{"opened":true,"linger":{"stillOpen":true,"overlayStillOpen":true},"esc1":{"open":true,"focus":"w-g8-menu","focusInert":false,"focusSummary":false,"overlay":false},"esc2":{"open":false,"focus":"Expand dock","focusInert":false,"focusSummary":true}},
+    webkit rc=0
+=== g8-nohold
+  [chromium]
+    applied g8-nohold - RU-114: the overlay hold ignored on a leave and when the linger runs out
+    {"menu":{"restsFolded":true,"opened":true,"menuOpened":true,"after72s":{"dockOpen":false,"menuOpen":false},"pass":false}}
+    chromium rc=0
+  [webkit]
+    applied g8-nohold - RU-114: the overlay hold ignored on a leave and when the linger runs out
+    {"menu":{"restsFolded":true,"opened":true,"menuOpened":true,"after72s":{"dockOpen":false,"menuOpen":false},"pass":false}}
+    webkit rc=0
+=== g8-trigger
+  [chromium]
+    applied g8-trigger - G-8 / RU-62: the scrim's stamp removed and a quiet focus return cancelling the linger again
+    {"engine":"chromium","tag":"m9m-g8-trigger","pass":false,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":false,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":false,"select-touch-item":true,"sheet-touc
+    chromium rc=0
+  [webkit]
+    applied g8-trigger - G-8 / RU-62: the scrim's stamp removed and a quiet focus return cancelling the linger again
+    {"engine":"webkit","tag":"m9m-g8-trigger","pass":false,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":false,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":false,"select-touch-item":true,"sheet-touch-
+    webkit rc=0
+=== g9-scope
+  [chromium]
+    applied g9-scope - G-9: the published progress write removed (the root's --dock-expand-t)
+    chromium rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.26 at summary f33, shortest fade 75.4 ms | op60 0.25 at full f132, shortest fade 73.9 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 237 ms, travels 0.02-
+    p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.25 at summary f34, shortest fade 74.3 ms | op60 0.26 at full f130, shortest fade 74.6 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 246 ms, travels 0.02-0.98
+  [webkit]
+    applied g9-scope - G-9: the published progress write removed (the root's --dock-expand-t)
+    webkit rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.26 at summary f33, shortest fade 75.4 ms | op60 0.25 at full f132, shortest fade 73.9 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 237 ms, travels 0.02-
+    p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.25 at summary f34, shortest fade 74.3 ms | op60 0.26 at full f130, shortest fade 74.6 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 246 ms, travels 0.02-0.98
+    p3-fold-pill-fine webkit 1440-fine-light: sample interval 10.00 ms (199 rows) | op60 0.18 at summary f26, shortest fade 79.0 ms | op60 0.2 at full f125, shortest fade 74.6 ms | root --dock-expand-t: 199 rows, largest 60 Hz move 1.000 at 222 ms, travels 0.02-0.
+    p9-tiers-fine webkit 1440-fine-light: sample interval 10.00 ms (202 rows) | op60 0.26 at summary f26, shortest fade 75.9 ms | op60 0.21 at full f127, shortest fade 78.4 ms | root --dock-expand-t: 202 rows, largest 60 Hz move 1.000 at 225 ms, travels 0.02-0.98 
+=== g9-three
+  [chromium]
+    applied g9-three - RU-104 (C8-M17): the published progress compressed to three frames
+    chromium rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (224 rows) | op60 0.25 at summary f38, shortest fade 74.9 ms | op60 0.26 at full f130, shortest fade 74.7 ms | root --dock-expand-t: 224 rows, largest 60 Hz move 1.000 at 278 ms, travels 0.02-
+    p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.25 at summary f36, shortest fade 74.9 ms | op60 0.25 at full f131, shortest fade 74.3 ms | root --dock-expand-t: 221 rows, largest 60 Hz move 1.000 at 1063 ms, travels 0.02-0.9
+  [webkit]
+    applied g9-three - RU-104 (C8-M17): the published progress compressed to three frames
+    webkit rc=0
+    p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (224 rows) | op60 0.25 at summary f38, shortest fade 74.9 ms | op60 0.26 at full f130, shortest fade 74.7 ms | root --dock-expand-t: 224 rows, largest 60 Hz move 1.000 at 278 ms, travels 0.02-
+    p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.25 at summary f36, shortest fade 74.9 ms | op60 0.25 at full f131, shortest fade 74.3 ms | root --dock-expand-t: 221 rows, largest 60 Hz move 1.000 at 1063 ms, travels 0.02-0.9
+    p3-fold-pill-fine webkit 1440-fine-light: sample interval 10.00 ms (204 rows) | op60 0.22 at summary f25, shortest fade 74.1 ms | op60 0.23 at full f127, shortest fade 76.6 ms | root --dock-expand-t: 204 rows, largest 60 Hz move 0.667 at 1273 ms, travels 0.02-
+    p9-tiers-fine webkit 1440-fine-light: sample interval 10.00 ms (200 rows) | op60 0.25 at summary f27, shortest fade 79.8 ms | op60 0.2 at full f126, shortest fade 78.4 ms | root --dock-expand-t: 200 rows, largest 60 Hz move 0.667 at 1270 ms, travels 0.02-0.98 
+=== iconword
+  [chromium]
+    applied iconword - RU-75: the labelled icon seat's seat height removed
+    {"engine":"chromium","tag":"m9m-iconword","pass":false,"bad":10,"first":["1440 fine share 0.5 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.6 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.7 w-glyphs-icon Focus:
+    chromium rc=0
+  [webkit]
+    applied iconword - RU-75: the labelled icon seat's seat height removed
+    {"engine":"webkit","tag":"m9m-iconword","pass":false,"bad":10,"first":["1440 fine share 0.5 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.6 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.7 w-glyphs-icon Focus: s
+    webkit rc=0
+=== mark
+  [chromium]
+    applied mark - RU-66: the run mark's move removed (the plate jumps)
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is drawn while a seat is the run's destination, and only then 87ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > takes its first measure in the next frame, not in the mount task 18ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > leaves a destination inside its own scroller to paint itself 15ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is one plate on the run, under the seats, and the marked seat paints no plate of its own 2ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is no seat: not a roving stop, and the run stays a toolbar of its seats 21ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > mounts and marks without a ResizeObserver 14ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > re-measures when any seat resizes, not only the run and the destination 58ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > measures layout boxes, so a zoom or a transform above the run scales the plate once 45ms
+     ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > glides on the dock spring preset, never a literal 1ms
+     Test Files  1 passed (1)
+          Tests  9 passed (9)
+    unit rc=0
+    {"engine":"chromium","before":null,"firstPress":{"to":"w-std-library","markBefore":false,"after":[718.5,32],"seat":[714.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":120,"first":718.5,"last":718.5,"travel":0,"between":0,"largestStep":0,"stepShare
+    chromium rc=0
+  [webkit]
+    applied mark - RU-66: the run mark's move removed (the plate jumps)
+    {"engine":"webkit","before":null,"firstPress":{"to":"w-std-library","markBefore":false,"after":[718.5,32],"seat":[714.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":90,"first":718.5,"last":718.5,"travel":0,"between":0,"largestStep":0,"stepShare":n
+    webkit rc=0
+=== s1-facepad
+  [chromium]
+    applied s1-facepad - RU-112 plant: the folded face's inline padding 0.5rem
+    figure-tools 1440 [["Revenue tools","folded","glyph",52,40,36,36,[114,56],"FAIL",7.67],["Headcount tools","folded","glyph",52,40,36,36,[114,56],"FAIL",7.67],["Churn tools","folded","glyph",52,40,36,36,[114,56],"FAIL",7.67]]
+    pill 1440 [["Pill","folded","glyph",52,40,36,36,[68,56],"FAIL",12.79]]
+    chrome 1440 [["App","folded","glyph",52,40,36,36,[68,56],"FAIL",12.79]]
+    w-pill 1440 [["pill","folded","glyph",52,40,36,36,[68,56],"FAIL",10.24]]
+    w-card 1440 [["card","folded","glyph",52,40,36,36,[68,56],"FAIL",10.25]]
+    figure-tools 390 [["Revenue tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",7.67],["Headcount tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",7.66],["Churn tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",7.66]]
+    pill 390 [["Pill","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",12.74]]
+    chrome 390 [["App","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",12.74]]
+    w-pill 390 [["pill","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",10.24]]
+    w-card 390 [["card","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",10.23]]
+    chromium rc=0
+  [webkit]
+    applied s1-facepad - RU-112 plant: the folded face's inline padding 0.5rem
+    figure-tools 1440 [["Revenue tools","folded","glyph",52,40,36,36,[114,56],"FAIL",9.8],["Headcount tools","folded","glyph",52,40,36,36,[114,56],"FAIL",9.8],["Churn tools","folded","glyph",52,40,36,36,[114,56],"FAIL",9.8]]
+    pill 1440 [["Pill","folded","glyph",52,40,36,36,[68,56],"FAIL",12.79]]
+    chrome 1440 [["App","folded","glyph",52,40,36,36,[68,56],"FAIL",12.79]]
+    w-pill 1440 [["pill","folded","glyph",52,40,36,36,[68,56],"FAIL",5.48]]
+    w-card 1440 [["card","folded","glyph",52,40,36,36,[68,56],"FAIL",5.48]]
+    figure-tools 390 [["Revenue tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",9.79],["Headcount tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",9.79],["Churn tools","folded","glyph",55.59,44,39.59,39.59,[121.59,60],"FAIL",9.79]]
+    pill 390 [["Pill","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",12.74]]
+    chrome 390 [["App","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",12.74]]
+    w-pill 390 [["pill","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",5.02]]
+    w-card 390 [["card","folded","glyph",55.59,44,39.59,39.59,[71.59,60],"FAIL",5.01]]
+    webkit rc=0
+=== s3-nodark
+  [chromium]
+    applied s3-nodark - RU-93 plant: the token's dark line removed
+    chromium rc=0
+  [webkit]
+    applied s3-nodark - RU-93 plant: the token's dark line removed
+    webkit rc=0
+=== s4-channel
+  [chromium]
+    applied s4-channel - RU-95 plant: the channel restored inside the dock (fill, rim, shadow and lens)
+    chromium rc=0
+  [webkit]
+    applied s4-channel - RU-95 plant: the channel restored inside the dock (fill, rim, shadow and lens)
+    webkit rc=0
+=== s4-cureqhover
+  [chromium]
+    applied s4-cureqhover - RU-94 plant: the current step equal to the hover
+    chromium rc=0
+  [webkit]
+    applied s4-cureqhover - RU-94 plant: the current step equal to the hover
+    webkit rc=0
+=== s4-toggle08
+  [chromium]
+    applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+    chromium rc=0
+  [webkit]
+    applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+    webkit rc=0
+=== s5-ctlglyph
+  [chromium]
+    applied s5-ctlglyph - RU-100 plant: the controls preset's glyph line removed
+    chromium rc=0
+  [webkit]
+    applied s5-ctlglyph - RU-100 plant: the controls preset's glyph line removed
+    webkit rc=0
+=== s5-tab38
+  [chromium]
+    applied s5-tab38 - RU-98 plant: the comfortable tab height back to 38 px
+    chromium rc=0
+  [webkit]
+    applied s5-tab38 - RU-98 plant: the comfortable tab height back to 38 px
+    webkit rc=0
+=== s5-trigrun
+  [chromium]
+    applied s5-trigrun - RU-99 plant: the trigger's seat cut back to the run
+    chromium rc=0
+  [webkit]
+    applied s5-trigrun - RU-99 plant: the trigger's seat cut back to the run
+    webkit rc=0
+=== s6-nogate
+  [chromium]
+    applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+    chromium rc=0
+    FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 548 to the lift; largest box change 225.00 px (dock row 702 (press-home)); folded rows 8 (first 290 ms after its press); per press read 0.01, searc
+  [webkit]
+    applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+    webkit rc=0
+    FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 548 to the lift; largest box change 225.00 px (dock row 702 (press-home)); folded rows 8 (first 290 ms after its press); per press read 0.01, searc
+    FAIL p9-press-fine.wi8.webkit.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 448 to the lift; largest box change 225.00 px (dock row 585 (press-home)); folded rows 7 (first 294 ms after its press); per press read 0.01, search 
+=== s6-words
+  [chromium]
+    applied s6-words - RU-101 plant: the grown seat's width glide removed (no cut)
+    chromium rc=0
+    p6-words-fine | chromium | 1440-fine-light | curve 0 | held 105.86 | overlap 98 | whole {"row":233,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":407.8,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 105.86 px in the window's 
+  [webkit]
+    applied s6-words - RU-101 plant: the grown seat's width glide removed (no cut)
+    webkit rc=0
+    p6-words-fine | chromium | 1440-fine-light | curve 0 | held 105.86 | overlap 98 | whole {"row":233,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":407.8,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 105.86 px in the window's 
+    p6-words-fine | webkit | 1440-fine-light | curve 0 | held 105.91 | overlap 98 | whole {"row":205,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":407.9,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 105.91 px in the window's fi
+=== s7-nogate
+  [chromium]
+    applied s7-nogate - RU-103 plant: the sampler's morphing gate removed
+    chromium rc=0
+=== touchcure
+  [chromium]
+    applied touchcure - RU-72 (S6): the two touch cures removed (DockTrigger's close on a touch press, the scrim's touch click)
+    {"engine":"chromium","tag":"m9m-touchcure","pass":true,"cells":{"select-touch":true,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true},"bad":[]}
+    chromium rc=0
+  [webkit]
+    applied touchcure - RU-72 (S6): the two touch cures removed (DockTrigger's close on a touch press, the scrim's touch click)
+    {"engine":"webkit","tag":"m9m-touchcure","pass":false,"cells":{"select-touch":false,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false},"bad":["select-touch: opened true closed false stillClosed false reopened 0 dock true","sheet-touch: ope
+    webkit rc=0
+=== m9m-g14plant-g14-cap.log
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (85ms)
+    ✘  14 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (76ms)
+    2 failed
+    12 passed (1.5m)
+    chromium rc=1
+=== m9m-g14plant-g14-cap.webkit.log
+    ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (311ms)
+    ✘  14 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (231ms)
+    2 failed
+    12 passed (1.6m)
+    webkit-b rc=1
+=== m9m-g14plant-g14-clock.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays 
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays 
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays 
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat
+    ✘   8 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat 
+    ✘  15 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  16 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  17 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  18 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  19 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  20 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  21 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays un
+    ✘  22 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays und
+    16 failed
+    12 passed (1.4m)
+    chromium rc=1
+=== m9m-g14plant-g14-clock.webkit.log
+    ✘   1 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the poin
+    ✘   2 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the point
+    ✘   3 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the poin
+    ✘   4 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the point
+    ✘   5 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the poin
+    ✘   6 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the point
+    ✘   7 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘   8 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  15 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  16 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  17 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  18 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  19 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under th
+    ✘  20 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the
+    ✘  21 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays un
+    ✘  22 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays und
+    16 failed
+    12 passed (1.6m)
+    webkit-b rc=1
+=== m9m-g14plant-g14-corner.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.5s)
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.3s)
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.4s)
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.0s)
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+    ✘   8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (634ms)
+    ✘   9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (638ms)
+    ✘  10 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (
+    ✘  11 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (633ms)
+    ✘  12 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box ar
+    ✘  13 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the 
+    ✘  14 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.5s)
+    ✘  15 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+    ✘  16 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+    ✘  17 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+    ✘  18 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.3s)
+    ✘  19 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.5s)
+    ✘  20 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.1s)
+    ✘  21 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+    ✘  22 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (685ms)
+    ✘  23 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (651ms)
+    ✘  24 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (653ms)
+    ✘  25 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (622ms)
+    ✘  26 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (
+    ✘  27 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is 
+    ✘  28 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.5s)
+    28 failed
+    chromium rc=1
+=== m9m-g14plant-g14-corner.webkit.log
+    ✘   1 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (3.2s)
+    ✘   2 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.7s)
+    ✘   3 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.6s)
+    ✘   4 [webkit] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.9s)
+    ✘   5 [webkit] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (2.0s)
+    ✘   6 [webkit] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.6s)
+    ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.7s)
+    ✘   8 [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (1.2s)
+    ✘   9 [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (1.3s)
+    ✘  10 [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (1.2s)
+    ✘  11 [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (1.2s)
+    ✘  12 [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (1.2s)
+    ✘  13 [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    ✘  14 [webkit] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (4.0s)
+    ✘  15 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.5s)
+    ✘  16 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.5s)
+    ✘  17 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.6s)
+    ✘  18 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.9s)
+    ✘  19 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (2.0s)
+    ✘  20 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.5s)
+    ✘  21 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.7s)
+    ✘  22 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (1.1s)
+    ✘  23 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (1.1s)
+    ✘  24 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (1.2s)
+    ✘  25 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (1.1s)
+    ✘  26 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (
+    ✘  27 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is 
+    ✘  28 [webkit-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (4.1s)
+    28 failed
+    webkit-b rc=1
+=== m9m-g14plant-g14-fits.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (3.5
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.3s)
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.2s)
+    ✘   8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.1s)
+    ✘   9 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.3s)
+    ✘  10 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.3s)
+    ✘  11 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.3s)
+    ✘  13 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+    ✘  15 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.0s)
+    ✘  16 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.0s)
+    13 failed
+    3 passed (1.5m)
+    chromium rc=1
+=== m9m-g14plant-g14-fits.webkit.log
+    ✘   1 [webkit] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (3.4s)
+    ✘   2 [webkit] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.7s)
+    ✘   5 [webkit] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.4s)
+    ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (16.7s)
+    ✘   8 [webkit] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (17.1s)
+    ✘   9 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.9s)
+    ✘  10 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (3.0s)
+    ✘  15 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (16.8s)
+    ✘  16 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (16.9s)
+    9 failed
+    7 passed (1.7m)
+    webkit-b rc=1
+=== m9m-g14plant-g14-lane-1501.log
+    ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.8s)
+    ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.3s)
+    ✘  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.3s)
+    ✘  4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.3s)
+    ✘  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.3s)
+    ✘  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+    ✘  7 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.4s)
+    ✘  8 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+    8 failed
+    chromium rc=1
+=== m9m-g14plant-g14-lane-1501.webkit.log
+    ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (12.3s)
+    ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.7s)
+    ✘  3 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.7s)
+    ✘  4 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.8s)
+    ✘  5 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.7s)
+    ✘  6 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.7s)
+    ✘  7 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.8s)
+    ✘  8 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.8s)
+    8 failed
+    webkit-c rc=1
+=== m9m-g14plant-g14-lane.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the coll
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the col
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the colla
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the col
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through 
+    ✘   7 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4
+    ✘   8 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.
+    ✘   9 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s
+    ✘  10 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.
+    ✘  11 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double r
+    ✘  12 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double 
+    12 failed
+    chromium rc=1
+=== m9m-g14plant-g14-lane.webkit.log
+    ✘   1 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.6s)
+    ✘   2 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.9s)
+    ✘   3 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.0s)
+    ✘   4 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.1s)
+    ✘   5 [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversa
+    ✘   6 [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double revers
+    ✘   7 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.9
+    ✘   8 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.
+    ✘   9 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.0s
+    ✘  10 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.
+    ✘  11 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double r
+    ✘  12 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double 
+    12 failed
+    webkit-b rc=1
+=== m9m-g14plant-g14-press.log
+    ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (11.4s)
+    ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (10.3s)
+    ✘  3 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.3s)
+    ✘  4 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (10.3s)
+    4 failed
+    chromium rc=1
+=== m9m-g14plant-g14-press.webkit.log
+    ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (11.5s)
+    ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (11.1s)
+    ✘  3 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (11.0s)
+    ✘  4 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (11.1s)
+    4 failed
+    webkit-b rc=1
+=== m9m-g14plant-g14-reserve.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.6s)
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.1s)
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+    ✘   8 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (984ms)
+    ✘   9 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘  10 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+    ✘  11 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  12 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+    ✘  13 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.2s)
+    ✘  14 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.4s)
+    ✘  15 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.8s)
+    ✘  16 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (1.1s)
+    ✘  17 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+    ✘  18 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (1.6s)
+    ✘  19 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (1.2s)
+    ✘  20 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.3s)
+    ✘  21 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.7s)
+    ✘  22 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (1.1s)
+    ✘  23 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.1s)
+    ✘  24 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘  25 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+    ✘  26 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (972ms)
+    ✘  27 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+    ✘  28 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.1s)
+    ✘  29 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+    ✘  30 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (989ms)
+    ✘  31 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘  32 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+    ✘  33 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  34 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+    ✘  35 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+    ✘  36 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.3s)
+    ✘  37 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+    ✘  38 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (984ms)
+    ✘  39 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.1s)
+    ✘  40 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (1.5s)
+    ✘  41 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (990ms)
+    ✘  42 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.2s)
+    ✘  43 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.6s)
+    ✘  44 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (1.0s)
+    44 failed
+    chromium rc=1
+=== m9m-g14plant-g14-reserve.webkit.log
+    ✘   1 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (3.0s)
+    ✘   2 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.7s)
+    ✘   3 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (2.0s)
+    ✘   4 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘   5 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.5s)
+    ✘   6 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.7s)
+    ✘   7 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (2.2s)
+    ✘   8 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (1.6s)
+    ✘   9 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.8s)
+    ✘  10 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (3.0s)
+    ✘  11 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘  12 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  13 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.5s)
+    ✘  14 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.9s)
+    ✘  15 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (2.2s)
+    ✘  16 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (1.6s)
+    ✘  17 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.8s)
+    ✘  18 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (2.2s)
+    ✘  19 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (1.7s)
+    ✘  20 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.7s)
+    ✘  21 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (2.1s)
+    ✘  22 [webkit] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (1.6s)
+    ✘  23 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.6s)
+    ✘  24 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.7s)
+    ✘  25 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (2.1s)
+    ✘  26 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  27 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.6s)
+    ✘  28 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.7s)
+    ✘  29 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.9s)
+    ✘  30 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (1.4s)
+    ✘  31 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.6s)
+    ✘  32 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (3.1s)
+    ✘  33 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (2.2s)
+    ✘  34 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  35 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.6s)
+    ✘  36 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.8s)
+    ✘  37 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (2.1s)
+    ✘  38 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (1.6s)
+    ✘  39 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.9s)
+    ✘  40 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (2.1s)
+    ✘  41 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (1.4s)
+    ✘  42 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.7s)
+    ✘  43 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.9s)
+    ✘  44 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (1.4s)
+    44 failed
+    webkit-a rc=1
+=== m9m-g14plant-g14-touch.log
+    ✘   6 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (3.5s)
+    ✘   7 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (3.5s)
+    ✘   8 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (3.6s)
+    ✘   9 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (3.5s)
+    ✘  10 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (2.2s)
+    5 failed
+    5 passed (35.3s)
+    chromium rc=1
+=== m9m-g14plant-g14-touch.webkit.log
+    ✘   6 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (4.1s)
+    ✘   7 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (4.0s)
+    ✘   8 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (3.9s)
+    ✘   9 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (4.0s)
+    ✘  10 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (2.4s)
+    5 failed
+    5 passed (31.1s)
+    webkit-a rc=1
+=== m9m-g14plant-g14-zoom.log
+    ✘  1 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.0s
+    ✘  2 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.4s)
+    ✘  3 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.3
+    ✘  4 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.2s)
+    ✘  5 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.3s)
+    ✘  6 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.3s)
+    6 failed
+    chromium rc=1
+=== m9m-g14plant-g14-zoom.webkit.log
+    ✘  1 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.4s)
+    ✘  2 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.9s)
+    ✘  3 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.8s)
+    ✘  4 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.8s)
+    ✘  5 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.8s)
+    ✘  6 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (2.7s)
+    6 failed
+    webkit-b rc=1
+=== m9m-g14plant-g2-curve.log
+    ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (5.2s)
+    ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (3.0s)
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.6s)
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.3s)
+    ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.5s)
+    ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.1s)
+    ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+    ✘   8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (592ms)
+    ✘   9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (641ms)
+    ✘  10 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (
+    ✘  14 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+    ✘  15 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+    ✘  16 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+    ✘  17 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+    ✘  18 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.2s)
+    ✘  19 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.4s)
+    ✘  20 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.0s)
+    ✘  21 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+    ✘  22 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (627ms)
+    ✘  23 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (640ms)
+    ✘  24 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (639ms)
+    ✘  28 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+    22 failed
+    6 passed (1.4m)
+    chromium rc=1
+=== m9m-g14plant-g2-curve.webkit.log
+    28 passed (55.6s)
+    webkit-b rc=0
+=== m9m-g14plant-g2-nocut.log
+    8 passed (1.6m)
+    chromium rc=0
+=== m9m-g14plant-g2-nocut.webkit.log
+    8 passed (1.6m)
+    webkit-c rc=0
+=== m9m-g14plant-s4-hover8.log
+    ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps (2.3s)
+    1 failed
+    1 skipped
+    chromium rc=1
+=== m9m-g14plant-s4-hover8.webkit.log
+    ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps (3.0s)
+    1 failed
+    1 skipped
+    webkit-c rc=1
+=== m9m-g14plant-s4-press2.log
+    ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.3s)
+    ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.2s)
+    2 failed
+    2 passed (14.5s)
+    chromium rc=1
+=== m9m-g14plant-s4-press2.webkit.log
+    ✘  3 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.8s)
+    ✘  4 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (3.1s)
+    2 failed
+    2 passed (15.3s)
+    webkit-c rc=1
+=== m9m-g14plant-s6-empty.log
+    ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.6s)
+    1 failed
+    2 skipped
+    1 passed (8.9s)
+    chromium rc=1
+=== m9m-g14plant-s6-empty.webkit.log
+    ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.9s)
+    1 failed
+    2 skipped
+    1 passed (8.8s)
+    webkit-c rc=1
+=== m9m-g14plant-stale-target.log
+    ✘   3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.8s)
+    ✘   4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+    ✘  12 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+    ✘  25 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+    ✘  26 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.2s)
+    ✘  34 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.2s)
+    6 failed
+    38 passed (1.5m)
+    chromium rc=1
+=== m9m-g14plant-stale-target.webkit.log
+    ✘   4 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.4s)
+    ✘  11 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.9s)
+    ✘  12 [webkit] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    ✘  25 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (2.0s)
+    ✘  26 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (2.5s)
+    ✘  33 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (2.0s)
+    ✘  34 [webkit-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.6s)
+    7 failed
+    37 passed (1.8m)
+    webkit-a rc=1

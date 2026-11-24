@@ -1,0 +1,11 @@
+== g1-lift [webkit] 2026-11-23 19:53:42 (load { 23.59 33.55 39.42 })
+OK   g1-lift
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+-- webkit 19:53:47 (load { 26.02 33.89 39.51 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6034},"hOutside":{"opened":true,"foldAfterTapOutsideMs":14}}}
+webkit rc=0
+reverted g1-lift
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:54:47

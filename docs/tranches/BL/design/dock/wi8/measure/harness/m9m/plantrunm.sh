@@ -4,12 +4,21 @@
 # are read in Chromium and in WebKit 2287 against the tree's dev server (127.0.0.1:5474, runqm.py's `plant` server, which
 # reads the tree's src live); it is reverted (also on exit), the tree's src checked equal to HEAD, and judged. Each browser
 # run under the guard (WebKit `--exclusive webkit`; Chromium `--cpu-cores 0`, as part M of the eighth ran them; the cost
-# plants' Chromium on the GPU lane). A unit plant runs the unit in the tree. Log: logs/m9m-plant-<plant>.txt (its first
+# plants' Chromium on the GPU lane). A unit plant runs the unit in the tree (one test file, so `guarded --light` by the
+# machine law; from 2026-11-23 16:08, after g1-presshold's unit waited 30 min for a heavy slot held by other sessions). Log: logs/m9m-plant-<plant>.txt (its first
 # line carries the load); rows: rows/m9m-plant-<plant>/.
+# After the reboot (2026-11-23) a plant runs in two passes, so the WebKit legs of many plants share one take of the
+# machine-wide WebKit lock: PLANT_ENGINES=chromium (the runner's item: apply, the unit, the Chromium leg, revert; log
+# logs/m9m-plant-<plant>.txt, rows left unzipped), then PLANT_ENGINES=webkit inside m9m/wkbatch.py, which holds the lock
+# and sets WK_HELD=1 so the leg goes through `guarded` without `--exclusive webkit` (apply, the WebKit leg, revert, the
+# judges over both engines' rows; log logs/m9m-plant-<plant>.webkit.txt). Unset, both engines run as before. Before a
+# plant is applied, any plant a killed run left applied (<tree>/.s9-orig/<name>) is reverted and logged.
 set -u
 H="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"; L="$H/../logs"; R="$H/../rows"; T=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip; G=~/.claude/guard/guarded
 W=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
-P="$1"; log="$L/m9m-plant-$P.txt"; tmp="$log.part"; PL="$H/m9m/plantm.py"
+P="$1"; ENGINES="${PLANT_ENGINES:-chromium webkit}"; PL="$H/m9m/plantm.py"
+if [ "$ENGINES" = webkit ]; then log="$L/m9m-plant-$P.webkit.txt"; else log="$L/m9m-plant-$P.txt"; fi; tmp="$log.part"
+has() { case " $ENGINES " in *" $1 "*) return 0;; esac; return 1; }
 probe_cells() { case "$1" in
   g2-clock|g2-held|g2-laneinset|g2-step) echo p3-fold-pill-fine;; g2-curve) echo "p9-tall-fine p9-tall-dark p3-swap-layers-fine p3-fold-flow-fine";;
   g2-touch) echo p3-fold-transport-coarse;; g2-rim) echo p3-fold-rim-fine;; g3-hold) echo "p3-rev-fold-25-ptr p3-rev-fold-50-ptr p3-rev-unfold-50-out";;
@@ -68,7 +77,8 @@ judge() { local F; F=$(ls "$R/m9m-plant-$P"/*.rows.json 2>/dev/null); [ -z "$F" 
 scen() { for d in scenarios-m9 scenarios-m6 scenarios-m5 scenarios-m3; do [ -f "$H/$d/$1.json" ] && { echo "$d/$1.json"; return; }; done; echo "MISSING-$1"; }
 revert() { if [ -d "$T/.s9-orig/$P" ]; then python3 "$PL" "$T" "$P" revert >> "$tmp" 2>&1; fi; }
 trap revert EXIT INT TERM
-echo "== $P $(date '+%F %T') (load $(sysctl -n vm.loadavg))" > "$tmp"
+echo "== $P [$ENGINES] $(date '+%F %T') (load $(sysctl -n vm.loadavg))" > "$tmp"
+for d in "$T"/.s9-orig/*; do [ -d "$d" ] || continue; echo "-- a plant left applied: $(basename "$d"), reverted" >> "$tmp"; python3 "$PL" "$T" "$(basename "$d")" revert >> "$tmp" 2>&1; done
 python3 "$PL" "$T" "$P" check >> "$tmp" 2>&1 || { echo "plant site not on the tip" >> "$tmp"; mv "$tmp" "$log"; trap - EXIT; exit 0; }
 if [ "$P" = g12-scale ]; then
   echo "-- the tree's src" >> "$tmp"; G12_TREE="$T" node "$H/pm/g12.mjs" >> "$tmp" 2>&1
@@ -79,16 +89,18 @@ if [ "$P" = g12-scale ]; then
 fi
 python3 "$PL" "$T" "$P" apply >> "$tmp" 2>&1 || { echo "apply failed" >> "$tmp"; mv "$tmp" "$log"; exit 0; }
 sleep 4
-u=$(unit_cmd "$P")
-if [ -n "$u" ]; then (cd "$T" && $G --timeout 15 -- node_modules/.bin/vitest run $u --maxWorkers=2 --reporter=verbose 2>&1 | grep -E "✓|×|✗|FAIL|Tests |Test Files|AssertionError|expected" | head -60) >> "$tmp" 2>&1; echo "unit rc=$?" >> "$tmp"; fi
-cells=$(probe_cells "$P"); rm -rf "$R/m9m-plant-$P"; mkdir -p "$R/m9m-plant-$P"
-for E in chromium webkit; do
+u=""; has chromium && u=$(unit_cmd "$P")
+if [ -n "$u" ]; then (cd "$T" && $G --light --timeout 15 -- node_modules/.bin/vitest run $u --maxWorkers=2 --reporter=verbose 2>&1 | grep -E "✓|×|✗|FAIL|Tests |Test Files|AssertionError|expected" | head -60) >> "$tmp" 2>&1; echo "unit rc=$?" >> "$tmp"; fi
+cells=$(probe_cells "$P"); mkdir -p "$R/m9m-plant-$P"
+for E in $ENGINES; do rm -f "$R/m9m-plant-$P"/*.$E.*; done
+for E in $ENGINES; do
   cmd=""
   for c in $cells; do cmd="${cmd:+$cmd; }node probe.mjs $W dock-wi8 $(scen $c) --port 5474 --engine $E --out ../rows/m9m-plant-$P --no-strip 2>&1 | cut -c1-200"; done
   s=$(side_cmd "$P" "$E"); [ -n "$s" ] && cmd="${cmd:+$cmd; }$s"
   [ -z "$cmd" ] && continue
   echo "-- $E $(date '+%T') (load $(sysctl -n vm.loadavg))" >> "$tmp"
-  if [ "$E" = webkit ]; then (cd "$H" && $G --exclusive webkit --timeout 45 -- sh -c "$cmd") >> "$tmp" 2>&1
+  if [ "$E" = webkit ] && [ "${WK_HELD:-0}" = 1 ]; then (cd "$H" && $G --timeout 45 -- sh -c "$cmd") >> "$tmp" 2>&1
+  elif [ "$E" = webkit ]; then (cd "$H" && $G --exclusive webkit --timeout 45 -- sh -c "$cmd") >> "$tmp" 2>&1
   else (cd "$H" && $G --timeout 45 --cpu-cores 0 -- sh -c "$cmd") >> "$tmp" 2>&1; fi
   rc=$?; echo "$E rc=$rc" >> "$tmp"
   [ $rc = 75 ] && { echo "guard REFUSED" >> "$tmp"; revert; mv "$tmp" "$log"; exit 75; }
@@ -96,6 +108,6 @@ done
 revert
 python3 "$H/pm/clean.py" "$T" >> "$tmp" 2>&1 || { echo "TREE NOT CLEAN after $P" >> "$tmp"; mv "$tmp" "$log"; exit 3; }
 [ -n "$cells" ] && { echo "-- judge" >> "$tmp"; (cd "$H" && judge) >> "$tmp" 2>&1; }
-for f in "$R/m9m-plant-$P"/*.rows.json; do [ -f "$f" ] && gzip -f "$f"; done
+has webkit && for f in "$R/m9m-plant-$P"/*.rows.json; do [ -f "$f" ] && gzip -f "$f"; done
 echo "== done $(date '+%F %T')" >> "$tmp"
 mv "$tmp" "$log"

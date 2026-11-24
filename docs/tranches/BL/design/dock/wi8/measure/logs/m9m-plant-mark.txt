@@ -1,0 +1,23 @@
+== mark [chromium] 2026-11-23 19:16:35 (load { 47.43 42.16 42.11 })
+OK   mark
+applied mark - RU-66: the run mark's move removed (the plate jumps)
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is drawn while a seat is the run's destination, and only then 87ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > takes its first measure in the next frame, not in the mount task 18ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > leaves a destination inside its own scroller to paint itself 15ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is one plate on the run, under the seats, and the marked seat paints no plate of its own 2ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > is no seat: not a roving stop, and the run stays a toolbar of its seats 21ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > mounts and marks without a ResizeObserver 14ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > re-measures when any seat resizes, not only the run and the destination 58ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > measures layout boxes, so a zoom or a transform above the run scales the plate once 45ms
+ ✓ tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > glides on the dock spring preset, never a literal 1ms
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+unit rc=0
+-- chromium 19:16:51 (load { 46.82 42.25 42.14 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 47 > 36)
+{"engine":"chromium","before":null,"firstPress":{"to":"w-std-library","markBefore":false,"after":[718.5,32],"seat":[714.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":120,"first":718.5,"last":718.5,"travel":0,"between":0,"largestStep":0,"stepShare":null,"onSeat":true,"glides":false},"secondPress":{"to":"w-std-marks","markBefore":true,"after":[766.5,32],"seat":[762.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":123,"first":718.5,"last":766.5,"travel":48,"between":0,"largestStep":48,"stepShare":1,"onSeat":true,"glides":false}}
+chromium rc=0
+reverted mark
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:19:35

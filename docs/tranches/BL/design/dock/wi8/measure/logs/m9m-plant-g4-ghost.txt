@@ -1,0 +1,21 @@
+== g4-ghost [chromium] 2026-11-23 18:43:54 (load { 34.54 32.67 34.89 })
+OK   g4-ghost
+applied g4-ghost - G-4 (RU-81): a removed seat keeps painting at its own opacity through its exit and is cut at the landing
+-- chromium 18:43:58 (load { 33.62 32.51 34.82 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":453,"firstChange":279.4,"lastChange":3135.8,"screencast":null,"consoleErrors":0}
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":324,"firstChange":92.1,"lastChange":2063.5,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g4-ghost
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seatset-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | overlap 18 | ghost {"rows":36,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 181ms out 8ms"} | whole {"row":323,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: two seats overlap by 18.00 px (seat#3 over seat#4 row 266); joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 8ms (bound 75 ms)
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | overlap 27.84 | ghost {"rows":134,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 188ms out 8ms"} | whole {"row":452,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: two seats overlap by 27.84 px (seat#5 over seat#1 row 347); joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 8ms (bound 75 ms)
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f10-f47 284ms | L 82px first 1.9% max 8.2% last 0.11px; R 82px first 1.9% max 8.2% last 0.11px | op60 0.25 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f113-f145 246ms | L 26px first 0.9% max 6.6% last 0.17px; R 26px first 0.9% max 6.6% last 0.17px | op60 0.21 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 35.1/33.49 | f232-f266 254ms | L 26px first 1% max 7.2% last 0.12px; R 26px first 1% max 7.2% last 0.13px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f30-f66 279ms | L 76px first 1% max 6.9% last 0.03px; R 76px first 1% max 6.9% last 0.03px | op60 0.25 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f134-f166 250ms | L 24px first 1.5% max 7% last 0.13px; R 24px first 1.5% max 7% last 0.12px | op60 0.22 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f247-f279 245ms | L 24px first 1.4% max 6.4% last 0.17px; R 24px first 1.4% max 6.4% last 0.17px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 34.93/34.93 | f338-f368 247ms | L 24px first 1.5% max 8.5% last 0.16px; R 24px first 1.5% max 8.5% last 0.15px | op60 0.2 | out 0px | pass
+== done 2026-11-23 18:44:18

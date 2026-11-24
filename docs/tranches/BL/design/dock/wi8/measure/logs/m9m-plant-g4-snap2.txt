@@ -1,0 +1,16 @@
+== g4-snap2 [chromium] 2026-11-23 18:44:18 (load { 32.17 32.31 34.70 })
+OK   g4-snap2
+applied g4-snap2 - G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position
+-- chromium 18:44:22 (load { 30.79 32.02 34.58 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":501,"firstChange":142.3,"lastChange":3425.8,"screencast":null,"consoleErrors":0}
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":490,"firstChange":98.8,"lastChange":3399.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g4-snap2
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.0%","seat#0 last 8.68 px","seat#1 step 100.0% > 8.0%","seat#1 last 8.68 px","seat#2 step 100.0% > 8.0%","seat#2 last 8.68 px"]},{"mark":"far","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 7.5%","seat#0 last 8.69 px","seat#1 step 100.0% > 7.5%","seat#1 last 8.69 px","seat#2 step 100.0% > 7.5%","seat#2 last 8.69 px"]},{"mark":"twice","seatsMoved":5,"largestPx":26,"plateMovePx":0,"viol":["seat#0 step 42.5% > 6.1%","seat#0 last 11.05 px","seat#1 step 42.5% > 6.1%","seat#1 last 11.05 px","seat#2 step 42.5% > 6.1%","seat#2 last 11.05 px"]}]
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.8,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.7%","seat#0 last 8.75 px","seat#1 step 100.0% > 8.7%","seat#1 last 8.75 px","seat#2 step 100.0% > 8.7%","seat#2 last 8.75 px"]},{"mark":"far","seatsMoved":10,"largestPx":260.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":251,"plateMovePx":0,"viol":["seat#0 last 12.15 px","seat#1 last 12.15 px","seat#2 last 12.15 px","seat#3 last 12.15 px","seat#4 last 12.15 px","seat#5 last 12.15 px"]}]
+p3-seat-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":500,"fits":true,"whole":4,"of":5,"partial":[22],"absent":0,"ext":326,"over":26,"room":374,"offset":26,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 115: a run that fits shows 4 of 5 seats whole (partial [19]) (+4 rests)
+p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":489,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 113: a run that does not fit rests 326.0 px wide in a room of 374 (+3 rests)
+== done 2026-11-23 18:44:47

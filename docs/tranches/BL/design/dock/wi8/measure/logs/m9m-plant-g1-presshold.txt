@@ -1,0 +1,20 @@
+== g1-presshold [chromium] 2026-11-23 15:37:56 (load { 21.36 21.54 29.76 })
+OK   g1-presshold
+applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 27ms
+   → a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+   → a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+AssertionError: a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  2 failed | 20 skipped (22)
+unit rc=0
+-- chromium 16:06:41 (load { 18.53 17.72 22.85 })
+{"finger":{"how":"CDP touchStart/touchEnd","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3007,"foldAfterLiftMs":null,"pass":false}}
+chromium rc=0
+reverted g1-presshold
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 16:07:10

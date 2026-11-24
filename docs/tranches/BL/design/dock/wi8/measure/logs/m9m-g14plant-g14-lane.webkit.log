@@ -1,0 +1,1241 @@
+== g14-lane (g14-lane) [webkit] 2026-11-23 22:12:19 (load { 27.82 28.26 29.24 })
+applied g14-lane - G-14 lane: no region is clipped to its lane while a travel runs
+-- webkit-b 22:12:20 (load { 27.82 28.26 29.24 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 12 tests using 1 worker
+
+  ✘   1 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.6s)
+  ✘   2 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.9s)
+  ✘   3 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.0s)
+  ✘   4 [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.1s)
+  ✘   5 [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (3.4s)
+  ✘   6 [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (3.2s)
+  ✘   7 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.9s)
+  ✘   8 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.0s)
+  ✘   9 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.0s)
+  ✘  10 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (4.1s)
+  ✘  11 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (3.2s)
+  ✘  12 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (3.3s)
+
+
+  1) [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 49
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 93,
+    +       "label": "View layers",
+    +       "opacity": 0.2,
+    +     },
+    +     Object {
+    +       "by": 24,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.2,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 66,
+    +       "label": "View layers",
+    +       "opacity": 0.41,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 47,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 29,
+    +       "label": "View layers",
+    +       "opacity": 0.69,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "View layers",
+    +       "opacity": 0.78,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fa87a--the-expand-or-the-collapse-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 49
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 91,
+    +       "label": "View layers",
+    +       "opacity": 0.21,
+    +     },
+    +     Object {
+    +       "by": 22,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.21,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 67,
+    +       "label": "View layers",
+    +       "opacity": 0.4,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 46,
+    +       "label": "View layers",
+    +       "opacity": 0.56,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 29,
+    +       "label": "View layers",
+    +       "opacity": 0.69,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "View layers",
+    +       "opacity": 0.78,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-d7aa4--the-expand-or-the-collapse-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 49
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "Export frame",
+    +       "opacity": 0.17,
+    +     },
+    +     Object {
+    +       "by": 97,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.17,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 68,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.39,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 47,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 31,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.67,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 18,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.77,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 8,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-54988--the-expand-or-the-collapse-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 56
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 88,
+    +       "label": "View layers",
+    +       "opacity": 0.26,
+    +     },
+    +     Object {
+    +       "by": 19,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.26,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 64,
+    +       "label": "View layers",
+    +       "opacity": 0.45,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 43,
+    +       "label": "View layers",
+    +       "opacity": 0.61,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 27,
+    +       "label": "View layers",
+    +       "opacity": 0.73,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 16,
+    +       "label": "View layers",
+    +       "opacity": 0.82,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 2,
+    +       "label": "View layers",
+    +       "opacity": 0.92,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fea16--the-expand-or-the-collapse-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 125
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 102,
+    +       "label": "View layers",
+    +       "opacity": 0.13,
+    +     },
+    +     Object {
+    +       "by": 33,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.13,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 76,
+    +       "label": "View layers",
+    +       "opacity": 0.33,
+    +     },
+    +     Object {
+    +       "by": 7,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.33,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 53,
+    +       "label": "View layers",
+    +       "opacity": 0.51,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 46,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 59,
+    +       "label": "View layers",
+    +       "opacity": 0.46,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 82,
+    +       "label": "View layers",
+    +       "opacity": 0.29,
+    +     },
+    +     Object {
+    +       "by": 13,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.29,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 100,
+    +       "label": "View layers",
+    +       "opacity": 0.14,
+    +     },
+    +     Object {
+    +       "by": 31,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.14,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 83,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 14,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 64,
+    +       "label": "View layers",
+    +       "opacity": 0.42,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 48,
+    +       "label": "View layers",
+    +       "opacity": 0.54,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 33,
+    +       "label": "View layers",
+    +       "opacity": 0.66,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 22,
+    +       "label": "View layers",
+    +       "opacity": 0.74,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 12,
+    +       "label": "View layers",
+    +       "opacity": 0.82,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 5,
+    +       "label": "View layers",
+    +       "opacity": 0.87,
+    +     },
+    +   ],
+    + ]
+
+      673 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      674 |                 "frames that paint a control outside the plate",
+    > 675 |             ).toEqual([]);
+          |               ^
+      676 |         });
+      677 |     });
+      678 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:675:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-a30a3-e-through-a-double-reversal-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 113
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 87,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 18,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 62,
+    +       "label": "View layers",
+    +       "opacity": 0.46,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 57,
+    +       "label": "View layers",
+    +       "opacity": 0.5,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 66,
+    +       "label": "View layers",
+    +       "opacity": 0.43,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 87,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 18,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 98,
+    +       "label": "View layers",
+    +       "opacity": 0.19,
+    +     },
+    +     Object {
+    +       "by": 29,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.19,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 75,
+    +       "label": "View layers",
+    +       "opacity": 0.36,
+    +     },
+    +     Object {
+    +       "by": 6,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.36,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 57,
+    +       "label": "View layers",
+    +       "opacity": 0.5,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "View layers",
+    +       "opacity": 0.62,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "View layers",
+    +       "opacity": 0.73,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "View layers",
+    +       "opacity": 0.81,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 10,
+    +       "label": "View layers",
+    +       "opacity": 0.86,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "View layers",
+    +       "opacity": 0.91,
+    +     },
+    +   ],
+    + ]
+
+      673 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      674 |                 "frames that paint a control outside the plate",
+    > 675 |             ).toEqual([]);
+          |               ^
+      676 |         });
+      677 |     });
+      678 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:675:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-998c7-e-through-a-double-reversal-webkit/error-context.md
+
+  7) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 49
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 87,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 14,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 63,
+    +       "label": "View layers",
+    +       "opacity": 0.45,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 43,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 26,
+    +       "label": "View layers",
+    +       "opacity": 0.72,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 15,
+    +       "label": "View layers",
+    +       "opacity": 0.8,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 6,
+    +       "label": "View layers",
+    +       "opacity": 0.87,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fa87a--the-expand-or-the-collapse-webkit-touch/error-context.md
+
+  8) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 61
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 111,
+    +       "label": "View layers",
+    +       "opacity": 0.12,
+    +     },
+    +     Object {
+    +       "by": 38,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.12,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 83,
+    +       "label": "View layers",
+    +       "opacity": 0.32,
+    +     },
+    +     Object {
+    +       "by": 10,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.32,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 60,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 39,
+    +       "label": "View layers",
+    +       "opacity": 0.64,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 24,
+    +       "label": "View layers",
+    +       "opacity": 0.74,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 12,
+    +       "label": "View layers",
+    +       "opacity": 0.83,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-d7aa4--the-expand-or-the-collapse-webkit-touch/error-context.md
+
+  9) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 68
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "Export frame",
+    +       "opacity": 0.12,
+    +     },
+    +     Object {
+    +       "by": 114,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.12,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 12,
+    +       "label": "Export frame",
+    +       "opacity": 0.33,
+    +     },
+    +     Object {
+    +       "by": 85,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.33,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 61,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.51,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 42,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.65,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.75,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.83,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 9,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.89,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.93,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-54988--the-expand-or-the-collapse-webkit-touch/error-context.md
+
+  10) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 68
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 113,
+    +       "label": "View layers",
+    +       "opacity": 0.13,
+    +     },
+    +     Object {
+    +       "by": 40,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.13,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 85,
+    +       "label": "View layers",
+    +       "opacity": 0.33,
+    +     },
+    +     Object {
+    +       "by": 12,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.33,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 61,
+    +       "label": "View layers",
+    +       "opacity": 0.51,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "View layers",
+    +       "opacity": 0.65,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "View layers",
+    +       "opacity": 0.74,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 15,
+    +       "label": "View layers",
+    +       "opacity": 0.83,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 8,
+    +       "label": "View layers",
+    +       "opacity": 0.89,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 2,
+    +       "label": "View layers",
+    +       "opacity": 0.93,
+    +     },
+    +   ],
+    + ]
+
+      632 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      633 |                 "expand frames that paint a control outside the plate",
+    > 634 |             ).toEqual([]);
+          |               ^
+      635 |             expect(
+      636 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      637 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:634:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fea16--the-expand-or-the-collapse-webkit-touch/error-context.md
+
+  11) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 139
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 96,
+    +       "label": "View layers",
+    +       "opacity": 0.21,
+    +     },
+    +     Object {
+    +       "by": 23,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.21,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 66,
+    +       "label": "View layers",
+    +       "opacity": 0.43,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 48,
+    +       "label": "View layers",
+    +       "opacity": 0.56,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 43,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 59,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 83,
+    +       "label": "View layers",
+    +       "opacity": 0.31,
+    +     },
+    +     Object {
+    +       "by": 10,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.31,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 109,
+    +       "label": "View layers",
+    +       "opacity": 0.11,
+    +     },
+    +     Object {
+    +       "by": 36,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.11,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 108,
+    +       "label": "View layers",
+    +       "opacity": 0.12,
+    +     },
+    +     Object {
+    +       "by": 35,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.12,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 91,
+    +       "label": "View layers",
+    +       "opacity": 0.24,
+    +     },
+    +     Object {
+    +       "by": 18,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.24,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 72,
+    +       "label": "View layers",
+    +       "opacity": 0.39,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 55,
+    +       "label": "View layers",
+    +       "opacity": 0.51,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 38,
+    +       "label": "View layers",
+    +       "opacity": 0.63,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 26,
+    +       "label": "View layers",
+    +       "opacity": 0.72,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 16,
+    +       "label": "View layers",
+    +       "opacity": 0.8,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 8,
+    +       "label": "View layers",
+    +       "opacity": 0.86,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 1,
+    +       "label": "View layers",
+    +       "opacity": 0.9,
+    +     },
+    +   ],
+    + ]
+
+      673 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      674 |                 "frames that paint a control outside the plate",
+    > 675 |             ).toEqual([]);
+          |               ^
+      676 |         });
+      677 |     });
+      678 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:675:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-a30a3-e-through-a-double-reversal-webkit-touch/error-context.md
+
+  12) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 113
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 90,
+    +       "label": "View layers",
+    +       "opacity": 0.29,
+    +     },
+    +     Object {
+    +       "by": 17,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.29,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 65,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 58,
+    +       "label": "View layers",
+    +       "opacity": 0.53,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 69,
+    +       "label": "View layers",
+    +       "opacity": 0.45,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 93,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 20,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 104,
+    +       "label": "View layers",
+    +       "opacity": 0.2,
+    +     },
+    +     Object {
+    +       "by": 31,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.2,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 82,
+    +       "label": "View layers",
+    +       "opacity": 0.35,
+    +     },
+    +     Object {
+    +       "by": 9,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.35,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 63,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 44,
+    +       "label": "View layers",
+    +       "opacity": 0.62,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 31,
+    +       "label": "View layers",
+    +       "opacity": 0.72,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 20,
+    +       "label": "View layers",
+    +       "opacity": 0.8,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 11,
+    +       "label": "View layers",
+    +       "opacity": 0.86,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 5,
+    +       "label": "View layers",
+    +       "opacity": 0.91,
+    +     },
+    +   ],
+    + ]
+
+      673 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      674 |                 "frames that paint a control outside the plate",
+    > 675 |             ).toEqual([]);
+          |               ^
+      676 |         });
+      677 |     });
+      678 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:675:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-998c7-e-through-a-double-reversal-webkit-touch/error-context.md
+
+  12 failed
+    [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:612:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:648:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+webkit-b rc=1
+reverted g14-lane
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:13:30

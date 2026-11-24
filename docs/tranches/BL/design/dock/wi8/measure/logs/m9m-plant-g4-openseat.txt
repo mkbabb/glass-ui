@@ -1,0 +1,12 @@
+== g4-openseat [chromium] 2026-11-23 18:45:08 (load { 35.41 33.26 34.92 })
+OK   g4-openseat
+applied g4-openseat - G-4 (RU-28): the open seat's width rule restored (three pitches)
+-- chromium 18:45:12 (load { 34.02 33.01 34.82 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-seat-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":505,"firstChange":257.7,"lastChange":3459.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g4-openseat
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seat-fine | chromium | 1440-fine-light | curve 0.01 | held 96 | whole {"row":504,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row (seat#0 row 136); a change of open seat moves a box 96.00 px in one row (seat#1 width, row 254)
+== done 2026-11-23 18:45:30

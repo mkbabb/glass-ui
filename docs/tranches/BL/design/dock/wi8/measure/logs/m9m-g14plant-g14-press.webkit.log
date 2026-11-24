@@ -1,0 +1,102 @@
+== g14-press (g14-press) [webkit] 2026-11-23 22:15:45 (load { 24.24 26.48 28.32 })
+applied g14-press - G-14 press: the run takes no pointer events while [data-morphing] is set
+-- webkit-b 22:15:46 (load { 24.24 26.48 28.32 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (11.5s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (11.1s)
+  ✘  3 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (11.0s)
+  ✘  4 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once (11.1s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1646 |         }
+      1647 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1648 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1649 |     });
+      1650 | }
+      1651 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:1648:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--48bf3-and-activates-its-seat-once-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1646 |         }
+      1647 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1648 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1649 |     });
+      1650 | }
+      1651 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:1648:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-177-a--eb4f0-and-activates-its-seat-once-webkit/error-context.md
+
+  3) [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1646 |         }
+      1647 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1648 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1649 |     });
+      1650 | }
+      1651 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:1648:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--48bf3-and-activates-its-seat-once-webkit-touch/error-context.md
+
+  4) [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1646 |         }
+      1647 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1648 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1649 |     });
+      1650 | }
+      1651 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:1648:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-177-a--eb4f0-and-activates-its-seat-once-webkit-touch/error-context.md
+
+  4 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once 
+    [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+    [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1617:5 › m3 O-177 a press during the expand activates its seat once 
+webkit-b rc=1
+reverted g14-press
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:16:42

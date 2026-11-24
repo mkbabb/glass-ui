@@ -1,0 +1,14 @@
+== g2-step [chromium] 2026-11-23 16:34:06 (load { 36.31 41.47 36.22 })
+OK   g2-step
+applied g2-step - RU-104 (C8-M8): a fade of at least 66.7 ms with a one-frame step of 0.6 inside it
+-- chromium 16:34:10 (load { 36.28 41.37 36.22 })
+[guarded] waiting for headroom (load 37 > 36)
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":221,"firstChange":270.4,"lastChange":1453.1,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g2-step
+tree clean: 677 src files equal HEAD
+-- judge
+-- op9 chromium
+p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.67 at summary f35, shortest fade 94.0 ms FAIL: opacity 0.67 in 60 Hz at summary f35 | op60 0.67 at full f131, shortest fade 93.8 ms FAIL: opacity 0.67 in 60 Hz at full f131 | root --dock-expand-t: 221 rows, largest 60 Hz move 0.138 at 310 ms, travels 0.02-0.98 204.3, 204.6 ms -> root clause pass
+-- op9 webkit
+== done 2026-11-23 16:43:50

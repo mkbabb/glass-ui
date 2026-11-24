@@ -1,0 +1,12 @@
+== g2-touch [chromium] 2026-11-23 18:38:59 (load { 21.05 27.78 34.38 })
+OK   g2-touch
+applied g2-touch - G-2 (no folded face under touch): the rule removed
+-- chromium 18:39:03 (load { 23.84 28.25 34.51 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":444,"firstChange":112.3,"lastChange":3174.4,"screencast":null,"consoleErrors":
+chromium rc=0
+reverted g2-touch
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+== done 2026-11-23 18:39:19

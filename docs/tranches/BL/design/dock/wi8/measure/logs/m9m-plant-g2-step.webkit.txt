@@ -1,0 +1,15 @@
+== g2-step [webkit] 2026-11-23 19:58:12 (load { 37.09 35.70 38.92 })
+OK   g2-step
+applied g2-step - RU-104 (C8-M8): a fade of at least 66.7 ms with a one-frame step of 0.6 inside it
+-- webkit 19:58:16 (load { 35.25 35.34 38.78 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":192,"firstChange":259,"lastChange":1637,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-step
+tree clean: 677 src files equal HEAD
+-- judge
+-- op9 chromium
+p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (221 rows) | op60 0.67 at summary f35, shortest fade 94.0 ms FAIL: opacity 0.67 in 60 Hz at summary f35 | op60 0.67 at full f131, shortest fade 93.8 ms FAIL: opacity 0.67 in 60 Hz at full f131 | root --dock-expand-t: 221 rows, largest 60 Hz move 0.138 at 310 ms, travels 0.02-0.98 204.3, 204.6 ms -> root clause pass
+-- op9 webkit
+p3-fold-pill-fine webkit 1440-fine-light: sample interval 10.00 ms (192 rows) | op60 0.67 at summary f25, shortest fade 138.5 ms FAIL: opacity 0.67 in 60 Hz at summary f25 | op60 0.65 at full f117, shortest fade 94.7 ms FAIL: opacity 0.65 in 60 Hz at full f117 | root --dock-expand-t: 192 rows, largest 60 Hz move 0.133 at 338 ms, travels 0.02-0.98 243.2, 205 ms -> root clause pass
+== done 2026-11-23 20:01:14

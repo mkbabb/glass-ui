@@ -1,0 +1,18 @@
+== s4-toggle08 [chromium] 2026-11-23 18:12:16 (load { 29.92 38.47 41.02 })
+OK   s4-toggle08
+applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+-- chromium 18:12:20 (load { 29.60 38.27 40.93 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+w-segpair light folded folded seat 44 grid null segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.24 hover undefined segOk true flat true
+w-segpair light open open seat 44 grid [44,44] segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.25 hover 1.154 segOk true flat true
+w-segpair dark folded folded seat 44 grid null segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.39 hover undefined segOk true flat true
+w-segpair dark open open seat 44 grid [44,44] segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.377 hover 1.161 segOk true flat true
+active seat light [{"label":"Grid","shadow":"none","layers":0,"filter":"none"},{"label":"Draw","shadow":"none","layers":0,"filter":"none"}]
+active seat dark [{"label":"Grid","shadow":"none","layers":0,"filter":"none"},{"label":"Draw","shadow":"none","layers":0,"filter":"none"}]
+catch-light light {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"}} toggle {"opacity":"0.8","chain":0.8,"box":[40,40]}
+catch-light dark {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0.999994 0.0000455678 0.0000200868 / 0.05)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0.999994 0.0000455678 0.0000200868 / 0.05)"}} toggle {"opacity":"0.8","chain":0.8,"box":[40,40]}
+summary {"fail":["toggle light","toggle dark"]}
+chromium rc=0
+reverted s4-toggle08
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 18:13:02

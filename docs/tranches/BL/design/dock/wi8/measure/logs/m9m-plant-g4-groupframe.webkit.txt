@@ -1,0 +1,10 @@
+== g4-groupframe [webkit] 2026-11-23 20:34:43 (load { 25.19 31.09 33.21 })
+OK   g4-groupframe
+applied g4-groupframe - step 7: a role=group child of the run is a snap area again
+-- webkit 20:34:47 (load { 23.57 30.66 33.04 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"m9m-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.25,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.25,40],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 1440 fine: moved true, rests 60! 120! 180! 240! 300! 360! 420! 480! 540 0 60! 120!, group start, seat none","trig 390 coarse: {\"trigger\":[61.45,44],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 390 coarse: moved true, rests 60! 120 180! 240! 300! 360! 420! 480! 0 60! 120 180!, group start, seat none"]}
+webkit rc=0
+reverted g4-groupframe
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:35:10

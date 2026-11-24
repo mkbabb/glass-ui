@@ -1,0 +1,16 @@
+== g1-lift [chromium] 2026-11-23 16:07:18 (load { 17.03 17.40 22.52 })
+OK   g1-lift
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 20ms
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+ Test Files  1 passed (1)
+      Tests  2 passed | 20 skipped (22)
+unit rc=0
+-- chromium 16:07:27 (load { 18.28 17.67 22.56 })
+{"finger":{"how":"CDP touchStart/touchEnd","opened":true,"foldedWhileHeld":false,"lifted":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"foldAfterLiftMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"events":[[1951,"pointerdown","touch"],[1951,"pointerup","touch"],[1951,"touchend",""],[1952,"focusin",""],[1952,"click","touch"],[2872,"pointerdown","touch"],[11877,"pointerup","touch"],[11877,"touchend",""],[11878,"focusin",""],[11878,"click","touch"]],"tDown":2869,"tUp":11875}}
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6010},"hOutside":{"opened":true,"foldAfterTapOutsideMs":3.8}}}
+chromium rc=0
+reverted g1-lift
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 16:08:34

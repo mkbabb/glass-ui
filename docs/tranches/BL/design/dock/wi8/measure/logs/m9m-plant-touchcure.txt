@@ -1,0 +1,10 @@
+== touchcure [chromium] 2026-11-23 18:56:53 (load { 31.00 35.97 36.06 })
+OK   touchcure
+applied touchcure - RU-72 (S6): the two touch cures removed (DockTrigger's close on a touch press, the scrim's touch click)
+-- chromium 18:56:57 (load { 30.76 35.84 36.02 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"m9m-touchcure","pass":true,"cells":{"select-touch":true,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true},"bad":[]}
+chromium rc=0
+reverted touchcure
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 18:57:30

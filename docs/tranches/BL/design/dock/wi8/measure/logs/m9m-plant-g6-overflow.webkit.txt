@@ -1,0 +1,16 @@
+== g6-overflow [webkit] 2026-11-23 19:56:09 (load { 31.66 35.35 39.38 })
+OK   g6-overflow
+applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+-- webkit 19:56:13 (load { 31.12 35.18 39.29 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":326,"firstChange":77,"lastChange":3124,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p9-press-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":617,"firstChange":254,"lastChange":6340,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g6-overflow
+tree clean: 677 src files equal HEAD
+-- judge
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 292, largest box change 0.00 px (-), folded rows 0
+FAIL p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 242, largest box change 4.00 px (seat#0 row 184), folded rows 0
+FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 545 to the lift; largest box change 4.00 px (seat#4 row 606 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.00, marks 0.01, settings 4.00, home 4.00
+FAIL p9-press-fine.wi8.webkit.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 449 to the lift; largest box change 4.00 px (seat#4 row 503 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.01, marks 0.01, settings 4.00, home 4.00
+== done 2026-11-23 19:56:39

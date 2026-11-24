@@ -1,0 +1,10 @@
+== g1-presshold [webkit] 2026-11-23 19:53:06 (load { 29.45 35.71 40.40 })
+OK   g1-presshold
+applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+-- webkit 19:53:11 (load { 28.30 35.37 40.25 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"finger":{"how":"dispatched pointerdown/pointerup, pointerType touch (WebKit 2287 has no held touch in Playwright)","restsFolded":true,"opened":true,"foldedWhileHeld":true,"heldFoldAtMs":3008,"foldAfterLiftMs":null,"pass":false}}
+webkit rc=0
+reverted g1-presshold
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:53:42

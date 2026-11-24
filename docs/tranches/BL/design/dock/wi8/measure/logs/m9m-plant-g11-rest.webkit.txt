@@ -1,0 +1,15 @@
+== g11-rest [webkit] 2026-11-23 20:35:10 (load { 20.32 29.45 32.55 })
+OK   g11-rest
+applied g11-rest - G-11: a loop left running at rest
+-- webkit 20:35:14 (load { 19.65 29.16 32.43 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+w-pill@webkit {"rest":{"rafCalls":392,"mutations":0,"runningAnimations":0,"animTargets":[]},"restOpen":{"rafCalls":196,"mutations":0,"runningAnimations":0,"animTargets":[]}}
+w-flow@webkit {"rest":{"rafCalls":392,"mutations":0,"runningAnimations":0,"animTargets":[]},"restOpen":{"rafCalls":196,"mutations":0,"runningAnimations":0,"animTargets":[]}}
+w-ctl&corner=bottom-end@webkit {"rest":{"rafCalls":392,"mutations":0,"runningAnimations":0,"animTargets":[]},"restOpen":{"rafCalls":196,"mutations":0,"runningAnimations":0,"animTargets":[]}}
+w-seat@webkit {"rest":{"rafCalls":392,"mutations":0,"runningAnimations":0,"animTargets":[]},"restOpen":{"rafCalls":196,"mutations":0,"runningAnimations":0,"animTargets":[]}}
+g11 {"triggerFrames":0,"byCount":{},"over":0,"afterOver":0}
+summary {"w-pill":{"longest4x":[],"medianOfLongest4x":null,"medianLayoutAfterTrigger4x":null},"w-flow":{"longest4x":[],"medianOfLongest4x":null,"medianLayoutAfterTrigger4x":null},"w-ctl":{"longest4x":[],"medianOfLongest4x":null,"medianLayoutAfterTrigger4x":null},"w-seat":{"longest4x":[],"medianOfLongest4x":null,"medianLayoutAfterTrigger4x":null}}
+webkit rc=0
+reverted g11-rest
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:35:51

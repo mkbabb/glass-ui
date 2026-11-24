@@ -1,0 +1,13 @@
+== g2-held [webkit] 2026-11-23 20:36:35 (load { 15.49 25.90 30.91 })
+OK   g2-held
+applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+-- webkit 20:36:39 (load { 15.21 25.66 30.80 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":199,"firstChange":235,"lastChange":1620,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-held
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 136)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.02 | held 4 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 121)
+== done 2026-11-23 20:36:48

@@ -1,0 +1,12 @@
+== g2-rim [chromium] 2026-11-23 18:39:19 (load { 28.99 29.13 34.71 })
+OK   g2-rim
+applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+-- chromium 18:39:24 (load { 30.11 29.36 34.76 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":238,"firstChange":306.2,"lastChange":1456.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g2-rim
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":135,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.00 px off the plate's edge
+== done 2026-11-23 18:39:37

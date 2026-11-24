@@ -1,0 +1,13 @@
+== g4-join [chromium] 2026-11-23 18:43:05 (load { 36.17 32.67 35.02 })
+OK   g4-join
+applied g4-join - G-4 (a control joins or leaves): the records ignored
+-- chromium 18:43:09 (load { 36.17 32.67 35.02 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 36 > 36)
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":392,"firstChange":267.8,"lastChange":2680.2,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g4-join
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 5ms out 8ms"} | whole {"row":391,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 5ms (bound 75 ms); joining seat fade out 8ms (bound 75 ms)
+== done 2026-11-23 18:43:54

@@ -1,0 +1,13 @@
+== g2-touch [webkit] 2026-11-23 20:36:04 (load { 17.00 27.23 31.55 })
+OK   g2-touch
+applied g2-touch - G-2 (no folded face under touch): the rule removed
+-- webkit 20:36:08 (load { 16.36 26.92 31.41 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":596,"firstChange":null,"lastChange":null,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-touch
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+p3-fold-transport-coarse | webkit | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+== done 2026-11-23 20:36:21

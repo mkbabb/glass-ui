@@ -1,0 +1,10 @@
+== g14-fitmemory [webkit] 2026-11-23 20:48:34 (load { 23.46 20.63 24.73 })
+OK   g14-fitmemory
+applied g14-fitmemory - G-14 s2 / RU-54: the fit's memory removed (every sync decides again)
+-- webkit 20:48:39 (load { 22.30 20.43 24.64 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"m9m-g14-fitmemory","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":6,"pass":true,"bad":[]}}
+webkit rc=0
+reverted g14-fitmemory
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:49:50

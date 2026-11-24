@@ -1,0 +1,10 @@
+== g14-fitsibs [webkit] 2026-11-23 20:49:50 (load { 27.33 22.00 24.87 })
+OK   g14-fitsibs
+applied g14-fitsibs - RU-54 (C6-M8): the root's other regions dropped from the key
+-- webkit 20:49:54 (load { 26.90 22.00 24.85 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"m9m-g14-fitsibs","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":4,"pass":false,"bad":["364 long: fits true, span 136, lifted 33, persistent 285","362 long: fits true, span 136, lifted 31, persistent 285"]}}
+webkit rc=0
+reverted g14-fitsibs
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:51:09

@@ -1,0 +1,13 @@
+== s6-nogate [webkit] 2026-11-23 19:56:39 (load { 30.47 34.80 39.04 })
+OK   s6-nogate
+applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+-- webkit 19:56:44 (load { 30.91 34.82 39.02 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p9-press-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":612,"firstChange":249,"lastChange":6334,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted s6-nogate
+tree clean: 677 src files equal HEAD
+-- judge
+FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 548 to the lift; largest box change 225.00 px (dock row 702 (press-home)); folded rows 8 (first 290 ms after its press); per press read 0.01, search 0.01, library 0.00, marks 0.01, settings 0.01, home 225.00
+FAIL p9-press-fine.wi8.webkit.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 448 to the lift; largest box change 225.00 px (dock row 585 (press-home)); folded rows 7 (first 294 ms after its press); per press read 0.01, search 0.01, library 0.00, marks 0.01, settings 0.01, home 225.00
+== done 2026-11-23 19:57:21

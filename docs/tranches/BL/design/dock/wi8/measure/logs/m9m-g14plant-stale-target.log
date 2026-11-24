@@ -1,0 +1,173 @@
+== stale-target (stale-target) [chromium] 2026-11-23 21:08:15 (load { 29.53 24.21 24.71 })
+applied stale-target - RU-112: a travel keeps its first target when the pane or host changes mid-travel
+-- chromium 21:08:15 (load { 29.53 24.21 24.71 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.9s)
+  ✓   2 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+  ✘   3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.8s)
+  ✘   4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.3s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.6s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (942ms)
+  ✓   9 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✓  10 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.4s)
+  ✓  11 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+  ✘  12 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.0s)
+  ✓  13 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.1s)
+  ✓  14 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.4s)
+  ✓  15 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.6s)
+  ✓  16 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (1.2s)
+  ✓  17 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.5s)
+  ✓  18 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (1.8s)
+  ✓  19 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (1.0s)
+  ✓  20 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.4s)
+  ✓  21 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.6s)
+  ✓  22 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (1.0s)
+  ✓  23 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✓  24 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+  ✘  25 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+  ✘  26 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (1.2s)
+  ✓  27 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.1s)
+  ✓  28 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.3s)
+  ✓  29 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.6s)
+  ✓  30 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (1.0s)
+  ✓  31 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✓  32 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.4s)
+  ✓  33 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+  ✘  34 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (1.2s)
+  ✓  35 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+  ✓  36 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✓  37 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓  38 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (952ms)
+  ✓  39 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+  ✓  40 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (1.6s)
+  ✓  41 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (956ms)
+  ✓  42 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.3s)
+  ✓  43 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓  44 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (951ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+  38 passed (1.5m)
+chromium rc=1
+reverted stale-target
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 21:09:50

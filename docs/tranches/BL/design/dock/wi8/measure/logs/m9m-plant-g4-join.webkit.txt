@@ -1,0 +1,13 @@
+== g4-join [webkit] 2026-11-23 20:38:27 (load { 13.08 21.63 28.59 })
+OK   g4-join
+applied g4-join - G-4 (a control joins or leaves): the records ignored
+-- webkit 20:38:31 (load { 12.75 21.42 28.47 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":317,"firstChange":216,"lastChange":2824,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-join
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 5ms out 8ms"} | whole {"row":391,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 5ms (bound 75 ms); joining seat fade out 8ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 10ms out 12ms"} | whole {"row":316,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 10ms (bound 75 ms); joining seat fade out 12ms (bound 75 ms)
+== done 2026-11-23 20:38:41

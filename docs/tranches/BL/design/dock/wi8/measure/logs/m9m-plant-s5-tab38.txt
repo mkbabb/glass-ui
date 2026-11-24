@@ -1,0 +1,17 @@
+== s5-tab38 [chromium] 2026-11-23 18:13:02 (load { 41.31 40.03 41.44 })
+OK   s5-tab38
+applied s5-tab38 - RU-98 plant: the comfortable tab height back to 38 px
+-- chromium 18:13:06 (load { 39.92 39.76 41.34 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 40 > 36)
+trigger 1440 [["w-trigr-h-start","persistent",66.23,40,40,true],["w-trigr-h-run","run",40,40,40,true],["w-trigr-h-end","persistent-end",63.02,40,40,true],["w-trigr-v-start","persistent",66.23,40,40,true],["w-trigr-v-run","run",66.23,40,40,true],["w-trigr-v-run2","run",66.23,40,40,true]]
+tab seat 1440 [["Home",38.59,40,false],["Image",38.59,40,false],["Picture",38.59,40,false]]
+controls glyph 1440 {"posture":"folded","lh":44,"glyph":[22,22]} {"posture":"open","lh":44,"seats":[["Table",22,22],["Filter",22,22],["Palette",22,22],["Panel",22,22]]} want 22 true true
+trigger 390 [["w-trigr-h-start","persistent",61.45,44,44,true],["w-trigr-h-run","run",44,44,44,true],["w-trigr-h-end","persistent-end",58.69,44,44,true],["w-trigr-v-start","persistent",61.45,44,44,true],["w-trigr-v-run","run",61.45,44,44,true],["w-trigr-v-run2","run",61.45,44,44,true]]
+tab seat 390 [["Home",38,44,false],["Image",38,44,false],["Picture",38,44,false]]
+controls glyph 390 {"posture":"folded","lh":44,"glyph":[22,22]} {"posture":"open","lh":44,"seats":[["Table",22,22],["Filter",22,22],["Palette",22,22],["Panel",22,22]]} want 22 true true
+summary {"trigger":{"reads":12,"fail":[]},"tab seat":{"reads":6,"fail":["Home 1440  x38.59/40","Image 1440  x38.59/40","Picture 1440  x38.59/40","Home 390  x38/44","Image 390  x38/44","Picture 390  x38/44"]},"controls glyph":{"reads":2,"fail":[]}}
+chromium rc=0
+reverted s5-tab38
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 18:16:26

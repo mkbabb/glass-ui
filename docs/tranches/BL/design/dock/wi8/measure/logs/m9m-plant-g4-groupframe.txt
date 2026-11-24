@@ -1,0 +1,11 @@
+== g4-groupframe [chromium] 2026-11-23 18:21:25 (load { 36.38 36.83 39.45 })
+OK   g4-groupframe
+applied g4-groupframe - step 7: a role=group child of the run is a snap area again
+-- chromium 18:21:29 (load { 36.38 36.83 39.45 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 40 > 36)
+{"engine":"chromium","tag":"m9m-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.23,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.23,40],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 1440 fine: moved true, rests 60! 120! 180! 240! 300! 360! 420! 480! 540 600! 600! 600!, group start, seat none","trig 390 coarse: {\"trigger\":[61.45,44],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 390 coarse: moved true, rests 60! 120 180! 240! 300! 360! 420! 480! 535, group start, seat none"]}
+chromium rc=0
+reverted g4-groupframe
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 18:24:19

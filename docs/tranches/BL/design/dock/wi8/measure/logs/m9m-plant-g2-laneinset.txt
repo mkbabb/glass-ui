@@ -1,0 +1,15 @@
+== g2-laneinset [chromium] 2026-11-23 18:39:54 (load { 35.96 30.81 35.10 })
+OK   g2-laneinset
+applied g2-laneinset - G-2 (RU-25): a lane inset 12 px inside the plate's edge on a side with no neighbour
+-- chromium 18:39:58 (load { 34.92 30.68 35.02 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":237,"firstChange":291.2,"lastChange":1473.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g2-laneinset
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f33-f67 281ms | L 76px first 1.6% max 7% last 0.06px; R 76px first 1.6% max 7% last 0.07px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 36 region-rows, up to 12.02 px (layers f61)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 35.41/35.41 | f134-f170 278ms | L 76px first 1.2% max 6.9% last 0.03px; R 76px first 1.2% max 6.9% last 0.03px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 38 region-rows, up to 12.01 px (layers f169)
+-- judge8 webkit
+== done 2026-11-23 18:40:12

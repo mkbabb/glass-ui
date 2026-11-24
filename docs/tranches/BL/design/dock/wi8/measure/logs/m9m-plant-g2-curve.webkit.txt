@@ -1,0 +1,31 @@
+== g2-curve [webkit] 2026-11-23 20:04:00 (load { 35.88 35.27 37.55 })
+OK   g2-curve
+applied g2-curve - RU-91 plant (S1's s1-stadium): `--radius-dock` back on the root
+-- webkit 20:04:05 (load { 35.88 35.27 37.55 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 40 > 36)
+{"cell":"1440-fine-light","rows":"p9-tall-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":178,"firstChange":235,"lastChange":1408,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-dark","rows":"p9-tall-dark.wi8.webkit.1440-fine-dark.rows.json","strips":[],"frames":180,"firstChange":243,"lastChange":1431,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-swap-layers-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":257,"firstChange":223,"lastChange":2108,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-fold-flow-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":179,"firstChange":239,"lastChange":1408,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-curve
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-flow-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 75 (rest))
+p3-fold-flow-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+p3-swap-layers-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 72 (rest))
+p3-swap-layers-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 58 (rest))
+p9-tall-dark | chromium | 1440-fine-dark | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+p9-tall-dark | webkit | 1440-fine-dark | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 60 (rest))
+p9-tall-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 74 (rest))
+p9-tall-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+p3-fold-flow-fine chromium 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":145.72,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p3-fold-flow-fine webkit 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":145.72,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p3-swap-layers-fine chromium 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":275.23,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p3-swap-layers-fine webkit 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":275.23,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p9-tall-dark chromium 1440-fine-dark: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":263.06,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p9-tall-dark webkit 1440-fine-dark: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":263.06,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p9-tall-fine chromium 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":263.06,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+p9-tall-fine webkit 1440-fine-light: folded {"w":56,"h":56,"computed":"stadium","used":28,"halfCross":28,"short":0} open {"w":263.06,"h":108,"computed":"stadium","used":54,"halfCross":54,"short":0} taller than one row: open corner 54 px, half its cross 54 px, half one row 28 px
+== done 2026-11-23 20:06:06

@@ -1,0 +1,21 @@
+== g2-nocut (g2-nocut) [webkit] 2026-11-23 22:04:47 (load { 22.53 27.17 29.74 })
+applied g2-nocut - G-2 (RU-25): the neighbour cut removed (each lane is the plate's whole box)
+-- webkit-c 22:04:47 (load { 22.53 27.17 29.74 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 8 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (12.2s)
+  ✓  2 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.5s)
+  ✓  3 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.4s)
+  ✓  4 [webkit] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.5s)
+  ✓  5 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.7s)
+  ✓  6 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (12.2s)
+  ✓  7 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.4s)
+  ✓  8 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:1551:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.7s)
+
+  8 passed (1.6m)
+webkit-c rc=0
+reverted g2-nocut
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:06:30

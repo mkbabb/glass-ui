@@ -1,0 +1,24 @@
+== g2-nocut [webkit] 2026-11-23 20:37:01 (load { 14.21 24.61 30.27 })
+OK   g2-nocut
+applied g2-nocut - G-2 (RU-25): the neighbour cut removed (each lane is the plate's whole box)
+-- webkit 20:37:06 (load { 13.95 24.38 30.16 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-outlet-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":198,"firstChange":235,"lastChange":1614,"screencast":null,"consoleErrors":1}
+probe failed: no preview server at http://127.0.0.1:5474 (fetch failed); start it: see README.md
+webkit rc=0
+reverted g2-nocut
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f31-f66 282ms | L 80px first 3.6% max 7.4% last 0.08px; R 80px first 3.6% max 7.4% last 0.08px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 256.18 px (persistent f65); regions overlap in 14 unit-rows, up to 37.5 px (pend×seat#3 f42)
+p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 35.58/39.14 | f131-f166 279ms | L 80px first 1.4% max 8% last 0.05px; R 80px first 1.4% max 8% last 0.04px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 111 region-rows, up to 256.00 px (persistent f131); regions overlap in 10 unit-rows, up to 25.2 px (persistent×seat#0 f139)
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f28-f64 278ms | L 78px first 1.3% max 7.7% last 0.05px; R 78px first 1.3% max 7.7% last 0.04px | op60 0.24 | out 0px | FAIL: a region's clip is off its lane in 76 region-rows, up to 206.09 px (pend f63); regions overlap in 16 unit-rows, up to 38.3 px (pend×seat#3 f41)
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f131-f163 251ms | L 25px first 1.6% max 7.8% last 0.12px; R 25px first 1.6% max 7.8% last 0.13px | op60 0 | out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f216-f247 246ms | L 25px first 1.4% max 7% last 0.19px; R 25px first 1.4% max 7% last 0.18px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 62 region-rows, up to 205.81 px (pend f246); regions overlap in 11 unit-rows, up to 15.0 px (pend×seat#3 f216)
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f304-f338 284ms | L 78px first 1.3% max 8.5% last 0.08px; R 78px first 1.3% max 8.5% last 0.08px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 72 region-rows, up to 206.00 px (pend f304); regions overlap in 5 unit-rows, up to 22.3 px (pend×seat#3 f312)
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f413-f444 247ms | L 23px first 1.2% max 6.8% last 0.14px; R 23px first 1.2% max 6.8% last 0.14px | op60 0 | out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 43.85/43.85 | f497-f529 249ms | L 23px first 1.3% max 7.3% last 0.13px; R 23px first 1.3% max 7.3% last 0.12px | op60 0 | out 0px | FAIL: a region's clip is off its lane in 64 region-rows, up to 53.86 px (pend f528)
+-- judge8 webkit
+p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 13.95/13.95 | f22-f50 286ms | L 80px first 2.3% max 9.1% last 0.11px; R 80px first 2.3% max 9.1% last 0.11px | op60 0.17 | out 0px | FAIL: a region's clip is off its lane in 90 region-rows, up to 256.11 px (persistent f49); regions overlap in 10 unit-rows, up to 37.5 px (pend×seat#3 f32)
+p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 13.95/13.95 | f120-f148 282ms | L 80px first 1% max 10% last 0.06px; R 80px first 1% max 10% last 0.06px | op60 0.18 | out 0px | FAIL: a region's clip is off its lane in 90 region-rows, up to 256.00 px (persistent f120); regions overlap in 8 unit-rows, up to 24.5 px (persistent×seat#0 f127)
+== done 2026-11-23 20:37:15

@@ -1,0 +1,19 @@
+== g2-fitwhole [webkit] 2026-11-23 20:37:17 (load { 14.17 24.09 29.99 })
+OK   g2-fitwhole
+applied g2-fitwhole - G-2/G-13 (RU-26): fitWhole restored as built (the window read as clientWidth less two reserves, the run capped by a length)
+-- webkit 20:37:21 (load { 14.00 23.89 29.88 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":178,"firstChange":238,"lastChange":1403,"screencast":null,"consoleErrors":0}
+{"cell":"360-coarse-light","rows":"p3-fold-ctl6-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":171,"firstChange":68,"lastChange":1323,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light-rm","rows":"p3-fold-transport-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":129,"firstChange":243,"lastChange":883,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-fitwhole
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-ctl6-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":119,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 119: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-ctl6-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":87,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 87: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 32 | held 32 | whole {"row":130,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 row 78 (rest)); a unit moves 32.00 px in the window's first row (seat#3 row 131)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 32 | held 32 | whole {"row":100,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 row 60 (rest)); a unit moves 32.00 px in the window's first row (seat#3 row 101)
+p3-fold-transport-rm | chromium | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":97,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#1 row 42 (rest))
+p3-fold-transport-rm | webkit | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":75,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#1 row 34 (rest))
+== done 2026-11-23 20:37:38

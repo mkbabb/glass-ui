@@ -1,0 +1,16 @@
+== g2-whole-never [webkit] 2026-11-23 20:37:38 (load { 13.30 23.25 29.55 })
+OK   g2-whole-never
+applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+-- webkit 20:37:42 (load { 12.87 23.00 29.43 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":162,"firstChange":64,"lastChange":1247,"screencast":null,"consoleErrors":0}
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":163,"firstChange":68,"lastChange":1252,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-never
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":110,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 110: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":84,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 84: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":117,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 117: a run that does not fit has a partial seat [42] (+1 rests)
+p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"row":84,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 84: a run that does not fit has a partial seat [42] (+1 rests)
+== done 2026-11-23 20:37:55

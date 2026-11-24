@@ -1,0 +1,15 @@
+== g2-room [chromium] 2026-11-23 18:42:45 (load { 35.30 32.31 34.95 })
+OK   g2-room
+applied g2-room - G-2 (RU-36): a room change put on the spring (the seated branch removed for it)
+-- chromium 18:42:49 (load { 35.30 32.31 34.95 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":347,"firstChange":59.9,"lastChange":2277.6,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g2-room
+tree clean: 677 src files equal HEAD
+-- judge
+p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 20 | whole {"row":346,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 7 | cap plate 30 hidden 0 | FAIL: a unit moves 20.00 px in the window's first row (seat#0 row 254); the host's cap lifted: every seat shows 7 rows after the change (bound 2); the host's cap returned: the plate is at layout 30 rows after the change (bound 2)
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f52-f103 375ms | L 124px first 0.6% max 7.3% last 0.25px; R 124px first 0.6% max 7.3% last 0.25px | op60 0.24 | out 0px | pass
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f160-f193 248ms | L 24px first 1.2% max 6.8% last 0.14px; R 24px first 1.2% max 6.7% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 33 rows
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 34.07/34.07 | f254-f286 250ms | L 24px first 0.7% max 7.4% last 0.14px; R 24px first 0.7% max 7.4% last 0.14px | op60 0 | out 0px | FAIL: a resize moves the plate on 32 rows
+== done 2026-11-23 18:43:05

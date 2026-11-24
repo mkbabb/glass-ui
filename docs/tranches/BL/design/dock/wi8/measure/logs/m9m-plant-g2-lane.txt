@@ -1,0 +1,15 @@
+== g2-lane [chromium] 2026-11-23 16:57:35 (load { 41.64 53.23 48.58 })
+OK   g2-lane
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+-- chromium 16:57:39 (load { 41.64 53.23 48.58 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 42 > 36)
+{"cell":"1440-fine-light","rows":"p9-persist-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":215,"firstChange":264.6,"lastChange":1456,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-region-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":552,"firstChange":244.8,"lastChange":4202.6,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g2-lane
+tree clean: 677 src files equal HEAD
+-- judge
+p3-region-fine | chromium | 1440-fine-light | curve 0.02 | held 15 | whole {"row":283,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#3 row 203)
+p9-persist-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+== done 2026-11-23 16:58:37

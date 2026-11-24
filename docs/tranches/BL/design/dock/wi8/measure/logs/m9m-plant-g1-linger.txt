@@ -1,0 +1,9 @@
+== g1-linger [chromium] 2026-11-23 15:32:36 (load { 14.33 25.59 34.63 })
+OK   g1-linger
+applied g1-linger - G-1 (k) plant: the linger token ignored (master's fixed 3.6 s)
+-- chromium 15:32:40 (load { 14.22 25.38 34.51 })
+{"k":{"seat":"search","opened":true,"openAtLeave":true,"foldAfterLeaveMs":3612.6,"pass":false}}
+chromium rc=0
+reverted g1-linger
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 15:36:07

@@ -1,0 +1,11 @@
+== g13-trigseat [webkit] 2026-11-23 20:33:20 (load { 68.19 37.32 35.41 })
+OK   g13-trigseat
+applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+-- webkit 20:33:24 (load { 64.25 37.02 35.32 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 64 > 36)
+{"engine":"webkit","tag":"m9m-g13-trigseat","pass":false,"trig":{"1440 fine":{"trigger":[66.25,35.89],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,32],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.25,35.89],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","trig 390 coarse: {\"trigger\":[61.45,32],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}"]}
+webkit rc=0
+reverted g13-trigseat
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:34:43

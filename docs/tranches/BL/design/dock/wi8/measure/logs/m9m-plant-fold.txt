@@ -1,0 +1,11 @@
+== fold [chromium] 2026-11-23 19:09:07 (load { 55.32 45.21 42.06 })
+OK   fold
+applied fold - RU-79: the phone rule restored (no fold at 1440)
+-- chromium 19:09:12 (load { 53.93 45.09 42.03 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 54 > 36)
+{"rows":20,"ok":12,"wrong":["w-ctl@1440","w-ctl-mix@1440","w-ctlout@1440","w-fourier@1440","w-daraksha@1440","w-sci@1440","w-ctl6@1440","w-kfcode@1440"]}
+chromium rc=0
+reverted fold
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 19:16:35

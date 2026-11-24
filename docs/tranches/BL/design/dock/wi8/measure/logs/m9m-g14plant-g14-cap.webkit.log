@@ -1,0 +1,71 @@
+== g14-cap (g14-cap) [webkit] 2026-11-23 22:16:42 (load { 20.43 25.08 27.68 })
+applied g14-cap - G-14 cap: a cut-cap keyframe restored on the plate
+-- webkit-b 22:16:42 (load { 20.43 25.08 27.68 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 14 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (8.4s)
+  ✓   2 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.6s)
+  ✓   3 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.7s)
+  ✓   4 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.6s)
+  ✓   5 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.7s)
+  ✓   6 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.8s)
+  ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (311ms)
+  ✓   8 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (7.9s)
+  ✓   9 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.7s)
+  ✓  10 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.7s)
+  ✓  11 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.6s)
+  ✓  12 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.7s)
+  ✓  13 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.6s)
+  ✘  14 [webkit-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (231ms)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+
+    Error: no cut-cap keyframe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      2607 |     // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+      2608 |     // the run's four clip keyframes stay, and none of them carries a percentage.
+    > 2609 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+           |                                                                                                   ^
+      2610 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
+      2611 |     for (const [, name, body] of frames) {
+      2612 |         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:2609:99
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-160-no-4feb5-carries-a-percentage-radius-webkit/error-context.md
+
+  2) [webkit-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+
+    Error: no cut-cap keyframe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      2607 |     // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+      2608 |     // the run's four clip keyframes stay, and none of them carries a percentage.
+    > 2609 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+           |                                                                                                   ^
+      2610 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
+      2611 |     for (const [, name, body] of frames) {
+      2612 |         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-5.spec.ts:2609:99
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-160-no-4feb5-carries-a-percentage-radius-webkit-touch/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+    [webkit-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+  12 passed (1.6m)
+webkit-b rc=1
+reverted g14-cap
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:18:24

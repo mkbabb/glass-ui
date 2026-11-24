@@ -1,0 +1,13 @@
+== g2-whole-length [webkit] 2026-11-23 20:37:55 (load { 12.89 22.67 29.23 })
+OK   g2-whole-length
+applied g2-whole-length - G-2 (RU-27): a length written in place of the percentage (the carrier caps the run at n pitches in px)
+-- webkit 20:37:59 (load { 12.42 22.41 29.10 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":477,"firstChange":65,"lastChange":4465,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-length
+tree clean: 677 src files equal HEAD
+-- judge
+p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":608,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+p5-many-lift-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":476,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+== done 2026-11-23 20:38:11

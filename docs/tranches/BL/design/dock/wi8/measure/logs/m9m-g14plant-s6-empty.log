@@ -1,0 +1,41 @@
+== s6-empty (s6-empty) [chromium] 2026-11-23 21:16:31 (load { 31.82 32.37 28.77 })
+applied s6-empty - RU-90 (O-262) plant: an empty region carried from its empty box
+-- chromium 21:16:31 (load { 31.82 32.37 28.77 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (3.1s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.6s)
+  -  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc
+  -  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: foot never left of the plate
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 18.5
+    Received:    -72
+
+      1172 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1173 |         if (f.foot) {
+    > 1174 |             expect(f.foot[0], "foot never left of the plate").toBeGreaterThanOrEqual(f.root[0] - 1.5);
+           |                                                               ^
+      1175 |             expect(f.foot[1], "foot never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1176 |         }
+      1177 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:1174:63
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+  2 skipped
+  1 passed (8.9s)
+chromium rc=1
+reverted s6-empty
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 21:16:48

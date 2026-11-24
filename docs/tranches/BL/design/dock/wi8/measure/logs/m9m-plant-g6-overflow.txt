@@ -1,0 +1,14 @@
+== g6-overflow [chromium] 2026-11-23 16:11:35 (load { 28.00 22.62 23.43 })
+OK   g6-overflow
+applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+-- chromium 16:11:40 (load { 26.64 22.42 23.36 })
+[guarded] waiting for headroom (load 48 > 36)
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":397,"firstChange":81.7,"lastChange":457.9,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p9-press-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":728,"firstChange":234.4,"lastChange":6068.2,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted g6-overflow
+tree clean: 677 src files equal HEAD
+-- judge
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 292, largest box change 0.00 px (-), folded rows 0
+FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 545 to the lift; largest box change 4.00 px (seat#4 row 606 (press-settings)); folded rows 0; per press read 0.01, search 0.01, library 0.00, marks 0.01, settings 4.00, home 4.00
+== done 2026-11-23 16:17:04

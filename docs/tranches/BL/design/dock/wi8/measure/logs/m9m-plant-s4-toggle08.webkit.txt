@@ -1,0 +1,18 @@
+== s4-toggle08 [webkit] 2026-11-23 20:30:48 (load { 23.82 30.65 33.68 })
+OK   s4-toggle08
+applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+-- webkit 20:30:52 (load { 22.63 30.29 33.53 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+w-segpair light folded folded seat 44 grid null segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.145 hover undefined segOk true flat true
+w-segpair light open open seat 44 grid [44,44] segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.167 hover 1.106 segOk true flat true
+w-segpair dark folded folded seat 44 grid null segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.343 hover undefined segOk true flat true
+w-segpair dark open open seat 44 grid [44,44] segs [44,44] strip rgba(0, 0, 0, 0) none none ind none none mark 1.323 hover 1.151 segOk true flat true
+active seat light [{"label":"Grid","shadow":"none","layers":0,"filter":"none"},{"label":"Draw","shadow":"none","layers":0,"filter":"none"}]
+active seat dark [{"label":"Grid","shadow":"none","layers":0,"filter":"none"},{"label":"Draw","shadow":"none","layers":0,"filter":"none"}]
+catch-light light {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"}} toggle {"opacity":"0.8","chain":0.8,"box":[40,40]}
+catch-light dark {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(1 0 0 / 0.05)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(1 0 0 / 0.05)"}} toggle {"opacity":"0.8","chain":0.8,"box":[40,40]}
+summary {"fail":["w-segpair light folded","w-segpair light open","toggle light","toggle dark"]}
+webkit rc=0
+reverted s4-toggle08
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 20:31:27

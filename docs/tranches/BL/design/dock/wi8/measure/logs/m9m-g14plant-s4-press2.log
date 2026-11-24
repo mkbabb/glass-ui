@@ -1,0 +1,62 @@
+== s4-press2 (s4-press2) [chromium] 2026-11-23 21:14:24 (load { 40.77 32.47 28.18 })
+applied s4-press2 - RU-92 plant: a press is 2 % over a bare seat (no hover step under a finger)
+-- chromium 21:14:24 (load { 40.77 32.47 28.18 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 41 > 36)
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (3.6s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.2s)
+  ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.3s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.2s)
+
+
+  1) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.003624914620708977
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.004599865106117682
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--coarse-touch/error-context.md
+
+  2 failed
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+  2 passed (14.5s)
+chromium rc=1
+reverted s4-press2
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 21:15:19

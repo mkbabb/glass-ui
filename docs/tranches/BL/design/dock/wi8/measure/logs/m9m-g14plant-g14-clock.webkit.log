@@ -1,0 +1,443 @@
+== g14-clock (g14-clock) [webkit] 2026-11-23 22:10:34 (load { 25.59 27.92 29.26 })
+applied g14-clock - G-14 clock: the plate jumps to the new layout on the trigger frame (no edge carries the painted box)
+-- webkit-b 22:10:34 (load { 25.59 27.92 29.26 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 28 tests using 1 worker
+
+  ✘   1 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.9s)
+  ✘   2 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘   3 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✘   4 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘   5 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘   6 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘   7 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘   8 [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✓   9 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.6s)
+  ✓  10 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.4s)
+  ✓  11 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.3s)
+  ✓  12 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.3s)
+  ✓  13 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.3s)
+  ✓  14 [webkit] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.3s)
+  ✘  15 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✘  16 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.2s)
+  ✘  17 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘  18 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.4s)
+  ✘  19 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✘  20 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✘  21 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✘  22 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (2.3s)
+  ✓  23 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.5s)
+  ✓  24 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.4s)
+  ✓  25 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.3s)
+  ✓  26 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.3s)
+  ✓  27 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.2s)
+  ✓  28 [webkit-touch] › tests-visual/release-10-1-3.spec.ts:947:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.2s)
+
+
+  1) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 242
+    Received: 8
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   234
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-36-d65a5-eat-stays-under-the-pointer-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 118
+    Received: 352
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   234
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-36-c3d2d-eat-stays-under-the-pointer-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 272
+    Received: 26
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-9c39a-eat-stays-under-the-pointer-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 118
+    Received: 364
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-a4457-eat-stays-under-the-pointer-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 312
+    Received: 66
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-43-4e8ee-eat-stays-under-the-pointer-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 118
+    Received: 364
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-43-af5e1-eat-stays-under-the-pointer-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 1322
+    Received: 1076
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-cb653-eat-stays-under-the-pointer-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 118
+    Received: 364
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   246
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-4b2cc-eat-stays-under-the-pointer-webkit/error-context.md
+
+  9) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 234
+    Received: 8
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   226
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-36-d65a5-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  10) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 126
+    Received: 352
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   226
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-36-c3d2d-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  11) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 264
+    Received: 8
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   256
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-9c39a-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  12) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 126
+    Received: 382
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   256
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-a4457-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  13) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 304
+    Received: 42
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   262
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-43-4e8ee-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  14) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 126
+    Received: 388
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   262
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-43-af5e1-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  15) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's left edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 1314
+    Received: 1052
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   262
+
+      185 |                     first.dock.left,
+      186 |                     "first frame: the collapsed box's left edge",
+    > 187 |                 ).toBeCloseTo(rest.left, 0);
+          |                   ^
+      188 |                 expect(
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:187:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-cb653-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  16) [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+
+    Error: first frame: the collapsed box's right edge
+
+    expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 126
+    Received: 388
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   262
+
+      189 |                     first.dock.right,
+      190 |                     "first frame: the collapsed box's right edge",
+    > 191 |                 ).toBeCloseTo(rest.right, 0);
+          |                   ^
+      192 |                 const edge = (b: Box) => (anchor === "right" ? b.right : b.left);
+      193 |                 const drift = Math.max(
+      194 |                     ...morph.map((f) => Math.abs(edge(f.dock) - edge(rest))),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-3.spec.ts:191:19
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-4b2cc-eat-stays-under-the-pointer-webkit-touch/error-context.md
+
+  16 failed
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+    [webkit-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer 
+  12 passed (1.6m)
+webkit-b rc=1
+reverted g14-clock
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:12:19

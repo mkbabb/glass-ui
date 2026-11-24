@@ -1,0 +1,11 @@
+== s6-nogate [chromium] 2026-11-23 16:17:04 (load { 29.48 36.92 30.68 })
+OK   s6-nogate
+applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+-- chromium 16:17:08 (load { 29.48 36.92 30.68 })
+{"cell":"1440-fine-light","rows":"p9-press-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":735,"firstChange":246,"lastChange":6129.1,"screencast":null,"consoleErrors":0}
+chromium rc=0
+reverted s6-nogate
+tree clean: 677 src files equal HEAD
+-- judge
+FAIL p9-press-fine.wi8.chromium.1440-fine-light.rows.json: presses read,search,library,marks,settings,home; rows 548 to the lift; largest box change 225.00 px (dock row 702 (press-home)); folded rows 8 (first 290 ms after its press); per press read 0.01, search 0.01, library 0.00, marks 0.01, settings 0.01, home 225.00
+== done 2026-11-23 16:27:48

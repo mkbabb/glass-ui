@@ -1,0 +1,18 @@
+== g9-scope [webkit] 2026-11-23 20:03:12 (load { 29.43 34.61 37.49 })
+OK   g9-scope
+applied g9-scope - G-9: the published progress write removed (the root's --dock-expand-t)
+-- webkit 20:03:16 (load { 28.92 34.41 37.40 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":199,"firstChange":234,"lastChange":1612,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p9-tiers-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":202,"firstChange":241,"lastChange":1635,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g9-scope
+tree clean: 677 src files equal HEAD
+-- judge
+-- op9 chromium
+p3-fold-pill-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.26 at summary f33, shortest fade 75.4 ms | op60 0.25 at full f132, shortest fade 73.9 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 237 ms, travels 0.02-0.98 8, 8.6 ms -> root clause FAIL
+p9-tiers-fine chromium 1440-fine-light: sample interval 8.30 ms (220 rows) | op60 0.25 at summary f34, shortest fade 74.3 ms | op60 0.26 at full f130, shortest fade 74.6 ms | root --dock-expand-t: 220 rows, largest 60 Hz move 1.000 at 246 ms, travels 0.02-0.98 8.5, 7.8 ms -> root clause FAIL
+-- op9 webkit
+p3-fold-pill-fine webkit 1440-fine-light: sample interval 10.00 ms (199 rows) | op60 0.18 at summary f26, shortest fade 79.0 ms | op60 0.2 at full f125, shortest fade 74.6 ms | root --dock-expand-t: 199 rows, largest 60 Hz move 1.000 at 222 ms, travels 0.02-0.98 11.5, 12.5 ms -> root clause FAIL
+p9-tiers-fine webkit 1440-fine-light: sample interval 10.00 ms (202 rows) | op60 0.26 at summary f26, shortest fade 75.9 ms | op60 0.21 at full f127, shortest fade 78.4 ms | root --dock-expand-t: 202 rows, largest 60 Hz move 1.000 at 225 ms, travels 0.02-0.98 13.4, 8.6 ms -> root clause FAIL
+== done 2026-11-23 20:03:33

@@ -1,0 +1,61 @@
+== s4-press2 (s4-press2) [webkit] 2026-11-23 22:07:09 (load { 20.43 25.16 28.57 })
+applied s4-press2 - RU-92 plant: a press is 2 % over a bare seat (no hover step under a finger)
+-- webkit-c 22:07:09 (load { 20.43 25.16 28.57 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (3.5s)
+  ✓  2 [webkit] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.5s)
+  ✘  3 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.8s)
+  ✘  4 [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (3.1s)
+
+
+  1) [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.001651470649961101
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--webkit-touch/error-context.md
+
+  2) [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.0018862416362837725
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--webkit-touch/error-context.md
+
+  2 failed
+    [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [webkit-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+  2 passed (15.3s)
+webkit-c rc=1
+reverted s4-press2
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:07:41

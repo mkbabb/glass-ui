@@ -1,0 +1,19 @@
+== s4-channel [chromium] 2026-11-23 18:08:14 (load { 38.53 41.43 42.21 })
+OK   s4-channel
+applied s4-channel - RU-95 plant: the channel restored inside the dock (fill, rim, shadow and lens)
+-- chromium 18:08:18 (load { 37.13 41.09 42.08 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 45 > 36)
+w-segpair light folded folded seat 44 grid null segs [44,44] strip color(srgb 0.20397 0.148263 0.0829736 / 0.1) rgba(255, 255, 255, 0.1) 0px 1px 0px 0px blur(14px) saturate(1.5) ind rgba(255, 255, 255, 0.1) 0px 1px 0px 0px blur(20px) saturate(1.5) mark 1.454 hover undefined segOk true flat false
+w-segpair light open open seat 44 grid [44,44] segs [44,44] strip color(srgb 0.20397 0.148263 0.0829736 / 0.1) rgba(255, 255, 255, 0.1) 0px 1px 0px 0px blur(14px) saturate(1.5) ind rgba(255, 255, 255, 0.1) 0px 1px 0px 0px blur(20px) saturate(1.5) mark 1.453 hover 1.143 segOk true flat false
+w-segpair dark folded folded seat 44 grid null segs [44,44] strip color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) rgba(255, 255, 255, 0.08) 0px 1px 0px 0p blur(14px) saturate(1.5) ind rgba(255, 255, 255, 0.08) 0px 1px 0px 0p blur(20px) saturate(1.5) mark 1.33 hover undefined segOk true flat false
+w-segpair dark open open seat 44 grid [44,44] segs [44,44] strip color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) rgba(255, 255, 255, 0.08) 0px 1px 0px 0p blur(14px) saturate(1.5) ind rgba(255, 255, 255, 0.08) 0px 1px 0px 0p blur(20px) saturate(1.5) mark 1.311 hover 1.151 segOk true flat false
+active seat light [{"label":"Grid","shadow":"none","layers":0,"filter":"blur(20px) saturate(1.5)"},{"label":"Draw","shadow":"none","layers":0,"filter":"blur(20px) saturate(1.5)"}]
+active seat dark [{"label":"Grid","shadow":"none","layers":0,"filter":"blur(20px) saturate(1.5)"},{"label":"Draw","shadow":"none","layers":0,"filter":"blur(20px) saturate(1.5)"}]
+catch-light light {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0 0 0 / 0.065)"}} toggle {"opacity":"1","chain":1,"box":[40,40]}
+catch-light dark {"hovered":{"label":"Home","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0.999994 0.0000455678 0.0000200868 / 0.05)"},"pressed":{"label":"People","content":"none","bgImage":"none","opacity":"1","display":"block","hostBg":"oklab(0.999994 0.0000455678 0.0000200868 / 0.05)"}} toggle {"opacity":"1","chain":1,"box":[40,40]}
+summary {"fail":["w-segpair light folded","w-segpair light open","w-segpair dark folded","w-segpair dark open"]}
+chromium rc=0
+reverted s4-channel
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 18:12:16

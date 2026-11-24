@@ -1,0 +1,16 @@
+== g2-lane [webkit] 2026-11-23 20:06:06 (load { 28.49 35.61 37.61 })
+OK   g2-lane
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+-- webkit 20:06:10 (load { 29.65 35.73 37.64 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p9-persist-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":199,"firstChange":241,"lastChange":1628,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-region-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":455,"firstChange":223,"lastChange":4219,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-lane
+tree clean: 677 src files equal HEAD
+-- judge
+p3-region-fine | chromium | 1440-fine-light | curve 0.02 | held 15 | whole {"row":283,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#3 row 203)
+p3-region-fine | webkit | 1440-fine-light | curve 0.02 | held 15 | whole {"row":235,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":258,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 15.00 px in the window's first row (seat#3 row 169)
+p9-persist-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p9-persist-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":121,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":308,"over":0,"room":1424,"offset":0,"focused":false} | pass
+== done 2026-11-23 20:06:42

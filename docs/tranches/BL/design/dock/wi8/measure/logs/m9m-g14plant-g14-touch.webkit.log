@@ -1,0 +1,159 @@
+== g14-touch (g14-touch) [webkit] 2026-11-23 22:06:30 (load { 23.72 26.26 29.11 })
+applied g14-touch - G-14 touch: every dock rests open under (hover: none), with a folded face or not
+-- webkit-a 22:06:30 (load { 23.72 26.26 29.11 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795469871 slope=30.5/s inuse=26851 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 10 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (1.9s)
+  ✓   2 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (991ms)
+[WebServer] 10:06:37 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   3 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (960ms)
+  ✓   4 [webkit] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (1.3s)
+  ✓   5 [webkit] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (2.2s)
+  ✘   6 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (4.1s)
+  ✘   7 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (4.0s)
+  ✘   8 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (3.9s)
+  ✘   9 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (4.0s)
+  ✘  10 [webkit-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (2.4s)
+
+
+  1) [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-slot="menu-content"]')
+    Expected: 0
+    Received: 1
+    Timeout:  3000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 3000ms
+      - waiting for locator('[data-slot="menu-content"]')
+        10 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      147 |                 (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+      148 |             );
+    > 149 |             await expect(content).toHaveCount(0, { timeout: 3000 });
+          |                                   ^
+      150 |         });
+      151 |     }
+      152 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-1.spec.ts:149:35
+
+    Error Context: tests-visual/test-results/release-10-1-1-10-1-1-O-10-334c7-ses-when-the-dock-collapses-webkit-touch/error-context.md
+
+  2) [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-slot="popover-content"]')
+    Expected: 0
+    Received: 1
+    Timeout:  3000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 3000ms
+      - waiting for locator('[data-slot="popover-content"]')
+        10 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      147 |                 (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+      148 |             );
+    > 149 |             await expect(content).toHaveCount(0, { timeout: 3000 });
+          |                                   ^
+      150 |         });
+      151 |     }
+      152 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-1.spec.ts:149:35
+
+    Error Context: tests-visual/test-results/release-10-1-1-10-1-1-O-10-6b4ff-ses-when-the-dock-collapses-webkit-touch/error-context.md
+
+  3) [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-slot="select-content"]')
+    Expected: 0
+    Received: 1
+    Timeout:  3000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 3000ms
+      - waiting for locator('[data-slot="select-content"]')
+        10 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      147 |                 (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+      148 |             );
+    > 149 |             await expect(content).toHaveCount(0, { timeout: 3000 });
+          |                                   ^
+      150 |         });
+      151 |     }
+      152 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-1.spec.ts:149:35
+
+    Error Context: tests-visual/test-results/release-10-1-1-10-1-1-O-10-c778b-ses-when-the-dock-collapses-webkit-touch/error-context.md
+
+  4) [webkit-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-slot="menu-content"]')
+    Expected: 0
+    Received: 1
+    Timeout:  3000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 3000ms
+      - waiting for locator('[data-slot="menu-content"]')
+        10 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      169 |             (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+      170 |         );
+    > 171 |         await expect(page.locator('[data-slot="menu-content"]')).toHaveCount(0, { timeout: 3000 });
+          |                                                                  ^
+      172 |         await page.waitForTimeout(300); // past the menu's own (inert-refused) focus return
+      173 |         expect(
+      174 |             await page.evaluate(() =>
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-1.spec.ts:171:66
+
+    Error Context: tests-visual/test-results/release-10-1-1-10-1-1-O-10-5942d-us-to-the-summary-not-body--webkit-touch/error-context.md
+
+  5) [webkit-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      206 |                 () => (window as unknown as { __dock: () => { expanded: boolean } }).__dock().expanded,
+      207 |             ),
+    > 208 |         ).toBe(false);
+          |           ^
+      209 |     });
+      210 |
+      211 |     // ── (5) O-102 (6) — a GUARD, not a red/green witness ─────────────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9m-tip/tests-visual/release-10-1-1.spec.ts:208:11
+
+    Error Context: tests-visual/test-results/release-10-1-1-10-1-1-O-10-2964f-nd-the-dock-stays-collapsed-webkit-touch/error-context.md
+
+  5 failed
+    [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses 
+    [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses 
+    [webkit-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses 
+    [webkit-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> 
+    [webkit-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed 
+  5 passed (31.1s)
+webkit-a rc=1
+reverted g14-touch
+tree clean: 677 src files equal HEAD
+== done 2026-11-23 22:07:09
