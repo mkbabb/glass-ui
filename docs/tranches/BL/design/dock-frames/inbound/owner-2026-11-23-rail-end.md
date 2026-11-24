@@ -1,0 +1,3 @@
+# The owner on glass.babb.dev's dock (2026-11-23 23:18): "the icon is offset and the dock animates poorly--the icon therein is offset and padded incorrectly"
+
+Read on the live demo (v11.1.0) in `../../../audit/demo-error-1123/README.md`. On the vertical rail, the end seat's selection disc sits 4 px short of concentric with the rail's round end in Chromium and in WebKit: the end padding is 8 px against 12 px at the sides. The second challenge of the 11.1.2 cure adds one cell, in both orientations and both postures: the end seat's disc centre against the plate's end centre, 0 px. If the cure's padding pin doesn't already give that, the fix does.
