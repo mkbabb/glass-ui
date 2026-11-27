@@ -4,7 +4,7 @@ Recorded 2026-11-23 by claude-opus-5-5. The owner, in atlas's dark mode: "Many i
 
 Every reading names its engine. **Chromium** is Playwright's Chromium headless shell 149.0.7827.55. **WebKit** is Playwright's WebKit build 26.5 (the version the browser reports). It is not Safari. No Safari reading was taken.
 
-The build is glass `release/11.1.1` at 4f1fa667e, taken by `git archive` into `trees/` (never a worktree) and built with the demo's own config plus one stress page, `/ovf.html`. The cure is `cure.patch`, which applies to `release/11.1.1` with `git apply`. `critique.md` read cure v3; `fold.md` rules on each of its objections, and the patch after the fold was cure v4, kept as `cure-v4.patch`. Round 2 (§6) built value.js's four items into it as cure v5, kept as `cure-v5.patch`. Round 3 (§7) answered a second critique of v5: `cure.patch` is cure v6, which takes item 4 back out for the owner.
+The build is glass `release/11.1.1` at 4f1fa667e, taken by `git archive` into `trees/` (never a worktree) and built with the demo's own config plus one stress page, `/ovf.html`. The cure is `cure.patch`, which applies to `release/11.1.1` with `git apply`. `critique.md` read cure v3; `fold.md` rules on each of its objections, and the patch after the fold was cure v4, kept as `cure-v4.patch`. Round 2 (§6) built value.js's four items into it as cure v5, kept as `cure-v5.patch`. Round 3 (§7) answered a second critique of v5 with cure v6, which takes item 4 back out for the owner. §8 answers a third critique, of v6, and atlas's GL-16: `cure.patch` is cure v7, which applies to `release/11.1.1` (its `src` is unchanged at b9b96cb76).
 
 ## How it was read
 
@@ -564,9 +564,135 @@ Atlas's openers, read in atlas's source and on its live page (Chromium, dark):
 - Chrome 120 and Safari 16.4, where `scrollbar-width` is missing and the strip's `::-webkit-scrollbar` rule is what hides the bar. Playwright's engines have `scrollbar-width`.
 - The vitest files that touch the changed rules ran on the v6 tree (two workers): 14 files, 214 passed and 1 expected fail.
 
-## 8. The record
+## 8. v7: the third critique
+
+A third critic read v6 in Chromium (`critique.md`, "Round 2's last critic") and found three blocking items: the strip scroller lifts its ancestors' `touch-action` (R4-1), its automatic minimum is 0 as a flex item (R4-2), and `ConfiguratorLayer.vue:198`'s clip is glass's (R4-3); and six notes, one of which is R4-4 (the row law splits a Chip or a Button). atlas's GL-16 (a vertical swipe on a dock that hides nothing) joins R4-1. STUDY.md, "v7: the third critique", gives each ruling; this section gives the method and the tables.
+
+**Builds.** One tree, `trees/r3b`: a `git archive` of release/11.1.1, its own git root, `node_modules` a link to the main checkout's. `dist-base`, `dist-cure6` (`git apply cure-v6`, i.e. the v6 `cure.patch`) and `dist-cure7` (v7), each built from the same stress page, which carries round 3's cells under `/ovf.html?v7`. `v7-nohdr` is v7 with the Sheet header's `pan-x` rule taken back by an injected `[data-slot="dialog-header"] * { touch-action: auto }`.
+
+The v7 these tables read had the header rule on top and bottom sheets only. A right detented sheet read a leak that form left (§8.1, the side sheet), so the rule now covers every side. The four builds were then made again, with a page of their own for the side sheet (`/ovf.html?v7side`, so `?v7` is unchanged) and a fourth build, `dist-cure7tb`, which keeps the top-and-bottom form (`v7tb`). `dist-cure7` is now the final v7. The final build read on the `?v7` cells (`record/inspect/v7-final.chromium.json`) matches the v7 record in 60 of 66 rows; the other 6 differ only in how far momentum carried a pan, by 3 to 28 px, with the same moves and cancels, and every Sheet row matches.
+
+**Cells and probe.** `tools/plans/v7.mjs`, run by `v7.sh` (Chromium) and `v7-webkit.sh` (Playwright's WebKit, under the WebKit lock): 390×844 (Chromium with touch and `isMobile`; WebKit with `hasTouch`) and 1440×900, scale 2, light, `reducedMotion: no-preference`; one browser per run, a context per cell and build. Touch gestures are CDP touch events in Chromium's 390 cell, 12 moves 16 ms apart unless named, each begun on a tab that is not selected: with motion allowed the selected tab forwards its press to the draggable indicator (`touch-action: none`, `tabs/styles/drag.css`), so a gesture begun there reaches no browser gesture on any build. Each drag on the Sheet reads a freshly loaded page with the sheet opened at its 0.4 rung. Record: `record/inspect/v7.{chromium,webkit}.json` (`tools/plans/v7-table.py` prints either as lines).
+
+The cells: three tabs (Map, Table, Chart) in a 358 px `touch-action: none` box, in a 157 px `none` box, and in a `pan-x` box; eight tabs in a 267 px `none` box; three tabs over eight rows in a 200 px `overflow-y: auto` `pan-y` pane; eight tabs in a plain 267 px box; three and eight tabs beside a heading in a 358 px `nowrap` flex row; three and eight tabs over a list in a 240 px flex column; a vertical strip beside a paragraph; three tabs in a box 10 px too narrow for them (150 px at 390, 188 px at 1440) drawn at `scale(0.9)`; a bottom detented Sheet (detents 0.4, 0.7, 1) whose `DialogHeader` holds a three-tab and an eight-tab strip; in-flow GlassDocks of three and eight seats; two ConfiguratorLayers in a 200 px vertical scroller, one open holding a 300 px box and one closed; and a "Draft" Chip and an "Open" Button after the 55-character label in a Command row, an Accordion trigger, a Select trigger and a menu row, 226 to 260 px.
+
+### 8.1 The strip's touch-action (R4-1)
+
+Chromium, 390 touch. "page" is the window's scroll after the gesture; "moves" the pointermoves the page saw, then whether a pointercancel came.
+
+| cell, gesture | base | v6 | v7 | v7-nohdr |
+|---|---|---|---|---|
+| three tabs in a `none` box, 240 px up | 0; 12 moves | page 285; 1 move, cancel | 0; 12 moves | 0; 12 moves |
+| three tabs in the 157 px `none` box, 240 px up | 0; 12 | 323; cancel | 0; 12 | 0; 12 |
+| three tabs in a `pan-x` box, 240 px up | 0; 12 | 284; cancel | 0; 12 | 0; 12 |
+| three tabs in the `pan-y` pane, 150 px left | 0; 12 | 0; 2 moves, cancel | 0; 12 | 0; 12 |
+| the same, 240 px up | the pane scrolls 298 | 298 | 298 | 298 |
+| eight tabs in a `none` box, 240 px up | 0; 12 (the strip ran past the box) | 326; cancel | 388; cancel | 318; cancel |
+| the same, 150 px left | 0; 12 | the strip pans 170 | 203 | 197 |
+| eight tabs in a plain box, 240 px up | page 376 | 359 | 365 | 365 |
+| the same, 150 px left | 0 (no scroller) | the strip pans 217 | 208 | 197 |
+
+The Sheet, its header's strips (the eight tabs are 654 px of tabs in a 364 px strip on v6 and v7). "follows" is how far the sheet moved by the last move; "rest" where it settled.
+
+| strip, gesture | base | v6 | v7 | v7-nohdr |
+|---|---|---|---|---|
+| three tabs, 70 px down in 30 moves | 30 moves; follows 70; back to the rung | 7 moves, cancel; follows 0 | as the base | as the base |
+| three tabs, 220 px down in 6 moves | 6 moves; follows 220; closes | 1 move, cancel; flings shut | as the base | as the base |
+| eight tabs, 70 px down in 30 moves | 30; 70 | 7, cancel; 0 | 30; 70 | 7, cancel; 0 |
+| eight tabs, 220 px down in 6 moves | 6; 220; closes | 1, cancel; flings shut | 6; 220; closes | 1, cancel; flings shut |
+| eight tabs, 150 px left in 12 moves | 12 moves; the strip 0, the sheet 0 | cancel; the strip pans 135, the sheet 0 | the same as v6 | the same as v6 |
+
+The computed `touch-action` in the header (both engines, both widths): the base and v6 `auto` on both strips; v7 `pan-x` on both (the eight-tab strip `overflow-x: auto` at 390 and `visible` at 1440, where the sheet is wide enough to hold its tabs); `v7-nohdr` `auto`. The header computes `none` on all.
+
+**The side sheet** (`/ovf.html?v7side`: a right Sheet, non-modal, detents 0.5 and 0.9, opened at 0.9, 351 px wide at 390; `tools/plans/v7-side.mjs`, run by `V7_PROBE=v7-side.mjs v7.sh`; `record/inspect/v7-side.chromium.json`). Its header holds the three tabs (160 px, which fit) and the eight (654 px of tabs in a 325 px strip on v6 and v7). "follows" is how far the sheet's edge moved toward closed by the last move. Where it settled after release is not compared: a 70 px drag ends between the two rungs, and it fell either way across builds.
+
+| strip, gesture | base | v6 | v7tb | v7 |
+|---|---|---|---|---|
+| eight tabs, 240 px up in 12 moves | 12 moves; the page 0 | 1 move, cancel; the page 225 | 1, cancel; 228 | 12 moves; 0 |
+| eight tabs, 70 px toward closed in 30 moves | 30 moves; follows 70 | 7 moves, cancel; follows 0 | 7, cancel; 0 | 7, cancel; 0 |
+| eight tabs, 150 px the other way in 12 moves | 12 moves; the strip 0 | 2 moves, cancel; the strip pans 135 | the same as v6 | the same as v6 |
+| three tabs, 70 px toward closed | 30; follows 70 | 7, cancel; 0 | 30; 70 | 30; 70 |
+| three tabs, 240 px up | 12; the page 0 | 1, cancel; 225 | 12; 0 | 12; 0 |
+| the title, 70 px toward closed | 30; 70 | 30; 70 | 30; 70 | 30; 70 |
+
+The computed `touch-action`, at 390 and 1440: the strips and their tabs `auto` on the base, v6 and `v7tb`, `pan-x` on v7; the header `none` on all. At 1440 the sheet is 1296 px and both strips fit, on every build. WebKit did not read the side sheet.
+
+**The flag.** The eight tabs in 267 px: `data-overflow` set at 390 and 1440 in both engines. At 1440 the box widened to 900 px clears it within two frames and the strip computes `visible`; back at 267 px it is set again. The strip scrolled 300 px: its first tab's `offsetLeft` reads 3 px at 390 and 4 at 1440 before and after, and the flag holds. The scaled box: v7 sets the flag in both cells and engines (the strip 153/150 at 390 and 197/188 at 1440); the tabs' client-rect span is 132 px in a 144 px room (169.9 in 180), so a reading from `getBoundingClientRect` would have called the strip fitting. A wheel of 150 px on the eight tabs at 1440 pans the strip 150 and the page 0 on v6 and v7, both engines.
+
+### 8.2 The strip as a flex item (R4-2)
+
+Both engines, to 0.1 px; the strip's border box, then `scrollWidth`/`clientWidth` of the box around it where it matters. 390 touch / 1440.
+
+| cell | base | v6 | v7 |
+|---|---|---|---|
+| three tabs beside a heading, 358 px row | 152.7 / 196.7 px wide; the heading 3 lines | 101.6 / 121.5, one / two tabs past its clip; the heading 2 lines | 159.8 / 206.3, no tab past; the heading 3 / 4 lines |
+| eight tabs beside "Enrollment", 358 px row | the strip 654.3 / 857.6; the row 743/358 / 946/358 | 269.7, pans; the row 358/358 | 358, pans; the row 446/358 (the heading and the gap past it) |
+| three tabs over a list, 240 px column | 50 / 42.6 px tall | 6 / 8, three tabs past its clip | 50 / 42.6 |
+| eight tabs over a list | 50 / 42.6 tall; the column 651/240 (652 in WebKit) / 854/240 | 6 / 8; 240/240 | 50 / 42.6; 240/240, pans |
+| vertical strip beside a paragraph | 57.3 / 74.1 px wide | 26.6 / 30.6 | 57.3 / 74.1 |
+
+v7's strip in a row is its flex basis, its max-content width; the base's shrank to its min-content (its automatic minimum), so v7's is 7 to 10 px wider beside the heading.
+
+### 8.3 ConfiguratorLayer (R4-3)
+
+Both engines, both widths.
+
+| reading | base | v6 | v7 |
+|---|---|---|---|
+| the wrapper's computed `overflow-x` / `overflow-y` | `hidden` / `hidden` | `hidden` / `hidden` | `visible` / `clip` |
+| the 200 px column holding the open layer and its 300 px box | 200/200; the box cut 121 px past the layer | 200/200 | 341/200 |
+| a 150 px sideways swipe on the box (Chromium, 390 touch) | the column pans 0 | 0 | 120, to the box's end |
+| the closed layer | its body 0 px tall; no hit on its row | the same | the same |
+
+### 8.4 A Chip and a Button in the law's rows (R4-4)
+
+Width × lines, and the computed `overflow-wrap`. Chromium 390 touch; 1440 and WebKit read the same lines (widths within 1.5 px).
+
+| row | base | v6 | v7 |
+|---|---|---|---|
+| Command, 226 px | Chip 47.7 × 1, Button 57.3 × 1 (`normal`) | 29.2 × 4, 58.8 × 4 (`anywhere`) | as the base (`normal`) |
+| Accordion trigger, 260 px | 47.7 × 1, 59.4 × 1 | 30.1 × 4, 60.8 × 4 | as the base |
+| Select trigger, 260 px | 29 × 1 (its label 19 px past it), 59.4 × 1 | 29 × 4, 59.4 × 4 | as the base |
+| menu row, 234 px | 47.7 × 1, 57.3 × 1 | 29.2 × 4, 58.8 × 4 | as the base |
+
+### 8.5 The dock's vertical swipe (GL-16)
+
+Chromium, 390 touch, gestures begun on the second seat; computed `touch-action` on the run in both engines and widths.
+
+| dock, reading | base | v6 | v7 |
+|---|---|---|---|
+| three seats (`data-run-fits`): `touch-action` | `pan-x` | `pan-x` | `pan-x pan-y` |
+| 240 px up | page 0; 12 moves | 0; 12 moves | page 343; a cancel after 1 move |
+| 150 px left | the run pans 4 px (F8); cancel | 0; cancel | 0; cancel |
+| eight seats: `touch-action` | `pan-x` | `pan-x` | `pan-x` |
+| 240 px up | 0; 12 moves | 0; 12 | 0; 12 |
+| 150 px left | the run pans 398 px | 475 | 475 |
+
+### 8.6 The rings, the glide and the shortcut on v7
+
+`tools/plans/round3.mjs` (§7) on the base and v7, both engines (`record/inspect/round3-v7.{chromium,webkit}.json`).
+
+Playwright's WebKit: the stage's and the variant row's pill strips fit their boxes, and on v7 they are not scrollers (`visible`, as the base): at 390 their first and last tabs' rings read as the base's, 2.8 to 3.3 px past the tab, with 0 to 1 pixel cut where v6 cut 37 to 40 and the 74 faint pixels along the curve (§7.1). The underline strips read as v6's (0.9 to 1.1 px of room, 0 or 1 pixel cut). The eight tabs, which scroll, read as v6's: the first tab's ring 38 pixels cut at 390, the faint edge along the strip's rounded clip, and 0 at 1440; the last tab selected and scrolled into view has 0.5 px of room at 390 and 1 at 1440 (whole). The glide on v7: 0, 16: 7, 50: 112, 100: 285, 150: 364, 200: 387, 300: 388 px at 390 touch, and 591 px by 200 to 300 ms at 1440. The shortcut is one line, 42.5 × 20.5 and 44.5 × 21.6 px.
+
+### 8.7 The check and the unit tests on v7
+
+`check-overflow.mjs` on the final v7 (`check-selftest.sh` with `OVF_TREE=r3b CURE_DIST=dist-cure7 ONLY_CURE=1 CURE_PORT=5465`; `record/check/check-cure7.{fold,stress}.chromium.json`), Chromium, 390 touch and 1440 light: 24 fault readings (23 (a), 1 (b)), the same as v6, box for box. The `--click` that matches nothing and the `--then` that finds nothing exit 2; the menu then its submenu reads with both open (exit 1, the page's own faults).
+
+The unit tests ran on the tree at v7 (vitest, two workers), with the library built first for `public-surface.spec.ts`: every file under `tests/` that names a file or a selector the patch changes, and the comment-ratio, orphan-CSS-partial and type-hygiene gates. 50 files: 776 passed, 3 expected fails, 7 failed, and a worker for `radius-dialog-bind.test.ts` that did not start in time.
+
+- `overlay-plate-inline-bound.test.ts` failed on the patch. It counts the anchored plate arms that read `--overlay-inline-cap` and expected 2; the tooltip arm has read it since v4 (F3), so there are 3. `cure.patch` sets the count to 3 and names the three arms; the file then passes. Rounds 1 and 2 did not run it.
+- `easing.contract.test.ts` (two tests) and `dissolve.test.ts` read `docs/` and `tests-visual/` files the archive leaves out.
+- `layout-canon.test.ts` and `dialog-dismiss.test.ts` reject the stress page under `demo/__ovf/` (its `vh` box and its `@interact-outside.prevent`).
+- `public-surface.spec.ts`'s ratchet self-test ran out of its 30 s at a load near 30. Run again alone, with `radius-dialog-bind.test.ts`: 110 passed.
+
+After the header rule widened to every side, the nine files that read the Sheet's styles, a dialog header or `touch-action`, with the inline-bound test and the comment-ratio gate, ran again: 11 files, 131 passed, 2 expected fails. `vue-tsc --noEmit -p tsconfig.src.json` on the tree is clean. `verify:package` was not run: it compares the packed bytes with `.bundle-ratchet` exactly, every 11.1.2 row moves that figure, and it is rebound from the committed 11.1.2 tree.
+
+`cure.patch` applies with `git apply` to a fresh `git archive` of release/11.1.1's tip (14506233e at this reading), whose `src` and `tests` match 4f1fa667e.
+
+## 9. The record
 
 - `record/raw/<tag>.<engine>.<cell>.json`: every probe reading (tag `base` is release/11.1.1; `cure`, `cure2`, `cure3`, `cure4`, `cure5` are the cure builds v1 to v5; round 3 ran no sweep); `….fold.json` is the first fold page, `….fold5.json` the fold page with round 2's cells (route `/ovf.html?fold&round=2`).
+- v7 (§8): `record/inspect/v7.{chromium,webkit}.json` (`tools/plans/v7.mjs`, run by `v7.sh` and `v7-webkit.sh`; base, v6, v7, and in Chromium `v7-nohdr`) and `round3-v7.{chromium,webkit}.json` (`round3.mjs` on the base and v7); `v7-side.chromium.json` (`tools/plans/v7-side.mjs`, the right detented sheet; base, v6, `v7tb` and v7) and `v7-final.chromium.json` (`v7.mjs` on the final v7 alone); `record/check/check-cure7.{fold,stress}.chromium.json` (`check-selftest.sh` with `OVF_TREE=r3b CURE_DIST=dist-cure7 ONLY_CURE=1`, on the final v7). `tools/plans/v7-table.py` prints a v7 record as lines. `v7.sh` refuses a port another lane already serves. The tree was `trees/r3b`, deleted after the readings; `cure-v6.patch` keeps v6, and `v7tb` differs from `cure.patch` only in the Sheet header rule's selector (`:is([data-side="top"], [data-side="bottom"])` after `[data-detents]`) and its comment.
 - `record/inspect/*.json`: the witness and triage runs (`witness` = v1, `witness2` = v2, `witness3` = v3, `witness4` = v4; `witness4b` and `witness4c` are the fold's second and third runs, `witness3-fold` is v3 on the fold's cells). Round 2: `witness5.chromium.json` (value.js's items, base, v4 and v5), `witness5b` and `witness5c` (S1, V1f, V3 again with the value's width, V3v), `witness5s.chromium.json` (base and v5 on ports 5392 and 5393: the steps row's Slider, the wrap form at value.js's width, and the pictures), `witness5.webkit.json` (value.js's items in WebKit, pans by wheel) and `witness-wk5.webkit.json` (round 1's v4 rules in WebKit on v4 and v5). Round 3: `round3.chromium.json` and `round3.webkit.json` (`tools/plans/round3.mjs`: rings, glide, shortcut and count, the Dialog's kept word; base, v5 and v6), `slider-end.chromium.json` (v6's Sliders with a thumb at each end) and `atlas-live.chromium.json` (`tools/plans/atlas-live.mjs`: atlas's openers on its live page).
 - `record/shots/<case>.<tree>.<engine>.<cell>.png`: element pictures from the page's own headless render (`shot:` in `inspect.mjs`), to see how a cut value ends: the three 73 px fields and the 120 px field (`v2-lf3`, `v2-kf`), and the Steps row in a 200 and a 186 px column (`v3-200`, `v3-186`). Round 3's are `r3-<build>-<cell>-<case>.<engine>.png`: each strip's first tab focused (`s0`, `s1`, the underline `s2`, the vertical underline `uv`), the eight tabs' first and last (`fold8-tab0`, `fold8-tab7`), and the menu row (`menu-row`).
 - `record/faults.base.json`: the base readings folded by box (`tools/analyze.mjs`); `record/families.json`: every reading folded by fault family, tag, engine and cell (`tools/families.mjs`).

@@ -73,6 +73,22 @@ const ROUND3 = [
     ["fill (svg)", `fill: ${BOTH};`],
 ];
 
+// Round 4: controls for round 3, and which arm shapes count as "a mix" to WebKit.
+const RELV = (a) => `oklch(from var(--ink) l c h / ${a})`;
+const ROUND4 = [
+    ["control: plain background", "background-color: rgb(1 2 3);"],
+    ["control: one mix arm, other plain, on color", `color: color-mix(in oklab, ${M1}, red 35%);`],
+    ["both arms relative, literal origin", `background-color: color-mix(in oklab, ${rel(0.1)}, ${rel(0.14)} 35%);`],
+    ["both arms relative, var() origin", `background-color: color-mix(in oklab, ${RELV(0.1)}, ${RELV(0.14)} 35%);`],
+    ["arm mix + arm relative colour of a mix", `background-color: color-mix(in oklab, ${M2}, oklch(from ${M1} l c h) 35%);`],
+    ["arm relative of a mix + arm plain", `background-color: color-mix(in oklab, oklch(from ${M1} l c h), red 35%);`],
+    ["both arms light-dark() holding mixes", `background-color: color-mix(in oklab, light-dark(${M1}, red), light-dark(${M2}, blue) 35%);`],
+    ["registered <color> arms holding plain colours", "--ra: red; --rb: blue; background-color: color-mix(in oklab, var(--ra), var(--rb) 35%);"],
+    ["registered <color> arm holding a mix, other plain", `--ra: ${M1}; background-color: color-mix(in oklab, var(--ra), red 35%);`],
+    ["cured hover shape: one mix, relative var() ink, calc alpha and level", "--lvl: 1; --vq: 0.1; --vr: 0.14; background-color: color-mix(in srgb, oklch(from var(--ink) l c h / calc(0.65 * var(--vq) + 0.35 * var(--vr))) calc(var(--lvl) * 100%), hsl(30 85% 96%));"],
+    ["cured blob shape: relative shadow colour, mix of it, drop-shadow", "--sc: oklab(from hsl(24 9% 4%) calc(l * 0.5) calc(a * 0.5) calc(b * 0.5)); --bsc: color-mix(in srgb, var(--sc) 22%, var(--sc)); filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--bsc) 20%, transparent));"],
+];
+
 function html(value, prop, onHover) {
     const body = prop === "decl" ? value : `${prop}: var(--h);`;
     return `<!doctype html><html><head><style>
@@ -88,7 +104,7 @@ button { width: 200px; height: 60px; }
 const rows = [];
 const browser = await engine.launch({ headless: true });
 try {
-    const plan = process.env.ROUND === "3" ? [["decl", ROUND3]] : PROPS.map((p) => [p, CELLS]);
+    const plan = process.env.ROUND === "3" ? [["decl", ROUND3]] : process.env.ROUND === "4" ? [["decl", ROUND4]] : PROPS.map((p) => [p, CELLS]);
     for (const [prop, cells] of plan) {
         for (const onHover of [true, false]) {
             for (const [name, value] of cells) {
@@ -100,7 +116,7 @@ try {
                     const page = await context.newPage();
                     page.on("crash", () => { crashed = true; });
                     await page.setContent(html(value, prop, onHover));
-                    if (onHover) await page.hover("#t");
+                    if (onHover) await page.hover("#t", { timeout: 5000 });
                     await page.waitForTimeout(250);
                     resolved = await page.evaluate((p) => { const cs = getComputedStyle(document.getElementById("t")); return p === "decl" ? [cs.backgroundColor, cs.color, cs.filter, cs.boxShadow].join(" | ").slice(0, 200) : cs.getPropertyValue(p); }, prop);
                 } catch (e) {

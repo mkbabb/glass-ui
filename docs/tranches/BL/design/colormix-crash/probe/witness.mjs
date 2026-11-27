@@ -26,6 +26,8 @@ const CELLS = [
     ["button-destructive", ["hover", "press"]],
     ["input-invalid", ["hover"]],
     ["blob", ["hover"]],
+    // The blob's reduced-motion rule re-applies the resting shadow pair.
+    ["blob-prm", ["hover"]],
     ["bare-control-surface", ["hover"]],
     ["bare-feedback-tone", ["hover"]],
     ["bare-dock-icon-button", ["hover", "press"]],
@@ -36,6 +38,11 @@ const CELLS = [
     ["bare-focus-veil", []],
     ["bare-glass-capsule", ["hover", "press"]],
     ["bare-ghost-slot", ["hover"]],
+    ["card", ["hover"]],
+    ["bare-dock-plate", []],
+    ["bare-glass-well", []],
+    ["bare-segmented-tab", ["hover"]],
+    ["bare-configurator-loading", []],
 ].filter(([id]) => !PICK || PICK.has(id));
 
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".svg": "image/svg+xml" };
@@ -59,7 +66,8 @@ try {
     const version = browser.version();
     for (const mode of ["light", "dark"]) {
         for (const [id, actions] of CELLS) {
-            const context = await browser.newContext({ viewport: { width: 900, height: 700 } });
+            const target = id.replace(/-prm$/, "");
+            const context = await browser.newContext({ viewport: { width: 900, height: 700 }, reducedMotion: id.endsWith("-prm") ? "reduce" : "no-preference" });
             const row = { mode, cell: id, steps: [], crashed: false, crashedAt: null };
             let crashed = false;
             try {
@@ -85,14 +93,14 @@ try {
                     if (!el) return { missing: true };
                     const cs = getComputedStyle(el);
                     return { bg: cs.backgroundColor, filter: cs.filter === "none" ? undefined : cs.filter.slice(0, 160), errors: window.__errors };
-                }, id);
+                }, target);
                 await step("load", async () => {
-                    await page.goto(`http://127.0.0.1:${PORT}/index.html?only=${id}&mode=${mode}`);
+                    await page.goto(`http://127.0.0.1:${PORT}/index.html?only=${target}&mode=${mode}`);
                     await page.waitForFunction(() => window.__ready === true, null, { timeout: 6000 });
                     return read();
                 });
                 for (const a of actions) {
-                    if (a === "hover") await step("hover", async () => { await page.hover(`[data-target="${id}"]`, { timeout: 4000, force: true }); await sleep(150); return read(); });
+                    if (a === "hover") await step("hover", async () => { await page.hover(`[data-target="${target}"]`, { timeout: 4000, force: true }); await sleep(150); return read(); });
                     if (a === "press") await step("press", async () => { await page.mouse.down(); await sleep(200); const r = await read(); await page.mouse.up(); return r; });
                 }
             } finally {

@@ -4,7 +4,7 @@
 // each composited over the page background and over the card.
 // One browser per run, a new context per cell, all closed in finally.
 //
-// usage: node readings.mjs <base-dist> <cured-dist> <out.json> [token...]
+// usage: node readings.mjs <base-dist> <cured-dist> <out.json> [token-or-colour-expression...]
 import { chromium } from "playwright";
 import { createServer } from "node:http";
 import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
@@ -94,7 +94,7 @@ try {
                     return c;
                 };
                 const out = { page: probe("var(--background)"), card: probe("var(--card)") };
-                for (const t of tokens) out[t] = probe(`var(${t})`);
+                for (const t of tokens) out[t] = probe(t.startsWith("--") ? `var(${t})` : t);
                 return out;
             }, [level, TOKENS]);
         } finally {

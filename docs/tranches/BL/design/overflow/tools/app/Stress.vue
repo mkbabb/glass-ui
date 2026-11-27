@@ -45,6 +45,9 @@ import { DialogContent, DialogHeader, DialogFooter } from "@glass/components/dia
 import { Card } from "@glass/components/card";
 import { FadingScroll } from "@glass/components/fading-scroll";
 import { DeckSlide, DeckStage, useDeck } from "@glass/components/deck";
+// Round 3 (/ovf.html?v7): the strip's touch-action and flex size, the dock run's
+// vertical swipe, ConfiguratorLayer's clip, and a Chip and a Button in the law's rows.
+import { ConfiguratorLayer } from "@glass/components/configurator";
 
 const LONG = "Quarterly enrollment by district and program, all years";
 const TOKEN = "district_enrollment_by_program_quarterly_2019-2026.csv";
@@ -106,6 +109,19 @@ const bodySheetOpen = ref(false);
 const bodyRung = ref<number | null>(0.7);
 const deckV = useDeck(3, { axis: "vertical" });
 const ROWS8 = Array.from({ length: 8 }, (_, i) => `Row ${i + 1}: ${LONG}`);
+// round 3
+const v7 = typeof location !== "undefined" && new URLSearchParams(location.search).has("v7");
+const TABS3 = ["Map", "Table", "Chart"].map((d) => ({ value: d.toLowerCase(), label: d }));
+const v7Sheet = ref(false);
+const v7Rung = ref<number | null>(0.4);
+const v7Tab = ref<Record<string, string>>({ hf: "map", ho: "enrollment", none: "map", panx: "map", pany: "map", over: "enrollment", row: "map", rowo: "enrollment", col: "map", colo: "enrollment", vert: "map", tight: "map", nover: "enrollment", scaled: "map" });
+const v7Sel = ref("a");
+// /ovf.html?v7side: a detented right Sheet whose header holds a strip that fits and one
+// that does not (its drag shares the strip's axis); a page of its own, so ?v7 is unchanged.
+const v7side = typeof location !== "undefined" && new URLSearchParams(location.search).has("v7side");
+const v7Side = ref(false);
+const v7SideRung = ref<number | null>(0.9);
+const v7SideTab = ref<Record<string, string>>({ fit: "map", over: "enrollment" });
 </script>
 
 <template>
@@ -337,6 +353,152 @@ const ROWS8 = Array.from({ length: 8 }, (_, i) => `Row ${i + 1}: ${LONG}`);
                     </SheetContent>
                 </Dialog>
             </div>
+        </main>
+        <main v-else-if="v7side" class="ovf-page v7-page" data-testid="v7side">
+            <h1 class="ovf-h">Overflow round 3: a side sheet's header</h1>
+            <Dialog v-model:open="v7Side" :modal="false">
+                <DialogTrigger as-child>
+                    <Button data-testid="v7-open-side">Detented side sheet with tabs</Button>
+                </DialogTrigger>
+                <SheetContent side="right" :detents="[0.5, 0.9]" v-model:detent="v7SideRung" data-testid="v7-side" @interact-outside.prevent>
+                    <DialogHeader>
+                        <DialogTitle data-testid="v7-side-title">Measures</DialogTitle>
+                        <DialogDescription>Pick a view and a measure family.</DialogDescription>
+                        <div data-testid="v7-side-fit"><SegmentedTabs v-model="v7SideTab.fit" :options="TABS3" aria-label="View, side header" /></div>
+                        <div data-testid="v7-side-over"><SegmentedTabs v-model="v7SideTab.over" :options="TABS8" aria-label="Measure family, side header" /></div>
+                    </DialogHeader>
+                    <div>
+                        <p v-for="n in 12" :key="n" class="fold-p">Row {{ n }}: {{ LONG }}</p>
+                    </div>
+                </SheetContent>
+            </Dialog>
+            <p v-for="n in 40" :key="n" class="fold-p">Page row {{ n }}: {{ LONG }}</p>
+        </main>
+        <main v-else-if="v7" class="ovf-page v7-page" data-testid="v7">
+            <h1 class="ovf-h">Overflow round 3 cells</h1>
+
+            <!-- a detented bottom Sheet whose header holds a strip that fits and one that does not -->
+            <Dialog v-model:open="v7Sheet">
+                <DialogTrigger as-child>
+                    <Button data-testid="v7-open-sheet">Detented sheet with tabs</Button>
+                </DialogTrigger>
+                <SheetContent side="bottom" :detents="[0.4, 0.7, 1]" v-model:detent="v7Rung" data-testid="v7-sheet">
+                    <DialogHeader>
+                        <DialogTitle>Measures</DialogTitle>
+                        <DialogDescription>Pick a view and a measure family.</DialogDescription>
+                        <div data-testid="v7-hdr-fit"><SegmentedTabs v-model="v7Tab.hf" :options="TABS3" aria-label="View, header" /></div>
+                        <div data-testid="v7-hdr-over"><SegmentedTabs v-model="v7Tab.ho" :options="TABS8" aria-label="Measure family, header" /></div>
+                    </DialogHeader>
+                    <div>
+                        <p v-for="n in 12" :key="n" class="fold-p">Row {{ n }}: {{ LONG }}</p>
+                    </div>
+                </SheetContent>
+            </Dialog>
+
+            <!-- a strip that fits, in a touch-action: none box, a pan-x box and a pan-y pane -->
+            <div class="v7-box" style="touch-action: none" data-testid="v7-none">
+                <SegmentedTabs v-model="v7Tab.none" :options="TABS3" aria-label="View, none box" />
+            </div>
+            <div class="v7-box" style="touch-action: none; inline-size: 157px" data-testid="v7-none-tight">
+                <SegmentedTabs v-model="v7Tab.tight" :options="TABS3" aria-label="View, none box, 3 px short" />
+            </div>
+            <div class="v7-box" style="touch-action: none; inline-size: 267px" data-testid="v7-none-over">
+                <SegmentedTabs v-model="v7Tab.nover" :options="TABS8" aria-label="Measure family, none box" />
+            </div>
+            <div class="v7-box" style="touch-action: pan-x" data-testid="v7-panx">
+                <SegmentedTabs v-model="v7Tab.panx" :options="TABS3" aria-label="View, pan-x box" />
+            </div>
+            <div class="v7-box v7-pane" style="touch-action: pan-y" data-testid="v7-pany">
+                <SegmentedTabs v-model="v7Tab.pany" :options="TABS3" aria-label="View, pan-y pane" />
+                <p v-for="r in ROWS8" :key="r" class="fold-p">{{ r }}</p>
+            </div>
+
+            <!-- a strip that does not fit, in a plain 267 px box -->
+            <div class="v7-box" style="inline-size: 267px" data-testid="v7-over">
+                <SegmentedTabs v-model="v7Tab.over" :options="TABS8" aria-label="Measure family, eight" />
+            </div>
+
+            <!-- the strip as a flex item: beside a heading, over a list, and vertical beside a paragraph -->
+            <div class="v7-row" data-testid="v7-row">
+                <h3 class="v7-h">{{ LONG }}</h3>
+                <SegmentedTabs v-model="v7Tab.row" :options="TABS3" aria-label="View, row" />
+            </div>
+            <div class="v7-row" data-testid="v7-row-over">
+                <h3 class="v7-h">Enrollment</h3>
+                <SegmentedTabs v-model="v7Tab.rowo" :options="TABS8" aria-label="Measure family, row" />
+            </div>
+            <div class="v7-col" data-testid="v7-col">
+                <SegmentedTabs v-model="v7Tab.col" :options="TABS3" aria-label="View, column" />
+                <ul class="v7-list"><li v-for="n in 12" :key="n">Row {{ n }}</li></ul>
+            </div>
+            <div class="v7-col" data-testid="v7-col-over">
+                <SegmentedTabs v-model="v7Tab.colo" :options="TABS8" aria-label="Measure family, column" />
+                <ul class="v7-list"><li v-for="n in 12" :key="n">Row {{ n }}</li></ul>
+            </div>
+            <div class="v7-row" data-testid="v7-vert">
+                <SegmentedTabs v-model="v7Tab.vert" :options="TABS3" orientation="vertical" aria-label="View, vertical" />
+                <p class="fold-p">{{ LONG }} {{ LONG }}</p>
+            </div>
+
+            <!-- in-flow docks: three seats that fit, and eight that do not -->
+            <div class="v7-box" data-testid="v7-dock3">
+                <GlassDock :collapse="false" aria-label="Three seats, in flow">
+                    <DockControl v-for="d in ['Map', 'Table', 'Chart']" :key="d" shape="tab">{{ d }}</DockControl>
+                </GlassDock>
+            </div>
+            <div class="v7-box" data-testid="v7-dock8">
+                <GlassDock :collapse="false" aria-label="Eight seats, in flow">
+                    <DockControl v-for="d in DOCK" :key="d" shape="tab">{{ d }}</DockControl>
+                </GlassDock>
+            </div>
+
+            <!-- ConfiguratorLayer in a 200 px vertical scroller: an open layer holding a box wider than it, and a closed one -->
+            <div class="v7-box fold-scroll" style="inline-size: 200px; max-block-size: 320px" data-testid="v7-cfg">
+                <ConfiguratorLayer label="Easing" :default-open="true">
+                    <div class="v7-wide" data-testid="v7-cfg-wide">300 px</div>
+                </ConfiguratorLayer>
+                <ConfiguratorLayer label="Closed layer" :default-open="false">
+                    <p class="fold-p" data-testid="v7-cfg-hidden">A row the closed layer hides</p>
+                </ConfiguratorLayer>
+            </div>
+
+            <!-- a Chip and a Button beside a long label in the rows the line law reaches, 260 px -->
+            <div class="v7-box" style="inline-size: 260px" data-testid="v7-rows">
+                <Command class="glass-floating">
+                    <CommandList>
+                        <CommandGroup heading="Recent">
+                            <CommandItem :value="LONG" data-testid="v7-row-command">{{ LONG }}<Chip size="sm">Draft</Chip><Button size="sm">Open</Button></CommandItem>
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="x">
+                        <AccordionTrigger data-testid="v7-row-accordion">{{ LONG }}<Chip size="sm">Draft</Chip><Button size="sm">Open</Button></AccordionTrigger>
+                        <AccordionContent>{{ LONG }}</AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+                <Select v-model="v7Sel">
+                    <SelectTrigger data-testid="v7-row-select"><SelectValue /><Chip size="sm">Draft</Chip><Button size="sm">Open</Button></SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="a">{{ LONG }}</SelectItem>
+                    </SelectContent>
+                </Select>
+                <DropdownMenu>
+                    <DropdownMenuTrigger as-child>
+                        <Button data-testid="v7-open-menu">Menu</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent style="inline-size: 260px">
+                        <DropdownMenuItem data-testid="v7-row-menu">{{ LONG }}<Chip size="sm">Draft</Chip><Button size="sm">Open</Button></DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+
+            <!-- a strip a few px past its box, inside a box drawn at 0.9 (a sheet or dialog scaling in) -->
+            <div class="v7-scaled" data-testid="v7-scaled">
+                <SegmentedTabs v-model="v7Tab.scaled" :options="TABS3" aria-label="View, scaled box" />
+            </div>
+
+            <div class="v7-tail" aria-hidden="true" />
         </main>
         <main v-else class="ovf-page">
             <h1 class="ovf-h">Overflow stress</h1>
@@ -638,5 +800,59 @@ const ROWS8 = Array.from({ length: 8 }, (_, i) => `Row ${i + 1}: ${LONG}`);
 }
 .viz-options-band__select {
     inline-size: 100%;
+}
+/* round 3's cells */
+.v7-page {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* A cell that runs past its box must not widen the document: a mobile viewport
+       shrinks a wide page to fit, and touch points then land off their targets. */
+    overflow-x: clip;
+}
+.v7-box {
+    inline-size: 358px;
+}
+.v7-pane {
+    block-size: 200px;
+    overflow-y: auto;
+}
+.v7-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    inline-size: 358px;
+}
+.v7-h {
+    margin: 0;
+    font-size: 1rem;
+}
+.v7-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    inline-size: 240px;
+    block-size: 240px;
+}
+.v7-list {
+    margin: 0;
+}
+.v7-wide {
+    inline-size: 300px;
+    block-size: 36px;
+    border: 1px solid currentColor;
+}
+/* 10 px less than the three tabs need, per pointer */
+.v7-scaled {
+    inline-size: 188px;
+    transform: scale(0.9);
+    transform-origin: 0 0;
+}
+@media (pointer: coarse) {
+    .v7-scaled {
+        inline-size: 150px;
+    }
+}
+.v7-tail {
+    block-size: 200vh;
 }
 </style>

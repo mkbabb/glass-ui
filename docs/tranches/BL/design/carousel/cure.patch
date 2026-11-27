@@ -41,7 +41,17 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
  
  export interface UseDeckSnapOptions {
      /** The scroll container (the strip). Its element children are the members. */
-@@ -52,13 +58,23 @@
+@@ -37,7 +43,8 @@
+ }
+ 
+ export interface UseDeckSnap {
+-    /** Scroll a member into view. `smooth` rides the platform's own inertia. */
++    /** Scroll a member into view. `smooth` rides the platform's own inertia, and under
++        reduced motion fades the strip out and back in around an instant seat. */
+     scrollTo(index: number, behavior?: ScrollBehavior): void;
+     /** Re-measure the member extent (a resize, a member count change). */
+     measure(): void;
+@@ -52,13 +59,23 @@
      const { strip, deck } = options;
      const feedContinuous = options.continuous !== false;
  
@@ -67,7 +77,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
  
      const members = (): HTMLElement[] => {
          const el = strip.value;
-@@ -75,7 +91,7 @@
+@@ -75,7 +92,7 @@
              return;
          }
          // The PITCH, not the member's own box: a gutter between members makes the
@@ -76,7 +86,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          const vertical = deck.axis.value === "vertical";
          const second = kids[1];
          if (second) {
-@@ -95,12 +111,58 @@
+@@ -95,12 +112,62 @@
          return deck.axis.value === "vertical" ? el.scrollTop : el.scrollLeft;
      }
  
@@ -115,6 +125,10 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
 +        the commit never scrolls it again. */
      function commit(index: number): void {
          if (programmatic > 0) return;
++        // A strip that shows several members reports the ones beside the member it rests
++        // on (the observer catches up a frame after an instant seat). While the strip
++        // rests on the member it is heading to, such a report changes nothing.
++        if (heading >= 0 && index !== heading && Math.abs(offset() - offsetOf(heading)) < 1) return;
 +        heading = index;
          deck.go(index);
      }
@@ -135,26 +149,73 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          if (!feedContinuous || extent <= 0) return;
          const now = performance.now();
          const position = offset() / extent;
-@@ -142,31 +204,48 @@
+@@ -140,33 +207,94 @@
+         for (const member of members()) observer.observe(member);
+     }
  
++    /** Under reduced motion nothing travels. A press fades what the strip shows out,
++        seats the strip while it is hidden, and fades it back in: the motion canon's dip,
++        its out leg six tenths of its in. The in leg is the 0.15 s glass's own
++        reduced-motion swaps carve (`transitions.css`), which no token names. The curves
++        are glass's tokens, read from the strip: `--ease-in` out, and `--ease-standard`
++        in, because `--ease-out` lands a third of a 0.15 s fade in its first frame, too
++        near the canon's cap of two fifths. A press during the fade-out moves only
++        `heading`, so the seat goes to the last press; a press during the fade-in turns
++        round from the strip's opacity on screen, still over the whole out leg, so no leg
++        is shorter than five frames. */
++    const DIP_IN_MS = 150;
++    const DIP_OUT_MS = 90;
++    let dip: Animation | null = null;
++    let shown: Animation | null = null;
++
++    function hide(el: HTMLElement): void {
++        const style = getComputedStyle(el);
++        const ease = (token: string, fallback: string): string =>
++            style.getPropertyValue(token).trim() || fallback;
++        const from = Number(style.opacity || 1);
++        shown?.cancel();
++        const out = el.animate(
++            { opacity: [from, 0] },
++            { duration: DIP_OUT_MS, easing: ease("--ease-in", "ease-in"), fill: "forwards" },
++        );
++        dip = out;
++        out.finished.then(
++            () => {
++                dip = null;
++                seat(el, heading, "instant");
++                // From 0 to the strip's own opacity, whatever the page gives it.
++                shown = el.animate(
++                    [{ opacity: 0 }, {}],
++                    { duration: DIP_IN_MS, easing: ease("--ease-standard", "ease-in-out") },
++                );
++                out.cancel();
++            },
++            () => {
++                dip = null;
++            },
++        );
++    }
++
      function scrollTo(index: number, behavior: ScrollBehavior = "smooth"): void {
          const el = strip.value;
 -        if (!el || extent <= 0) return;
 -        const to = index * extent;
 +        if (!el || !members()[index]) return;
 +        heading = index;
++        if (!reduced.value || behavior !== "smooth") seat(el, index, behavior);
++        else if (!dip && Math.abs(offset() - offsetOf(index)) >= 1) hide(el);
++    }
++
++    /** Scroll the strip to member `index`, holding its reports until it rests. */
++    function seat(el: HTMLElement, index: number, behavior: ScrollBehavior): void {
 +        const to = offsetOf(index);
          if (Math.abs(offset() - to) < 1) return;
          programmatic += 1;
-+        // Under reduced motion the strip's sheet asks for an instant scroll; an
-+        // explicit `smooth` here would override it.
-+        const how = reduced.value && behavior === "smooth" ? "instant" : behavior;
          el.scrollTo(
-             deck.axis.value === "vertical"
+-            deck.axis.value === "vertical"
 -                ? { top: to, behavior }
 -                : { left: to, behavior },
-+                ? { top: to, behavior: how }
-+                : { left: to, behavior: how },
++            deck.axis.value === "vertical" ? { top: to, behavior } : { left: to, behavior },
          );
 -        // Release the suppression once the platform has settled the scroll. The
 -        // `scrollend` event is the honest signal; the timeout is its floor for an
@@ -198,7 +259,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
      );
      watch(() => deck.total.value, () => {
          measure();
-@@ -177,14 +256,20 @@
+@@ -177,14 +305,20 @@
          const el = strip.value;
          if (!el) return;
          measure();
@@ -221,7 +282,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          scrollTo(deck.index.value, "instant");
      });
  
-@@ -192,8 +277,12 @@
+@@ -192,8 +326,13 @@
          const el = strip.value;
          el?.removeEventListener("scrollsnapchange", onSnapChange);
          el?.removeEventListener("scroll", onScroll);
@@ -231,6 +292,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
 +        resizer?.disconnect();
 +        resizer = null;
 +        clearTimeout(idle);
++        dip?.cancel();
      });
  
      return { scrollTo, measure };
@@ -399,7 +461,7 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
          /* the FIRED clock's channel — a different property, a different language */
          opacity: 1;
          transition: opacity var(--spring-dock-duration) var(--spring-dock);
-@@ -51,23 +48,49 @@
+@@ -51,23 +48,55 @@
          opacity: 0.7;
      }
  
@@ -407,16 +469,16 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
 -    .carousel-item-content {
 -        translate: calc(var(--member-lag, 0) * 100%) 0;
 +    /* The travel clock's channel. The scale is a function of the scroll position, so
-+       the platform draws it from the content's view timeline and nothing writes it
-+       per frame: 1 where the member rests on its snap point, 0.965 (1 -
-+       MEMBER_SCALE_DROP) one member either side. The range peaks where the content's
-+       start edge meets the strip's start edge, inset by the strip's `scroll-padding`.
-+       So a strip that offsets its members from its start (a padding, a centred snap)
-+       must state that offset as its `scroll-padding` too, or the member at rest stays
-+       below 1. A member that clips uses `overflow: clip`: `hidden` makes the member a
-+       scroll container, the content's timeline then reads the member, and the scale
-+       stays at 1. The scale rides the CONTENT, never the member: the member is the
-+       snap area, and the platform measures a snap area on its transformed box. */
++       the platform draws it from the member's view timeline and nothing writes it per
++       frame: 1 where the member rests on its snap point, 0.965 (1 - MEMBER_SCALE_DROP)
++       one member either side. The range peaks where the member's start edge meets the
++       strip's start edge, inset by the strip's `scroll-padding`. So a strip that
++       offsets its members from its start (a padding, a centred snap) must state that
++       offset as its `scroll-padding` too, or the member at rest stays below 1. The
++       timeline is named on the member, so it reads the strip even when the member
++       clips with `overflow: hidden` and so becomes a scroll container itself. The
++       scale rides the CONTENT, never the member: the member is the snap area, and the
++       platform measures a snap area on its transformed box. */
 +    @keyframes carousel-member-travel {
 +        0%,
 +        100% {
@@ -430,14 +492,17 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
 -        translate: 0 calc(var(--member-lag, 0) * 100%);
 +    @supports (animation-timeline: view()) {
 +        @media (prefers-reduced-motion: no-preference) {
++            .carousel-item {
++                view-timeline: --carousel-member inline;
++            }
++            .carousel-strip[data-orientation="vertical"] > .carousel-item {
++                view-timeline-axis: block;
++            }
 +            .carousel-strip[data-projection="travel"] .carousel-item-content,
 +            .carousel-strip[data-projection="window"] .carousel-item[data-state="active"] .carousel-item-content {
 +                animation: carousel-member-travel linear both;
-+                animation-timeline: view(inline);
++                animation-timeline: --carousel-member;
 +                animation-range: exit -100% exit 100%;
-+            }
-+            .carousel-strip[data-orientation="vertical"][data-projection] .carousel-item .carousel-item-content {
-+                animation-timeline: view(block);
 +            }
 +            /* In a window expansion the neighbours do not move. */
 +            .carousel-strip[data-projection="window"] .carousel-item:not([data-state="active"]) .carousel-item-content {
@@ -446,11 +511,16 @@ diff --git a/src/components/carousel/styles.css b/src/components/carousel/styles
 +        }
      }
  
++    /* Under reduced motion nothing travels or scales. A press never scrolls the strip in
++       sight: the travel arm fades the strip out, seats it and fades it back in. The
++       neighbours still dim, on a short fade carved past the universal reduced-motion
++       layer, as glass's other kept fades are: reduced motion keeps a fade. */
      @media (prefers-reduced-motion: reduce) {
          .carousel-item {
 -            scale: 1;
-             opacity: 1;
-             transition: none;
+-            opacity: 1;
+-            transition: none;
++            transition: opacity 0.15s var(--ease-out) !important;
          }
 -        .carousel-item-content {
 -            translate: none;
@@ -531,7 +601,7 @@ diff --git a/tests/components/deck/snap-travel.test.ts b/tests/components/deck/s
 new file mode 100644
 --- /dev/null
 +++ b/tests/components/deck/snap-travel.test.ts
-@@ -0,0 +1,228 @@
+@@ -0,0 +1,269 @@
 +import { mount } from "@vue/test-utils";
 +import { defineComponent, nextTick, ref } from "vue";
 +import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -548,6 +618,7 @@ new file mode 100644
 +const PITCH = 400;
 +
 +let calls: ScrollToOptions[] = [];
++let fades: { el: Element; keyframes: unknown; finish: () => void; finished: Promise<void> }[] = [];
 +let report: ((entries: Partial<IntersectionObserverEntry>[]) => void) | null = null;
 +
 +/** The strip reports member `i` as holding the viewport. */
@@ -585,6 +656,7 @@ new file mode 100644
 +beforeEach(() => {
 +    vi.useFakeTimers();
 +    calls = [];
++    fades = [];
 +    report = null;
 +    setReduced(false);
 +    (window as unknown as { onscrollend: null }).onscrollend = null;
@@ -631,6 +703,14 @@ new file mode 100644
 +        if (typeof opts.left === "number") this.scrollLeft = opts.left;
 +        this.dispatchEvent(new Event("scroll"));
 +    } as typeof HTMLElement.prototype.scrollTo;
++    // happy-dom has no Web Animations; the stand-in records each fade, and a test ends
++    // one with `finish`.
++    HTMLElement.prototype.animate = function (this: HTMLElement, keyframes: unknown) {
++        let finish = () => {};
++        const finished = new Promise<void>((resolve) => (finish = resolve));
++        fades.push({ el: this, keyframes, finish, finished });
++        return { finished, cancel: () => {} } as unknown as Animation;
++    } as typeof HTMLElement.prototype.animate;
 +});
 +afterEach(() => {
 +    vi.useRealTimers();
@@ -642,10 +722,21 @@ new file mode 100644
 +    it("commits a member the strip reports and never scrolls the strip to it again", async () => {
 +        const { deck, el } = harness();
 +        calls = [];
++        el.scrollLeft = 300;
 +        reportMember(el, 1);
 +        await nextTick();
 +        expect(deck.index.value).toBe(1);
 +        expect(calls).toHaveLength(0);
++    });
++
++    it("ignores a report of a member beside the one the strip rests on", async () => {
++        const { deck, el } = harness();
++        deck.go(1);
++        await nextTick();
++        el.dispatchEvent(new Event("scrollend"));
++        reportMember(el, 2);
++        await nextTick();
++        expect(deck.index.value).toBe(1);
 +    });
 +
 +    it("scrolls a press to the member's own offset", async () => {
@@ -683,12 +774,32 @@ new file mode 100644
 +        expect(deck.index.value).toBe(0);
 +    });
 +
-+    it("scrolls a press at once under reduced motion", async () => {
++    it("under reduced motion fades the strip out, seats it at once, and fades it in", async () => {
 +        setReduced(true);
-+        const { deck } = harness();
++        const { deck, el } = harness();
++        calls = [];
++        deck.go(2);
++        await nextTick();
++        // A press during the fade-out moves the seat; it starts no second fade.
 +        deck.go(3);
 +        await nextTick();
-+        expect(calls.at(-1)).toEqual({ left: 3 * PITCH, behavior: "instant" });
++        expect(calls).toHaveLength(0);
++        expect(fades).toHaveLength(1);
++        expect(fades[0]!.el).toBe(el);
++        expect(fades[0]!.keyframes).toEqual({ opacity: [1, 0] });
++        fades[0]!.finish();
++        await fades[0]!.finished;
++        expect(calls).toEqual([{ left: 3 * PITCH, behavior: "instant" }]);
++        expect(fades).toHaveLength(2);
++        expect(fades[1]!.el).toBe(el);
++        expect(fades[1]!.keyframes).toEqual([{ opacity: 0 }, {}]);
++    });
++
++    it("fades nothing when motion is allowed", async () => {
++        const { deck } = harness();
++        deck.go(2);
++        await nextTick();
++        expect(fades).toHaveLength(0);
 +    });
 +});
 +

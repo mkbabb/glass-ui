@@ -31,6 +31,7 @@ C, ChatGPT's construction with the track's own ground as the shell: shell ⊃ fi
 ## Inputs folded
 
 - **The touch intent** (LF-57, 11.1.2; `audit/hassio-r14/PLACED.md`). On a coarse pointer a horizontal slider's root is `touch-action: pan-y`; no value is set until the pointer has moved 10 px more along the track than across it; a press let go inside the threshold sets the value once at its release, emitting `update:modelValue` and `valueCommit` once. The expanded view grows on the press as designed, and the value waits for intent. BM-5 keeps every line of it.
+- **The touch target adds nothing to an ancestor's overflow** (atlas's film G-3, IN O-434; S112, "atlas's dropdown films"). 11.1.2 keeps every coarse-pointer target at 44 px or more while adding nothing to any ancestor's scrollable overflow. The finger target here rides the root's own box (`min-block-size`, `min-inline-size`), which is layout, not overflow, so the grown root takes its room in the row and no scroller around it gains a sideways scroll. The proof keeps G-3's witness.
 - **The value's two events** (IN O-432). `update:modelValue` carries the live value as it moves, and `valueCommit` fires once at release, so a site puts its costly call on `valueCommit`. No speed carries the value on after the finger lifts (law 3).
 - **What C removes** from BL's build: the separate card ground, its hairline, its opacity leg, the hover's knob growth, and the track's ink deepening from 16 % to 24 %.
 
@@ -46,11 +47,13 @@ In headless Chromium and Playwright WebKit, through `guarded`:
 - a site's colour ground grows in that colour; an image ground stays on the track's box with a clear ring;
 - the ring stands at g with no jump as Tab leaves;
 - a tap within g of the root, on a fine pointer, reaches the neighbour;
-- at 390 with touch: a vertical swipe begun on a slider scrolls the page and leaves the value unchanged while the ground grows on the press; a horizontal drag sets the value from the 10 px point; a tap sets it once at release; the root is 44 px or more on its short axis;
+- at 390 with touch: a vertical swipe begun on a slider scrolls the page and leaves the value unchanged while the ground grows on the press; a horizontal drag sets the value from the 10 px point; a tap sets it once at release; the root is 44 px or more on its short axis; a slider at the inline edge of an `overflow: auto` scroller leaves its `scrollWidth` at its `clientWidth` (G-3's witness, kept);
 - the counts read on the real sheet: one movement on a hover; on a press two, or three with a knob and a readout;
 - forced colours (Canvas ground, 1 px CanvasText edge, the root's 2 px outline as the ring), more contrast (nothing changes) and Reduce Motion (nothing grows; the readout fades);
 - the strips `strip-held-{light,dark}.png` re-shot on the build, 390 and 1440;
 - G-2, G-3 and G-5.
+
+daraksha is asked to run its `e2e/veil-webkit.spec.ts` on the minor's candidate with its two scrubbers grown (BM.md §10).
 
 Optional, never blocking: a Busy-page look at a knobbed slider (D§15.2) and VoiceOver's order on an iPhone.
 
@@ -58,12 +61,12 @@ Optional, never blocking: a Busy-page look at a knobbed slider (D§15.2) and Voi
 
 | Site | Sliders (newest branch, read 2026-11-24) | Asked |
 |---|---|---|
-| atlas | `src/filter/ui/RangeFacet.vue:62` (a two-value slider); five sci filters (`DemandFilter.vue:63`, `EcfFilter.vue:366`, `:383`, `SciFilter.vue:189`, `UsfFilter.vue:100`) | sliders within 8 px of a neighbour; suites that read a held slider's size; whether RangeFacet keeps knobs |
-| value.js | six, among them the channel sliders (`demo/picker/controls/ComponentSliders/ComponentSliders.vue:63`, a ramp on `--glass-slider-track-background` at `:237`) | the ring round a ramp; whether any slider wants a knob |
-| daraksha | the two scrubbers (`src/name/NameDock.vue:116`, `src/portraits/PortraitsDock.vue:79`) in the gold `src/gilt/gilt.css:57-65` sets | the gold growing on the gilt; whether the scrubbers keep a knob |
-| fourier | `web/src/components/shared/FourierTimeline.vue:222`, `web/src/components/ui/SliderControl.vue:187` | whether both grow while held; sliders near the canvas |
+| atlas | `src/filter/ui/RangeFacet.vue:62` (a two-value slider, `u/s24-atlas`); five in the sci filters (`DemandFilter.vue:63`, `EcfFilter.vue:366`, `:383`, `SciFilter.vue:189`, `UsfFilter.vue:100`, on `u/s24-sci`) | sliders within 8 px of a neighbour; suites that read a held slider's size; whether RangeFacet keeps knobs |
+| value.js | six: the channel sliders (`demo/picker/controls/ComponentSliders/ComponentSliders.vue:63`, a ramp on `--glass-slider-track-background` at `:237`), `demo/scenes/ConfigSliderPane.vue:217`, `demo/workbenches/extract/ExtractControls.vue:48` and `:77`, `generate/GenerateControls.vue:366`, `gradient/GradientVisualizer/GradientVisualizer.vue:313`; the thumb reads the fill's colour (`demo/styles/foundation.css:499`) | the ring round a ramp; whether any slider wants a knob |
+| daraksha | the two scrubbers (`src/name/NameDock.vue:116`, `src/portraits/PortraitsDock.vue:79`, `origin/master`) in the gold `src/gilt/gilt.css:57-65` sets: the groove at `:60`, the knob's colour at `:58` and `:65` | the gold growing on the gilt; whether the scrubbers keep a knob |
+| fourier | `web/src/components/shared/FourierTimeline.vue:222`; `web/src/components/ui/SliderControl.vue:187`, mounted in `equation/FunctionInput.vue:208`, `morph/HarmonicLevelGrid.vue:10`, `:20` and `morph/MorphPhaseConfig.vue:46` | whether both grow while held; sliders near the canvas |
 | keyframes | four (`LayerConfigPanel.vue:155`, `TransportScrub.vue:10`, `PlaybackRibbon.vue:65`, `SpringPhysicsFacet.vue:144`) | nothing |
-| Home Assistant | `frontend/src/tiles/rails.ts:234` (its colour through `--slider-range-bg` at `:251`) | whether the rails set `:expand="false"` |
+| Home Assistant | `frontend/src/tiles/rails.ts:234` (its colour through `--slider-range-bg` at `:251`). Its own hand stands in front of the slider (`:6-11`) and takes the pointer, so the Slider's `update:modelValue` sees the keyboard only (`:261`) | whether the rails keep the hand, and whether they set `:expand="false"` |
 
 gaggle and slides mount no Slider.
 

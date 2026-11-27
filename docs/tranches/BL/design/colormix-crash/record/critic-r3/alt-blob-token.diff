@@ -1,0 +1,12 @@
+--- a/src/styles/tokens/shadow.css
++++ b/src/styles/tokens/shadow.css
+@@ -105,8 +105,7 @@
+        `--blob-shadow-*` sub-axes) on the cascade. */
+     --blob-shadow-offset: 0 4px;
+     --blob-shadow-blur:   14px;
+-    --blob-shadow-color:  color-mix(in srgb,
+-        var(--blob-color, var(--shadow-color)) 22%, var(--shadow-color));
++    --blob-shadow-color:  var(--shadow-color);
+     --blob-shadow-strength: 20%;
+     /* The AMBIENT cast (the soft diffuse drop) — the dome floats a little above its
+        surface. This is the first drop-shadow rung. */

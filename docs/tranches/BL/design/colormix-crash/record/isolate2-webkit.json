@@ -1,0 +1,311 @@
+{
+ "engine": "webkit",
+ "rows": [
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms opaque literal mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms opaque mixes, 35% on second",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms translucent literal mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), oklch(0.28 0.035 70 / 0.2)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.3), oklch(0.28 0.035 70 / 0.4)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm 1 translucent mix, arm 2 opaque mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), hsl(30 85% 96%)), color-mix(in srgb, red, blue))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm 1 opaque mix, arm 2 translucent mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), hsl(30 85% 96%)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms translucent mixes with transparent",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 1) 10%, transparent), color-mix(in srgb, oklch(0.28 0.035 70 / 1) 14%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms mixes, srgb outer",
+   "value": "color-mix(in srgb, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms mixes, oklch outer",
+   "value": "color-mix(in oklch, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms the same mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms relative colours of mixes",
+   "value": "color-mix(in oklab, oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)) l c h), oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm mix + arm relative colour",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), oklch(from oklch(0.28 0.035 70) l c h / 0.14) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm mix + arm light-dark()",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), light-dark(red, blue) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.573456 0.191518 0.111287 / 0.415)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms light-dark()",
+   "value": "color-mix(in oklab, light-dark(red, blue), light-dark(green, white) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.590084 0.097055 0.119487)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "both arms currentcolor mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, currentcolor 10%, transparent), color-mix(in srgb, currentcolor 20%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm mix + arm currentcolor mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, currentcolor 20%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "arm mix + arm mix holding a mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)) 50%, color-mix(in srgb, color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 50%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "background-color",
+   "trigger": "hover",
+   "name": "mix of (mix, plain) inside a mix",
+   "value": "color-mix(in oklab, color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.910839 0.006211 0.01545 / 0.275)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms opaque literal mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms opaque mixes, 35% on second",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms translucent literal mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), oklch(0.28 0.035 70 / 0.2)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.3), oklch(0.28 0.035 70 / 0.4)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm 1 translucent mix, arm 2 opaque mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), hsl(30 85% 96%)), color-mix(in srgb, red, blue))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm 1 opaque mix, arm 2 translucent mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, oklch(0.28 0.035 70 / 0.1), hsl(30 85% 96%)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms translucent mixes with transparent",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 1) 10%, transparent), color-mix(in srgb, oklch(0.28 0.035 70 / 1) 14%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms mixes, srgb outer",
+   "value": "color-mix(in srgb, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms mixes, oklch outer",
+   "value": "color-mix(in oklch, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms the same mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms relative colours of mixes",
+   "value": "color-mix(in oklab, oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)) l c h), oklch(from color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) l c h) 35%)",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm mix + arm relative colour",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), oklch(from oklch(0.28 0.035 70) l c h / 0.14) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm mix + arm light-dark()",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), light-dark(red, blue) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.573456 0.191518 0.111287 / 0.415)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms light-dark()",
+   "value": "color-mix(in oklab, light-dark(red, blue), light-dark(green, white) 35%)",
+   "crashed": false,
+   "resolved": "oklab(0.590084 0.097055 0.119487)",
+   "error": null
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "both arms currentcolor mixes",
+   "value": "color-mix(in oklab, color-mix(in srgb, currentcolor 10%, transparent), color-mix(in srgb, currentcolor 20%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm mix + arm currentcolor mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), color-mix(in srgb, currentcolor 20%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "arm mix + arm mix holding a mix",
+   "value": "color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)) 50%, color-mix(in srgb, color-mix(in srgb, oklch(0.28 0.035 70 / 0.14) 100%, hsl(30 85% 96%)) 50%, transparent))",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "background-color",
+   "trigger": "load",
+   "name": "mix of (mix, plain) inside a mix",
+   "value": "color-mix(in oklab, color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), hsl(30 85% 96%)) 50%, transparent)",
+   "crashed": false,
+   "resolved": "oklab(0.910839 0.006211 0.01545 / 0.275)",
+   "error": null
+  }
+ ]
+}

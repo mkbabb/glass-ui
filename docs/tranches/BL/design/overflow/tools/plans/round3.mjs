@@ -8,7 +8,7 @@
 import { createRequire } from "node:module";
 import { writeFileSync, mkdirSync } from "node:fs";
 
-const TREE = new URL("../../trees/v11.1.1/package.json", import.meta.url).pathname;
+const TREE = new URL(`../../trees/${process.env.OVF_TREE || "v11.1.1"}/package.json`, import.meta.url).pathname;
 const require = createRequire(TREE);
 const pw = require("playwright");
 const { PNG } = require("pngjs");

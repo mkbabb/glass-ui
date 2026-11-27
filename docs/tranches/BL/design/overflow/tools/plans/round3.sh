@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # round3.sh <engine> <out-name> <dist:port>... [-- <name:port[:css]>...]
-# One guarded run: a vite preview of each dist of trees/v11.1.1 on its port, then
+# One guarded run: a vite preview of each dist of trees/v11.1.1 (or OVF_TREE) on its port, then
 # round3.mjs over the named builds. The previews are this script's children and stop
 # with it.
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/../.." && pwd)"
-TREE="$ROOT/trees/v11.1.1"
+TREE="$ROOT/trees/${OVF_TREE:-v11.1.1}"
 ENGINE="$1"; NAME="$2"; shift 2
 SRVS=""
 trap 'for p in $SRVS; do kill "$p" 2>/dev/null; done' EXIT

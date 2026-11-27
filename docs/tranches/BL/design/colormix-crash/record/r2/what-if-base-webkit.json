@@ -1,0 +1,168 @@
+{
+ "engine": "webkit",
+ "version": "26.5",
+ "dist": "trees/fix2-base/cmx/dist",
+ "at": "2026-11-25T03:17:40.174Z",
+ "cases": {
+  "what-if-ink-mix": ":root, .dark { --foreground: color-mix(in oklab, #1c1917 90%, #7c2d12); }",
+  "what-if-accent-mix": "[data-target=\"bare-dock-icon-button\"] { --glass-accent: color-mix(in oklab, #2e9d5b 62%, transparent); --glass-accent-strength: 100%; }"
+ },
+ "rows": [
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-segmented-tab",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "oklab(0.395081 0.014942 0.027155)"
+   }
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-segmented-tab",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "oklab(0.497394 0.009488 0.018745)"
+   }
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "checkbox-checked",
+   "mode": "light",
+   "action": "press",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "checkbox-checked",
+   "mode": "dark",
+   "action": "press",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "checkbox-unchecked",
+   "mode": "light",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "checkbox-unchecked",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "rgb(28, 25, 23)"
+   }
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-dock-plate",
+   "mode": "light",
+   "action": null,
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.addStyleTag: Target page, context or browser has been closed"
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-dock-plate",
+   "mode": "dark",
+   "action": null,
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.addStyleTag: Target page, context or browser has been closed"
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "card",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.14)",
+    "border": "oklab(0.235343 0.012236 0.011771 / 0.16)"
+   }
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "card",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.092767 0.050346 0.00879 / 0.18)",
+    "border": "oklab(0.235343 0.012236 0.011771 / 0.16)"
+   }
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-control-surface",
+   "mode": "light",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "what-if-ink-mix",
+   "cell": "bare-control-surface",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "what-if-accent-mix",
+   "cell": "bare-dock-icon-button",
+   "mode": "light",
+   "action": "press",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "oklab(0.257663 0.008982 0.023166 / 0.2002)",
+    "border": "rgb(28, 25, 23)",
+    "filter": "brightness(1)"
+   }
+  },
+  {
+   "name": "what-if-accent-mix",
+   "cell": "bare-dock-icon-button",
+   "mode": "dark",
+   "action": "press",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "oklab(0.926152 0.001586 0.006089 / 0.11)",
+    "border": "rgb(233, 230, 226)",
+    "filter": "brightness(1)"
+   }
+  }
+ ]
+}

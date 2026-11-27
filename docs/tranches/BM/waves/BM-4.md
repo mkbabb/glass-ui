@@ -26,7 +26,9 @@ One writer serves SegmentedTabs, a dock run that fits, DockLayerGroup's switcher
 
 ## Inputs folded
 
-11.1.2's run cures stand and the mark keeps them: `useSelectionGroup` scrolls only its own run (GL-18; the `scrollIntoView` call at `useSelectionGroup.ts:200`), a run whose seats fit is no scroller (IN O-430 item 7), and a run lets a vertical swipe through (GL-16; `dock/styles/run.css:276` is `pan-x` on master and 11.1.1, and 11.1.2 widens it). 11.1.1's reduced-motion run mark already crossfades (its exits scope, row 13 (a)); the new mark does the same.
+11.1.2's run cures stand and the mark keeps them: `useSelectionGroup` scrolls only its own run (GL-18; the `scrollIntoView` call at `src/composables/motion/morph/useSelectionGroup.ts:200`), a run whose seats fit is no scroller (IN O-430 item 7), and a run lets a vertical swipe through (GL-16; `dock/styles/run.css:276` is `pan-x` on master and 11.1.1, and 11.1.2 widens it). 11.1.1's reduced-motion run mark already crossfades (its exits scope, row 13 (a)); the new mark does the same.
+
+The tab's touch target is 11.1.2's too (atlas's film G-3, IN O-434; S112, "atlas's dropdown films"). Under a coarse pointer a tab grows to `--control-floor`, 44 px (`src/components/tabs/styles/segmented.css:184-187`), and 11.1.2 keeps that target from adding to any ancestor's scrollable overflow. The mark sits inside the option's box, so it adds nothing there either, and the proof re-reads G-3's witness.
 
 ## Bytes
 
@@ -37,6 +39,7 @@ CSS +585 B (the mark's sheet) and −494 B (the run mark's rules); JS +914 B (th
 In headless Chromium and Playwright WebKit, through `guarded`, on P5-mark, P6-hosts and glass's demo (a three-tab strip with a wide third tab, a dock run that fits, a run that scrolls, a Switch):
 
 - no option's box moves when the choice moves, to 0 px, in plain mode, forced colours (light-text and dark-text themes), more contrast, under the keyboard and under Reduce Motion;
+- at 390 on a coarse pointer, a strip at the inline edge of an `overflow: auto` scroller leaves its `scrollWidth` at its `clientWidth` (G-3's witness, kept);
 - a tap's glide ends within half a pixel and passes its rest by 0.30 % of its travel or less; a second tap mid-glide turns without a jump;
 - a drag commits only at release, a cancelled drag chooses nothing, and passing options never fires one;
 - arrow keys and Reduce Motion fade the mark across;
@@ -49,10 +52,10 @@ Read on each site's newest branch on 2026-11-24 (the census in `study/pass-8/fol
 
 | Site | Hosts |
 |---|---|
-| atlas | SegmentedTabs in `src/charts/frame/PlateDial.vue`, `src/filter/ui/VizOptionsBand.vue`, `YearScrubber.vue` and five sci dashboard filters; Switch in `DataAside.vue` and `VizOptionsBand.vue`; its dock runs |
-| value.js | SegmentedTabs in `demo/workbenches/mix/MixSourceSelector.vue` and `AdminNamesPanel.vue`; DockLayerGroup in `demo/shell/dock/Dock.vue` |
-| fourier | SegmentedTabs in `web/src/components/equation/EquationModeToggle.vue:59` and `gallery/GalleryView.vue:473`; its dock runs |
-| keyframes | SegmentedTabs in `EasingCatalogue.vue`; a Switch in `LayerConfigPanel.vue`; its dock runs |
+| atlas | SegmentedTabs in `src/filter/ui/components/YearScrubber.vue:213` (`u/s24-atlas`; VizOptionsBand's pick-one rows became Selects there) and in five sci dashboard filters (`dashboards/ecf/features/filter/EcfFilter.vue:218`, `:298`, `usf-integrity/features/filter/ConsultantFilter.vue:64`, `:79`, `usf/features/filter/UsfFilter.vue:79`, on `u/s24-sci`); Switch in `src/editorial/DataAside.vue:150` and `src/filter/ui/VizOptionsBand.vue:103`; its dock runs |
+| value.js | SegmentedTabs in `demo/workbenches/mix/MixSourceSelector.vue:147` and `demo/palettes/admin/panels/AdminNamesPanel.vue:28`. Its DockLayerGroup hides the switcher (`:show-switcher="false"`, `demo/shell/dock/Dock.vue:305`), so the mark does not reach it there |
+| fourier | SegmentedTabs in `web/src/components/equation/EquationModeToggle.vue:59` and `gallery/GalleryView.vue:479`; its dock runs |
+| keyframes | SegmentedTabs in `demo/components/EasingCatalogue/EasingCatalogue.vue:42`; a Switch in `LayerConfigPanel.vue:193`; its dock runs |
 | gaggle, daraksha, Home Assistant | their dock runs; daraksha's DockLayerGroup; Home Assistant's five Switches |
 
 No site changes anything. atlas is asked whether a suite reads a strip's boxes under forced colours.

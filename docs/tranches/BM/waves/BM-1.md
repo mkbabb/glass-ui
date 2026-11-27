@@ -24,7 +24,7 @@ daraksha's `ThemeControl.vue` is a private repo, so its idea is taken and none o
 
 ## Inputs folded
 
-- **The theme change as one tween** (IN O-430, item 9's second half, placed with this face; IN O-436 (6), "With the toggle's new face: the theme flip"). 11.1.2 puts the dock's words and glyph on the plate's clock. BM-1 starts the glyph's 200 ms on the frame the root's `.dark` changes, so the glyph lands with them. A site that sets `disable-transitions` re-prints its page in one style recalc by its own choice (atlas does by default, `DockThemeToggle.vue:12` and `:35` on `u/s24-dd-atlas`); the glyph's groups carry `data-allow-motion`, so `html.no-transition *:not([data-allow-motion])` (`src/styles/utilities/a11y-overrides.css:72-74`) still lets the glyph tween. BM builds no page-wide colour tween: the study designs none. The wave's strip films one flip frame by frame in each theme on glass's demo dock, and if the ground cuts while the glyph tweens, that strip goes to the owner with the wave.
+- **The theme change as one tween** (IN O-430, item 9's second half, placed with this face; IN O-436 (6), "With the toggle's new face: the theme flip"). 11.1.2 puts the dock's words and glyph on the plate's clock. BM-1 starts the glyph's 200 ms on the frame the root's `.dark` changes, so the glyph lands with them. A site that sets `disable-transitions` re-prints its page in one style recalc by its own choice (atlas does by default, `DockThemeToggle.vue:12` and `:35` on `u/s24-atlas`); the glyph's groups carry `data-allow-motion`, so `html.no-transition *:not([data-allow-motion])` (`src/styles/utilities/a11y-overrides.css:72-74`) still lets the glyph tween. BM builds no page-wide colour tween: the study designs none. The wave's strip films one flip frame by frame in each theme on glass's demo dock, and if the ground cuts while the glyph tweens, that strip goes to the owner with the wave.
 - **The specular rest light** (S112, the pointer-light section). The rest-light selector on `release/11.1.1` (`src/styles/glass/material.css:350-375`) lists the dock's own controls and not `.dark-mode-toggle-button`, so the toggle carries no rest light today, and BM-1 adds none.
 - **More contrast and forced colours.** Both arms of `src/styles/accessibility.css:9-51` take `[aria-pressed="true"]`, so in dark mode they would draw a selection border on the toggle, a second sign of a state the glyph already shows. The proof reads it. If the arms ring the toggle, the same attribute that keeps the plate's on fill away narrows them too.
 
@@ -48,12 +48,12 @@ In headless Chromium and Playwright WebKit, through `guarded`, on P10-toggle's B
 
 | Site | Where it mounts glass's toggle | What the site does |
 |---|---|---|
-| atlas | `src/platform/chrome/dock/components/DockThemeToggle.vue:29`, used by `Dock.vue:630`, `:714` and `DockFoot.vue:58` (`u/s24-dd-atlas`) | nothing, or `--toggle-tone` on its docks for one ink (asked) |
-| keyframes | `demo/app/dock/ChromeDock.vue:636` (`origin/master`, `kf45`; `:641` on `kf47`) | nothing |
+| atlas | `src/platform/chrome/dock/components/DockThemeToggle.vue:29`, used by `Dock.vue:631`, `:717` and `DockFoot.vue:61` (`u/s24-atlas`) | nothing, or `--toggle-tone` on its docks for one ink (asked) |
+| keyframes | `demo/app/dock/ChromeDock.vue:641` (`origin/master`, with `kf47` merged), already named "Dark mode" | nothing |
 | gaggle | `dashboard/src/App.vue:152` (`tranche-c`); `dashboard/src/report/kit/KitDock.vue:91`, `report/page/PageDock.vue:117`, `:138` and `shell/Dock.vue:221` (`site-redesign`) | nothing |
 | slides | `src/deck/DeckView.vue:164`, inside the deck's dock, and `src/views/HomeView.vue:27` (`npig`, on glass 10.1.4) | moves to the dock-redesign minor when it next touches the decks |
 
-Not mounted: color (its theme is a "Dark mode" checkbox row in two menus, `demo/shell/dock/menus/ProfileSection.vue:248` and `MobileMenuDropdown.vue:157`), fourier (its own `web/src/components/layout/DarkModeToggle.vue`, a `DockControl` with `aria-pressed`, which BM-2's on-mark attribute serves), daraksha (`ThemeControl`), dns-analysis (its own `frontend/src/components/layout/DarkModeToggle.vue`) and Home Assistant.
+Not mounted: color (its theme is a "Dark mode" checkbox row in two menus, `demo/shell/dock/menus/ProfileSection.vue:248` and `MobileMenuDropdown.vue:157`), fourier (its own `web/src/components/layout/DarkModeToggle.vue`, a `DockControl` at `:36` with `:aria-pressed="isDark"` at `:39`, which BM-2's on-mark attribute serves), daraksha (`ThemeControl`), dns-analysis (its own `frontend/src/components/layout/DarkModeToggle.vue`) and Home Assistant.
 
 ## Not this wave's
 

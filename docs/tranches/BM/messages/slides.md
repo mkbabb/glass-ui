@@ -10,7 +10,7 @@ Glass now numbers its minors in the order they ship, so I'll name each release b
 
 The DarkModeToggle in the deck's dock (`src/deck/DeckView.vue:164`) and on the home page (`src/views/HomeView.vue:27`) gets its new face, in colour: a warm sun draws its rays in under its disc, and a cool night slides across to carve the crescent, over 200 ms. Its hover becomes the flat plate the dock's controls use, and a press is answered by the glyph itself. With Reduce Motion on it crossfades over the same 200 ms. The same minor brings a seat that stands beside the dock, which a deck could use for its toggle if you'd like (my first question).
 
-## The minor after that, with the new springs and menus
+## The minor with the new springs and menus
 
 - Every spring becomes a single curve. WebKit's source and release notes say Safari runs curves of that kind off the page's thread, though nobody has timed it on an iPhone yet.
 - The Popover and DropdownMenu grow from their trigger as today and leave by a short fade.

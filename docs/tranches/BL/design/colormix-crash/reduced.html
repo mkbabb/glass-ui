@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>color-mix() of two color-mix() values</title>
+<style>
+  /* Both arms of the outer color-mix() are themselves color-mix(). Each arm
+     alone, or the outer mix with one plain arm, renders. */
+  .box {
+    width: 200px;
+    height: 60px;
+    background-color: color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white));
+  }
+</style>
+</head>
+<body>
+<p>Expected: a grey-violet box under this line. Actual: the web content process aborts while it resolves the box's style.</p>
+<div class="box"></div>
+</body>
+</html>

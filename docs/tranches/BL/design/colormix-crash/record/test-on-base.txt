@@ -1,10 +1,25 @@
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/colormix-crash/trees/base
+ ❯ tests/styles/color-mix-endpoints.test.ts (2 tests | 1 failed) 113ms
+     × never gives a color-mix two endpoints that each hold a color-mix 53ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/styles/color-mix-endpoints.test.ts > gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure > never gives a color-mix two endpoints that each hold a color-mix
+AssertionError: expected [ …(2) ] to deeply equal []
 - Expected
 + Received
-
 - []
 + [
 +   "src/styles/tokens/glass.css:263 --control-surface-bg-hover",
 +   "src/styles/tokens/shadow.css:108 --blob-shadow-color",
 + ]
-
- ❯ tests/styles/color-mix-endpoints.test.ts:201:56
+ ❯ tests/styles/color-mix-endpoints.test.ts:183:56
+    181|         // trigger, and the blob's dark shadow on load. A mix with one…
+    182|         // resolves; express the value as one mix instead.
+    183|         expect(mixOfMixes(collectStyles(files(root)))).toEqual([]);
+       |                                                        ^
+    184|     });
+    185| });
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  13:34:28
+   Duration  352ms (transform 20ms, setup 37ms, import 12ms, tests 113ms, environment 93ms)

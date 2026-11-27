@@ -37,7 +37,7 @@ The generator computes them; these are the study's figures, and G-1 reads the bu
 ## Inputs folded
 
 - **The spring's end step** (IN O-430 item 6). 11.1.2 fixes the generator so no easing's last step exceeds 0.1 %. Step 1 replaces the tokens after it, from the same generator.
-- **keyframes.js today** (read on keyframes.js `origin/master`, 6.5.0). `sampleNormalizedSpring` (`src/animation/physics/spring/solver/sample.ts:75`) already steps the solver from a seeded speed, and `Draggable` (`src/animation/orchestration/drag/draggable.ts:127`) already re-seats its spring from the release speed; neither the sampler nor a keyframe form of it is in the package's public barrel (`src/animation/index.ts:54` exports `springTimingFunction` only). The ask in keyframes' message is that export.
+- **keyframes.js today** (read on keyframes.js `origin/master` at `2a11fb1f`, 6.5.0). The pieces are there: `SpringProgress` is public (`src/animation/index.ts:37`) and steps a spring from any position and speed; `springLinearStops` and `springTimingLUT` (`:52`, `:57`) take an `initialVelocity`, on the normalized spring, as even samples or a `linear()`; `sampleNormalizedSpring` (`src/animation/physics/spring/solver/sample.ts:75`) is their shared seeded step loop; and `Draggable` (`src/animation/orchestration/drag/draggable.ts:127`) re-seats its spring from the release speed. What no export gives is keyframes from a start position, target and speed to a tolerance, with the spring's state at any time. The ask in keyframes' message is that one function, and a follow in `Draggable` that starts the spring at release. Rule 2 needs keyframes and not a `linear()` easing, which Safari's compositor takes only from 27.3.
 
 ## Bytes
 
