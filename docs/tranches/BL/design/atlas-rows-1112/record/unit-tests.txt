@@ -1,0 +1,52 @@
+vitest run --maxWorkers=2 over the touched areas, on a sparse archive of release/11.1.1 (11.1.1) and on it with cure.patch (cure).
+11.1.1: 263 suites, 881 tests, 853 passed, 15 failed
+cure: 265 suites, 903 tests, 872 passed, 31 failed
+
+Fail on both (files a sparse archive lacks, or a dist only the cure built):
+   tests/gates/boot-graph.test.ts | the built demo has a dist-demo to measure
+   tests/gates/boot-graph.test.ts | the dist-demo it measures is NEWER than every source it is built from
+   tests/gates/boot-graph.test.ts | the eager graph stays under the modulepreload and byte ceilings
+   tests/gates/ci-browser-free.test.ts | (file)
+   tests/gates/ci-sparse-checkout.test.ts | (file)
+   tests/gates/comment-ratio.test.ts | REPO-WIDE ≤20% AND zero tranche/wave/round names — OWED AT BATCH CLOSE
+   tests/gates/comment-ratio.test.ts | the census is internally consistent — comment + code = non-blank
+   tests/public-surface.spec.ts | G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster
+   tests/public-surface.spec.ts | walks every shipped sheet from an export or a published chunk (U/B7b X3)
+   tests/styles/dissolve.test.ts | owns the root's OWN reduced-motion exit — the material release and the fade survive
+   tests/styles/radius-role-canon.test.ts | (file)
+   tests/styles/shadow-token-surface.test.ts | (file)
+
+Fail only on the cure:
+   tests/gates/gate-register.test.ts | BITE — `#`-commenting release.sh's pixel-floor commands REDs both floor rows
+   tests/gates/gate-register.test.ts | BITE — a `#`-commented command inside a `run: |` block scalar REDs the anchor
+   tests/gates/gate-register.test.ts | BITE — a `describe.skip(` block leaves every rostered row beneath it ABSENT
+   tests/gates/gate-register.test.ts | BITE — a live `it.only(` leaves its rostered siblings ABSENT, itself bound
+   tests/gates/gate-register.test.ts | BITE — a missing external enrollment anchor REDs
+   tests/gates/gate-register.test.ts | BITE — a mutated roster byte REDs the sha pin
+   tests/gates/gate-register.test.ts | BITE — a registration commented out with `// it(` is ABSENT, not bound
+   tests/gates/gate-register.test.ts | BITE — a rostered title that survives only in a COMMENT does not count as bound
+   tests/gates/gate-register.test.ts | BITE — a seat claiming a binding its file does not carry REDs
+   tests/gates/gate-register.test.ts | BITE — a seat name surviving only in a COMMENT does not count as bound
+   tests/gates/gate-register.test.ts | BITE — a seat register that is not exactly 60 rows REDs the budget
+   tests/gates/gate-register.test.ts | BITE — a stale `counts` object REDs the recomputation
+   tests/gates/gate-register.test.ts | BITE — a §B.5 family movement REDs Figure A against its authority
+   tests/gates/gate-register.test.ts | BITE — an EMBEDDING seat rename (`XX-…-RETIRED`) REDs instead of binding
+   tests/gates/gate-register.test.ts | BITE — an `it.skip(`'d registration is ABSENT, not bound
+   tests/gates/gate-register.test.ts | BITE — dropping `tests/` from tsconfig.test.json REDs all EIGHT folded type rows
+   tests/gates/gate-register.test.ts | BITE — dropping only the flood leg from release.sh REDs the blob row alone
+   tests/gates/gate-register.test.ts | BITE — gutting release.sh's pixel-floor commands REDs the FOLDED anchor
+   tests/gates/gate-register.test.ts | BITE — severing a rostered `it(` title REDs as an undeclared drift
+   tests/gates/gate-register.test.ts | every seat and every rostered row resolves to an executable
+   tests/gates/gate-register.test.ts | holds the roster drift set as a pinned record, not an allowlist
+   tests/gates/gate-register.test.ts | states both figures — the 60 doc seats and the measured code register
+   tests/styles/sfc-sheets.test.ts | has the shipped README name only files the build emits
+  (gate-register.test.ts ran only in the cure's batch; alone on 11.1.1 it fails the same 22 tests on the missing docs/ roster. sfc-sheets reads README.md, absent from the archive; it skips on 11.1.1, which has no dist.)
+
+Fail only on 11.1.1 (each needs a built dist; only the cured tree was built):
+   tests/gates/no-orphan-lightningcss-polyfill.test.ts | declares every --lightningcss-light / --lightningcss-dark it references
+   tests/public-surface.spec.ts | has a built dist/ to accept
+   tests/public-surface.spec.ts | keeps raw code-bearing sources out of the built artifact
+   tests/public-surface.spec.ts | keeps side-effect stylesheet imports out of the declarations
+   tests/public-surface.spec.ts | rejects packed CSS drift against the built artifact
+   tests/public-surface.spec.ts | ships exactly the style closure, the chunk sheets and the two generated members
+   tests/styles/backdrop-prefix-normalization.test.ts | ships every backdrop-filter as an adjacent -webkit-/standard pair

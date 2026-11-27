@@ -218,11 +218,13 @@ function inPage(strips) {
         for (const el of document.querySelectorAll("[data-ovf-key]")) s[el.getAttribute("data-ovf-key")] = el.scrollLeft;
         return s;
     };
+    // A restore must land at once: a box with `scroll-behavior: smooth` (a tab strip)
+    // would still be gliding back when the next swipe is read.
     const put = (s) => {
         for (const [k, v] of Object.entries(s)) {
             if (k === "window") continue;
             const el = document.querySelector(`[data-ovf-key="${k}"]`);
-            if (el) el.scrollLeft = v;
+            if (el) el.scrollTo({ left: v, top: el.scrollTop, behavior: "instant" });
         }
         scrollTo({ left: s.window, top: scrollY, behavior: "instant" });
     };

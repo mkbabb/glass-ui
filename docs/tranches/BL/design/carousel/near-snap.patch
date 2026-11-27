@@ -7,7 +7,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
  import { useReducedMotion } from "../../../composables/motion/core/useReducedMotion";
  import type { DeckCore } from "./useDeck";
  
-@@ -47,6 +47,9 @@
+@@ -48,6 +48,9 @@
      scrollTo(index: number, behavior?: ScrollBehavior): void;
      /** Re-measure the member extent (a resize, a member count change). */
      measure(): void;
@@ -17,7 +17,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
  }
  
  interface SnapChangeEvent extends Event {
-@@ -69,6 +72,7 @@
+@@ -70,6 +73,7 @@
      let lastTime = 0;
      let observer: IntersectionObserver | null = null;
      let resizer: ResizeObserver | null = null;
@@ -25,7 +25,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
      const reduced = useReducedMotion();
      /** An engine without `scrollend` (Safari before 26.2) gets one from an idle floor:
          no scroll event for this long is rest. */
-@@ -152,6 +156,7 @@
+@@ -157,6 +161,7 @@
  
      /** The strip is at rest: the continuous channel reads its position, still. */
      function rest(): void {
@@ -33,7 +33,7 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          lastTime = 0;
          if (!feedContinuous || extent <= 0) return;
          lastPosition = offset() / extent;
-@@ -159,6 +164,7 @@
+@@ -164,6 +169,7 @@
      }
  
      function onScroll(): void {
@@ -41,16 +41,16 @@ diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/dec
          if (!scrollEnds) {
              clearTimeout(idle);
              idle = setTimeout(() => strip.value?.dispatchEvent(new Event("scrollend")), REST_IDLE_MS);
-@@ -209,6 +215,7 @@
+@@ -263,6 +269,7 @@
          const to = offsetOf(index);
          if (Math.abs(offset() - to) < 1) return;
          programmatic += 1;
 +        moving.value = true;
-         // Under reduced motion the strip's sheet asks for an instant scroll; an
-         // explicit `smooth` here would override it.
-         const how = reduced.value && behavior === "smooth" ? "instant" : behavior;
-@@ -289,5 +296,5 @@
-         clearTimeout(idle);
+         el.scrollTo(
+             deck.axis.value === "vertical" ? { top: to, behavior } : { left: to, behavior },
+         );
+@@ -335,5 +342,5 @@
+         dip?.cancel();
      });
  
 -    return { scrollTo, measure };

@@ -1,0 +1,1849 @@
+diff --git a/src/components/data-table/DataTable.vue b/src/components/data-table/DataTable.vue
+index bce4ce5b7..87cdbd16e 100644
+--- a/src/components/data-table/DataTable.vue
++++ b/src/components/data-table/DataTable.vue
+@@ -6,13 +6,14 @@ import {
+     onBeforeUpdate,
+     onUpdated,
+     ref,
++    useId,
+     useSlots,
+     watch,
+ } from "vue";
+ import { useResizeObserver } from "../../composables/dom";
+ import {
+-    Table,
+     TableBody,
++    TableCaption,
+     TableCell,
+     TableHead,
+     TableHeader,
+@@ -26,6 +27,7 @@ import {
+     type RowEntry,
+ } from "./composables/useDataTableRowIdentity";
+ import { useDataTableResponsive } from "./composables/useDataTableResponsive";
++import { useDataTableFit } from "./composables/useDataTableFit";
+ import { cn } from "../_shared/class-names";
+ import { FOCUSABLE_SELECTOR } from "../_shared/focus";
+ 
+@@ -36,6 +38,7 @@ const props = withDefaults(defineProps<DataTableProps<T>>(), {
+     selectable: false,
+     responsive: false,
+     cardBreakpoint: 640,
++    fit: false,
+ });
+ 
+ const emit = defineEmits<{
+@@ -43,21 +46,18 @@ const emit = defineEmits<{
+     "update:selectedRowId": [id: PropertyKey];
+     "update:tabbableRowId": [id: PropertyKey];
+     select: [row: T];
++    fold: [columns: DataTableColumn<T>[]];
+ }>();
+ 
+ const slots = useSlots();
+ const hasRowActions = computed(() => !!slots["row-actions"]);
++const hasCaption = computed(() => !!slots.caption);
++const captionId = `${useId()}-caption`;
+ const tableRole = computed(
+     () =>
+         props.role ??
+         (props.selectable || props.tabbableRowId !== undefined ? "grid" : undefined),
+ );
+-const logicalColumnCount = computed(
+-    () => props.ariaColCount ?? props.columns.length + (hasRowActions.value ? 1 : 0),
+-);
+-const logicalRowCount = computed(
+-    () => props.ariaRowCount ?? (tableRole.value ? props.rows.length + 1 : undefined),
+-);
+ const renderedState = computed(() => {
+     if (props.status === "error") return "error";
+     if (props.status === "loading" && props.rows.length === 0) return "loading";
+@@ -103,6 +103,47 @@ watch(
+     { flush: "post" },
+ );
+ 
++// The fit runs on the table only: the cards stack every column.
++const rulerRef = ref<HTMLElement | null>(null);
++const { shown: shownColumns, folded: foldedColumns } = useDataTableFit<T>({
++    enabled: () => props.fit && !isCard.value,
++    columns: () => props.columns,
++    ruler: rulerRef,
++});
++const tableColumns = computed(() => (isCard.value ? props.columns : shownColumns.value));
++watch(
++    () => foldedColumns.value.map((col) => col.key).join("\u0000"),
++    () => emit("fold", foldedColumns.value),
++);
++
++const logicalColumnCount = computed(
++    () => props.ariaColCount ?? tableColumns.value.length + (hasRowActions.value ? 1 : 0),
++);
++const logicalRowCount = computed(
++    () => props.ariaRowCount ?? (tableRole.value ? props.rows.length + 1 : undefined),
++);
++
++// THE VIEWPORT. Each projection scrolls its rows in one element, which fills the
++// root's block size; a host reads it through `viewportRef` (a virtualizer, a scroll
++// restorer). The sticky header and first column hold against it.
++const viewportEl = ref<HTMLElement | null>(null);
++watch(viewportEl, (el) => props.viewportRef?.(el), { flush: "post", immediate: true });
++
++// The sticky parts take their ground only once rows pass beneath them, so a table at rest
++// paints exactly as it does unscrolled.
++function markScrolled(el: HTMLElement): void {
++    el.toggleAttribute("data-scrolled-block", el.scrollTop > 0);
++    el.toggleAttribute("data-scrolled-inline", Math.abs(el.scrollLeft) > 0);
++}
++const onViewportScroll = (event: Event): void =>
++    markScrolled(event.currentTarget as HTMLElement);
++watch(viewportEl, (el, previous) => {
++    previous?.removeEventListener("scroll", onViewportScroll);
++    if (!el) return;
++    el.addEventListener("scroll", onViewportScroll, { passive: true });
++    markScrolled(el);
++});
++
+ // Stable identity validation stays separate from rendering and interaction.
+ const { rowEntries } = useDataTableRowIdentity<T>({
+     rows: () => props.rows,
+@@ -146,6 +187,15 @@ function getCellValue(row: T, col: DataTableColumn<T>): string {
+     return raw == null ? "—" : String(raw);
+ }
+ 
++const cellWidth = (col: DataTableColumn<T>) =>
++    col.width ? { inlineSize: col.width } : undefined;
++
++/** A card cell's role, the one its column takes in the table. */
++function cardCellRole(col?: DataTableColumn<T>): string {
++    if (col?.rowHeader) return "rowheader";
++    return tableRole.value === "grid" ? "gridcell" : "cell";
++}
++
+ function toggleSort(col: DataTableColumn<T>) {
+     if (!col.sortable) return;
+     const current = props.sort;
+@@ -237,29 +287,22 @@ const tabbableKey = computed<PropertyKey | null>(() => {
+     return selected?.key ?? rowEntries.value[0]?.key ?? null;
+ });
+ 
+-function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknown> {
++function rowInteraction(entry: RowEntry<T>): Record<string, unknown> {
+     if (!props.selectable) return {};
+     const selected = isSelected(entry);
+     return {
+         class: "data-table-row-interactive",
+-        role: card ? "option" : undefined,
+         "aria-selected": selected,
+         "data-state": selected ? "selected" : undefined,
+         onClick: (event: MouseEvent) => onRowClick(event, entry),
+     };
+ }
+ 
+-function rowBindings(
+-    entry: RowEntry<T>,
+-    index: number,
+-    card = false,
+-): Record<string, unknown> {
++function rowBindings(entry: RowEntry<T>, index: number): Record<string, unknown> {
+     const attrs = {
+         ...props.getRowAttrs?.(entry.row, index),
+     } as Record<string, unknown>;
+-    if (card) delete attrs["aria-rowindex"];
+-    else if (props.getRowIndex)
+-        attrs["aria-rowindex"] = props.getRowIndex(entry.row, index);
++    if (props.getRowIndex) attrs["aria-rowindex"] = props.getRowIndex(entry.row, index);
+     const focusable = props.selectable || props.tabbableRowId !== undefined;
+     const roving = focusable
+         ? {
+@@ -269,7 +312,7 @@ function rowBindings(
+               onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
+           }
+         : {};
+-    return mergeProps(attrs, rowInteraction(entry, card), roving);
++    return mergeProps(attrs, rowInteraction(entry), roving);
+ }
+ </script>
+ 
+@@ -279,11 +322,11 @@ function rowBindings(
+         ref="rootRef"
+         :class="cn('data-table', props.class)"
+         :data-state="renderedState"
++        :data-fit="fit && !isCard ? '' : undefined"
+         :aria-busy="status === 'loading' || undefined"
+     >
+         <!-- ── Card projection (responsive, narrow container) ────────── -->
+         <template v-if="isCard">
+-            <!-- Loading skeleton -->
+             <div
+                 v-if="status === 'error'"
+                 class="data-table-state glass-quiet"
+@@ -292,6 +335,7 @@ function rowBindings(
+                 <slot name="error">Unable to load data</slot>
+             </div>
+ 
++            <!-- Loading skeleton -->
+             <div
+                 v-else-if="status === 'loading' && rows.length === 0"
+                 class="data-table-cards"
+@@ -306,22 +350,51 @@ function rowBindings(
+                 </div>
+             </div>
+ 
+-            <!-- Data cards -->
++            <!-- Data cards. They keep the table's semantics: the same role, a header row
++                 for assistive technology, one row per card and one cell per field. A
++                 field's visible label is hidden from that tree, where its column header
++                 already names it. -->
+             <div
+                 v-else-if="rows.length > 0"
+-                class="data-table-cards"
+-                :role="selectable ? 'listbox' : undefined"
+-                :aria-label="selectable ? (ariaLabel ?? 'Rows') : undefined"
++                ref="viewportEl"
++                class="data-table-cards data-table-viewport"
++                :role="tableRole ?? 'table'"
++                :aria-label="ariaLabel"
++                :aria-labelledby="!ariaLabel && hasCaption ? captionId : undefined"
++                :aria-colcount="logicalColumnCount"
++                :aria-rowcount="logicalRowCount"
+             >
+                 <div
+-                    v-for="(entry, index) in rowEntries"
+-                    :key="entry.key"
+-                    :ref="(el) => setRowEl(entry, index, el)"
+-                    v-bind="rowBindings(entry, index, true)"
+-                    class="data-table-card glass-quiet"
++                    v-if="hasCaption"
++                    :id="captionId"
++                    role="caption"
++                    class="data-table-caption text-small text-muted-foreground"
+                 >
+-                    <div class="data-table-card-header">
+-                        <div class="data-table-card-title">
++                    <slot name="caption" />
++                </div>
++                <div role="rowgroup" class="sr-only">
++                    <div role="row" :aria-rowindex="tableRole === 'grid' ? 1 : undefined">
++                        <div
++                            v-for="col in columns"
++                            :key="col.key"
++                            role="columnheader"
++                            :aria-sort="ariaSort(col)"
++                        >
++                            {{ col.label }}
++                        </div>
++                        <div v-if="hasRowActions" role="columnheader" />
++                    </div>
++                </div>
++                <div role="rowgroup" class="data-table-card-list">
++                    <div
++                        v-for="(entry, index) in rowEntries"
++                        :key="entry.key"
++                        :ref="(el) => setRowEl(entry, index, el)"
++                        v-bind="rowBindings(entry, index)"
++                        role="row"
++                        class="data-table-card glass-quiet"
++                    >
++                        <div :role="cardCellRole(headerColumn)" class="data-table-card-title">
+                             <component
+                                 v-if="headerColumn?.component"
+                                 :is="headerColumn.component"
+@@ -332,35 +405,45 @@ function rowBindings(
+                                 {{ getCellValue(entry.row, headerColumn) }}
+                             </template>
+                         </div>
++
++                        <div v-if="bodyColumns.length > 0" class="data-table-card-fields">
++                            <div
++                                v-for="col in bodyColumns"
++                                :key="col.key"
++                                :role="cardCellRole(col)"
++                                class="data-table-card-field"
++                            >
++                                <span class="data-table-card-label" aria-hidden="true">{{
++                                    col.label
++                                }}</span>
++                                <span
++                                    :class="cn('data-table-card-value', col.class)"
++                                    :data-align="col.align ?? 'left'"
++                                >
++                                    <component
++                                        v-if="col.component"
++                                        :is="col.component"
++                                        :value="getNestedValue(entry.row, col.key)"
++                                        :row="entry.row"
++                                    />
++                                    <template v-else>{{
++                                        getCellValue(entry.row, col)
++                                    }}</template>
++                                </span>
++                            </div>
++                        </div>
++
+                         <div
+                             v-if="hasRowActions"
++                            :role="cardCellRole()"
+                             class="data-table-actions"
+                             @click.stop
+                         >
+                             <slot name="row-actions" :row="entry.row" />
+                         </div>
+                     </div>
+-
+-                    <dl v-if="bodyColumns.length > 0" class="data-table-card-fields">
+-                        <template v-for="col in bodyColumns" :key="col.key">
+-                            <dt class="data-table-card-label">{{ col.label }}</dt>
+-                            <dd
+-                                :class="cn('data-table-card-value', col.class)"
+-                                :data-align="col.align ?? 'left'"
+-                            >
+-                                <component
+-                                    v-if="col.component"
+-                                    :is="col.component"
+-                                    :value="getNestedValue(entry.row, col.key)"
+-                                    :row="entry.row"
+-                                />
+-                                <template v-else>{{
+-                                    getCellValue(entry.row, col)
+-                                }}</template>
+-                            </dd>
+-                        </template>
+-                    </dl>
+                 </div>
++                <slot name="sentinel" />
+             </div>
+ 
+             <!-- Empty state -->
+@@ -371,116 +454,152 @@ function rowBindings(
+         </template>
+ 
+         <!-- ── Tabular layout (default + wide container) ─────────────── -->
+-        <Table
++        <div
+             v-else
+-            :role="tableRole"
+-            :aria-label="ariaLabel"
+-            :aria-col-count="logicalColumnCount"
+-            :aria-row-count="logicalRowCount"
++            ref="viewportEl"
++            data-slot="table-container"
++            class="table-container data-table-viewport"
+         >
+-            <TableHeader>
+-                <TableRow
+-                    class="data-table-header-row"
+-                    :aria-rowindex="tableRole === 'grid' ? 1 : undefined"
+-                >
+-                    <TableHead
+-                        v-for="col in columns"
+-                        :key="col.key"
+-                        :class="col.headerClass"
+-                        :data-align="col.align ?? 'left'"
+-                        :aria-sort="ariaSort(col)"
+-                    >
+-                        <button
+-                            v-if="col.sortable"
+-                            type="button"
+-                            class="data-table-sort focus-ring"
+-                            :data-align="col.align ?? 'left'"
+-                            @click="toggleSort(col)"
+-                        >
+-                            <span>{{ col.label }}</span>
+-                            <span aria-hidden="true">{{ sortIndicator(col) }}</span>
+-                        </button>
+-                        <template v-else>{{ col.label }}</template>
+-                    </TableHead>
+-                    <!-- Trailing actions column header (auto when row-actions slot is provided) -->
+-                    <TableHead v-if="hasRowActions" class="data-table-actions-cell" />
+-                </TableRow>
+-            </TableHeader>
+-
+-            <TableBody>
+-                <!-- Loading skeleton -->
+-                <TableEmpty
+-                    v-if="status === 'error'"
+-                    :colspan="columns.length + (hasRowActions ? 1 : 0)"
+-                    :role="tableRole === 'grid' ? 'presentation' : undefined"
+-                >
+-                    <span role="alert"
+-                        ><slot name="error">Unable to load data</slot></span
++            <table
++                data-slot="table"
++                class="w-full text-small"
++                :role="tableRole"
++                :aria-label="ariaLabel"
++                :aria-colcount="logicalColumnCount"
++                :aria-rowcount="logicalRowCount"
++            >
++                <TableCaption v-if="hasCaption" class="data-table-caption mt-0">
++                    <slot name="caption" />
++                </TableCaption>
++                <TableHeader>
++                    <TableRow
++                        class="data-table-header-row"
++                        :aria-rowindex="tableRole === 'grid' ? 1 : undefined"
+                     >
+-                </TableEmpty>
+-
+-                <template v-else-if="status === 'loading' && rows.length === 0">
+-                    <TableRow v-for="i in skeletonRows" :key="'skel-' + i">
+-                        <TableCell
+-                            v-for="col in columns"
++                        <TableHead
++                            v-for="col in tableColumns"
+                             :key="col.key"
++                            :class="col.headerClass"
++                            :style="cellWidth(col)"
+                             :data-align="col.align ?? 'left'"
++                            :aria-sort="ariaSort(col)"
+                         >
+-                            <Skeleton class="data-table-cell-skeleton" />
+-                        </TableCell>
+-                        <TableCell v-if="hasRowActions" class="data-table-actions-cell">
+-                            <Skeleton class="data-table-action-skeleton" />
+-                        </TableCell>
++                            <button
++                                v-if="col.sortable"
++                                type="button"
++                                class="data-table-sort focus-ring"
++                                :data-align="col.align ?? 'left'"
++                                @click="toggleSort(col)"
++                            >
++                                <span>{{ col.label }}</span>
++                                <span aria-hidden="true">{{ sortIndicator(col) }}</span>
++                            </button>
++                            <template v-else>{{ col.label }}</template>
++                        </TableHead>
++                        <!-- Trailing actions column header (auto when row-actions slot is provided) -->
++                        <TableHead v-if="hasRowActions" class="data-table-actions-cell" />
+                     </TableRow>
+-                </template>
++                </TableHeader>
+ 
+-                <!-- Data rows -->
+-                <template v-else-if="rows.length > 0">
+-                    <TableRow
+-                        v-for="(entry, index) in rowEntries"
+-                        :key="entry.key"
+-                        :ref="(el) => setRowEl(entry, index, el)"
+-                        v-bind="rowBindings(entry, index)"
++                <TableBody>
++                    <TableEmpty
++                        v-if="status === 'error'"
++                        :colspan="tableColumns.length + (hasRowActions ? 1 : 0)"
++                        :role="tableRole === 'grid' ? 'presentation' : undefined"
+                     >
+-                        <TableCell
+-                            v-for="col in columns"
+-                            :key="col.key"
+-                            :class="col.class"
+-                            :data-align="col.align ?? 'left'"
++                        <span role="alert"
++                            ><slot name="error">Unable to load data</slot></span
+                         >
+-                            <component
+-                                v-if="col.component"
+-                                :is="col.component"
+-                                :value="getNestedValue(entry.row, col.key)"
+-                                :row="entry.row"
+-                            />
+-                            <template v-else>{{
+-                                getCellValue(entry.row, col)
+-                            }}</template>
+-                        </TableCell>
+-                        <TableCell
+-                            v-if="hasRowActions"
+-                            class="data-table-actions-cell"
+-                            @click.stop
++                    </TableEmpty>
++
++                    <!-- Loading skeleton -->
++                    <template v-else-if="status === 'loading' && rows.length === 0">
++                        <TableRow v-for="i in skeletonRows" :key="'skel-' + i">
++                            <TableCell
++                                v-for="col in tableColumns"
++                                :key="col.key"
++                                :data-align="col.align ?? 'left'"
++                            >
++                                <Skeleton class="data-table-cell-skeleton" />
++                            </TableCell>
++                            <TableCell v-if="hasRowActions" class="data-table-actions-cell">
++                                <Skeleton class="data-table-action-skeleton" />
++                            </TableCell>
++                        </TableRow>
++                    </template>
++
++                    <!-- Data rows -->
++                    <template v-else-if="rows.length > 0">
++                        <TableRow
++                            v-for="(entry, index) in rowEntries"
++                            :key="entry.key"
++                            :ref="(el) => setRowEl(entry, index, el)"
++                            v-bind="rowBindings(entry, index)"
+                         >
+-                            <slot name="row-actions" :row="entry.row" />
+-                        </TableCell>
+-                    </TableRow>
+-                </template>
+-
+-                <!-- Empty state -->
+-                <TableEmpty
+-                    v-else
+-                    :colspan="columns.length + (hasRowActions ? 1 : 0)"
+-                    :role="tableRole === 'grid' ? 'presentation' : undefined"
++                            <component
++                                :is="col.rowHeader ? 'th' : TableCell"
++                                v-for="col in tableColumns"
++                                :key="col.key"
++                                :scope="col.rowHeader ? 'row' : undefined"
++                                :class="
++                                    col.rowHeader
++                                        ? cn('table-cell align-middle data-table-row-header', col.class)
++                                        : col.class
++                                "
++                                :style="cellWidth(col)"
++                                :data-align="col.align ?? 'left'"
++                            >
++                                <component
++                                    v-if="col.component"
++                                    :is="col.component"
++                                    :value="getNestedValue(entry.row, col.key)"
++                                    :row="entry.row"
++                                />
++                                <template v-else>{{
++                                    getCellValue(entry.row, col)
++                                }}</template>
++                            </component>
++                            <TableCell
++                                v-if="hasRowActions"
++                                class="data-table-actions-cell"
++                                @click.stop
++                            >
++                                <slot name="row-actions" :row="entry.row" />
++                            </TableCell>
++                        </TableRow>
++                    </template>
++
++                    <!-- Empty state -->
++                    <TableEmpty
++                        v-else
++                        :colspan="tableColumns.length + (hasRowActions ? 1 : 0)"
++                        :role="tableRole === 'grid' ? 'presentation' : undefined"
++                    >
++                        <slot v-if="filtered" name="filtered-empty">No matching rows</slot>
++                        <slot v-else name="empty">No rows yet</slot>
++                    </TableEmpty>
++                </TableBody>
++            </table>
++            <slot name="sentinel" />
++            <!-- The ruler `fit` measures: every column at its own width, shown or folded,
++                 on a track as wide as the viewport. -->
++            <div
++                v-if="fit"
++                ref="rulerRef"
++                class="data-table-ruler text-small font-medium"
++                aria-hidden="true"
++            >
++                <span
++                    v-for="col in columns"
++                    :key="col.key"
++                    class="table-head"
++                    :data-column="col.key"
++                    :style="cellWidth(col)"
++                    >{{ col.label }}{{ sortIndicator(col) }}</span
+                 >
+-                    <slot v-if="filtered" name="filtered-empty">No matching rows</slot>
+-                    <slot v-else name="empty">No rows yet</slot>
+-                </TableEmpty>
+-            </TableBody>
+-        </Table>
+-
+-        <slot name="sentinel" />
++                <span v-if="hasRowActions" class="data-table-actions-cell" data-actions />
++            </div>
++        </div>
+     </div>
+ </template>
+ 
+diff --git a/src/components/data-table/composables/useDataTableFit.ts b/src/components/data-table/composables/useDataTableFit.ts
+new file mode 100644
+index 000000000..049639c63
+--- /dev/null
++++ b/src/components/data-table/composables/useDataTableFit.ts
+@@ -0,0 +1,113 @@
++// Which leading columns fit the table's viewport, measured off a hidden ruler.
++import {
++    computed,
++    onScopeDispose,
++    shallowRef,
++    toValue,
++    watch,
++    type ComputedRef,
++    type MaybeRefOrGetter,
++    type Ref,
++} from "vue";
++import type { DataTableColumn } from "../types";
++
++export interface UseDataTableFitOptions<T> {
++    /** Whether the table folds the columns that do not fit. */
++    enabled: MaybeRefOrGetter<boolean>;
++    /** Every column, in order, shown or folded. */
++    columns: MaybeRefOrGetter<DataTableColumn<T>[]>;
++    /**
++     * The ruler: out of flow inside the viewport, so its own inline size is the
++     * viewport's. Each child with `data-column` carries one column's width; a child with
++     * `data-actions` carries the row-actions column.
++     */
++    ruler: Readonly<Ref<HTMLElement | null>>;
++}
++
++export interface UseDataTableFitReturn<T> {
++    /** The leading columns that fit, the first always among them. */
++    shown: ComputedRef<DataTableColumn<T>[]>;
++    /** The columns after them. */
++    folded: ComputedRef<DataTableColumn<T>[]>;
++}
++
++const inlineSize = (entry: ResizeObserverEntry, box: "border" | "content"): number =>
++    (box === "border" ? entry.borderBoxSize : entry.contentBoxSize)?.[0]?.inlineSize ??
++    entry.contentRect.width;
++
++/**
++ * The ruler measures every column whether or not the table shows it, so hiding a column
++ * never changes the measure that hid it. The observer takes sizes from its entries only,
++ * and the fold resizes nothing it observes: the ruler is out of flow and as wide as the
++ * viewport, whose inline size the fold leaves alone.
++ */
++export function useDataTableFit<T>(
++    options: UseDataTableFitOptions<T>,
++): UseDataTableFitReturn<T> {
++    const room = shallowRef(0);
++    const actions = shallowRef(0);
++    const widths = shallowRef<ReadonlyMap<string, number>>(new Map());
++    let observer: ResizeObserver | null = null;
++
++    function onResize(entries: ResizeObserverEntry[]): void {
++        let next: Map<string, number> | null = null;
++        for (const entry of entries) {
++            const el = entry.target as HTMLElement;
++            const key = el.dataset.column;
++            if (key !== undefined) {
++                next ??= new Map(widths.value);
++                next.set(key, inlineSize(entry, "border"));
++            } else if (el.dataset.actions !== undefined) {
++                actions.value = inlineSize(entry, "border");
++            } else {
++                room.value = inlineSize(entry, "content");
++            }
++        }
++        if (next) widths.value = next;
++    }
++
++    function disconnect(): void {
++        observer?.disconnect();
++        observer = null;
++    }
++
++    watch(
++        [
++            () => toValue(options.enabled),
++            options.ruler,
++            () => toValue(options.columns).map((col) => `${col.key}\u0000${col.width ?? ""}`).join("\u0001"),
++        ],
++        ([enabled, ruler]) => {
++            disconnect();
++            if (!enabled || !ruler || typeof ResizeObserver === "undefined") return;
++            observer = new ResizeObserver(onResize);
++            observer.observe(ruler);
++            for (const child of Array.from(ruler.children)) {
++                observer.observe(child, { box: "border-box" });
++            }
++        },
++        { flush: "post", immediate: true },
++    );
++    onScopeDispose(disconnect);
++
++    const count = computed(() => {
++        const columns = toValue(options.columns);
++        if (!toValue(options.enabled) || room.value <= 0) return columns.length;
++        let used = actions.value;
++        let n = 0;
++        for (const col of columns) {
++            const width = widths.value.get(col.key);
++            // A column not yet measured: show everything until the ruler has reported.
++            if (width === undefined) return columns.length;
++            if (n > 0 && used + width > room.value + 0.5) break;
++            used += width;
++            n += 1;
++        }
++        return Math.max(Math.min(1, columns.length), n);
++    });
++
++    return {
++        shown: computed(() => toValue(options.columns).slice(0, count.value)),
++        folded: computed(() => toValue(options.columns).slice(count.value)),
++    };
++}
+diff --git a/src/components/data-table/index.ts b/src/components/data-table/index.ts
+index 9e9a8ed99..fcde41639 100644
+--- a/src/components/data-table/index.ts
++++ b/src/components/data-table/index.ts
+@@ -7,4 +7,5 @@ export type {
+     DataTableRowIndex,
+     DataTableRowRef,
+     DataTableStatus,
++    DataTableViewportRef,
+ } from "./types";
+diff --git a/src/components/data-table/styles.css b/src/components/data-table/styles.css
+index 496612fe0..96cf53c38 100644
+--- a/src/components/data-table/styles.css
++++ b/src/components/data-table/styles.css
+@@ -1,10 +1,118 @@
+ @layer components {
++    /* THE VIEWPORT. The root fills its host's block size (at most, so a short table stays
++       short) and hands it to one viewport, the element that scrolls the rows: the table
++       container in the table, the card list in the cards. A host that gives no block
++       size gets a table as tall as its rows, as before. */
++    .data-table {
++        display: flex;
++        flex-direction: column;
++        max-block-size: 100%;
++        min-block-size: 0;
++    }
++
++    .data-table-viewport {
++        flex: 1 1 auto;
++        min-block-size: 0;
++    }
++
++    /* A folding table keeps its gutter, so a scrollbar that comes and goes never changes
++       the width the fold measured. */
++    .data-table[data-fit] .data-table-viewport {
++        scrollbar-gutter: stable;
++    }
++
++    /* THE STICKY HEADER AND FIRST COLUMN. Both hold against the viewport, which scrolls
++       both axes. They take the opaque ground of the plate (`--card`, its opaque escape)
++       only while rows pass beneath them, so a table at rest paints as it always has. */
++    .data-table-viewport > table > thead th {
++        position: sticky;
++        inset-block-start: 0;
++        z-index: 2;
++    }
++
++    .data-table-viewport > table > :is(thead, tbody) > tr > :first-child {
++        position: sticky;
++        inset-inline-start: 0;
++        z-index: 1;
++    }
++
++    .data-table-viewport > table > thead > tr > th:first-child {
++        z-index: 3;
++    }
++
++    .data-table-viewport > table > thead th,
++    .data-table-viewport > table > tbody > tr > :first-child {
++        transition:
++            background-color var(--duration-fast) var(--ease-standard),
++            box-shadow var(--duration-fast) var(--ease-standard);
++    }
++
++    /* The rules draw as inset shadows: a collapsed border stays with the row it belongs
++       to, not with the cell that sticks. */
++    .data-table-viewport[data-scrolled-block] > table > thead th {
++        background-color: var(--card);
++        box-shadow: inset 0 -1px var(--border);
++    }
++
++    .data-table-viewport[data-scrolled-inline] > table > :is(thead, tbody) > tr > :first-child {
++        background-color: var(--card);
++        box-shadow: inset -1px 0 var(--border);
++    }
++
++    .data-table-viewport[data-scrolled-inline]:dir(rtl)
++        > table
++        > :is(thead, tbody)
++        > tr
++        > :first-child {
++        box-shadow: inset 1px 0 var(--border);
++    }
++
++    .data-table-viewport[data-scrolled-block][data-scrolled-inline] > table > thead th:first-child {
++        box-shadow:
++            inset 0 -1px var(--border),
++            inset -1px 0 var(--border);
++    }
++
++    /* A row's state tint reaches the cell that sticks, over its ground. */
++    .data-table-viewport[data-scrolled-inline]
++        > table
++        > tbody
++        > .data-table-row-interactive:is(:hover, [data-state="selected"])
++        > :first-child {
++        background-image: linear-gradient(var(--surface-tint-8), var(--surface-tint-8));
++    }
++
++    /* A row header reads as the cell it is; only its semantics change. */
++    .data-table-row-header {
++        font-weight: inherit;
++        text-align: start;
++    }
++
++    /* The caption names the table above its header, and scrolls with it. */
++    .data-table-caption {
++        padding: 0.75rem var(--table-head-px, 1rem) 0.25rem;
++        text-align: start;
++    }
++
+     .data-table-cards {
+         display: flex;
+         flex-direction: column;
+         gap: 0.5rem;
+     }
+ 
++    /* The card list scrolls inside the root as the table does. Its inset keeps a selected
++       card's ring inside the scroller's clip. */
++    .data-table-cards.data-table-viewport {
++        overflow-y: auto;
++        padding: 0.25rem;
++    }
++
++    .data-table-card-list {
++        display: flex;
++        flex-direction: column;
++        gap: 0.5rem;
++    }
++
+     .data-table-card,
+     .data-table-state {
+         border: 1px solid var(--border);
+@@ -34,11 +142,21 @@
+         height: 1rem;
+     }
+ 
+-    .data-table-card-header {
+-        display: flex;
+-        align-items: flex-start;
+-        justify-content: space-between;
+-        gap: 0.5rem;
++    /* A card is one row: its title and its actions share the first line, and its fields
++       follow. The cells sit in column order in the document, so the grid places them. */
++    .data-table-card[role="row"] {
++        display: grid;
++        grid-template-columns: minmax(0, 1fr) auto;
++        column-gap: 0.5rem;
++        align-items: start;
++    }
++
++    .data-table-card > .data-table-card-title {
++        grid-area: 1 / 1;
++    }
++
++    .data-table-card > .data-table-actions {
++        grid-area: 1 / 2;
+     }
+ 
+     .data-table-card-title,
+@@ -52,12 +170,21 @@
+     }
+ 
+     .data-table-card-fields {
++        grid-column: 1 / -1;
+         display: grid;
+         grid-template-columns: auto minmax(0, 1fr);
+         gap: 0.25rem 0.75rem;
+         margin-block-start: 0.5rem;
+     }
+ 
++    /* Each field is one cell spanning the two tracks, so its label and value still align
++       with every other field's. */
++    .data-table-card-field {
++        grid-column: 1 / -1;
++        display: grid;
++        grid-template-columns: subgrid;
++    }
++
+     .data-table-card-label,
+     .data-table-header-row {
+         color: var(--muted-foreground);
+@@ -69,6 +196,23 @@
+         flex: none;
+     }
+ 
++    /* The ruler `fit` reads: out of flow, unpainted, as wide as the viewport. */
++    .data-table-ruler {
++        position: absolute;
++        inset-block-start: 0;
++        inset-inline: 0;
++        display: flex;
++        block-size: 0;
++        overflow: hidden;
++        visibility: hidden;
++        pointer-events: none;
++        white-space: nowrap;
++    }
++
++    .data-table-ruler > * {
++        flex: none;
++    }
++
+     .data-table-sort {
+         display: inline-flex;
+         width: 100%;
+diff --git a/src/components/data-table/types.ts b/src/components/data-table/types.ts
+index 375b4dfef..4f2f78efe 100644
+--- a/src/components/data-table/types.ts
++++ b/src/components/data-table/types.ts
+@@ -17,6 +17,16 @@ export interface DataTableColumn<T = any> {
+     class?: string;
+     /** Additional CSS classes for the header cell */
+     headerClass?: string;
++    /**
++     * The column's inline size, as any CSS length (`"16rem"`, `"max(9rem, 12ch)"`). Its
++     * header and body cells take it, and `fit` counts the column at it.
++     */
++    width?: string;
++    /**
++     * Its cells head their rows: `<th scope="row">` in the table, `role="rowheader"` in
++     * the card projection.
++     */
++    rowHeader?: boolean;
+ }
+ 
+ export interface DataTableSort {
+@@ -39,6 +49,9 @@ export type DataTableRowRef<T> = (
+     index: number,
+ ) => void;
+ 
++/** Receives the table's viewport, the element that scrolls its rows, and `null` when it leaves. */
++export type DataTableViewportRef = (element: HTMLElement | null) => void;
++
+ /** One-based absolute row index, including the header row at index 1. */
+ export type DataTableRowIndex<T> = (row: T, mountedIndex: number) => number;
+ 
+@@ -80,14 +93,23 @@ export interface DataTableProps<T = any> {
+     selectable?: boolean;
+     /** Stable identity of the selected row when selection is enabled. */
+     selectedRowId?: PropertyKey | null;
++    /** Called with the viewport (the element that scrolls the rows) as each projection mounts it. */
++    viewportRef?: DataTableViewportRef;
+     /**
+      * When true, the table collapses to a stacked card-per-row
+      * projection once its container measures below `cardBreakpoint` —
+      * the responsive story for a dense multi-column table at narrow
+-     * widths. At/above the breakpoint the tabular layout renders.
++     * widths. At/above the breakpoint the tabular layout renders. The
++     * cards keep the table's role, rows and cells.
+      */
+     responsive?: boolean;
+     /** Container-width (CSS px) below which `responsive` swaps to cards. Defaults to 640. */
+     cardBreakpoint?: number;
++    /**
++     * The table shows the leading columns whose widths fit its viewport's inline size and
++     * folds the rest, so it never scrolls sideways. `fold` reports the folded columns.
++     * The first column always shows.
++     */
++    fit?: boolean;
+     class?: HTMLAttributes["class"];
+ }
+diff --git a/src/components/dialog/Dialog.vue b/src/components/dialog/Dialog.vue
+index fd986a85f..2b593c7be 100644
+--- a/src/components/dialog/Dialog.vue
++++ b/src/components/dialog/Dialog.vue
+@@ -1,6 +1,7 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
++import { computed, provide } from "vue";
+ import { DialogRoot, useForwardPropsEmits } from "reka-ui";
++import { DIALOG_ORIGIN, type DialogOrigin } from "./origin";
+ 
+ export interface DialogProps {
+     open?: boolean;
+@@ -8,18 +9,12 @@ export interface DialogProps {
+     modal?: boolean;
+     unmountOnHide?: boolean;
+     /**
+-     * THE ORIGIN RECT — the surface this dialog grew out of, in viewport coordinates.
+-     *
+-     * A SEAM, and it is declared as one: the entrance reads it NOWHERE today, and the
+-     * plate blooms from its own centre exactly as it does without it. It is here so the
+-     * expandable-container fold lands `origin="element"` by wiring an entrance to a rect
+-     * the root already accepts, instead of re-cutting the entrance and this signature in
+-     * the same breath. It is the ONE prop-shaped hole this wave was told to leave.
+-     *
+-     * It carries no machinery on purpose. If the fold refuses, this prop leaves with the
+-     * refusal — a hole that nothing ever fills is a hole, not an API.
++     * Where the content grows from and returns to: the element that opened it, or a rect
++     * in viewport coordinates. An element is read as the dialog opens and again as it
++     * closes, so the plate lands where its opener is then; one that has left the page
++     * keeps the rect read at the open. Without an origin the plate blooms in place.
+      */
+-    origin?: DOMRectReadOnly | null;
++    origin?: DialogOrigin;
+ }
+ 
+ const props = defineProps<DialogProps>();
+@@ -27,12 +22,12 @@ const emits = defineEmits<{ "update:open": [value: boolean] }>();
+ 
+ // `origin` is withheld from the forward set. reka's root does not know the prop, so
+ // forwarding it would drop it into `$attrs` on a component that renders no element of
+-// its own — a stray that can only ever be noise, and a rect stringified onto the DOM if
+-// the root ever grows one.
++// its own. The content reads it through the injection instead.
+ const rootProps = computed(() => {
+     const { origin: _origin, ...forwardable } = props;
+     return forwardable;
+ });
++provide(DIALOG_ORIGIN, () => props.origin);
+ 
+ const forwarded = useForwardPropsEmits(rootProps, emits);
+ </script>
+diff --git a/src/components/dialog/DialogContent.vue b/src/components/dialog/DialogContent.vue
+index a432afcb3..724a2288a 100644
+--- a/src/components/dialog/DialogContent.vue
++++ b/src/components/dialog/DialogContent.vue
+@@ -1,5 +1,13 @@
+ <script setup lang="ts">
+-import { type HTMLAttributes, computed, type CSSProperties, ref, watch } from "vue";
++import {
++    type HTMLAttributes,
++    computed,
++    type CSSProperties,
++    inject,
++    ref,
++    shallowRef,
++    watch,
++} from "vue";
+ import {
+     DialogClose as RekaDialogClose,
+     DialogContent as RekaDialogContent,
+@@ -11,6 +19,8 @@ import { cn } from "../_shared/class-names";
+ import { useSpringMount } from "../../composables/motion/spring/useSpringMount";
+ import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
+ import ModalOverlay from "./ModalOverlay.vue";
++import { DIALOG_ORIGIN } from "./origin";
++import { useResizeObserver } from "../../composables/dom";
+ import type { Motion, Surface } from "../_shared/axes";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import { surfaceClass } from "../_shared/surface/resolve";
+@@ -82,18 +92,52 @@ const dialogRoot = injectDialogRootContext();
+ // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
+ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
+ 
+-// ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
+-// is named here once and the consumer chooses nothing — and the knob that used to offer
+-// the choice took its bug with it: it was captured non-reactively at setup, so a live
+-// `prefers-reduced-motion` flip lost both the bloom AND the spring.
+-const springMount = useSpringMount({ open: dialogRoot.open, preset: "present" });
++// THE ORIGIN. With one, the plate grows out of its opener's rect and returns to it: the
++// frame lerps the plate's centre and size between that rect and its own resting box on the
++// one position scalar the scrim also reads. Both rects are read at each edge, the opener's
++// at the open and again at the close (it keeps the open's rect if it has left the page),
++// the plate's own once it is laid out. Without one, the plate blooms in place.
++type Box = Pick<DOMRectReadOnly, "x" | "y" | "width" | "height">;
++const origin = inject(DIALOG_ORIGIN, () => null);
++const from = shallowRef<Box | null>(null);
++const rest = shallowRef<Box | null>(null);
++
++function readOrigin(): Box | null {
++    const source = origin();
++    if (!source) return null;
++    const rect =
++        source instanceof Element
++            ? source.isConnected
++                ? source.getBoundingClientRect()
++                : null
++            : source;
++    return rect && rect.width >= 1 && rect.height >= 1 ? rect : null;
++}
++
++/** The plate's own box, without the frame this component writes on `transform`. */
++function restRect(el: HTMLElement): Box | null {
++    const written = el.style.transform;
++    el.style.transform = "none";
++    const rect = el.getBoundingClientRect();
++    el.style.transform = written;
++    return rect.width >= 1 && rect.height >= 1 ? rect : null;
++}
++
++// ONE mount spring per entrance. MOTION-CANON gives the MODAL a single row: the plate
++// presents in place; grown from an origin it is the fired deploy, the panel row, whose
++// one rebound lands the bloom. The row is read at each open, never chosen by a consumer.
++const springMount = useSpringMount({
++    open: dialogRoot.open,
++    preset: () => (origin() ? "panel" : "present"),
++});
+ const reducedMotion = useReducedMotion();
+ 
+-// The entrance is UNTOUCHED — anisotropic squish into a small overshoot, then settle.
+-// The centring rides `translate:` (authored in styles.css so it survives motion="off")
+-// and the squish rides `scale:`, each its OWN longhand: a `transform: translate()
+-// scale()` composes ONE matrix, so the squish would re-derive the −50% offset off the
+-// scaled box and drift the plate off centre mid-bloom.
++// In place, the plate squishes into its size on `scale:`. The centring rides `translate:`
++// (authored in styles.css so it survives motion="off"), each on its OWN longhand: a
++// `transform: translate() scale()` holding the centring would re-derive the −50% offset
++// off the scaled box and drift the plate off centre mid-bloom. From an origin, the frame
++// is a `transform` laid over that centring, centre-origin like every FLIP the library
++// writes: its translate moves the plate's centre and its scale sizes the box about it.
+ //
+ // No `animation: none` leg: the plate composes no `animate-in`/`animate-out` utility
+ // and no `.glass-reveal`, so there is no keyframe to defeat — and writing one here
+@@ -101,10 +145,31 @@ const reducedMotion = useReducedMotion();
+ const springStyle = computed<CSSProperties | undefined>(() => {
+     if (!live.value) return undefined;
+     const p = springMount.position.value; // 0 = mounted, 1 = dismissed
+-    // Under reduced motion the position is a fade's clock: the plate keeps its size.
++    // Under reduced motion the position is a fade's clock: the plate keeps its size and
++    // its place, origin or not.
++    if (reducedMotion.value)
++        return { transform: "none", scale: "1", opacity: String(1 - p), transition: "none" };
++    if (from.value) {
++        // Until the plate is laid out its resting box is unknown, and it paints nothing.
++        if (!rest.value)
++            return { transform: "none", scale: "1", opacity: "0", transition: "none" };
++        const a = from.value;
++        const b = rest.value;
++        const x = (a.x + a.width / 2 - (b.x + b.width / 2)) * p;
++        const y = (a.y + a.height / 2 - (b.y + b.height / 2)) * p;
++        const sx = 1 - p + (a.width / b.width) * p;
++        const sy = 1 - p + (a.height / b.height) * p;
++        return {
++            transform: `translate(${x}px, ${y}px) scale(${sx}, ${sy})`,
++            transformOrigin: "50% 50%",
++            scale: "1",
++            opacity: String(1 - p),
++            transition: "none",
++        };
++    }
+     return {
+         transform: "none",
+-        scale: reducedMotion.value ? "1" : String(1 - 0.05 * p),
++        scale: String(1 - 0.05 * p),
+         opacity: String(1 - p),
+         transition: "none",
+     };
+@@ -138,6 +203,7 @@ const resolveContentEl = (): HTMLElement | null =>
+     (contentAnchorEl.value?.closest(
+         '[data-slot="dialog-content"]',
+     ) as HTMLElement | null) ?? null;
++
+ watch(
+     () => dialogRoot.open.value,
+     (open) => {
+@@ -150,6 +216,51 @@ watch(
+ );
+ const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
+ 
++// Each edge is read in the flush the open changes in, before anything renders: the
++// opener while the page under the plate is as it was, the plate (on a close or a reopen)
++// where its last frame stands.
++watch(
++    () => dialogRoot.open.value,
++    (open, was) => {
++        if (!open && was === undefined) return;
++        const el = resolveContentEl();
++        const opener = readOrigin();
++        if (open || opener) from.value = opener;
++        rest.value = from.value && el ? restRect(el) : null;
++    },
++    { flush: "pre", immediate: true },
++);
++// A plate mounted by the open is measured once it is laid out, before it first paints.
++watch(
++    [() => dialogRoot.open.value, contentAnchorEl],
++    ([open]) => {
++        if (!open || !from.value || rest.value) return;
++        const el = resolveContentEl();
++        if (el) rest.value = restRect(el);
++    },
++    { flush: "post" },
++);
++// Content that arrives after the open (an async body) grows the plate. It stays centred,
++// so its resting box keeps its centre and takes the new size from the observer's entry.
++const contentEl = computed(() => (contentAnchorEl.value ? resolveContentEl() : null));
++useResizeObserver(
++    contentEl,
++    (_rect, entry) => {
++        const box = rest.value;
++        const size = entry.borderBoxSize?.[0];
++        if (!box || !size) return;
++        const cx = box.x + box.width / 2;
++        const cy = box.y + box.height / 2;
++        rest.value = {
++            x: cx - size.inlineSize / 2,
++            y: cy - size.blockSize / 2,
++            width: size.inlineSize,
++            height: size.blockSize,
++        };
++    },
++    { box: "border-box", rafBatch: false },
++);
++
+ // THE REBUFF. `locked` refuses Esc and outside-press, and the refusal is PERCEPTIBLE:
+ // a monotonically-increasing count drives the rung the portaled node carries, so every
+ // refusal starts a fresh run. There is no completion handshake to miss and therefore no
+diff --git a/src/components/dialog/index.ts b/src/components/dialog/index.ts
+index 360ef7547..43f99c720 100644
+--- a/src/components/dialog/index.ts
++++ b/src/components/dialog/index.ts
+@@ -1,4 +1,5 @@
+ export { default as Dialog, type DialogProps } from "./Dialog.vue";
++export type { DialogOrigin } from "./origin";
+ export {
+     default as DialogContent,
+     type DialogContentProps,
+diff --git a/src/components/dialog/origin.ts b/src/components/dialog/origin.ts
+new file mode 100644
+index 000000000..c0741147b
+--- /dev/null
++++ b/src/components/dialog/origin.ts
+@@ -0,0 +1,8 @@
++import type { InjectionKey } from "vue";
++
++/** Where a dialog grows from and returns to: the element that opened it, or a rect in
++ *  viewport coordinates. */
++export type DialogOrigin = Element | DOMRectReadOnly | null;
++
++/** The root hands its `origin` to the content, which runs the motion. */
++export const DIALOG_ORIGIN: InjectionKey<() => DialogOrigin | undefined> = Symbol("dialog-origin");
+diff --git a/src/composables/motion/spring/useSpringMount.ts b/src/composables/motion/spring/useSpringMount.ts
+index 3ddecf8d9..ab16ffd94 100644
+--- a/src/composables/motion/spring/useSpringMount.ts
++++ b/src/composables/motion/spring/useSpringMount.ts
+@@ -30,12 +30,16 @@
+ 
+ import {
+     computed,
++    effectScope,
+     nextTick,
+     onMounted,
+     onScopeDispose,
+     readonly,
+     ref,
++    shallowRef,
++    toValue,
+     watch,
++    type MaybeRefOrGetter,
+     type Ref,
+ } from "vue";
+ import { useSpring, type SpringRef } from "./useSpring";
+@@ -69,8 +73,8 @@ export interface UseSpringMountOptions {
+      * `.value` is read-only here, so the Readonly satisfies the contract.
+      */
+     open: Readonly<Ref<boolean>>;
+-    /** Preset name (default `smooth`). */
+-    preset?: SpringPreset;
++    /** The row the entrance rides, or a getter read at each open (default `panel`). */
++    preset?: MaybeRefOrGetter<SpringPreset>;
+     /** Honor `prefers-reduced-motion`. Default true. */
+     respectReducedMotion?: boolean;
+     /**
+@@ -128,8 +132,8 @@ const EXIT_EDGE = 1e-3;
+ const MOUNT_EXIT_STRETCH: Partial<Record<SpringPreset, number>> = { present: 1.5 };
+ 
+ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+-    const presetName = options.preset ?? "panel";
+-    const preset = SPRING_PRESETS[presetName];
++    const presetOf = (): SpringPreset => toValue(options.preset) ?? "panel";
++    let presetName = presetOf();
+     // Always seat the spring AT the off-screen position (1) and let the
+     // mount watch drive the target → 0 transition on the first frame. This
+     // makes the entrance read consistently — without this, an already-open
+@@ -151,14 +155,34 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     // re-fire a no-op. The flag is the cleanest single-source signal.
+     let pendingDismiss = false;
+ 
+-    const spring = useSpring(target, {
+-        response: preset.response,
+-        dampingFraction: preset.dampingFraction,
+-        initial: 1, // start off-screen / scaled-small
+-        settleThreshold: EXIT_EDGE,
+-        velocitySettleThreshold: 1e-3,
+-        respectReducedMotion: options.respectReducedMotion !== false,
+-    });
++    // The spring lives in its own scope, so a row change at an open builds the next one
++    // from where the surface stands and disposes the last.
++    function build(name: SpringPreset, initial: number, initialVelocity: number): SpringRef {
++        const row = SPRING_PRESETS[name];
++        return useSpring(target, {
++            response: row.response,
++            dampingFraction: row.dampingFraction,
++            initial,
++            initialVelocity,
++            settleThreshold: EXIT_EDGE,
++            velocitySettleThreshold: 1e-3,
++            respectReducedMotion: options.respectReducedMotion !== false,
++        });
++    }
++    let springScope = effectScope(true);
++    // Start off-screen / scaled-small.
++    const springRef = shallowRef<SpringRef>(springScope.run(() => build(presetName, 1, 0))!);
++    /** Rides `name` from here on, continuous in position and velocity. */
++    function ride(name: SpringPreset): void {
++        if (name === presetName) return;
++        const { value, velocity } = springRef.value;
++        const scope = effectScope(true);
++        const next = scope.run(() => build(name, value.value, velocity.value))!;
++        springScope.stop();
++        springScope = scope;
++        springRef.value = next;
++        presetName = name;
++    }
+ 
+     // The exit tween's position while it runs; null when the spring owns the position.
+     const exitPosition = ref<number | null>(null);
+@@ -176,7 +200,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+         const exit = readExitClock(presetName, reduced, MOUNT_EXIT_STRETCH[presetName]);
+         if (!exit || typeof requestAnimationFrame !== "function") return false;
+         stopExit();
+-        const from = exitPosition.value ?? spring.value.value;
++        const from = exitPosition.value ?? springRef.value.value.value;
+         exitPosition.value = from;
+         // The spring heads for the same end underneath, so a reversal retargets it.
+         target.value = to;
+@@ -184,7 +208,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+             exit,
+             (k) => (exitPosition.value = from + (to - from) * k),
+             () => {
+-                spring.reset(to, 0);
++                springRef.value.reset(to, 0);
+                 exitPosition.value = null;
+             },
+         );
+@@ -196,6 +220,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     onMounted(() => {
+         if (options.open.value) {
+             void nextTick(() => {
++                ride(presetOf());
+                 if (!tween(0)) target.value = 0;
+             });
+         }
+@@ -210,10 +235,11 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+             if (next) present.value = true; // mount before anything else can early-return
+             if (isDragging.value) return; // drag owns the target while active
+             if (next) {
++                ride(presetOf());
+                 if (tween(0)) return;
+                 if (exitPosition.value !== null) {
+                     stopExit();
+-                    spring.reset(exitPosition.value, 0);
++                    springRef.value.reset(exitPosition.value, 0);
+                     exitPosition.value = null;
+                 }
+                 target.value = 0;
+@@ -226,7 +252,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+ 
+     // On-settle dismiss hook: consumes the one-shot `pendingDismiss` flag.
+     const stopSettleWatch = watch(
+-        () => spring.isSettled.value,
++        () => springRef.value.isSettled.value,
+         (settled) => {
+             if (settled && pendingDismiss && target.value >= 1) {
+                 pendingDismiss = false;
+@@ -243,7 +269,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     // sheet kept its scrim mounted and the body scroll-locked, and the page ate the reader's
+     // next scroll or tap (U/B7b M1, repair round 1). At the edge the surface is under a pixel
+     // from fully off and its scrim alpha is ~0, so nothing visible is cut short.
+-    //   • gated on the spring POSITION (`spring.value.value`), not the local `target`
++    //   • gated on the spring POSITION (`springRef.value.value.value`), not the local `target`
+     //     ref: `target` flips synchronously on close while the position is still 0, so
+     //     the guard only holds once the exit has actually arrived.
+     //   • watched as a CONDITION, not an edge: under PRM the snap lands the position at 1
+@@ -251,7 +277,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     //   • independent of the `pendingDismiss` drag branch (that one still waits the settle).
+     // `!open` keeps a re-open-mid-exit mounted.
+     const stopPresentWatch = watch(
+-        () => exitPosition.value === null && spring.value.value >= 1 - EXIT_EDGE && !options.open.value,
++        () => exitPosition.value === null && springRef.value.value.value >= 1 - EXIT_EDGE && !options.open.value,
+         (dismissed) => {
+             if (dismissed) present.value = false;
+         },
+@@ -294,6 +320,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     }
+ 
+     onScopeDispose(() => {
++        springScope.stop();
+         stopExit();
+         stopOpenWatch();
+         stopSettleWatch();
+@@ -301,7 +328,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     });
+ 
+     return {
+-        position: computed(() => exitPosition.value ?? spring.value.value),
++        position: computed(() => exitPosition.value ?? springRef.value.value.value),
+         present: readonly(present),
+         isDragging: computed(() => isDragging.value),
+         dragHandlers: {
+diff --git a/tests/components/dialog/dialog-attrs.test.ts b/tests/components/dialog/dialog-attrs.test.ts
+index 6a3982b6a..497b1bd63 100644
+--- a/tests/components/dialog/dialog-attrs.test.ts
++++ b/tests/components/dialog/dialog-attrs.test.ts
+@@ -44,15 +44,14 @@ describe("DialogContent attributes", () => {
+     });
+ });
+ 
+-// THE ORIGIN-RECT SEAM. The root accepts the rect the expandable-container fold will
+-// grow the plate from, so that fold wires an entrance rather than re-cutting this
+-// signature. Nothing reads it yet and the spec says so ("one prop-shaped hole, no
+-// machinery") — what is gated is the hole's SHAPE, which stays true after the fold
+-// lands: the root declares it, and it never reaches the DOM as a stringified rect.
+-describe("Dialog root — the origin-rect seam", () => {
+-    it("declares the rect on the ROOT, typed", () => {
++// THE ORIGIN. The root takes the element (or rect) the plate grows from and hands it to
++// the content through an injection; it never reaches the DOM as an attribute.
++describe("Dialog root — the origin", () => {
++    it("declares an element or a rect on the ROOT, typed", () => {
+         const source = readFileSync("src/components/dialog/Dialog.vue", "utf8");
+-        expect(source).toMatch(/origin\?:\s*DOMRectReadOnly\s*\|\s*null/);
++        expect(source).toMatch(/origin\?:\s*DialogOrigin/);
++        const types = readFileSync("src/components/dialog/origin.ts", "utf8");
++        expect(types).toMatch(/DialogOrigin\s*=\s*Element\s*\|\s*DOMRectReadOnly\s*\|\s*null/);
+     });
+ 
+     it("never forwards it into the DOM", async () => {
+diff --git a/tests/components/dialog/dialog-spring.test.ts b/tests/components/dialog/dialog-spring.test.ts
+index 43ef110a6..c13e2dcf4 100644
+--- a/tests/components/dialog/dialog-spring.test.ts
++++ b/tests/components/dialog/dialog-spring.test.ts
+@@ -11,8 +11,8 @@
+ // centring rides `translate:` — authored in `dialog/styles.css` so it holds at
+ // `motion="off"`, where no spring style is written at all.
+ 
+-import { mount } from "@vue/test-utils";
+-import { defineComponent, h, nextTick } from "vue";
++import { mount, type VueWrapper } from "@vue/test-utils";
++import { defineComponent, h, nextTick, toValue } from "vue";
+ import { describe, expect, it, vi } from "vitest";
+ 
+ import {
+@@ -24,11 +24,11 @@ import {
+ } from "@glass/components/dialog";
+ import * as springMountModule from "@glass/composables/motion/spring/useSpringMount";
+ 
+-function mountDialog(props: Record<string, unknown> = {}) {
++function mountDialog(props: Record<string, unknown> = {}, root: Record<string, unknown> = {}) {
+     const Host = defineComponent({
+         setup() {
+             return () =>
+-                h(Dialog, { open: true }, () => [
++                h(Dialog, { open: true, ...root }, () => [
+                     h(DialogTrigger, () => "open"),
+                     h(DialogContent, { ...props, class: "test-dialog" }, () => [
+                         h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
+@@ -54,16 +54,16 @@ const findDialog = (): HTMLElement | null =>
+     document.querySelector(".test-dialog") as HTMLElement | null;
+ 
+ describe("DialogContent — spring entrance", () => {
+-    it("rides ONE curve, named once, with no consumer choice", async () => {
++    it("presents in place and deploys from an origin, with no consumer choice", async () => {
+         const spy = vi.spyOn(springMountModule, "useSpringMount");
++        const mounted: VueWrapper[] = [];
+         try {
+-            const wrapper = mountDialog();
+-            expect(spy).toHaveBeenCalledWith(
+-                expect.objectContaining({ preset: "present" }),
+-            );
+-            await nextTick();
+-            wrapper.unmount();
++            mounted.push(mountDialog());
++            expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("present");
++            mounted.push(mountDialog({}, { origin: new DOMRect(10, 10, 40, 40) }));
++            expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("panel");
+         } finally {
++            for (const wrapper of mounted) wrapper.unmount();
+             spy.mockRestore();
+         }
+     });
+@@ -97,6 +97,33 @@ describe("DialogContent — spring entrance", () => {
+         wrapper.unmount();
+     });
+ 
++    it("starts the plate on its origin's rect, centre and size, invisible", async () => {
++        // No frame runs, so the position stays at the dismissed end the mount seats.
++        vi.stubGlobal("requestAnimationFrame", () => 0);
++        const rest = { x: 464, y: 250, width: 512, height: 400 };
++        const spy = vi
++            .spyOn(HTMLElement.prototype, "getBoundingClientRect")
++            .mockImplementation(function (this: HTMLElement) {
++                const r = this.matches('[data-slot="dialog-content"]') ? rest : { x: 0, y: 0, width: 0, height: 0 };
++                return { ...r, top: r.y, left: r.x, right: r.x + r.width, bottom: r.y + r.height, toJSON: () => r } as DOMRect;
++            });
++        let wrapper: VueWrapper | undefined;
++        try {
++            wrapper = mountDialog({}, { origin: new DOMRect(40, 60, 128, 40) });
++            await nextTick();
++            await nextTick();
++            const plate = findDialog()!;
++            // Centres: origin (104, 80), plate (720, 450). Sizes: 128/512, 40/400.
++            expect(plate.style.transform).toBe("translate(-616px, -370px) scale(0.25, 0.1)");
++            expect(plate.style.scale).toBe("1");
++            expect(plate.style.opacity).toBe("0");
++        } finally {
++            wrapper?.unmount();
++            spy.mockRestore();
++            vi.unstubAllGlobals();
++        }
++    });
++
+     it("writes no spring style at all when motion is off", async () => {
+         const wrapper = mountDialog({ motion: "off" });
+         await nextTick();
+diff --git a/tests/components/ui/data-table/DataTable.test.ts b/tests/components/ui/data-table/DataTable.test.ts
+index 82ed6765d..4ed8d0c33 100644
+--- a/tests/components/ui/data-table/DataTable.test.ts
++++ b/tests/components/ui/data-table/DataTable.test.ts
+@@ -1,5 +1,5 @@
+ import { mount, type VueWrapper } from "@vue/test-utils";
+-import { defineComponent, h, markRaw, type Component, type PropType } from "vue";
++import { defineComponent, h, markRaw, nextTick, type Component, type PropType } from "vue";
+ import { afterEach, describe, expect, it, vi } from "vitest";
+ import DataTable from "@glass/components/data-table/DataTable.vue";
+ import type { DataTableColumn } from "@glass/components/data-table/types";
+@@ -284,7 +284,7 @@ describe("DataTable interaction semantics", () => {
+         }
+     });
+ 
+-    it("projects the same controlled selection contract onto responsive cards", async () => {
++    it("projects the same controlled selection contract onto responsive cards, as a grid", async () => {
+         vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
+         const wrapper = mountTable(
+             [
+@@ -294,16 +294,55 @@ describe("DataTable interaction semantics", () => {
+             { responsive: true, selectable: true, selectedRowId: "2" },
+         );
+ 
+-        await vi.waitFor(() => expect(wrapper.find('[role="listbox"]').exists()).toBe(true));
+-        const cards = wrapper.findAll('[role="option"]');
++        await vi.waitFor(() =>
++            expect(wrapper.find('.data-table-cards[role="grid"]').exists()).toBe(true),
++        );
++        const cards = wrapper.findAll('.data-table-card[role="row"]');
+         expect(cards).toHaveLength(2);
+         expect(cards[1].attributes("aria-selected")).toBe("true");
++        expect(cards[0].find('[role="gridcell"]').exists()).toBe(true);
+ 
+         await cards[0].trigger("keydown", { key: " " });
+         expect(wrapper.emitted("update:selectedRowId")?.at(-1)?.[0]).toBe("1");
+     });
+ 
+-    it("keeps native-table row indices out of responsive cards", async () => {
++    it("keeps the table's role, header row, rows and cells in the card projection", async () => {
++        vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
++        const wrapper = mount(DataTable as Component, {
++            attachTo: document.body,
++            props: {
++                columns: [
++                    { key: "name", label: "Name", rowHeader: true },
++                    { key: "slug", label: "Slug" },
++                ],
++                rows: [
++                    { _id: "1", name: "Ada", slug: "ada" },
++                    { _id: "2", name: "Grace", slug: "grace" },
++                ],
++                responsive: true,
++            },
++            slots: { caption: "Pioneers" },
++        });
++
++        await vi.waitFor(() => expect(wrapper.find(".data-table-cards").exists()).toBe(true));
++        const table = wrapper.get('.data-table-cards[role="table"]');
++        const caption = table.get('[role="caption"]');
++        expect(caption.text()).toBe("Pioneers");
++        expect(table.attributes("aria-labelledby")).toBe(caption.attributes("id"));
++        expect(table.attributes("aria-colcount")).toBe("2");
++        expect(
++            table.findAll('[role="columnheader"]').map((head) => head.text()),
++        ).toEqual(["Name", "Slug"]);
++        const rows = table.findAll('.data-table-card[role="row"]');
++        expect(rows).toHaveLength(2);
++        expect(rows[0].get('[role="rowheader"]').text()).toBe("Ada");
++        const cell = rows[0].get('[role="cell"]');
++        expect(cell.text()).toContain("ada");
++        expect(cell.get(".data-table-card-label").attributes("aria-hidden")).toBe("true");
++        wrapper.unmount();
++    });
++
++    it("keeps caller-windowed row indices and counts in responsive cards", async () => {
+         vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
+         const wrapper = mountTable(
+             [
+@@ -322,13 +361,15 @@ describe("DataTable interaction semantics", () => {
+             },
+         );
+ 
+-        await vi.waitFor(() => expect(wrapper.find('[role="listbox"]').exists()).toBe(true));
++        await vi.waitFor(() =>
++            expect(wrapper.find('.data-table-cards[role="grid"]').exists()).toBe(true),
++        );
+         const cards = wrapper.findAll("[data-absolute-index]");
+         expect(wrapper.find("table").exists()).toBe(false);
+-        expect(wrapper.find('[aria-rowcount="101"]').exists()).toBe(false);
++        expect(wrapper.get('.data-table-cards[role="grid"]').attributes("aria-rowcount")).toBe("101");
+         expect(cards.map((card) => card.attributes("aria-rowindex"))).toEqual([
+-            undefined,
+-            undefined,
++            "42",
++            "43",
+         ]);
+         expect(cards.map((card) => card.attributes("data-absolute-index"))).toEqual([
+             "42",
+@@ -414,6 +455,194 @@ describe("DataTable interaction semantics", () => {
+     });
+ });
+ 
++describe("DataTable viewport, caption, row headers and widths", () => {
++    it("names the table with its caption slot, above the header", () => {
++        const wrapper = mount(DataTable as Component, {
++            attachTo: document.body,
++            props: { columns, rows: [{ _id: "1", name: "Ada" }] },
++            slots: { caption: "Pioneers" },
++        });
++        const table = wrapper.get("table");
++        expect(table.element.firstElementChild?.tagName).toBe("CAPTION");
++        expect(table.get("caption").text()).toBe("Pioneers");
++        wrapper.unmount();
++    });
++
++    it("renders a row-header column as th scope=row", () => {
++        const wrapper = mountTable([{ _id: "1", name: "Ada", slug: "ada" }], {
++            columns: [
++                { key: "name", label: "Name", rowHeader: true },
++                { key: "slug", label: "Slug" },
++            ],
++        });
++        const cells = wrapper.get("tbody tr").element.children;
++        expect(cells[0].tagName).toBe("TH");
++        expect(cells[0].getAttribute("scope")).toBe("row");
++        expect(cells[0].textContent).toBe("Ada");
++        expect(cells[1].tagName).toBe("TD");
++        wrapper.unmount();
++    });
++
++    it("gives a column's cells its width", () => {
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }], {
++            columns: [{ key: "name", label: "Name", width: "16rem" }],
++        });
++        expect((wrapper.get("thead th").element as HTMLElement).style.inlineSize).toBe("16rem");
++        expect((wrapper.get("tbody td").element as HTMLElement).style.inlineSize).toBe("16rem");
++        wrapper.unmount();
++    });
++
++    it("hands its viewport to the host, and the cards' when it projects them", async () => {
++        const viewportRef = vi.fn();
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }], { viewportRef });
++        await nextTick();
++        const container = wrapper.get('[data-slot="table-container"]').element;
++        expect(viewportRef).toHaveBeenLastCalledWith(container);
++        expect(container.classList).toContain("data-table-viewport");
++
++        vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
++        const cards = mountTable([{ _id: "1", name: "Ada" }], {
++            responsive: true,
++            viewportRef,
++        });
++        await vi.waitFor(() =>
++            expect(viewportRef).toHaveBeenLastCalledWith(cards.get(".data-table-cards").element),
++        );
++        wrapper.unmount();
++        cards.unmount();
++    });
++
++    it("puts the sentinel inside the viewport, after the rows", () => {
++        const wrapper = mount(DataTable as Component, {
++            attachTo: document.body,
++            props: { columns, rows: [{ _id: "1", name: "Ada" }] },
++            slots: { sentinel: '<div data-sentinel></div>' },
++        });
++        const sentinel = wrapper.get("[data-sentinel]").element;
++        expect(sentinel.parentElement?.matches('[data-slot="table-container"]')).toBe(true);
++        wrapper.unmount();
++    });
++
++    it("marks each scrolled axis, so the sticky parts take a ground only then", async () => {
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }]);
++        await nextTick();
++        const viewport = wrapper.get('[data-slot="table-container"]').element as HTMLElement;
++        expect(viewport.hasAttribute("data-scrolled-block")).toBe(false);
++        viewport.scrollTop = 40;
++        viewport.dispatchEvent(new Event("scroll"));
++        expect(viewport.hasAttribute("data-scrolled-block")).toBe(true);
++        expect(viewport.hasAttribute("data-scrolled-inline")).toBe(false);
++        viewport.scrollTop = 0;
++        viewport.scrollLeft = 24;
++        viewport.dispatchEvent(new Event("scroll"));
++        expect(viewport.hasAttribute("data-scrolled-block")).toBe(false);
++        expect(viewport.hasAttribute("data-scrolled-inline")).toBe(true);
++        wrapper.unmount();
++    });
++});
++
++describe("DataTable fit", () => {
++    // The ruler's own entry carries the viewport's inline size, each column's span its
++    // width; the root reads wide, so the table projection stands.
++    function fitObserver(room: { value: number }, widths: Record<string, number>) {
++        const observers: { cb: ResizeObserverCallback; targets: Element[] }[] = [];
++        class FitResizeObserver {
++            private readonly record: { cb: ResizeObserverCallback; targets: Element[] };
++            constructor(cb: ResizeObserverCallback) {
++                this.record = { cb, targets: [] };
++                observers.push(this.record);
++            }
++            observe(target: Element) {
++                this.record.targets.push(target);
++            }
++            unobserve() {}
++            disconnect() {
++                this.record.targets = [];
++            }
++        }
++        const sizeOf = (target: Element): number => {
++            const el = target as HTMLElement;
++            if (el.dataset.column !== undefined) return widths[el.dataset.column] ?? 0;
++            if (el.classList.contains("data-table-ruler")) return room.value;
++            return 1200;
++        };
++        const deliver = () => {
++            for (const { cb, targets } of observers) {
++                if (targets.length === 0) continue;
++                cb(
++                    targets.map((target) => {
++                        const size = sizeOf(target);
++                        const box = [{ inlineSize: size, blockSize: 0 }];
++                        return {
++                            target,
++                            contentRect: { width: size, height: 0 },
++                            borderBoxSize: box,
++                            contentBoxSize: box,
++                        } as unknown as ResizeObserverEntry;
++                    }),
++                    {} as ResizeObserver,
++                );
++            }
++        };
++        vi.stubGlobal("ResizeObserver", FitResizeObserver);
++        return deliver;
++    }
++
++    const fitColumns: DataTableColumn[] = ["a", "b", "c", "d"].map((key) => ({
++        key,
++        label: key.toUpperCase(),
++        width: "200px",
++    }));
++
++    it("shows the leading columns that fit the viewport and reports the rest", async () => {
++        const room = { value: 640 };
++        const deliver = fitObserver(room, { a: 200, b: 200, c: 200, d: 200 });
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }], {
++            columns: fitColumns,
++            fit: true,
++        });
++        await nextTick();
++        expect(wrapper.attributes("data-fit")).toBe("");
++        expect(wrapper.findAll(".data-table-ruler [data-column]")).toHaveLength(4);
++
++        deliver();
++        await nextTick();
++        expect(wrapper.findAll("thead th").map((th) => th.text())).toEqual(["A", "B", "C"]);
++        expect(
++            (wrapper.emitted("fold")?.at(-1)?.[0] as DataTableColumn[]).map((col) => col.key),
++        ).toEqual(["d"]);
++
++        // A narrower viewport keeps the first column however little room there is.
++        room.value = 150;
++        deliver();
++        await nextTick();
++        expect(wrapper.findAll("thead th").map((th) => th.text())).toEqual(["A"]);
++        expect(
++            (wrapper.emitted("fold")?.at(-1)?.[0] as DataTableColumn[]).map((col) => col.key),
++        ).toEqual(["b", "c", "d"]);
++
++        // The ruler still measures the folded columns, so a wider viewport brings them back.
++        expect(wrapper.findAll(".data-table-ruler [data-column]")).toHaveLength(4);
++        room.value = 900;
++        deliver();
++        await nextTick();
++        expect(wrapper.findAll("thead th")).toHaveLength(4);
++        expect(wrapper.emitted("fold")?.at(-1)?.[0]).toEqual([]);
++        wrapper.unmount();
++    });
++
++    it("measures nothing and folds nothing without fit", async () => {
++        const deliver = fitObserver({ value: 100 }, { a: 200, b: 200, c: 200, d: 200 });
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }], { columns: fitColumns });
++        deliver();
++        await nextTick();
++        expect(wrapper.find(".data-table-ruler").exists()).toBe(false);
++        expect(wrapper.findAll("thead th")).toHaveLength(4);
++        expect(wrapper.emitted("fold")).toBeUndefined();
++        wrapper.unmount();
++    });
++});
++
+ describe("DataTable row identity", () => {
+     it("rejects rows with missing identity", () => {
+         expect(() => mountTable([{ name: "Ada" }])).toThrow(
+diff --git a/tests/composables/useSpringMount.test.ts b/tests/composables/useSpringMount.test.ts
+index b8864f488..6301fbfaa 100644
+--- a/tests/composables/useSpringMount.test.ts
++++ b/tests/composables/useSpringMount.test.ts
+@@ -11,6 +11,8 @@ import { defineComponent, h, nextTick, ref } from "vue";
+ import { mount as vueMount } from "@vue/test-utils";
+ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+ import { useSpringMount, type SpringMountRef } from "@glass/composables/motion";
++import * as useSpringModule from "@glass/composables/motion/spring/useSpring";
++import { springPreset } from "@glass/composables/motion/spring/springPresets";
+ 
+ function mountHost(opts: {
+     initialOpen?: boolean;
+@@ -379,3 +381,48 @@ describe("useSpringMount — present mount-hold (SHEET-INTERRUPTIBLE-MOTION)", (
+         wrapper.unmount();
+     });
+ });
++
++describe("useSpringMount — the row is read at each open", () => {
++    afterEach(() => {
++        vi.restoreAllMocks();
++    });
++
++    it("rides the row its preset getter names at the open, from where the surface stands", async () => {
++        const spy = vi.spyOn(useSpringModule, "useSpring");
++        const row = ref<"present" | "panel">("present");
++        const open = ref(false);
++        const Host = defineComponent({
++            setup() {
++                useSpringMount({ open, preset: () => row.value });
++                return () => h("div");
++            },
++        });
++        const wrapper = vueMount(Host, { attachTo: document.body });
++        const present = springPreset("present");
++        expect(spy).toHaveBeenCalledTimes(1);
++        expect(spy.mock.calls[0][1]).toMatchObject({
++            response: present.response,
++            dampingFraction: present.dampingFraction,
++            initial: 1,
++        });
++
++        row.value = "panel";
++        open.value = true;
++        await nextTick();
++        const panel = springPreset("panel");
++        expect(spy).toHaveBeenCalledTimes(2);
++        expect(spy.mock.calls[1][1]).toMatchObject({
++            response: panel.response,
++            dampingFraction: panel.dampingFraction,
++            initial: 1,
++        });
++
++        // The same row at the next open builds nothing.
++        open.value = false;
++        await nextTick();
++        open.value = true;
++        await nextTick();
++        expect(spy).toHaveBeenCalledTimes(2);
++        wrapper.unmount();
++    });
++});

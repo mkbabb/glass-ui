@@ -1,0 +1,183 @@
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -255,12 +255,14 @@
+        Input/Textarea/Select/Combobox/NumberField — so the whole control band is ONE
+        material at rest instead of a per-control fork. The register adopts the WARMER
+        rung (the no-gray choice); per-control recipes read these tokens and fork
+-       nothing. The hover lift mixes the rest fill one step toward the resting rung so
+-       every control brightens in lockstep. */
++       nothing. The hover lift is the quiet plate with its ink 35% of the way to the
++       resting rung's alpha, so every control brightens in lockstep. It is one plate
++       mix, not a mix of the two plates: a `color-mix()` whose two arms each hold a
++       `color-mix()` aborts the page in WebKit. */
+     --control-surface-bg:        var(--glass-plate-quiet);
+     --control-surface-border:    var(--glass-border-floating);
+     --control-surface-blur:      var(--glass-blur-quiet);
+-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
++    --control-surface-bg-hover:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / calc(0.65 * var(--glass-veil-quiet) + 0.35 * var(--glass-veil-resting))) calc(var(--glass-level) * 100%), var(--card));
+ }
+ 
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+diff --git a/src/styles/tokens/shadow.css b/src/styles/tokens/shadow.css
+--- a/src/styles/tokens/shadow.css
++++ b/src/styles/tokens/shadow.css
+@@ -95,9 +95,13 @@
+        substrates speak — NOT the hard `5px 5px` near-black offset-stamp the
+        cartoon family carries (that stamp stays the identity of
+        <Card surface="cartoon">; it is removed ONLY from the gel bead, a different
+-       lighting language). The shadow color is ambient: the bead's own
+-       `--blob-color` mixed toward `--shadow-color` at a LOW strength, so the dome
+-       casts a faint tinted contact shade. Adaptive-by-construction: `--shadow-color`
++       lighting language). The shadow color is ambient: `--shadow-color` itself, so
++       the dome casts a faint contact shade in the house shadow ink. It is not mixed
++       with the bead's `--blob-color`: this token resolves on `:root`, where
++       `--blob-color` is never set (the wrapper sets it), so that mix was
++       `--shadow-color` mixed with itself, and with a consumer's `--shadow-color`
++       that is a `color-mix()` it became a mix of two mixes, which aborts the page in
++       WebKit. Adaptive-by-construction: `--shadow-color`
+        is `var(--foreground)`, which flips light→dark, so the contact shadow
+        re-resolves under `.dark` with NO hardcoded `.dark` re-declaration (the house
+        cartoon-shadow contract's pattern, applied to the ambient shadow). A consumer
+@@ -105,8 +109,7 @@
+        `--blob-shadow-*` sub-axes) on the cascade. */
+     --blob-shadow-offset: 0 4px;
+     --blob-shadow-blur:   14px;
+-    --blob-shadow-color:  color-mix(in srgb,
+-        var(--blob-color, var(--shadow-color)) 22%, var(--shadow-color));
++    --blob-shadow-color:  var(--shadow-color);
+     --blob-shadow-strength: 20%;
+     /* The AMBIENT cast (the soft diffuse drop) — the dome floats a little above its
+        surface. This is the first drop-shadow rung. */
+diff --git a/tests/styles/color-mix-endpoints.test.ts b/tests/styles/color-mix-endpoints.test.ts
+--- a/tests/styles/color-mix-endpoints.test.ts
++++ b/tests/styles/color-mix-endpoints.test.ts
+@@ -1,5 +1,5 @@
+ import { readFileSync, readdirSync } from "node:fs";
+-import { join } from "node:path";
++import { join, relative } from "node:path";
+ import postcss from "postcss";
+ import { describe, expect, it } from "vitest";
+ 
+@@ -21,6 +21,9 @@
+ // The `resolvedNested` arm below is therefore a REGRESSION FENCE on the files the
+ // de-nesting cured that still exist — three of the original four; `drawer/styles.css`
+ // left with its family at BK #39 — and `inspect()` recurses UNBOUNDED, not "one hop".
++// One resolved shape IS gated, by the last two tests: a color-mix whose two endpoints
++// each hold a color-mix, which aborts the page in WebKit, or whose two endpoints are one
++// custom property, which takes that shape when a consumer sets the property to a mix.
+ 
+ type StyleSource = { id: string; css: string };
+ type Call = { name: string; args: string[] };
+@@ -117,6 +120,70 @@
+     return { literalNested: [...literalNested], resolvedNested: [...resolvedNested] };
+ };
+ 
++// An endpoint split at its top-level spaces, so its weight can be dropped.
++const words = (value: string): string[] => {
++    const parts: string[] = [];
++    let depth = 0; let start = 0;
++    for (let i = 0; i <= value.length; i += 1) {
++        if (value[i] === "(") depth += 1;
++        else if (value[i] === ")") depth -= 1;
++        else if (i === value.length || (depth === 0 && /\s/.test(value[i]))) {
++            if (i > start) parts.push(value.slice(start, i));
++            start = i + 1;
++        }
++    }
++    return parts;
++};
++
++// The custom properties an endpoint IS: its var() and each var() down its fallback
++// chain. Empty when the endpoint is anything but a var().
++const namesOf = (endpoint: string): string[] => {
++    const parts = words(endpoint.trim()).filter((part) => !/^(?:-?[\d.]+%|calc\(.*\))$/s.test(part));
++    if (parts.length !== 1 || !parts[0].startsWith("var(")) return [];
++    const [call] = calls(parts[0]);
++    const name = call?.args[0]?.trim() ?? "";
++    return [name, ...(call && call.args.length > 1 ? namesOf(call.args.slice(1).join(", ")) : [])];
++};
++
++// Every declaration holding a color-mix whose two endpoints EACH hold a color-mix
++// once every var() (and its fallback) is followed through every declaration of that
++// property: an endpoint that is a mix, a relative colour of a mix, or a light-dark()
++// with a mix inside. Over-approximates on purpose: one producer that holds a mix is
++// enough, whatever selector or scheme declares it. glass's own producers cannot show
++// a consumer's value, so a color-mix whose two endpoints are the same custom property
++// is flagged too: a consumer that sets that property to a mix makes both endpoints
++// mixes.
++const mixOfMixes = (sources: StyleSource[]): string[] => {
++    const declarations: Array<{ id: string; value: string }> = [];
++    const producers = new Map<string, string[]>();
++    for (const source of sources) {
++        postcss.parse(source.css, { from: source.id }).walkDecls((decl) => {
++            const id = `${relative(process.cwd(), source.id)}:${decl.source?.start?.line}`;
++            declarations.push({ id: `${id} ${decl.prop}`, value: decl.value });
++            if (decl.prop.startsWith("--"))
++                producers.set(decl.prop, [...(producers.get(decl.prop) ?? []), decl.value]);
++        });
++    }
++    const holdsMix = (value: string, stack: string[]): boolean =>
++        calls(value).some((call) => {
++            if (call.name === "color-mix") return true;
++            if (call.name !== "var") return false;
++            const name = call.args[0]?.trim() ?? "";
++            if (call.args.length > 1 && holdsMix(call.args.slice(1).join(", "), stack)) return true;
++            if (stack.includes(name)) return false;
++            return (producers.get(name) ?? []).some((candidate) => holdsMix(candidate, [...stack, name]));
++        });
++    const found = new Set<string>();
++    for (const declaration of declarations)
++        for (const mix of calls(declaration.value).filter((call) => call.name === "color-mix")) {
++            const [first, second] = mix.args.slice(1, 3);
++            if (!first || !second) continue;
++            const shared = namesOf(first).some((name) => namesOf(second).includes(name));
++            if (shared || (holdsMix(first, []) && holdsMix(second, []))) found.add(declaration.id);
++        }
++    return [...found];
++};
++
+ describe("gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure", () => {
+     it("rejects literal nested endpoints across executable CSS and CSS Vue style blocks", () => {
+         const styles = collectStyles(files(root));
+@@ -139,4 +206,40 @@
+         ])
+             expect(report.resolvedNested.filter((entry) => entry.startsWith(`${file}:`))).toEqual([]);
+     });
++
++    it("never gives a color-mix two endpoints that each hold a color-mix, or one property twice", () => {
++        // WebKit (Playwright WebKit 26.5) aborts the page process when it applies such a
++        // value to any colour property, with or without a relative colour inside: the
++        // control hover lift did on every Select trigger, toggle item and accordion
++        // trigger, and the blob's shadow on load whenever `--shadow-color` was a mix,
++        // since it mixed that colour with itself. A mix with one such endpoint resolves;
++        // express the value as one mix, or as the property alone.
++        expect(mixOfMixes(collectStyles(files(root)))).toEqual([]);
++    });
++
++    it("finds each endpoint shape WebKit aborts on, and passes the shapes it resolves", () => {
++        const tokens = ":root { --m: color-mix(in srgb, red, blue); --n: color-mix(in srgb, green 20%, transparent); --ink: oklch(0.3 0.03 70); }";
++        const sheet = (value: string): StyleSource[] => [{ id: "fixture.css", css: `${tokens} .a { color: ${value}; }` }];
++        for (const aborts of [
++            "color-mix(in oklab, color-mix(in srgb, red, blue), color-mix(in srgb, green, white))",
++            "color-mix(in oklab, var(--m), var(--n) 35%)",
++            "color-mix(in oklab, var(--m), oklch(from var(--m) l c h) 35%)",
++            "color-mix(in oklab, light-dark(var(--m), red), light-dark(var(--n), blue))",
++            "color-mix(in oklab, var(--missing, var(--m)), var(--n))",
++            // one property on both endpoints: plain here, the abort shape once a
++            // consumer sets it to a mix
++            "color-mix(in srgb, var(--missing, var(--ink)) 22%, var(--ink))",
++            "color-mix(in oklab, var(--ink) calc(var(--t) * 100%), var(--ink))",
++        ])
++            expect(mixOfMixes(sheet(aborts)), aborts).toHaveLength(1);
++        for (const resolves of [
++            "color-mix(in oklab, var(--m) 50%, transparent)",
++            "color-mix(in oklab, var(--m), red 35%)",
++            "color-mix(in oklab, oklch(from var(--ink) l c h / 0.1), oklch(from var(--ink) l c h / 0.14) 35%)",
++            "color-mix(in oklab, oklch(from var(--m) l c h), red 35%)",
++            "color-mix(in srgb, var(--ink) 20%, transparent)",
++            "color-mix(in srgb, var(--ink) 20%, var(--missing, red))",
++        ])
++            expect(mixOfMixes(sheet(resolves)), resolves).toEqual([]);
++    });
+ });

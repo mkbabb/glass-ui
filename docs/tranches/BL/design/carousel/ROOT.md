@@ -8,15 +8,17 @@ Engines, as in the record. **Chromium** is Playwright's headless shell 149.0.782
 
 **The second fold** (`fold.md`, second section) moved `cure.patch` onto release/11.1.1 (ca61ce5b6). 11.1.1 changes no library file the cure touches, so the films on v11.1.0 stand for the library half. It added the stage's scroll-padding, the start value, the comment fixes and a unit test, and re-read what those touch on trees built from release/11.1.1 (§2.4).
 
-**The third fold** (`fold.md`, third section) answers the second critic's two blocking items and takes its note on `overflow: hidden`, on trees built from release/11.1.1. Under reduced motion a press still seats the strip at once and now fades the arriving slide in (cause 9). The travel scale reads a view timeline named on the member, so a member that clips with `overflow: hidden` keeps it (cause 2). SITES.md no longer says PagerDots does not change (§6). Its readings are §2.5.
+**The third fold** (`critique.md`, "Round 2, the second critic") answers that critic's two blocking items and takes its note on `overflow: hidden`, on trees built from release/11.1.1. Under reduced motion a press still seats the strip at once and now fades the arriving slide in (cause 9). The travel scale reads a view timeline named on the member, so a member that clips with `overflow: hidden` keeps it (cause 2). SITES.md no longer says PagerDots does not change (§6). Its readings are §2.5.
+
+**The fourth fold** (`critique-r3.md`, the third critic) answers that critic's two blocking items, on trees built from release/11.1.1 (14506233e now; its `src`, `tests` and `demo` are still ca61ce5b6's). Under reduced motion a press no longer cuts anything: the strip fades out over 90 ms, seats while it is hidden and fades back in over 150 ms, and a second press during the fade-out moves the pending seat (cause 9). The neighbours' dimming keeps a short fade under reduced motion. A strip that shows several members no longer commits one beside the member pressed for (cause 11). The witness now reads every member's ink, frame by frame, on three pages. Its readings are §2.6.
 
 ## Verdict
 
 - **The platform's scroll-snap is sound, and the jitter is glass's own writes around it.** With the cure, every touch, wheel and pager cell in Chromium runs 0 reversals and rests 0 px off its snap point, and a held finger keeps the picture 1:1 (0.99 at 1440, 0.96 at 390): the bare strip's own numbers. In WebKit the wheel now carries the strip, with one snap-back left per wheel gesture whose cause is not named (§2.2).
 - **No fork between native snap and a pointer glide.** Native stays (§5).
-- **11.1.2** is `cure.patch` against release/11.1.1: seven library files (+197 −101), glass's own Carousel stage (+7 −3) and a unit test (+245), 179 B gzip larger than 11.1.1 in a consumer build (§3). It fixes ten faults (§1), among them the Home View study's carousel defect (the dots and the slides disagree), a stale pitch after a resize, presses that animate under reduced motion (a press now lands at once and fades in), and an engine without `scrollend`.
+- **11.1.2** is `cure.patch` against release/11.1.1: seven library files (+248 −105), glass's own Carousel stage (+7 −3) and a unit test (+269), 388 B gzip larger than 11.1.1 in a consumer build (§3). It fixes ten faults (§1), and guards against an eleventh that its own instant seat brought out, among them the Home View study's carousel defect (the dots and the slides disagree), a stale pitch after a resize, presses that animate under reduced motion (a press now fades the strip out, seats it and fades it back in), and an engine without `scrollend`.
 - **The content lag goes by default, and bringing it back is the owner's call** (§1.3, question 1). It cannot return without a per-frame write, and WebKit drops the trackpad when anything is written per frame.
-- **11.3.0** gets one `moving` signal for heavy live members (`near-snap.patch`, +36 B, §4), the commit at the decision (§1.2), and the autoplay (CR-06). On the cure a consumer's own "run only while still" rule is already smooth (§4); `moving` makes that rule direct and right at the strip's end.
+- **11.3.0** gets one `moving` signal for heavy live members (`near-snap.patch`, +32 B, §4), the commit at the decision (§1.2), and the autoplay (CR-06). On the cure a consumer's own "run only while still" rule is already smooth (§4); `moving` makes that rule direct and right at the strip's end.
 - **Atlas** runs a glass line whose page turn causes its 150 to 350 px jumps (record §2.1). Its path onto the cure is §7: 11.1.2 takes the line's resize, rest and reduced-motion handling, and the spring turn for presses is question 2.
 
 ## 1. The causes and the cures
@@ -33,8 +35,9 @@ Lines are v11.1.0's. Paths are under `src/components/`.
 | 6 | **Reports dropped during a hold** (CR-09) | `useDeckSnap.ts:98-101`: a commit during a programmatic scroll is dropped, and the engine reports nothing more if the strip comes back to the member it last settled on | Next, then the page's own scroll back to member 0 within 60 ms: the strip rests on 0 with member 1 active | At the hold's end, if the strip rests somewhere other than where it was sent, commit the member whose own offset it rests on (`restingOn`) |
 | 7 | **The model is one-way** (the Home View study's defect; W-L.2 item 9) | `carousel/Carousel.vue:24` with `carousel/useCarousel.ts:35-43`: `active` is read once, at creation | A PagerDots bound to the same `v-model:active` moves its dot and not the strip: at 390 every press, at 1440 every dot | `watch(active, (to) => deck.go(to))`. `go` ignores the deck's own change coming back. The deck is made while the member count is 0, so it seats 0 whatever `active` says: a second watch takes `active` once, synchronously, when the members first arrive, before the strip is seated (§2.4, start) |
 | 8 | **A cached pitch** | `useDeckSnap.ts:146`: `scrollTo` goes to `index × extent`, and `extent` is measured only at mount and on a member-count change (`:171-174`, `:179`) | After a resize or a rotation a press goes to the old pitch's offset. Chromium, 1440 → 1000: the strip rests on member 3 with member 2 active (v11.1.0 and the first cure); 390 → 844: the first cure rests on member 1 with the dots on 3 | `scrollTo` and the reconcile read each member's own offset (`offsetOf`, clamped to the strip's end); a `ResizeObserver` re-measures the pitch the continuous channel divides by |
-| 9 | **Reduced motion ignored** (CR-08) | `useDeckSnap.ts:143`: `scrollTo` passes `behavior: "smooth"`, which overrides the stylesheet's `scroll-behavior: auto` under `reduce` (`styles.css:71-73`) | A press animates under reduced motion: 64 rows over 575 ms in Chromium (62 over 601 ms in the first cure) | Under reduced motion a press scrolls `instant`, so nothing travels, and the arriving member fades in over 150 ms on an ease-out, so nothing arrives in one frame either (motion canon P0 and P6). The fade is a Web Animation on the member's opacity, which the universal reduced-motion layer (CSS durations only) does not reach (§2.5) |
+| 9 | **Reduced motion ignored** (CR-08) | `useDeckSnap.ts:143`: `scrollTo` passes `behavior: "smooth"`, which overrides the stylesheet's `scroll-behavior: auto` under `reduce` (`styles.css:71-73`) | A press animates under reduced motion: 64 rows over 575 ms in Chromium (62 over 601 ms in the first cure) | Under reduced motion a press never scrolls in sight. The strip fades out over 90 ms on `--ease-in`, seats `instant` while it is hidden, and fades back in over 150 ms on `--ease-standard`: the motion canon's dip (P6), the out leg six tenths of the in (P0a). Every member on screen, the slide being left and any neighbour, rides the one fade. A press during the fade-out moves the pending seat; a press during the fade-in turns round from the strip's opacity. The fades are Web Animations on the strip, which the universal reduced-motion layer (CSS durations only) does not reach. The neighbours' dimming keeps a 0.15 s fade there, carved past that layer as `transitions.css` carves its swaps (§2.6) |
 | 10 | **No `scrollend`** | Safari 26.0 and 26.1 do not fire it; v11.1.0's release falls to the 900 ms floor | The hold's reconcile never runs and the velocity is never zeroed: the held cell fails with the event removed, in both engines | Where the engine has no `scrollend`, 150 ms with no scroll event dispatches one on the strip, so `rest()` and the reconcile run as they do elsewhere |
+| 11 | **A neighbour's late report** (found by the fourth fold) | `useDeckSnap.ts:127-139`: the IntersectionObserver commits the member most in view in each batch of entries. On a strip that shows several members whole, a batch that lands after a press's hold is released names a member beside the one pressed for | A strip shaped like fourier's featured row (16rem members, `projection="none"`), 1440, Chromium: on the third fold a reduced-motion press for member 1 rests on member 1 with member 3 active (two runs of two), and one smooth Next of two rested with member 4 active. The cure's instant seat brings it out: `scrollend` releases the hold in the seat frame, and the observer's batch lands a frame later. 11.1.1 rested with member 1 active in the same cells (one run each, Chromium) | While the strip rests on the member it is heading to, a report of another member commits nothing (§2.6) |
 
 ### 1.1 Left as they are
 
@@ -46,8 +49,8 @@ Lines are v11.1.0's. Paths are under `src/components/`.
 - **The `window` projection** switches the newly active member's scale from 0.965 to its timeline value in one frame at the commit, as v11.1.0 did in script. Unfilmed; no page in glass's `src` or `demo` uses `window`. With §1.2.
 - **A press just after a lift.** A Next press 60 or 150 ms after a swipe's lift (Chromium, hero, 1440) ends its smooth scroll 3 px short (`scrollend` at 2069 against 2072), and the snap then creeps the rest with 1 to 3 px back-steps. The reconcile commits the right member and the active member never steps back. This is the second critique's reading, not refilmed here, and it looks like the engine's snap, not glass.
 - **No stacking context under `projection="none"` or reduced motion.** v11.1.0's `.carousel-item` always carried `scale: var(--member-scale, 1)`, so every member was a stacking context and the containing block of a fixed-position child. The cure scales the content node, and only where the travel scale runs, so under `"none"` and under reduced motion a member is neither. It is kept: that containment was a side effect of the per-frame channel, glass's only CarouselItem page (the stage) depends on neither, and a rule that restores it would have no other job. The release note says so (§3). Unfilmed.
-- **Under reduced motion, the slide being left goes in the seat's frame.** The arriving slide fades up from transparent over 150 ms (§2.5), so on a full-width strip the frame after the press shows what is behind the strip. The fuller form is P6's dip: the slide fades out where it is, the strip seats while it is hidden, the new slide fades in, 100 ms each way. It would hold the seat about 100 ms behind the press and give the hold a pending seat to cancel when a second press comes, so it is not built.
-- **Under reduced motion the neighbours still dim, and the dimming switches in one frame.** The reduce block's `opacity: 1` (`.carousel-item`) loses to the dimming rule's specificity, and its `transition: none` removes the fade, so a neighbour goes 0.7 → 1 in one frame at each commit (the reduce cell reads it on the member being pressed for, §2.5). By the same rule a swipe's commit switches both slides mid-gesture, while both are on screen (not filmed under reduced motion). 11.1.1 does the same. P6 keeps opacity fades under reduced motion, so the cure is a shortened opacity transition carved with `!important` (as `reveal.css` does), not `none`. It is not jitter and the cure did not cause it; it is placed beside the reduced-motion row for the next motion wave.
+- **Under reduced motion the neighbours stay dimmed** at 0.7, as with motion. The reduce block's old `opacity: 1` lost to the dimming rule's specificity and never applied, so the fourth fold drops it rather than make it win. Its old `transition: none` switched the dimming in one frame at each commit (11.1.1 did the same); the fourth fold gives it a 0.15 s fade instead (cause 9). A swipe's commit under reduced motion, where both slides are on screen, is reasoned from that rule and not filmed.
+- **The press waits for the fade-out under reduced motion.** The seat comes 92 to 100 ms after the press in Chromium and 96 to 113 ms in WebKit (§2.6), and `deck.index`, the dots and the caption change at the press. A swipe is untouched: it never runs the dip. For the dip's 240 ms the strip's animated opacity makes it a stacking context, as any fade does, so a member's child raised with `z-index` over what lies outside the strip stays inside the strip's layer until the fade ends. Not filmed.
 
 ### 1.2 Commit timing (law 3), for 11.3.0
 
@@ -173,7 +176,7 @@ The model cell is also the P-21a witness: a jump of two members lands on its tar
 
 ### 2.4 The second fold, on release/11.1.1
 
-RED here is release/11.1.1 (ca61ce5b6), GREEN is 11.1.1 with this `cure.patch`, each from `git archive` into `trees/`, built with `tools/build-tree.sh`, served on 5381 and 5382.
+RED here is release/11.1.1 (ca61ce5b6), GREEN is 11.1.1 with the second fold's `cure.patch`, each from `git archive` into `trees/`, built with `tools/build-tree.sh`, served on 5381 and 5382. The third fold changes two of its rows, `hidden` and reduce (§2.5); every other row reads the same on it.
 
 **The travel scale on a strip that centres its slides** (`tools/scale-stage.mjs`). The page is glass's own Carousel page (`?c=carousel`): 11.1.1's CarouselStage, slides 64cqi wide at 40rem and up (82cqi below), `scroll-snap-align: center`, the strip's `padding-inline` half of what a slide leaves. The strip is held at member 1 and at fractions of a pitch past it, snap off; members 0, 1 and 2 are read (the member's scale times its content's).
 
@@ -184,7 +187,7 @@ RED here is release/11.1.1 (ca61ce5b6), GREEN is 11.1.1 with this `cure.patch`, 
 | the same, 390 | 0.9675 / 0.9961 / 0.965 | **0.9998** / 0.9966 / 0.9937 / 0.9857 |
 | 11.1.2 (the stage states its offset as `scroll-padding-inline`), 1440 | 0.965 / 1 / 0.965 | 0.9964 / 0.9929 / 0.99 / 0.9821 |
 | the same, 390 | 0.965 / 1 / 0.965 | 0.9964 / 0.9928 / 0.9899 / 0.9819 |
-| 11.1.2 with every member `overflow: hidden`, both widths | 1 / 1 / 1 | 1 at every hold |
+| the second fold with every member `overflow: hidden`, both widths | 1 / 1 / 1 | 1 at every hold |
 | 11.1.2 with every member `overflow: clip`, both widths | as 11.1.2 | as 11.1.2 |
 
 WebKit 26.5 reads every row the same to the fourth decimal: 11.1.1 at 0.965 / 1 / 0.965; the cure without the line at 0.9741 / 0.9901 / 0.965 (1440) and 0.9675 / 0.9961 / 0.965 (390), member 1 swelling to 0.9999 at +0.28 (1440) and 0.9998 at +0.1 (390); 11.1.2 at 0.965 / 1 / 0.965; `hidden` at 1 everywhere; `clip` as 11.1.2.
@@ -203,14 +206,96 @@ Without the scroll-padding the view range peaks where the content's start edge m
 
 **The unit test** (`tests/components/deck/snap-travel.test.ts`, in the patch; happy-dom): nine tests, for `heading`, the press offset, the release-once, the reconcile, reduced motion, rest velocity 0, the idle floor, the inbound model and the start value. 9 of 9 pass on 11.1.2; 8 fail on 11.1.1 (the press offset passes, since its members are equal); on the cure without the start watch only the start test fails.
 
+### 2.5 The third fold, on release/11.1.1
+
+RED here is release/11.1.1 with the second fold's `cure.patch` (§2.4's GREEN). GREEN is release/11.1.1 with the third fold's `cure.patch` (§2.6 replaces its reduced-motion half). The branch has moved since §2.4 (b9b96cb76 when this was written), but its `src`, `tests` and `demo` are ca61ce5b6's to the byte, and both patches apply to it in order. Both come from `git archive` into `trees/`, are built with `tools/build-tree.sh` and served on 5381 and 5382. The two builds differ in two places: under reduced motion `scrollTo` fades the arriving member in, and the travel scale's view timeline is named on the member.
+
+**Reduced motion** (`tools/witness.mjs --cells reduce`, the hero page, one Next press in a context with `reducedMotion: "reduce"`). Each frame reads the strip's offset and the opacity of member 0 (left) and member 1 (pressed for), each the member's opacity times its content's.
+
+| | Chromium 149, GPU lane, 1440 / 390 | WebKit 26.5, 1440 / 390 |
+|---|---|---|
+| the seat, RED → GREEN | one frame, no offset between: 56 / 41 ms → 51 / 37 ms | one frame, no offset between: 50 / 41 ms → 50 / 48 ms |
+| member 1 in the seat frame | 1 → **0** | 1 → **0** |
+| member 1 after the seat (GREEN) | 0.49 at 50 ms, 0.84 at 100 ms, 1 at 150 / 149 ms; largest step 0.09 a frame | 0.50 at 50 ms, 0.84 at 100 ms, 1 at 150 / 149 ms; largest step 0.19 a frame (60 Hz) |
+| member 0 in the seat frame | 0.7, both builds (off screen, a dimmed neighbour from then on) | the same |
+| `scrollend` (GREEN) | one, in the seat frame | one, 17 ms after the seat |
+| the cell: seated in one frame, member 1 under 0.25 there, at 1 within 100 to 250 ms | fails → **holds** | fails → **holds** |
+
+So nothing travelled, and the slide pressed for no longer arrived in one frame. The cell read only that slide, on a page whose neighbours are never on screen. The third critic read every member and found the cut moved, not gone: the slide being left still went in the seat frame, and on a strip that shows more than one member a member already on screen blinked to 0 (`critique-r3.md`, B-1 and B-2). The fourth fold replaces this fade with the dip (§2.6). The model and start cells, re-read on GREEN, hold in both engines at both widths as in §2.4.
+
+The fourth fold moves the fade from the member to the strip and adds its out leg (§2.6); the reasoning for a Web Animation below still holds. The fade is `Element.animate` on the member, not a CSS animation. The universal reduced-motion layer (`utilities/a11y-overrides.css`) sets every CSS animation to 0.01 ms and every transition to 0 s, and a glass fade that must survive it is carved with `!important` (motion canon P6). That fits a state. This fade belongs to a press: in CSS it would need a class set on the arriving member, cleared at the animation's end and restarted by a second press. A Web Animation starts at the press, on the member the arm already holds, and the layer, which sets CSS durations only, does not reach it. It fades the member because the arm knows only the strip's children; DeckStage's snap register rides the same arm and fades the same way. Opacity is not geometry, so the member stays the snap area, unlike the scale (cause 2). 150 ms sits with glass's other shortened fades (`pane-swap` and `metric-swap` at 0.15 s in `transitions.css`) and with daraksha's 144 ms.
+
+**The travel scale with `overflow: hidden`** (`tools/scale-stage.mjs`, as in §2.4: members 0 / 1 / 2 at rest on member 1, then member 1 leaving at +0.1 / +0.2 / +0.28 / +0.5 of a pitch):
+
+| every member `overflow: hidden` | Chromium 149 | WebKit 26.5 |
+|---|---|---|
+| RED, 1440 and 390 | 1 / 1 / 1; 1 at every hold | the same |
+| GREEN, 1440 | 0.965 / 1 / 0.965; 0.9964 / 0.9929 / 0.99 / 0.9821 | the same |
+| GREEN, 390 | 0.965 / 1 / 0.965; 0.9964 / 0.9928 / 0.9899 / 0.9819 | the same |
+
+GREEN's `hidden` rows equal its `built` rows to the fourth decimal in both engines. A member that clips with `overflow: hidden` is a scroll container, so `view()` on its content found the member, which never scrolls. Named on the member, the timeline's subject is the member, whose nearest scroll container is the strip, and each content node takes the name from its own member, the nearest ancestor that declares it. Every other row (`built`, `nopad`, `clip`, the hero page) reads the same on RED and GREEN to the fourth decimal in both engines, and each strip rests where it did (940 / 330 px on the stage, 1036 / 422 on the hero). The release note's `overflow: clip` line goes.
+
+**The wheel in WebKit** (`tools/snapback.mjs --travel --only travel,travel-flat --repeat 3`, GREEN), to see that a timeline declared on the snap area does not bring back cause 2's snap-backs: as §2.2 found it. At 1440 the strip is at 559 px when the last wheel event lands, with one 21 px step back at 56 to 66 ms, 3 of 3; at 390, 192 px and one 28 px step back at 85 to 96 ms, 3 of 3 (§2.2: 530 to 559 px and 21 px at 49 to 54 ms; 192 px and 28 px at 85 to 87 ms; rows ran every 10 ms then and every 17 ms now). Without the dimming (`travel-flat`) the strip keeps the hand, 602 and 234 px, none, 3 of 3.
+
+**The unit test** now has ten tests. The reduced-motion test also asks that the press fades the arriving member in with `opacity: [0, 1]`, and a new one asks that nothing fades when motion is allowed. 10 of 10 pass on 11.1.2 (16 of 16 with the Carousel and deck contract files); on the second fold only the fade test fails.
+
+### 2.6 The fourth fold, on release/11.1.1
+
+Here **11.1.1** is release/11.1.1 itself, **RED** is the third fold (§2.5's GREEN) and **GREEN** is this `cure.patch`. Each comes from `git archive` into `trees/`, is built with `tools/build-tree.sh` and is served on 5383, 5381 and 5382. GREEN differs from RED in four places: the dip (cause 9), the neighbour guard (cause 11), the dimming's reduced-motion fade, and the `>` in the vertical selector (the third critic's minor 3).
+
+**The dip.** A press under reduced motion no longer scrolls at once. `scrollTo` animates the strip's opacity from what it shows to 0 over 90 ms on `--ease-in` and holds it at 0. At the end the strip seats `instant` on the member it is then heading to, a second Web Animation fades it from 0 back to its own opacity over 150 ms on `--ease-standard`, and the first is cancelled. A press during the fade-out only moves `heading`, so the pending seat goes to the last press and no second fade starts. A press during the fade-in cancels it and fades out from the opacity on screen, still over the whole 90 ms, so no leg is shorter than five frames. The curves are read from the strip's computed tokens. 90 and 150 are literals, and the comment says why: glass's reduced-motion swaps carve 0.15 s, and no token names it (the third critic's minor 1). The press still answers in its own frame: `deck.index`, the dots and the caption change at once, and the fade-out starts there.
+
+The fade is on the strip, not a member, as B-2 asks. Every member on screen rides the one fade, so a member already on screen never blinks, and no member's own opacity (the dimming) is replaced for the fade's length (M-1).
+
+**The ink cells** (`tools/witness.mjs --cells reduce,retarget,turn,motion`). Each frame the cell reads the strip's offset and opacity and every member's ink: the share of its width inside the strip, times its content's opacity, its own and the strip's. A press is a click made in the page, so the gap between two is exact. There are three pages. The hero is atlas's shape: full-width members and a 2rem gutter. Glass's own Carousel page (`?c=carousel`) centres its slides, with the neighbours peeking at both edges. The 16rem strip is shaped like fourier's featured row: the hero with `projection=none`, 16rem members and a 1rem gutter, so three members show whole at 1440 and one and a half at 390.
+
+- `reduce` presses for member 1 on each page under reduced motion.
+- `retarget` presses the stage's dots for member 1, then for member 2 60 ms later, inside the fade-out.
+- `turn` presses for member 1 on the hero, then for member 2 160 ms later, inside the fade-in.
+- `motion` presses for member 1 on the hero and the 16rem strip with motion allowed.
+
+A reduced-motion cell holds when the strip rests on the last member pressed for with that member active, takes no offset in between, seats at most once a press (once in `retarget`), and no member's ink changes by more than two fifths within one 60 Hz frame (a 120 Hz film is read over 17 ms). A motion cell holds when the strip rests on member 1 with member 1 active.
+
+Each entry is the largest change of any member's ink within one 60 Hz frame, at 1440 / 390, then what the film shows.
+
+| Chromium 149, GPU lane | 11.1.1 | RED (third fold) | GREEN (fourth fold) |
+|---|---|---|---|
+| reduce, hero | 0.30: the press travels (59 offsets between), and member 0's dimming steps 1 → 0.7 in one frame / the dot does not move the strip (cause 7) | **1 / 1**: member 0 goes 1 → 0 in the seat frame, so the strip shows nothing | **holds**: 0.28 / 0.28; seated 99 / 96 ms after the press, back to 1 150 ms later |
+| reduce, stage | 0.30 / 0.30: travels (55 / 31 between), the dimming steps in one frame | **0.82 / 0.95**: member 0 drops from 1 to its sliver in the seat frame, and member 2's sliver appears at 0.18 / 0.05 | **holds**: 0.30 / 0.29 |
+| reduce, 16rem strip | 0.26: travels (27 between) / the dot does not move the strip | **1 / 1**: member 1, whole on screen before and after, goes 1 → 0 in the seat frame; at 1440 the strip rests with **member 3 active** (cause 11) | **holds**: 0.28 / 0.28, member 1 active |
+| retarget, stage | 0.30 / 0.30: travels to member 2 (86 / 50 between) | 0.82 / 0.95, and two seats, one at each press | **holds**: 0.28 / 0.28; one seat, on member 2, 96 ms after the first press |
+| turn, hero | 0.30: travels (90 between) / the dot does not move the strip | 1 / 1, two seats | **holds**: 0.29 / 0.29; the second press comes at 0.69 of the fade-in, and the strip turns round from there |
+| motion, hero | 0.14: travels, and rests 18 px past member 1 (1054 px; cause 2) / the dot does not move the strip | holds (59 / 36 between) | holds (59 / 35 between) |
+| motion, 16rem strip | 0.26, holds / the dot does not move the strip | holds in this run; one earlier run of the same build rested with member 4 active (cause 11) | holds |
+
+| WebKit 26.5 | 11.1.1 | RED (third fold) | GREEN (fourth fold) |
+|---|---|---|---|
+| reduce, hero | 0.30: travels (11 offsets between), the dimming steps in one frame / the dot does not move the strip | **1 / 1**: member 0 goes 1 → 0 in the seat frame | **holds**: 0.27 / 0.28; seated 113 / 100 ms after the press |
+| reduce, stage | 0.30 / 0.30: travels (11 / 11 between) | **0.82 / 0.95**, as in Chromium | **holds**: 0.27 / 0.27 |
+| reduce, 16rem strip | 0.20: travels (11 between) / the dot does not move the strip | **1 / 1**; member 1 active at rest (cause 11 not seen in WebKit) | **holds**: 0.27 / 0.35 (the 0.35 over one 21 ms frame) |
+| retarget, stage | 0.30 / 0.30: travels to member 2 (14 / 14 between) | 0.82 / 0.95, two seats | **holds**: 0.28 / 0.28; one seat, on member 2, 101 / 103 ms after the first press |
+| turn, hero | 0.30: travels (21 between) / the dot does not move the strip | 1 / 1, two seats | **holds**: 0.29 / 0.29 |
+| motion, hero | 0.21, holds (12 between) / the dot does not move the strip | holds | holds |
+| motion, 16rem strip | 0.20, holds / the dot does not move the strip | holds | holds |
+
+What GREEN's films show, on the hero at 1440 (Chromium, every second row, about 17 ms apart): member 0 reads 1, 0.85, 0.68, 0.49, 0.29, 0.09 from the press's frame, the strip seats while it is hidden, and member 1 reads 0.01, 0.08, 0.31, 0.59, 0.78, 0.88, 0.95, 0.98, 1. On the 16rem strip, members 1 to 3 stay on screen through the press and all three take that same curve; member 0 leaves while the strip is hidden. On the stage, both slivers come back with the slide at the centre, at 0.18 of it. WebKit's films, at 60 Hz, read the same curves. `scrollend` fires once a seat: in the seat frame in Chromium, 10 to 15 ms after it in WebKit. The model and start cells, re-read on GREEN, hold in both engines at both widths as in §2.4.
+
+**Why the in leg is on `--ease-standard`.** The first build of the dip faded in on `--ease-out`, cubic-bezier(0, 0, 0.2, 1), which lands a third of a 150 ms fade in its first 17 ms. In Chromium that read 0.33 a frame; in WebKit the fade's first painted frame came late and read 0.45 on the hero and the 16rem strip and 0.43 on the stage, so those cells failed (`witness.green-fold4-easeout.webkit.json`). `--ease-standard`, cubic-bezier(0.4, 0, 0.2, 1), is the canon's other effects curve (P1). It starts slowly, so a late first frame costs little. Its steepest 60 Hz frame lands 0.27 to 0.30 of the fade, and 0.35 in the one WebKit frame that took 21 ms. The out leg stays on `--ease-in`, whose steepest frame is its last. The same build's out leg was cut short on a turn (90 ms times the opacity on screen, so 40 ms from 0.45); GREEN keeps the whole 90 ms (P0a's five frames).
+
+**The neighbour guard** (cause 11). The observer commits the member most in view in each batch of entries. On the 16rem strip at 1440, three members are whole on screen once the strip rests on member 1, and a batch that lands after the hold is released names one of the others. RED, Chromium: a reduced-motion press for member 1 rested with member 3 active in both runs, and a smooth Next rested with member 4 active in one run of two. WebKit's RED rested with member 1 active in every cell, so the late report is Chromium's here. GREEN ignores a report of another member while the strip rests on the member it is heading to; a swipe moves the strip off that offset at once, so its reports pass. Every GREEN cell rests with the pressed member active.
+
+**The dimming.** A press moves the dimming at once: on the stage, member 1 loses its 0.7 and member 0 takes it. The reduce block's old `transition: none` made that a 0.3 step in one frame on 11.1.1 and on every fold before this one (11.1.1's 0.30 above). GREEN carves a 0.15 s fade on `--ease-out` for it, past the universal reduced-motion layer, as `transitions.css` carves its swaps, so it runs inside the fade-out.
+
+**The unit test** has eleven tests. The reduced-motion test asks that a press fades the strip out (`[1, 0]`), that a second press during the fade-out scrolls nothing and starts no second fade, that the seat at the fade-out's end goes to the second press's member, and that the strip then fades in to its own opacity. A new test asks that a report of a member beside the one the strip rests on commits nothing. 11 of 11 pass on GREEN (17 of 17 with the Carousel and deck contract files, and 17 of 17 with `near-snap.patch` on top). On RED the reduced-motion test and the new one fail. vue-tsc on `tsconfig.src.json` is clean with `near-snap.patch` on top, and both patches apply to release/11.1.1 in order with `git apply` and `patch -p1`.
+
 ## 3. Bytes and code
 
-| | v11.1.0 and 11.1.1 | first cure | folded cure | second fold | 11.1.2 (third fold) | 11.3.0 (third fold + `moving`) |
-|---|---|---|---|---|---|---|
-| a consumer build: the Carousel's chunks, minified, gzip -9 (`CarouselItem` js + css, `slideContext` js) | 1505 + 496 + 1458 = **3459 B** | 1174 + 580 + 1574 = 3328 B | 1175 + 580 + 1826 = 3581 B | 1176 + 580 + 1826 = 3582 B (+123) | 1175 + 590 + 1873 = **3638 B** (+179) | 1185 + 590 + 1900 = **3675 B** (+37 over the third fold) |
-| lines changed | | +93 −71, five files | +167 −90, five files | library +188 −101 in seven files; the stage +7 −3; the test +228 | **library +197 −101 in seven files; the stage +7 −3; the test +245** | +16 −6, four files |
+| | v11.1.0 and 11.1.1 | first cure | folded cure | second fold | third fold | 11.1.2 (fourth fold) | 11.3.0 (fourth fold + `moving`) |
+|---|---|---|---|---|---|---|---|
+| a consumer build: the Carousel's chunks, minified, gzip -9 (`CarouselItem` js + css, `slideContext` js) | 1505 + 496 + 1458 = **3459 B** | 1174 + 580 + 1574 = 3328 B | 1175 + 580 + 1826 = 3581 B | 1176 + 580 + 1826 = 3582 B (+123) | 1175 + 590 + 1873 = 3638 B (+179) | 1174 + 606 + 2067 = **3847 B** (+388) | 1187 + 606 + 2086 = **3879 B** (+32 over the fourth fold) |
+| lines changed | | +93 −71, five files | +167 −90, five files | library +188 −101 in seven files; the stage +7 −3; the test +228 | library +197 −101 in seven files; the stage +7 −3; the test +245 | **library +248 −105 in seven files; the stage +7 −3; the test +269** | +16 −6, four files |
 
-The cure moves the scale out of script: the per-frame `project()` and its two watchers are gone, and the CSS grows by 84 B for the keyframes. `useDeckSnap` grows by the fixes the fold added: live offsets and the resting member, the resize observer, the idle floor and the reduced-motion branch, together 252 B over the first cure. The second fold adds 1 B (the start watch); its comment changes cost nothing minified. The third fold adds 56 B: the reduced-motion fade (47 B in `slideContext`) and the named timeline (10 B of CSS). 11.1.1's chunks are v11.1.0's to the byte (both demo builds read 3459 B).
+The cure moves the scale out of script: the per-frame `project()` and its two watchers are gone, and the CSS grows by 84 B for the keyframes. `useDeckSnap` grows by the fixes the fold added: live offsets and the resting member, the resize observer, the idle floor and the reduced-motion branch, together 252 B over the first cure. The second fold adds 1 B (the start watch); its comment changes cost nothing minified. The third fold adds 56 B: the reduced-motion fade (47 B in `slideContext`) and the named timeline (10 B of CSS), less 1 B in `CarouselItem`'s js. The fourth fold adds 209 B over the third: 194 B in `slideContext` for the dip (two Web Animations on the strip, the pending seat, the two curve tokens read from the strip) and the neighbour guard, 16 B of CSS for the dimming's reduced-motion fade, less 1 B in `CarouselItem`'s js. `moving` on top adds 32 B. 11.1.1's chunks are v11.1.0's to the byte (all three 11.1.1 demo builds read 3459 B).
 
 **Release note, 11.1.2.**
 - The Carousel no longer jitters under a swipe, a trackpad or a pager press; the strip settles on the browser's own snap and rests exactly on it.
@@ -219,7 +304,7 @@ The cure moves the scale out of script: the per-frame `project()` and its two wa
 - Under `projection="none"` and reduced motion a slide is no longer a stacking context or the containing block of a fixed-position child. A page that relied on that sets `isolation: isolate` (the stacking context) or `contain: layout` (both) on its slides.
 - The content no longer lags its slide (question 1 decides whether it comes back).
 - Dots bound to the Carousel's `v-model:active` move the slides, and a Carousel mounted with `v-model:active` on a later slide shows that slide.
-- Under reduced motion a press puts the slide in place at once and fades it in over 150 ms; nothing slides.
+- Under reduced motion a press fades the slides out, puts the new slide in place and fades them back in (90 ms out, 150 ms in); nothing slides. The neighbours' dimming fades there too.
 - A press after a resize or a rotation lands on the right slide.
 
 **Overlaps with BL rows.**
@@ -256,7 +341,7 @@ Why a signal and not the position: "still" read from the deck's position (an int
 
 What stays with the page: which slides mount a figure (the near window, `tools/app-extra/mounts/carousel-near.vue` shows one), pausing off screen and in a hidden document (daraksha's stage does both, §6), `contain: paint`, decoding ahead.
 
-Cost: +36 B gzip, +16 −6 lines. Without `scrollend` the figure still starts after landing (the frozen cell, §2.3). After an instant press under reduced motion both engines fire `scrollend` (Chromium in the arriving frame, WebKit 12 to 18 ms later; §2.4), so `moving` falls there too.
+Cost: +32 B gzip over the fourth fold (it cost 37 B on the third), +16 −6 lines. Without `scrollend` the figure still starts after landing (the frozen cell, §2.3). Under reduced motion `moving` rises at the dip's seat, not at the press, and falls at that seat's `scrollend` (Chromium in the seat frame, WebKit 13 to 16 ms later; §2.6), while the strip fades back in. The slide being left stops its figure at the press, when it stops being active, and fades out still.
 
 **Weighed and left out.**
 - `near`, `live` and `rested` (the first prototype): `live` is `active && !moving`, and the window is a page's loading policy.
@@ -290,9 +375,9 @@ What stays daraksha's, and a page's, own:
 - Its stage's live drawing stops when the stage leaves the screen (an IntersectionObserver) or the document is hidden (`visibilitychange`), in `PortraitStage.vue`.
 - `warmNeighbours` fetches and decodes the photos either side of the one shown; `decoded()` races `img.decode()` against 610 ms. A page's loading policy.
 - `contain: paint` on its figures.
-- Under reduced motion a turn fades 144 ms out and 144 ms in. The Carousel now seats the strip at once and fades the arriving slide in over 150 ms (cause 9); it does not fade the slide being left (§1.1).
+- Under reduced motion a turn fades 144 ms out and 144 ms in. The Carousel now dips the same way: 90 ms out, the seat, 150 ms in (cause 9). Its out is shorter than its in, as the canon asks of a thing that leaves (P0a).
 
-Its dots are glass's PagerDots (`src/pages/PortraitsPage.vue:556` at 61b36f0), so the dots' look is question 4. This study's patches do not touch PagerDots, but two other 11.1.2 rows do: LT-18 takes the dots to the 44 px coarse-pointer floor, and O-372's `3c24e5b4c` keeps the active end dot of a bare rail (`ring=false`) whole instead of cut to a half-moon. So daraksha's portraits dots are worth a look on 11.1.2; the note to daraksha says so (SITES.md).
+Its dots are glass's PagerDots (`src/pages/PortraitsPage.vue:556` at 61b36f0: `:ring="false"`, and `window-fit` 3 or 5 on narrow screens), so the dots' look is question 4. This study's patches do not touch PagerDots. One other 11.1.2 row does: O-372's `3c24e5b4c` (on `u/glass-fixes-on-11.1.0`, not yet on release/11.1.1) keeps the active end dot of a ring-off rail whole instead of cut to a half-moon, and daraksha's rail is ring-off. The dots' tap target does not change for daraksha. PagerDots already sets `--pager-hit-cell` to `--touch-target` (2.75rem) under `pointer: coarse` at v10.1.4 (daraksha's pin), v11.1.0 and release/11.1.1 (`PagerDots.vue:588-590`), and the third critic measured a ring-off rail at 390 with a touch pointer at 44 × 44 per dot on 11.1.1 and on the cure, in both engines. LT-18's 32 × 32 is its reading of the stage's dots (`audit/last-ten/FINDINGS.md:30`), and what LT-18 will change is not built. The round 2 critic's brief named a coarse-size change for daraksha's dots; the measurement says otherwise, so the note names the end dot only. O-385 (f) (eight or more dots overflow a 358 px stage at a coarse pointer) is read with the end-dot commit; daraksha's rail windows itself on narrow screens, so it should not meet it. So daraksha's portraits dots are worth a look on 11.1.2, on the first and last portrait; the note to daraksha says so (SITES.md).
 
 ## 7. Atlas's path onto the cure
 
@@ -305,7 +390,7 @@ Atlas's home deck runs glass `u/sp-integ-glass` (8b4d8f82b). That line branches 
 | a rest without `scrollend` | 150 ms idle floor, always armed | same | 150 ms idle floor, only where the engine has no `scrollend` (a held finger is not rest) | glass |
 | velocity zeroed at rest | yes | yes | yes (cause 4) | glass |
 | release once | yes | yes | yes, with the reconcile (causes 5, 6) | glass |
-| reduced motion | instant | instant | instant, and the arriving slide fades in over 150 ms (cause 9) | glass |
+| reduced motion | instant | instant | the dip: the strip fades out over 90 ms, seats while hidden, fades back in over 150 ms (cause 9) | glass |
 | inbound `watch(active)` | yes | no | yes (cause 7) | glass |
 | the commit echo | yes (the spring turn runs on every commit) | yes | gone (`heading`, cause 1) | glass |
 | the projection (scale and lag per scroll frame) | yes | yes | view-timeline scale, no lag (causes 2, 3) | glass; the lag is question 1 |
@@ -365,17 +450,22 @@ Held: an entrance for a carousel's media dock, until glass has one.
 - A `scrollend` lost in a hidden document mid-scroll: not covered by the idle floor (it arms only where the engine has no `scrollend`).
 - `moving` against the position-derived rule at a clamped strip end (§4): reasoned, not filmed.
 - The near-snap tree in WebKit, beyond the frozen cell.
+- The near-snap tree's films (§4 and the frozen cell) on the fourth fold: not re-run. Its unit tests, typecheck and bytes were (§2.6, §3).
 - A vertical strip, the `window` projection and dark mode.
 - Repeats: each GREEN film cell ran once; the snap-back variants ran three times at each width.
-- The reduced-motion fade on a strip whose neighbours show (glass's stage) and on DeckStage's snap register, which rides the same arm: not filmed. The reduce cell is the hero page.
-- A swipe under reduced motion, where the dimming switches in one frame (§1.1): not filmed.
+- The dip on DeckStage's snap register, which rides the same arm: not filmed. The ink cells are the hero, glass's stage and the 16rem strip (§2.6).
+- A swipe under reduced motion, where the dimming now fades over 0.15 s at the commit (§1.1): not filmed.
+- The dip in a hidden document: the fade-out's end, which seats the strip, waits on the document's animation clock, so a press made while the tab is hidden (an autoplay) may seat only when the tab shows again. Reasoned, not filmed.
+- A Carousel mounted hidden (round 2's note): one reading by the third critic (Chromium, the hero with `start=2` mounted inside `display: none` and shown 600 ms later) rested at 2072 px with member 2 active and the caption on 3, so it did not reproduce in that shape. Not refilmed here.
+- Dot jumps in Chromium that grow with distance (round 2's note: 0 to 7 takes 1.4 s): the browser's smooth scroll over seven pitches, which the cure does not shape (question 2). Not refilmed here.
+- The WebKit wheel and the travel scale on the fourth fold: not refilmed. The fold changes no rule that runs with motion allowed except the vertical selector (now `>`, so a horizontal strip inside a vertical one keeps the inline axis; no page has a vertical strip), and the neighbour guard, which acts only while the strip rests on its heading. §2.5's wheel and scale rows stand on the third fold.
 - The named timeline on a vertical strip: not run (no page in glass has one).
 - value.js's HOME-DECK-REFS.md is not committed; it is quoted as the record quotes it.
 
 ## 12. Files
 
 - `cure.patch`: 11.1.2 against release/11.1.1 (`patch -p1` or `git apply` at the repo root): the library, glass's Carousel stage and `tests/components/deck/snap-travel.test.ts`. Its library half applies to v11.1.0 too; the stage file does not exist there. `near-snap.patch`: 11.3.0 against the cure.
-- `fold.md`: each objection's ruling. `STUDY.md`: the study for the owner. `SITES.md`: the notes for atlas, and for value.js and daraksha.
+- `fold.md`: each objection's ruling in the first two folds; the third fold answers `critique.md`'s second round directly (§2.5), and the fourth answers `critique-r3.md` directly (§2.6). `STUDY.md`: the study for the owner. `SITES.md`: the notes for atlas, and for value.js and daraksha.
 - `witness/`
   - `probe-red/`, `probe-green-fold/`: RED and the folded GREEN, with `summary.json`. `probe-green/`: the first cure.
   - `probe-nearsnap-fold/`: §4's comparison. `probe-nearsnap/`: the first prototype.
@@ -384,4 +474,5 @@ Held: an entrance for a carousel's media dock, until glass has one.
   - `snapback-fold-webkit.log`: the variants, three runs at each width. `scale-*.log`, `snapback-webkit.log`, `snapback-travel-webkit.log`: the first checks.
   - The second fold: `scale-stage-{chromium,webkit}.log` (§2.4's scale), `run-fold2-{red,green}-{chromium,webkit}.log` and `witness.{red,green}-fold2.*.json` (§2.4's logic cells).
   - The third fold: `run-fold3-{red,green}-{chromium,webkit}.log` and `witness.{red,green}-fold3.*.json` (§2.5's reduce, model and start cells), `scale-stage-fold3-{chromium,webkit}.log` (§2.5's scale), `snapback-fold3-webkit.log` (§2.5's wheel).
-- `tools/`: `carousel-probe.mjs`, `analyze.mjs` (still rows skipped), `witness.mjs` (with the `start` cell, and the `reduce` cell reading each member's opacity per frame), `snapback.mjs`, `scale.mjs`, `scale-stage.mjs`, `compare.py`, `wheel.py`, `tables.py`, `build-tree.sh`, `serve.sh`, and the study pages under `app-extra/mounts/`.
+  - The fourth fold: `run-fold4-{v1111,red,green}-{chromium,webkit}.log` and `witness.{v1111,red,green}-fold4.*.json` (§2.6's ink cells; RED is the third fold). `witness.green-fold4-easeout.*.json` and `run-fold4-green-easeout-*.log`: the dip with its in leg on `--ease-out`, the reading that moved it to `--ease-standard` (§2.6); its WebKit run lost its browser at 390, cause not read.
+- `tools/`: `carousel-probe.mjs`, `analyze.mjs` (still rows skipped), `witness.mjs` (with the `start` cell, and the ink cells `reduce`, `retarget`, `turn` and `motion`, which read every member's on-screen ink per frame), `snapback.mjs`, `scale.mjs`, `scale-stage.mjs`, `compare.py`, `wheel.py`, `tables.py`, `build-tree.sh`, `serve.sh`, and the study pages under `app-extra/mounts/` (the hero now takes `member` and `gutter`, for the 16rem strip).

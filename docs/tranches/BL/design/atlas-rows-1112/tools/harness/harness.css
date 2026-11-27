@@ -1,0 +1,57 @@
+@import "tailwindcss" source("./");
+@source "../src/components/**/*.vue";
+@source "../src/components/_shared/**/*.ts";
+@source "../src/components/**/*Variants.ts";
+@source "../src/components/**/index.ts";
+@import "tw-animate-css";
+@import "../src/styles/index.css";
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 24px;
+}
+.tall {
+    min-height: 4000px;
+}
+.cell {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+    max-width: 40rem;
+}
+.spacer {
+    height: 1400px;
+}
+.outer {
+    height: 220px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+}
+.outer-pad {
+    height: 200px;
+}
+.pre {
+    height: 620px;
+}
+.run {
+    width: 260px;
+    overflow-x: auto;
+}
+.foot {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+/* GL-11's gutter reading needs a scrollbar that takes room. Playwright WebKit draws
+   overlay bars, so the dialog cells style the root's bar, which makes it a classic one
+   in WebKit; Chromium runs with its scrollbars shown (the witness's launch flag). */
+html[data-classic-bar]::-webkit-scrollbar {
+    width: 15px;
+}
+html[data-classic-bar]::-webkit-scrollbar-thumb {
+    background: #888;
+}

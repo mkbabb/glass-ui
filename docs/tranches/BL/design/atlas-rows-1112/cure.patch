@@ -1,0 +1,704 @@
+diff --git a/src/components/_shared/overlay/modal-layers.ts b/src/components/_shared/overlay/modal-layers.ts
+new file mode 100644
+index 0000000..2668fd6
+--- /dev/null
++++ b/src/components/_shared/overlay/modal-layers.ts
+@@ -0,0 +1,61 @@
++import { computed, onScopeDispose, shallowReactive, watch, type ComputedRef } from "vue";
++
++/* THE MODAL LAYERS, in the order they opened.
++ *
++ * A modal surface (a Dialog or a Sheet over its scrim, an enlarged ExpandableContainer)
++ * stands above every modal surface that opened before it. Document order cannot say
++ * which that is: a portal keeps the place its component mounted in, so a Dialog
++ * declared before the Dialog that opens it lands earlier in `body` and, on the same
++ * rung, paints under it. The order here is the order of opening.
++ *
++ * The open layer on top keeps the modal rung. Each scrim stands two steps per layer
++ * below it above the overlay rung, so it dims every earlier layer, and a covered
++ * layer's plate stands one step above its own scrim. With one layer open nothing moves:
++ * its scrim is on the overlay rung and its plate on the modal rung. A layer leaves when
++ * its scrim has gone, so the layer below takes its rung back only once nothing dims it. */
++const layers = shallowReactive<object[]>([]);
++
++export interface ModalLayer {
++    /** This layer's place in the opening order, from 0. */
++    index: ComputedRef<number>;
++    /** Whether a layer that opened later is still present above this one. */
++    covered: ComputedRef<boolean>;
++}
++
++/** Take a place in the modal order for as long as `present()` reads true. On the
++ *  server nothing takes a place: the order is shared by the whole module, and a render
++ *  there has no page to stack. */
++export function useModalLayer(present: () => boolean): ModalLayer {
++    if (typeof document === "undefined")
++        return { index: computed(() => 0), covered: computed(() => false) };
++    const self = {};
++    const leave = (): void => {
++        const at = layers.indexOf(self);
++        if (at !== -1) layers.splice(at, 1);
++    };
++    watch(
++        present,
++        (now) => {
++            if (!now) leave();
++            else if (!layers.includes(self)) layers.push(self);
++        },
++        { immediate: true, flush: "sync" },
++    );
++    onScopeDispose(leave);
++    const index = computed(() => Math.max(0, layers.indexOf(self)));
++    const covered = computed(() => {
++        const at = layers.indexOf(self);
++        return at !== -1 && at < layers.length - 1;
++    });
++    return { index, covered };
++}
++
++/** The z-index of the scrim of the layer at `index`. */
++export function scrimZ(index: number): string {
++    return `calc(var(--z-overlay) + ${2 * index})`;
++}
++
++/** The z-index of a covered layer's plate: one step above its own scrim. */
++export function coveredZ(index: number): string {
++    return `calc(var(--z-overlay) + ${2 * index + 1})`;
++}
+diff --git a/src/components/dark-mode-toggle/DarkModeToggle.vue b/src/components/dark-mode-toggle/DarkModeToggle.vue
+index c74b9c3..f43d776 100644
+--- a/src/components/dark-mode-toggle/DarkModeToggle.vue
++++ b/src/components/dark-mode-toggle/DarkModeToggle.vue
+@@ -26,7 +26,9 @@ const { isDark, toggleDark, setDisableTransitions } = useGlobalDark();
+ const forwardedAttrs = computed(() => {
+     const { class: _class, type: _type, ...rest } = attrs;
+     return {
+-        "aria-label": isDark.value ? "Switch to light mode" : "Switch to dark mode",
++        // One pattern: a fixed name and the pressed state. A name that names the
++        // action and a pressed state together read as "Switch to light mode, pressed".
++        "aria-label": "Dark mode",
+         "aria-pressed": isDark.value,
+         ...rest,
+     };
+diff --git a/src/components/data-table/styles.css b/src/components/data-table/styles.css
+index 496612f..28094da 100644
+--- a/src/components/data-table/styles.css
++++ b/src/components/data-table/styles.css
+@@ -69,9 +69,13 @@
+         flex: none;
+     }
+ 
++    /* The sort button is the header's target: the control height on a fine pointer and
++       the touch floor on a coarse one (36 and 44 px), through `--control-floor`. Its
++       focus ring is drawn inside it, so a header that clips its cells cannot cut it. */
+     .data-table-sort {
+         display: inline-flex;
+         width: 100%;
++        min-block-size: max(2.25rem, var(--control-floor));
+         align-items: center;
+         gap: 0.25rem;
+         justify-content: flex-start;
+@@ -85,6 +89,10 @@
+         cursor: pointer;
+     }
+ 
++    .data-table .data-table-sort:focus-visible {
++        outline-offset: calc(-1 * var(--focus-ring-width));
++    }
++
+     /* `text-align` here serves the td/dd/button family; a `th.table-head` reads the same `data-align` off its own class list. */
+     .data-table [data-align="center"] {
+         justify-content: center;
+diff --git a/src/components/dialog/DialogContent.vue b/src/components/dialog/DialogContent.vue
+index a432afc..0571b63 100644
+--- a/src/components/dialog/DialogContent.vue
++++ b/src/components/dialog/DialogContent.vue
+@@ -15,6 +15,7 @@ import type { Motion, Surface } from "../_shared/axes";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import { surfaceClass } from "../_shared/surface/resolve";
+ import { scrimOpacity } from "../sheet/motion";
++import { coveredZ, useModalLayer } from "../_shared/overlay/modal-layers";
+ import {
+     returnFocusQuietly,
+     useExitPress,
+@@ -128,11 +129,20 @@ const scrimAlpha = computed(() =>
+ const scrimForceMount = computed(() =>
+     live.value ? springMount.present.value || dialogRoot.open.value : undefined,
+ );
++// A modal plate takes its place in the modal order for as long as its scrim is present,
++// so a dialog opened from another one stands above it wherever either was declared.
++const layer = useModalLayer(
++    () =>
++        dialogRoot.modal.value &&
++        (dialogRoot.open.value || (live.value && springMount.present.value)),
++);
+ 
+ // Focus handoff — the closing plate keeps a mounted-but-inert Presence beyond reka's
+-// logical close, stranding focus on `<body>` for the exit window. Pull it back to the
+-// trigger at the LOGICAL close if it would otherwise strand inside the animating-out
+-// content (the inert-bounces-to-body → sync-watch-pulls-to-trigger order).
++// logical close, stranding focus on `<body>` for the exit window. Hand it to the trigger
++// at the LOGICAL close. The handoff runs after the render that closes the plate: until
++// then reka's focus trap still holds the plate and pulls a focus moved out of it straight
++// back in. By then focus is still in the plate, or on `<body>` if the inert plate has
++// already dropped it.
+ const contentAnchorEl = ref<HTMLElement | null>(null);
+ const resolveContentEl = (): HTMLElement | null =>
+     (contentAnchorEl.value?.closest(
+@@ -143,10 +153,10 @@ watch(
+     (open) => {
+         if (!live.value || open !== false) return;
+         const active = document.activeElement;
+-        if (active && resolveContentEl()?.contains(active))
++        if (!active || active === document.body || resolveContentEl()?.contains(active))
+             dialogRoot.triggerElement.value?.focus({ preventScroll: true });
+     },
+-    { flush: "sync" },
++    { flush: "post" },
+ );
+ const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
+ 
+@@ -206,6 +216,7 @@ const contentStyle = computed<CSSProperties>(() => ({
+     "--glass-veil-tier": "var(--glass-veil-dialog)",
+     ...((motionAxis.hostStyle.value as CSSProperties | undefined) ?? {}),
+     ...(springStyle.value ?? {}),
++    ...(layer.covered.value ? { zIndex: coveredZ(layer.index.value) } : {}),
+ }));
+ 
+ // Geometry is authored ONCE, in `dialog/styles.css`, off named space rungs — there is
+@@ -226,7 +237,12 @@ const contentClass = computed(() =>
+         <!-- `veil` is passed HERE and nowhere else: the centred plate sits inside the
+              focus veil's own fixed core, which is the only geometry that mask is true
+              for. `sheet/SheetContent.vue` composes the same scrim and passes none. -->
+-        <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
++        <ModalOverlay
++            veil
++            :opacity="scrimAlpha"
++            :force-mount="scrimForceMount"
++            :layer="layer.index.value"
++        />
+         <RekaDialogContent
+             v-bind="{
+                 ...forwardedToContent,
+diff --git a/src/components/dialog/ModalOverlay.vue b/src/components/dialog/ModalOverlay.vue
+index 4a816d8..54dfe67 100644
+--- a/src/components/dialog/ModalOverlay.vue
++++ b/src/components/dialog/ModalOverlay.vue
+@@ -1,7 +1,8 @@
+ <script setup lang="ts">
+-import { type HTMLAttributes } from "vue";
++import { computed, type HTMLAttributes } from "vue";
+ import { Presence, injectDialogRootContext } from "reka-ui";
+ import { cn } from "../_shared/class-names";
++import { scrimZ } from "../_shared/overlay/modal-layers";
+ import ModalScrim from "./ModalScrim.vue";
+ 
+ /**
+@@ -52,13 +53,28 @@ interface ModalOverlayProps {
+      * nothing and gets the dim alone.
+      */
+     veil?: boolean;
++    /**
++     * The surface's place in the modal order (`useModalLayer`). Above the first open
++     * layer the scrim rises with it, so it dims every plate that opened before it.
++     */
++    layer?: number;
+ }
+ 
+ const props = withDefaults(defineProps<ModalOverlayProps>(), {
+     opacity: null,
+     veil: false,
++    layer: 0,
+ });
+ 
++const scrimStyle = computed(() =>
++    props.opacity == null && props.layer === 0
++        ? undefined
++        : {
++              ...(props.opacity == null ? {} : { opacity: props.opacity }),
++              ...(props.layer === 0 ? {} : { zIndex: scrimZ(props.layer) }),
++          },
++);
++
+ /* reka's `DialogOverlay` mounting, kept: a modal root only, present while open (or
+    force-mounted through the spring exit), shown while present. The element is
+    `ModalScrim`, which holds the page through the root lock rather than `body`. */
+@@ -82,7 +98,7 @@ const root = injectDialogRootContext();
+                     props.class,
+                 )
+             "
+-            :style="props.opacity == null ? undefined : { opacity: props.opacity }"
++            :style="scrimStyle"
+         >
+             <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
+             <slot />
+diff --git a/src/components/dialog/styles.css b/src/components/dialog/styles.css
+index 25d12dd..99606cc 100644
+--- a/src/components/dialog/styles.css
++++ b/src/components/dialog/styles.css
+@@ -25,6 +25,11 @@
+         inline-size: min(100% - 2 * var(--space-section), 32rem);
+         padding-inline: var(--space-family);
+         padding-block: var(--space-family);
++        /* A scrolling body keeps its scroll: a wheel or a swipe that reaches its end does
++           not move the page behind it. Under a modal dialog the root lock holds the page
++           as well; a `modal={false}` dialog can leave the page live, and then this is the
++           only hold. */
++        overscroll-behavior: contain;
+         /* The centring is a `translate` LONGHAND on its own channel, authored here rather
+            than as a utility, so it holds at `motion="off"` when no spring style is written
+            at all — and so the entrance's `scale:` can never compose one matrix with it and
+diff --git a/src/components/expandable-container/ExpandableContainer.vue b/src/components/expandable-container/ExpandableContainer.vue
+index 6daced4..4cc9c4c 100644
+--- a/src/components/expandable-container/ExpandableContainer.vue
++++ b/src/components/expandable-container/ExpandableContainer.vue
+@@ -15,6 +15,7 @@
+                 :role="open ? 'dialog' : undefined"
+                 :aria-label="open ? expandLabel : undefined"
+                 :aria-modal="open || undefined"
++                :style="layer.covered.value ? { zIndex: coveredZ(layer.index.value) } : undefined"
+                 v-bind="$attrs"
+             >
+                 <div class="expandable-container__chrome" :hidden="placed">
+@@ -74,6 +75,7 @@ import { registerShortcut } from "../../composables/keyboard";
+ import type { Surface } from "../_shared/axes";
+ import { FOCUSABLE_SELECTOR } from "../_shared/focus";
+ import { acquireRootScrollLock, releaseRootScrollLock } from "../_shared/overlay";
++import { coveredZ, useModalLayer } from "../_shared/overlay/modal-layers";
+ 
+ defineOptions({ inheritAttrs: false });
+ 
+@@ -189,6 +191,21 @@ function onScopeMountAutoFocus(event: Event) {
+  */
+ const placed = ref(open.value);
+ let leave = 0;
++/* The enlarged layer takes its place in the modal order while it is placed, so a Dialog
++   opened from inside it stands above it, and its Escape yields to any surface above it:
++   a modal layer that covers it, or a surface the key was pressed in that it does not
++   contain (a Dialog, a popover, a menu opened from it). */
++const layer = useModalLayer(() => placed.value);
++
++function onEscape(event: KeyboardEvent) {
++    const target = event.target;
++    const elsewhere =
++        target instanceof Node &&
++        target !== document.body &&
++        !getContainer()?.contains(target);
++    if (layer.covered.value || elsewhere) return;
++    collapse();
++}
+ 
+ function overlayTransitions(): Animation[] {
+     const root = getContainer();
+@@ -225,7 +242,7 @@ watch(
+                 typeof document !== "undefined" ? document.activeElement : null;
+             if (!getContainer()?.contains(active))
+                 restoreTarget = active instanceof HTMLElement ? active : null;
+-            unregEsc = registerShortcut("Escape", collapse, {
++            unregEsc = registerShortcut("Escape", onEscape, {
+                 label: "Exit fullscreen",
+                 group: "UI",
+                 allowInInput: true,
+diff --git a/src/components/popover/PopoverTrigger.vue b/src/components/popover/PopoverTrigger.vue
+index fd4b06f..825395e 100644
+--- a/src/components/popover/PopoverTrigger.vue
++++ b/src/components/popover/PopoverTrigger.vue
+@@ -3,6 +3,8 @@ import { computed, useAttrs, type HTMLAttributes } from "vue";
+ import {
+     HoverCardTrigger as RekaHoverCardTrigger,
+     PopoverTrigger as RekaPopoverTrigger,
++    Slot,
++    injectPopoverRootContext,
+ } from "reka-ui";
+ import type { PrimitiveProps } from "../_shared/primitive";
+ import { usePopoverUnion } from "./popoverContext";
+@@ -27,6 +29,16 @@ const forwardedAttrs = computed(() => {
+ });
+ const union = usePopoverUnion();
+ const usesHoverRoot = computed(() => union?.usesHoverRoot.value ?? false);
++
++/* The trigger names its content only while the content is open. reka's trigger writes
++   `aria-controls` from its first render on: an empty value before the first open, and
++   after a close the id of a panel that is no longer in the page. Its host takes the
++   attribute from the element under it, whose own props win reka's merge, so the click arm
++   renders that element here and states the attribute on it. */
++const popoverRoot = injectPopoverRootContext(null);
++const controls = computed(() =>
++    popoverRoot?.open.value && popoverRoot.contentId ? popoverRoot.contentId : undefined,
++);
+ </script>
+ 
+ <template>
+@@ -44,9 +56,10 @@ const usesHoverRoot = computed(() => union?.usesHoverRoot.value ?? false);
+         v-else
+         v-bind="forwardedAttrs"
+         as="button"
+-        :as-child="asChild"
++        as-child
+         :class="props.class"
+     >
+-        <slot />
++        <Slot v-if="asChild" :aria-controls="controls"><slot /></Slot>
++        <button v-else type="button" :aria-controls="controls"><slot /></button>
+     </RekaPopoverTrigger>
+ </template>
+diff --git a/src/components/select/SelectContent.vue b/src/components/select/SelectContent.vue
+index 639f3ef..33e1d03 100644
+--- a/src/components/select/SelectContent.vue
++++ b/src/components/select/SelectContent.vue
+@@ -16,7 +16,7 @@ export interface SelectContentEmits {
+ </script>
+ 
+ <script setup lang="ts">
+-import { computed, useAttrs } from "vue";
++import { computed, useAttrs, watch } from "vue";
+ import {
+     injectSelectRootContext,
+     SelectContent as RekaSelectContent,
+@@ -123,6 +123,25 @@ const leave = useLeaveFinished({
+     open: () => selectRoot?.open.value ?? false,
+     emit: () => emit("leaveFinished"),
+ });
++/* THE CLOSE MOVES FOCUS QUIETLY. reka moves focus to the list itself when a pointer leaves
++   the row that holds it, with no `preventScroll`, and a pointer leaves that row as the list
++   leaves under it, so the move could scroll the page. The leaving list is inert, so neither
++   it nor a row can take focus while it leaves, and in the next frame focus goes back to the
++   trigger with `preventScroll` if it is still in the list. The frame lets the key that
++   picked the row finish first: a trigger focused under that key would take its click. */
++const closing = computed(() => (selectRoot ? !selectRoot.open.value : false));
++watch(
++    () => selectRoot?.open.value ?? false,
++    (open, was) => {
++        if (open || !was || typeof requestAnimationFrame === "undefined") return;
++        requestAnimationFrame(() => {
++            if (selectRoot?.open.value) return;
++            if (document.activeElement?.closest('[data-slot="select-content"]'))
++                selectRoot?.triggerElement.value?.focus({ preventScroll: true });
++        });
++    },
++);
++
+ function onPointerDownOutside(event: PointerDownOutsideEvent): void {
+     exitPress.letThrough(event);
+     emit("pointerDownOutside", event);
+@@ -155,6 +174,7 @@ const dock = useDockParticipation({
+                 ...dock.portalAttrs.value,
+                 disableOutsidePointerEvents: exitPress.blockOutside.value,
+                 ...leave.attrs,
++                inert: closing ? '' : undefined,
+             }"
+             data-reveal="menu"
+             data-slot="select-content"
+diff --git a/src/components/sheet/SheetContent.vue b/src/components/sheet/SheetContent.vue
+index e9d657d..9d632b5 100644
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -28,6 +28,7 @@ import {
+     type SidePlacement,
+ } from "./motion";
+ import { useSheetDetents } from "./detents/use";
++import { coveredZ, scrimZ, useModalLayer } from "../_shared/overlay/modal-layers";
+ import type { DismissableContentEmits } from "../_shared/interaction";
+ 
+ export interface SheetContentProps {
+@@ -197,9 +198,15 @@ const springStyle = computed<CSSProperties | undefined>(() => {
+     };
+ });
+ 
+-// The frost sampler takes the plate's fade.
++// The frost sampler takes the plate's fade, and while a later layer covers the sheet it
++// stands with the sheet's own scrim, under the plate.
+ const haloStyle = computed<CSSProperties | undefined>(() =>
+-    fade.value === null ? undefined : { opacity: String(fade.value) },
++    fade.value === null && !layer.covered.value
++        ? undefined
++        : {
++              ...(fade.value === null ? {} : { opacity: String(fade.value) }),
++              ...(layer.covered.value ? { zIndex: scrimZ(layer.index.value) } : {}),
++          },
+ );
+ 
+ // Mount-hold — the spring, not a keyframe, owns unmount timing.
+@@ -234,6 +241,11 @@ const scrimAlpha = computed(() => {
+ const scrimForceMount = computed(() =>
+     live.value ? held.value || dialogRoot.open.value : undefined,
+ );
++// A modal sheet takes its place in the modal order for as long as its scrim is present,
++// so a surface opened from it stands above it, and it above one it was opened from.
++const layer = useModalLayer(
++    () => dialogRoot.modal.value && (dialogRoot.open.value || (live.value && held.value)),
++);
+ 
+ // ── the grip: the ladder made visible, and the only thing that carries it ──────────
+ // It is a slider over the rungs, so the keyboard reaches every one of them, and its
+@@ -287,9 +299,10 @@ function onGripKeydown(event: KeyboardEvent) {
+ }
+ 
+ // Focus handoff — a closing sheet keeps a mounted-but-inert Presence beyond reka's
+-// logical close, stranding focus on `<body>` for the exit window. Move focus to the
+-// trigger at the LOGICAL close if it would otherwise strand inside the animating-out
+-// content (the inert-bounces-to-body → sync-watch-pulls-to-trigger order).
++// logical close, stranding focus on `<body>` for the exit window. Hand it to the trigger
++// at the LOGICAL close, after the render that closes the sheet: until then reka's focus
++// trap still holds it and pulls a focus moved out straight back in. By then focus is
++// still in the sheet, or on `<body>` if the inert sheet has already dropped it.
+ const contentAnchorEl = ref<HTMLElement | null>(null);
+ const resolveContentEl = (): HTMLElement | null =>
+     (contentAnchorEl.value?.closest(
+@@ -300,10 +313,10 @@ watch(
+     (open) => {
+         if (!live.value || open !== false) return;
+         const active = document.activeElement;
+-        if (active && resolveContentEl()?.contains(active))
++        if (!active || active === document.body || resolveContentEl()?.contains(active))
+             dialogRoot.triggerElement.value?.focus({ preventScroll: true });
+     },
+-    { flush: "sync" },
++    { flush: "post" },
+ );
+ const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
+ 
+@@ -352,6 +365,7 @@ const contentStyle = computed<CSSProperties>(() => ({
+     "--radius-inset": "var(--space-family)",
+     ...((motionAxis.hostStyle.value as CSSProperties | undefined) ?? {}),
+     ...(springStyle.value ?? {}),
++    ...(layer.covered.value ? { zIndex: coveredZ(layer.index.value) } : {}),
+ }));
+ </script>
+ 
+@@ -360,7 +374,11 @@ const contentStyle = computed<CSSProperties>(() => ({
+         <!-- The scrim is DIM ONLY here — no `veil`. The focus veil's core is fixed at
+              the viewport centre, and a sheet is anchored at an edge: the pool would
+              frost the middle of the page with nothing engaged inside it. -->
+-        <ModalOverlay :opacity="scrimAlpha" :force-mount="scrimForceMount" />
++        <ModalOverlay
++            :opacity="scrimAlpha"
++            :force-mount="scrimForceMount"
++            :layer="layer.index.value"
++        />
+         <RekaDialogContent
+             v-bind="{
+                 ...forwardedToContent,
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+index 24f3859..2448f26 100644
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -569,8 +569,12 @@
+                 clamp(0, var(--detent-t), 1) * 100dvh
+         );
+     }
++    /* A bottom sheet at its full rung stops under the top safe-area inset (a phone's status
++       bar or notch, on a page with `viewport-fit=cover`), so its grip and head stay clear
++       of it. Elsewhere the inset is 0 and the full rung is the viewport's height. */
+     :where([data-slot="sheet-content"][data-detents][data-side="bottom"]) {
+         translate: 0 var(--_sheet-below-floor);
++        max-block-size: calc(100dvh - env(safe-area-inset-top, 0px));
+     }
+     :where([data-slot="sheet-content"][data-detents][data-side="top"]) {
+         translate: 0 calc(-1 * var(--_sheet-below-floor));
+diff --git a/src/composables/motion/morph/useSelectionGroup.ts b/src/composables/motion/morph/useSelectionGroup.ts
+index a974e53..5aa9d1a 100644
+--- a/src/composables/motion/morph/useSelectionGroup.ts
++++ b/src/composables/motion/morph/useSelectionGroup.ts
+@@ -38,8 +38,9 @@ import {
+  *   • the ONE TRAVELING-INDICATOR WRITER — `useSelectionIndicator` (the
+  *     center-anchored ResizeObserver measure), so the
+  *     dock and tabs indicator is Safari-identical by construction;
+- *   • the RECENTER CALL — `el.scrollIntoView({inline:'nearest', block:'nearest'})`
+- *     on every select, so a selection past the fold pulls itself into view.
++ *   • the RECENTER CALL — on every select the strip's own run scrolls the item into
++ *     view (`revealInRun`), so a selection past the fold pulls itself into view and
++ *     no outer scroller or the page moves.
+  *
+  * ROLE-PER-MODE rides the engine (the WAI-ARIA contract):
+  *   • `radiogroup` — a single-select CHOOSER: `role="radio"` + `aria-checked`;
+@@ -103,7 +104,7 @@ export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
+     isSelected: (value: V) => boolean;
+     /**
+      * Commit a selection at `idx` — writes the model (toggle in `multiple`),
+-     * and recenters the item via `scrollIntoView`.
++     * and recenters the item in its own run.
+      */
+     select: (value: V, idx: number) => void;
+     /** The roving tabindex for option `idx` (`0` for the tabstop, `-1` else). */
+@@ -118,6 +119,38 @@ export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
+     itemAttrs: (value: V) => Record<string, string>;
+ }
+ 
++/**
++ * Scroll the strip's own run, and nothing else, so `item` is in view along the strip's
++ * axis. The run is the item's nearest ancestor that scrolls on that axis; the page's own
++ * scroller is never it, and no scroller outside the run moves. `scrollIntoView` would
++ * scroll every scrolling ancestor on both axes, the page included. The run's
++ * `scroll-padding` is kept, as `scrollIntoView` keeps it.
++ */
++function revealInRun(item: HTMLElement, vertical: boolean): void {
++    const page = item.ownerDocument.scrollingElement;
++    for (
++        let run = item.parentElement;
++        run && run !== page && run !== item.ownerDocument.body;
++        run = run.parentElement
++    ) {
++        const style = getComputedStyle(run);
++        const overflow = vertical ? style.overflowY : style.overflowX;
++        if (overflow !== "auto" && overflow !== "scroll") continue;
++        const port = run.getBoundingClientRect();
++        const box = item.getBoundingClientRect();
++        const pad = (value: string) => parseFloat(value) || 0;
++        const start = vertical
++            ? box.top - (port.top + run.clientTop) - pad(style.scrollPaddingTop)
++            : box.left - (port.left + run.clientLeft) - pad(style.scrollPaddingLeft);
++        const end = vertical
++            ? box.bottom - (port.top + run.clientTop + run.clientHeight) + pad(style.scrollPaddingBottom)
++            : box.right - (port.left + run.clientLeft + run.clientWidth) + pad(style.scrollPaddingRight);
++        const delta = start < 0 ? start : end > 0 ? Math.min(end, start) : 0;
++        if (delta !== 0) run.scrollBy(vertical ? { top: delta } : { left: delta });
++        return;
++    }
++}
++
+ function unwrap<T>(v: ComputedRef<T> | T | undefined, fallback: T): T {
+     if (v == null) return fallback;
+     return typeof v === "object" && "value" in (v as object)
+@@ -195,12 +228,9 @@ export function useSelectionGroup<O extends SelectionOption>(
+             model.value = value;
+         }
+ 
+-        // 's recenter FACILITY, fired here in the engine: a select
+-        // past the fold pulls itself into view (native scroll, no measure loop).
+-        buttonRefs.value[idx]?.scrollIntoView({
+-            inline: "nearest",
+-            block: "nearest",
+-        });
++        // The recenter: a select past the fold pulls itself into view in its own run.
++        const item = buttonRefs.value[idx];
++        if (item) revealInRun(item, isVertical.value);
+     }
+ 
+     // ── The roving machine (composed VERBATIM) ──
+diff --git a/src/styles/index.css b/src/styles/index.css
+index 6979768..ead6eca 100644
+--- a/src/styles/index.css
++++ b/src/styles/index.css
+@@ -1,4 +1,4 @@
+-@layer theme, base, components, utilities, reduced-motion;
++@layer theme, base, components, utilities, reduced-motion, print;
+ 
+ /* `reduced-motion` comes last: it holds only the reduced-motion fallback
+    (utilities/a11y-overrides.css), which beats every layered rule and loses to a
+@@ -278,6 +278,9 @@
+    target adaptation after every material and component recipe. */
+ @import "./accessibility.css";
+ 
++/* Print is the other terminal mode: paper takes none of glass's material. */
++@import "./print.css";
++
+ /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
+    classes they emit (CVA variant classes like text-destructive-foreground,
+    layout utilities like h-full/shrink-0).
+diff --git a/src/styles/print.css b/src/styles/print.css
+new file mode 100644
+index 0000000..fde375d
+--- /dev/null
++++ b/src/styles/print.css
+@@ -0,0 +1,52 @@
++/* PRINT — paper takes none of glass's material.
++
++   Under `@media print` the page loses the chrome a reader cannot use on paper and
++   every surface flattens to paper:
++
++   - The floating chrome is hidden: the dock, popovers and hover cards, tooltips,
++     toasts, and any menu or Select list left open.
++   - Every surface resolves to its solid card through the one `--glass-level: 0`
++     escape that reduced transparency rides, and no element keeps a backdrop filter or
++     a shadow. The scrims and the focus veil that dim the page behind a modal clear, and
++     the Sheet's frost sampler goes with them.
++   - Dialog and Sheet print flat where they stand, not hidden, so a modal's content
++     still prints.
++
++   Nothing transitions into print. The overlay plates carry a discrete `display`
++   transition, and a running transition outranks an important declaration, so a plate
++   would stay on the page for the length of its exit.
++
++   The declarations are important and sit in the last layer: they beat every normal
++   rule, unlayered and inline ones included, and lose only to an important rule a site
++   writes in an earlier layer or in a style attribute. */
++@layer print {
++    @media print {
++        :root {
++            --glass-level: 0 !important;
++            --glass-grain-opacity: 0 !important;
++            --overlay-scrim: transparent !important;
++        }
++
++        *,
++        *::before,
++        *::after {
++            backdrop-filter: none !important;
++            box-shadow: none !important;
++            transition: none !important;
++        }
++
++        :is(
++            .glass-dock,
++            [data-slot="popover-content"],
++            [data-slot="tooltip-content"],
++            [data-slot="toast"],
++            [data-slot="menu-content"],
++            [data-slot="menu-sub-content"],
++            [data-slot="select-content"],
++            [data-slot="glass-graded-halo"],
++            .glass-focus-veil
++        ) {
++            display: none !important;
++        }
++    }
++}
+diff --git a/tests/components/dark-mode-toggle.contract.test.ts b/tests/components/dark-mode-toggle.contract.test.ts
+index 030a1e3..b0b0cbf 100644
+--- a/tests/components/dark-mode-toggle.contract.test.ts
++++ b/tests/components/dark-mode-toggle.contract.test.ts
+@@ -22,14 +22,14 @@ describe("DarkModeToggle", () => {
+         const button = wrapper.get("button");
+ 
+         expect(button.attributes("type")).toBe("button");
+-        expect(button.attributes("aria-label")).toBe("Switch to dark mode");
++        expect(button.attributes("aria-label")).toBe("Dark mode");
+         expect(button.attributes("aria-pressed")).toBe("false");
+ 
+         button.element.focus();
+         expect(document.activeElement).toBe(button.element);
+ 
+         await button.trigger("click");
+-        expect(button.attributes("aria-label")).toBe("Switch to light mode");
++        expect(button.attributes("aria-label")).toBe("Dark mode");
+         expect(button.attributes("aria-pressed")).toBe("true");
+ 
+         await button.trigger("click");
+diff --git a/tests/components/dialog/dialog-focus-return.test.ts b/tests/components/dialog/dialog-focus-return.test.ts
+index 48840a4..7007ed3 100644
+--- a/tests/components/dialog/dialog-focus-return.test.ts
++++ b/tests/components/dialog/dialog-focus-return.test.ts
+@@ -6,9 +6,10 @@
+ // to the trigger. The anchor's presence is load-bearing: without it the watch cannot
+ // resolve the live content root to test containment.
+ //
+-// We assert the watch INVOKES the trigger's focus at logical close (a `{flush:"sync"}`
+-// same-tick call). happy-dom's `inert` does not stop reka's FocusScope from re-capturing
+-// focus into the still-mounted content, so the FINAL activeElement is unreliable here —
++// We assert the watch INVOKES the trigger's focus at logical close (a `{flush:"post"}`
++// call, after the render that lifts reka's focus trap). happy-dom's `inert` does not
++// stop reka's FocusScope from re-capturing focus into the still-mounted content, so the
++// FINAL activeElement is unreliable here —
+ // the real inert-bounce→settle choreography is browser-captured (the band's π
+ // LIVE-DEFER). The invoke IS the load-bearing contract.
+ 
+@@ -80,7 +81,7 @@ describe("DialogContent — focus-return (W1-C)", () => {
+         inside!.focus();
+         const focusSpy = vi.spyOn(trigger!, "focus");
+ 
+-        // Logical close — the sync focus-handoff watch fires same-tick.
++        // Logical close — the focus-handoff watch fires after the closing render.
+         open.value = false;
+         await nextTick();
+ 

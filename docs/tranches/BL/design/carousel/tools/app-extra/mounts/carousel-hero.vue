@@ -20,6 +20,9 @@
 // (carousel-near.vue): a figure exists only near where the strip last rested.
 // link=1 wraps each slide in a link, as atlas's previews are (the keyboard route).
 // start=k mounts the Carousel with v-model:active already k (the start cell).
+// member=<length> and gutter=<length> set each member's flex basis and the gutter, so
+// projection=none&member=16rem&gutter=1rem is a strip shaped like fourier's featured row
+// (GalleryFeaturedCarousel.vue), several members on screen at once.
 import { ref } from "vue";
 import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
@@ -39,6 +42,8 @@ const link = q.get("link") === "1";
 //   projection=none the Carousel without its per-scroll member writes
 const bare = q.get("bare") === "1";
 const projection = q.get("projection") === "none" ? "none" : "travel";
+const member = q.get("member");
+const gutter = q.get("gutter");
 const N = 8;
 
 const imgs = import.meta.glob("../carousel-img/*.webp", {
@@ -56,7 +61,7 @@ const slides = Array.from({ length: N }, (_, i) => ({
     src: urls.length ? urls[i % urls.length] : "",
 }));
 const active = ref(Math.max(0, Math.trunc(Number(q.get("start") ?? 0)) || 0));
-(window as unknown as { __heroInfo: unknown }).__heroInfo = { content, live, link, N, images: urls.length, bare, projection };
+(window as unknown as { __heroInfo: unknown }).__heroInfo = { content, live, link, N, images: urls.length, bare, projection, member, gutter };
 </script>
 
 <template>
@@ -79,7 +84,15 @@ const active = ref(Math.max(0, Math.trunc(Number(q.get("start") ?? 0)) || 0));
             </div>
         </div>
     </div>
-    <div v-else class="hero-stage" data-testid="hero-stage" :data-content="content" :data-live="live">
+    <div
+        v-else
+        class="hero-stage"
+        data-testid="hero-stage"
+        :data-content="content"
+        :data-live="live"
+        :data-member="member ? '' : undefined"
+        :style="{ '--hero-member': member ?? undefined, '--hero-gutter': gutter ?? undefined }"
+    >
         <Carousel
             v-model:active="active"
             aria-label="Dashboards"
@@ -181,7 +194,10 @@ const active = ref(Math.max(0, Math.trunc(Number(q.get("start") ?? 0)) || 0));
     margin-inline: auto;
 }
 .hero-stage :deep(.hero-stage__strip) {
-    --carousel-gutter: 2rem;
+    --carousel-gutter: var(--hero-gutter, 2rem);
+}
+.hero-stage[data-member] :deep(.carousel-item) {
+    flex: 0 0 var(--hero-member);
 }
 .hero-frame {
     color: inherit;

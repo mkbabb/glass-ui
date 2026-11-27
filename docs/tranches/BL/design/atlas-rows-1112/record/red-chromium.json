@@ -1,0 +1,585 @@
+{
+  "engine": "chromium",
+  "dist": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/atlas-rows-1112/trees/red/harness/dist",
+  "cells": {
+    "print": {
+      "screen": {
+        "shown": {
+          "dock": true,
+          "popover": true,
+          "tooltip": true,
+          "toast": true,
+          "card": true,
+          "button": true
+        },
+        "cardBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.14)",
+        "frost": 8,
+        "frostSample": [
+          "div[t=card][slot=card].glass-resting.card: blur(16px) saturate(1.5)",
+          "button[t=button][slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "button[t=tip-trigger][slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "div.dock-plate: blur(16px) saturate(1.2)",
+          "button[slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "div[t=popover][slot=popover-content].glass-floating.glass-overlay-plate.glass-reveal: blur(20px) saturate(1.5)"
+        ],
+        "shadow": 8,
+        "shadowSample": [
+          "div[t=card][slot=card].glass-resting.card",
+          "button[t=button][slot=button].button.tap-squish.focus-ring",
+          "button[t=tip-trigger][slot=button].button.tap-squish.focus-ring",
+          "div[t=dock].glass-dock.horizontal.shape-pill",
+          "button[slot=button].button.tap-squish.focus-ring",
+          "div[t=popover][slot=popover-content].glass-floating.glass-overlay-plate.glass-reveal"
+        ]
+      },
+      "print": {
+        "shown": {
+          "dock": true,
+          "popover": true,
+          "tooltip": true,
+          "toast": true,
+          "card": true,
+          "button": true
+        },
+        "cardBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.14)",
+        "frost": 8,
+        "frostSample": [
+          "div[t=card][slot=card].glass-resting.card: blur(16px) saturate(1.5)",
+          "button[t=button][slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "button[t=tip-trigger][slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "div.dock-plate: blur(16px) saturate(1.2)",
+          "button[slot=button].button.tap-squish.focus-ring: blur(14px) saturate(1.5)",
+          "div[t=popover][slot=popover-content].glass-floating.glass-overlay-plate.glass-reveal: blur(20px) saturate(1.5)"
+        ],
+        "shadow": 8,
+        "shadowSample": [
+          "div[t=card][slot=card].glass-resting.card",
+          "button[t=button][slot=button].button.tap-squish.focus-ring",
+          "button[t=tip-trigger][slot=button].button.tap-squish.focus-ring",
+          "div[t=dock].glass-dock.horizontal.shape-pill",
+          "button[slot=button].button.tap-squish.focus-ring",
+          "div[t=popover][slot=popover-content].glass-floating.glass-overlay-plate.glass-reveal"
+        ]
+      },
+      "errors": []
+    },
+    "print-dialog": {
+      "screen": {
+        "plate": true,
+        "plateBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+        "scrim": true,
+        "scrimBg": "color(srgb 0.109804 0.0980392 0.0901961 / 0.5)",
+        "halo": "absent",
+        "frost": 2,
+        "frostSample": [
+          "span.glass-focus-veil: blur(20px) saturate(1.5)",
+          "div[t=dialog][slot=dialog-content].fixed.left-1/2.top-1/2: blur(20px) saturate(1.5)"
+        ],
+        "shadow": 1,
+        "shadowSample": [
+          "div[t=dialog][slot=dialog-content].fixed.left-1/2.top-1/2"
+        ]
+      },
+      "print": {
+        "plate": true,
+        "plateBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+        "scrim": true,
+        "scrimBg": "color(srgb 0.109804 0.0980392 0.0901961 / 0.5)",
+        "halo": "absent",
+        "frost": 2,
+        "frostSample": [
+          "span.glass-focus-veil: blur(20px) saturate(1.5)",
+          "div[t=dialog][slot=dialog-content].fixed.left-1/2.top-1/2: blur(20px) saturate(1.5)"
+        ],
+        "shadow": 1,
+        "shadowSample": [
+          "div[t=dialog][slot=dialog-content].fixed.left-1/2.top-1/2"
+        ]
+      },
+      "errors": []
+    },
+    "print-sheet": {
+      "screen": {
+        "plate": true,
+        "plateBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+        "scrim": true,
+        "scrimBg": "color(srgb 0.109804 0.0980392 0.0901961 / 0.5)",
+        "halo": true,
+        "frost": 2,
+        "frostSample": [
+          "div[t=sheet][slot=sheet-content].fixed.border-l.glass-floating: blur(20px) saturate(1.5)",
+          "span[slot=glass-graded-halo]: blur(34px) saturate(1.5)"
+        ],
+        "shadow": 1,
+        "shadowSample": [
+          "div[t=sheet][slot=sheet-content].fixed.border-l.glass-floating"
+        ]
+      },
+      "print": {
+        "plate": true,
+        "plateBg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+        "scrim": true,
+        "scrimBg": "color(srgb 0.109804 0.0980392 0.0901961 / 0.5)",
+        "halo": true,
+        "frost": 2,
+        "frostSample": [
+          "div[t=sheet][slot=sheet-content].fixed.border-l.glass-floating: blur(20px) saturate(1.5)",
+          "span[slot=glass-graded-halo]: blur(34px) saturate(1.5)"
+        ],
+        "shadow": 1,
+        "shadowSample": [
+          "div[t=sheet][slot=sheet-content].fixed.border-l.glass-floating"
+        ]
+      },
+      "errors": []
+    },
+    "toggle": {
+      "before": {
+        "label": "Switch to dark mode",
+        "pressed": "false",
+        "dark": false
+      },
+      "after": {
+        "label": "Switch to light mode",
+        "pressed": "true",
+        "dark": true
+      },
+      "errors": []
+    },
+    "popover": {
+      "closed": {
+        "tag": "button",
+        "has": true,
+        "value": "",
+        "target": null,
+        "expanded": "false",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": false
+      },
+      "opened": {
+        "tag": "button",
+        "has": true,
+        "value": "reka-popover-content-v-2",
+        "target": true,
+        "expanded": "true",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": true
+      },
+      "closedAgain": {
+        "tag": "button",
+        "has": true,
+        "value": "reka-popover-content-v-2",
+        "target": false,
+        "expanded": "false",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": false
+      },
+      "focusBack": true,
+      "errors": []
+    },
+    "popover-child": {
+      "closed": {
+        "tag": "button",
+        "has": true,
+        "value": "",
+        "target": null,
+        "expanded": "false",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": false
+      },
+      "opened": {
+        "tag": "button",
+        "has": true,
+        "value": "reka-popover-content-v-2",
+        "target": true,
+        "expanded": "true",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": true
+      },
+      "closedAgain": {
+        "tag": "button",
+        "has": true,
+        "value": "reka-popover-content-v-2",
+        "target": false,
+        "expanded": "false",
+        "haspopup": "dialog",
+        "nested": false,
+        "content": false
+      },
+      "focusBack": true,
+      "errors": []
+    },
+    "dlg-scroll": {
+      "nonModal": {
+        "gutter": {
+          "bar": 15,
+          "gutter": "stable",
+          "markerX": 36
+        },
+        "before": {
+          "y": 1000,
+          "overscroll": "auto",
+          "overflowY": "auto",
+          "markerX": 36,
+          "bar": 15
+        },
+        "after": {
+          "y": 2200,
+          "dialogAtEnd": true
+        },
+        "pageMovedBy": 1200,
+        "errors": []
+      },
+      "modal": {
+        "gutter": {
+          "bar": 15,
+          "gutter": "stable",
+          "markerX": 36
+        },
+        "before": {
+          "y": 1000,
+          "overscroll": "auto",
+          "overflowY": "auto",
+          "markerX": 36,
+          "bar": 0
+        },
+        "after": {
+          "y": 1000,
+          "dialogAtEnd": true
+        },
+        "pageMovedBy": 0,
+        "errors": []
+      }
+    },
+    "dlg-pos": {
+      "y0": 1000,
+      "yOpen": 1000,
+      "yEsc": 1000,
+      "yClose": 1000,
+      "yScrim": 1000,
+      "errors": []
+    },
+    "stack-dialog": {
+      "lowerOnly": {
+        "root": "hidden"
+      },
+      "both": {
+        "plateOverLower": {
+          "above": true,
+          "za": 140,
+          "zb": 140,
+          "a": "div[t=top][slot=dialog-content].fixed.left-1/2.top-1/2",
+          "b": "div[t=lower][slot=dialog-content].fixed.left-1/2.top-1/2"
+        },
+        "scrimOverLower": {
+          "above": false,
+          "za": 50,
+          "zb": 140,
+          "a": "div.fixed.inset-0.z-overlay",
+          "b": "div[t=lower][slot=dialog-content].fixed.left-1/2.top-1/2"
+        },
+        "scrims": 2,
+        "probe": "inside top",
+        "topCentre": "top",
+        "root": "hidden",
+        "focus": "in top"
+      },
+      "duringExit": {
+        "focusInLower": false,
+        "focus": "body"
+      },
+      "afterEsc": {
+        "topOpen": false,
+        "lowerOpen": true,
+        "root": "hidden",
+        "focusInLower": true,
+        "focus": "button[t=top-trigger][slot=button].button.tap-squish.focus-ring"
+      },
+      "errors": []
+    },
+    "stack-sheet": {
+      "lowerOnly": {
+        "root": "hidden"
+      },
+      "both": {
+        "plateOverLower": {
+          "above": true,
+          "za": 140,
+          "zb": 140,
+          "a": "div[t=top][slot=dialog-content].fixed.left-1/2.top-1/2",
+          "b": "div[t=lower][slot=sheet-content].fixed.border-l.glass-floating"
+        },
+        "scrimOverLower": {
+          "above": false,
+          "za": 50,
+          "zb": 140,
+          "a": "div.fixed.inset-0.z-overlay",
+          "b": "div[t=lower][slot=sheet-content].fixed.border-l.glass-floating"
+        },
+        "scrims": 2,
+        "probe": "div.fixed.inset-0.z-overlay",
+        "topCentre": "top",
+        "root": "hidden",
+        "focus": "in top"
+      },
+      "duringExit": {
+        "focusInLower": false,
+        "focus": "body"
+      },
+      "afterEsc": {
+        "topOpen": false,
+        "lowerOpen": true,
+        "root": "hidden",
+        "focusInLower": true,
+        "focus": "button[t=top-trigger][slot=button].button.tap-squish.focus-ring"
+      },
+      "errors": []
+    },
+    "stack-drawer": {
+      "lowerOnly": {
+        "root": "visible"
+      },
+      "both": {
+        "plateOverLower": {
+          "above": true,
+          "za": 140,
+          "zb": 39,
+          "a": "div[t=top][slot=dialog-content].fixed.left-1/2.top-1/2",
+          "b": "div[t=lower][slot=sheet-content].fixed.border-l.glass-floating"
+        },
+        "scrimOverLower": {
+          "above": true,
+          "za": 50,
+          "zb": 39,
+          "a": "div.fixed.inset-0.z-overlay",
+          "b": "div[t=lower][slot=sheet-content].fixed.border-l.glass-floating"
+        },
+        "scrims": 1,
+        "probe": "div.fixed.inset-0.z-overlay",
+        "topCentre": "top",
+        "root": "hidden",
+        "focus": "in top"
+      },
+      "duringExit": {
+        "focusInLower": false,
+        "focus": "body"
+      },
+      "afterEsc": {
+        "topOpen": false,
+        "lowerOpen": true,
+        "root": "visible",
+        "focusInLower": true,
+        "focus": "button[t=top-trigger][slot=button].button.tap-squish.focus-ring"
+      },
+      "errors": []
+    },
+    "stack-expand": {
+      "lowerOnly": {
+        "root": "hidden"
+      },
+      "both": {
+        "plateOverLower": {
+          "above": true,
+          "za": 140,
+          "zb": 140,
+          "a": "div[t=top][slot=dialog-content].fixed.left-1/2.top-1/2",
+          "b": "div[t=lower].expandable-container"
+        },
+        "scrimOverLower": {
+          "above": false,
+          "za": 50,
+          "zb": 140,
+          "a": "div.fixed.inset-0.z-overlay",
+          "b": "div[t=lower].expandable-container"
+        },
+        "scrims": 1,
+        "probe": "div.fixed.inset-0.z-overlay",
+        "topCentre": "top",
+        "root": "hidden",
+        "focus": "in top"
+      },
+      "duringExit": {
+        "focusInLower": false,
+        "focus": "body"
+      },
+      "afterEsc": {
+        "topOpen": false,
+        "lowerOpen": false,
+        "root": "visible",
+        "focusInLower": true,
+        "focus": "button[t=top-trigger][slot=button].button.tap-squish.focus-ring"
+      },
+      "errors": []
+    },
+    "stack-sibling": {
+      "lowerOnly": {
+        "root": "hidden"
+      },
+      "both": {
+        "plateOverLower": {
+          "above": false,
+          "za": 140,
+          "zb": 140,
+          "a": "div[t=top][slot=dialog-content].fixed.left-1/2.top-1/2",
+          "b": "div[t=lower][slot=dialog-content].fixed.left-1/2.top-1/2"
+        },
+        "scrimOverLower": {
+          "above": false,
+          "za": 50,
+          "zb": 140,
+          "a": "div.fixed.inset-0.z-overlay",
+          "b": "div[t=lower][slot=dialog-content].fixed.left-1/2.top-1/2"
+        },
+        "scrims": 2,
+        "probe": "inside top",
+        "topCentre": "top",
+        "root": "hidden",
+        "focus": "in top"
+      },
+      "duringExit": {
+        "focusInLower": false,
+        "focus": "body"
+      },
+      "afterEsc": {
+        "topOpen": false,
+        "lowerOpen": true,
+        "root": "hidden",
+        "focusInLower": true,
+        "focus": "button[t=top-trigger][slot=button].button.tap-squish.focus-ring"
+      },
+      "errors": []
+    },
+    "button": {
+      "fine": {
+        "coarse": false,
+        "sm": 36,
+        "md": 40,
+        "floor": "0px",
+        "scale": "1",
+        "errors": []
+      },
+      "coarse": {
+        "coarse": true,
+        "sm": 44,
+        "md": 44,
+        "floor": "2.75rem",
+        "scale": "1.5",
+        "errors": []
+      }
+    },
+    "select": {
+      "keys": {
+        "focusAfterPick": [
+          "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover (preventScroll) moved"
+        ],
+        "scrollingFocus": 0,
+        "activeAtEnd": "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover",
+        "pageY0": 1000,
+        "pageMin": 1000,
+        "pageMax": 1000,
+        "pageEnd": 1000,
+        "value": "Section B",
+        "errors": []
+      },
+      "pointer": {
+        "focusAfterPick": [
+          "div[t=item-d].interactive-item.glass-menu-row.relative (preventScroll) did not move",
+          "div[t=content][slot=select-content].relative.z-popover.overflow-hidden (no preventScroll) moved",
+          "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover (preventScroll) moved"
+        ],
+        "scrollingFocus": 1,
+        "activeAtEnd": "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover",
+        "pageY0": 1000,
+        "pageMin": 1000,
+        "pageMax": 1000,
+        "pageEnd": 1000,
+        "value": "Section D",
+        "errors": []
+      },
+      "touch": {
+        "focusAfterPick": [
+          "div[t=item-a].interactive-item.glass-menu-row.relative (preventScroll) did not move",
+          "div[t=content][slot=select-content].relative.z-popover.overflow-hidden (no preventScroll) moved",
+          "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover (preventScroll) moved"
+        ],
+        "scrollingFocus": 1,
+        "activeAtEnd": "button[t=trigger][slot=select-trigger].control-surface.glass-control-edge.glass-capsule-hover",
+        "pageY0": 1000,
+        "pageMin": 1000,
+        "pageMax": 1000,
+        "pageEnd": 1000,
+        "errors": []
+      }
+    },
+    "selgroup": {
+      "before": {
+        "page": 0,
+        "outer": 0,
+        "run": 0,
+        "selected": "Option 0"
+      },
+      "after": {
+        "page": 87,
+        "outer": 20,
+        "run": 444,
+        "selected": "Option 7"
+      },
+      "errors": []
+    },
+    "table": {
+      "fine": {
+        "coarse": false,
+        "thFont": 16,
+        "sortFont": 16,
+        "sortHeight": 22.390625,
+        "thHeight": 48,
+        "ring": {
+          "focused": true,
+          "focusVisible": true,
+          "style": "solid",
+          "width": 2,
+          "offset": 2,
+          "inset": false
+        },
+        "errors": []
+      },
+      "narrow": {
+        "coarse": false,
+        "thFont": 14,
+        "sortFont": 14,
+        "sortHeight": 19.59375,
+        "thHeight": 48,
+        "ring": null,
+        "errors": []
+      },
+      "coarse": {
+        "coarse": true,
+        "thFont": 14,
+        "sortFont": 14,
+        "sortHeight": 19.59375,
+        "thHeight": 48,
+        "ring": null,
+        "errors": []
+      }
+    },
+    "sheet-full": {
+      "override": "top 47, bottom 34",
+      "env": 47,
+      "sheet": {
+        "top": 0,
+        "height": 844,
+        "bottom": 844,
+        "innerHeight": 844
+      },
+      "ruleNamesTopInset": false,
+      "rule": [],
+      "errors": []
+    }
+  },
+  "version": "149.0.7827.55"
+}

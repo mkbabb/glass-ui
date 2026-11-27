@@ -1,0 +1,364 @@
+{
+ "tree": "trees/fix2-cure",
+ "alone": {},
+ "consumers": {
+  "atlas": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "value.js": {
+   "mixOverridesOfGlassTokens": [
+    "--shadow-color @ demo/styles/foundation.css:707",
+    "--shadow-cartoon @ demo/styles/foundation.css:482",
+    "--border @ demo/styles/foundation.css:968",
+    "--muted-foreground @ demo/styles/foundation.css:971",
+    "--muted-foreground @ demo/styles/foundation.css:980",
+    "--muted-foreground @ demo/styles/utils.css:225",
+    "--on-glass-muted @ demo/styles/foundation.css:981",
+    "--muted-foreground-strong @ demo/styles/shell.css:349",
+    "--muted-foreground-strong @ demo/styles/shell.css:391",
+    "--muted-foreground-strong @ demo/styles/shell.css:428",
+    "--on-glass-muted-strong @ demo/styles/shell.css:354",
+    "--on-glass-muted-strong @ demo/styles/shell.css:397",
+    "--on-glass-muted-strong @ demo/styles/shell.css:434"
+   ],
+   "added": {}
+  },
+  "keyframes.js": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "daraksha": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "gaggle/dashboard": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "slides": {
+   "mixOverridesOfGlassTokens": [
+    "--glass-border-resting @ src/deck/DeckView.vue:319",
+    "--glass-border-resting @ src/styles/deck.css:174",
+    "--glass-border-resting @ src/styles/deck.css:806",
+    "--glass-border-quiet @ src/styles/deck.css:173",
+    "--glass-border-quiet @ src/styles/deck.css:805",
+    "--glass-border-floating @ src/styles/deck.css:175",
+    "--glass-border-floating @ src/styles/deck.css:807",
+    "--shadow-soft @ src/styles/deck.css:255",
+    "--shadow-md @ src/styles/deck.css:256",
+    "--shadow-lg @ src/styles/deck.css:257",
+    "--shadow-xl @ src/styles/deck.css:258",
+    "--turn-gutter-ink @ src/styles/deck.css:555",
+    "--turn-scrim-fill @ src/styles/deck.css:559"
+   ],
+   "added": {
+    "src/components/dock/styles/dock.css:147 --_dock-edge-lerp": {
+     "arm1": [
+      "--_dock-edge-expanded-ink @ src/components/dock/styles/adaptive-legibility.css:99",
+      "--glass-border-floating @ src/styles/deck.css:175"
+     ],
+     "arm2": [
+      "--glass-border-floating @ src/styles/deck.css:175"
+     ]
+    }
+   }
+  },
+  "fourier-analysis/web": {
+   "mixOverridesOfGlassTokens": [
+    "--menu-row-bg @ src/components/visualization/EditorControlsDock.vue:385"
+   ],
+   "added": {}
+  },
+  "hassio-config/frontend": {
+   "mixOverridesOfGlassTokens": [
+    "--control-checked-bg @ src/styles/tokens.css:157",
+    "--control-checked-bg @ src/styles/tokens.css:174",
+    "--control-bit-fill @ src/styles/tokens.css:162",
+    "--shadow-md @ src/styles/tokens.css:163",
+    "--glass-slider-track-background @ src/tiles/css/rooms.css:116"
+   ],
+   "added": {
+    "src/styles/glass/rim.css:69 --glass-border-accent": {
+     "arm1": [
+      "--glass-border @ src/styles/tokens/glass.css:233",
+      "--glass-border-quiet @ src/styles/tokens/glass.css:219"
+     ],
+     "arm2": [
+      "--glass-accent @ src/tiles/css/plate.css:77",
+      "--presence-edge @ src/styles/tokens.css:103"
+     ]
+    }
+   }
+  },
+  "chicago": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "gregg": {
+   "mixOverridesOfGlassTokens": [
+    "--hm-band @ src/components/Section.vue:133",
+    "--dock-control-active-bg @ src/style.css:496",
+    "--dock-control-active-bg @ src/style.css:499"
+   ],
+   "added": {}
+  },
+  "parkway": {
+   "mixOverridesOfGlassTokens": [
+    "--glass-veil-ink @ src/style.css:108",
+    "--card @ src/style.css:152"
+   ],
+   "added": {
+    "src/components/configurator/styles.css:482 background-image": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/components/dock/styles/dock.css:147 --_dock-edge-lerp": {
+     "arm1": [
+      "--_dock-edge-expanded-ink @ src/components/dock/styles/adaptive-legibility.css:99",
+      "--glass-border-floating @ src/styles/tokens/glass.css:227",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--glass-border-floating @ src/styles/tokens/glass.css:227",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/components/tabs/styles/segmented.css:233 color": {
+     "arm1": [
+      "--muted-foreground @ src/components/dock/styles/adaptive-legibility.css:48",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/glass/control-bit.css:297 background-color": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--control-bit-fill @ src/styles/glass/control-bit.css:109"
+     ]
+    },
+    "src/styles/glass/control-bit.css:306 background-color": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--control-bit-fill @ src/styles/glass/control-bit.css:109"
+     ]
+    },
+    "src/styles/glass/surface-axis.css:164 background": {
+     "arm1": [
+      "--card @ src/style.css:152"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/glass/veil.css:75 --glass-veil": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:165 --glass-plate-wash": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:166 --glass-plate-quiet": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:167 --glass-plate-resting": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:168 --glass-plate-floating": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:169 --glass-plate-overlay": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:173 --glass-plate-chassis": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:174 --glass-plate-dialog": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/glass.css:265 --control-surface-bg-hover": {
+     "arm1": [
+      "--glass-veil-ink @ src/style.css:108"
+     ],
+     "arm2": [
+      "--card @ src/style.css:152"
+     ]
+    },
+    "src/styles/tokens/sizing.css:275 --dock-control-press-bg": {
+     "arm1": [
+      "--glass-plate-resting @ src/styles/tokens/glass.css:167"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/style.css:152"
+     ]
+    }
+   }
+  },
+  "reddit": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "speedtest": {
+   "mixOverridesOfGlassTokens": [
+    "--card @ src/components/survey/ThankYou.vue:225",
+    "--glass-progress-track-background @ src/features/speedtest/ui/MeterColumn.vue:548"
+   ],
+   "added": {
+    "src/components/configurator/styles.css:482 background-image": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ]
+    },
+    "src/components/dock/styles/dock.css:147 --_dock-edge-lerp": {
+     "arm1": [
+      "--_dock-edge-expanded-ink @ src/components/dock/styles/adaptive-legibility.css:99",
+      "--glass-border-floating @ src/styles/tokens/glass.css:227",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--glass-border-floating @ src/styles/tokens/glass.css:227",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ]
+    },
+    "src/components/tabs/styles/segmented.css:233 color": {
+     "arm1": [
+      "--muted-foreground @ src/components/dock/styles/adaptive-legibility.css:48",
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ]
+    },
+    "src/styles/glass/control-bit.css:297 background-color": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--control-bit-fill @ src/styles/glass/control-bit.css:109"
+     ]
+    },
+    "src/styles/glass/control-bit.css:306 background-color": {
+     "arm1": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--control-bit-fill @ src/styles/glass/control-bit.css:109"
+     ]
+    },
+    "src/styles/glass/surface-axis.css:164 background": {
+     "arm1": [
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ]
+    },
+    "src/styles/tokens/sizing.css:275 --dock-control-press-bg": {
+     "arm1": [
+      "--glass-plate-resting @ src/styles/tokens/glass.css:167"
+     ],
+     "arm2": [
+      "--foreground @ src/styles/glass/ladder.css:277",
+      "--card @ src/components/survey/ThankYou.vue:225"
+     ]
+    }
+   }
+  },
+  "bbnf-buddy": {
+   "mixOverridesOfGlassTokens": [
+    "--dock-active-bg @ src/editor/components/dock/tools/ToolsLayer.vue:331",
+    "--dock-active-border @ src/editor/components/dock/tools/ToolsLayer.vue:332",
+    "--dock-active-shadow @ src/editor/components/dock/tools/ToolsLayer.vue:333",
+    "--shadow-cartoon @ src/styles/preset.css:184",
+    "--shadow-cartoon-md @ src/styles/preset.css:188",
+    "--shadow-cartoon-lg @ src/styles/preset.css:192"
+   ],
+   "added": {}
+  },
+  "muster/frontend": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "sci-report/dashboards": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "words/frontend": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  },
+  "bbnf-lang/playground": {
+   "mixOverridesOfGlassTokens": [],
+   "added": {}
+  }
+ }
+}

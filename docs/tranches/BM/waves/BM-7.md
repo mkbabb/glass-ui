@@ -37,11 +37,10 @@ In headless Chromium and Playwright WebKit, through `guarded`, on glass's demo d
 
 | Site | Where the rim mounts (newest branch, read 2026-11-24) |
 |---|---|
-| atlas | `src/platform/chrome/dock/components/DockProgressRim.vue` (`u/s24-dd-atlas`) |
-| fourier | `web/src/components/layout/AppDock.vue:597`, `edge="border"` with stops (`origin/master`) |
-| gaggle | `dashboard/src/report/page/PageDock.vue` (`site-redesign`) |
+| atlas | `src/platform/chrome/dock/components/DockProgressRim.vue:20`, `edge="border"` (`u/s24-atlas`) |
+| fourier | `web/src/components/layout/AppDock.vue:785`, `edge="border"` with stops (`origin/master`) |
 
-None changes anything. fourier is asked whether a test reads the rim's clip.
+None changes anything. fourier is asked whether a test reads the rim's clip. gaggle mounts no rim in its site: its page dock's header comment names one (`dashboard/src/report/page/PageDock.vue:4`), but only its F3 prototype draws it (`dashboard/proto/F3/App.vue:412`).
 
 ## Not this wave's
 

@@ -2,12 +2,15 @@
 # check-selftest.sh: runs check-overflow.mjs on the base and v6 builds of the fold and stress
 # pages, as a site would run it on its own pages (from a project that has Playwright: the
 # tree), then once with a --click selector that matches nothing, which must exit 2. A preview
-# already up on its port is used; one this call starts stops with it.
+# already up on its port is used; one this call starts stops with it. OVF_TREE, CURE_DIST and
+# ONLY_CURE=1 read another tree's cure alone (round 3: v7 in trees/r3b).
 #   ~/.claude/guard/guarded --timeout 30 -- tools/check-selftest.sh
+#   OVF_TREE=r3b CURE_DIST=dist-cure7 ONLY_CURE=1 ~/.claude/guard/guarded --timeout 30 -- tools/check-selftest.sh
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/.." && pwd)"
-TREE="$ROOT/trees/v11.1.1"
+TREE="$ROOT/trees/${OVF_TREE:-v11.1.1}"
+CD="${CURE_DIST:-dist-cure6}"; CT="${CD#dist-}"
 OUT="$ROOT/record/check"
 mkdir -p "$OUT"
 SRVS=""
@@ -21,10 +24,12 @@ serve() { # port outdir
 }
 # BASE_PORT and CURE_PORT pick other ports (a preview already up on them is reused).
 B="${BASE_PORT:-5391}" C="${CURE_PORT:-5393}"
-serve "$B" dist-base
-serve "$C" dist-cure6
+[ -n "${ONLY_CURE:-}" ] || serve "$B" dist-base
+serve "$C" "$CD"
 cd "$TREE"
-for p in "$B:base" "$C:cure6"; do
+PAIRS="$B:base $C:$CT"
+[ -n "${ONLY_CURE:-}" ] && PAIRS="$C:$CT"
+for p in $PAIRS; do
     port="${p%%:*}"; tag="${p#*:}"
     # The fold page has no Filters trigger, so it is read in a call of its own.
     echo "== $tag fold"

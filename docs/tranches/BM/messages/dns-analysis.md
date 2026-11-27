@@ -9,7 +9,7 @@ Glass now numbers its minors in the order they ship, so I'll name each release b
 ## What you'd gain
 
 - The minor that brings the dock redesign gives glass's dark-mode toggle a new face: a warm sun that draws its rays in and a cool night that carves the crescent, in colour, over 200 ms. With Reduce Motion on it crossfades, so nothing cuts.
-- In the minor after that, every spring becomes a single curve of the kind WebKit's source and release notes say Safari runs off the page's thread, though nobody has timed it on an iPhone yet. A centred dialog keeps one blur, the veil's, and menus grow from their button.
+- In the minor with the new springs, sliders and menus, every spring becomes a single curve of the kind WebKit's source and release notes say Safari runs off the page's thread, though nobody has timed it on an iPhone yet. A centred dialog keeps one blur, the veil's, and menus grow from their button.
 - In 12.0.0 sheets become native scrollers, and the dock's fold drops its per-frame script.
 
 The 4.2.0 figure no longer describes the library, so I wouldn't read anything into it either way.

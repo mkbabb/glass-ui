@@ -1,0 +1,37 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795576721 slope=96.6/s inuse=94494 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 trees/fix2-base
+
+ ❯ tests/styles/cmx-gate-on-base.test.ts (3 tests | 1 failed) 165ms
+     × never gives a color-mix two endpoints that each hold a color-mix, or one property twice 75ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/cmx-gate-on-base.test.ts > gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure > never gives a color-mix two endpoints that each hold a color-mix, or one property twice
+AssertionError: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/styles/tokens/glass.css:263 --control-surface-bg-hover",
++   "src/styles/tokens/shadow.css:108 --blob-shadow-color",
++ ]
+
+ ❯ tests/styles/cmx-gate-on-base.test.ts:217:56
+    215|         // since it mixed that colour with itself. A mix with one such…
+    216|         // express the value as one mix, or as the property alone.
+    217|         expect(mixOfMixes(collectStyles(files(root)))).toEqual([]);
+       |                                                        ^
+    218|     });
+    219|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  22:18:53
+   Duration  751ms (transform 29ms, setup 58ms, import 23ms, tests 165ms, environment 349ms)
+

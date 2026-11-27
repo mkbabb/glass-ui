@@ -1,0 +1,203 @@
+{
+ "engine": "webkit",
+ "rows": [
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "control: plain background",
+   "value": "background-color: rgb(1 2 3);",
+   "crashed": false,
+   "resolved": "rgb(1, 2, 3) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "control: one mix arm, other plain, on color",
+   "value": "color: color-mix(in oklab, color-mix(in oklab, hsl(26 22% 17%), black 50%), red 35%);",
+   "crashed": false,
+   "resolved": "rgb(192, 192, 192) | oklab(0.315617 0.0823 0.050083) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "both arms relative, literal origin",
+   "value": "background-color: color-mix(in oklab, oklch(from oklch(0.28 0.035 70) l c h / 0.1), oklch(from oklch(0.28 0.035 70) l c h / 0.14) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "both arms relative, var() origin",
+   "value": "background-color: color-mix(in oklab, oklch(from var(--ink) l c h / 0.1), oklch(from var(--ink) l c h / 0.14) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "arm mix + arm relative colour of a mix",
+   "value": "background-color: color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), oklch(from color-mix(in oklab, hsl(26 22% 17%), black 50%) l c h) 35%);",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "arm relative of a mix + arm plain",
+   "value": "background-color: color-mix(in oklab, oklch(from color-mix(in oklab, hsl(26 22% 17%), black 50%) l c h), red 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.315617 0.0823 0.050083) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "both arms light-dark() holding mixes",
+   "value": "background-color: color-mix(in oklab, light-dark(color-mix(in oklab, hsl(26 22% 17%), black 50%), red), light-dark(color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), blue) 35%);",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.hover: Timeout 5000ms exceeded."
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "registered <color> arms holding plain colours",
+   "value": "--ra: red; --rb: blue; background-color: color-mix(in oklab, var(--ra), var(--rb) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.566376 0.134801 -0.027235) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "registered <color> arm holding a mix, other plain",
+   "value": "--ra: color-mix(in oklab, hsl(26 22% 17%), black 50%); background-color: color-mix(in oklab, var(--ra), red 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.315616 0.082435 0.049975) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "cured hover shape: one mix, relative var() ink, calc alpha and level",
+   "value": "--lvl: 1; --vq: 0.1; --vr: 0.14; background-color: color-mix(in srgb, oklch(from var(--ink) l c h / calc(0.65 * var(--vq) + 0.35 * var(--vr))) calc(var(--lvl) * 100%), hsl(30 85% 96%));",
+   "crashed": false,
+   "resolved": "color(srgb 0.203993 0.148252 0.08296 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "hover",
+   "name": "cured blob shape: relative shadow colour, mix of it, drop-shadow",
+   "value": "--sc: oklab(from hsl(24 9% 4%) calc(l * 0.5) calc(a * 0.5) calc(b * 0.5)); --bsc: color-mix(in srgb, var(--sc) 22%, var(--sc)); filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--bsc) 20%, transparent));",
+   "crashed": false,
+   "resolved": "rgb(192, 192, 192) | rgba(0, 0, 0, 0.847) | drop-shadow(color(srgb 0.005466 0.00491 0.00455 / 0.2) 0px 4px 14px) | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "control: plain background",
+   "value": "background-color: rgb(1 2 3);",
+   "crashed": false,
+   "resolved": "rgb(1, 2, 3) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "control: one mix arm, other plain, on color",
+   "value": "color: color-mix(in oklab, color-mix(in oklab, hsl(26 22% 17%), black 50%), red 35%);",
+   "crashed": false,
+   "resolved": "rgb(192, 192, 192) | oklab(0.315617 0.0823 0.050083) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "both arms relative, literal origin",
+   "value": "background-color: color-mix(in oklab, oklch(from oklch(0.28 0.035 70) l c h / 0.1), oklch(from oklch(0.28 0.035 70) l c h / 0.14) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "both arms relative, var() origin",
+   "value": "background-color: color-mix(in oklab, oklch(from var(--ink) l c h / 0.1), oklch(from var(--ink) l c h / 0.14) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.28 0.011971 0.032889 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "arm mix + arm relative colour of a mix",
+   "value": "background-color: color-mix(in oklab, color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), oklch(from color-mix(in oklab, hsl(26 22% 17%), black 50%) l c h) 35%);",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "arm relative of a mix + arm plain",
+   "value": "background-color: color-mix(in oklab, oklch(from color-mix(in oklab, hsl(26 22% 17%), black 50%) l c h), red 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.315617 0.0823 0.050083) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "both arms light-dark() holding mixes",
+   "value": "background-color: color-mix(in oklab, light-dark(color-mix(in oklab, hsl(26 22% 17%), black 50%), red), light-dark(color-mix(in srgb, oklch(0.28 0.035 70 / 0.1) 100%, hsl(30 85% 96%)), blue) 35%);",
+   "crashed": true,
+   "resolved": null,
+   "error": "page.setContent: Page crashed"
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "registered <color> arms holding plain colours",
+   "value": "--ra: red; --rb: blue; background-color: color-mix(in oklab, var(--ra), var(--rb) 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.566376 0.134801 -0.027235) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "registered <color> arm holding a mix, other plain",
+   "value": "--ra: color-mix(in oklab, hsl(26 22% 17%), black 50%); background-color: color-mix(in oklab, var(--ra), red 35%);",
+   "crashed": false,
+   "resolved": "oklab(0.315616 0.082435 0.049975) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "cured hover shape: one mix, relative var() ink, calc alpha and level",
+   "value": "--lvl: 1; --vq: 0.1; --vr: 0.14; background-color: color-mix(in srgb, oklch(from var(--ink) l c h / calc(0.65 * var(--vq) + 0.35 * var(--vr))) calc(var(--lvl) * 100%), hsl(30 85% 96%));",
+   "crashed": false,
+   "resolved": "color(srgb 0.203993 0.148252 0.08296 / 0.114) | rgba(0, 0, 0, 0.847) | none | none",
+   "error": null
+  },
+  {
+   "prop": "decl",
+   "trigger": "load",
+   "name": "cured blob shape: relative shadow colour, mix of it, drop-shadow",
+   "value": "--sc: oklab(from hsl(24 9% 4%) calc(l * 0.5) calc(a * 0.5) calc(b * 0.5)); --bsc: color-mix(in srgb, var(--sc) 22%, var(--sc)); filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--bsc) 20%, transparent));",
+   "crashed": false,
+   "resolved": "rgb(192, 192, 192) | rgba(0, 0, 0, 0.847) | drop-shadow(color(srgb 0.005466 0.00491 0.00455 / 0.2) 0px 4px 14px) | none",
+   "error": null
+  }
+ ]
+}

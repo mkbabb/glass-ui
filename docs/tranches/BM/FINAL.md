@@ -52,7 +52,7 @@ Each read at the close on the shipped library, in the engines it names, with the
 | G-6 the 12.0.0 dock samples nothing | | Chromium, Playwright WebKit | | | |
 | G-7 the goo's close | | Playwright WebKit, Busy page on (an indication) | | | |
 
-## 4 G-4, per site and per candidate
+## 4 Each site at each candidate: G-4, and daraksha's occasion mode
 
 | Site | Bound | The dock-redesign minor | BM's parts minor | 12.0.0 | Ref read |
 |---|---|---|---|---|---|
@@ -63,6 +63,7 @@ Each read at the close on the shipped library, in the engines it names, with the
 | keyframes | none stated | | | | |
 | gaggle | first load within 11,282 B (gate 29) | | | | |
 | Home Assistant | entry within 0.2 kB; every script within 0.8 kB | | | | |
+| daraksha, the occasion mode | its `e2e/veil-webkit.spec.ts` (run by daraksha): the page alive at 390, 430 and 1440, dark and light | | | — | |
 | slides | none stated | | | | |
 | dns-analysis | no glass-ui | — | — | — | |
 

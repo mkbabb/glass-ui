@@ -1,0 +1,53 @@
+{
+ "tree": "trees/fix2-cure",
+ "summary": {
+  "direct": 0,
+  "alias": 1,
+  "colour": 4
+ },
+ "rows": [
+  {
+   "at": "src/components/dock/styles/dock.css:147",
+   "prop": "--_dock-edge-lerp",
+   "mix": "color-mix(in srgb, var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%), var(--glass-border-floating))",
+   "direct": [],
+   "alias": [
+    "--glass-border-floating"
+   ],
+   "colour": [
+    "--glass-border-floating",
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/components/tabs/styles/segmented.css:233",
+   "prop": "color",
+   "mix": "color-mix(in oklab, var(--muted-foreground), var(--foreground) var(--hover-ink-mix))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/styles/glass/control-bit.css:297",
+   "prop": "background-color",
+   "mix": "color-mix(in oklab, var(--foreground) calc(var(--fill-hover) * 100%), var(--control-bit-fill))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/styles/glass/control-bit.css:306",
+   "prop": "background-color",
+   "mix": "color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), var(--control-bit-fill))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  }
+ ]
+}

@@ -176,6 +176,13 @@ function hasRelative(items) {
     }
     return false;
 }
+function holdsMix(items) {
+    for (const it of items) {
+        if (it.t !== "fn") continue;
+        if (it.name === "color-mix" || holdsMix(it.args)) return true;
+    }
+    return false;
+}
 function armKind(armItems) {
     // drop a trailing/leading percentage
     const fns = armItems.filter((x) => x.t === "fn");
@@ -187,7 +194,7 @@ function armKind(armItems) {
     else if (COLOR_FNS.has(f.name) && /^\s*from\b/i.test(stringify(f.args))) kind = "relative";
     else if (f.name === "light-dark") kind = "light-dark";
     else if (f.name === "calc") kind = "calc";
-    return { kind, relInside: hasRelative([f]), text: stringify(armItems).trim() };
+    return { kind, relInside: hasRelative([f]), holds: holdsMix(fns), text: stringify(armItems).trim() };
 }
 function findMixes(items, path = []) {
     const out = [];
@@ -213,10 +220,13 @@ for (const d of decls) {
         const mixes = findMixes(parseValue(a.text));
         for (const m of mixes) {
             const both = m.arms.length === 2 && m.arms.every((x) => x.kind === "mix");
+            // WebKit's abort needs only that each arm HOLDS a mix (a mix, a relative
+            // colour of a mix, a light-dark() of a mix), not that each arm IS one.
+            const bothHold = m.arms.length === 2 && m.arms.every((x) => x.holds);
             const relBoth = both && m.arms.some((x) => x.relInside);
             const mixRelArm = m.arms.some((x) => x.kind === "mix" && x.relInside);
             const mixArm = m.arms.some((x) => x.kind === "mix");
-            if (both || mixRelArm || mixArm) hits.push({ both, relBoth, mixRelArm, mixArm, arms: m.arms.map((x) => x.kind + (x.relInside ? "+rel" : "")), chain: a.chain.filter((c) => c.file || c.registered).map((c) => (c.registered ? `${c.name} (registered ${c.registered})` : `${c.name} @ ${c.file}:${c.line}`)), expanded: a.text.length > 900 ? a.text.slice(0, 900) + "…" : a.text });
+            if (both || bothHold || mixRelArm || mixArm) hits.push({ both, bothHold, relBoth, mixRelArm, mixArm, arms: m.arms.map((x) => x.kind + (x.relInside ? "+rel" : "")), chain: a.chain.filter((c) => c.file || c.registered).map((c) => (c.registered ? `${c.name} (registered ${c.registered})` : `${c.name} @ ${c.file}:${c.line}`)), expanded: a.text.length > 900 ? a.text.slice(0, 900) + "…" : a.text });
         }
     }
     if (hits.length) {
@@ -239,11 +249,19 @@ const summary = {
     registeredColor: [...registered].filter(([, s]) => s && s.includes("color")).map(([n, s]) => `${n} ${s}`),
     sites: sites.length,
 };
-writeFileSync(OUT, JSON.stringify({ summary, sites }, null, 1));
 console.log(JSON.stringify(summary, null, 1));
 for (const s of sites) {
-    const cls = s.hits.some((h) => h.both) ? "BOTH-ARMS-MIX" : s.hits.some((h) => h.mixRelArm) ? "arm-mix+rel" : "arm-mix";
+    const cls = s.hits.some((h) => h.both) ? "BOTH-ARMS-MIX" : s.hits.some((h) => h.bothHold) ? "BOTH-HOLD-MIX" : s.hits.some((h) => h.mixRelArm) ? "arm-mix+rel" : "arm-mix";
     s.cls = cls;
     console.log(`${cls.padEnd(13)} ${s.custom ? "token" : "rule "} ${s.file}:${s.line}  ${s.prop}  [${s.selector}]  paths=${s.hits.length}`);
 }
-writeFileSync(OUT, JSON.stringify({ summary, sites }, null, 1));
+// The record keeps each site's class, its path count and up to three example
+// resolution paths of its worst kind; the full expansion runs to megabytes.
+const rank = (h) => (h.both ? 3 : h.bothHold ? 2 : h.mixRelArm ? 1 : 0);
+const record = sites.map((s) => {
+    const worst = Math.max(...s.hits.map(rank));
+    const examples = s.hits.filter((h) => rank(h) === worst).slice(0, 3).map((h) => ({ arms: h.arms, chain: h.chain, expanded: h.expanded.length > 400 ? h.expanded.slice(0, 400) + "…" : h.expanded }));
+    return { cls: s.cls, file: s.file, line: s.line, prop: s.prop, selector: s.selector, value: s.value, paths: s.hits.length, examples };
+});
+summary.byClass = record.reduce((acc, s) => ((acc[s.cls] = (acc[s.cls] ?? 0) + 1), acc), {});
+writeFileSync(OUT, JSON.stringify({ summary, sites: record }, null, 1));

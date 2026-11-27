@@ -9,6 +9,8 @@ import { Switch } from "@glass/components/switch";
 import { Button } from "@glass/components/button";
 import { Input } from "@glass/components/input";
 import { Blob, BLOB_CONFIG_DEFAULTS } from "@glass/components/blob";
+import { Card } from "@glass/components/card";
+import "@glass/components/configurator/styles.css";
 
 // ?only=<cell> renders one cell, so a page process that aborts names its cell.
 const only = new URLSearchParams(location.search).get("only");
@@ -81,6 +83,10 @@ const radio = ref("a");
             <Blob color="var(--primary)" :config="BLOB_CONFIG_DEFAULTS" data-target="blob" />
         </section>
 
+        <section v-if="show('card')" class="cell">
+            <Card data-target="card">A card</Card>
+        </section>
+
         <!-- Bare elements for the global rules the sweep named. -->
         <section v-if="show('bare-control-surface')" class="cell">
             <button class="control-surface bare" data-target="bare-control-surface">surface</button>
@@ -111,6 +117,21 @@ const radio = ref("a");
         </section>
         <section v-if="show('bare-ghost-slot')" class="cell">
             <div class="ghost-slot bare" data-target="bare-ghost-slot">slot</div>
+        </section>
+        <!-- Bare elements for the sites a consumer's own values reach. -->
+        <section v-if="show('bare-dock-plate')" class="cell">
+            <div class="glass-dock" style="position: relative; width: 16rem; height: 3rem; --dock-expand-t: 0.5">
+                <div class="dock-plate" data-target="bare-dock-plate"></div>
+            </div>
+        </section>
+        <section v-if="show('bare-glass-well')" class="cell">
+            <div class="glass-well bare" data-target="bare-glass-well">well</div>
+        </section>
+        <section v-if="show('bare-segmented-tab')" class="cell">
+            <div class="segmented-tabs"><button class="segmented-tab bare" data-target="bare-segmented-tab">tab</button></div>
+        </section>
+        <section v-if="show('bare-configurator-loading')" class="cell">
+            <div class="configurator-preset-well is-loading bare" data-target="bare-configurator-loading"></div>
         </section>
     </main>
 </template>

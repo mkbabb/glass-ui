@@ -40,12 +40,26 @@
 //             caption say 3, and the strip reaches it with no offset in between.
 //   reduce    also counts the strip's `scrollend` events after the instant press.
 //
-// Added by the third fix seat (fold.md, the third section):
-//   reduce    also reads, each frame, the opacity of the member left (0) and the member
-//             pressed for (1), each the member's times its content's. Holds now also
-//             asks that the pressed member is under 0.25 in the frame the strip arrives
-//             and climbs to 1 over 100 to 250 ms: the seat is instant and the arrival
-//             fades in, so nothing travels and nothing cuts in.
+// The third fix seat's reduce cell read only the member left and the member pressed
+// for, on the hero; the fourth fold replaced it (below).
+//
+// Rewritten by the fourth fold (critique-r3.md, the third critic), selected with --cells.
+// Every cell below films each frame the strip's offset and opacity and every member's
+// ink (the share of its width inside the strip, times its content's opacity, its own
+// and the strip's), and presses by a click in the page, so two presses are exact:
+//   reduce    under reduced motion, one press for member 1 on three pages: the hero,
+//             glass's own Carousel page (centred slides, neighbours peeking) and a strip
+//             shaped like fourier's featured row (projection none, 16rem members, a
+//             1rem gutter). Holds: the strip rests on member 1 with member 1 active,
+//             takes no offset between its start and member 1, seats once, and no
+//             member's ink moves more than two fifths in any 17 ms (one 60 Hz frame).
+//   retarget  the same, on glass's Carousel page: dots for member 1, then member 2
+//             60 ms later, inside the first press's fade-out. Holds also when the strip
+//             seats once, on member 2.
+//   turn      the same, on the hero: member 1, then member 2 160 ms later, inside the
+//             first press's fade-in. Holds with two seats.
+//   motion    with motion allowed, one press on the hero and the 16rem strip. Holds
+//             when the strip rests on member 1 with member 1 active.
 //
 // Writes <out>/witness.<label>.<engine>.json and prints one line per cell.
 import { createRequire } from "node:module";
@@ -309,50 +323,129 @@ async function cellKeyboard(browser, v, link) {
     }
 }
 
-async function cellReduce(browser, v) {
-    const { context, page, errors } = await heroOpen(browser, { ...v, reduce: true });
+// In-page: from now on, each frame, the strip's offset and opacity and every member's
+// ink. A member's ink is the share of its width inside the strip, times its content's
+// opacity, its own and the strip's: what of it the reader sees.
+const FILM = (stripSel) => {
+    const strip = document.querySelector(stripSel);
+    const t0 = performance.now();
+    window.__film = { t0, rows: [], ends: [] };
+    strip.addEventListener("scrollend", () => window.__film.ends.push(+(performance.now() - t0).toFixed(1)));
+    const op = (e) => (e ? parseFloat(getComputedStyle(e).opacity) : 1);
+    const tick = () => {
+        const box = strip.getBoundingClientRect();
+        const so = op(strip);
+        const inks = [...strip.children].map((m) => {
+            const r = m.getBoundingClientRect();
+            const share = r.width > 0 ? Math.max(0, Math.min(r.right, box.right) - Math.max(r.left, box.left)) / r.width : 0;
+            return +(share * so * op(m) * op(m.querySelector(".carousel-item-content"))).toFixed(3);
+        });
+        window.__film.rows.push([+(performance.now() - t0).toFixed(1), strip.scrollLeft, +so.toFixed(3), inks]);
+        if (performance.now() - t0 < 1400) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+};
+
+// The ink cells' pages: the hero (atlas's shape, full-width members), glass's own Carousel
+// page (centred slides, neighbours peeking at both edges) and a strip shaped like
+// fourier's featured row (projection none, 16rem members, a 1rem gutter).
+const INK_PAGES = {
+    hero: { url: "/?c=carousel-hero&content=none", root: HERO },
+    stage: { url: "/?c=carousel", root: "[data-testid=carousel-0]" },
+    strip16: { url: "/?c=carousel-hero&content=none&projection=none&member=16rem&gutter=1rem", root: HERO },
+};
+
+// One ink cell under reduced motion: open `page`, film, and press for each target in
+// `presses` ([member, ms after the first press]). A press is the chevron where the page
+// shows one and the press is one ahead, else the dot; it is clicked in the page, so the
+// gap between two presses is exact.
+async function cellInk(browser, v, name, presses, cell, reduce = true) {
+    const p = INK_PAGES[name];
+    const strip = `${p.root} [data-slot=carousel-content]`;
+    const { context, page, errors } = await open(browser, { ...v, reduce }, `${BASE}${p.url}`, NO_AUTOPLAY);
     try {
-        await page.evaluate((s) => {
-            const strip = document.querySelector(s);
-            window.__rows = [];
-            window.__ends = [];
-            const t0 = performance.now();
-            strip.addEventListener("scrollend", () => window.__ends.push(+(performance.now() - t0).toFixed(1)));
-            const seen = (m) => {
-                const c = m.querySelector(".carousel-item-content") || m;
-                return +(parseFloat(getComputedStyle(m).opacity) * parseFloat(getComputedStyle(c).opacity)).toFixed(3);
-            };
-            const tick = () => {
-                const [m0, m1] = strip.children;
-                window.__rows.push([+(performance.now() - t0).toFixed(1), strip.scrollLeft, seen(m0), seen(m1)]);
-                if (performance.now() - t0 < 1200) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-        }, HERO_STRIP);
-        await pressFor(page, 1, 0);
-        await sleep(1300);
-        const rows = await page.evaluate(() => window.__rows);
-        const scrollends = await page.evaluate(() => window.__ends);
-        const end = await page.evaluate(STATE, HERO_STRIP);
-        const target = end.offsets[1];
+        await page.waitForSelector(strip, { timeout: 20000 });
+        await page.evaluate((s) => document.querySelector(s).scrollIntoView({ block: "center", behavior: "instant" }), p.root);
+        await sleep(700);
+        const before = await page.evaluate((s) => [...document.querySelector(s).children].findIndex((k) => k.getAttribute("data-state") === "active"), strip);
+        await page.evaluate(FILM, strip);
+        await sleep(60);
+        await page.evaluate(
+            ([root, presses, from]) => {
+                const target = (k, prev) => {
+                    const next = document.querySelector(`${root} [data-testid=hero-next]`);
+                    if (k === prev + 1 && next && next.offsetParent !== null) return next;
+                    return document.querySelectorAll(`${root} .pager-dot`)[k];
+                };
+                const at = [];
+                let prev = from;
+                for (const [k, ms] of presses) {
+                    const el = target(k, prev);
+                    prev = k;
+                    setTimeout(() => {
+                        at.push(+(performance.now() - window.__film.t0).toFixed(1));
+                        el.click();
+                    }, ms);
+                }
+                window.__pressAt = at;
+            },
+            [p.root, presses, before],
+        );
+        await sleep(1500);
+        const film = await page.evaluate(() => ({ rows: window.__film.rows, ends: window.__film.ends, at: window.__pressAt }));
+        const end = await page.evaluate(SETTLE, [strip, 300, 3000]);
+        const offsets = await page.evaluate((s) => { const k = [...document.querySelector(s).children]; return k.map((m) => m.offsetLeft - k[0].offsetLeft); }, strip);
+        const goal = presses[presses.length - 1][0];
+        const rows = film.rows;
         const start = rows[0][1];
-        const between = rows.filter(([, x]) => Math.abs(x - start) > 1 && Math.abs(x - target) > 1);
-        const firstMove = rows.find(([, x]) => Math.abs(x - start) > 1);
-        const at = rows.findIndex(([, x]) => Math.abs(x - target) <= 1);
-        const arrive = rows[at];
-        // The pressed member's opacity from the frame before the strip arrives until it
-        // first reads 1, and the largest rise between two rows.
-        const done = rows.findIndex((r, i) => i >= at && r[3] >= 0.999);
-        const fade = at >= 0 ? rows.slice(Math.max(0, at - 1), done >= 0 ? done + 1 : rows.length).map(([t, , o0, o1]) => [t, o0, o1]) : [];
-        let maxRise = 0;
-        for (let i = Math.max(1, at); at >= 0 && i <= (done >= 0 ? done : rows.length - 1); i++) maxRise = Math.max(maxRise, rows[i][3] - rows[i - 1][3]);
-        const seatOpacity = arrive ? arrive[3] : null;
-        const fadeMs = at >= 0 && done >= 0 ? +(rows[done][0] - arrive[0]).toFixed(1) : null;
-        const leftAtSeat = arrive ? arrive[2] : null;
-        const seated = end.active === 1 && Math.abs(end.sl - target) <= 1 && between.length === 0;
-        const fades = seatOpacity !== null && seatOpacity <= 0.25 && fadeMs !== null && fadeMs >= 100 && fadeMs <= 250;
-        const holds = seated && fades;
-        return { cell: "reduce", w: v.w, end: { sl: end.sl, active: end.active, dot: end.dot }, target, between: between.length, firstMoveMs: firstMove?.[0] ?? null, arriveMs: arrive?.[0] ?? null, seatOpacity, fadeMs, maxRise: +maxRise.toFixed(3), leftAtSeat, fade, scrollends, seated, fades, holds, errors };
+        const to = offsets[goal];
+        // Every distinct offset the strip takes after the first press, and any between.
+        const seats = [];
+        for (let i = 1; i < rows.length; i++) if (Math.abs(rows[i][1] - rows[i - 1][1]) > 1) seats.push(+rows[i][0].toFixed(1));
+        const stops = [start, ...presses.map(([k]) => offsets[k])];
+        const between = rows.filter(([, x]) => stops.every((y) => Math.abs(x - y) > 1)).length;
+        // The largest change of any member's ink between two frames, and within any
+        // 17 ms (one 60 Hz frame, so a 120 Hz film is read at the same scale).
+        let step = 0;
+        let step60 = 0;
+        let worst = null;
+        const n = rows[0][3].length;
+        for (let m = 0; m < n; m++) {
+            for (let i = 1; i < rows.length; i++) {
+                const d = Math.abs(rows[i][3][m] - rows[i - 1][3][m]);
+                if (d > step) step = d;
+                for (let j = i - 1; j >= 0 && (j === i - 1 || rows[i][0] - rows[j][0] <= 17.5); j--) {
+                    const w = Math.abs(rows[i][3][m] - rows[j][3][m]);
+                    if (w > step60) {
+                        step60 = w;
+                        worst = { member: m, from: [rows[j][0], rows[j][3][m]], to: [rows[i][0], rows[i][3][m]] };
+                    }
+                }
+            }
+        }
+        // The legs: from the first press to the seat, from the seat until no ink moves.
+        const press0 = film.at?.[0] ?? null;
+        const seatAt = seats.length ? seats[seats.length - 1] : null;
+        let still = null;
+        for (let i = rows.length - 1; i > 0; i--) {
+            if (rows[i][3].some((x, m) => Math.abs(x - rows[i - 1][3][m]) > 0.001) || Math.abs(rows[i][2] - rows[i - 1][2]) > 0.001) {
+                still = rows[i][0];
+                break;
+            }
+        }
+        const dim = Math.min(...rows.map((r) => r[2]));
+        // Members on screen (ink over 0.01) in the frame before the first press and
+        // in the last frame, with their ink.
+        const shown = (r) => r[3].map((x, m) => [m, x]).filter(([, x]) => x > 0.01);
+        const pre = rows.filter((r) => press0 === null || r[0] < press0).at(-1) ?? rows[0];
+        const seated = end.active === goal && Math.abs(end.sl - to) <= 1 && between === 0;
+        // Under reduced motion: seated with nothing between, at most one seat a press, and
+        // no member's ink moving more than two fifths in a 60 Hz frame. With motion the
+        // strip travels, so only the seat is read.
+        const maxSeats = cell === "retarget" ? 1 : presses.length;
+        const holds = reduce ? seated && step60 <= 0.4 && seats.length <= maxSeats : end.active === goal && Math.abs(end.sl - to) <= 1;
+        const sample = rows.filter((r, i) => i % 2 === 0 && press0 !== null && r[0] >= press0 - 20 && r[0] <= (still ?? press0) + 20).map(([t, x, so, inks]) => [t, Math.round(x), so, inks.filter((y) => y > 0.005).length ? inks : []]);
+        return { cell, page: name, w: v.w, presses, pressAt: film.at, end: { sl: end.sl, active: end.active }, target: to, seats, between, stripMin: dim, outMs: press0 !== null && seatAt !== null ? +(seatAt - press0).toFixed(1) : null, inMs: seatAt !== null && still !== null ? +(still - seatAt).toFixed(1) : null, stillMs: press0 !== null && still !== null ? +(still - press0).toFixed(1) : null, frames: rows.length, step: +step.toFixed(3), step60: +step60.toFixed(3), worst, before: shown(pre), after: shown(rows.at(-1)), scrollends: film.ends, seated, holds, sample, errors };
     } finally {
         await context.close().catch(() => {});
     }
@@ -416,14 +509,17 @@ async function main() {
                 rows.push(await cellKeyboard(browser, v, false).catch((e) => err("keyboard", v, e)));
                 rows.push(await cellKeyboard(browser, v, true).catch((e) => err("keyboard-link", v, e)));
             }
-            if (CELLS.has("reduce")) rows.push(await cellReduce(browser, v).catch((e) => err("reduce", v, e)));
+            if (CELLS.has("reduce")) for (const name of ["hero", "stage", "strip16"]) rows.push(await cellInk(browser, v, name, [[1, 0]], "reduce").catch((e) => ({ ...err("reduce", v, e), page: name })));
+            if (CELLS.has("retarget")) rows.push(await cellInk(browser, v, "stage", [[1, 0], [2, 60]], "retarget").catch((e) => ({ ...err("retarget", v, e), page: "stage" })));
+            if (CELLS.has("motion")) for (const name of ["hero", "strip16"]) rows.push(await cellInk(browser, v, name, [[1, 0]], "motion", false).catch((e) => ({ ...err("motion", v, e), page: name })));
+            if (CELLS.has("turn")) rows.push(await cellInk(browser, v, "hero", [[1, 0], [2, 160]], "turn").catch((e) => ({ ...err("turn", v, e), page: "hero" })));
             if (CELLS.has("noend")) rows.push(await cellHeld(browser, v, true).catch((e) => err("noend", v, e)));
             if (CELLS.has("frozen")) rows.push(await cellFrozen(browser, v).catch((e) => err("frozen", v, e)));
             if (CELLS.has("start")) rows.push(await cellStart(browser, v).catch((e) => err("start", v, e)));
         }
         const meta = { engine: opt.engine, browserVersion: browser.version(), label: opt.label, port: opt.port, cells: opt.cells, when: new Date().toISOString() };
         writeFileSync(join(opt.out, `witness.${opt.label}.${opt.engine}.json`), JSON.stringify({ meta, rows }, null, 1));
-        for (const r of rows) console.log(JSON.stringify({ label: opt.label, engine: opt.engine, ...r, log: r.log?.map((e) => `${e.t}:${e.active}`).join(" ") }));
+        for (const r of rows) console.log(JSON.stringify({ label: opt.label, engine: opt.engine, ...r, log: r.log?.map((e) => `${e.t}:${e.active}`).join(" "), sample: undefined }));
     } finally {
         if (browser) await browser.close().catch(() => {});
     }

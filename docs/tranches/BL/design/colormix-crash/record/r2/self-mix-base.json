@@ -1,0 +1,82 @@
+{
+ "tree": "trees/fix2-base",
+ "summary": {
+  "direct": 1,
+  "alias": 2,
+  "colour": 6
+ },
+ "rows": [
+  {
+   "at": "src/components/dock/styles/dock.css:147",
+   "prop": "--_dock-edge-lerp",
+   "mix": "color-mix(in srgb, var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%), var(--glass-border-floating))",
+   "direct": [],
+   "alias": [
+    "--glass-border-floating"
+   ],
+   "colour": [
+    "--glass-border-floating",
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/components/tabs/styles/segmented.css:233",
+   "prop": "color",
+   "mix": "color-mix(in oklab, var(--muted-foreground), var(--foreground) var(--hover-ink-mix))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/styles/glass/control-bit.css:297",
+   "prop": "background-color",
+   "mix": "color-mix(in oklab, var(--foreground) calc(var(--fill-hover) * 100%), var(--control-bit-fill))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/styles/glass/control-bit.css:306",
+   "prop": "background-color",
+   "mix": "color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), var(--control-bit-fill))",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--foreground"
+   ]
+  },
+  {
+   "at": "src/styles/tokens/glass.css:263",
+   "prop": "--control-surface-bg-hover",
+   "mix": "color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%)",
+   "direct": [],
+   "alias": [],
+   "colour": [
+    "--glass-veil-ink",
+    "--_music-staff-folio",
+    "--music-staff-folio"
+   ]
+  },
+  {
+   "at": "src/styles/tokens/shadow.css:108",
+   "prop": "--blob-shadow-color",
+   "mix": "color-mix(in srgb, var(--blob-color, var(--shadow-color)) 22%, var(--shadow-color))",
+   "direct": [
+    "--shadow-color"
+   ],
+   "alias": [
+    "--shadow-color",
+    "--foreground"
+   ],
+   "colour": [
+    "--shadow-color",
+    "--foreground",
+    "--neutral-0"
+   ]
+  }
+ ]
+}

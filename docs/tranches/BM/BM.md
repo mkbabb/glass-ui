@@ -2,12 +2,12 @@
 
 | field | value |
 |---|---|
-| seat | formation seat, BM part 3 (`driver/bm-part-3.js`). Writes this file, `waves/`, `FINAL.md`, `FORMATION.md`, `messages/`, and BM-0's edits to `docs/precepts/` |
+| seat | formation seat, BM part 3 (`driver/bm-part-3.js`), resumed on the owner's order to re-deploy every workflow (2026-11-24 evening, and again 2026-11-25 morning). It continues the partial formation committed at `f88841d27`. Writes this file, `waves/`, `FINAL.md`, `FORMATION.md`, `messages/`, and BM-0's edits to `docs/precepts/` |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| HEAD | glass-ui master `c0fdcdc08` (the seat began at `fff9e958e`; the commits between are BL records); `release/11.1.1` at `b124a311a` (judged, cutting); npm `latest` is 11.1.0 |
-| inputs, read in full | `CHARTER.md`, `PROGRESS.md`; `study/DESIGN.md` (pass 10 with the final fold), `study/OPEN.md`, `study/pass-10/fold.md`, `study/choices/RULING-2026-11-23.md` (O-426 and its O-428 addendum); the drafts `study/pass-10/tranche-draft.md`, `precepts.md` and `messages/`; BL's `PLAN.md`, `waves/INDEX.md`, `waves/W-B.17.md`, `waves/W-B.18.md`, `waves/W-I.8.md` (R-6, R-12), `driver/glass-11.1.1-scope.md` (the 11.1.2 scope, every section dated 2026-11-19 to 2026-11-24), `driver/glass-11.1.1-exits-scope.md`, `audit/hassio-r14/PLACED.md`, `design/dock-frames/inbound/value-js-2026-11-24-four-sites.md`; `audit/INBOUND.md` O-420 to O-436 (O-436, placed after the run's inputs were written, gives BM-1 the theme flip and every wave the one-level colour rule below) |
-| sites read | atlas `u/s24-dd-atlas` (`ac0b7cc`) and the sci dashboards `u/s24-prod-sci` (`65fc0e81`); value.js `origin/master` (`561137225`); keyframes.js `origin/master` (`a690ede9`) and `kf47`; fourier `origin/master` (`39a335a`); daraksha `b13` (`1c0ecaa`); gaggle `site-redesign` (`e0819ab`) and `tranche-c`; Home Assistant `master` (`f58c650f`); dns-analysis `master` (`7644558`); slides `npig` (`3cec2cb`) |
-| fences | no source edit, no build, no browser, no git write. The sites' sources were read with `git show` and `git grep` only |
+| HEAD | glass-ui master `2186523b7` (no `src/` change since `c0fdcdc08`, where the first attempt read it); `release/11.1.1` at `37fa9ecbb`, whose source is `b124a311a` (judged; its close is running); npm `latest` is 11.1.0, `release-10` 10.1.6 |
+| inputs, read in full | `CHARTER.md`, `PROGRESS.md`; `study/DESIGN.md` (pass 10 with the final fold), `study/OPEN.md`, `study/pass-10/fold.md`, `study/choices/RULING-2026-11-23.md` (O-426 and its O-428 addendum); the drafts `study/pass-10/tranche-draft.md`, `precepts.md` and `messages/`; BL's `PLAN.md`, `waves/INDEX.md`, `waves/W-B.17.md`, `waves/W-B.18.md`, `waves/W-I.8.md` (R-6, R-12), `driver/glass-11.1.1-scope.md` (the 11.1.2 scope, every section dated 2026-11-19 to 2026-11-24, with "atlas's dropdown films (O-434, G-1 to G-4)" added at 22:14), `driver/glass-11.1.1-exits-scope.md`, `audit/hassio-r14/PLACED.md`, `design/dock-frames/inbound/value-js-2026-11-24-four-sites.md`; `audit/INBOUND.md` O-420 to O-436 (O-436 gives BM-1 the theme flip and every wave the one-level colour rule below; O-434's films give BM-4, BM-5, BM-6 and BM-10 the cures in §6) |
+| sites read | atlas `u/s24-atlas` (`61b36d6`) and `u/s24-dd-atlas` (`fc9aece`) in the atlas repo (`.u-build/s24-atlas`), and the sci dashboards `u/s24-sci` (`29047982`), re-read on 2026-11-25: no cited file changed since `b3fcabe` and `d860832e`; value.js `origin/master` (`561137225`); keyframes.js `origin/master` (`2a11fb1f`, `kf47` merged); fourier `origin/master` (`89337ad`); daraksha `origin/master` (`cd9c430`) and `b13` (`1c0ecaa`); gaggle `site-redesign` (`e0819ab`) and `tranche-c` (`2e91359`); Home Assistant `master` (`f58c650f`); dns-analysis `master` (`da6ed10`); slides `npig` (`3cec2cb`) |
+| fences | no source edit, no build and no browser. The sites' sources were read with `git show` and `git grep` at the local refs above, with no fetch. The one git write is BM-0's: the precepts checkout's `main` fast-forwarded to `origin/main` (`51edb59`) and the amendments left on it uncommitted |
 
 Short cites: `D§n` is `study/DESIGN.md` section n; `OPEN` is `study/OPEN.md`; `IN O-n` is BL's `audit/INBOUND.md` row; `S112` is BL's `driver/glass-11.1.1-scope.md` (the 11.1.2 scope, under its old name).
 
@@ -23,7 +23,7 @@ Short cites: `D§n` is `study/DESIGN.md` section n; `OPEN` is `study/OPEN.md`; `
 - **Engines.** Headless Chromium is not a GPU and Playwright WebKit is not Safari. A claim about production iOS Safari rests on WebKit's source or release notes and is marked as an inference, or on an iPhone reading, which is optional (D§15).
 - **Clean breaks.** No alias, shim, dual path or masking fallback. A removed public name gets a MIGRATION row in the same wave and a line in its site's message.
 - **Nothing in `src/` carries a wave id, a row id or seat vocabulary in a comment.**
-- **A colour token mixes one level deep.** 11.1.2 flattens every token that is a `color-mix()` of other mixed tokens, after a Playwright WebKit page crash on hovering one (IN O-436 (1)). A token a BM wave writes or reads for a fill, a tone or a glyph's colour reads a section colour, the plate's tone or a flat token directly, never a mix of mixes.
+- **A colour token mixes one level deep.** 11.1.2 flattens every token that is a `color-mix()` of other mixed tokens, after a Playwright WebKit page crash on hovering one (IN O-436 (1)); daraksha's occasion-mode crash had the same cause (§10). A token a BM wave writes or reads for a fill, a tone or a glyph's colour reads a section colour, the plate's tone or a flat token directly, never a mix of mixes.
 - **The precepts lead.** BM-0's amendments are the law each wave builds to. Where a precept and DESIGN disagree, the wave stops and the orchestrator settles it before building.
 
 ## 2 Releases, by the release rule
@@ -71,14 +71,14 @@ Seven, each an invariant of the shipped library read at runtime, not a figure fr
 
 | Wave | What | Release | DESIGN | Starts from | Gates | Sites | Status | File |
 |---|---|---|---|---|---|---|---|---|
-| BM-0 | The precepts | before every wave | §12 | `study/pass-10/precepts.md` | none (text) | all | complete (applied, uncommitted; the tabs-seam assertion moves to BM-4) | `waves/BM-0.md` |
+| BM-0 | The precepts | before every wave | §12 | `study/pass-10/precepts.md` | none (text) | all | complete: applied atop precepts `origin/main` (`51edb59`), uncommitted; the tabs-seam assertion moves to BM-4 | `waves/BM-0.md` |
 | BM-1 | The toggle's new face (O-428) | the dock-redesign minor | §9 | `study/pass-10/toggle/sketch/` | G-2, G-3, G-5 | atlas, keyframes, gaggle, slides | planned | `waves/BM-1.md` |
 | BM-2 | The plate's strengths (choice 5, C) | the dock-redesign minor | §6.2 | W-B.17's `plate.css` | G-2, G-3, G-5 | every dock site | planned | `waves/BM-2.md` |
 | BM-3 | Springs on curves Safari's compositor takes | BM's parts minor | §4.2 | `SPRING_PRESETS`; keyframes.js | G-1, G-2, G-5 | every site | planned; its settle player waits on keyframes.js | `waves/BM-3.md` |
 | BM-4 | The one selection mark | BM's parts minor | §8.1 | `pass-6/fold/` | G-2, G-3, G-5 | every site with a segmented strip, a dock run or a Switch | planned | `waves/BM-4.md` |
 | BM-5 | The slider while held (choice 23, C), with the finger target (GL-15) | BM's parts minor | §8.3 | `study/pass-10/slider/sketch/` | G-2, G-3, G-5 | every slider site | planned | `waves/BM-5.md` |
 | BM-6 | Presentations | BM's parts minor | §5.2, §6.3 to §6.5 | 11.1.1's exits | G-2, G-3, G-5 | every site with an overlay | planned | `waves/BM-6.md` |
-| BM-7 | The rim's window | BM's parts minor | §4.3 | `study/pass-2/delivery/sketch/scroll-progress-rim.next.css` | G-2, G-5 | atlas, fourier, gaggle | planned | `waves/BM-7.md` |
+| BM-7 | The rim's window | BM's parts minor | §4.3 | `study/pass-2/delivery/sketch/scroll-progress-rim.next.css` | G-2, G-5 | atlas, fourier | planned | `waves/BM-7.md` |
 | BM-8 | The capsule window in 11.x, conditional | BM's parts minor, or 12.0.0 with BM-11 | §3 | `pass-4/shape/` | G-2, G-5 | every dock site | planned; ships in the minor only on its reading | `waves/BM-8.md` |
 | BM-13 | FourierField on `@mkbabb/fourier` | BM's parts minor | — (IN O-428 (3)) | `@mkbabb/fourier` 0.1.0 | G-4 | slides; glass's demo | planned | `waves/BM-13.md` |
 | BM-R1 | BM's parts minor's candidate | BM's parts minor | §11 | — | G-4 | every site | planned | `waves/BM-R1.md` |
@@ -105,6 +105,10 @@ Each is settled in BL's scope files. BM builds on it and never undoes it, and th
 | The toggle's fixed name, "Dark mode", with `aria-pressed` (GL-7) | 11.1.2 | BM-1 |
 | The pointer light leaves every surface; a state's rest light stays until the dock redesign shows selection by fill steps (S112, "the pointer light leaves cards too") | 11.1.2 | BM-2 is the fill step. BM writes no specular rule |
 | The phone-scroll cure, the detented scrim, GL-11, GL-13 | 11.1.2 | BM-10 |
+| A phone Select keeps its sheet form from open until its content unmounts, so it never re-anchors to its trigger on its first closed frame (atlas's film G-1, IN O-434; `b0748ff69`, `_shared/overlay/sheet-width.ts`) | 11.1.1 | BM-6 |
+| A Sheet's exit: on every side and every dismissal route the frame before the unmount shows 1 % or less of it (atlas's film G-2) | 11.1.2 | BM-6, BM-10 |
+| A coarse pointer's touch target stays at least 44 px and adds nothing to any ancestor's scrollable overflow (atlas's film G-3: a Slider or SegmentedTabs at the inline edge of an `overflow: auto` scroller leaves its `scrollWidth` at its `clientWidth`) | 11.1.2 | BM-4, BM-5 |
+| A detented sheet's region scrolls on the block axis only, and a focus ring at its inline edge stays whole (atlas's film G-4) | 11.1.2 | BM-10 |
 | `useSelectionGroup` scrolls only its own run (GL-18); a run whose seats fit is no scroller (O-430 item 7); a run lets a vertical swipe through (GL-16) | 11.1.2 | BM-4 |
 | Every spring easing's last step within 0.1 % (O-430 item 6; O-311) | 11.1.2 | BM-3 replaces the tokens after it; G-1 compares against the closed form, not today's list |
 | The dock's words and glyph change on the plate's clock (O-430 item 9, first half); reduced motion trades the dock's faces by a fade in place (item 8) | 11.1.2 | BM-1, BM-11 |
@@ -120,6 +124,7 @@ Each is settled in BL's scope files. BM builds on it and never undoes it, and th
 | The dock redesign (W-I.8): the width that glides on a transform (O-430 item 3), a tooltip prop on DockControl and DockTrigger and a hover-only option on the provider (item 11 (a), (c)), and the seat beside the dock (item 12) | the dock-redesign minor | BM-11 builds the fold on the redesign's dock. Item 12 in that minor is W-I.8's R-12: the theme seat as a round dock of its own beside the main one, anchored, which neither parts nor fuses (D§7.3, "no split ships on frosted chrome"). The goo that joins them is BM-12, in 12.0.0 on the dock that samples nothing (G-6). The four-site placement's note "(BM choice 24, C)" on item 12 is read as that later join |
 | W-I.8 R-6's 12.0.0 fission seat | 12.0.0 | Its `beside` slot is W-I.8's to build. Its neck is replaced by BM-12's goo, which the owner ratified (choice 24 C, O-426); R-6's clip-path crop criterion is superseded by G-6 and G-7 (§8) |
 | The floating Configurator's card radius (O-428 (3)) and the demo's icon set | 11.1.2 | BM touches neither |
+| Home Assistant's collapsible floors as an Accordion of `type="multiple"`, and its one dock in the shell (IN O-432) | answered, the dashboard's own; no glass row | BM changes neither Accordion nor the dock's mount. BM-5 keeps O-432's slider answer (the live value on `update:modelValue`, the service call on `valueCommit`, the fill's colour through `--slider-range-bg`) |
 
 ## 8 Rows placed in BM, and rows that are BL's, sent with this tranche
 
@@ -158,6 +163,7 @@ BL's rows, sent with this tranche:
 
 - **The owner's word** (OPEN §1): O-1, `--ease-cartoon-punch`'s overshoot on controls; O-2, the toast's vanish. Today's form ships until he answers.
 - **The sites' word** (OPEN §2): each question is in its site's message under `messages/`, with the default that ships until it answers. Only one holds a step of a wave: BM-3's settle player waits on keyframes.js. Reading the sources raised a few more, each with its default: whether atlas's RangeFacet and daraksha's scrubbers keep knobs (thumbless), whether color moves its theme into the seat beside the dock (it stays in its menus), when daraksha moves into glass's seat (at 12.0.0), whether Home Assistant's faces move beside the dock and its rails keep their hand (they stay; the growth is on), whether gaggle's phone menu opts out of the touch slide (on), and whether slides' toggle moves into the seat (it stays).
+- **daraksha's occasion-mode crash** (OPEN §2; D§10.8). daraksha found it on 2026-11-24 (`b13`, `3eb1f60`): its occasion dress set the dock's plate-border tokens to a `color-mix()`, glass mixes those again inside its own `color-mix()`, and WebKit's page process aborts resolving the nested mix. Its fix draws the ring as one relative colour, and its spec `e2e/veil-webkit.spec.ts` enters and leaves the mode at 390, 430 and 1440 with the page alive throughout. That answers the steps and the page. The spec reads the occasion's word from daraksha's private sources, so glass cannot run it; daraksha's message asks it to run the spec on each candidate that reaches it (the dock-redesign minor's, with BM-2's plate, and BM's parts minor's, with BM-5's slider), and until it passes there no glass part is called safe in the occasion mode. §1's one-level rule is the same fault from glass's side.
 - **Optional iPhone checks** (OPEN §4): each amends what it names. BM-8 ships in the minor only where its own reading holds.
 - **Not BM's** (OPEN §6): the blur register and the 12.0.0 veil are W-R.1's; the run's caps in 12.0.0 are BL's.
 

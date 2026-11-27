@@ -1,0 +1,52 @@
+# On load: the isolation page, background-color set to a color-mix() of two literal color-mix() values (Playwright WebKit 26.5)
+# process: com.apple.WebKit.WebContent.Development 625+, macOS 26.4.1 (25E253); captured 2026-11-24 13:27:04.6683 -0500
+# exception: EXC_CRASH SIGABRT (Abort trap: 6)
+ 0  libsystem_kernel.dylib   __pthread_kill
+ 1  libsystem_pthread.dylib  pthread_kill
+ 2  libsystem_c.dylib        abort
+ 3  libc++abi.dylib          __abort_message
+ 4  libc++abi.dylib          demangling_terminate_handler()
+ 5  libc++abi.dylib          std::__terminate(void (*)())
+ 6  libc++abi.dylib          std::terminate()
+ 7  WebCore                  WebCore::Style::Color::resolvedColor() const
+ 8  WebCore                  WebCore::Style::toStyleColor(WebCore::CSS::ColorMix const&, WebCore::Style::ColorResolutionState&)
+ 9  WebCore                  WebCore::Style::toStyleColor(WebCore::CSS::Color const&, WTF::Ref<WebCore::Document const>, WebCore::Style::ComputedStyle const&, WebCore::CSSToLengthConversionData const&, WebCore::Style::ForVisitedLink)
+10  WebCore                  WebCore::Style::CSSValueConversion<WebCore::Style::Color>::operator()(WebCore::Style::BuilderState&, WebCore::CSSValue const&, WebCore::Style::ForVisitedLink)
+11  WebCore                  WebCore::Style::BuilderFunctions::applyValueBackgroundColor(WebCore::Style::BuilderState&, WebCore::CSSValue&)
+12  WebCore                  WebCore::Style::Builder::applyProperty(WebCore::CSSPropertyID, WebCore::CSSValue&, WebCore::SelectorChecker::LinkMatchMask, WebCore::Style::PropertyCascade::Origin)
+13  WebCore                  void WebCore::Style::Builder::applyPropertiesImpl<(WebCore::Style::Builder::CustomPropertyCycleTracking)0>(int, int)
+14  WebCore                  WebCore::Style::Builder::applyNonHighPriorityProperties()
+15  WebCore                  WebCore::Style::Resolver::applyMatchedProperties(WebCore::Style::Resolver::State&, WebCore::Style::MatchResult const&, WebCore::Style::PropertyCascade::IncludedProperties&&)
+16  WebCore                  WebCore::Style::Resolver::unadjustedStyleForElement(WebCore::Element&, WebCore::Style::ResolutionContext const&, WebCore::RuleMatchingBehavior)
+17  WebCore                  WebCore::Style::TreeResolver::styleForStyleable(WebCore::Styleable const&, WebCore::Style::TreeResolver::ResolutionType, WebCore::Style::ResolutionContext const&, WebCore::Style::ComputedStyle const*)
+
+# On hover: the glass witness on the 11.1.1 base, a mouse move restyles a control surface whose hover background is a color-mix() of two color-mix() values
+# process: com.apple.WebKit.WebContent.Development 625+, macOS 26.4.1 (25E253); captured 2026-11-24 13:35:47.6245 -0500
+# exception: EXC_CRASH SIGABRT (Abort trap: 6)
+ 0  libsystem_kernel.dylib   __pthread_kill
+ 1  libsystem_pthread.dylib  pthread_kill
+ 2  libsystem_c.dylib        abort
+ 3  libc++abi.dylib          __abort_message
+ 4  libc++abi.dylib          demangling_terminate_handler()
+ 5  libc++abi.dylib          std::__terminate(void (*)())
+ 6  libc++abi.dylib          std::terminate()
+ 7  WebCore                  WebCore::Style::Color::resolvedColor() const
+ 8  WebCore                  WebCore::Style::toStyleColor(WebCore::CSS::ColorMix const&, WebCore::Style::ColorResolutionState&)
+ 9  WebCore                  WebCore::Style::toStyleColor(WebCore::CSS::Color const&, WTF::Ref<WebCore::Document const>, WebCore::Style::ComputedStyle const&, WebCore::CSSToLengthConversionData const&, WebCore::Style::ForVisitedLink)
+10  WebCore                  WebCore::Style::CSSValueConversion<WebCore::Style::Color>::operator()(WebCore::Style::BuilderState&, WebCore::CSSValue const&, WebCore::Style::ForVisitedLink)
+11  WebCore                  WebCore::Style::BuilderFunctions::applyValueBackgroundColor(WebCore::Style::BuilderState&, WebCore::CSSValue&)
+12  WebCore                  WebCore::Style::Builder::applyProperty(WebCore::CSSPropertyID, WebCore::CSSValue&, WebCore::SelectorChecker::LinkMatchMask, WebCore::Style::PropertyCascade::Origin)
+13  WebCore                  void WebCore::Style::Builder::applyPropertiesImpl<(WebCore::Style::Builder::CustomPropertyCycleTracking)1>(int, int)
+14  WebCore                  WebCore::Style::Builder::applyNonHighPriorityProperties()
+15  WebCore                  WebCore::Style::Resolver::applyMatchedProperties(WebCore::Style::Resolver::State&, WebCore::Style::MatchResult const&, WebCore::Style::PropertyCascade::IncludedProperties&&)
+16  WebCore                  WebCore::Style::Resolver::unadjustedStyleForElement(WebCore::Element&, WebCore::Style::ResolutionContext const&, WebCore::RuleMatchingBehavior)
+17  WebCore                  WebCore::Style::Resolver::styleForElement(WebCore::Element&, WebCore::Style::ResolutionContext const&, WebCore::RuleMatchingBehavior)
+18  WebCore                  WebCore::Document::styleForElementIgnoringPendingStylesheets(WebCore::Element&, WebCore::Style::ComputedStyle const*, std::__1::optional<WebCore::Style::PseudoElementIdentifier> const&)
+19  WebCore                  WebCore::Element::resolveComputedStyle(WebCore::Element::ResolveComputedStyleMode)
+20  WebCore                  WebCore::Node::computeEditabilityWithStyle(WebCore::Style::ComputedStyle const*, WebCore::Node::UserSelectAllTreatment, WebCore::Node::ShouldUpdateStyle) const
+21  WebCore                  WebCore::EventHandler::textRecognitionCandidateElement() const
+22  WebCore                  WebCore::EventHandler::updateMouseEventTargetNode(WTF::AtomString const&, WebCore::Node*, WebCore::PlatformMouseEvent const&, WebCore::EventHandler::FireMouseOverOut)
+23  WebCore                  WebCore::EventHandler::dispatchMouseEvent(WTF::AtomString const&, WebCore::Node*, int, WebCore::PlatformMouseEvent const&, WebCore::EventHandler::FireMouseOverOut)
+24  WebCore                  WebCore::EventHandler::handleMouseMoveEvent(WebCore::PlatformMouseEvent const&, WebCore::HitTestResult*, bool, WTF::OptionSet<WebCore::HitTestRequest::Type, (WTF::ConcurrencyTag)0>) (.cold.4)
+25  WebCore                  WebCore::EventHandler::handleMouseMoveEvent(WebCore::PlatformMouseEvent const&, WebCore::HitTestResult*, bool, WTF::OptionSet<WebCore::HitTestRequest::Type, (WTF::ConcurrencyTag)0>)
+

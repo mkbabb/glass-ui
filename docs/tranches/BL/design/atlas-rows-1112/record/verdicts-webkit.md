@@ -1,0 +1,22 @@
+webkit 26.5
+
+| Cell | 11.1.1 | Reading | Cure | Reading |
+|---|---|---|---|---|
+| print | RED | printed: dock, popover, tooltip, toast; card alpha 0.14; frost 8, shadow 8 | GREEN | printed: none of the chrome; card alpha 1; frost 0, shadow 0 |
+| print-dialog | RED | plate shown true, alpha 0.18; scrim alpha 0.5; frost 2, shadow 1 | GREEN | plate shown true, alpha 1; scrim alpha 0; frost 0, shadow 0 |
+| print-sheet | RED | plate shown true, alpha 0.18; scrim alpha 0.5; frost 2, shadow 1 | GREEN | plate shown true, alpha 1; scrim alpha 0; frost 0, shadow 0 |
+| toggle | RED | "Switch to dark mode" pressed false, then "Switch to light mode" pressed true | GREEN | "Dark mode" pressed false, then "Dark mode" pressed true |
+| popover | RED | closed ""; open "reka-popover-content-v-2" (mounted); closed again "reka-popover-content-v-2" (gone) | GREEN | closed none; open "reka-popover-content-v-2" (mounted); closed again none |
+| popover-child | RED | closed ""; open "reka-popover-content-v-2" (mounted); closed again "reka-popover-content-v-2" (gone) | GREEN | closed none; open "reka-popover-content-v-2" (mounted); closed again none |
+| dlg-scroll | RED | page moved 1200 px (modal={false}) and 0 px (modal); overscroll auto; page bar 15 px, content shift 0 px | GREEN | page moved 0 px (modal={false}) and 0 px (modal); overscroll contain; page bar 15 px, content shift 0 px |
+| dlg-pos | GREEN | scrollY 1000 before; 1000, 1000, 1000, 1000 (open, Escape, close button, scrim) | GREEN | scrollY 1000 before; 1000, 1000, 1000, 1000 (open, Escape, close button, scrim) |
+| stack-dialog | RED | top plate over lower true, top scrim over lower false; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
+| stack-sheet | RED | top plate over lower true, top scrim over lower false; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
+| stack-drawer | RED | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock visible→visible; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock visible→visible; focus in the lower, in the lower during the exit |
+| stack-expand | RED | top plate over lower true, top scrim over lower false; after Escape top closed, lower closed, lock hidden→visible; focus in the lower, in the lower during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
+| stack-sibling | RED | top plate over lower false, top scrim over lower false; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
+| button | GREEN | sm 36 px fine, 44 px coarse | GREEN | sm 36 px fine, 44 px coarse |
+| select | RED | keys: 0 focus moves without preventScroll; pointer: 1 focus move without preventScroll | GREEN | keys: 0 focus moves without preventScroll; pointer: 0 focus moves without preventScroll |
+| selgroup | RED | page 0→87, outer 0→20, run 0→444 | GREEN | page 0→0, outer 0→0, run 0→444 |
+| table | RED | header 16/14/14 px; sort 22.4/19.6/19.6 px (fine/narrow/coarse); ring offset 2, width 2 | GREEN | header 16/14/14 px; sort 36/36/44 px (fine/narrow/coarse); ring offset -2, width 2 |
+| sheet-full | RED | inset 0 px; sheet top 0 px, bottom 844 of 844; rule reads the inset: false | GREEN | inset 0 px; sheet top 0 px, bottom 844 of 844; rule reads the inset: true |

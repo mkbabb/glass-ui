@@ -1,3 +1,29 @@
+diff --git a/src/components/configurator/ConfiguratorLayer.vue b/src/components/configurator/ConfiguratorLayer.vue
+index c513026..086fa75 100644
+--- a/src/components/configurator/ConfiguratorLayer.vue
++++ b/src/components/configurator/ConfiguratorLayer.vue
+@@ -180,8 +180,10 @@ const showActions = computed(
+         <!--
+             CSS-only animated reveal: the outer grid morphs its single row
+             from `0fr` to `1fr` with `transition-[grid-template-rows]`; the
+-            inner wrapper sets `overflow: hidden` and `min-h-0` so the inner
+-            body collapses cleanly. No Vue watchers; no DOM-measurement
++            inner wrapper is `min-h-0` and clips its block axis only
++            (`overflow-y: clip`), so the body collapses cleanly, and a row
++            wider than the layer shows past it instead of being cut off at
++            the layer's edge. No Vue watchers; no DOM-measurement
+             race. Matches the reka-ui `data-state` vocabulary so existing
+             consumer CSS (chevron rotate, etc.) keeps working.
+         -->
+@@ -195,7 +197,7 @@ const showActions = computed(
+             class="configurator-layer-region grid motion-reduce:transition-none"
+             :style="{ gridTemplateRows: open ? '1fr' : '0fr' }"
+         >
+-            <div class="min-h-0 overflow-hidden">
++            <div class="min-h-0 overflow-y-clip">
+                 <!-- The inter-row divider reads the
+                      dark-adaptive --configurator-divider token (off the inline
+                      `border-border/30` alpha). The `border-t`/`pt-2` arbitrary
 diff --git a/src/components/dialog/styles.css b/src/components/dialog/styles.css
 index 25d12dd..61cd910 100644
 --- a/src/components/dialog/styles.css
@@ -32,7 +58,7 @@ index 46a62f8..ac21403 100644
  function restSize(
      root: HTMLElement,
 diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
-index 37e587a..fe30336 100644
+index 37e587a..6f44e6f 100644
 --- a/src/components/dock/styles/run.css
 +++ b/src/components/dock/styles/run.css
 @@ -368,16 +368,19 @@
@@ -85,6 +111,24 @@ index 37e587a..fe30336 100644
      }
  
      /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
+@@ -497,6 +496,17 @@
+            zero, and the whole 8px overflow the re-capture measured was here. */
+     }
+ 
++    /* A RUN THAT HIDES NOTHING TAKES NO GESTURE FROM THE PAGE. `pan-<axis>` gives the
++       run's own axis to the scroller and refuses the other, which holds a long run to
++       its axis; on a run whose seats all show (`data-run-fits`) there is nothing to pan,
++       and the refusal only kept a vertical swipe begun on an in-flow dock from
++       scrolling the page. There both pans pass, and a swipe the run has no range for
++       goes to whatever holds the dock. A long run keeps its one axis. The rule follows
++       the vertical run's, which it overrides on a vertical run whose seats fit. */
++    .glass-dock[data-run-fits] :where(.dock-layers) > .dock-run {
++        touch-action: pan-x pan-y;
++    }
++
+     /* ══ W4 · THE OPEN SEAT ══════════════════════════════════════════════════════
+        [2026-08-24 · BK #47 W4 SEAT]
+ 
 diff --git a/src/components/easing/EasingPicker.vue b/src/components/easing/EasingPicker.vue
 index e6e0127..1aab93e 100644
 --- a/src/components/easing/EasingPicker.vue
@@ -130,7 +174,7 @@ index dc0fff7..128739e 100644
      }
  
 diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
-index 24f3859..2639ca6 100644
+index 24f3859..9a079d2 100644
 --- a/src/components/sheet/styles.css
 +++ b/src/components/sheet/styles.css
 @@ -91,6 +91,9 @@
@@ -143,7 +187,27 @@ index 24f3859..2639ca6 100644
      }
  
      /* THE LIVE-BEHIND LAYER CONTRACT. `<Dialog :modal="false">` is reka's own non-modal arm
-@@ -122,6 +125,11 @@
+@@ -112,6 +115,19 @@
+         touch-action: none;
+     }
+ 
++    /* A scroller inside the header ends the header's `none` (Pointer Events read
++       `touch-action` only up to the nearest scroll container), so a gesture begun on
++       it, a tab strip whose tabs run past it, went to the browser: it cancelled a top
++       or bottom sheet's drag, and a vertical swipe scrolled the page behind a side
++       sheet. Every box in the header pans sideways only. A box that does not scroll
++       still reads the header's `none`; a strip that scrolls keeps its sideways pan and
++       passes no vertical swipe on. In a top or bottom sheet the vertical drag stays
++       the sheet's; in a side sheet the strip's pan takes the drag's axis, and the
++       sheet drags from the grip or from the header beside the strip. */
++    :where([data-slot="sheet-content"][data-detents] [data-slot="dialog-header"] *) {
++        touch-action: pan-x;
++    }
++
+     :where([data-slot="sheet-content"][data-dragging]) {
+         cursor: grabbing;
+         user-select: none;
+@@ -122,6 +138,11 @@
       * graded sampler with the scrollport. */
      :where([data-slot="sheet-content"] > [data-slot="sheet-content-region"]) {
          display: grid;
@@ -155,7 +219,7 @@ index 24f3859..2639ca6 100644
          align-content: start;
          gap: var(--space-body);
      }
-@@ -535,8 +543,9 @@
+@@ -535,8 +556,9 @@
       * the engine still requests the close. Below the floor the box stops shrinking, so the
       * plate slides by the difference instead: what shows of it is always the rung's share of
       * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
@@ -167,38 +231,164 @@ index 24f3859..2639ca6 100644
       *
       * On the way in the box takes the rung it opens to on its first frame
       * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
+diff --git a/src/components/tabs/SegmentedTabs.vue b/src/components/tabs/SegmentedTabs.vue
+index 5dd66c2..45be116 100644
+--- a/src/components/tabs/SegmentedTabs.vue
++++ b/src/components/tabs/SegmentedTabs.vue
+@@ -29,6 +29,7 @@ import {
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+ import { useTabDragMorph } from "./composables/useTabDragMorph";
+ import { useTabResponsive } from "./composables/useTabResponsive";
++import { useStripOverflow } from "./composables/useStripOverflow";
+ import type { SegmentedTabOption, SegmentedTabsProps } from "./types";
+ // Motion weight is the sole drag-enrichment axis.
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+@@ -54,6 +55,8 @@ const containerRef = ref<HTMLElement | null>(null);
+ const barShape = useBarShape(containerRef);
+ const indicatorRef = ref<HTMLElement | null>(null);
+ const buttonRefs = ref<HTMLElement[]>([]);
++/* The strip scrolls only while its tabs run past it (segmented.css). */
++const overflow = useStripOverflow(containerRef, buttonRefs);
+ 
+ // ── Computed state ──
+ 
+@@ -195,6 +198,7 @@ function onMobileUpdate(value: unknown) {
+         "
+         :data-motion="motionAxis.dataMotion.value"
+         :data-shape="barShape"
++        :data-overflow="overflow"
+         :style="motionAxis.hostStyle.value"
+         :class="
+             cn(
+diff --git a/src/components/tabs/composables/useStripOverflow.ts b/src/components/tabs/composables/useStripOverflow.ts
+new file mode 100644
+index 0000000..ea4189f
+--- /dev/null
++++ b/src/components/tabs/composables/useStripOverflow.ts
+@@ -0,0 +1,78 @@
++import { onBeforeUnmount, shallowRef, watch, type Ref } from "vue";
++
++/* WHETHER THE STRIP'S TABS RUN PAST ITS BOX. Bind the result to `data-overflow`;
++ * segmented.css makes the strip a scroller only while it holds, because a scroll
++ * container ends the `touch-action` its ancestors set (Pointer Events read it only up
++ * to the nearest scroll container), and a strip with nothing to scroll must not lift
++ * a `touch-action: none` box's or a detented Sheet header's restriction.
++ *
++ * The reading is the tabs' inline extent against the strip's content box: the span of
++ * their layout boxes (`offset*`, as the dock reads its seats). A tab is never narrower
++ * than its label (`nowrap`, and no clip on the tab), so the tabs' span is the content's.
++ * Layout boxes ignore transforms, so a strip in a sheet or a dialog that scales in
++ * reads the same as at rest. Neither the span nor the room depends on whether
++ * the strip scrolls (the strip's minimum is 0 in both states, and an offset is read
++ * against the strip's unscrolled padding edge), so setting the attribute never changes
++ * the reading. A strip's `scrollWidth` would: a scroller counts its end padding and a
++ * box that does not scroll does not, so tabs that reach into the trim would read as
++ * fitting until the strip scrolled and as overflowing after.
++ *
++ * A ResizeObserver on the strip and on each tab keeps it live: the strip resizes with
++ * its container, and a tab resizes when its label or its font changes, which a strip
++ * already at its cap would not show. Its first delivery is the first reading, after
++ * layout and before paint. */
++export function useStripOverflow(
++    strip: Ref<HTMLElement | null>,
++    tabs: Ref<HTMLElement[]>,
++): Readonly<Ref<"" | undefined>> {
++    const overflow = shallowRef<"" | undefined>(undefined);
++    let observer: ResizeObserver | null = null;
++    let observedStrip: HTMLElement | null = null;
++    let observed: HTMLElement[] = [];
++
++    const measure = () => {
++        const el = strip.value;
++        if (!el) return;
++        let start = Infinity;
++        let end = -Infinity;
++        for (const tab of observed) {
++            if (!tab.isConnected) continue;
++            start = Math.min(start, tab.offsetLeft);
++            end = Math.max(end, tab.offsetLeft + tab.offsetWidth);
++        }
++        const style = getComputedStyle(el);
++        const room = el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
++        // Each layout length is whole pixels, rounded, so a span within 1 px of the room
++        // fits: the tabs then reach at most a pixel into the trim.
++        overflow.value = end - start > room + 1 ? "" : undefined;
++    };
++
++    watch(
++        [strip, () => [...tabs.value]],
++        ([el, list]) => {
++            // A re-render refills the tab refs with the same buttons; nothing to re-observe.
++            const same =
++                observer !== null &&
++                el === observedStrip &&
++                list.length === observed.length &&
++                list.every((t, i) => t === observed[i]);
++            if (same) return;
++            observer?.disconnect();
++            observer = null;
++            observedStrip = el;
++            observed = list;
++            if (!el || typeof ResizeObserver === "undefined") return;
++            observer = new ResizeObserver(measure);
++            observer.observe(el);
++            for (const tab of list) observer.observe(tab);
++        },
++        { flush: "post", immediate: true },
++    );
++
++    onBeforeUnmount(() => {
++        observer?.disconnect();
++        observer = null;
++    });
++
++    return overflow;
++}
 diff --git a/src/components/tabs/styles/segmented.css b/src/components/tabs/styles/segmented.css
-index 6736361..a8e3ec3 100644
+index 6736361..a113839 100644
 --- a/src/components/tabs/styles/segmented.css
 +++ b/src/components/tabs/styles/segmented.css
-@@ -61,6 +61,23 @@
+@@ -61,6 +61,18 @@
          display: inline-grid;
          grid-auto-flow: column;
          grid-auto-columns: 1fr;
 +        /* THE STRIP IS BOUNDED BY ITS BOX. A column is never narrower than its tab's
 +           label (`white-space: nowrap` below), so a strip whose tabs need more room
 +           than its container ran past it and made the nearest scroller pan sideways.
-+           The strip is no wider than its container and pans its own tabs, as the dock
-+           run does: every tab keeps its whole label, a selected tab scrolls itself into
-+           view (`useSelectionGroup`), and the indicator measures through the scroll
-+           (`useSelectionIndicator`). A strip whose tabs fit has nothing to scroll, and a
-+           pan that reaches the strip's end stops there.
-+           A scroller clips at its padding box. The pill's trim holds a focused tab's
-+           ring, and the scroll padding keeps that trim beside a tab scrolled into view;
-+           the underline material has no trim, so its tab draws the ring inside itself
-+           (below). */
++           The strip is no wider than its container; past it, it pans its own tabs
++           (`[data-overflow]`, below). A scroller's automatic minimum is 0, so as a
++           flex item it does not shrink: in a row its siblings give way, and in a
++           column it keeps its height. A grid gives `flex-shrink` no say, so a grid's
++           `auto` track can still narrow it, and it then pans its tabs. Its minimum is
++           0 in every state, so whether it scrolls never changes its size. */
 +        max-inline-size: 100%;
++        min-inline-size: 0;
++        flex-shrink: 0;
+         padding: var(--bouncy-track-trim);
+         border-radius: var(--bouncy-track-radius);
+         /* The warm-glass quiet surface + the rim + the iOS-27
+@@ -71,6 +83,30 @@
+            The underline material does NOT compose the track (paper, no surface). */
+     }
+ 
++    /* A STRIP WHOSE TABS RUN PAST IT PANS THEM, as the dock run does, and only then
++       (`data-overflow`, `useStripOverflow`). Every tab keeps its whole label, a selected
++       tab scrolls itself into view (`useSelectionGroup`), and the indicator measures
++       through the scroll (`useSelectionIndicator`). A strip whose tabs fit is no
++       scroller: a scroll container ends the `touch-action` its ancestors set, so a
++       strip that scrolled with nothing to scroll let a vertical swipe through a
++       `touch-action: none` box and cancelled a detented Sheet's drag from a tab.
++       A scroller clips at its padding box. The pill's trim holds a focused tab's ring,
++       and the scroll padding keeps that trim beside a tab scrolled into view; the
++       underline material has no trim, so its tab draws the ring inside itself
++       (below). */
++    .segmented-tabs[data-overflow] {
 +        overflow-x: auto;
 +        overscroll-behavior-x: contain;
 +        scroll-padding-inline: var(--bouncy-track-trim);
 +        scrollbar-width: none;
-         padding: var(--bouncy-track-trim);
-         border-radius: var(--bouncy-track-radius);
-         /* The warm-glass quiet surface + the rim + the iOS-27
-@@ -71,6 +88,12 @@
-            The underline material does NOT compose the track (paper, no surface). */
-     }
- 
++    }
++
 +    /* `scrollbar-width` is newer than the build targets (Chrome 120, Safari 16.4), where
 +       a classic scrollbar would sit inside the capsule and take its height. */
 +    .segmented-tabs::-webkit-scrollbar {
@@ -208,7 +398,7 @@ index 6736361..a8e3ec3 100644
      /* Past 20rem the horizontal strip is a bar (U/B7 G1-7, `useBarShape`): the one
         radius seam re-binds to `--radius-bar`, so the tabs, the indicator and the
         concentric track follow it. Under a coarse pointer the bar keeps round ends: the
-@@ -163,6 +186,12 @@
+@@ -163,6 +199,12 @@
      /* The JS-measured glide. The indicator is moved by inline `translate`/`width`
         writes; every channel it owns is animated here, in one list. */
      @media (prefers-reduced-motion: no-preference) {
@@ -221,7 +411,7 @@ index 6736361..a8e3ec3 100644
          .segmented-indicator--js {
              transition:
                  translate var(--tab-indicator-duration) var(--spring-dock),
-@@ -304,6 +333,14 @@
+@@ -304,6 +346,14 @@
          text-align: start;
      }
  
@@ -309,10 +499,10 @@ index d93767a..db0f931 100644
              var(--overlay-max-block),
              var(--reka-popper-available-height, var(--overlay-max-block))
 diff --git a/src/styles/typography/semantic.css b/src/styles/typography/semantic.css
-index d75e41a..d11b366 100644
+index d75e41a..6ea3331 100644
 --- a/src/styles/typography/semantic.css
 +++ b/src/styles/typography/semantic.css
-@@ -17,6 +17,49 @@
+@@ -17,6 +17,52 @@
          font-size: var(--type-body);
          line-height: var(--type-leading-body);
      }
@@ -330,8 +520,9 @@ index d75e41a..d11b366 100644
 +       (`anywhere`): the label is a flex item, and a flex item cannot shrink below a
 +       word that will not break. Their width comes from outside, so the label gives up
 +       only a word wider than the whole row, and the Select trigger's one-line value
-+       (`line-clamp-1`) ends in its ellipsis. The rest of the row inherits `anywhere`
-+       too: a shortcut opts out below, and a Badge keeps its one line (`nowrap`).
++       (`line-clamp-1`) ends in its ellipsis. The rest of the row would inherit
++       `anywhere` too, so the parts set in a row that are not its label opt out below,
++       and a Badge keeps its one line (`nowrap`).
 +
 +       Buttons, Chips, toggle items and badges keep every word whole. They size to
 +       their own label, and with `anywhere` a table column or a squeezed row could
@@ -353,12 +544,31 @@ index d75e41a..d11b366 100644
 +        overflow-wrap: anywhere;
 +    }
 +
-+    /* A row's shortcut is not its label. Under `anywhere` its min-content is one
-+       glyph, so a long label shrank it onto two lines ("⌘" over "⇧E"). It keeps its
-+       words whole, and its width with them. */
-+    :where(.menu__shortcut, .command__shortcut) {
++    /* A row's shortcut, and a Button or a Chip set in a row, are not its label. Under
++       `anywhere` their min-content is one glyph, so a long label shrank them a letter
++       or two a line ("⌘" over "⇧E"; a Chip on three lines and a Button on four in a
++       260 px menu). They keep their words whole. */
++    :where(.glass-menu-row, .disclosure-group-trigger, [data-slot="select-trigger"])
++        :where(.menu__shortcut, .command__shortcut, .button, .glass-chip) {
 +        overflow-wrap: normal;
 +    }
  }
  
  /* A family-neutral headline/kicker pair. Consumers choose the font family,
+diff --git a/tests/styles/overlay-plate-inline-bound.test.ts b/tests/styles/overlay-plate-inline-bound.test.ts
+index a895219..0ca730b 100644
+--- a/tests/styles/overlay-plate-inline-bound.test.ts
++++ b/tests/styles/overlay-plate-inline-bound.test.ts
+@@ -27,9 +27,10 @@ describe("overlay plate — one inline bound", () => {
+     });
+ 
+     it("reads it on every anchored arm and never measures room in vw", () => {
+-        // `none` is the sheet form, which spans the screen and is not anchored.
++        // `none` is the sheet form, which spans the screen and is not anchored. The
++        // overlay arm, the tooltip arm and the Select plate each read the bound.
+         const caps = (plate.match(/max-inline-size:\s*[^;]+;/g) ?? []).filter((c) => !c.endsWith("none;"));
+-        expect(caps.length).toBe(2);
++        expect(caps.length).toBe(3);
+         for (const cap of caps) expect(cap).toBe("max-inline-size: var(--overlay-inline-cap);");
+         expect(plate).not.toMatch(/100vw\s*-/);
+     });
