@@ -1,0 +1,828 @@
+
+Running 81 tests using 1 worker
+
+  ✓   1 [coarse-touch] › tests-visual/shell-hold.spec.ts:57:1 › BA.W-SHELL-HOLD — P1: the demo shell HOLDS the page (no echo self-nav) (13.4s)
+  ✘   2 [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) (1.4s)
+  ✘   3 [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) (1.2s)
+  ✘   4 [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) (1.2s)
+  ✘   5 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor (5.9s)
+  ✘   6 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:93:5 › SortableList public transaction contract › keyboard lift, travel, drop, cancel, and focus retention (1.0m)
+  ✘   7 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:123:5 › SortableList public transaction contract › pointer and touch commit through the same reorder transaction (1.0m)
+  ✘   8 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:139:5 › SortableList public transaction contract › cross-list drop retains insertion and names source and destination (1.0m)
+  ✘   9 [coarse-touch] › tests-visual/specular-coalesce.spec.ts:28:5 › specular-coalesce (π lane — the rAF-coalesced specular write, fail-CLOSED) › a 200-event pointer sweep collapses to ≤ frames+slack rect reads + a cached matchMedia (71ms)
+  ✘  10 [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) (1.0s)
+  ✓  11 [coarse-touch] › tests-visual/spring-ease.spec.ts:128:9 › spring-ease — light › (1) TAB GLIDE — the indicator translate fills its clock + co-times the squish (1.4s)
+  -  12 [coarse-touch] › tests-visual/spring-ease.spec.ts:167:9 › spring-ease — light › (3) PRESS — the scale answers toward --scale-press within ~100ms, coupled with --glass-btn-press-t
+  -  13 [coarse-touch] › tests-visual/spring-ease.spec.ts:206:9 › spring-ease — light › (4) ABSORB — a rapid double-tap re-seats the press value continuously (no restart jump)
+  ✓  14 [coarse-touch] › tests-visual/spring-ease.spec.ts:261:9 › spring-ease — light › (5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row) (1.3s)
+  -  15 [coarse-touch] › tests-visual/spring-ease.spec.ts:293:9 › spring-ease — light › (6) PRM — under reduce the press snaps (zero in-between transform frames), the fade kept
+  ✘  16 [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) (953ms)
+  ✓  17 [coarse-touch] › tests-visual/spring-ease.spec.ts:128:9 › spring-ease — dark › (1) TAB GLIDE — the indicator translate fills its clock + co-times the squish (1.5s)
+  -  18 [coarse-touch] › tests-visual/spring-ease.spec.ts:167:9 › spring-ease — dark › (3) PRESS — the scale answers toward --scale-press within ~100ms, coupled with --glass-btn-press-t
+  -  19 [coarse-touch] › tests-visual/spring-ease.spec.ts:206:9 › spring-ease — dark › (4) ABSORB — a rapid double-tap re-seats the press value continuously (no restart jump)
+  ✓  20 [coarse-touch] › tests-visual/spring-ease.spec.ts:261:9 › spring-ease — dark › (5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row) (1.3s)
+  -  21 [coarse-touch] › tests-visual/spring-ease.spec.ts:293:9 › spring-ease — dark › (6) PRM — under reduce the press snaps (zero in-between transform frames), the fade kept
+  ✘  22 [coarse-touch] › tests-visual/squircle-language.spec.ts:30:5 › squircle-language (π lane — cornerShape readback, fail-CLOSED) › the big-dock card shell reads a squircle (or the round fallback); a card stays round (1.2s)
+  ✘  23 [coarse-touch] › tests-visual/stage.spec.ts:45:1 › (a) a formerly-keyless route paints its declared background (the void killed) (1.1s)
+  ✘  24 [coarse-touch] › tests-visual/stage.spec.ts:67:1 › (e) the aurora substrate renders on a staged route (breathing has a field) (1.4s)
+  ✓  25 [coarse-touch] › tests-visual/stage.spec.ts:86:1 › whole-page gestalt captures — the staged demo in BOTH modes (17.0s)
+  ✓  26 [coarse-touch] › tests-visual/storybook-meta.spec.ts:59:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [light] (789ms)
+  ✘  27 [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] (998ms)
+  ✓  28 [coarse-touch] › tests-visual/storybook-meta.spec.ts:59:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [dark] (878ms)
+  ✘  29 [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] (999ms)
+  -  30 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:310:5 › substrate-cohesion: G-ACCENT (ONE accent family) › the blob MOOD bead chroma sits in the warm-register band the FourierField comet occupies
+  -  31 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:407:5 › substrate-cohesion: G-RECESSION (ONE recession contract) › a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance
+  -  32 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:476:5 › substrate-cohesion: G-SHADOW (ambient, not the cartoon stamp) › the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp
+PI aurora DEFAULT meanChannel=238.7 floor=8
+PI aurora setting-sun meanChannel=240.6 floor=8
+PI aurora dusk meanChannel=239.7 floor=8
+PI aurora sky meanChannel=238.4 floor=8
+PI aurora meadow meanChannel=209.1 floor=8
+PI aurora pastel meanChannel=242.1 floor=8
+PI aurora oil meanChannel=199.8 floor=8
+PI aurora vangogh meanChannel=104.5 floor=8
+PI aurora oil-pastel meanChannel=204.3 floor=8
+PI aurora crayon meanChannel=191.4 floor=8
+PI aurora metal meanChannel=203.2 floor=8
+  ✓  33 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:576:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (13.1s)
+PI blob paintable=[0.025,0.099]-[0.975,0.901] paintableShareOfInterior=1.000
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.192 floor=0.1 · paintedShare=0.192 ceil=0.7
+  ✓  34 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:756:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (3.5s)
+PI blob paintable=[0.025,0.099]-[0.975,0.901] paintableShareOfInterior=1.000
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.192 floor=0.1 · paintedShare=0.192 ceil=0.7
+  ✓  35 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:764:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (3.5s)
+  ✘  36 [coarse-touch] › tests-visual/suffuse.spec.ts:109:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S1 — a hero page's chassis title resolves to a display register (>> text-heading) (944ms)
+  ✘  37 [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) (1.0m)
+  ✘  38 [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) (1.0m)
+  ✘  39 [coarse-touch] › tests-visual/suffuse.spec.ts:196:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier (1.4s)
+  ✘  40 [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (light) (1.4s)
+  ✘  41 [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (dark) (1.4s)
+  ✘  42 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) (1.3s)
+  ✘  43 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) (1.3s)
+  ✘  44 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) (1.3s)
+  ✘  45 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) (1.3s)
+  ✘  46 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) (1.4s)
+  ✘  47 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) (1.3s)
+  ✘  48 [coarse-touch] › tests-visual/suffuse2.spec.ts:230:5 › BA.W-SUFFUSE2 — the per-category color identity (π) › S4 — the content chrome <h1> font-size resolves strictly ABOVE the section <h2> (1.2s)
+  ✘  49 [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) (1.0m)
+  ✘  50 [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) (1.0m)
+  ✓  51 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ mobile light (1.1s)
+  ✓  52 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ mobile light (1.0s)
+  ✓  53 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ mobile light (1.0s)
+  ✓  54 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ mobile light (976ms)
+  ✓  55 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ mobile light (1.0s)
+  ✘  56 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light (1.0s)
+  ✓  57 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ mobile dark (1.1s)
+  ✓  58 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ mobile dark (977ms)
+  ✓  59 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ mobile dark (994ms)
+  ✓  60 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ mobile dark (1.0s)
+  ✓  61 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ mobile dark (993ms)
+  ✘  62 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark (1.0s)
+  ✓  63 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ desktop light (1.1s)
+  ✓  64 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ desktop light (1.0s)
+  ✓  65 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ desktop light (1.0s)
+  ✓  66 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ desktop light (1.0s)
+  ✓  67 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ desktop light (1.1s)
+  ✘  68 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light (1.1s)
+  ✓  69 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ desktop dark (1.2s)
+  ✓  70 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ desktop dark (1.1s)
+  ✓  71 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ desktop dark (1.0s)
+  ✓  72 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ desktop dark (1.0s)
+  ✓  73 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ desktop dark (1.0s)
+  ✘  74 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark (1.0s)
+  ✓  75 [coarse-touch] › tests-visual/surface-axis.spec.ts:356:5 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › DELTA capture — the surface-axis rungs over a busy backdrop (1.9s)
+  ✓  76 [coarse-touch] › tests-visual/tabs-std.spec.ts:49:1 › W1 — underline paints NO plate (no filled pill behind the active tab) (1.2s)
+  ✘  77 [coarse-touch] › tests-visual/tabs-std.spec.ts:91:1 › W2 — vertical indicator tracks the block axis (y/height change dominates) (1.2s)
+  ✓  78 [coarse-touch] › tests-visual/tabs-std.spec.ts:121:1 › W3 — the indicator settles inside the calibrated clock with no dead tail (2.4s)
+  ✘  79 [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [pill] (1.7s)
+  ✓  80 [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [underline] (1.8s)
+  ✓  81 [coarse-touch] › tests-visual/tabs-std.spec.ts:245:1 › capture — the standardized tab materials over their substrates (2.9s)
+
+
+  1) [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) 
+
+    Error: a facet chip is present on the faceted route
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      113 |     });
+      114 |
+    > 115 |     expect(clicked.found, "a facet chip is present on the faceted route").toBe(true);
+          |                                                                           ^
+      116 |
+      117 |     // Give the router.push a tick to land.
+      118 |     await page.waitForTimeout(700);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/shell-hold.spec.ts:115:75
+
+    Error Context: tests-visual/test-results/shell-hold-BA-W-SHELL-HOLD-eba69-navigate-advance-path-live--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) 
+
+    Error: spectrum corner-shape should resolve superellipse(2) on a supporting engine; got "round"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      146 |                     SUPERELLIPSE_RE.test(spec.cornerShape),
+      147 |                     `spectrum corner-shape should resolve superellipse(2) on a supporting engine; got "${spec.cornerShape}"`,
+    > 148 |                 ).toBe(true);
+          |                   ^
+      149 |             }
+      150 |             // UNCONDITIONAL — the round border-radius is the cross-engine fallback
+      151 |             // truth even on a supporting engine. It must be a GENEROUS fraction of
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/slider-spectrum-fallback.spec.ts:148:19
+
+    Error Context: tests-visual/test-results/slider-spectrum-fallback-s-528d0-ds-squircle-adjacent-light--coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) 
+
+    Error: spectrum corner-shape should resolve superellipse(2) on a supporting engine; got "round"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      146 |                     SUPERELLIPSE_RE.test(spec.cornerShape),
+      147 |                     `spectrum corner-shape should resolve superellipse(2) on a supporting engine; got "${spec.cornerShape}"`,
+    > 148 |                 ).toBe(true);
+          |                   ^
+      149 |             }
+      150 |             // UNCONDITIONAL — the round border-radius is the cross-engine fallback
+      151 |             // truth even on a supporting engine. It must be a GENEROUS fraction of
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/slider-spectrum-fallback.spec.ts:148:19
+
+    Error Context: tests-visual/test-results/slider-spectrum-fallback-s-95af0-ads-squircle-adjacent-dark--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: 'Drag Verify handle selector' })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Drag Verify handle selector' })
+
+
+      73 |         expect(await handles.count()).toBeGreaterThan(0);
+      74 |         await expect(page.getByRole("button", { name: "Drag Verify handle selector" }))
+    > 75 |             .toBeDisabled();
+         |              ^
+      76 |
+      77 |         if (testInfo.project.name === "coarse-touch") {
+      78 |             const boxes = await handles.evaluateAll((nodes) => nodes.map((node) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:75:14
+
+    Error Context: tests-visual/test-results/sortable-list.contract-Sor-88dc1-ion-and-coarse-target-floor-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:93:5 › SortableList public transaction contract › keyboard lift, travel, drop, cancel, and focus retention 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.focus: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Reorder Draft spec' })
+
+
+       95 |         const live = page.locator('ul[aria-label="Tasks"] + span[aria-live]');
+       96 |         const alpha = page.getByRole("button", { name: "Reorder Draft spec" });
+    >  97 |         await alpha.focus();
+          |                     ^
+       98 |         await alpha.press("Space");
+       99 |         await expect(live).toContainText(
+      100 |             "Lifted Draft spec, position 1 of 5",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:97:21
+
+    Error Context: tests-visual/test-results/sortable-list.contract-Sor-1c454--cancel-and-focus-retention-coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:123:5 › SortableList public transaction contract › pointer and touch commit through the same reorder transaction 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.boundingBox: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Reorder Draft spec' })
+
+
+      14 |     pointerType = "touch",
+      15 | ): Promise<void> {
+    > 16 |     const from = await handle.boundingBox();
+         |                               ^
+      17 |     const to = await target.boundingBox();
+      18 |     expect(from).not.toBeNull();
+      19 |     expect(to).not.toBeNull();
+        at dispatchTouchDrag (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:16:31)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:130:19
+
+    Error Context: tests-visual/test-results/sortable-list.contract-Sor-483e7-he-same-reorder-transaction-coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:139:5 › SortableList public transaction contract › cross-list drop retains insertion and names source and destination 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.boundingBox: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('ul[aria-label="Todo"]').getByRole('button', { name: 'Reorder Audit token cascade' })
+
+
+      14 |     pointerType = "touch",
+      15 | ): Promise<void> {
+    > 16 |     const from = await handle.boundingBox();
+         |                               ^
+      17 |     const to = await target.boundingBox();
+      18 |     expect(from).not.toBeNull();
+      19 |     expect(to).not.toBeNull();
+        at dispatchTouchDrag (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:16:31)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/sortable-list.contract.spec.ts:144:15
+
+    Error Context: tests-visual/test-results/sortable-list.contract-Sor-48160-ames-source-and-destination-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/specular-coalesce.spec.ts:28:5 › specular-coalesce (π lane — the rAF-coalesced specular write, fail-CLOSED) › a 200-event pointer sweep collapses to ≤ frames+slack rect reads + a cached matchMedia 
+
+    Error: pi-manifest: scene substrates/glass-material not found in the re-sourced manifest — the demo story was renamed/removed; update the π target, do NOT hard-code a dead route.
+
+       at pi-manifest.ts:55
+
+      53 |     );
+      54 |     if (!scene) {
+    > 55 |         throw new Error(
+         |               ^
+      56 |             `pi-manifest: scene ${category}/${story} not found in the re-sourced manifest — the demo story was renamed/removed; update the π target, do NOT hard-code a dead route.`,
+      57 |         );
+      58 |     }
+        at resolveScene (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/pi-manifest.ts:55:15)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/specular-coalesce.spec.ts:55:23
+
+    Error Context: tests-visual/test-results/specular-coalesce-specular-0c90d-t-reads-a-cached-matchMedia-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+
+    Error: --spring-snappy is emitted
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^linear\(/
+    Received string:  ""
+
+      114 |             const snappy = await readSpringToken(page, "snappy");
+      115 |             const press = await readSpringToken(page, "press");
+    > 116 |             expect(snappy, "--spring-snappy is emitted").toMatch(/^linear\(/);
+          |                                                          ^
+      117 |             expect(press, "--spring-press (the minted iOS register) is emitted").toMatch(/^linear\(/);
+      118 |
+      119 |             // snappy fills its clock: the eased curve must NOT collapse to a dead-flat
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/spring-ease.spec.ts:116:58
+
+    Error Context: tests-visual/test-results/spring-ease-spring-ease-—--ceaef-lls-its-clock-press-minted--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+
+    Error: --spring-snappy is emitted
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^linear\(/
+    Received string:  ""
+
+      114 |             const snappy = await readSpringToken(page, "snappy");
+      115 |             const press = await readSpringToken(page, "press");
+    > 116 |             expect(snappy, "--spring-snappy is emitted").toMatch(/^linear\(/);
+          |                                                          ^
+      117 |             expect(press, "--spring-press (the minted iOS register) is emitted").toMatch(/^linear\(/);
+      118 |
+      119 |             // snappy fills its clock: the eased curve must NOT collapse to a dead-flat
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/spring-ease.spec.ts:116:58
+
+    Error Context: tests-visual/test-results/spring-ease-spring-ease-—--4b5a6-lls-its-clock-press-minted--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/squircle-language.spec.ts:30:5 › squircle-language (π lane — cornerShape readback, fail-CLOSED) › the big-dock card shell reads a squircle (or the round fallback); a card stays round 
+
+    Error: no .glass-dock on the dock route
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      72 |         // The dock route always mounts a .glass-dock; if no card-shape dock is
+      73 |         // present the readback is on the variant-dock root (still meaningful).
+    > 74 |         expect(probe.dockFound, "no .glass-dock on the dock route").toBe(true);
+         |                                                                     ^
+      75 |
+      76 |         if (probe.supports && probe.dockShapeCard) {
+      77 |             // SUPPORTING engine + a real big-dock card shell → the squircle paints.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/squircle-language.spec.ts:74:69
+
+    Error Context: tests-visual/test-results/squircle-language-squircle-8ad72-fallback-a-card-stays-round-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/stage.spec.ts:45:1 › (a) a formerly-keyless route paints its declared background (the void killed) 
+
+    Error: /feedback/alert should render a declared background substrate
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      57 |             return document.querySelector(".story-hero-bg") !== null;
+      58 |         });
+    > 59 |         expect(hasField, `${route} should render a declared background substrate`).toBe(
+         |                                                                                    ^
+      60 |             true,
+      61 |         );
+      62 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/stage.spec.ts:59:84
+
+    Error Context: tests-visual/test-results/stage--a-a-formerly-keyles-ef1f8-background-the-void-killed--coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/stage.spec.ts:67:1 › (e) the aurora substrate renders on a staged route (breathing has a field) 
+
+    Error: the navigation aurora substrate must render
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      79 |         return { hasBg: bg !== null, hasCanvas: canvas !== null };
+      80 |     });
+    > 81 |     expect(auroraRenders.hasBg, "the navigation aurora substrate must render").toBe(true);
+         |                                                                                ^
+      82 |     await shot(page, "e-aurora-breathing-field");
+      83 | });
+      84 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/stage.spec.ts:81:80
+
+    Error Context: tests-visual/test-results/stage--e-the-aurora-substr-77e81-oute-breathing-has-a-field--coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":641,"scrollerBottom":1000}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |                 clearance.ok,
+      137 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 138 |             ).toBe(true);
+          |               ^
+      139 |         });
+      140 |     }
+      141 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/storybook-meta.spec.ts:138:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":641,"scrollerBottom":1000}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |                 clearance.ok,
+      137 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 138 |             ).toBe(true);
+          |               ^
+      139 |         });
+      140 |     }
+      141 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/storybook-meta.spec.ts:138:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/suffuse.spec.ts:109:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S1 — a hero page's chassis title resolves to a display register (>> text-heading) 
+
+    Error: the chassis hero <h1> renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      132 |
+      133 |         paired.heroTitle = heroTitle;
+    > 134 |         expect(heroTitle, "the chassis hero <h1> renders").not.toBeNull();
+          |                                                                ^
+      135 |         expect(
+      136 |             heroTitle!.fs,
+      137 |             `the hero title "${heroTitle!.t}" resolves ${heroTitle!.fs}px — must be a DISPLAY register (>> ${TEXT_HEADING_PX}px text-heading), the audacious-type uplift (D2-1)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:134:64
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-18cff-play-register-text-heading--coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Target page, context or browser has been closed
+
+      187 |             };
+      188 |
+    > 189 |             await page.screenshot({
+          |                        ^
+      190 |                 path: `${VISUAL_DIR}/W-SUFFUSE-motion-purple-${mode}.png`,
+      191 |             });
+      192 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-05ccf--accent-not-warm-red-light--coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Target page, context or browser has been closed
+
+      187 |             };
+      188 |
+    > 189 |             await page.screenshot({
+          |                        ^
+      190 |                 path: `${VISUAL_DIR}/W-SUFFUSE-motion-purple-${mode}.png`,
+      191 |             });
+      192 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-4b7f3-n-accent-not-warm-red-dark--coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/suffuse.spec.ts:196:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier 
+
+    Error: the settings page renders the .story-bg-grid blueprint underlay (D4-1)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      225 |             grid.gridPresent,
+      226 |             "the settings page renders the .story-bg-grid blueprint underlay (D4-1)",
+    > 227 |         ).toBeTruthy();
+          |           ^
+      228 |         expect(
+      229 |             grid.gridHasImage,
+      230 |             "the grid underlay paints its ruled linear-gradients (the layer is VISIBLE, not display:none) (D4-3)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:227:11
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-006a1-e-card-drops-to-a-thin-tier-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (light) 
+
+    Error: the motion masthead display title renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      312 |             (paired3 as Record<string, unknown>)[`motionTitle_${mode}`] = masthead;
+      313 |
+    > 314 |             expect(masthead, "the motion masthead display title renders").not.toBeNull();
+          |                                                                               ^
+      315 |             expect(
+      316 |                 masthead!.fs,
+      317 |                 `the masthead title "${masthead!.t}" resolves ${masthead!.fs}px — must be a DISPLAY register (>> ${TEXT_HEADING_PX}px text-heading)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:314:79
+
+    Error Context: tests-visual/test-results/suffuse-BB-W-SUFFUSE3-—-th-67679-motion-accent-violet-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/suffuse-BB-W-SUFFUSE3-—-th-67679-motion-accent-violet-light--coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (dark) 
+
+    Error: the motion masthead display title renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      312 |             (paired3 as Record<string, unknown>)[`motionTitle_${mode}`] = masthead;
+      313 |
+    > 314 |             expect(masthead, "the motion masthead display title renders").not.toBeNull();
+          |                                                                               ^
+      315 |             expect(
+      316 |                 masthead!.fs,
+      317 |                 `the masthead title "${masthead!.t}" resolves ${masthead!.fs}px — must be a DISPLAY register (>> ${TEXT_HEADING_PX}px text-heading)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse.spec.ts:314:79
+
+    Error Context: tests-visual/test-results/suffuse-BB-W-SUFFUSE3-—-th-f40c0--motion-accent-violet-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/suffuse-BB-W-SUFFUSE3-—-th-f40c0--motion-accent-violet-dark--coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) 
+
+    Error: /forms/checks: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-6477a--section-color-3-hue-light--coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) 
+
+    Error: /forms/checks: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-28c4d---section-color-3-hue-dark--coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) 
+
+    Error: /containers/accordion: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-c30aa--section-color-2-hue-light--coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) 
+
+    Error: /containers/accordion: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-5208e---section-color-2-hue-dark--coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) 
+
+    Error: /data/table: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-3f33a--section-color-9-hue-light--coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) 
+
+    Error: /data/table: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-4f676---section-color-9-hue-dark--coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/suffuse2.spec.ts:230:5 › BA.W-SUFFUSE2 — the per-category color identity (π) › S4 — the content chrome <h1> font-size resolves strictly ABOVE the section <h2> 
+
+    Error: a section <h2> renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      246 |         paired.rungGrade = sizes;
+      247 |         expect(sizes.h1, "the content chrome <h1> renders").not.toBeNull();
+    > 248 |         expect(sizes.h2, "a section <h2> renders").not.toBeNull();
+          |                                                        ^
+      249 |         expect(
+      250 |             sizes.h1!,
+      251 |             `the content <h1> (${sizes.h1}px) must dominate the section <h2> (${sizes.h2}px) — the HS-2 rung grade`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/suffuse2.spec.ts:248:56
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-4455b-ictly-ABOVE-the-section-h2--coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-54ae2-t-violet-no-warm-red-light--coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-d19f3-nt-violet-no-warm-red-dark--coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.20397 0.148263 0.0829736 / 0.1)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--29b92-r-no-gray-fork-mobile-light-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--e03cd-er-no-gray-fork-mobile-dark-coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.20397 0.148263 0.0829736 / 0.1)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--3d5c5--no-gray-fork-desktop-light-coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--76932-r-no-gray-fork-desktop-dark-coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/tabs-std.spec.ts:91:1 › W2 — vertical indicator tracks the block axis (y/height change dominates) 
+
+    Error: no vertical pill strip
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      110 |         return { ok: true, dy, dx, indH: r1.height, stripH };
+      111 |     });
+    > 112 |     expect(probe.ok, probe.reason).toBeTruthy();
+          |                                    ^
+      113 |     // The block-axis move dominates the inline-axis move (it tracks the column).
+      114 |     expect(probe.dy!).toBeGreaterThan(probe.dx!);
+      115 |     expect(probe.dy!).toBeGreaterThan(4);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/tabs-std.spec.ts:112:36
+
+    Error Context: tests-visual/test-results/tabs-std-W2-—-vertical-ind-985cf--y-height-change-dominates--coarse-touch/error-context.md
+
+  36) [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [pill] 
+
+    Error: no active tab
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      235 |             };
+      236 |         }, variant);
+    > 237 |         expect(probe.ok, probe.reason).toBeTruthy();
+          |                                        ^
+      238 |         // The indicator center equals the label center on the inline axis within 1.5px.
+      239 |         expect(probe.dx!).toBeLessThanOrEqual(1.5);
+      240 |         expect(probe.dy!).toBeLessThanOrEqual(1.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/tabs-std.spec.ts:237:40
+
+    Error Context: tests-visual/test-results/tabs-std-W5-—-indicator-center-label-center-both-axes-pill--coarse-touch/error-context.md
+
+  36 failed
+    [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) 
+    [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) 
+    [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) 
+    [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor 
+    [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:93:5 › SortableList public transaction contract › keyboard lift, travel, drop, cancel, and focus retention 
+    [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:123:5 › SortableList public transaction contract › pointer and touch commit through the same reorder transaction 
+    [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:139:5 › SortableList public transaction contract › cross-list drop retains insertion and names source and destination 
+    [coarse-touch] › tests-visual/specular-coalesce.spec.ts:28:5 › specular-coalesce (π lane — the rAF-coalesced specular write, fail-CLOSED) › a 200-event pointer sweep collapses to ≤ frames+slack rect reads + a cached matchMedia 
+    [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+    [coarse-touch] › tests-visual/spring-ease.spec.ts:107:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+    [coarse-touch] › tests-visual/squircle-language.spec.ts:30:5 › squircle-language (π lane — cornerShape readback, fail-CLOSED) › the big-dock card shell reads a squircle (or the round fallback); a card stays round 
+    [coarse-touch] › tests-visual/stage.spec.ts:45:1 › (a) a formerly-keyless route paints its declared background (the void killed) 
+    [coarse-touch] › tests-visual/stage.spec.ts:67:1 › (e) the aurora substrate renders on a staged route (breathing has a field) 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:94:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:109:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S1 — a hero page's chassis title resolves to a display register (>> text-heading) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:144:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:196:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (light) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:288:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:230:5 › BA.W-SUFFUSE2 — the per-category color identity (π) › S4 — the content chrome <h1> font-size resolves strictly ABOVE the section <h2> 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark 
+    [coarse-touch] › tests-visual/tabs-std.spec.ts:91:1 › W2 — vertical indicator tracks the block axis (y/height change dominates) 
+    [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [pill] 
+  9 skipped
+  36 passed (9.5m)

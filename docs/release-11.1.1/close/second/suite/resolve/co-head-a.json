@@ -1,0 +1,1646 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=coarse-touch",
+      "--workers=1",
+      "tests-visual/blob-mood-live.spec.ts",
+      "tests-visual/easing-primitive.spec.ts",
+      "tests-visual/goo-redress.spec.ts",
+      "tests-visual/viz-fourier-ribbon.spec.ts",
+      "-g",
+      "P1\\ —\\ the\\ bezier\\ stroke\\ plots\\ the\\ real\\ CubicBezier\\ twin|P11\\ —\\ the\\ draw\\-on\\ sweeps\\ over\\ frames,\\ and\\ lands\\ on\\ one\\ under\\ reduce|P2\\ —\\ the\\ steps\\ stroke\\ is\\ constructed,\\ not\\ sampled|P4\\ —\\ the\\ readout\\ is\\ the\\ re\\-parseable\\ literal\\ in\\ both\\ modes|P5\\ —\\ the\\ frame\\ is\\ constant\\ and\\ the\\ plot\\ is\\ square\\ \\(letterbox\\ zero\\)|a\\ manual\\ setMood\\ drives\\ a\\ VISIBLE\\ mood\\-derived\\ render\\ delta\\ that\\ PERSISTS\\ \\(D7\\ —\\ the\\ auto\\-mood\\ clobber\\ is\\ fixed\\)|bridge\\ holds\\ \\+\\ hover\\ wakes\\ \\(dark\\)|fourier\\ ribbon\\ paints\\ as\\ a\\ chromatic\\ stroke\\ —\\ dark",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/close/second/suite/resolve/co-head-a.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "blob-mood-live.spec.ts",
+      "file": "blob-mood-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)",
+          "file": "blob-mood-live.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 180020,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts",
+                            "column": 64,
+                            "line": 104
+                          },
+                          "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Shy' }).first()\u001b[22m\n\n\n  102 | async function clickMood(page: Page, mood: string): Promise<void> {\n  103 |     const presetLabel = MOOD_PRESET[mood] ?? mood;\n> 104 |     await page.getByRole(\"tab\", { name: presetLabel }).first().click();\n      |                                                                ^\n  105 | }\n  106 |\n  107 | test.describe(\"blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)\", () => {\n    at clickMood (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:104:64)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:121:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:27:12.026Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/blob-mood-live-blob-mood-l-bc0a4-auto-mood-clobber-is-fixed--coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-ea49bd3398165e7e57dd",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            },
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 180017,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts",
+                            "column": 64,
+                            "line": 104
+                          },
+                          "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Shy' }).first()\u001b[22m\n\n\n  102 | async function clickMood(page: Page, mood: string): Promise<void> {\n  103 |     const presetLabel = MOOD_PRESET[mood] ?? mood;\n> 104 |     await page.getByRole(\"tab\", { name: presetLabel }).first().click();\n      |                                                                ^\n  105 | }\n  106 |\n  107 | test.describe(\"blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)\", () => {\n    at clickMood (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:104:64)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:121:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:33:38.596Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/blob-mood-live-blob-mood-l-bc0a4-auto-mood-clobber-is-fixed--coarse-touch-repeat1/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-ff89d79b63f765531ea4",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            },
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 180021,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts",
+                            "column": 64,
+                            "line": 104
+                          },
+                          "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Shy' }).first()\u001b[22m\n\n\n  102 | async function clickMood(page: Page, mood: string): Promise<void> {\n  103 |     const presetLabel = MOOD_PRESET[mood] ?? mood;\n> 104 |     await page.getByRole(\"tab\", { name: presetLabel }).first().click();\n      |                                                                ^\n  105 | }\n  106 |\n  107 | test.describe(\"blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)\", () => {\n    at clickMood (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:104:64)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/blob-mood-live.spec.ts:121:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:40:04.512Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/blob-mood-live-blob-mood-l-bc0a4-auto-mood-clobber-is-fixed--coarse-touch-repeat2/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-2cbdd803a94ccc1d7ff4",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "easing-primitive.spec.ts",
+      "file": "easing-primitive.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BK #85 W-EASING — the published curve family (π)",
+          "file": "easing-primitive.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "P1 — the bezier stroke plots the real CubicBezier twin",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5873,
+                      "error": {
+                        "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n",
+                        "stack": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 66,
+                          "line": 74
+                        },
+                        "snippet": "  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 66,
+                            "line": 74
+                          },
+                          "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n\n  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:30:12.519Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-7596a-s-the-real-CubicBezier-twin-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 66,
+                        "line": 74
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-7078456e0cea4ffbac66",
+              "file": "easing-primitive.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "P2 — the steps stroke is constructed, not sampled",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60014,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 72,
+                            "line": 105
+                          },
+                          "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Steps', exact: true })\u001b[22m\n\n\n  103 |         await page.setViewportSize({ width: 1280, height: 900 });\n  104 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 105 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n      |                                                                        ^\n  106 |\n  107 |         const picker = page.locator(`${PICKER}[data-mode=\"steps\"]`);\n  108 |         await expect(picker, \"the editor switches to steps mode\").toBeVisible();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:105:72"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:30:18.842Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-97b42--is-constructed-not-sampled-coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-52d5ed575aa508352184",
+              "file": "easing-primitive.spec.ts",
+              "line": 102,
+              "column": 5
+            },
+            {
+              "title": "P4 — the readout is the re-parseable literal in both modes",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60015,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 14,
+                            "line": 179
+                          },
+                          "message": "Error: locator.textContent: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"] code').first()\u001b[22m\n\n\n  177 |             .locator(`${PICKER}[data-mode=\"bezier\"] code`)\n  178 |             .first()\n> 179 |             .textContent();\n      |              ^\n  180 |         expect(bezierLiteral?.trim()).toMatch(/^cubic-bezier\\(/);\n  181 |\n  182 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:179:14"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:31:19.331Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-a3324-eable-literal-in-both-modes-coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-b965ebd99bed9b79e1e1",
+              "file": "easing-primitive.spec.ts",
+              "line": 172,
+              "column": 5
+            },
+            {
+              "title": "P5 — the frame is constant and the plot is square (letterbox zero)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60014,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 34,
+                            "line": 197
+                          },
+                          "message": "Error: locator.getAttribute: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-curve\"] svg').first()\u001b[22m\n\n\n  195 |\n  196 |         const svg = page.locator(`${CURVE} svg`).first();\n> 197 |         const before = await svg.getAttribute(\"viewBox\");\n      |                                  ^\n  198 |         expect(before, \"the shipped constant frame\").toBe(\"-0.1 -0.1 1.2 1.2\");\n  199 |\n  200 |         const box = await svg.boundingBox();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:197:34"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:32:19.746Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-96355-t-is-square-letterbox-zero--coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-9e0841d3e75c5ce631ec",
+              "file": "easing-primitive.spec.ts",
+              "line": 190,
+              "column": 5
+            },
+            {
+              "title": "P11 — the draw-on sweeps over frames, and lands on one under reduce",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5843,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 44,
+                          "line": 243
+                        },
+                        "snippet": "  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 44,
+                            "line": 243
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n\n  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:33:20.208Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-690df-d-lands-on-one-under-reduce-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 44,
+                        "line": 243
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-a19394c6c7ba980e4b4f",
+              "file": "easing-primitive.spec.ts",
+              "line": 238,
+              "column": 5
+            },
+            {
+              "title": "P1 — the bezier stroke plots the real CubicBezier twin",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5817,
+                      "error": {
+                        "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n",
+                        "stack": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 66,
+                          "line": 74
+                        },
+                        "snippet": "  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 66,
+                            "line": 74
+                          },
+                          "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n\n  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:36:39.006Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-7596a-s-the-real-CubicBezier-twin-coarse-touch-repeat1/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 66,
+                        "line": 74
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-f80f427cd9d250c6204e",
+              "file": "easing-primitive.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "P2 — the steps stroke is constructed, not sampled",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60011,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 72,
+                            "line": 105
+                          },
+                          "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Steps', exact: true })\u001b[22m\n\n\n  103 |         await page.setViewportSize({ width: 1280, height: 900 });\n  104 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 105 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n      |                                                                        ^\n  106 |\n  107 |         const picker = page.locator(`${PICKER}[data-mode=\"steps\"]`);\n  108 |         await expect(picker, \"the editor switches to steps mode\").toBeVisible();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:105:72"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:36:45.180Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-97b42--is-constructed-not-sampled-coarse-touch-repeat1/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-21d35818f23b22ad06bf",
+              "file": "easing-primitive.spec.ts",
+              "line": 102,
+              "column": 5
+            },
+            {
+              "title": "P4 — the readout is the re-parseable literal in both modes",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60013,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 14,
+                            "line": 179
+                          },
+                          "message": "Error: locator.textContent: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"] code').first()\u001b[22m\n\n\n  177 |             .locator(`${PICKER}[data-mode=\"bezier\"] code`)\n  178 |             .first()\n> 179 |             .textContent();\n      |              ^\n  180 |         expect(bezierLiteral?.trim()).toMatch(/^cubic-bezier\\(/);\n  181 |\n  182 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:179:14"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:37:45.628Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-a3324-eable-literal-in-both-modes-coarse-touch-repeat1/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-2fc51fccd2dfcbd669f0",
+              "file": "easing-primitive.spec.ts",
+              "line": 172,
+              "column": 5
+            },
+            {
+              "title": "P5 — the frame is constant and the plot is square (letterbox zero)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60015,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 34,
+                            "line": 197
+                          },
+                          "message": "Error: locator.getAttribute: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-curve\"] svg').first()\u001b[22m\n\n\n  195 |\n  196 |         const svg = page.locator(`${CURVE} svg`).first();\n> 197 |         const before = await svg.getAttribute(\"viewBox\");\n      |                                  ^\n  198 |         expect(before, \"the shipped constant frame\").toBe(\"-0.1 -0.1 1.2 1.2\");\n  199 |\n  200 |         const box = await svg.boundingBox();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:197:34"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:38:46.041Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-96355-t-is-square-letterbox-zero--coarse-touch-repeat1/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-05416e9af1bc6e82a3eb",
+              "file": "easing-primitive.spec.ts",
+              "line": 190,
+              "column": 5
+            },
+            {
+              "title": "P11 — the draw-on sweeps over frames, and lands on one under reduce",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5814,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 44,
+                          "line": 243
+                        },
+                        "snippet": "  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 44,
+                            "line": 243
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n\n  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:39:46.438Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-690df-d-lands-on-one-under-reduce-coarse-touch-repeat1/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 44,
+                        "line": 243
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-07e977d89d971d8387f4",
+              "file": "easing-primitive.spec.ts",
+              "line": 238,
+              "column": 5
+            },
+            {
+              "title": "P1 — the bezier stroke plots the real CubicBezier twin",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5835,
+                      "error": {
+                        "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n",
+                        "stack": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 66,
+                          "line": 74
+                        },
+                        "snippet": "  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 66,
+                            "line": 74
+                          },
+                          "message": "Error: the editor mounts in bezier mode\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - the editor mounts in bezier mode with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"]')\u001b[22m\n\n\n  72 |\n  73 |         const picker = page.locator(`${PICKER}[data-mode=\"bezier\"]`);\n> 74 |         await expect(picker, \"the editor mounts in bezier mode\").toBeVisible();\n     |                                                                  ^\n  75 |\n  76 |         const probe = await picker.evaluate((root, ink) => {\n  77 |             const code = root.querySelector(\"code\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:74:66"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:43:05.046Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-7596a-s-the-real-CubicBezier-twin-coarse-touch-repeat2/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 66,
+                        "line": 74
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-63f6eab021991ecc47f6",
+              "file": "easing-primitive.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "P2 — the steps stroke is constructed, not sampled",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60016,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 72,
+                            "line": 105
+                          },
+                          "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Steps', exact: true })\u001b[22m\n\n\n  103 |         await page.setViewportSize({ width: 1280, height: 900 });\n  104 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 105 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n      |                                                                        ^\n  106 |\n  107 |         const picker = page.locator(`${PICKER}[data-mode=\"steps\"]`);\n  108 |         await expect(picker, \"the editor switches to steps mode\").toBeVisible();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:105:72"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:43:11.379Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-97b42--is-constructed-not-sampled-coarse-touch-repeat2/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-2bdab8261e17c615ff19",
+              "file": "easing-primitive.spec.ts",
+              "line": 102,
+              "column": 5
+            },
+            {
+              "title": "P4 — the readout is the re-parseable literal in both modes",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60012,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 14,
+                            "line": 179
+                          },
+                          "message": "Error: locator.textContent: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"][data-mode=\"bezier\"] code').first()\u001b[22m\n\n\n  177 |             .locator(`${PICKER}[data-mode=\"bezier\"] code`)\n  178 |             .first()\n> 179 |             .textContent();\n      |              ^\n  180 |         expect(bezierLiteral?.trim()).toMatch(/^cubic-bezier\\(/);\n  181 |\n  182 |         await page.getByRole(\"button\", { name: \"Steps\", exact: true }).click();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:179:14"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:44:11.838Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-a3324-eable-literal-in-both-modes-coarse-touch-repeat2/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-950d8358f697aa8cfb9b",
+              "file": "easing-primitive.spec.ts",
+              "line": 172,
+              "column": 5
+            },
+            {
+              "title": "P5 — the frame is constant and the plot is square (letterbox zero)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60014,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 34,
+                            "line": 197
+                          },
+                          "message": "Error: locator.getAttribute: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-slot=\"easing-curve\"] svg').first()\u001b[22m\n\n\n  195 |\n  196 |         const svg = page.locator(`${CURVE} svg`).first();\n> 197 |         const before = await svg.getAttribute(\"viewBox\");\n      |                                  ^\n  198 |         expect(before, \"the shipped constant frame\").toBe(\"-0.1 -0.1 1.2 1.2\");\n  199 |\n  200 |         const box = await svg.boundingBox();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:197:34"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:45:12.223Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-96355-t-is-square-letterbox-zero--coarse-touch-repeat2/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-551686855c9095f00b0b",
+              "file": "easing-primitive.spec.ts",
+              "line": 190,
+              "column": 5
+            },
+            {
+              "title": "P11 — the draw-on sweeps over frames, and lands on one under reduce",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5839,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                          "column": 44,
+                          "line": 243
+                        },
+                        "snippet": "  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                            "column": 44,
+                            "line": 243
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"easing-picker\"]')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"easing-picker\"]')\u001b[22m\n\n\n  241 |         await page.setViewportSize({ width: 1280, height: 900 });\n  242 |         await page.goto(ROUTE, { waitUntil: \"networkidle\" });\n> 243 |         await expect(page.locator(PICKER)).toBeVisible();\n      |                                            ^\n  244 |\n  245 |         const swept = await sampleSweep(page);\n  246 |         const between = swept.filter((v) => v > 1 && v < 103);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts:243:44"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:46:12.666Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/easing-primitive-BK-85-W-E-690df-d-lands-on-one-under-reduce-coarse-touch-repeat2/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/easing-primitive.spec.ts",
+                        "column": 44,
+                        "line": 243
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-51731226523fbd11ae05",
+              "file": "easing-primitive.spec.ts",
+              "line": 238,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "goo-redress.spec.ts",
+      "file": "goo-redress.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-GOO-REDRESS capture — dark",
+          "file": "goo-redress.spec.ts",
+          "line": 169,
+          "column": 10,
+          "specs": [
+            {
+              "title": "bridge holds + hover wakes (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9425,
+                      "error": {
+                        "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m",
+                        "stack": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                          "column": 15,
+                          "line": 269
+                        },
+                        "snippet": "  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                            "column": 15,
+                            "line": 269
+                          },
+                          "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[W-GOO-REDRESS-π] dark: worstComponents=2 detachFrames=36/36 minMass=2721 hoverDelta=52 restCx=340 totalTravel=2 maxStep=1 lurchRatio=0.23\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:33:26.474Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/goo-redress-W-GOO-REDRESS--4baf9-dge-holds-hover-wakes-dark--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                        "column": 15,
+                        "line": 269
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "244576f2b682de0db1e9-2c8d60e520721e0367fe",
+              "file": "goo-redress.spec.ts",
+              "line": 172,
+              "column": 9
+            },
+            {
+              "title": "bridge holds + hover wakes (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9403,
+                      "error": {
+                        "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m",
+                        "stack": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                          "column": 15,
+                          "line": 269
+                        },
+                        "snippet": "  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                            "column": 15,
+                            "line": 269
+                          },
+                          "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[W-GOO-REDRESS-π] dark: worstComponents=2 detachFrames=36/36 minMass=2717 hoverDelta=49 restCx=341 totalTravel=2 maxStep=1 lurchRatio=0.24\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:39:52.662Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/goo-redress-W-GOO-REDRESS--4baf9-dge-holds-hover-wakes-dark--coarse-touch-repeat1/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                        "column": 15,
+                        "line": 269
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "244576f2b682de0db1e9-347c2302a09918046f6b",
+              "file": "goo-redress.spec.ts",
+              "line": 172,
+              "column": 9
+            },
+            {
+              "title": "bridge holds + hover wakes (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9417,
+                      "error": {
+                        "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m",
+                        "stack": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                          "column": 15,
+                          "line": 269
+                        },
+                        "snippet": "  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                            "column": 15,
+                            "line": 269
+                          },
+                          "message": "Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 2 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  267 |                 worstComponents,\n  268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,\n> 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);\n      |               ^\n  270 |             expect(\n  271 |                 minSilhouetteMass,\n  272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts:269:15"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[W-GOO-REDRESS-π] dark: worstComponents=2 detachFrames=36/36 minMass=2721 hoverDelta=47 restCx=340 totalTravel=2 maxStep=1 lurchRatio=0.24\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-28T02:46:18.970Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/goo-redress-W-GOO-REDRESS--4baf9-dge-holds-hover-wakes-dark--coarse-touch-repeat2/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/goo-redress.spec.ts",
+                        "column": 15,
+                        "line": 269
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "244576f2b682de0db1e9-0c2564da2501ec610bd7",
+              "file": "goo-redress.spec.ts",
+              "line": 172,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "viz-fourier-ribbon.spec.ts",
+      "file": "viz-fourier-ribbon.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fourier ribbon paints as a chromatic stroke — dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1764,
+                  "error": {
+                    "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m",
+                    "stack": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                      "column": 11,
+                      "line": 118
+                    },
+                    "snippet": "  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                        "column": 11,
+                        "line": 118
+                      },
+                      "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n\n  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-28T02:33:36.347Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/viz-fourier-ribbon-fourier-6d177-s-a-chromatic-stroke-—-dark-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                    "column": 11,
+                    "line": 118
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-26c61f2bef46665e048c",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 104,
+          "column": 5
+        },
+        {
+          "title": "fourier ribbon paints as a chromatic stroke — dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1693,
+                  "error": {
+                    "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m",
+                    "stack": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                      "column": 11,
+                      "line": 118
+                    },
+                    "snippet": "  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                        "column": 11,
+                        "line": 118
+                      },
+                      "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n\n  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-28T02:40:02.430Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/viz-fourier-ribbon-fourier-6d177-s-a-chromatic-stroke-—-dark-coarse-touch-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                    "column": 11,
+                    "line": 118
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-dd07b37622d353de8e20",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 104,
+          "column": 5
+        },
+        {
+          "title": "fourier ribbon paints as a chromatic stroke — dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 23,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1717,
+                  "error": {
+                    "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m",
+                    "stack": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                      "column": 11,
+                      "line": 118
+                    },
+                    "snippet": "  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                        "column": 11,
+                        "line": 118
+                      },
+                      "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m42.867599999999996\u001b[39m\n\n  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts:118:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-28T02:46:28.812Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/test-results/viz-fourier-ribbon-fourier-6d177-s-a-chromatic-stroke-—-dark-coarse-touch-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/head/tree/tests-visual/viz-fourier-ribbon.spec.ts",
+                    "column": 11,
+                    "line": 118
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-b46352914fc04b51310f",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 104,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-28T02:27:10.349Z",
+    "duration": 1160299.017,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 24,
+    "flaky": 0
+  }
+}
