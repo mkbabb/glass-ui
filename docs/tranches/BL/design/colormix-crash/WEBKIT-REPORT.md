@@ -4,6 +4,8 @@ For the owner to file at bugs.webkit.org (component: CSS). Attach `reduced.html`
 
 Real Safari has not been checked. Every result here comes from Playwright's WebKit 26.5 build (WebContent 625.1.21, macOS 26.4.1), and on glass that build has given the opposite result to shipping Safari before. Before filing, load `reduced.html` once in Safari and once in Safari Technology Preview. If neither aborts, the report should say it reproduces only in the Playwright build, or it should not be filed.
 
+**Build range (2026-11-27).** Only Playwright WebKit build 2311 (26.5) aborts. Builds 2287 (26.4), 2370 and 2388 (27.2) render every row below and `reduced.html`. File this only if Safari Technology Preview or a shipping Safari aborts on `reduced.html`, and then give the bisect range 2287 to 2311 and say the abort is gone again by 2370.
+
 ---
 
 **Title:** color-mix() whose two colour arms each contain a color-mix() aborts the web content process (std::terminate in Style::Color::resolvedColor)

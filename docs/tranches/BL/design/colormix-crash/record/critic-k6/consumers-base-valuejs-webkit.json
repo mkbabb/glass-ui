@@ -1,0 +1,194 @@
+{
+ "engine": "webkit",
+ "version": "26.5",
+ "dist": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/colormix-crash/trees/k6-base/cmx/dist",
+ "at": "2026-11-27T23:33:15.027Z",
+ "cases": {
+  "valuejs-shadow": ".dark { --shadow-color: color-mix(in oklab, var(--foreground) 34%, var(--background)); }",
+  "valuejs-contrast": ":root, .dark { --border: color-mix(in oklab, var(--foreground) 78%, var(--background)); --muted-foreground: color-mix(in oklab, var(--foreground) 88%, var(--background)); }"
+ },
+ "rows": [
+  {
+   "name": "valuejs-shadow",
+   "cell": "blob",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "rgb(28, 25, 23)",
+    "filter": "drop-shadow(color(srgb 0.109804 0.098039 0.090196 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.109804 0.098039 0.090196"
+   }
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "blob",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.goto: Page crashed"
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "blob-prm",
+   "mode": "light",
+   "action": null,
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "rgb(28, 25, 23)",
+    "filter": "drop-shadow(color(srgb 0.109804 0.098039 0.090196 / 0.2) 0px 4px 14px) drop-shadow(color(srgb 0.109804 0.098039 0.090196"
+   }
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "blob-prm",
+   "mode": "dark",
+   "action": null,
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.goto: Page crashed"
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "card",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.14)",
+    "border": "oklab(0.216115 0.003422 0.005081 / 0.16)"
+   }
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "card",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.092767 0.050346 0.00879 / 0.18)",
+    "border": "oklab(0.926152 0.001586 0.006089 / 0.16)"
+   }
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "bare-control-surface",
+   "mode": "light",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "valuejs-shadow",
+   "cell": "bare-control-surface",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "select-trigger",
+   "mode": "light",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "select-trigger",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": true,
+   "at": null,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded."
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "bare-segmented-tab",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "oklab(0.266882 0.003214 0.004933)"
+   }
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "bare-segmented-tab",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "oklab(0.874635 0.001548 0.005859)"
+   }
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "card",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.14)",
+    "border": "oklab(0.216115 0.003422 0.005081 / 0.16)"
+   }
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "card",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.092767 0.050346 0.00879 / 0.18)",
+    "border": "oklab(0.926152 0.001586 0.006089 / 0.16)"
+   }
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "input-invalid",
+   "mode": "light",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.945412 0.862745 0.826667)",
+    "border": "rgb(219, 36, 36)"
+   }
+  },
+  {
+   "name": "valuejs-contrast",
+   "cell": "input-invalid",
+   "mode": "dark",
+   "action": "hover",
+   "crashed": false,
+   "at": null,
+   "read": {
+    "bg": "color(srgb 0.306576 0.231099 0.205593)",
+    "border": "oklch(0.702 0.184 27.5)"
+   }
+  }
+ ]
+}

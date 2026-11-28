@@ -1,0 +1,216 @@
+{
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "rows": [
+  {
+   "expect": "abort",
+   "name": "reduced.html",
+   "crashed": false,
+   "read": "oklab(0.583088 0.0367287 -0.0180101)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "both arms a mix",
+   "crashed": false,
+   "read": "oklab(0.583088 0.0367287 -0.0180101)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "translucent arms",
+   "crashed": false,
+   "read": "oklab(0.52974 -0.0134471 -0.0545445 / 0.75098)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "transparent arms",
+   "crashed": false,
+   "read": "oklab(0.573858 0.042303 0.116769 / 0.5)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "currentcolor arms",
+   "crashed": false,
+   "read": "oklab(0.434272 -0.00969557 -0.0931675)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "both arms the same mix",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "outer in srgb",
+   "crashed": false,
+   "read": "color(srgb 0.5 0.37549 0.5)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "outer in oklch",
+   "crashed": false,
+   "read": "oklch(0.583088 0.152335 56.3544)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "one arm a mix of a mix",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172 / 0.75)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "mix + relative of mix",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "relative of mix both",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "light-dark holding a mix both",
+   "crashed": false,
+   "read": "oklab(0.534079 0.0749871 -0.0429586)",
+   "matches": false
+  },
+  {
+   "expect": "render",
+   "name": "one arm a mix",
+   "crashed": false,
+   "read": "oklab(0.492609 0.185475 -0.0217109)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "mix and transparent",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172 / 0.5)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "three levels one mixed arm each",
+   "crashed": false,
+   "read": "oklab(0.419725 0.164257 -0.101172 / 0.25)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "two relative colours of a plain colour",
+   "crashed": false,
+   "read": "oklab(0.3 0.0102606 0.0281908 / 0.114)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "relative of mix + plain",
+   "crashed": false,
+   "read": "oklab(0.492609 0.185475 -0.0217108)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "two plain light-dark",
+   "crashed": false,
+   "read": "oklab(0.59009 0.097076 0.119496)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "mix + plain light-dark",
+   "crashed": false,
+   "read": "oklab(0.492609 0.185475 -0.0217109)",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "color",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "border-top-color",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "outline-color",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "box-shadow",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "text-shadow",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "filter drop-shadow",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "gradient stop",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "svg fill",
+   "crashed": false,
+   "read": "rgba(0, 0, 0, 0)",
+   "matches": false
+  },
+  {
+   "expect": "abort",
+   "name": "two registered colour arms",
+   "crashed": false,
+   "read": "oklab(0.583088 0.0367288 -0.0180101)",
+   "matches": false
+  },
+  {
+   "expect": "render",
+   "name": "one registered colour arm + plain",
+   "crashed": false,
+   "read": "oklab(0.523845 0.194568 0.0123438)",
+   "matches": true
+  },
+  {
+   "expect": "abort-hover",
+   "name": "on hover",
+   "crashed": false,
+   "read": "oklab(0.583088 0.0367287 -0.0180101)",
+   "matches": false
+  }
+ ]
+}

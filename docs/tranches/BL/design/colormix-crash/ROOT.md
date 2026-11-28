@@ -8,6 +8,8 @@ This is the fix seat's round 2. It answers the round-3 critique (`critique-r3.md
 - **The gate gains a second case:** a color-mix whose two endpoints are one custom property.
 - **Real consumer values are witnessed in WebKit.** A new probe reads the overrides each glass consumer declares in its own source and runs glass's detector with them added. The witness then applies those values in WebKit on both trees.
 
+**The build range (the second critic, 2026-11-27; `record/critic-k6/`).** The abort comes from one Playwright WebKit build. Build 2311 (WebKit 26.5, glass's Playwright 1.61.1) aborts. Builds 2287 (26.4), 2370 and 2388 (27.2) render every report row and `reduced.html`, and glass's unpatched 11.1.1 base, the old hover and the dark Blob included, renders on build 2388. The cure ships in 11.1.2 anyway: it changes no colour past a ΔE OK of 8.0e-5, and it keeps glass whole in the build glass and its consumers test with. The consumers' pins in the critic's note came from primary working trees: value.js master pins glass 11.1.0, not 10.1.3 (value-js-4d, 2026-11-27). Each consumer's pin is read from its origin/master before a 10.1.x item is weighed.
+
 ## Cause
 
 Playwright WebKit 26.5 aborts the page process with SIGABRT (`std::terminate` in `WebCore::Style::Color::resolvedColor`, called from `toStyleColor(CSS::ColorMix)`; `record/webkit-backtrace.txt`). It does this whenever it applies a `color-mix()` whose two colour arms each contain a `color-mix()`.

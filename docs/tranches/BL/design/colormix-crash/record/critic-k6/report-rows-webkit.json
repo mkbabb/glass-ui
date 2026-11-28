@@ -1,0 +1,238 @@
+{
+ "engine": "webkit",
+ "version": "26.5",
+ "rows": [
+  {
+   "expect": "abort",
+   "name": "reduced.html",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "both arms a mix",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "translucent arms",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "transparent arms",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "currentcolor arms",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "both arms the same mix",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "outer in srgb",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "outer in oklch",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "one arm a mix of a mix",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "mix + relative of mix",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "relative of mix both",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "light-dark holding a mix both",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "one arm a mix",
+   "crashed": false,
+   "read": "oklab(0.492607 0.185458 -0.021725)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "mix and transparent",
+   "crashed": false,
+   "read": "oklab(0.419728 0.16424 -0.101186 / 0.5)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "three levels one mixed arm each",
+   "crashed": false,
+   "read": "oklab(0.419728 0.16424 -0.101186 / 0.25)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "two relative colours of a plain colour",
+   "crashed": false,
+   "read": "oklab(0.3 0.010261 0.028191 / 0.114)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "relative of mix + plain",
+   "crashed": false,
+   "read": "oklab(0.492607 0.185458 -0.021725)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "two plain light-dark",
+   "crashed": false,
+   "read": "oklab(0.590084 0.097055 0.119487)",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "mix + plain light-dark",
+   "crashed": false,
+   "read": "oklab(0.492607 0.185458 -0.021725)",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "color",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "border-top-color",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "outline-color",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "box-shadow",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "text-shadow",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "filter drop-shadow",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "gradient stop",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "svg fill",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "abort",
+   "name": "two registered colour arms",
+   "crashed": true,
+   "read": null,
+   "error": "page.setContent: Page crashed",
+   "matches": true
+  },
+  {
+   "expect": "render",
+   "name": "one registered colour arm + plain",
+   "crashed": false,
+   "read": "oklab(0.523842 0.194552 0.01233)",
+   "matches": true
+  },
+  {
+   "expect": "abort-hover",
+   "name": "on hover",
+   "crashed": true,
+   "read": null,
+   "error": "page.hover: Timeout 4000ms exceeded.",
+   "matches": true
+  }
+ ]
+}

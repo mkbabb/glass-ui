@@ -1,0 +1,9 @@
+missed  color-mix(in srgb, var(--ink) var(--w), var(--ink))
+missed  color-mix(in srgb, var(--ink) min(20%, 30%), var(--ink))
+FLAGGED color-mix(in srgb, var(--ink) 20%, var(--ink) 80%)
+missed  color-mix(in oklab, oklch(from var(--ink) l c h / 0.1), oklch(from var(--ink) l c h / 0.2))
+missed  color-mix(in oklab, var(--r), var(--m))
+FLAGGED color-mix(in oklab, var(--pq), var(--m) 35%)
+missed  color-mix(in oklab, light-dark(var(--ink), red), var(--ink))
+real mutant (hover via --control-surface-bg): ["src/styles/tokens/glass.css:265 --control-surface-bg-hover"]
+real mutant (old blob): ["src/styles/tokens/shadow.css:112 --blob-shadow-color"]
