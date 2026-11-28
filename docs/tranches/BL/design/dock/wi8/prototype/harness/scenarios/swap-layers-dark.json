@@ -1,0 +1,182 @@
+{
+ "name": "swap-layers-dark",
+ "url": "/?c=dock-wi8&cell=w-layers&scheme=dark",
+ "cells": [
+  {
+   "tag": "1440-fine-dark",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "dark"
+  }
+ ],
+ "ready": "[data-testid=w-layers]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-layers]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-layers] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "seatplate",
+   "sel": "[data-testid=w-layers] .dock-plate--beside"
+  },
+  {
+   "as": "neck",
+   "sel": "[data-testid=w-layers] .dock-neck"
+  },
+  {
+   "as": "shadow",
+   "sel": "[data-testid=w-layers] .dock-shadow",
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-layers] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-layers] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-layers] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "beside",
+   "sel": "[data-testid=w-layers] .dock-beside",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-layers] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-layers] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-layers] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-layers] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true
+  },
+  {
+   "as": "face",
+   "sel": "[data-testid=w-layers] .dock-face",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate",
+  "seatplate",
+  "beside"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "steps": [
+  {
+   "do": "leave",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-layers]",
+   "ms": 100,
+   "hz": 60
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "focus",
+   "sel": "[data-testid=w-layers] [role=tab][aria-selected=true], [data-testid=w-layers] .dock-switcher button"
+  },
+  {
+   "do": "mark",
+   "name": "key1"
+  },
+  {
+   "do": "key",
+   "key": "ArrowDown"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "key2"
+  },
+  {
+   "do": "key",
+   "key": "ArrowDown"
+  },
+  {
+   "do": "wait",
+   "ms": 90
+  },
+  {
+   "do": "mark",
+   "name": "third"
+  },
+  {
+   "do": "key",
+   "key": "ArrowUp"
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 3000
+  }
+ ]
+}

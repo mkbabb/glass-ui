@@ -1,0 +1,6 @@
+| scenario | cell | seg | prototype: travel, first / max % / last | op60 | out | prototype verdict | RED: travel, first / max % / last | RED op60 | RED verdict |
+|---|---|---|---|---|---|---|---|---|---|
+| overlay-dark | 1440-fine-dark | 1 | 80 px, 1.9 / 7.5 % / 0.1 px | 0.39 · blank 1@0.38 | 0 | L 1 steps against travel (0.09 px); R 1 steps against travel (0.10 px); not a capsule in 51 rows | 78 px, 5 / 8.3 % / 0.08 px | 1 | L first 5.0% > 1.5% ; R first 5.0% > 1.5% ; opacity 1.00 in 60 Hz at full f24; full fade has 0 samples |
+| overlay-dark | 1440-fine-dark | 2 | – | – | – | – | 78 px, 5 / 8.1 % / 0.13 px | 1 | L first 5.0% > 1.6% ; R first 5.0% > 1.6% ; opacity 1.00 in 60 Hz at summary f284; summary fade has 0 samples |
+| overlay-fine | 1440-fine-light | 1 | 80 px, 1.4 / 7.4 % / 0.1 px | 0.38 · blank 1@0.37 | 0 | L 1 steps against travel (0.09 px); R 1 steps against travel (0.10 px); not a capsule in 51 rows | 78 px, 5 / 7.5 % / 0.1 px | 1 | L first 5.0% > 1.6% ; R first 5.0% > 1.6% ; opacity 1.00 in 60 Hz at full f26; full fade has 0 samples |
+| overlay-fine | 1440-fine-light | 2 | – | – | – | – | 78 px, 5 / 7.4 % / 0.11 px | 1 | L first 5.0% > 2.2% ; R first 5.0% > 2.2% ; opacity 1.00 in 60 Hz at summary f287; summary fade has 0 samples |
