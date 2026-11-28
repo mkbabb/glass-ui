@@ -1,8 +1,25 @@
+diff --git a/src/components/constellation/README.md b/src/components/constellation/README.md
+index e573928..1342e8d 100644
+--- a/src/components/constellation/README.md
++++ b/src/components/constellation/README.md
+@@ -246,7 +246,7 @@ Three properties make the warp read as a real spring chasing a real node:
+   critically-damped integrator (`x += v·dt; v += (−2ζω·v − ω²·(x−target))·dt`, with `ω = 2π/response`,
+   `ζ = dampingFraction` — the keyframes.js `(response, dampingFraction)` PARAM model reused, but NOT
+   its rAF) advanced **inside the substrate's single rAF** (`warpStep` is called from `stepField`).
+-  `useSpring` wraps `SpringProgress.play()`, which spawns its OWN rAF bound to a reactive ref — a
++  `useSpring` steps a `SpringProgress` on its OWN rAF, bound to a reactive ref — a
+   SECOND rAF would DEFEAT the offscreen/tab-hidden/PRM freeze the whole `useCanvas2D` substrate
+   exists to provide. The `dt` is clamped (~50 ms) so a tab-throttle / offscreen-park-resume gap
+   cannot teleport the mark.
 diff --git a/src/components/data-table/DataTable.vue b/src/components/data-table/DataTable.vue
-index bce4ce5b7..87cdbd16e 100644
+index bce4ce5..43f3045 100644
 --- a/src/components/data-table/DataTable.vue
 +++ b/src/components/data-table/DataTable.vue
-@@ -6,13 +6,14 @@ import {
+@@ -3,16 +3,18 @@ import {
+     computed,
+     mergeProps,
+     nextTick,
++    onBeforeUnmount,
      onBeforeUpdate,
      onUpdated,
      ref,
@@ -18,7 +35,7 @@ index bce4ce5b7..87cdbd16e 100644
      TableCell,
      TableHead,
      TableHeader,
-@@ -26,6 +27,7 @@ import {
+@@ -26,6 +28,7 @@ import {
      type RowEntry,
  } from "./composables/useDataTableRowIdentity";
  import { useDataTableResponsive } from "./composables/useDataTableResponsive";
@@ -26,7 +43,7 @@ index bce4ce5b7..87cdbd16e 100644
  import { cn } from "../_shared/class-names";
  import { FOCUSABLE_SELECTOR } from "../_shared/focus";
  
-@@ -36,6 +38,7 @@ const props = withDefaults(defineProps<DataTableProps<T>>(), {
+@@ -36,6 +39,7 @@ const props = withDefaults(defineProps<DataTableProps<T>>(), {
      selectable: false,
      responsive: false,
      cardBreakpoint: 640,
@@ -34,7 +51,7 @@ index bce4ce5b7..87cdbd16e 100644
  });
  
  const emit = defineEmits<{
-@@ -43,21 +46,18 @@ const emit = defineEmits<{
+@@ -43,21 +47,18 @@ const emit = defineEmits<{
      "update:selectedRowId": [id: PropertyKey];
      "update:tabbableRowId": [id: PropertyKey];
      select: [row: T];
@@ -59,7 +76,7 @@ index bce4ce5b7..87cdbd16e 100644
  const renderedState = computed(() => {
      if (props.status === "error") return "error";
      if (props.status === "loading" && props.rows.length === 0) return "loading";
-@@ -103,6 +103,47 @@ watch(
+@@ -103,6 +104,48 @@ watch(
      { flush: "post" },
  );
  
@@ -88,6 +105,7 @@ index bce4ce5b7..87cdbd16e 100644
 +// restorer). The sticky header and first column hold against it.
 +const viewportEl = ref<HTMLElement | null>(null);
 +watch(viewportEl, (el) => props.viewportRef?.(el), { flush: "post", immediate: true });
++onBeforeUnmount(() => props.viewportRef?.(null));
 +
 +// The sticky parts take their ground only once rows pass beneath them, so a table at rest
 +// paints exactly as it does unscrolled.
@@ -107,7 +125,7 @@ index bce4ce5b7..87cdbd16e 100644
  // Stable identity validation stays separate from rendering and interaction.
  const { rowEntries } = useDataTableRowIdentity<T>({
      rows: () => props.rows,
-@@ -146,6 +187,15 @@ function getCellValue(row: T, col: DataTableColumn<T>): string {
+@@ -146,6 +189,15 @@ function getCellValue(row: T, col: DataTableColumn<T>): string {
      return raw == null ? "—" : String(raw);
  }
  
@@ -123,7 +141,7 @@ index bce4ce5b7..87cdbd16e 100644
  function toggleSort(col: DataTableColumn<T>) {
      if (!col.sortable) return;
      const current = props.sort;
-@@ -237,29 +287,22 @@ const tabbableKey = computed<PropertyKey | null>(() => {
+@@ -237,29 +289,22 @@ const tabbableKey = computed<PropertyKey | null>(() => {
      return selected?.key ?? rowEntries.value[0]?.key ?? null;
  });
  
@@ -156,7 +174,7 @@ index bce4ce5b7..87cdbd16e 100644
      const focusable = props.selectable || props.tabbableRowId !== undefined;
      const roving = focusable
          ? {
-@@ -269,7 +312,7 @@ function rowBindings(
+@@ -269,7 +314,7 @@ function rowBindings(
                onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
            }
          : {};
@@ -165,7 +183,7 @@ index bce4ce5b7..87cdbd16e 100644
  }
  </script>
  
-@@ -279,11 +322,11 @@ function rowBindings(
+@@ -279,11 +324,11 @@ function rowBindings(
          ref="rootRef"
          :class="cn('data-table', props.class)"
          :data-state="renderedState"
@@ -178,7 +196,7 @@ index bce4ce5b7..87cdbd16e 100644
              <div
                  v-if="status === 'error'"
                  class="data-table-state glass-quiet"
-@@ -292,6 +335,7 @@ function rowBindings(
+@@ -292,6 +337,7 @@ function rowBindings(
                  <slot name="error">Unable to load data</slot>
              </div>
  
@@ -186,7 +204,7 @@ index bce4ce5b7..87cdbd16e 100644
              <div
                  v-else-if="status === 'loading' && rows.length === 0"
                  class="data-table-cards"
-@@ -306,22 +350,51 @@ function rowBindings(
+@@ -306,22 +352,51 @@ function rowBindings(
                  </div>
              </div>
  
@@ -249,7 +267,7 @@ index bce4ce5b7..87cdbd16e 100644
                              <component
                                  v-if="headerColumn?.component"
                                  :is="headerColumn.component"
-@@ -332,35 +405,45 @@ function rowBindings(
+@@ -332,35 +407,45 @@ function rowBindings(
                                  {{ getCellValue(entry.row, headerColumn) }}
                              </template>
                          </div>
@@ -315,7 +333,12 @@ index bce4ce5b7..87cdbd16e 100644
              </div>
  
              <!-- Empty state -->
-@@ -371,116 +454,152 @@ function rowBindings(
+@@ -368,119 +453,157 @@ function rowBindings(
+                 <slot v-if="filtered" name="filtered-empty">No matching rows</slot>
+                 <slot v-else name="empty">No rows yet</slot>
+             </div>
++            <!-- With no card list, the sentinel follows the state card. -->
++            <slot v-if="status === 'error' || rows.length === 0" name="sentinel" />
          </template>
  
          <!-- ── Tabular layout (default + wide container) ─────────────── -->
@@ -568,7 +591,7 @@ index bce4ce5b7..87cdbd16e 100644
  
 diff --git a/src/components/data-table/composables/useDataTableFit.ts b/src/components/data-table/composables/useDataTableFit.ts
 new file mode 100644
-index 000000000..049639c63
+index 0000000..049639c
 --- /dev/null
 +++ b/src/components/data-table/composables/useDataTableFit.ts
 @@ -0,0 +1,113 @@
@@ -686,7 +709,7 @@ index 000000000..049639c63
 +    };
 +}
 diff --git a/src/components/data-table/index.ts b/src/components/data-table/index.ts
-index 9e9a8ed99..fcde41639 100644
+index 9e9a8ed..fcde416 100644
 --- a/src/components/data-table/index.ts
 +++ b/src/components/data-table/index.ts
 @@ -7,4 +7,5 @@ export type {
@@ -696,10 +719,10 @@ index 9e9a8ed99..fcde41639 100644
 +    DataTableViewportRef,
  } from "./types";
 diff --git a/src/components/data-table/styles.css b/src/components/data-table/styles.css
-index 496612fe0..96cf53c38 100644
+index 496612f..0c8f873 100644
 --- a/src/components/data-table/styles.css
 +++ b/src/components/data-table/styles.css
-@@ -1,10 +1,118 @@
+@@ -1,10 +1,121 @@
  @layer components {
 +    /* THE VIEWPORT. The root fills its host's block size (at most, so a short table stays
 +       short) and hands it to one viewport, the element that scrolls the rows: the table
@@ -809,8 +832,11 @@ index 496612fe0..96cf53c38 100644
 +        padding: 0.25rem;
 +    }
 +
++    /* The list is the viewport's content, so it never shrinks to the viewport: a host that
++       virtualizes the cards sizes it to every row's total, and that is the scroll range. */
 +    .data-table-card-list {
 +        display: flex;
++        flex: none;
 +        flex-direction: column;
 +        gap: 0.5rem;
 +    }
@@ -818,7 +844,7 @@ index 496612fe0..96cf53c38 100644
      .data-table-card,
      .data-table-state {
          border: 1px solid var(--border);
-@@ -34,11 +142,21 @@
+@@ -34,11 +145,21 @@
          height: 1rem;
      }
  
@@ -845,7 +871,7 @@ index 496612fe0..96cf53c38 100644
      }
  
      .data-table-card-title,
-@@ -52,12 +170,21 @@
+@@ -52,12 +173,21 @@
      }
  
      .data-table-card-fields {
@@ -867,7 +893,7 @@ index 496612fe0..96cf53c38 100644
      .data-table-card-label,
      .data-table-header-row {
          color: var(--muted-foreground);
-@@ -69,6 +196,23 @@
+@@ -69,6 +199,23 @@
          flex: none;
      }
  
@@ -892,7 +918,7 @@ index 496612fe0..96cf53c38 100644
          display: inline-flex;
          width: 100%;
 diff --git a/src/components/data-table/types.ts b/src/components/data-table/types.ts
-index 375b4dfef..4f2f78efe 100644
+index 375b4df..b7e79e6 100644
 --- a/src/components/data-table/types.ts
 +++ b/src/components/data-table/types.ts
 @@ -17,6 +17,16 @@ export interface DataTableColumn<T = any> {
@@ -922,11 +948,11 @@ index 375b4dfef..4f2f78efe 100644
  /** One-based absolute row index, including the header row at index 1. */
  export type DataTableRowIndex<T> = (row: T, mountedIndex: number) => number;
  
-@@ -80,14 +93,23 @@ export interface DataTableProps<T = any> {
+@@ -80,14 +93,24 @@ export interface DataTableProps<T = any> {
      selectable?: boolean;
      /** Stable identity of the selected row when selection is enabled. */
      selectedRowId?: PropertyKey | null;
-+    /** Called with the viewport (the element that scrolls the rows) as each projection mounts it. */
++    /** Called with the viewport (the element that scrolls the rows) as each projection mounts it, and with `null` as the table unmounts. */
 +    viewportRef?: DataTableViewportRef;
      /**
       * When true, the table collapses to a stacked card-per-row
@@ -941,14 +967,15 @@ index 375b4dfef..4f2f78efe 100644
      cardBreakpoint?: number;
 +    /**
 +     * The table shows the leading columns whose widths fit its viewport's inline size and
-+     * folds the rest, so it never scrolls sideways. `fold` reports the folded columns.
-+     * The first column always shows.
++     * folds the rest. `fold` reports the folded columns. The first column always shows.
++     * It counts each column at its `width` (a column with none at its header), so the
++     * table stays inside the viewport while every cell stays within its column's width.
 +     */
 +    fit?: boolean;
      class?: HTMLAttributes["class"];
  }
 diff --git a/src/components/dialog/Dialog.vue b/src/components/dialog/Dialog.vue
-index fd986a85f..2b593c7be 100644
+index fd986a8..c3ecab2 100644
 --- a/src/components/dialog/Dialog.vue
 +++ b/src/components/dialog/Dialog.vue
 @@ -1,6 +1,7 @@
@@ -960,7 +987,7 @@ index fd986a85f..2b593c7be 100644
  
  export interface DialogProps {
      open?: boolean;
-@@ -8,18 +9,12 @@ export interface DialogProps {
+@@ -8,18 +9,14 @@ export interface DialogProps {
      modal?: boolean;
      unmountOnHide?: boolean;
      /**
@@ -974,17 +1001,19 @@ index fd986a85f..2b593c7be 100644
 -     *
 -     * It carries no machinery on purpose. If the fold refuses, this prop leaves with the
 -     * refusal — a hole that nothing ever fills is a hole, not an API.
-+     * Where the content grows from and returns to: the element that opened it, or a rect
-+     * in viewport coordinates. An element is read as the dialog opens and again as it
-+     * closes, so the plate lands where its opener is then; one that has left the page
-+     * keeps the rect read at the open. Without an origin the plate blooms in place.
++     * Where the content grows from and returns to: the control that opened it (the
++     * button the reader pressed, taken from its click), or a rect in viewport
++     * coordinates. Pass `null` when no control opened it (a link loaded with the dialog
++     * open, a history step), and the plate blooms in place. A control is read as the
++     * dialog opens and again as it closes, so the plate lands where the control is then;
++     * one that has left the page keeps the rect read at the open.
       */
 -    origin?: DOMRectReadOnly | null;
 +    origin?: DialogOrigin;
  }
  
  const props = defineProps<DialogProps>();
-@@ -27,12 +22,12 @@ const emits = defineEmits<{ "update:open": [value: boolean] }>();
+@@ -27,12 +24,12 @@ const emits = defineEmits<{ "update:open": [value: boolean] }>();
  
  // `origin` is withheld from the forward set. reka's root does not know the prop, so
  // forwarding it would drop it into `$attrs` on a component that renders no element of
@@ -1000,7 +1029,7 @@ index fd986a85f..2b593c7be 100644
  const forwarded = useForwardPropsEmits(rootProps, emits);
  </script>
 diff --git a/src/components/dialog/DialogContent.vue b/src/components/dialog/DialogContent.vue
-index a432afcb3..724a2288a 100644
+index a432afc..80b7bf4 100644
 --- a/src/components/dialog/DialogContent.vue
 +++ b/src/components/dialog/DialogContent.vue
 @@ -1,5 +1,13 @@
@@ -1027,7 +1056,7 @@ index a432afcb3..724a2288a 100644
  import type { Motion, Surface } from "../_shared/axes";
  import { useMotionAxis } from "../_shared/useMotionAxis";
  import { surfaceClass } from "../_shared/surface/resolve";
-@@ -82,18 +92,52 @@ const dialogRoot = injectDialogRootContext();
+@@ -82,18 +92,53 @@ const dialogRoot = injectDialogRootContext();
  // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
  useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
  
@@ -1069,10 +1098,11 @@ index a432afcb3..724a2288a 100644
 +
 +// ONE mount spring per entrance. MOTION-CANON gives the MODAL a single row: the plate
 +// presents in place; grown from an origin it is the fired deploy, the panel row, whose
-+// one rebound lands the bloom. The row is read at each open, never chosen by a consumer.
++// one rebound lands the bloom. The row is read at each open, from the rect the plate will
++// grow from (an opener that has left the page gives none), never chosen by a consumer.
 +const springMount = useSpringMount({
 +    open: dialogRoot.open,
-+    preset: () => (origin() ? "panel" : "present"),
++    preset: () => (readOrigin() ? "panel" : "present"),
 +});
  const reducedMotion = useReducedMotion();
  
@@ -1090,7 +1120,7 @@ index a432afcb3..724a2288a 100644
  //
  // No `animation: none` leg: the plate composes no `animate-in`/`animate-out` utility
  // and no `.glass-reveal`, so there is no keyframe to defeat — and writing one here
-@@ -101,10 +145,31 @@ const reducedMotion = useReducedMotion();
+@@ -101,10 +146,31 @@ const reducedMotion = useReducedMotion();
  const springStyle = computed<CSSProperties | undefined>(() => {
      if (!live.value) return undefined;
      const p = springMount.position.value; // 0 = mounted, 1 = dismissed
@@ -1124,7 +1154,7 @@ index a432afcb3..724a2288a 100644
          opacity: String(1 - p),
          transition: "none",
      };
-@@ -138,6 +203,7 @@ const resolveContentEl = (): HTMLElement | null =>
+@@ -138,6 +204,7 @@ const resolveContentEl = (): HTMLElement | null =>
      (contentAnchorEl.value?.closest(
          '[data-slot="dialog-content"]',
      ) as HTMLElement | null) ?? null;
@@ -1132,7 +1162,7 @@ index a432afcb3..724a2288a 100644
  watch(
      () => dialogRoot.open.value,
      (open) => {
-@@ -150,6 +216,51 @@ watch(
+@@ -150,6 +217,51 @@ watch(
  );
  const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
  
@@ -1185,7 +1215,7 @@ index a432afcb3..724a2288a 100644
  // a monotonically-increasing count drives the rung the portaled node carries, so every
  // refusal starts a fresh run. There is no completion handshake to miss and therefore no
 diff --git a/src/components/dialog/index.ts b/src/components/dialog/index.ts
-index 360ef7547..43f99c720 100644
+index 360ef75..43f99c7 100644
 --- a/src/components/dialog/index.ts
 +++ b/src/components/dialog/index.ts
 @@ -1,4 +1,5 @@
@@ -1196,20 +1226,163 @@ index 360ef7547..43f99c720 100644
      type DialogContentProps,
 diff --git a/src/components/dialog/origin.ts b/src/components/dialog/origin.ts
 new file mode 100644
-index 000000000..c0741147b
+index 0000000..13a9582
 --- /dev/null
 +++ b/src/components/dialog/origin.ts
 @@ -0,0 +1,8 @@
 +import type { InjectionKey } from "vue";
 +
-+/** Where a dialog grows from and returns to: the element that opened it, or a rect in
-+ *  viewport coordinates. */
++/** Where a dialog grows from and returns to: the control that opened it, or a rect in
++ *  viewport coordinates. `null` when nothing on the page opened it. */
 +export type DialogOrigin = Element | DOMRectReadOnly | null;
 +
 +/** The root hands its `origin` to the content, which runs the motion. */
 +export const DIALOG_ORIGIN: InjectionKey<() => DialogOrigin | undefined> = Symbol("dialog-origin");
+diff --git a/src/composables/motion/spring/exitClock.ts b/src/composables/motion/spring/exitClock.ts
+index 8597cbe..abe1ef0 100644
+--- a/src/composables/motion/spring/exitClock.ts
++++ b/src/composables/motion/spring/exitClock.ts
+@@ -4,6 +4,7 @@
+ // the entrance's fade as well as the exit. The spring mount kernel and the sheet's detent
+ // engine both run on it.
+ 
++import { FRAME_MS } from "../core/constants";
+ import type { SpringPresetName } from "./springPresets";
+ 
+ export interface ExitClock {
+@@ -68,7 +69,7 @@ export function runExitClock(
+     let last: number | null = null;
+     let elapsed = 0;
+     const step = (now: number) => {
+-        if (last !== null) elapsed += Math.min(now - last, 1000 / 60);
++        if (last !== null) elapsed += Math.min(now - last, FRAME_MS);
+         last = now;
+         const k = Math.min(1, elapsed / clock.ms);
+         frame(clock.ease(k));
+diff --git a/src/composables/motion/spring/useSpring.ts b/src/composables/motion/spring/useSpring.ts
+index 6048ad1..d7967f6 100644
+--- a/src/composables/motion/spring/useSpring.ts
++++ b/src/composables/motion/spring/useSpring.ts
+@@ -5,14 +5,17 @@
+ // overshoot, `useSpring` integrates a second-order damped harmonic
+ // oscillator — overshoot, oscillation, parametric `(response, ζ)`.
+ //
+-// The engine owns the rAF loop (`SpringProgress.play(onFrame)`); this
+-// composable wires Vue reactivity, target-source tracking, the
++// The engine solves the spring analytically; this composable steps it once per
++// animation frame, and wires Vue reactivity, target-source tracking, the
+ // prefers-reduced-motion fast-path, and lifecycle cleanup on scope dispose.
+ //
+-// Lands of the AL SLIM plan. Consumes (SpringProgress publisher
+-// in `@mkbabb/keyframes.js`).
++// THE FRAME CLOCK. Each frame advances the spring by the time since the last one, but by
++// at most one 60 Hz frame (`FRAME_MS`), as the exit clock does. A long frame (a body that
++// mounts, a table that renders) then slows the motion rather than skipping a stretch of
++// it, so no painted frame moves a surface further than one frame of its spring can. On
++// steady frames at 60 Hz and above it keeps the spring's own clock.
+ 
+-import { SpringProgress } from "@mkbabb/keyframes.js";
++import { RAFPlayback, SpringProgress } from "@mkbabb/keyframes.js";
+ import {
+     getCurrentScope,
+     onScopeDispose,
+@@ -24,6 +27,7 @@ import {
+     type MaybeRefOrGetter,
+     type Ref,
+ } from "vue";
++import { FRAME_MS } from "../core/constants";
+ import { motionTempo } from "../core/motionTempo";
+ 
+ export interface UseSpringOptions {
+@@ -80,9 +84,10 @@ export interface SpringRef {
+ /**
+  * Track a live numeric target with iOS-style spring physics.
+  *
+- * Wraps `SpringProgress.play(onFrame)` from `@mkbabb/keyframes.js`. The
+- * engine owns rAF + analytic ODE integration; this composable wires the
+- * reactive surface, target-source tracking, and PRM fast-path.
++ * Steps a `SpringProgress` from `@mkbabb/keyframes.js` once per animation
++ * frame, by at most one 60 Hz frame. The engine owns the analytic ODE
++ * solution; this composable owns the frame clock and wires the reactive
++ * surface, target-source tracking, and PRM fast-path.
+  *
+  * @example
+  * ```ts
+@@ -127,10 +132,10 @@ export function useSpring(
+     );
+ 
+     // `subscribe` is the unified mirror — fires on every state change
+-    // including the rAF tick (via `play`), the prefers-reduced-motion
+-    // fast-path snap inside `target` setter, and `snap`/`reset`. Using it
+-    // as the single sync point means the Vue refs stay accurate across
+-    // all engine paths, not just the rAF loop.
++    // including the frame tick, the prefers-reduced-motion fast-path snap
++    // inside `target` setter, and `snap`/`reset`. Using it as the single sync
++    // point means the Vue refs stay accurate across all engine paths, not
++    // just the frame loop.
+     const unsubscribe = spring.value.subscribe((v, vel) => {
+         value.value = v;
+         velocity.value = vel;
+@@ -138,20 +143,26 @@ export function useSpring(
+         options.onValue?.(v, vel);
+     });
+ 
+-    // `play(noopCallback)` arms the engine's rAF lifecycle (auto-start on
+-    // target re-seat, auto-stop on settle). The callback itself is a no-op
+-    // — we read state through `subscribe` above so the Vue refs stay in
+-    // sync across every engine path (rAF tick, PRM snap, target re-seat,
+-    // snap/reset). The `_onFrame` slot is non-undefined which is the
+-    // engine's auto-resume gate (see SpringProgress.reseatTarget).
+-    const noop = (): void => {};
+-    spring.value.play(noop);
++    // The frame loop: it starts when a target re-seat leaves the spring moving and stops
++    // when it settles. The engine's own `play` loop is never armed, so this is the one
++    // clock the spring advances on.
++    const frames = new RAFPlayback();
++    let lastFrame = 0;
++    function drive(): void {
++        if (frames.running || spring.value.settled) return;
++        lastFrame = 0;
++        frames.loop((now) => {
++            spring.value.tickDt(lastFrame ? Math.min(now - lastFrame, FRAME_MS) : FRAME_MS);
++            lastFrame = now;
++            return !spring.value.settled;
++        });
++    }
+ 
+     const stopTargetWatch = watch(
+         () => toValue(target),
+         (nextTarget) => {
+-            if (nextTarget == null) return;
+-            spring.value.target = nextTarget;
++            if (nextTarget != null) spring.value.target = nextTarget;
++            drive();
+         },
+         { immediate: true },
+     );
+@@ -165,6 +176,7 @@ export function useSpring(
+     function dispose(): void {
+         stopTargetWatch();
+         unsubscribe();
++        frames.stop();
+         spring.value.dispose();
+     }
+ 
+@@ -177,10 +189,12 @@ export function useSpring(
+         velocity: readonly(velocity),
+         isSettled: readonly(isSettled),
+         snap: () => {
++            frames.stop();
+             spring.value.snap();
+             syncRefs();
+         },
+         reset: (resetValue, resetVelocity) => {
++            frames.stop();
+             spring.value.reset(resetValue ?? 0, resetVelocity ?? 0);
+             syncRefs();
+         },
 diff --git a/src/composables/motion/spring/useSpringMount.ts b/src/composables/motion/spring/useSpringMount.ts
-index 3ddecf8d9..ab16ffd94 100644
+index 3ddecf8..ab16ffd 100644
 --- a/src/composables/motion/spring/useSpringMount.ts
 +++ b/src/composables/motion/spring/useSpringMount.ts
 @@ -30,12 +30,16 @@
@@ -1378,7 +1551,7 @@ index 3ddecf8d9..ab16ffd94 100644
          isDragging: computed(() => isDragging.value),
          dragHandlers: {
 diff --git a/tests/components/dialog/dialog-attrs.test.ts b/tests/components/dialog/dialog-attrs.test.ts
-index 6a3982b6a..497b1bd63 100644
+index 6a3982b..497b1bd 100644
 --- a/tests/components/dialog/dialog-attrs.test.ts
 +++ b/tests/components/dialog/dialog-attrs.test.ts
 @@ -44,15 +44,14 @@ describe("DialogContent attributes", () => {
@@ -1405,7 +1578,7 @@ index 6a3982b6a..497b1bd63 100644
  
      it("never forwards it into the DOM", async () => {
 diff --git a/tests/components/dialog/dialog-spring.test.ts b/tests/components/dialog/dialog-spring.test.ts
-index 43ef110a6..c13e2dcf4 100644
+index 43ef110..c47c586 100644
 --- a/tests/components/dialog/dialog-spring.test.ts
 +++ b/tests/components/dialog/dialog-spring.test.ts
 @@ -11,8 +11,8 @@
@@ -1433,7 +1606,7 @@ index 43ef110a6..c13e2dcf4 100644
                      h(DialogTrigger, () => "open"),
                      h(DialogContent, { ...props, class: "test-dialog" }, () => [
                          h(DialogTitle, { class: "sr-only" }, () => "Test dialog"),
-@@ -54,16 +54,16 @@ const findDialog = (): HTMLElement | null =>
+@@ -54,16 +54,19 @@ const findDialog = (): HTMLElement | null =>
      document.querySelector(".test-dialog") as HTMLElement | null;
  
  describe("DialogContent — spring entrance", () => {
@@ -1452,12 +1625,15 @@ index 43ef110a6..c13e2dcf4 100644
 +            expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("present");
 +            mounted.push(mountDialog({}, { origin: new DOMRect(10, 10, 40, 40) }));
 +            expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("panel");
++            // An opener that has left the page gives no rect, so the plate presents in place.
++            mounted.push(mountDialog({}, { origin: document.createElement("button") }));
++            expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("present");
          } finally {
 +            for (const wrapper of mounted) wrapper.unmount();
              spy.mockRestore();
          }
      });
-@@ -97,6 +97,33 @@ describe("DialogContent — spring entrance", () => {
+@@ -97,6 +100,33 @@ describe("DialogContent — spring entrance", () => {
          wrapper.unmount();
      });
  
@@ -1492,7 +1668,7 @@ index 43ef110a6..c13e2dcf4 100644
          const wrapper = mountDialog({ motion: "off" });
          await nextTick();
 diff --git a/tests/components/ui/data-table/DataTable.test.ts b/tests/components/ui/data-table/DataTable.test.ts
-index 82ed6765d..4ed8d0c33 100644
+index 82ed676..ba57807 100644
 --- a/tests/components/ui/data-table/DataTable.test.ts
 +++ b/tests/components/ui/data-table/DataTable.test.ts
 @@ -1,5 +1,5 @@
@@ -1590,7 +1766,7 @@ index 82ed6765d..4ed8d0c33 100644
          ]);
          expect(cards.map((card) => card.attributes("data-absolute-index"))).toEqual([
              "42",
-@@ -414,6 +455,194 @@ describe("DataTable interaction semantics", () => {
+@@ -414,6 +455,216 @@ describe("DataTable interaction semantics", () => {
      });
  });
  
@@ -1649,6 +1825,28 @@ index 82ed6765d..4ed8d0c33 100644
 +        );
 +        wrapper.unmount();
 +        cards.unmount();
++    });
++
++    it("tells the host when its viewport leaves", async () => {
++        const viewportRef = vi.fn();
++        const wrapper = mountTable([{ _id: "1", name: "Ada" }], { viewportRef });
++        await nextTick();
++        wrapper.unmount();
++        expect(viewportRef).toHaveBeenLastCalledWith(null);
++    });
++
++    it("keeps the sentinel in the cards' loading, empty and error states", async () => {
++        vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
++        for (const props of [{ status: "loading" }, {}, { status: "error" }]) {
++            const wrapper = mount(DataTable as Component, {
++                attachTo: document.body,
++                props: { columns, rows: [], responsive: true, ...props },
++                slots: { sentinel: '<div data-sentinel></div>' },
++            });
++            await vi.waitFor(() => expect(wrapper.find(".data-table-card, .data-table-state").exists()).toBe(true));
++            expect(wrapper.find("[data-sentinel]").exists()).toBe(true);
++            wrapper.unmount();
++        }
 +    });
 +
 +    it("puts the sentinel inside the viewport, after the rows", () => {
@@ -1785,8 +1983,61 @@ index 82ed6765d..4ed8d0c33 100644
  describe("DataTable row identity", () => {
      it("rejects rows with missing identity", () => {
          expect(() => mountTable([{ name: "Ada" }])).toThrow(
+diff --git a/tests/composables/useSpring.test.ts b/tests/composables/useSpring.test.ts
+index 57c48bf..267aea3 100644
+--- a/tests/composables/useSpring.test.ts
++++ b/tests/composables/useSpring.test.ts
+@@ -192,6 +192,48 @@ describe("useSpring", () => {
+         spring.dispose();
+     });
+ 
++    it("advances by at most one 60 Hz frame across a long frame", async () => {
++        // A frame clock the test runs by hand: each `frame(at)` fires the callbacks queued
++        // since the last one at that timestamp.
++        let queue: FrameRequestCallback[] = [];
++        const request = (cb: FrameRequestCallback): number => queue.push(cb);
++        vi.stubGlobal("requestAnimationFrame", request);
++        Object.defineProperty(window, "requestAnimationFrame", {
++            configurable: true,
++            writable: true,
++            value: request,
++        });
++        const frame = (at: number) => {
++            const run = queue;
++            queue = [];
++            for (const cb of run) cb(at);
++        };
++        const after = async (gaps: number[]) => {
++            const target = ref(0);
++            const spring = useSpring(target, {
++                response: 0.4,
++                dampingFraction: 0.8,
++                respectReducedMotion: false,
++            });
++            target.value = 100;
++            await nextTick();
++            let at = 1000;
++            frame(at);
++            for (const gap of gaps) frame((at += gap));
++            const value = spring.value.value;
++            spring.dispose();
++            queue = [];
++            return value;
++        };
++        const frameMs = 1000 / 60;
++        // A 200 ms frame (a body that mounts, a table that renders) moves the spring as far
++        // as one steady frame does, not twelve.
++        const steady = await after([frameMs, frameMs]);
++        const long = await after([frameMs, 200]);
++        expect(steady).toBeGreaterThan(0);
++        expect(long).toBeCloseTo(steady, 9);
++    });
++
+     it("ignores null/undefined targets", async () => {
+         const target = ref<number | null>(null);
+         const spring = useSpring(target, { initial: 5 });
 diff --git a/tests/composables/useSpringMount.test.ts b/tests/composables/useSpringMount.test.ts
-index b8864f488..6301fbfaa 100644
+index b8864f4..6301fbf 100644
 --- a/tests/composables/useSpringMount.test.ts
 +++ b/tests/composables/useSpringMount.test.ts
 @@ -11,6 +11,8 @@ import { defineComponent, h, nextTick, ref } from "vue";

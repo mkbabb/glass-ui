@@ -26,6 +26,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@glass
 const params = new URLSearchParams(location.search);
 const cell = params.get("cell") ?? "";
 const modal = params.get("modal") !== "0";
+const activation = params.get("act") === "manual" ? "manual" : "automatic";
 
 const lowerOpen = ref(false);
 const topOpen = ref(false);
@@ -240,7 +241,7 @@ onMounted(() => {
             <div class="outer" data-t="outer">
                 <div class="outer-pad" />
                 <div class="run" data-t="run">
-                    <SegmentedTabs v-model="tab" :options="tabs" aria-label="Views" data-t="strip" />
+                    <SegmentedTabs v-model="tab" :options="tabs" :activation="activation" aria-label="Views" data-t="strip" />
                 </div>
                 <div class="outer-pad" />
             </div>

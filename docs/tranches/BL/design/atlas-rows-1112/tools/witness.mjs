@@ -352,7 +352,12 @@ const CELLS = {
             await page.evaluate(() => [...$t("run").querySelectorAll("button")].find((b) => b.textContent.trim() === "Option 7").click());
             await sleep(600);
             const after = await read();
-            return { before, after, errors };
+            // The keys arms: Option 0 holds focus with the page and the outer scroller at
+            // rest, then ArrowRight seven times (and Enter under manual activation), read
+            // after every press.
+            const keys = await selgroupKeys(browser, "automatic");
+            const manual = await selgroupKeys(browser, "manual");
+            return { before, after, errors, keys, manual };
         } finally {
             await context.close();
         }
@@ -455,6 +460,45 @@ const CELLS = {
         }
     },
 };
+
+async function selgroupKeys(browser, activation) {
+    const { context, page, errors } = await open(browser, DESKTOP, "selgroup", activation === "manual" ? "&act=manual" : "");
+    try {
+        const read = (key) =>
+            page.evaluate((key) => {
+                const run = $t("run");
+                const focused = document.activeElement;
+                const port = run.getBoundingClientRect();
+                const box = focused?.getBoundingClientRect();
+                return {
+                    key,
+                    page: scrollY,
+                    outer: $t("outer").scrollTop,
+                    run: Math.round(run.scrollLeft),
+                    focused: run.contains(focused) ? focused.textContent.trim() : desc(focused),
+                    inRun: !!box && box.left >= port.left - 1 && box.right <= port.right + 1,
+                    selected: [...run.querySelectorAll("button")].find((b) => ["aria-checked", "aria-pressed", "aria-selected"].some((a) => b.getAttribute(a) === "true"))?.textContent.trim(),
+                };
+            }, key);
+        await page.evaluate(() => [...$t("run").querySelectorAll("button")].find((b) => b.textContent.trim() === "Option 0").focus({ preventScroll: true }));
+        const reads = [await read("start")];
+        for (let i = 0; i < 7; i++) {
+            await page.keyboard.press("ArrowRight");
+            await sleep(150);
+            reads.push(await read("ArrowRight"));
+        }
+        if (activation === "manual") {
+            await page.keyboard.press("Enter");
+            await sleep(150);
+            reads.push(await read("Enter"));
+        }
+        await sleep(450);
+        reads.push(await read("settled"));
+        return { activation, reads, errors };
+    } finally {
+        await context.close();
+    }
+}
 
 async function popoverCell(browser, cell) {
     const { context, page, errors } = await open(browser, DESKTOP, cell);

@@ -1,0 +1,464 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795820978 slope=23.1/s inuse=326334 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/atlas-minor/trees/r2-redtest
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts (30 tests | 11 failed) 2522ms
+     × projects the same controlled selection contract onto responsive cards, as a grid 1009ms
+     × keeps the table's role, header row, rows and cells in the card projection 65ms
+     × keeps caller-windowed row indices and counts in responsive cards 1005ms
+     × names the table with its caption slot, above the header 3ms
+     × renders a row-header column as th scope=row 2ms
+     × gives a column's cells its width 2ms
+     × hands its viewport to the host, and the cards' when it projects them 4ms
+     × tells the host when its viewport leaves 2ms
+     × puts the sentinel inside the viewport, after the rows 3ms
+     × marks each scrolled axis, so the sticky parts take a ground only then 3ms
+     × shows the leading columns that fit the viewport and reports the rest 3ms
+stderr | tests/composables/useSpringMount.test.ts > useSpringMount — the row is read at each open > rides the row its preset getter names at the open, from where the surface stands
+[Vue warn]: Component is missing template or render function:  { setup: [Function: setup], components: {} } 
+  at <Anonymous ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+ ❯ tests/composables/useSpringMount.test.ts (15 tests | 1 failed) 396ms
+     × rides the row its preset getter names at the open, from where the surface stands 6ms
+ ❯ tests/components/dialog/dialog-spring.test.ts (5 tests | 2 failed) 104ms
+     × presents in place and deploys from an origin, with no consumer choice 55ms
+     × starts the plate on its origin's rect, centre and size, invisible 11ms
+ ❯ tests/components/dialog/dialog-attrs.test.ts (5 tests | 1 failed) 67ms
+     × declares an element or a rect on the ROOT, typed 3ms
+ ❯ tests/composables/useSpring.test.ts (11 tests | 1 failed) 137ms
+     × advances by at most one 60 Hz frame across a long frame 3ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/useSpring.test.ts > useSpring > advances by at most one 60 Hz frame across a long frame
+AssertionError: expected 97.38439318794495 to be close to 20.17293770712412, received difference is 77.21145548082083, but expected 5e-10
+ ❯ tests/composables/useSpring.test.ts:234:22
+    232|         const long = await after([frameMs, 200]);
+    233|         expect(steady).toBeGreaterThan(0);
+    234|         expect(long).toBeCloseTo(steady, 9);
+       |                      ^
+    235|     });
+    236|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  tests/composables/useSpringMount.test.ts > useSpringMount — the row is read at each open > rides the row its preset getter names at the open, from where the surface stands
+TypeError: Cannot read properties of undefined (reading 'response')
+ ❯ useSpringMount src/composables/motion/spring/useSpringMount.ts:155:26
+    153|
+    154|     const spring = useSpring(target, {
+    155|         response: preset.response,
+       |                          ^
+    156|         dampingFraction: preset.dampingFraction,
+    157|         initial: 1, // start off-screen / scaled-small
+ ❯ setup tests/composables/useSpringMount.test.ts:396:17
+ ❯ callWithErrorHandling ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:200:19
+ ❯ setupStatefulComponent ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8151:25
+ ❯ setupComponent ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:8113:36
+ ❯ mountComponent ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6023:7
+ ❯ processComponent ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5989:9
+ ❯ patch ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5494:11
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../../../../../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6137:11
+ ❯ ReactiveEffect.run ../../../../../../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:268:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  tests/components/dialog/dialog-attrs.test.ts > Dialog root — the origin > declares an element or a rect on the ROOT, typed
+AssertionError: expected '<script setup lang="ts">\nimport { co…' to match /origin\?:\s*DialogOrigin/
+
+- Expected:
+/origin\?:\s*DialogOrigin/
+
++ Received:
+"<script setup lang=\"ts\">
+import { computed } from \"vue\";
+import { DialogRoot, useForwardPropsEmits } from \"reka-ui\";
+
+export interface DialogProps {
+    open?: boolean;
+    defaultOpen?: boolean;
+    modal?: boolean;
+    unmountOnHide?: boolean;
+    /**
+     * THE ORIGIN RECT — the surface this dialog grew out of, in viewport coordinates.
+     *
+     * A SEAM, and it is declared as one: the entrance reads it NOWHERE today, and the
+     * plate blooms from its own centre exactly as it does without it. It is here so the
+     * expandable-container fold lands `origin=\"element\"` by wiring an entrance to a rect
+     * the root already accepts, instead of re-cutting the entrance and this signature in
+     * the same breath. It is the ONE prop-shaped hole this wave was told to leave.
+     *
+     * It carries no machinery on purpose. If the fold refuses, this prop leaves with the
+     * refusal — a hole that nothing ever fills is a hole, not an API.
+     */
+    origin?: DOMRectReadOnly | null;
+}
+
+const props = defineProps<DialogProps>();
+const emits = defineEmits<{ \"update:open\": [value: boolean] }>();
+
+// `origin` is withheld from the forward set. reka's root does not know the prop, so
+// forwarding it would drop it into `$attrs` on a component that renders no element of
+// its own — a stray that can only ever be noise, and a rect stringified onto the DOM if
+// the root ever grows one.
+const rootProps = computed(() => {
+    const { origin: _origin, ...forwardable } = props;
+    return forwardable;
+});
+
+const forwarded = useForwardPropsEmits(rootProps, emits);
+</script>
+
+<template>
+    <DialogRoot data-slot=\"dialog\" v-bind=\"forwarded\">
+        <slot />
+    </DialogRoot>
+</template>
+"
+
+ ❯ tests/components/dialog/dialog-attrs.test.ts:52:24
+     50|     it("declares an element or a rect on the ROOT, typed", () => {
+     51|         const source = readFileSync("src/components/dialog/Dialog.vue"…
+     52|         expect(source).toMatch(/origin\?:\s*DialogOrigin/);
+       |                        ^
+     53|         const types = readFileSync("src/components/dialog/origin.ts", …
+     54|         expect(types).toMatch(/DialogOrigin\s*=\s*Element\s*\|\s*DOMRe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  tests/components/dialog/dialog-spring.test.ts > DialogContent — spring entrance > presents in place and deploys from an origin, with no consumer choice
+AssertionError: expected 'present' to be 'panel' // Object.is equality
+
+Expected: "panel"
+Received: "present"
+
+ ❯ tests/components/dialog/dialog-spring.test.ts:64:63
+     62|             expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("pr…
+     63|             mounted.push(mountDialog({}, { origin: new DOMRect(10, 10,…
+     64|             expect(toValue(spy.mock.calls.at(-1)![0].preset)).toBe("pa…
+       |                                                               ^
+     65|             // An opener that has left the page gives no rect, so the …
+     66|             mounted.push(mountDialog({}, { origin: document.createElem…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  tests/components/dialog/dialog-spring.test.ts > DialogContent — spring entrance > starts the plate on its origin's rect, centre and size, invisible
+AssertionError: expected 'none' to be 'translate(-616px, -370px) scale(0.25,…' // Object.is equality
+
+Expected: "translate(-616px, -370px) scale(0.25, 0.1)"
+Received: "none"
+
+ ❯ tests/components/dialog/dialog-spring.test.ts:120:43
+    118|             const plate = findDialog()!;
+    119|             // Centres: origin (104, 80), plate (720, 450). Sizes: 128…
+    120|             expect(plate.style.transform).toBe("translate(-616px, -370…
+       |                                           ^
+    121|             expect(plate.style.scale).toBe("1");
+    122|             expect(plate.style.opacity).toBe("0");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable interaction semantics > projects the same controlled selection contract onto responsive cards, as a grid
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:298:77
+    296|
+    297|         await vi.waitFor(() =>
+    298|             expect(wrapper.find('.data-table-cards[role="grid"]').exis…
+       |                                                                             ^
+    299|         );
+    300|         const cards = wrapper.findAll('.data-table-card[role="row"]');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable interaction semantics > keeps the table's role, header row, rows and cells in the card projection
+Error: Unable to get .data-table-cards[role="table"] within: <div data-slot="data-table" class="data-table" data-state="ready">
+  <!-- ── Card projection (responsive, narrow container) ────────── -->
+  <!-- Loading skeleton -->
+  <!-- Data cards -->
+  <div class="data-table-cards">
+    <div class="data-table-card glass-quiet">
+      <div class="data-table-card-header">
+        <div class="data-table-card-title">Ada</div>
+        <!--v-if-->
+      </div>
+      <dl class="data-table-card-fields">
+        <dt class="data-table-card-label">Slug</dt>
+        <dd class="data-table-card-value" data-align="left">ada</dd>
+      </dl>
+    </div>
+    <div class="data-table-card glass-quiet">
+      <div class="data-table-card-header">
+        <div class="data-table-card-title">Grace</div>
+        <!--v-if-->
+      </div>
+      <dl class="data-table-card-fields">
+        <dt class="data-table-card-label">Slug</dt>
+        <dd class="data-table-card-value" data-align="left">grace</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+ ❯ VueWrapper.get ../../../../../../../node_modules/@vue/test-utils/dist/vue-test-utils.cjs.js:7182:15
+ ❯ tests/components/ui/data-table/DataTable.test.ts:328:31
+    326|
+    327|         await vi.waitFor(() => expect(wrapper.find(".data-table-cards"…
+    328|         const table = wrapper.get('.data-table-cards[role="table"]');
+       |                               ^
+    329|         const caption = table.get('[role="caption"]');
+    330|         expect(caption.text()).toBe("Pioneers");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable interaction semantics > keeps caller-windowed row indices and counts in responsive cards
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:365:77
+    363|
+    364|         await vi.waitFor(() =>
+    365|             expect(wrapper.find('.data-table-cards[role="grid"]').exis…
+       |                                                                             ^
+    366|         );
+    367|         const cards = wrapper.findAll("[data-absolute-index]");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > names the table with its caption slot, above the header
+AssertionError: expected 'THEAD' to be 'CAPTION' // Object.is equality
+
+Expected: "CAPTION"
+Received: "THEAD"
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:466:58
+    464|         });
+    465|         const table = wrapper.get("table");
+    466|         expect(table.element.firstElementChild?.tagName).toBe("CAPTION…
+       |                                                          ^
+    467|         expect(table.get("caption").text()).toBe("Pioneers");
+    468|         wrapper.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > renders a row-header column as th scope=row
+AssertionError: expected 'TD' to be 'TH' // Object.is equality
+
+Expected: "TH"
+Received: "TD"
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:479:34
+    477|         });
+    478|         const cells = wrapper.get("tbody tr").element.children;
+    479|         expect(cells[0].tagName).toBe("TH");
+       |                                  ^
+    480|         expect(cells[0].getAttribute("scope")).toBe("row");
+    481|         expect(cells[0].textContent).toBe("Ada");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > gives a column's cells its width
+AssertionError: expected '' to be '16rem' // Object.is equality
+
+- Expected
++ Received
+
+- 16rem
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:490:83
+    488|             columns: [{ key: "name", label: "Name", width: "16rem" }],
+    489|         });
+    490|         expect((wrapper.get("thead th").element as HTMLElement).style.…
+       |                                                                                   ^
+    491|         expect((wrapper.get("tbody td").element as HTMLElement).style.…
+    492|         wrapper.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > hands its viewport to the host, and the cards' when it projects them
+AssertionError: expected last "vi.fn()" call to have been called with [ <div …(2)>…(1)</div> ]
+
+- Expected:
+[
+  <div
+    class="table-container"
+    data-slot="table-container"
+  >
+    <table
+      aria-colcount="1"
+      class="w-full caption-bottom text-small"
+      data-slot="table"
+    >
+      
+      <thead
+        class="[&_tr]:border-b [&_tr]:border-border"
+      >
+        
+        <tr
+          class="border-b border-border data-table-header-row"
+        >
+          
+          
+          <th
+            class="table-head text-left data-[align=center]:text-center data-[align=right]:text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
+            data-align="left"
+          >
+            
+            
+            Name
+            
+            
+          </th>
+          
+          <!-- Trailing actions column header (auto when row-actions slot is provided) -->
+          <!--v-if-->
+          
+        </tr>
+        
+      </thead>
+      <tbody
+        class="[&_tr:last-child]:border-0"
+      >
+        
+        <!-- Loading skeleton -->
+        
+        <!-- Data rows -->
+        
+        <tr
+          class="border-b border-border"
+        >
+          
+          
+          <td
+            class="table-cell align-middle [&:has([role=checkbox])]:pr-0"
+            data-align="left"
+          >
+            
+            <span
+              value="Ada"
+            >
+              Ada-&gt;Ada
+            </span>
+            
+          </td>
+          
+          <!--v-if-->
+          
+        </tr>
+        
+        
+        
+      </tbody>
+      
+    </table>
+  </div>,
+]
+
++ Received:
+undefined
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:500:29
+    498|         await nextTick();
+    499|         const container = wrapper.get('[data-slot="table-container"]')…
+    500|         expect(viewportRef).toHaveBeenLastCalledWith(container);
+       |                             ^
+    501|         expect(container.classList).toContain("data-table-viewport");
+    502|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > tells the host when its viewport leaves
+AssertionError: expected last "vi.fn()" call to have been called with [ null ]
+
+- Expected:
+[
+  null,
+]
+
++ Received:
+undefined
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:520:29
+    518|         await nextTick();
+    519|         wrapper.unmount();
+    520|         expect(viewportRef).toHaveBeenLastCalledWith(null);
+       |                             ^
+    521|     });
+    522|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > puts the sentinel inside the viewport, after the rows
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:544:82
+    542|         });
+    543|         const sentinel = wrapper.get("[data-sentinel]").element;
+    544|         expect(sentinel.parentElement?.matches('[data-slot="table-cont…
+       |                                                                                  ^
+    545|         wrapper.unmount();
+    546|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable viewport, caption, row headers and widths > marks each scrolled axis, so the sticky parts take a ground only then
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:555:62
+    553|         viewport.scrollTop = 40;
+    554|         viewport.dispatchEvent(new Event("scroll"));
+    555|         expect(viewport.hasAttribute("data-scrolled-block")).toBe(true…
+       |                                                              ^
+    556|         expect(viewport.hasAttribute("data-scrolled-inline")).toBe(fal…
+    557|         viewport.scrollTop = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+ FAIL  tests/components/ui/data-table/DataTable.test.ts > DataTable fit > shows the leading columns that fit the viewport and reports the rest
+AssertionError: expected undefined to be '' // Object.is equality
+
+- Expected:
+""
+
++ Received:
+undefined
+
+ ❯ tests/components/ui/data-table/DataTable.test.ts:627:48
+    625|         });
+    626|         await nextTick();
+    627|         expect(wrapper.attributes("data-fit")).toBe("");
+       |                                                ^
+    628|         expect(wrapper.findAll(".data-table-ruler [data-column]")).toH…
+    629|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+
+ Test Files  5 failed | 17 passed (22)
+      Tests  16 failed | 161 passed (177)
+   Start at  18:18:06
+   Duration  18.80s (transform 3.09s, setup 1.42s, import 8.18s, tests 17.04s, environment 6.16s)
+

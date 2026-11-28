@@ -1,0 +1,97 @@
+diff --git a/src/components/deck/composables/useDeckSnap.ts b/src/components/deck/composables/useDeckSnap.ts
+--- a/src/components/deck/composables/useDeckSnap.ts
++++ b/src/components/deck/composables/useDeckSnap.ts
+@@ -218,31 +218,70 @@
+         for (const member of members()) observer.observe(member);
+     }
+ 
+-    function scrollTo(index: number, behavior: ScrollBehavior = "smooth"): void {
+-        const el = strip.value;
+-        if (!el || !members()[index]) return;
+-        heading = index;
+-        if (!reduced.value) return seat(el, index, behavior);
+-        // Under reduced motion nothing travels: a press seats the strip at once. A strip
+-        // still moving (a swipe's settle, a wheel's coast) carries itself back off an
+-        // instant seat, so the press holds the strip's reports, lets it rest, and then
+-        // seats it on the last member pressed for.
+-        if (waiting) return;
+-        if (!moving) return seat(el, index, "instant");
+-        programmatic += 1;
++    /* TRIAL ONLY (the dip for the parts minor, not 11.1.2). Under reduced motion a press
++       fades the strip out over 100 ms on --ease-in, seats it while hidden once it is
++       still, and fades it in over 100 ms on --ease-apple. The strip's reports are held
++       from the press. A press back to the member on show during the out leg turns it
++       round from the opacity on screen; a press during the in leg fades out from there. */
++    const DIP_MS = 100;
++    let dip: Animation | null = null;
++    let shown: Animation | null = null;
++    const ease = (el: HTMLElement, token: string): string =>
++        getComputedStyle(el).getPropertyValue(token).trim();
++
++    function whenStill(el: HTMLElement, then: () => void): void {
+         const go = (): void => {
+             if (waiting !== go) return;
+             waiting = null;
+             clearTimeout(waitIdle);
+             el.removeEventListener("scrollend", go);
+-            programmatic -= 1;
+-            seat(el, heading, "instant");
++            then();
+         };
+         waiting = go;
+         el.addEventListener("scrollend", go);
+         waitIdle = setTimeout(go, REST_IDLE_MS);
+     }
+ 
++    function reveal(el: HTMLElement, out: Animation): void {
++        dip = null;
++        programmatic -= 1;
++        const now = Number(getComputedStyle(el).opacity);
++        shown = el.animate([{ opacity: now }, {}], { duration: DIP_MS, easing: ease(el, "--ease-apple") });
++        out.cancel();
++    }
++
++    function scrollTo(index: number, behavior: ScrollBehavior = "smooth"): void {
++        const el = strip.value;
++        if (!el || !members()[index]) return;
++        heading = index;
++        if (!reduced.value) return seat(el, index, behavior);
++        if (behavior !== "smooth") return seat(el, index, "instant");
++        const here = !moving && Math.abs(offset() - offsetOf(index)) < 1;
++        if (dip) {
++            if (here && !waiting) reveal(el, dip);
++            return;
++        }
++        if (here) return;
++        programmatic += 1;
++        shown?.cancel();
++        const from = Number(getComputedStyle(el).opacity);
++        const out = el.animate({ opacity: [from, 0] }, { duration: DIP_MS, easing: ease(el, "--ease-in"), fill: "forwards" });
++        dip = out;
++        out.finished.then(
++            () => {
++                if (dip !== out) return;
++                const land = (): void => {
++                    if (dip !== out) return;
++                    reveal(el, out);
++                    seat(el, heading, "instant");
++                };
++                if (moving) whenStill(el, land);
++                else land();
++            },
++            () => {},
++        );
++    }
++
+     /** Scroll the strip to member `index`, holding its reports until it rests. */
+     function seat(el: HTMLElement, index: number, behavior: ScrollBehavior): void {
+         const to = offsetOf(index);
+@@ -315,6 +354,8 @@
+         if (waiting) el?.removeEventListener("scrollend", waiting);
+         waiting = null;
+         clearTimeout(waitIdle);
++        dip?.cancel();
++        shown?.cancel();
+         observer?.disconnect();
+         observer = null;
+         resizer?.disconnect();

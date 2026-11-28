@@ -689,9 +689,77 @@ After the header rule widened to every side, the nine files that read the Sheet'
 
 `cure.patch` applies with `git apply` to a fresh `git archive` of release/11.1.1's tip (14506233e at this reading), whose `src` and `tests` match 4f1fa667e.
 
-## 9. The record
+## 9. v8: the fourth critique
+
+A fourth critic read v7 in both engines (`critique-sci.md`) and found one blocking item, three sentences the patch writes into source that the readings contradict (R5-S1); two major items, v7's inline cap on the vertical strip (R5-M1) and a strip that scrolls hiding its selected tab at rest (R5-M2); and six notes. STUDY.md, "v8: the fourth critique", gives each ruling; this section gives the method and the tables.
+
+**Builds.** One tree, `trees/v8`: a `git archive` of release/11.1.1 at 871be44bc without `docs/` and `tests-visual/`, its own git root, `node_modules` a link to the main checkout's. `dist-base`, then `git apply cure-v7.patch` and `dist-v7`, then v8 written over v7 in the tree's `src` and `dist-v8`. `cure.patch` is the tree's `git diff` of `src` and `tests` against the archive, and `git apply --check` passes it on a fresh archive of release/11.1.1's `src` and `tests`. After the readings one comment line in `useStripOverflow.ts` was reworded (a strip the reader has panned stays put "until its choice changes or it or one of its tabs resizes"); no code changed. Each build carries the witness page as a second entry, `/sci.html` (`tools/plans/v8/build.sh`).
+
+**Page and probes.** `tools/plans/v8/Witness.vue` is the critic's page (`record/inspect/critic-sci3/Sci.vue`) with five cells added: a vertical strip of three beside a paragraph in a 358 px flex row (`vert-row`); eight tabs in 267 px whose choice changes from code (`sel-prog`, through `window.__prog`); a third strip in the Sheet's header with its last tab chosen (`hdr-last`); and a reader of each animation frame, from mount for the last-selected strip (`window.__loadFrames`) and on request for any strip (`window.__frames`). `probe.mjs` is the critic's, unchanged. `probe-v8.mjs` reads R5-M1 and R5-M2. `run.sh` previews the three builds on 5631 to 5633 as children of one guarded call and stops them on exit. Cells: Chromium at 390×844 with touch, `isMobile` and scale 2, at 1440×900, and (`probe-v8.mjs` only) at 390 touch with `reducedMotion: reduce`; Playwright's WebKit at the same sizes with `hasTouch`, read for sizes, offsets and frames, and pressed by mouse. Light, one browser per run, a context per cell and build, closed in `finally`. Record: `record/inspect/v8/touch.{chromium,webkit}.json` (`probe.mjs`) and `record/inspect/v8/m2.{chromium,webkit}.json` (`probe-v8.mjs`).
+
+### 9.1 The dock run's range (R5-S1, the GL-16 comment)
+
+Three seats; `natural` is the host width the dock asks for (211.6 px at 390, 228.7 at 1440), and each row squeezes the host by k px. The run's `scrollWidth`/`clientWidth`, then whether the dock has `data-run-fits`. Chromium; WebKit below the table.
+
+| host | base 390 / 1440 | v7 390 / 1440 | v8 390 / 1440 |
+|---|---|---|---|
+| natural | 196/192, 213/209, flagged | 196/196, 213/213, flagged | as v7 |
+| k = 2 | 196/190, 213/207, flagged | 196/194, 213/211, flagged | as v7 |
+| k = 4 | 196/188, 213/205, flagged | 196/192, 213/209, flagged | as v7 |
+| k = 8 | 196/184, 213/201, not flagged | 196/188, 213/205, flagged | as v7 |
+| k = 12 | 196/180, 213/197, not flagged | 196/184, 213/201, not flagged | as v7 |
+
+`touch-action` on the run: `pan-x` on the base everywhere; `pan-x pan-y` on v7 and v8 wherever the run is flagged, `pan-x` at k = 12. A 240 px vertical swipe begun on the second seat, at 0, 16 and 48 px of drift (390 touch): the base 0 with 12 moves and no cancel on every flagged and squeezed host; v7 and v8 scroll the page 293 to 371 px (v7) and 343 to 378 px (v8), each with a cancel after 1 move, and pan the run 0 px. At k = 12, 0 on all three.
+
+Playwright's WebKit (static only): the base reads as in Chromium. v7 and v8 read 196/196 and 213/213 at the natural width; 194/194 and 211/211 at k = 2 and 192/192 and 209/209 at k = 4, flagged, with no range (choice 7); 196/188 and 213/205 at k = 8, flagged; 196/184 and 213/201 at k = 12, not flagged. `touch-action` as in Chromium.
+
+### 9.2 The vertical strip (R5-M1)
+
+The eight measure labels, vertical, in a 100 px box: the strip's width and computed `max-width`, the widest label's tab and text, and where the text ends against its tab and the box. Chromium; Playwright's WebKit reads within 0.4 px (the base and v8 108 / 142.4 px; v7 at 1440, the text 30.4 px past its 92 px tab).
+
+| build | 390 touch | 1440 |
+|---|---|---|
+| base | strip 107.9 px, `none`; "Transportation" 81.9 px of text in a 102 px tab, 10 px inside it, 5.1 px inside the box | strip 142.3 px, `none`; 110.3 px of text in a 134 px tab, 12 px inside it; the text 26.3 px past the box |
+| v7 | strip 100 px, `100%`; the text in a 94 px tab, 2.1 px inside it | strip 100 px, `100%`; the text in a 92 px tab, 30.3 px past it and past the pill; 26.3 px past the box |
+| v8 | as the base, to 0.1 px | as the base, to 0.1 px |
+
+No build sets `data-overflow` on the vertical strip. A vertical strip of three beside a paragraph in a 358 px row: 57.3 px wide at 390 and 74.1 at 1440, the paragraph 288.7 and 271.9 px on 3 lines, on all three builds.
+
+### 9.3 The selected tab (R5-M2)
+
+Eight tabs in a 267 px box. "inside" is the share of the selected tab inside the strip's box (for the base, whose strip runs past its box, inside the box); `scrollLeft` is the strip's. The frames are v8's, as milliseconds after the first sampled frame and the strip's `scrollLeft` then. Chromium, 390 touch / 1440.
+
+| case | base | v7 | v8 | v8's frames |
+|---|---|---|---|---|
+| the last tab chosen at load | the strip 654 / 858 px, the tab 582 / 763 px in: 0 % inside the box | flagged; `scrollLeft` 0; 0 % | flagged; `scrollLeft` 387 / 591; 100 %, ring room 2.7 / 4.4 px at the strip's end | 0: 0, then 12: 387 (390); 0: 0, then 9: 591 (1440). The first frame reads before the observer's first delivery, on every build |
+| widened to 1200 px | the strip 822 / 1083, 100 % | not flagged, 100 % | the same | |
+| back to 267 | as at load | flagged; 0; 0 % | 387 / 591; 100 % | a glide: 22: 1, 54: 19, 96: 164, 121: 249, 305: 387 (390); 591 by about 380 ms (1440) |
+| narrowed to 200 while it scrolls | as at load | 0; 0 % | 454 / 658; 100 % | 387 → 454 by 104 ms; 591 → 658 by 104 ms |
+| `sel-prog`, the first tab chosen at load | 100 % | 0; 100 % | 0; 100 % | |
+| code chooses the last tab | 0 % inside the box | 0; 0 % | 387 / 591; 100 % | 0 → 387 by 309 ms; 0 → 591 by about 370 ms |
+| scrolled back to 0 by script, read 800 ms later | | 0; 0 % | 0; 0 %: the strip stays where it was put | |
+| code chooses Transportation | 0 % inside the box | 0; 0 % | 250 / 411; 100 % | 0 → 250 by 240 ms; 0 → 411 by 316 ms |
+| a press on the tab the strip's edge cuts (Graduation / Attendance) | nothing scrolls; the tab stays 12 / 37 % inside the box | 76 / 74; 100 % | 76 / 74; 100 % | 0 → 76 by 139 ms; 0 → 74 by 112 ms; v7's curve the same |
+| the Sheet's header strip, the last tab chosen, at open | 0 % (390) | flagged; 0; 0 % (390) | flagged; 290; 100 % (390) | 0 in the frame before its first reading, 290 in the next, 8 ms later. At 1440 the sheet holds the tabs on every build |
+
+Under reduced motion (390 touch), v8 lands in one frame each time: at load 0 then 387 (6 ms), back to 267 at 8 ms, narrowed to 200 at 12 ms, and both choices from code in the frame they were read. The indicator sits on the selected tab in every row of every build.
+
+Playwright's WebKit (390 with `hasTouch` / 1440, pressed by mouse; `m2.webkit.json`) reads every case as Chromium does, to 1 px. The last tab chosen at load: the base 0 % inside the box; v7 0 %; v8 at 388 / 591 with 3.5 / 4.2 px of ring room, the first frame 0 and the second, 46 / 49 ms later, the end. Back to 267: v8 glides 0 → 388 / 591 by 213 / 205 ms. Narrowed to 200: 388 → 455 / 591 → 658 by 74 / 73 ms. Code chooses the last tab: 0 → 388 / 591 by 192 / 196 ms; scrolled back to 0, still 0 800 ms later; Transportation: 0 → 250 / 411 by 196 / 198 ms. The press: 76 / 74 on v7 and v8, by 98 / 85 ms on v8. The Sheet's header strip at open (390): v8 291, in the first frame after it is laid out (42 ms); v7 0 %. Under reduced motion each lands in one frame. v7 shows 0 % in every case but the press.
+
+### 9.4 The rest of the critic's page on v8
+
+`probe.mjs` reads 41 rows per build in Chromium. v8's equal v7's in every static row (the docks' sizes, flags and `touch-action`; the ConfiguratorLayer columns, 491/200 and `visible`/`clip` on the nowrap line; the strips' flags, `overflow-x` and `touch-action`; the Sheet's header) and in the moves and cancels of every gesture. Momentum differed: the page scrolls after the docks' vertical swipes (above), and the ConfiguratorLayer column's sideways pan of the nowrap line, 213 px on v8 and 218 on v7. The eight tabs in a `none` box still let a vertical swipe begun on a tab scroll the page: 358 px on v8, 374 on v7, 0 on the base. In Playwright's WebKit, which takes no touch input here, `probe.mjs` reads 26 static rows per build, and v8's equal v7's in all of them: the docks (above), the ConfiguratorLayer columns (491/200 at 390 and 564/200 at 1440 on the nowrap line, `visible`/`clip`), and the Sheet's header strips (`pan-x` on the strips and their tabs and `none` on the header; the eight tabs flagged at 390, 655/364).
+
+### 9.5 The check and the unit tests on v8
+
+The unit tests ran on the tree at v8 (vitest, two workers, the witness page taken out of `demo/` first): the 22 files that read the strip, the dock run, the Sheet, the overlay plate or the ConfiguratorLayer, among them `segmented-tabs.test.ts`, `useSelectionIndicator.test.ts`, the five dock run files and `overlay-plate-inline-bound.test.ts`, with the comment-ratio, overfit-structure, type-hygiene, orphan-CSS-partial, token-hygiene and tabs-seam gates and `layout-canon.test.ts`: 314 passed, 3 expected fails (`record/inspect/v8/vitest.log`). `vue-tsc --noEmit -p tsconfig.src.json` on the tree at v8 is clean (`record/inspect/v8/typecheck.log`). `verify:package` was not run, for the reason §8.7 gives.
+
+`check-overflow.mjs` on the critic's twelve demo routes (the configurator, sheet, tabs, springs, labeled-field, toggle, timeline, nav, rail and chrome dock, aurora and blob pages), base then v8, Chromium, 390 touch and 1440 light (`tools/plans/v8/run-check.sh`; `record/inspect/v8/check-{base,v8}.chromium.json`): 20 fault readings on each build, all (a), and the same boxes on both. Only the Timeline's marks list changes width, since F4a's reserve narrows the track: 322/300 → 278/256 at 390 and 948/936 → 924/912 at 1440, the list still a half mark over. v8's 20 readings are the critic's v7 readings (`record/inspect/critic-sci3/check-v7.chromium.json`) exactly, and the base's are the critic's base's. Each names a glass part: the Timeline's marks list, the `dock-layers` box of the demo's sidebar dock on every 1440 route and of `/dock/chrome`'s dock at both widths, two dock face triggers on `/dock/chrome` at 390, and the Blob canvas bleed. The letters now name these as known (STUDY.md, N4). Both runs exit 1, as both builds hold these readings.
+
+## 10. The record
 
 - `record/raw/<tag>.<engine>.<cell>.json`: every probe reading (tag `base` is release/11.1.1; `cure`, `cure2`, `cure3`, `cure4`, `cure5` are the cure builds v1 to v5; round 3 ran no sweep); `….fold.json` is the first fold page, `….fold5.json` the fold page with round 2's cells (route `/ovf.html?fold&round=2`).
+- v8 (§9): `record/inspect/v8/touch.{chromium,webkit}.json` (the critic's `probe.mjs`, unchanged, on the base, v7 and v8), `record/inspect/v8/m2.{chromium,webkit}.json` (`probe-v8.mjs`: the vertical strip and the selected tab), and `record/inspect/v8/check-{base,v8}.chromium.json` with their logs (`run-check.sh`: `check-overflow.mjs` on the critic's twelve demo routes). The page, the probes and the scripts are in `tools/plans/v8/` (`build.sh` builds a tree with `/sci.html`; `run.sh` previews the three builds and runs a probe; `run-check.sh` runs the check). The tree was `trees/v8`, deleted after the readings; `cure-v7.patch` keeps v7.
 - v7 (§8): `record/inspect/v7.{chromium,webkit}.json` (`tools/plans/v7.mjs`, run by `v7.sh` and `v7-webkit.sh`; base, v6, v7, and in Chromium `v7-nohdr`) and `round3-v7.{chromium,webkit}.json` (`round3.mjs` on the base and v7); `v7-side.chromium.json` (`tools/plans/v7-side.mjs`, the right detented sheet; base, v6, `v7tb` and v7) and `v7-final.chromium.json` (`v7.mjs` on the final v7 alone); `record/check/check-cure7.{fold,stress}.chromium.json` (`check-selftest.sh` with `OVF_TREE=r3b CURE_DIST=dist-cure7 ONLY_CURE=1`, on the final v7). `tools/plans/v7-table.py` prints a v7 record as lines. `v7.sh` refuses a port another lane already serves. The tree was `trees/r3b`, deleted after the readings; `cure-v6.patch` keeps v6, and `v7tb` differs from `cure.patch` only in the Sheet header rule's selector (`:is([data-side="top"], [data-side="bottom"])` after `[data-detents]`) and its comment.
 - `record/inspect/*.json`: the witness and triage runs (`witness` = v1, `witness2` = v2, `witness3` = v3, `witness4` = v4; `witness4b` and `witness4c` are the fold's second and third runs, `witness3-fold` is v3 on the fold's cells). Round 2: `witness5.chromium.json` (value.js's items, base, v4 and v5), `witness5b` and `witness5c` (S1, V1f, V3 again with the value's width, V3v), `witness5s.chromium.json` (base and v5 on ports 5392 and 5393: the steps row's Slider, the wrap form at value.js's width, and the pictures), `witness5.webkit.json` (value.js's items in WebKit, pans by wheel) and `witness-wk5.webkit.json` (round 1's v4 rules in WebKit on v4 and v5). Round 3: `round3.chromium.json` and `round3.webkit.json` (`tools/plans/round3.mjs`: rings, glide, shortcut and count, the Dialog's kept word; base, v5 and v6), `slider-end.chromium.json` (v6's Sliders with a thumb at each end) and `atlas-live.chromium.json` (`tools/plans/atlas-live.mjs`: atlas's openers on its live page).
 - `record/shots/<case>.<tree>.<engine>.<cell>.png`: element pictures from the page's own headless render (`shot:` in `inspect.mjs`), to see how a cut value ends: the three 73 px fields and the 120 px field (`v2-lf3`, `v2-kf`), and the Steps row in a 200 and a 186 px column (`v3-200`, `v3-186`). Round 3's are `r3-<build>-<cell>-<case>.<engine>.png`: each strip's first tab focused (`s0`, `s1`, the underline `s2`, the vertical underline `uv`), the eight tabs' first and last (`fold8-tab0`, `fold8-tab7`), and the menu row (`menu-row`).
@@ -702,5 +770,5 @@ After the header rule widened to every side, the nine files that read the Sheet'
 
 A note for sibling studies that build a tree under a gitignored directory: Tailwind's scanner honours the enclosing repository's `.gitignore`, so a tree under `trees/` (ignored by `*`) built with no library utilities at all until it was made its own git root (`build-tree.sh` checks this). The first sweep here ran on that unfaithful build and was discarded.
 
-`trees/` (242 MB: the 11.1.1 tree with `dist-base` and `dist-cure3` to `dist-cure6`, its `src` holding v6, the critic's tree, and the run logs) is still in place at the end of round 3: the delete was refused again, so it is left for the owner or a later session to remove (`rm -rf` of `docs/tranches/BL/design/overflow/trees/`). The pictures in `record/shots/` are untracked, as the repository ignores `*.png`. To read again, rebuild the tree as `build-tree.sh`'s header says (a `git archive` of `release/11.1.1` without `docs/`, its own git root, `npm ci --ignore-scripts`; build `dist-base`, then `git apply cure-v4.patch` and build `dist-cure4`, then reset `src` and `git apply cure-v5.patch` and build `dist-cure5`, then reset `src` and `git apply cure.patch` and build `dist-cure6`); the tools load Playwright from `trees/v11.1.1`.
+`trees/` at the end of v8 holds the run logs, the critics' trees (`critic-r2`, `critic-sci`, `critic-sci-b`), `explore` and `scratch`; v8's tree, `trees/v8`, is deleted. The rest is left for the owner or a later session to remove (`rm -rf` of `docs/tranches/BL/design/overflow/trees/`). The pictures in `record/shots/` are untracked, as the repository ignores `*.png`. To read v8 again, make the tree as §9 says (a `git archive` of `release/11.1.1` without `docs/` and `tests-visual/`, its own git root, `node_modules` linked to the main checkout's), build `dist-base` with `tools/plans/v8/build.sh`, then `git apply cure-v7.patch` and build `dist-v7`, then reset `src` and `tests`, `git apply cure.patch` and build `dist-v8`. `run.sh` and `run-check.sh` find the tree at `trees/v8`, and the probes load Playwright from the main checkout. The rounds before v8 rebuild as `build-tree.sh`'s header says (`npm ci --ignore-scripts` in the tree; `dist-cure4` to `dist-cure6` from `cure-v4.patch` to `cure-v6.patch`), and their tools load Playwright from `trees/v11.1.1`.
 

@@ -7,7 +7,9 @@
 //           and a row-header column; role=grid gives it a roving row
 //   vcards  300 rows of 20 columns as cards in a 344 x 600 host, virtualized with atlas's
 //           own useVirtualWindow (atlas/, copied) through `viewportRef` and `rowRef`, with
-//           atlas's row attrs and the note's two rules, and an 8 px gap in the virtualizer
+//           atlas's row attrs and the note's two rules, and an 8 px gap in the virtualizer.
+//           shrink=1 gives the card list back the flex item's default shrink (the control:
+//           the list as round 1 left it)
 //   dialog  a button (ox, oy) that opens a Dialog grown from it. heavy=1 gives the plate
 //           atlas's size and a body that mounts 100 ms after the open with a 90 ms task,
 //           and adds a 120 ms task 250 ms into the open and 40 ms into the close.
@@ -51,6 +53,7 @@ const grid = params.get("role") === "grid";
 const ox = Number(params.get("ox") ?? "40");
 const oy = Number(params.get("oy") ?? "60");
 const heavy = params.get("heavy") === "1";
+const shrink = params.get("shrink") === "1";
 
 const wide = mode === "sticky" || mode === "fit" || mode === "vcards";
 const keys = wide
@@ -228,7 +231,7 @@ if (mode === "dialog") {
         <div
             v-if="mode === 'vcards'"
             id="host"
-            class="am-v"
+            :class="shrink ? 'am-v am-shrink' : 'am-v'"
             :style="{ inlineSize: `${hostW}px`, blockSize: `${hostH}px` }"
         >
             <DataTable
@@ -316,5 +319,8 @@ if (mode === "dialog") {
     position: absolute;
     inset-block-start: 0;
     inline-size: 100%;
+}
+.am-v.am-shrink .data-table-card-list {
+    flex: 0 1 auto;
 }
 </style>

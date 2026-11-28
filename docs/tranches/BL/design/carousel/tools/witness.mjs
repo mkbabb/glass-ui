@@ -61,6 +61,29 @@
 //   motion    with motion allowed, one press on the hero and the 16rem strip. Holds
 //             when the strip rests on member 1 with member 1 active.
 //
+// Changed by the fifth fold (critique-r3.md, the fourth critic; the owner's ratified
+// choice 8 A: 11.1.2's reduced press arrives at once, and the dip is 11.3.0's):
+//   reduce, retarget, turn  still film every member's ink, but hold when the strip seats
+//             in one frame (no offset in between), at most one seat a press, on the last
+//             member pressed for with that member active, and the active member never
+//             steps back. The ink at the seat frame is recorded, not held to two fifths.
+// Added by the fifth fold, each recording every offset the strip takes, every change of
+// the active member and every scrollend, and holding when the strip rests on the member
+// last pressed for with that member active and the active member, once pressed, never
+// steps back:
+//   swipe     Chromium only (a moving touch): a touch swipe toward member 1 (80 % to
+//             20 % of the strip in 150 ms) on the hero, then the press for member 2,
+//             `lag` ms after the lift (Next at 1440, the dot at 390), under reduced
+//             motion and with motion allowed.
+//   wheel     a trackpad-like wheel of 60 % of the strip on the hero (WebKit: bare steps
+//             every 16 ms; Chromium: the engine's own phased gesture, since its bare
+//             steps snap back to the start), then a press `lag` ms after the last wheel
+//             event (Next at 1440, for the member after the one active then; the dot for
+//             member 2 at 390), under reduced motion. Lag "none" presses nothing and
+//             films where the strip goes by itself; "none-nofade" does the same with the
+//             neighbours' dimming transition set to none inline.
+//   seatend   under reduced motion, the press for member 1, and inside the strip's first
+//             scrollend after it, the press for member 2: the hero and the 16rem strip.
 // Writes <out>/witness.<label>.<engine>.json and prints one line per cell.
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -68,7 +91,8 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const require = createRequire(join(resolve(HERE, "../trees/red"), "package.json"));
+// Playwright from the main checkout's node_modules (each tree links it there).
+const require = createRequire(join(resolve(HERE, "../../../../../.."), "package.json"));
 const pw = require("playwright");
 
 const opt = { engine: "chromium", port: 5381, label: "red", out: resolve(HERE, "../witness"), cells: "race,model,held" };
@@ -87,6 +111,8 @@ const BASE = `http://127.0.0.1:${opt.port}`;
 const NO_SCROLLEND = `(() => { for (const o of [window, Window.prototype, Document.prototype, HTMLElement.prototype, Element.prototype, SVGElement.prototype]) { try { delete o.onscrollend; } catch {} } window.addEventListener("scrollend", (e) => { if (e.isTrusted) e.stopImmediatePropagation(); }, true); })();`;
 const NO_AUTOPLAY = `(() => { const si = window.setInterval; window.setInterval = function (f, ms, ...r) { if (ms === 4200) return 0; return si.call(this, f, ms, ...r); }; })();`;
 const LAGS = [760, 800, 840, 860, 880, 890, 900];
+const SWIPE_LAGS = [0, 40, 60, 80, 120, 160, 200, 300];
+const WHEEL_LAGS = [0, 100, 200, 300];
 const WIDTHS = [
     { w: 1440, h: 900 },
     { w: 390, h: 844 },
@@ -369,6 +395,7 @@ async function cellInk(browser, v, name, presses, cell, reduce = true) {
         await sleep(700);
         const before = await page.evaluate((s) => [...document.querySelector(s).children].findIndex((k) => k.getAttribute("data-state") === "active"), strip);
         await page.evaluate(FILM, strip);
+        await page.evaluate(WATCH, strip);
         await sleep(60);
         await page.evaluate(
             ([root, presses, from]) => {
@@ -393,6 +420,7 @@ async function cellInk(browser, v, name, presses, cell, reduce = true) {
         );
         await sleep(1500);
         const film = await page.evaluate(() => ({ rows: window.__film.rows, ends: window.__film.ends, at: window.__pressAt }));
+        const log = await page.evaluate(() => window.__w.log.map((e) => ({ t: +(e.t - window.__film.t0).toFixed(1), active: e.active })));
         const end = await page.evaluate(SETTLE, [strip, 300, 3000]);
         const offsets = await page.evaluate((s) => { const k = [...document.querySelector(s).children]; return k.map((m) => m.offsetLeft - k[0].offsetLeft); }, strip);
         const goal = presses[presses.length - 1][0];
@@ -442,10 +470,10 @@ async function cellInk(browser, v, name, presses, cell, reduce = true) {
         // Under reduced motion: seated with nothing between, at most one seat a press, and
         // no member's ink moving more than two fifths in a 60 Hz frame. With motion the
         // strip travels, so only the seat is read.
-        const maxSeats = cell === "retarget" ? 1 : presses.length;
-        const holds = reduce ? seated && step60 <= 0.4 && seats.length <= maxSeats : end.active === goal && Math.abs(end.sl - to) <= 1;
+        const stepsBack = backSteps(log, film.at, presses);
+        const holds = reduce ? seated && seats.length <= presses.length && stepsBack === 0 : end.active === goal && Math.abs(end.sl - to) <= 1;
         const sample = rows.filter((r, i) => i % 2 === 0 && press0 !== null && r[0] >= press0 - 20 && r[0] <= (still ?? press0) + 20).map(([t, x, so, inks]) => [t, Math.round(x), so, inks.filter((y) => y > 0.005).length ? inks : []]);
-        return { cell, page: name, w: v.w, presses, pressAt: film.at, end: { sl: end.sl, active: end.active }, target: to, seats, between, stripMin: dim, outMs: press0 !== null && seatAt !== null ? +(seatAt - press0).toFixed(1) : null, inMs: seatAt !== null && still !== null ? +(still - seatAt).toFixed(1) : null, stillMs: press0 !== null && still !== null ? +(still - press0).toFixed(1) : null, frames: rows.length, step: +step.toFixed(3), step60: +step60.toFixed(3), worst, before: shown(pre), after: shown(rows.at(-1)), scrollends: film.ends, seated, holds, sample, errors };
+        return { cell, page: name, w: v.w, presses, pressAt: film.at, end: { sl: end.sl, active: end.active }, target: to, seats, between, stripMin: dim, outMs: press0 !== null && seatAt !== null ? +(seatAt - press0).toFixed(1) : null, inMs: seatAt !== null && still !== null ? +(still - seatAt).toFixed(1) : null, stillMs: press0 !== null && still !== null ? +(still - press0).toFixed(1) : null, frames: rows.length, step: +step.toFixed(3), step60: +step60.toFixed(3), worst, before: shown(pre), after: shown(rows.at(-1)), scrollends: film.ends, acts: log.map((e) => `${e.t}:${e.active}`).join(" "), stepsBack, seated, holds, sample, errors };
     } finally {
         await context.close().catch(() => {});
     }
@@ -493,6 +521,192 @@ async function cellFrozen(browser, v) {
     }
 }
 
+// After each press (at `at[i]`, for member presses[i][0]), the number of times the
+// active member changes to one that is neither that press's member nor a later press's.
+function backSteps(log, at, presses) {
+    if (!at?.length) return 0;
+    let n = 0;
+    for (const e of log) {
+        let i = -1;
+        for (let j = 0; j < at.length; j++) if (e.t >= at[j]) i = j;
+        if (i < 0) continue;
+        const allowed = presses.slice(i).map(([k]) => k);
+        if (!allowed.includes(e.active)) n++;
+    }
+    return n;
+}
+
+// In-page: from now on, every offset the strip takes, every change of its active member
+// and every scrollend, with times from now.
+const TRACE = (stripSel) => {
+    const strip = document.querySelector(stripSel);
+    const t0 = performance.now();
+    const now = () => +(performance.now() - t0).toFixed(1);
+    const act = () => [...strip.children].findIndex((k) => k.getAttribute("data-state") === "active");
+    const tr = (window.__tr = { t0, xs: [], acts: [[0, act()]], ends: [], at: [], from: [], lift: null, lastWheel: null });
+    tr.act = act;
+    strip.addEventListener("scrollend", () => tr.ends.push(now()));
+    strip.addEventListener("wheel", () => (tr.lastWheel = performance.now()), { passive: true });
+    new MutationObserver(() => {
+        const i = act();
+        if (i !== tr.acts[tr.acts.length - 1][1]) tr.acts.push([now(), i]);
+    }).observe(strip, { subtree: true, attributes: true, attributeFilter: ["data-state"] });
+    const tick = () => {
+        const x = Math.round(strip.scrollLeft);
+        const l = tr.xs[tr.xs.length - 1];
+        if (!l || l[1] !== x) tr.xs.push([now(), x]);
+        if (performance.now() - t0 < 5000) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+};
+
+// In-page: the control that presses for member k (Next, or the dot).
+const PRESS_EL = `window.__pressEl = (root, k, dot) => dot ? document.querySelectorAll(root + " .pager-dot")[k] : document.querySelector(root + " [data-testid=hero-next]");`;
+
+async function traceEnd(page, strip, goal, cellName, extra) {
+    // goal is reassigned below for a Next press
+    await sleep(400);
+    const end = await page.evaluate(SETTLE, [strip, 500, 4000]);
+    const tr = await page.evaluate(() => window.__tr);
+    const offsets = await page.evaluate((s) => { const k = [...document.querySelector(s).children]; return k.map((m) => m.offsetLeft - k[0].offsetLeft); }, strip);
+    const pressAt = tr.at.length ? tr.at[tr.at.length - 1] : null;
+    // A Next press is for the member after the one active when it is pressed.
+    if (extra.press === "next" && tr.from.length) goal = tr.from[tr.from.length - 1] + 1;
+    const after = pressAt === null ? [] : tr.acts.filter(([t]) => t >= pressAt);
+    const back = after.filter(([, a]) => a !== goal).length;
+    const rests = offsets.findIndex((o) => Math.abs(o - end.sl) <= 1);
+    const lands = goal === null ? null : end.active === goal && Math.abs(end.sl - offsets[goal]) <= 1;
+    const holds = goal === null ? null : lands && back === 0;
+    const verdict = goal === null ? `rests on ${rests}, member ${end.active} active` : holds ? `member ${goal}` : rests === end.active ? `lost (rests on ${rests}, member ${end.active} active)` : `rests on ${rests}, member ${end.active} active`;
+    return { cell: cellName, ...extra, goal, pressAt, lift: tr.lift, lastWheel: tr.lastWheel, end: { sl: Math.round(end.sl), active: end.active }, rests, acts: tr.acts.map(([t, a]) => `${t}:${a}`).join(" "), ends: tr.ends, xs: tr.xs, lands, back, holds, verdict };
+}
+
+// A touch swipe toward member 1, then the press for member 2 `lag` ms after the lift.
+async function cellSwipe(browser, v, lag, reduce) {
+    const { context, page, errors } = await open(browser, { ...v, reduce }, `${BASE}/?c=carousel-hero&content=none`, [NO_AUTOPLAY, PRESS_EL]);
+    try {
+        await page.waitForSelector(HERO_STRIP, { timeout: 20000 });
+        await page.evaluate((s) => document.querySelector(s).scrollIntoView({ block: "center", behavior: "instant" }), HERO);
+        await sleep(700);
+        const cdp = await context.newCDPSession(page);
+        const b = await page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; }, HERO_STRIP);
+        const y = b.y + Math.min(b.h / 2, 300);
+        await page.evaluate(TRACE, HERO_STRIP);
+        await page.evaluate(([root, lag, dot]) => {
+            const el = window.__pressEl(root, 2, dot);
+            window.addEventListener("touchend", () => {
+                const tr = window.__tr;
+                tr.lift = +(performance.now() - tr.t0).toFixed(1);
+                setTimeout(() => {
+                    tr.at.push(+(performance.now() - tr.t0).toFixed(1));
+                    tr.from.push(tr.act());
+                    el.click();
+                }, lag);
+            }, { once: true, capture: true, passive: true });
+        }, [HERO, lag, v.w <= 500]);
+        const touch = (type, x) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y, id: 1, radiusX: 4, radiusY: 4, force: 1 }] });
+        const from = b.x + b.w * 0.8;
+        const to = b.x + b.w * 0.2;
+        const n = 9;
+        await touch("touchStart", from);
+        const t0 = Date.now();
+        for (let k = 1; k <= n; k++) {
+            await touch("touchMove", from + ((to - from) * k) / n);
+            const wait = t0 + (k * 150) / n - Date.now();
+            if (wait > 0) await sleep(wait);
+        }
+        await touch("touchEnd", to);
+        await sleep(lag);
+        return { ...(await traceEnd(page, HERO_STRIP, 2, "swipe", { w: v.w, lag, reduce, press: v.w <= 500 ? "dot" : "next" })), errors };
+    } finally {
+        await context.close().catch(() => {});
+    }
+}
+
+// A trackpad-like wheel of 60 % of the strip, then the press for member 2 `lag` ms after
+// the last wheel event, or no press (lag null).
+async function cellWheel(browser, v, lag, nofade = false) {
+    const { context, page, errors } = await open(browser, { ...v, reduce: true }, `${BASE}/?c=carousel-hero&content=none`, [NO_AUTOPLAY, PRESS_EL]);
+    try {
+        await page.waitForSelector(HERO_STRIP, { timeout: 20000 });
+        await page.evaluate((s) => document.querySelector(s).scrollIntoView({ block: "center", behavior: "instant" }), HERO);
+        await sleep(700);
+        if (nofade) await page.evaluate((s) => { for (const m of document.querySelector(s).children) m.style.setProperty("transition", "none", "important"); }, HERO_STRIP);
+        const b = await page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + Math.min(r.height / 2, 300), w: r.width }; }, HERO_STRIP);
+        await page.mouse.move(b.x, b.y);
+        await page.evaluate(TRACE, HERO_STRIP);
+        if (opt.engine === "chromium") {
+            // Chromium's bare wheel steps snap back to the start; its trackpad-like input
+            // is the engine's own phased gesture, as in the probe's Chromium wheel cell.
+            const cdp = await context.newCDPSession(page);
+            await cdp.send("Input.synthesizeScrollGesture", { x: b.x, y: b.y, xDistance: -Math.round(b.w * 0.6), yDistance: 0, speed: 1200, gestureSourceType: "mouse", preventFling: false });
+        } else {
+            const shape = [];
+            for (let k = 1; k <= 8; k++) shape.push(k);
+            let s = 8;
+            for (let k = 0; k < 26; k++) shape.push((s *= 0.86));
+            const sum = shape.reduce((x, y) => x + y, 0);
+            const total = b.w * 0.6;
+            const start = Date.now();
+            let acc = 0;
+            for (let k = 0; k < shape.length; k++) {
+                const step = (shape[k] / sum) * total;
+                acc += step;
+                const dx = Math.round(acc) - Math.round(acc - step);
+                if (dx) await page.mouse.wheel(dx, 0);
+                const wait = start + (k + 1) * 16 - Date.now();
+                if (wait > 0) await sleep(wait);
+            }
+        }
+        if (lag !== null) {
+            await page.evaluate(([root, lag, dot]) => {
+                const tr = window.__tr;
+                const el = window.__pressEl(root, 2, dot);
+                setTimeout(() => {
+                    tr.at.push(+(performance.now() - tr.t0).toFixed(1));
+                    tr.from.push(tr.act());
+                    el.click();
+                }, Math.max(0, tr.lastWheel + lag - performance.now()));
+            }, [HERO, lag, v.w <= 500]);
+            await sleep(lag);
+        }
+        await sleep(600);
+        const r = await traceEnd(page, HERO_STRIP, lag === null ? null : 2, "wheel", { w: v.w, lag: lag === null ? (nofade ? "none-nofade" : "none") : lag, press: v.w <= 500 ? "dot" : "next" });
+        r.lastWheel = r.lastWheel === null ? null : +(r.lastWheel - (await page.evaluate(() => window.__tr.t0))).toFixed(1);
+        return { ...r, errors };
+    } finally {
+        await context.close().catch(() => {});
+    }
+}
+
+// Under reduced motion: the press for member 1, and inside the strip's first scrollend
+// after it, the press for member 2.
+async function cellSeatEnd(browser, v, name) {
+    const p = INK_PAGES[name];
+    const strip = `${p.root} [data-slot=carousel-content]`;
+    const { context, page, errors } = await open(browser, { ...v, reduce: true }, `${BASE}${p.url}`, [NO_AUTOPLAY, PRESS_EL]);
+    try {
+        await page.waitForSelector(strip, { timeout: 20000 });
+        await page.evaluate((s) => document.querySelector(s).scrollIntoView({ block: "center", behavior: "instant" }), p.root);
+        await sleep(700);
+        await page.evaluate(TRACE, strip);
+        await page.evaluate(([root, s, dot]) => {
+            const tr = window.__tr;
+            const first = window.__pressEl(root, 1, dot);
+            const second = window.__pressEl(root, 2, dot);
+            document.querySelector(s).addEventListener("scrollend", () => {
+                tr.at.push(+(performance.now() - tr.t0).toFixed(1));
+                second.click();
+            }, { once: true });
+            tr.at.push(+(performance.now() - tr.t0).toFixed(1));
+            first.click();
+        }, [p.root, strip, v.w <= 500]);
+        return { ...(await traceEnd(page, strip, 2, "seatend", { w: v.w, page: name })), errors };
+    } finally {
+        await context.close().catch(() => {});
+    }
+}
+
 async function main() {
     mkdirSync(opt.out, { recursive: true });
     let browser;
@@ -516,10 +730,17 @@ async function main() {
             if (CELLS.has("noend")) rows.push(await cellHeld(browser, v, true).catch((e) => err("noend", v, e)));
             if (CELLS.has("frozen")) rows.push(await cellFrozen(browser, v).catch((e) => err("frozen", v, e)));
             if (CELLS.has("start")) rows.push(await cellStart(browser, v).catch((e) => err("start", v, e)));
+            if (CELLS.has("swipe") && opt.engine === "chromium") for (const reduce of [true, false]) for (const lag of SWIPE_LAGS) rows.push(await cellSwipe(browser, v, lag, reduce).catch((e) => ({ ...err("swipe", v, e), lag, reduce })));
+            if (CELLS.has("wheel")) {
+                rows.push(await cellWheel(browser, v, null).catch((e) => ({ ...err("wheel", v, e), lag: "none" })));
+                rows.push(await cellWheel(browser, v, null, true).catch((e) => ({ ...err("wheel", v, e), lag: "none-nofade" })));
+                for (const lag of WHEEL_LAGS) rows.push(await cellWheel(browser, v, lag).catch((e) => ({ ...err("wheel", v, e), lag })));
+            }
+            if (CELLS.has("seatend")) for (const name of ["hero", "strip16"]) rows.push(await cellSeatEnd(browser, v, name).catch((e) => ({ ...err("seatend", v, e), page: name })));
         }
         const meta = { engine: opt.engine, browserVersion: browser.version(), label: opt.label, port: opt.port, cells: opt.cells, when: new Date().toISOString() };
         writeFileSync(join(opt.out, `witness.${opt.label}.${opt.engine}.json`), JSON.stringify({ meta, rows }, null, 1));
-        for (const r of rows) console.log(JSON.stringify({ label: opt.label, engine: opt.engine, ...r, log: r.log?.map((e) => `${e.t}:${e.active}`).join(" "), sample: undefined }));
+        for (const r of rows) console.log(JSON.stringify({ label: opt.label, engine: opt.engine, ...r, log: r.log?.map((e) => `${e.t}:${e.active}`).join(" "), sample: undefined, xs: r.xs ? r.xs.length : undefined }));
     } finally {
         if (browser) await browser.close().catch(() => {});
     }

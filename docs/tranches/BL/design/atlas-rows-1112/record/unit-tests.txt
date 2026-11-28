@@ -50,3 +50,15 @@ Fail only on 11.1.1 (each needs a built dist; only the cured tree was built):
    tests/public-surface.spec.ts | rejects packed CSS drift against the built artifact
    tests/public-surface.spec.ts | ships exactly the style closure, the chunk sheets and the two generated members
    tests/styles/backdrop-prefix-normalization.test.ts | ships every backdrop-filter as an adjacent -webkit-/standard pair
+
+Round 2 (2026-11-27), after the roving machine's focus move and the sort button's token changed.
+vitest run --maxWorkers=2 over tests/components/custom/tabs, tests/components/ui/toggle-group,
+tests/components/custom/dock, tests/composables/motion, tests/gates/overfit-structure.test.ts,
+tests/components/ui/data-table and tests/components/table.contract.test.ts, on the cured tree:
+49 files, 46 passed; 356 tests passed and 1 expected fail.
+The three files that did not load read scripts/ (scripts/lib/subpath-policy.mjs,
+scripts/regen-spring-tokens.mjs), which the sparse archive lacked. With scripts/ added to both
+trees, those three files read the same on 11.1.1 and on the cure: 22 passed, 1 skipped, and 1
+failed, the export-reach arm of overfit-structure, on one offender that predates the patch
+(src/composables/glass/useGlassBackdropLuminance.ts :: GLASS_BACKDROP_SHARED_ATTR). The exported
+revealInRun is not an offender: the selection group imports it.

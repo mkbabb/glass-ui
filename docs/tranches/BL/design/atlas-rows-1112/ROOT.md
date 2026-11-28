@@ -5,15 +5,21 @@ atlas's rows of 2026-11-23 (INBOUND O-429) and its second note of 2026-11-24, as
 GL-13, GL-14, GL-17, GL-18, GL-5 (e) and the DataTable sort buttons. GL-16 joins the
 overflow cure and is not here.
 
-Read on `release/11.1.1` at `14506233e`. Its `src` and `tests` are unchanged since
+Read on `release/11.1.1`, now at `871be44bc`. Its `src` and `tests` are unchanged since
 `48ab5d94e` (`tools/BASE-SHA.txt`), where this seat began before the reboot of 2026-11-24.
 
-**`cure.patch`** is one patch: 16 files, +303 −37 (14 in `src`, two unit tests). It applies
-with `patch -p1` to a `git archive` of `release/11.1.1`, and that tree equals the cured
-tree the witness read (`trees/green`), file for file. Read with phone-scroll's three
-patches (`audit/phone-scroll/cure.patch`, `scrim.patch`, `detents.patch`): all four
-apply with no offset and no fuzz with this patch first or last, and the four together
-typecheck (`vue-tsc --noEmit -p tsconfig.src.json`). Nothing is committed anywhere.
+This is round 2. The critic of round 1 (`critique-sci.md`) found one blocking item, GL-18 by
+keyboard, and five notes; §2 says how each was met. Round 2 changed the roving machine's focus
+move (`tabs/composables/useTabRovingFocus.ts`) and six passages of the note, and added the
+keys arms to the `selgroup` witness. The sort button's height token was tried and put back
+(§2, N4), so that hunk is round 1's.
+
+**`cure.patch`** is one patch: 17 files, +314 −38 (15 in `src`, two unit tests). It applies
+with `patch -p1` to a `git archive` of `release/11.1.1` with no offset and no fuzz, and that
+tree equals the cured tree the witness read, file for file. Phone-scroll's three patches
+(`audit/phone-scroll/cure.patch`, `scrim.patch`, `detents.patch`) apply over it with no
+message, and the cured tree typechecks (`vue-tsc --noEmit -p tsconfig.src.json`), alone and
+with those three patches. Nothing is committed anywhere.
 
 | File | Row |
 |---|---|
@@ -24,7 +30,7 @@ typecheck (`vue-tsc --noEmit -p tsconfig.src.json`). Nothing is committed anywhe
 | `src/components/_shared/overlay/modal-layers.ts` (new), `dialog/DialogContent.vue`, `dialog/ModalOverlay.vue`, `sheet/SheetContent.vue`, `expandable-container/ExpandableContainer.vue`, `tests/components/dialog/dialog-focus-return.test.ts` | GL-12 |
 | `src/components/sheet/styles.css` | GL-13 |
 | `src/components/select/SelectContent.vue` | GL-17 |
-| `src/composables/motion/morph/useSelectionGroup.ts` | GL-18 |
+| `src/composables/motion/morph/useSelectionGroup.ts`, `src/components/tabs/composables/useTabRovingFocus.ts` | GL-18 |
 | `src/components/data-table/styles.css` | the sort buttons |
 
 GL-14 and GL-5 (e) held on 11.1.1 and change nothing. Of GL-11, the gutter and the scroll
@@ -103,8 +109,11 @@ the bar: with a 15 px classic bar in both engines, the content does not move (x 
 and while open). The page's scroll position stays at 1000 after a close by Escape, by the
 close button and by a press on the scrim.
 
-**Cure.** `overscroll-behavior: contain` on the Dialog plate. The Sheet half belongs to
-phone-scroll's cure and is not duplicated. With that cure, a `:modal="false"` Dialog below
+**Cure.** `overscroll-behavior: contain` on the Dialog plate. It acts where the plate is a
+scroll container, which is under `scroll` (`DialogContent.vue:229`); a scroller a site
+places inside the plate keeps its own `overscroll-behavior` (atlas's glossary and entity
+bodies set `contain`). The Sheet half belongs to phone-scroll's cure and is not
+duplicated. With that cure, a `:modal="false"` Dialog below
 30rem also takes the root lock (`useOverlayOutside`); this rule is what holds the page
 above that width, and on 11.1.1 alone at every width.
 
@@ -222,18 +231,44 @@ pointer jumps onto the row and then to a far corner, never crossing the trigger.
 
 ### GL-18, the selection group's reach
 
-**Cause.** `composables/motion/morph/useSelectionGroup.ts:200` calls
-`scrollIntoView({ inline: "nearest", block: "nearest" })`, which scrolls every scrolling
-ancestor on both axes. Picking Option 7 in a strip inside its own horizontal run, inside
-an outer vertical scroller half below the fold, moved the page 87 px and the outer
-scroller 20 px, in both engines.
+**Cause.** Two calls scroll every scroller around the strip, the page included.
 
-**Cure.** `revealInRun` scrolls only the item's nearest ancestor that scrolls along the
-strip's axis, never the page's scroller or `body`, by the least distance that brings the
-item into view, and keeps that run's `scroll-padding`.
+- The select. `composables/motion/morph/useSelectionGroup.ts:200` calls
+  `scrollIntoView({ inline: "nearest", block: "nearest" })`, which scrolls every scrolling
+  ancestor on both axes. Picking Option 7 with a click, in a strip inside its own
+  horizontal run, inside an outer vertical scroller half below the fold, moved the page
+  87 px and the outer scroller 20 px, in both engines.
+- The focus move. The roving machine the selection group composes moves focus with
+  `focus()` and no `preventScroll` (`tabs/composables/useTabRovingFocus.ts:124`), and the
+  browser's reveal of a focused element scrolls every ancestor. With Option 0 focused and
+  the page and the outer scroller at rest, the first ArrowRight moved the page 470 px and
+  the outer scroller 20 px in Chromium, under automatic and manual activation alike. In
+  WebKit on 11.1.1 the manual press moved the page 470 px too, and the automatic one 87 px:
+  there `scrollIntoView` had already revealed the item by the nearest distance, so WebKit's
+  reveal of the focused element found nothing left to do. Round 1 cured only the select,
+  so WebKit's reveal ran alone on the automatic press and moved the page 470 px, further
+  than 11.1.1 (the critic's B1).
 
-**Witness.** `selgroup`: the page, the outer scroller and the run before and after the
-pick.
+**Cure.** One helper, `revealInRun`, scrolls only the item's nearest ancestor that scrolls
+along the strip's axis, never the page's scroller or `body`, by the least distance that
+brings the item into view, and keeps that run's `scroll-padding`. It lives in the roving
+machine's module, which still imports `vue` only, and the selection group imports it. The
+select calls it in place of `scrollIntoView`. The focus move calls
+`focus({ preventScroll: true })` and then reveals the item in its run, so manual
+activation, which moves focus without a select, reveals it too; under automatic activation
+the select's reveal then finds nothing to do.
+
+A strip that sits outside the page's view when an arrow key is pressed (the page scrolled
+away after focus entered the strip) stays there: focus moves and the run follows, and the
+page does not. That is the brief's rule. Tab into the strip is the browser's own focus
+move, untouched by the patch, so it still brings the strip into view (not read).
+
+**Witness.** `selgroup`, three arms. The pick: a click on Option 7, reading the page, the
+outer scroller and the run before and after. The keys, under automatic and under manual
+activation: Option 0 focused with `preventScroll`, the page and the outer scroller at 0,
+then ArrowRight seven times (and Enter under manual), read after every press. Green needs
+the page and the outer scroller still at every read, and Option 7 focused, chosen and in
+view within its run.
 
 ### GL-5 (e) and the sort buttons
 
@@ -244,13 +279,65 @@ block size, so its target is its line of text: 22.4 px at 1280 and 19.6 px at 32
 cells would cut it.
 
 **Cure.** `min-block-size: max(2.25rem, var(--control-floor))`, 36 px on a fine pointer and
-44 px on a coarse one, and under `:focus-visible` an `outline-offset` of
-`-1 × --focus-ring-width`, which draws the ring inside the button.
+44 px on a coarse one, whatever order the sheets load in. Under `:focus-visible` an
+`outline-offset` of `-1 × --focus-ring-width` draws the ring inside the button.
+
+`var(--control-h-sm)` does not give these heights: under a coarse pointer it is
+`max(2.25rem × 1.5, 2.75rem)`, 54 px. The small Button reads 44 px there only because the
+shared coarse floor, `[data-control-target] { min-block-size: var(--touch-target) }`
+(`styles/utilities/responsive.css`), comes after its own rule in the same layer and wins
+(read with `tools/dbg-sort.mjs`).
 
 **Witness.** `table`: a sortable three-column DataTable at 1280, at 320 and at 390 with
 touch; the ring read at 1280 after keyboard focus (Tab in Chromium, Option-Tab in WebKit).
 
-## 2. Readings
+## 2. Round 2: the critic's items
+
+**B1, GL-18 by keyboard. Cured.** The critic read, with the keys, page 0 → 470 and outer
+0 → 20 in Chromium on 11.1.1 and on round 1's cure, and in WebKit page 0 → 87 on 11.1.1 and
+0 → 470 on round 1's cure. The cause is the roving machine's `focus()` without
+`preventScroll`; the cure and the witness are under GL-18 above. The keys arms, automatic
+and manual, read red on 11.1.1 in both engines (page 470 and outer 20 in Chromium under
+both activations; in WebKit page 87 under automatic and 470 under manual, outer 20 under
+both) and green on the cure in both engines: the page and the outer scroller at 0 after
+every press, and Option 7 focused, chosen and fully in view in its run (§3).
+
+The five notes:
+
+- **N1, print in the dark scheme. Not changed.** Under print with `html.dark` the card is a
+  solid dark fill with light ink, as on 11.1.1, and a browser printing without background
+  graphics leaves light ink on white. The brief names no scheme. Forcing the light scheme
+  for print needs every dark token to ride `light-dark()`, which has to be read first. The
+  note tells atlas and offers it.
+- **N2, rungs inside the inset band. Not changed.** The brief's case, `[1]`, reads green.
+  Taking each rung as a share of the safe height means changing the drag's pixel map in
+  `sheet/detents/use.ts`, which phone-scroll's `detents.patch` rewrites, so it belongs with
+  that cure or a later minor. Recorded here, not built.
+- **N3, a second Escape during the top's exit. The note changed.** The critic read the
+  second press swallowed on the enlarged figure, as with a Dialog over a Dialog or over a
+  Sheet on both trees. The note's second ask now says to let the data view finish leaving
+  before the second press. Not read again here.
+- **N4, the sort button's token. Tried and put back.** With
+  `min-block-size: var(--control-h-sm)` the `table` cell read 36/36/54 px in Chromium, RED
+  on the coarse arm, because the token is 54 px under a coarse pointer (GL-5 above says
+  why the Button still reads 44). So round 1's `max(2.25rem, var(--control-floor))` stays.
+  What the critic named still holds at a fine pointer: a site that sets `--ui-scale` moves
+  the small Button and not the sort target. Matching that would take the Button's own two
+  sources, its rung at a fine pointer and the shared floor (`data-control-target`) on a
+  coarse one, and the floor's `min-inline-size` of 44 px could widen a narrow column on
+  touch. Not built.
+- **N5, GL-11's reach. The note and this record changed.** The note says the Dialog's own
+  scrolling body holds its scroll, and that a scroller placed inside it keeps its own
+  `overscroll-behavior`.
+
+From the critic's consumer reads: GL-8 reaches none of atlas's current triggers (its hover
+popovers never wrote `aria-controls`; its dock and legend popovers anchor through reka's
+`PopoverAnchor`), and the note now says so. In Home Assistant, `revealInRun` walks
+`parentElement`, which stops at a shadow root: a ToggleGroup's run inside a card's shadow
+root still scrolls, and a scroller outside that shadow root no longer does, which is the
+brief's rule. Not read in Home Assistant.
+
+## 3. Readings
 
 Playwright Chromium 149.0.7827.55 (headless shell) and Playwright WebKit 26.5, one browser
 per run and a new context per cell, every context and the browser closed in `finally`.
@@ -283,13 +370,21 @@ Of 18 cells, 16 are RED on 11.1.1 and GREEN on the cure in each engine; `dlg-pos
 | stack-sibling | RED | top plate over lower false, top scrim over lower false; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
 | button | GREEN | sm 36 px fine, 44 px coarse | GREEN | sm 36 px fine, 44 px coarse |
 | select | RED | keys: 0 focus moves without preventScroll; pointer: 1 focus move without preventScroll; touch: 1 focus move without preventScroll | GREEN | keys: 0 focus moves without preventScroll; pointer: 0 focus moves without preventScroll; touch: 0 focus moves without preventScroll |
-| selgroup | RED | page 0→87, outer 0→20, run 0→444 | GREEN | page 0→0, outer 0→0, run 0→444 |
+| selgroup | RED | pick: page 0→87, outer 0→20, run 0→444; keys: page max 470, outer max 20, run 0→530, focus Option 7 in view in its run, chosen Option 7; manual keys: page max 470, outer max 20, run 0→530, focus Option 7 in view in its run, chosen Option 7 | GREEN | pick: page 0→0, outer 0→0, run 0→444; keys: page max 0, outer max 0, run 0→444, focus Option 7 in view in its run, chosen Option 7; manual keys: page max 0, outer max 0, run 0→444, focus Option 7 in view in its run, chosen Option 7 |
 | table | RED | header 16/14/14 px; sort 22.4/19.6/19.6 px (fine/narrow/coarse); ring offset 2, width 2 | GREEN | header 16/14/14 px; sort 36/36/44 px (fine/narrow/coarse); ring offset -2, width 2 |
 | sheet-full | RED | inset 47 px; sheet top 0 px, bottom 844 of 844; rule reads the inset: false | GREEN | inset 47 px; sheet top 47 px, bottom 844 of 844; rule reads the inset: true |
 
-Both Chromium reads are tonight's, with the current witness. The pre-reboot cured read
-stopped at `stack-dialog` when the Mac slept (the browser closed under it), and the
-11.1.1 read of 17:36 had no focus reading during the exit.
+The cured read is round 2's (2026-11-27), of the final patch, every cell. The 11.1.1 read
+is round 1's (2026-11-24) for every cell but `selgroup`, which was read again on 2026-11-27
+with the keys arms, on a fresh archive of `release/11.1.1` whose `src` and `tests` equal
+round 1's tree. Its pick arm reads as round 1's did. Every cell but `selgroup` reads on the
+cure as it did in round 1.
+
+On 11.1.1 the keys arms leave the run at 530 where the pick leaves it at 444: the browser's
+focus reveal centres the item in the run, where the nearest reveal stops at its edge. Under
+manual activation on 11.1.1, Options 2, 4 and 6 were not fully in view in the run after
+their press, and the run did not move for them; on the cure every focused item is fully in
+view in its run after its press.
 
 ### Playwright WebKit 26.5
 
@@ -310,16 +405,18 @@ stopped at `stack-dialog` when the Mac slept (the browser closed under it), and 
 | stack-sibling | RED | top plate over lower false, top scrim over lower false; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, body during the exit | GREEN | top plate over lower true, top scrim over lower true; after Escape top closed, lower open, lock hidden→hidden; focus in the lower, in the lower during the exit |
 | button | GREEN | sm 36 px fine, 44 px coarse | GREEN | sm 36 px fine, 44 px coarse |
 | select | RED | keys: 0 focus moves without preventScroll; pointer: 1 focus move without preventScroll | GREEN | keys: 0 focus moves without preventScroll; pointer: 0 focus moves without preventScroll |
-| selgroup | RED | page 0→87, outer 0→20, run 0→444 | GREEN | page 0→0, outer 0→0, run 0→444 |
+| selgroup | RED | pick: page 0→87, outer 0→20, run 0→444; keys: page max 87, outer max 20, run 0→444, focus Option 7 in view in its run, chosen Option 7; manual keys: page max 470, outer max 20, run 0→530, focus Option 7 in view in its run, chosen Option 7 | GREEN | pick: page 0→0, outer 0→0, run 0→444; keys: page max 0, outer max 0, run 0→444, focus Option 7 in view in its run, chosen Option 7; manual keys: page max 0, outer max 0, run 0→444, focus Option 7 in view in its run, chosen Option 7 |
 | table | RED | header 16/14/14 px; sort 22.4/19.6/19.6 px (fine/narrow/coarse); ring offset 2, width 2 | GREEN | header 16/14/14 px; sort 36/36/44 px (fine/narrow/coarse); ring offset -2, width 2 |
 | sheet-full | RED | inset 0 px; sheet top 0 px, bottom 844 of 844; rule reads the inset: false | GREEN | inset 0 px; sheet top 0 px, bottom 844 of 844; rule reads the inset: true |
 
-In the full WebKit run on the cure, `dlg-scroll` timed out loading its page (15 s, with the
-machine's load near 40). It was read again alone, twice, and both reads agree; the first
-is the cell above, and the timed-out read and the second are kept under `reruns` in
-`record/green-webkit.json`. The 11.1.1 WebKit read was taken again tonight with the current
-witness: the read of 13:42 had no `popover-child` or `stack-sibling` cell and no classic
-bar.
+As in Chromium, the cured read is round 2's, every cell in one run, and the 11.1.1 read is
+round 1's for every cell but `selgroup`, read again on 2026-11-27. Every cell but
+`selgroup` reads on the cure as it did in round 1, and no cell failed or timed out (round
+1's cured run had to read `dlg-scroll` again alone).
+
+On 11.1.1 the automatic keys arm moves the page 87 px, as far as the pick: the select's
+`scrollIntoView` reveals the item before WebKit reveals the focused element. The manual arm
+has no select, so WebKit's own reveal moves the page 470 px. Both read 0 on the cure.
 
 The `select` keys arm picks Section B in some reads and Section C in others, on both trees
 (two of four repeated Chromium reads on 11.1.1 picked B). The arm is the control for the
@@ -327,12 +424,14 @@ focus count, which reads 0 in every read.
 
 ### The library, the types and the unit tests
 
-- **Library build.** `vite build` on the cured tree passes. `dist/styles/index.css` declares
-  `@layer …, reduced-motion, print` and imports `print.css` last; `dist/styles/print.css`
+- **Library build.** `vite build` on round 2's cured tree passes (the sparse archive needs
+  `package-lock.json`, which the build hashes). `dist/styles/index.css` declares
+  `@layer theme,base,components,utilities,reduced-motion,print`, and `dist/styles/print.css`
   carries the print rules (553 B). The Sheet's inset cap, the Dialog's `contain` and the
-  sort button's rules ship in their sheets.
-- **Types.** `vue-tsc --noEmit -p tsconfig.src.json` passes on the cured tree, and on the
-  tree with phone-scroll's three patches as well.
+  sort button's rules ship in their sheets, and `revealInRun` ships once, in the selection
+  group's chunk, beside the focus move's `preventScroll`.
+- **Types.** `vue-tsc --noEmit -p tsconfig.src.json` passes on round 2's cured tree, and on
+  that tree with phone-scroll's three patches as well.
 - **Unit and gate tests**, `vitest run --maxWorkers=2` over `tests/components/dialog`,
   `sheet`, `select`, the Select, Popover, ExpandableContainer, DarkModeToggle and Table
   contracts, `tests/components/ui/data-table`, `tests/composables/motion`, `tests/gates`,
@@ -341,9 +440,16 @@ focus count, which reads 0 in every read.
   reads a file a sparse archive does not hold (`docs/`, `README.md`, a built demo) or a
   `dist/` that only the cured tree had built; `gate-register.test.ts`, which ran only in
   the cured tree's batch, fails the same 22 tests on 11.1.1 when run alone, on a missing
-  `docs/` file.
+  `docs/` file. That comparison is round 1's.
+- **Round 2's unit run**, over the areas the roving machine reaches
+  (`tests/components/custom/tabs`, `ui/toggle-group`, `custom/dock`,
+  `tests/composables/motion`, `overfit-structure`, the DataTable and Table tests): 356
+  passed and one expected fail on the cure. The three files that read `scripts/` were run
+  again on both trees with `scripts/` added and read the same on each, one failure on both
+  on an export that predates the patch (`record/unit-tests.txt`). Round 2 changes nothing
+  else that round 1's comparison covered.
 
-## 3. What was not run
+## 4. What was not run
 
 - **Real print.** The witness emulates print media and reads computed styles. Nothing was
   paginated or sent to a printer or a PDF. Chromium repeats a `position: fixed` box on each
@@ -352,26 +458,32 @@ focus count, which reads 0 in every read.
 - **Menus and Select lists under print.** The rule hides them; no cell opens one.
 - **Safe areas on a device.** WebKit has no inset override, so GL-13 in WebKit reads the
   rule and the height kept, not the inset. No iPhone was used.
-- **More of GL-12.** A Sheet over a Dialog, three layers, a popover opened from a covered
-  layer, and Escape pressed during the top layer's exit (the lower layer yields until the
-  top's scrim has gone) were not read.
+- **More of GL-12.** A Sheet over a Dialog, three layers and a popover opened from a covered
+  layer were not read. Escape pressed during the top layer's exit was read by the critic
+  (N3), not by this seat.
 - **GL-17 where the page would move.** The witness reads the focus call and its
   `preventScroll`; its page did not move on 11.1.1 either. The touch arm runs in Chromium
   only.
 - **GL-8's hover arm.** Unchanged and not read.
+- **More of GL-18.** The witness reads a horizontal strip in a horizontal run. A vertical
+  strip, a right-to-left one, Home and End, a ToggleGroup, the dock's run, and a run inside
+  a shadow root (Home Assistant's cards) were not read.
 - **The combined 11.1.2 tree.** With phone-scroll's patches it applies and typechecks; no
   browser read it.
 - **Firefox**, the full unit suite, and the comment-ratio gate (its census needs the git
   index, so it reads 0 lines in an archive on both trees).
-- **The final comment.** After the readings, one CSS comment in `dialog/styles.css` was
-  reworded; the cured tree the witness read differs from `cure.patch` in nothing else.
+- **The cured tree and the patch.** The witness read the tree `cure.patch` makes, file for
+  file; nothing changed after the readings.
 
-## 4. Files
+## 5. Files
 
 - `cure.patch`: the patch against `release/11.1.1`.
 - `NOTE-atlas.md`: the note for atlas.
-- `tools/`: the witness page (`harness/`), `build.sh`, `witness.mjs`, `judge.mjs`, and
-  `dbg.mjs`, `dbg-print.mjs`, `dbg-stack.mjs` (the debug reads the first attempt used to
-  find the print and focus causes).
+- `critique-sci.md`: the critic's read of round 1.
+- `tools/`: the witness page (`harness/`), `build.sh`, `witness.mjs`, `judge.mjs`,
+  `table-into-root.py` (puts a verdict table into this file), and `dbg.mjs`,
+  `dbg-print.mjs`, `dbg-stack.mjs` (the debug reads round 1 used to find the print and
+  focus causes) and `dbg-sort.mjs` (round 2's read of the sort button's height under
+  touch).
 - `record/`: the readings, the verdict tables, the run logs and the unit test comparison
   (`unit-tests.txt`).

@@ -17,14 +17,26 @@
 //                            is not reachable from Playwright, so there the cell reads
 //                            Element.computedRole where the engine has it, and Playwright's
 //                            ARIA snapshot otherwise, and says which.
+//   vcards-390               300 cards virtualized with atlas's own useVirtualWindow through
+//                            `viewportRef`, in a 344 x 600 host. GREEN needs the card list to
+//                            hold the virtualizer's total size, a 4,000 px wheel to reach
+//                            4,000, no two cards overlapping, the 8 px gap kept, and under 60
+//                            cards mounted.
+//   vcards-shrink-390        the control: the same, with the list's flex shrink given back.
 //   dialog-1440, dialog-390  a Dialog opened from a button: the plate's rect and opacity on
 //                            every animation frame from the click to its removal. GREEN
-//                            needs the first frame on the opener, the last within a tenth
-//                            of the travel of it, a close that never overshoots, and no
-//                            step of more than 0.3 of the travel between frames of 34 ms or
-//                            less. A step beside a longer frame is listed, not judged: the
-//                            spring advances on frame time and catches up across it.
-//   dialog-rm-1440           the same under prefers-reduced-motion.
+//                            needs the plate to come to rest within 10 s, the first frame on
+//                            the opener, the last within a tenth of the travel of it, a close
+//                            that never overshoots, and EVERY step between two frames within
+//                            what one 60 Hz frame of the clock in play can move
+//                            (window.__amBound, from glass's own rows), whatever the frame's
+//                            length.
+//   dialog-heavy-1440,       the same with atlas's plate size, a body that mounts 100 ms after
+//   dialog-heavy-390         the open with a 90 ms task, a 120 ms task 250 ms into the open
+//                            and another 40 ms into the close.
+//   dialog-deep-1440         opened with no origin, as a deep link opens it: the plate never
+//                            moves, fades in from under 0.3, and every step keeps the bound.
+//   dialog-rm-1440           the first cell under prefers-reduced-motion.
 //
 // Run under the guard: guarded [--exclusive webkit] --timeout 30 -- node probe.mjs ...
 import { chromium, webkit } from "playwright";
@@ -41,8 +53,13 @@ const ALL = [
     "fit-1440",
     "cards-table-390",
     "cards-grid-390",
+    "vcards-390",
+    "vcards-shrink-390",
     "dialog-1440",
     "dialog-390",
+    "dialog-heavy-1440",
+    "dialog-heavy-390",
+    "dialog-deep-1440",
     "dialog-rm-1440",
 ];
 const cells = cellArg ? cellArg.split(",") : ALL;
@@ -291,10 +308,93 @@ async function cards(page, context, role) {
     return { dom, tree, verdict };
 }
 
+// ── vcards ────────────────────────────────────────────────────────────────────────────
+async function vcards(page, shrink) {
+    await ready(page, `am=vcards&w=344&h=600${shrink ? "&shrink=1" : ""}`);
+    await page.waitForSelector(".data-table-cards", { timeout: 5000 }).catch(() => {});
+    await sleep(400);
+    const read = () =>
+        page.evaluate(() => {
+            const host = document.getElementById("host");
+            const root = document.querySelector('[style*="--source-total-size"]');
+            const list = document.querySelector(".data-table-card-list");
+            const cardsEl = document.querySelector(".data-table-cards");
+            const viewport = window.__amViewport ?? null;
+            const scroller = viewport ?? host;
+            const cards = Array.from(document.querySelectorAll(".data-table-card"))
+                .map((c) => {
+                    const r = c.getBoundingClientRect();
+                    return { top: r.top, bottom: r.bottom, row: c.getAttribute("aria-rowindex") };
+                })
+                .sort((a, b) => a.top - b.top);
+            const gaps = cards.slice(1).map((c, i) => c.top - cards[i].bottom);
+            return {
+                viewportIsCards: !!viewport && viewport === cardsEl,
+                role: cardsEl?.getAttribute("role") ?? null,
+                total: root ? parseFloat(root.style.getPropertyValue("--source-total-size")) : null,
+                listBlock: list ? list.getBoundingClientRect().height : null,
+                listFlex: list ? getComputedStyle(list).flex : null,
+                scrollTop: scroller.scrollTop,
+                scrollHeight: scroller.scrollHeight,
+                clientHeight: scroller.clientHeight,
+                hostScrollTop: host.scrollTop,
+                mounted: cards.length,
+                firstRow: cards[0]?.row ?? null,
+                lastRow: cards.at(-1)?.row ?? null,
+                minGap: gaps.length ? Math.min(...gaps) : null,
+                maxGap: gaps.length ? Math.max(...gaps) : null,
+                overlaps: gaps.filter((g) => g < -0.5).length,
+            };
+        });
+    const before = await read();
+    const box = await page.evaluate(() => {
+        const r = document.getElementById("host").getBoundingClientRect();
+        return { x: r.x, y: r.y, w: r.width, h: r.height };
+    });
+    await page.mouse.move(box.x + box.w / 2, box.y + box.h / 2);
+    await page.mouse.wheel(0, 4000);
+    await sleep(1500);
+    const after = await read();
+    const verdict =
+        after.viewportIsCards &&
+        after.total !== null &&
+        Math.abs(after.listBlock - after.total) <= 1 &&
+        after.scrollHeight >= after.total - 1 &&
+        after.scrollTop >= 3999 &&
+        after.hostScrollTop === 0 &&
+        before.overlaps === 0 &&
+        after.overlaps === 0 &&
+        after.minGap !== null &&
+        after.minGap >= 7.5 &&
+        after.mounted < 60
+            ? "GREEN"
+            : "RED";
+    return { before, after, verdict };
+}
+
 // ── dialog ────────────────────────────────────────────────────────────────────────────
-async function dialog(page, width, reduced) {
+// The plate is at rest when its last ten frames agree within half a pixel in centre, width
+// and height and 0.002 in opacity. That is the mount spring's own settle band: it stops at
+// a thousandth of its travel, under a pixel on any plate shorter than 1,000 px. Runs in the
+// page (on the samples so far) and in Node (on the open frames).
+function REST_STEADY(frames) {
+    const list = (frames ?? window.__amSamples).filter((s) => !s.gone).slice(-10);
+    if (list.length < 10) return false;
+    const z = list.at(-1);
+    const c = (s) => [s.x + s.w / 2, s.y + s.h / 2];
+    return list.every(
+        (s) =>
+            Math.abs(c(s)[0] - c(z)[0]) <= 0.5 &&
+            Math.abs(c(s)[1] - c(z)[1]) <= 0.5 &&
+            Math.abs(s.w - z.w) <= 0.5 &&
+            Math.abs(s.h - z.h) <= 0.5 &&
+            Math.abs(s.o - z.o) <= 0.002,
+    );
+}
+async function dialog(page, width, { reduced, heavy, deep }) {
     const at = width === 1440 ? { ox: 40, oy: 60 } : { ox: 24, oy: 120 };
-    await ready(page, `am=dialog&ox=${at.ox}&oy=${at.oy}`);
+    await ready(page, `am=dialog&ox=${at.ox}&oy=${at.oy}${heavy ? "&heavy=1" : ""}`);
+    const bound = await page.evaluate(() => window.__amBound ?? null);
     const opener = await page.evaluate(() => {
         const r = document.getElementById("opener").getBoundingClientRect();
         return { x: r.x, y: r.y, w: r.width, h: r.height };
@@ -322,17 +422,26 @@ async function dialog(page, width, reduced) {
         };
         requestAnimationFrame(loop);
     });
-    await page.click("#opener");
-    await sleep(1400);
+    if (deep) await page.evaluate(() => window.__amOpenDeep());
+    else await page.click("#opener");
+    // The close waits for the plate to come to rest (REST_STEADY below), at least a second
+    // after the open and at most ten. The spring advances by at most one 60 Hz frame per
+    // frame, so on a machine painting at 20 fps the entrance takes three times its clock.
+    const opened = Date.now();
+    for (;;) {
+        await sleep(250);
+        const steady = await page.evaluate(REST_STEADY);
+        if ((steady && Date.now() - opened >= 1000) || Date.now() - opened >= 10000) break;
+    }
     const openedAt = await page.evaluate(() => window.__amSamples.length);
     await page.keyboard.press("Escape");
     await page.waitForFunction(() => !document.querySelector('[data-slot="dialog-content"]'), null, {
         timeout: 5000,
     });
     await sleep(200);
-    const samples = await page.evaluate(() => {
+    const { samples, longTasks } = await page.evaluate(() => {
         window.__amSampling = false;
-        return window.__amSamples;
+        return { samples: window.__amSamples, longTasks: window.__amLongTasks ?? [] };
     });
     const firstPresent = samples.findIndex((s) => !s.gone);
     const open = samples.slice(firstPresent, openedAt).filter((s) => !s.gone);
@@ -341,6 +450,7 @@ async function dialog(page, width, reduced) {
     const rest = open.at(-1);
     const cx = (s) => s.x + s.w / 2;
     const cy = (s) => s.y + s.h / 2;
+    const restSteady = REST_STEADY(open);
     const travel = Math.hypot(cx(rest) - cx(opener), cy(rest) - cy(opener));
     const at_ = (s) => ({
         center: Math.hypot(cx(s) - cx(opener), cy(s) - cy(opener)),
@@ -350,44 +460,61 @@ async function dialog(page, width, reduced) {
         rect: { x: s.x, y: s.y, w: s.w, h: s.h },
         opacity: s.o,
     });
-    // The largest centre step between two samples, judged only where the frames on both
-    // sides of it are no more than two 60 Hz frames long. The sampler's callback runs before
-    // the spring's in each frame, so a sample shows the spring one tick late: the step
-    // between samples i and i+1 is the spring's tick across the frame before sample i.
-    // A step next to a longer frame is the spring catching up on frame time, and is listed
-    // in `longFrames` instead of judged.
-    const LONG_FRAME = 34;
-    const step = (a, b) => Math.hypot(cx(b) - cx(a), cy(b) - cy(a));
-    const gap = (list, i) => (i > 0 && i < list.length ? list[i].ft - list[i - 1].ft : 0);
-    const maxStep = (list) => {
-        let m = 0;
-        for (let i = 1; i < list.length; i++)
-            if (gap(list, i) <= LONG_FRAME && gap(list, i - 1) <= LONG_FRAME)
-                m = Math.max(m, step(list[i - 1], list[i]));
-        return m;
+    // THE STEP RULE. Every pair of consecutive frames is judged, beside a long frame or not.
+    // The plate's frame is linear in the mount position p: its centre moves p·travel, its
+    // width (w_rest − w_opener)·p from an origin or 0.05·w_rest·p in place, and its opacity
+    // is 1 − p. So each channel's step is the position's step times a fixed length, and one
+    // 60 Hz frame of the clock in play bounds it: the entrance's spring row (`panel` when
+    // the plate travels, `present` in place), the exit clock on the close, the held fade
+    // under reduced motion. `over` is the largest step as a share of what that bound
+    // allows, so 1 is the bound; a 0.5 px and 0.002 allowance covers rounding.
+    // Under reduced motion nothing moves, so the row cannot be read off the frames: the
+    // fade is judged against the looser of the two rows' held clocks.
+    const moved = open.some((s) => Math.hypot(cx(s) - cx(rest), cy(s) - cy(rest)) > 2);
+    const row = moved ? "panel" : "present";
+    const held = bound ? Math.max(bound.panelReduced ?? 0, bound.presentReduced ?? 0) || null : null;
+    const clock = {
+        open: reduced ? held : bound?.[row],
+        close: reduced ? held : bound?.[`${row}Exit`],
     };
-    // Each frame longer than LONG_FRAME, with the step the next sample shows across it.
-    const longFrames = (list) =>
-        list.slice(1).flatMap((s, i) =>
-            s.ft - list[i].ft > LONG_FRAME
-                ? [{
-                      frame: i + 1,
-                      ms: +(s.ft - list[i].ft).toFixed(1),
-                      stepOfTravel: list[i + 2] ? +(step(s, list[i + 2]) / travel).toFixed(3) : null,
-                  }]
-                : [],
-        );
+    const widthSpan = moved ? Math.abs(rest.w - opener.w) : 0.05 * rest.w;
+    const stepsOf = (list, b) =>
+        list.slice(1).map((s, i) => {
+            const a = list[i];
+            const centre = Math.hypot(cx(s) - cx(a), cy(s) - cy(a));
+            const w = Math.abs(s.w - a.w);
+            const o = Math.abs(s.o - a.o);
+            const allowC = reduced ? 1 : b * travel + 0.5;
+            const allowW = reduced ? 1 : b * widthSpan + 0.5;
+            const allowO = b + 0.002;
+            return {
+                frame: i + 1,
+                ms: +(s.ft - a.ft).toFixed(1),
+                centre: +centre.toFixed(2),
+                width: +w.toFixed(2),
+                opacity: +o.toFixed(4),
+                over: +Math.max(centre / allowC, w / allowW, o / allowO).toFixed(3),
+            };
+        });
+    const openSteps = clock.open ? stepsOf(open, clock.open) : [];
+    const closeSteps = clock.close ? stepsOf(close, clock.close) : [];
+    const worst = (steps) => steps.reduce((m, s) => (s.over > (m?.over ?? -1) ? s : m), null);
+    const LONG_FRAME = 34;
     const maxGap = (list) => {
         let m = 0;
         for (let i = 1; i < list.length; i++) m = Math.max(m, list[i].ft - list[i - 1].ft);
         return +m.toFixed(1);
     };
-    const maxOpacityStep = (list) => {
-        let m = 0;
-        for (let i = 1; i < list.length; i++) m = Math.max(m, Math.abs(list[i].o - list[i - 1].o));
-        return m;
-    };
+    // The entrance's length: from the first frame to the first one from which the plate
+    // stays within 0.5 px of its rest.
+    const atRest = (s) => Math.abs(cx(s) - cx(rest)) <= 0.5 && Math.abs(cy(s) - cy(rest)) <= 0.5 && Math.abs(s.w - rest.w) <= 0.5 && Math.abs(s.o - rest.o) <= 0.002;
+    let settleIndex = open.length - 1;
+    while (settleIndex > 0 && atRest(open[settleIndex - 1])) settleIndex--;
     const result = {
+        bound,
+        row,
+        settle: { frames: settleIndex, ms: +(open[settleIndex].ft - open[0].ft).toFixed(0) },
+        clock,
         opener,
         rest: { x: rest.x, y: rest.y, w: rest.w, h: rest.h, o: rest.o },
         travel,
@@ -396,20 +523,20 @@ async function dialog(page, width, reduced) {
         mount: at_(open[0]),
         firstPainted: open[1] ? at_(open[1]) : null,
         lastPainted: close.length ? at_(close.at(-1)) : null,
-        maxCenterStepOpen: maxStep(open) / travel,
-        maxCenterStepClose: maxStep(close) / travel,
-        maxOpacityStepOpen: maxOpacityStep(open),
-        maxOpacityStepClose: maxOpacityStep(close),
+        worstOpen: worst(openSteps),
+        worstClose: worst(closeSteps),
+        // Each step beside a frame longer than LONG_FRAME ms, the frames a long task makes.
+        longOpen: openSteps.filter((s, i) => s.ms > LONG_FRAME || (openSteps[i + 1]?.ms ?? 0) > LONG_FRAME),
+        longClose: closeSteps.filter((s, i) => s.ms > LONG_FRAME || (closeSteps[i + 1]?.ms ?? 0) > LONG_FRAME),
+        longTasks: longTasks.map((t) => ({ at: +(t.at - (open[0]?.t ?? 0)).toFixed(0), ms: +t.ms.toFixed(0) })),
+        maxFrameGapOpen: maxGap(open),
+        maxFrameGapClose: maxGap(close),
         opacities: { open: open.map((s) => +s.o.toFixed(3)), close: close.map((s) => +s.o.toFixed(3)) },
         // Each frame: centre x, centre y, width, height, and its frame time in ms after the list's first.
         centers: {
             open: open.map((s) => [+cx(s).toFixed(1), +cy(s).toFixed(1), +s.w.toFixed(1), +s.h.toFixed(1), +(s.ft - open[0].ft).toFixed(1)]),
             close: close.map((s) => [+cx(s).toFixed(1), +cy(s).toFixed(1), +s.w.toFixed(1), +s.h.toFixed(1), +(s.ft - close[0].ft).toFixed(1)]),
         },
-        maxFrameGapOpen: maxGap(open),
-        maxFrameGapClose: maxGap(close),
-        longFramesOpen: longFrames(open),
-        longFramesClose: longFrames(close),
     };
     // The close never overshoots: frame by frame the plate only nears its opener, shrinks
     // and fades. The open's rebound past its resting size is read, not judged.
@@ -418,30 +545,37 @@ async function dialog(page, width, reduced) {
     for (let i = 1; i < close.length; i++) {
         const a = close[i - 1];
         const b = close[i];
-        if (toOpener(b) > toOpener(a) + 0.01 || b.w > a.w + 0.01 || b.h > a.h + 0.01 || b.o > a.o + 1e-6)
+        if ((moved && toOpener(b) > toOpener(a) + 0.01) || b.w > a.w + 0.01 || b.h > a.h + 0.01 || b.o > a.o + 1e-6)
             closeMonotone = false;
     }
     result.closeMonotone = closeMonotone;
     result.openReboundW = Math.max(...open.map((s) => s.w)) - rest.w;
     result.openReboundH = Math.max(...open.map((s) => s.h)) - rest.h;
+    const stepsHold =
+        !!clock.open && !!clock.close && (result.worstOpen?.over ?? 0) <= 1 && (result.worstClose?.over ?? 0) <= 1;
+    result.stepsHold = stepsHold;
+    result.restSteady = restSteady;
     const near = (m, tol) =>
         m && m.centerOfTravel <= tol && Math.abs(m.widthOfChange) <= tol && Math.abs(m.heightOfChange) <= tol;
+    const still = [...open, ...close].every(
+        (s) => Math.abs(cx(s) - cx(rest)) <= 1 && Math.abs(cy(s) - cy(rest)) <= 1,
+    );
+    result.still = still;
     if (reduced) {
-        const still = [...open, ...close].every(
-            (s) => Math.abs(cx(s) - cx(rest)) <= 1 && Math.abs(cy(s) - cy(rest)) <= 1 && Math.abs(s.w - rest.w) <= 1 && Math.abs(s.h - rest.h) <= 1,
-        );
-        const fadesIn = open.length >= 3 && open[0].o < 0.3 && result.maxOpacityStepOpen <= 0.6;
-        const fadesOut = close.length >= 3 && close.at(-1).o < 0.3 && result.maxOpacityStepClose <= 0.6;
-        result.still = still;
-        result.verdict = still && fadesIn && fadesOut ? "GREEN" : "RED";
+        const sized = [...open, ...close].every((s) => Math.abs(s.w - rest.w) <= 1 && Math.abs(s.h - rest.h) <= 1);
+        const fadesIn = open.length >= 3 && open[0].o < 0.3;
+        const fadesOut = close.length >= 3 && close.at(-1).o < 0.3;
+        result.verdict = restSteady && still && sized && fadesIn && fadesOut && stepsHold ? "GREEN" : "RED";
+    } else if (deep) {
+        result.verdict = restSteady && still && open[0].o < 0.3 && closeMonotone && stepsHold ? "GREEN" : "RED";
     } else {
         result.verdict =
+            restSteady &&
             near(result.mount, 0.02) &&
             near(result.firstPainted, 0.1) &&
             near(result.lastPainted, 0.1) &&
             closeMonotone &&
-            result.maxCenterStepOpen <= 0.3 &&
-            result.maxCenterStepClose <= 0.3
+            stepsHold
                 ? "GREEN"
                 : "RED";
     }
@@ -469,8 +603,15 @@ try {
             if (cell.startsWith("sticky")) r = await sticky(page, width);
             else if (cell === "fit-1440") r = await fit(page);
             else if (cell.startsWith("cards-")) r = await cards(page, context, cell.includes("grid") ? "grid" : "table");
-            else if (cell.startsWith("dialog")) r = await dialog(page, width, reduced);
+            else if (cell.startsWith("vcards")) r = await vcards(page, cell.includes("shrink"));
+            else if (cell.startsWith("dialog"))
+                r = await dialog(page, width, {
+                    reduced,
+                    heavy: cell.includes("heavy"),
+                    deep: cell.includes("deep"),
+                });
             r.pageErrors = errors;
+            r.startedAt = new Date().toISOString();
             results.cells[cell] = r;
             console.log(cell, r.verdict);
         } catch (err) {

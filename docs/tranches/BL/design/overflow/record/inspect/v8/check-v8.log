@@ -1,0 +1,102 @@
+
+clean   http://127.0.0.1:5633/containers/configurator  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/containers/sheet  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/navigation/tabs  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/motion/springs  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/forms/labeled-field  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/forms/toggle  [chromium 390t-light]
+
+FAULTS  http://127.0.0.1:5633/data/timeline  [chromium 390t-light]
+  (a) as it loads: spill div.stage-swap.timeline-stage-swap > div.stage-swap-pane > div.tl > ul.tl__marks: 278/256 (+22)
+        past the edge by 22 px: div.tl > ul.tl__marks > li.tl__mark-seat
+
+clean   http://127.0.0.1:5633/dock/nav  [chromium 390t-light]
+
+clean   http://127.0.0.1:5633/dock/rail  [chromium 390t-light]
+
+FAULTS  http://127.0.0.1:5633/dock/chrome  [chromium 390t-light]
+  (a) as it loads: spill div.scene-swap > div.glass-dock.horizontal.shape-pill > div.dock-controls > div.dock-layers: 268/264 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-25-summary.dock-layer.dock-layer--summary
+        past the edge by 4.5 px: div.dock-controls > div.dock-layers > div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run "CanvasFileEdit100%"
+  (a) as it loads: spill div.dock-face.is-active > div.dock-face-content > div.flex.items-center > button[data-slot=menu-trigger]#reka-dropdown-menu-trigger-v-28.menu__trigger.dock-trigger.dock-dropdown-trigger: 42/39 (+3)
+  (a) as it loads: spill div.dock-face.is-active > div.dock-face-content > div.flex.items-center > button#reka-popover-trigger-v-32.dock-trigger.dock-dropdown-trigger: 38/32 (+6)
+
+clean   http://127.0.0.1:5633/substrates/aurora  [chromium 390t-light]
+
+FAULTS  http://127.0.0.1:5633/substrates/blob  [chromium 390t-light]
+  (a) as it loads: spill div.configurator-stage.relative.min-h-0 > div.blob-stage > div.blob-stage-box > div.goo-blob-wrapper: 304/234 (+70)
+        past the edge by 70.2 px: div.blob-stage-box > div.goo-blob-wrapper > canvas.goo-blob-canvas
+
+FAULTS  http://127.0.0.1:5633/containers/configurator  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/containers/sheet  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/navigation/tabs  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/motion/springs  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/forms/labeled-field  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/forms/toggle  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/data/timeline  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+  (a) as it loads: spill div.stage-swap.timeline-stage-swap > div.stage-swap-pane > div.tl > ul.tl__marks: 924/912 (+12)
+        past the edge by 12 px: div.tl > ul.tl__marks > li.tl__mark-seat
+
+FAULTS  http://127.0.0.1:5633/dock/nav  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/dock/rail  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/dock/chrome  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+  (a) as it loads: spill div.scene-swap > div.glass-dock.horizontal.shape-pill > div.dock-controls > div.dock-layers: 281/277 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-25-summary.dock-layer.dock-layer--summary
+        past the edge by 4.4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run "CanvasFileEdit100%"
+
+FAULTS  http://127.0.0.1:5633/substrates/aurora  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+
+FAULTS  http://127.0.0.1:5633/substrates/blob  [chromium 1440-light]
+  (a) as it loads: spill nav.demo-sidebar-rail > div.demo-sidebar-dock.min-h-0.glass-dock > div.dock-controls > div.dock-layers: 44/40 (+4)
+        past the edge by 12 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-summary.dock-layer.dock-layer--summary
+        past the edge by 4 px: div.dock-controls > div.dock-layers > div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run
+  (a) as it loads: spill div.configurator-stage.relative.min-h-0 > div.blob-stage > div.blob-stage-box > div.goo-blob-wrapper: 663/510 (+153)
+        past the edge by 152.9 px: div.blob-stage-box > div.goo-blob-wrapper > canvas.goo-blob-canvas
+
+20 fault readings on 24 page readings (chromium 149.0.7827.55).

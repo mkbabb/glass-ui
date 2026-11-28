@@ -58,8 +58,22 @@ const JUDGES = {
         return [bad.length === 0, arms.map((k) => `${k}: ${c[k].scrollingFocus} focus move${c[k].scrollingFocus === 1 ? "" : "s"} without preventScroll`).join("; ")];
     },
     selgroup(c) {
-        const ok = c.after.page === c.before.page && c.after.outer === c.before.outer && c.after.run > c.before.run && c.after.selected === "Option 7";
-        return [ok, `page ${c.before.page}→${c.after.page}, outer ${c.before.outer}→${c.after.outer}, run ${c.before.run}→${c.after.run}`];
+        const pick = c.after.page === c.before.page && c.after.outer === c.before.outer && c.after.run > c.before.run && c.after.selected === "Option 7";
+        const arm = (a) => {
+            const [start] = a.reads;
+            const end = a.reads.at(-1);
+            const still = a.reads.every((r) => r.page === start.page && r.outer === start.outer);
+            const ok = still && end.focused === "Option 7" && end.selected === "Option 7" && end.inRun && end.run > start.run;
+            const pageMax = Math.max(...a.reads.map((r) => r.page));
+            const outerMax = Math.max(...a.reads.map((r) => r.outer));
+            return [ok, `page max ${pageMax}, outer max ${outerMax}, run ${start.run}→${end.run}, focus ${end.focused}${end.inRun ? " in view in its run" : " out of its run's view"}, chosen ${end.selected}`];
+        };
+        const [keysOk, keysRead] = arm(c.keys);
+        const [manualOk, manualRead] = arm(c.manual);
+        return [
+            pick && keysOk && manualOk,
+            `pick: page ${c.before.page}→${c.after.page}, outer ${c.before.outer}→${c.after.outer}, run ${c.before.run}→${c.after.run}; keys: ${keysRead}; manual keys: ${manualRead}`,
+        ];
     },
     table(c) {
         const widths = Object.keys(c);

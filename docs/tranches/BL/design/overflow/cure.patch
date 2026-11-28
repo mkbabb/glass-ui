@@ -58,7 +58,7 @@ index 46a62f8..ac21403 100644
  function restSize(
      root: HTMLElement,
 diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
-index 37e587a..6f44e6f 100644
+index 37e587a..7eb76d5 100644
 --- a/src/components/dock/styles/run.css
 +++ b/src/components/dock/styles/run.css
 @@ -368,16 +368,19 @@
@@ -111,17 +111,20 @@ index 37e587a..6f44e6f 100644
      }
  
      /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
-@@ -497,6 +496,17 @@
+@@ -497,6 +496,20 @@
             zero, and the whole 8px overflow the re-capture measured was here. */
      }
  
-+    /* A RUN THAT HIDES NOTHING TAKES NO GESTURE FROM THE PAGE. `pan-<axis>` gives the
-+       run's own axis to the scroller and refuses the other, which holds a long run to
-+       its axis; on a run whose seats all show (`data-run-fits`) there is nothing to pan,
-+       and the refusal only kept a vertical swipe begun on an in-flow dock from
-+       scrolling the page. There both pans pass, and a swipe the run has no range for
-+       goes to whatever holds the dock. A long run keeps its one axis. The rule follows
-+       the vertical run's, which it overrides on a vertical run whose seats fit. */
++    /* A RUN WHOSE SEATS ALL SHOW PASSES THE OTHER AXIS ON. `pan-<axis>` gives the run's
++       own axis to the scroller and refuses the other, which holds a long run to its
++       axis. A run whose seats all show (`data-run-fits`) keeps at most the reserves'
++       range: a horizontal run in a host a few pixels narrower than it asks scrolls by
++       up to twice the ring's reach (above), so a focused end seat's ring comes into
++       view. On such a run the refusal only kept a vertical swipe begun on an in-flow
++       dock from scrolling the page. There both pans pass: a sideways swipe still pans
++       the range the run has, and a vertical one goes to whatever holds the dock. A long
++       run keeps its one axis. The rule follows the vertical run's, which it overrides
++       on a vertical run whose seats fit. */
 +    .glass-dock[data-run-fits] :where(.dock-layers) > .dock-run {
 +        touch-action: pan-x pan-y;
 +    }
@@ -232,7 +235,7 @@ index 24f3859..9a079d2 100644
       * On the way in the box takes the rung it opens to on its first frame
       * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
 diff --git a/src/components/tabs/SegmentedTabs.vue b/src/components/tabs/SegmentedTabs.vue
-index 5dd66c2..45be116 100644
+index 5dd66c2..bb3d570 100644
 --- a/src/components/tabs/SegmentedTabs.vue
 +++ b/src/components/tabs/SegmentedTabs.vue
 @@ -29,6 +29,7 @@ import {
@@ -243,16 +246,20 @@ index 5dd66c2..45be116 100644
  import type { SegmentedTabOption, SegmentedTabsProps } from "./types";
  // Motion weight is the sole drag-enrichment axis.
  import { useMotionAxis } from "../_shared/useMotionAxis";
-@@ -54,6 +55,8 @@ const containerRef = ref<HTMLElement | null>(null);
- const barShape = useBarShape(containerRef);
- const indicatorRef = ref<HTMLElement | null>(null);
- const buttonRefs = ref<HTMLElement[]>([]);
-+/* The strip scrolls only while its tabs run past it (segmented.css). */
-+const overflow = useStripOverflow(containerRef, buttonRefs);
+@@ -117,6 +118,12 @@ const { select, rovingTabindex, singleSliderStyle } = selection;
+ const onStripKeydown = selection.onKeydown;
+ const isActive = (value: T) => selection.isSelected(value);
  
- // ── Computed state ──
- 
-@@ -195,6 +198,7 @@ function onMobileUpdate(value: unknown) {
++/* The strip scrolls only while its tabs run past it (segmented.css), and keeps the
++ * selected tab in view while it does. */
++const overflow = useStripOverflow(containerRef, buttonRefs, () =>
++    stripOptions.value.findIndex((option) => option.value === stripModel.value),
++);
++
+ // Function refs are index-aligned to the rendered options. Clear stale entries
+ // before a responsive subset or option list changes shape.
+ onBeforeUpdate(() => {
+@@ -195,6 +202,7 @@ function onMobileUpdate(value: unknown) {
          "
          :data-motion="motionAxis.dataMotion.value"
          :data-shape="barShape"
@@ -262,41 +269,70 @@ index 5dd66c2..45be116 100644
              cn(
 diff --git a/src/components/tabs/composables/useStripOverflow.ts b/src/components/tabs/composables/useStripOverflow.ts
 new file mode 100644
-index 0000000..ea4189f
+index 0000000..06873a0
 --- /dev/null
 +++ b/src/components/tabs/composables/useStripOverflow.ts
-@@ -0,0 +1,78 @@
-+import { onBeforeUnmount, shallowRef, watch, type Ref } from "vue";
+@@ -0,0 +1,114 @@
++import { nextTick, onBeforeUnmount, shallowRef, watch, type Ref } from "vue";
 +
-+/* WHETHER THE STRIP'S TABS RUN PAST ITS BOX. Bind the result to `data-overflow`;
-+ * segmented.css makes the strip a scroller only while it holds, because a scroll
-+ * container ends the `touch-action` its ancestors set (Pointer Events read it only up
-+ * to the nearest scroll container), and a strip with nothing to scroll must not lift
-+ * a `touch-action: none` box's or a detented Sheet header's restriction.
++/* WHETHER THE STRIP'S TABS RUN PAST ITS BOX, and the selected tab kept in view while they
++ * do. Bind the result to `data-overflow`; segmented.css makes the strip a scroller only
++ * while it holds, because a scroll container ends the `touch-action` its ancestors set
++ * (Pointer Events read it only up to the nearest scroll container), and a strip with
++ * nothing to scroll must not lift a `touch-action: none` box's or a detented Sheet
++ * header's restriction.
 + *
 + * The reading is the tabs' inline extent against the strip's content box: the span of
-+ * their layout boxes (`offset*`, as the dock reads its seats). A tab is never narrower
-+ * than its label (`nowrap`, and no clip on the tab), so the tabs' span is the content's.
-+ * Layout boxes ignore transforms, so a strip in a sheet or a dialog that scales in
-+ * reads the same as at rest. Neither the span nor the room depends on whether
-+ * the strip scrolls (the strip's minimum is 0 in both states, and an offset is read
-+ * against the strip's unscrolled padding edge), so setting the attribute never changes
-+ * the reading. A strip's `scrollWidth` would: a scroller counts its end padding and a
-+ * box that does not scroll does not, so tabs that reach into the trim would read as
++ * their layout boxes (`offset*`, as the dock reads its seats). A horizontal tab is never
++ * narrower than its label (its `1fr` column's minimum is the tab's, the tab is `nowrap`,
++ * and nothing clips it), so the tabs' span is the content's. A vertical strip's tabs take
++ * its width, which segmented.css leaves at its longest label, so a vertical strip never
++ * reads as overflowing. Layout boxes ignore transforms, so a strip in a sheet or a dialog
++ * that scales in reads the same as at rest. Neither the span nor the room depends on
++ * whether the strip scrolls (the strip's minimum is 0 in both states, and an offset is
++ * read against the strip's unscrolled padding edge), so setting the attribute never
++ * changes the reading. A strip's `scrollWidth` would: a scroller counts its end padding
++ * and a box that does not scroll does not, so tabs that reach into the trim would read as
 + * fitting until the strip scrolled and as overflowing after.
 + *
-+ * A ResizeObserver on the strip and on each tab keeps it live: the strip resizes with
-+ * its container, and a tab resizes when its label or its font changes, which a strip
-+ * already at its cap would not show. Its first delivery is the first reading, after
-+ * layout and before paint. */
++ * A ResizeObserver on the strip and on each tab keeps it live: the strip resizes with its
++ * container, and a tab resizes when its label or its font changes, which a strip already
++ * at its cap would not show. Its first delivery is the first reading, after layout and
++ * before paint.
++ *
++ * THE SELECTED TAB IN VIEW. While the strip scrolls, every reading and every change of
++ * choice brings the selected tab whole into view, inside the scroll padding (the trim that
++ * holds its ring). A strip that has just come into layout (its first reading, or out of
++ * `display: none`) is at its tab from its first frame; one already on screen glides there
++ * (`behavior: "auto"` takes segmented.css's `scroll-behavior`, smooth unless motion is
++ * reduced). A tab already in view moves nothing, so a strip the reader has panned stays
++ * where it is until its choice changes or it or one of its tabs resizes. */
 +export function useStripOverflow(
 +    strip: Ref<HTMLElement | null>,
 +    tabs: Ref<HTMLElement[]>,
++    selected: () => number,
 +): Readonly<Ref<"" | undefined>> {
 +    const overflow = shallowRef<"" | undefined>(undefined);
 +    let observer: ResizeObserver | null = null;
 +    let observedStrip: HTMLElement | null = null;
 +    let observed: HTMLElement[] = [];
++    // The strip's width at the last reading: 0 before the first and while it has no layout.
++    let laidOut = 0;
++
++    const reveal = (behavior: ScrollBehavior) => {
++        const el = strip.value;
++        const tab = tabs.value[selected()];
++        if (!el || !tab?.isConnected || overflow.value === undefined) return;
++        const style = getComputedStyle(el);
++        const start = tab.offsetLeft - (parseFloat(style.scrollPaddingLeft) || 0);
++        const end =
++            tab.offsetLeft + tab.offsetWidth + (parseFloat(style.scrollPaddingRight) || 0) - el.clientWidth;
++        // Half a pixel of slack: the scroll offset can be fractional while an offset is
++        // whole pixels, and a tab flush within that is in view.
++        const at = el.scrollLeft;
++        if (start < at - 0.5) el.scrollTo({ left: start, behavior });
++        else if (end > at + 0.5) el.scrollTo({ left: end, behavior });
++    };
 +
 +    const measure = () => {
 +        const el = strip.value;
@@ -313,6 +349,10 @@ index 0000000..ea4189f
 +        // Each layout length is whole pixels, rounded, so a span within 1 px of the room
 +        // fits: the tabs then reach at most a pixel into the trim.
 +        overflow.value = end - start > room + 1 ? "" : undefined;
++        const behavior: ScrollBehavior = laidOut > 0 ? "auto" : "instant";
++        laidOut = el.clientWidth;
++        // The attribute, and the scroller with it, lands at Vue's next flush.
++        if (overflow.value === "") void nextTick(() => reveal(behavior));
 +    };
 +
 +    watch(
@@ -327,6 +367,7 @@ index 0000000..ea4189f
 +            if (same) return;
 +            observer?.disconnect();
 +            observer = null;
++            if (el !== observedStrip) laidOut = 0;
 +            observedStrip = el;
 +            observed = list;
 +            if (!el || typeof ResizeObserver === "undefined") return;
@@ -337,6 +378,8 @@ index 0000000..ea4189f
 +        { flush: "post", immediate: true },
 +    );
 +
++    watch(selected, () => reveal("auto"), { flush: "post" });
++
 +    onBeforeUnmount(() => {
 +        observer?.disconnect();
 +        observer = null;
@@ -345,40 +388,42 @@ index 0000000..ea4189f
 +    return overflow;
 +}
 diff --git a/src/components/tabs/styles/segmented.css b/src/components/tabs/styles/segmented.css
-index 6736361..a113839 100644
+index 6736361..cea0fcc 100644
 --- a/src/components/tabs/styles/segmented.css
 +++ b/src/components/tabs/styles/segmented.css
-@@ -61,6 +61,18 @@
-         display: inline-grid;
-         grid-auto-flow: column;
-         grid-auto-columns: 1fr;
-+        /* THE STRIP IS BOUNDED BY ITS BOX. A column is never narrower than its tab's
-+           label (`white-space: nowrap` below), so a strip whose tabs need more room
-+           than its container ran past it and made the nearest scroller pan sideways.
-+           The strip is no wider than its container; past it, it pans its own tabs
-+           (`[data-overflow]`, below). A scroller's automatic minimum is 0, so as a
-+           flex item it does not shrink: in a row its siblings give way, and in a
-+           column it keeps its height. A grid gives `flex-shrink` no say, so a grid's
-+           `auto` track can still narrow it, and it then pans its tabs. Its minimum is
-+           0 in every state, so whether it scrolls never changes its size. */
-+        max-inline-size: 100%;
-+        min-inline-size: 0;
-+        flex-shrink: 0;
-         padding: var(--bouncy-track-trim);
-         border-radius: var(--bouncy-track-radius);
-         /* The warm-glass quiet surface + the rim + the iOS-27
-@@ -71,6 +83,30 @@
+@@ -71,6 +71,51 @@
             The underline material does NOT compose the track (paper, no surface). */
      }
  
++    /* THE HORIZONTAL STRIP IS BOUNDED BY ITS BOX. A column is never narrower than its
++       tab's label (a `1fr` column's minimum is its tab's, and the tab is `nowrap`
++       below), so a strip whose tabs need more room than its container ran past it and
++       made the nearest scroller pan sideways. The strip is no wider than its
++       container; past it, it pans its own tabs (`[data-overflow]`, below). A
++       scroller's automatic minimum is 0, so as a flex item it does not shrink: in a
++       row its siblings give way, and in a column it keeps its height. A grid gives
++       `flex-shrink` no say, so a grid's `auto` track can still narrow it, and it then
++       pans its tabs. Its minimum is 0 in every state, so whether it scrolls never
++       changes its size.
++
++       The vertical strip takes no cap. Its tabs stretch to its width, so a cap would
++       narrow them below their labels and leave a label outside the pill. It is as wide
++       as its longest label, and in a box narrower than that it runs past the box. */
++    .segmented-tabs:not(.segmented-tabs--vertical) {
++        max-inline-size: 100%;
++        min-inline-size: 0;
++        flex-shrink: 0;
++    }
++
 +    /* A STRIP WHOSE TABS RUN PAST IT PANS THEM, as the dock run does, and only then
-+       (`data-overflow`, `useStripOverflow`). Every tab keeps its whole label, a selected
-+       tab scrolls itself into view (`useSelectionGroup`), and the indicator measures
-+       through the scroll (`useSelectionIndicator`). A strip whose tabs fit is no
-+       scroller: a scroll container ends the `touch-action` its ancestors set, so a
-+       strip that scrolled with nothing to scroll let a vertical swipe through a
-+       `touch-action: none` box and cancelled a detented Sheet's drag from a tab.
-+       A scroller clips at its padding box. The pill's trim holds a focused tab's ring,
++       (`data-overflow`, `useStripOverflow`). Every tab keeps its whole label, the strip
++       keeps its selected tab in view (`useStripOverflow`: there from the first frame,
++       and gliding there when the choice changes or the strip's width does), and the
++       indicator measures through the scroll (`useSelectionIndicator`). A strip whose
++       tabs fit is no scroller: a scroll container ends the `touch-action` its
++       ancestors set, so a strip that scrolled with nothing to scroll let a vertical
++       swipe through a `touch-action: none` box and cancelled a detented Sheet's drag
++       from a tab. A scroller clips at its padding box. The pill's trim holds a focused tab's ring,
 +       and the scroll padding keeps that trim beside a tab scrolled into view; the
 +       underline material has no trim, so its tab draws the ring inside itself
 +       (below). */
@@ -398,12 +443,13 @@ index 6736361..a113839 100644
      /* Past 20rem the horizontal strip is a bar (U/B7 G1-7, `useBarShape`): the one
         radius seam re-binds to `--radius-bar`, so the tabs, the indicator and the
         concentric track follow it. Under a coarse pointer the bar keeps round ends: the
-@@ -163,6 +199,12 @@
+@@ -163,6 +208,13 @@
      /* The JS-measured glide. The indicator is moved by inline `translate`/`width`
         writes; every channel it owns is animated here, in one list. */
      @media (prefers-reduced-motion: no-preference) {
-+        /* A tab selected past the strip's edge glides into view: `scrollIntoView` takes
-+           the strip's own scroll behaviour. */
++        /* A strip that brings a tab into view glides to it: a scroll that names no
++           behaviour of its own (`useStripOverflow`'s, a press's `scrollIntoView`) takes
++           the strip's. */
 +        .segmented-tabs {
 +            scroll-behavior: smooth;
 +        }
@@ -411,7 +457,7 @@ index 6736361..a113839 100644
          .segmented-indicator--js {
              transition:
                  translate var(--tab-indicator-duration) var(--spring-dock),
-@@ -304,6 +346,14 @@
+@@ -304,6 +356,14 @@
          text-align: start;
      }
  
