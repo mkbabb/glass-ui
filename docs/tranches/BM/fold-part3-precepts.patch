@@ -1,0 +1,183 @@
+diff --git a/affordance-map.md b/affordance-map.md
+index 8935c12..241bb51 100644
+--- a/affordance-map.md
++++ b/affordance-map.md
+@@ -85,9 +85,9 @@ on a control already on is answered by its shrink, or in a dock by the dock's ow
+ Every lighter state is the one fill at a lower `opacity`, so no colour transitions. A
+ tinted seat's plate takes its tone and its glyph keeps its colour, so a hovered glyph
+ never outshines the current seat. No drawn shape (an outline or a ring) answers a hover.
+-A control whose glyph is its on-mark (the dark-mode toggle, O-428) takes the plate as a
+-fill for hover and focus alone: no held strength from `aria-pressed`, no press tone and
+-no shrink.
++A control whose glyph is its on-mark (the dark-mode toggle, O-428) takes the plate for
++hover and focus alone, growing from four fifths as every plate does: no held strength from
++`aria-pressed`, no press tone and no shrink.
+ 
+ **The glyph** answers with one motion of its own strokes while its control is pointed
+ at, and returns the same way. `data-glyph` on the `svg`, with one of four verbs. A glyph
+@@ -178,8 +178,8 @@ the SFC template + the CVA `index.ts`).
+ | **Button** (solid/destructive/link/secondary/outline/ghost) | ui/button | ✓ `scale-hover` | — (opaque, no glass-tier `::before`) | ✓ `.tap-squish` `:active` + `useSpringPress` | — | ✓ `.focus-ring` | `index.ts` `transition-control`; the gleam is glass-tier-only (recorded) |
+ | **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock-controls/icon-button.css` |
+ | **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock-controls/triggers.css`·`tab-button.css` |
+-| **DarkModeToggle** | custom/dock | ✓ the plate (`W-B.17`) as a fill alone, on hover and focus | — | — (the glyph's change is the press's answer: no press tone, no held fill from `aria-pressed`, no shrink) | — | ✓ `.focus-ring` and the plate's fill | the glyph (O-428): a warm sun whose rays draw in under its disc and a cool night that slides across to carve the crescent; the rays, the night and the colour on one 200 ms clock; `--toggle-tone` on an ancestor draws it in one ink |
+-| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ each option's own fill at the plate's light strength | — | ✓ the pressed option's fill takes the press tone; nothing shrinks | ✓ where the host opts in (`:draggable`), after 6 px of slack | ✓ roving-tabindex; arrow keys fade the mark across | the one mark: a capsule at its option's size moved by `translate` alone; no lift, no stretch (choices 15 A, 16 A); equal options (17 A); keys fade it (18 C) |
++| **DarkModeToggle** | custom/dock | ✓ the plate (`W-B.17`) on hover and focus, growing from four fifths | — | — (the glyph's change is the press's answer: no press tone, no held fill from `aria-pressed`, no shrink) | — | ✓ `.focus-ring` and the plate's fill | the glyph (O-428): a warm sun whose rays draw in under its disc and a cool night that slides across to carve the crescent; the rays, the night and the colour on one 200 ms clock; `--toggle-tone` on an ancestor draws it in one ink |
++| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ each option's own fill at the plate's light strength | — | ✓ the pressed option's fill takes the press tone; nothing shrinks | — (`:draggable` is no longer read from the BM tranche's parts minor and leaves in 12.0.0: no site sets it) | ✓ roving-tabindex; arrow keys fade the mark across | the one mark: a capsule at its option's size moved by `translate` alone; no lift, no stretch (choices 15 A, 16 A); equal options (17 A); keys fade it (18 C) |
+ | **SegmentedTabs underline indicator** (variant="underline") | ui/tabs | — (a hairline does not lift) | — | — (a hairline does not squish) | — | ✓ roving-tabindex | the ink mark SLIDES on `--spring-snappy` (recorded — the paper material) |
+ | **menu row** (Dropdown/Context/Select/Combobox/Command items) | ui/dropdown-menu, ui/context-menu, ui/select, ui/combobox, ui/command | ✓ `--menu-row-lift` -1px on `--spring-smooth` | — (a row is quiet — gleam reserved for the trigger) | — (select-on-click, no squish) | — | ✓ `data-highlighted` + `.focus-ring` | `menu.css` (the lift rides `--spring-smooth`, co-timed with the bg tint) |
+ | **Card** (:pressable, default-OFF opt-in) | ui/card | ✓ (opt-in `cartoon-surface` hover-lift) | ✓ `v-specular` (gated) | ✓ `useLiquidPress` `--card-press-t` → `.glass-press` | — | ✓ `.focus-ring` | `Card.vue`·`cards.css`·`useLiquidPress.ts` (Button #1, Card #2 of `useSpringPress`) |
+@@ -198,7 +198,9 @@ the SFC template + the CVA `index.ts`).
+ Three rows above (DarkModeToggle, the SegmentedTabs pill indicator, the Slider) were
+ rewritten on 2026-11-24 to the design the owner ratified (O-426, O-428). Each is the
+ design to build to until its wave lands: the toggle in the dock-redesign minor, the
+-indicator and the slider in the BM tranche's parts minor.
++indicator and the slider in the BM tranche's parts minor. The DockLayerGroup switcher rail
++keeps its row until 12.0.0, where it leaves with `:draggable`: no site shows it (the
++overfitting rule).
+ 
+ A `—` cell is recorded-not-befitting (the proportion fence — the gate does NOT demand
+ every affordance on every element, it demands the MAPPED floor). The reveal-surface row
+diff --git a/motion-canon.md b/motion-canon.md
+index af24d4b..0dd4907 100644
+--- a/motion-canon.md
++++ b/motion-canon.md
+@@ -72,7 +72,7 @@ and Apple's sites and the design references on 2026-11-12 (the study of INBOUND
+ 
+ | Kind | In | Out |
+ |---|---|---|
+-| hover fill, tint, plate, glyph | 100 to 200 ms | the same clock, the same curve |
++| hover fill, tint, plate, glyph | 100 to 200 ms; a leg on the page's thread (a colour, a glyph's strokes) 167 to 200 ms, by the 30 fps line below | the same clock, the same curve |
+ | a surface or mark that appears | 100 to 200 ms | 75 to 120 ms: about six tenths of the in |
+ | a box that resizes | 120 ms for a correction between two open states; 250 to 450 ms for a whole panel | the same, or shorter |
+ | a press | about 100 ms | about 100 ms |
+@@ -109,8 +109,8 @@ frames is still a cut.
+ **At 30 fps.** A leg on the page's thread runs 167 ms or more, so it still shows five
+ frames when Low Power Mode halves the page's rendering to 30 fps. A shorter leg rides the
+ compositor (P5). Whether the compositor itself keeps 60 Hz in Low Power Mode is unread.
+-This line counts frames; it sets no bound on the share of a leg's travel drawn in one
+-30 Hz frame. (The BM study's law 7, ratified 2026-11-23, O-426.)
++(The BM study's law 7, as its tenth pass and final fold wrote it on the defaults the owner
++ratified on 2026-11-23, O-426.)
+ 
+ ## P1 — spring iff spatial, bezier iff effect
+ 
+@@ -161,7 +161,8 @@ leg; the transform channel rides the matching `--spring-<name>-duration`. The
+ `transitions.css` `dialog-scale`/`pop`/`dropdown`/`pane-swap`/`metric-swap` recipes are
+ the model for an entrance (each is a two-leg `transition: opacity …, transform …`). A
+ bare opacity entrance with no transform reads flat; a bare transform with no fade reads
+-abrupt.
++abrupt. One order stands past this paragraph: a menu or select grows from its button by a
++clip with its opacity at 1 from the first frame (P5's first order).
+ 
+ An exit fades where it is: it does not slide or shrink back (P0a rule 3). A sheet leaves
+ the way it came. The exit's curve and clock are the exit register's (`--exit-curve`,
+@@ -223,22 +224,28 @@ Collapsible/Accordion `height`/`grid-template-rows` toggle) is a DIFFERENT primi
+ a continuous compositor-safe shrink: it is a one-shot bounded-CLS transition, named on the
+ gate's narrow audited allowlist with its rationale, never a silent escape.
+ 
+-Two orders the owner gave stand past this rule, each with its length.
+-
+-- **The menu's grow** (O-171, 5 November: "every height and width animated, no needless
+-  fade"; the BM board's choice 10 default). A menu, select or popover grows from its
+-  button by a clip of its own shape, on `bloom`, over 370 ms on the page's thread.
+-- **The dock's fusion layer** (the BM board's choice 24 C, ratified 2026-11-23, O-426).
+-  While a seat parts from or joins the dock, and through the folded rest, one layer per
+-  document may carry `filter: url()` over the two plates, on the 12.0.0 register only,
+-  where the dock samples nothing. WebKit paints that layer on the page's thread, so the
+-  fold's translates under it are painted there too. Its licence is `restraint.md`'s
+-  Motion rule ("Overshoot and goo belong to the spatial morphs he ruled"), and the BM
+-  tranche's gate G-7 holds its cost.
+-
+-The toast's vanish drives its blur from registered properties (`dissolve.css:60-72`). It
+-is the owner's open line on how glass arrives and leaves, and P5 does not reach it until
+-he rules.
++Two orders the owner gave stand past this rule, each with its length. Each is known by the
++selector its own part carries, so a check reads the part and not this paragraph.
++
++- **The menu's grow** (`[data-reveal="menu"]`). O-171, 5 November: "every height and
++  width animated, no needless fade", for the menu plate that grows from its trigger. Its
++  clip, and that clip's run on the page's thread over `bloom`'s 370 ms, are the BM board's
++  choice 10 C (today's grow), ratified 2026-11-23, O-426. A menu or select grows from its
++  button by a clip of its own shape. A popover is not a menu: it enters by P3.
++- **The dock's fusion layer** (its own element, mounted only on a dock with a seat beside
++  it; the BM board's choice 24 C, ratified 2026-11-23, O-426). While a seat parts from or
++  joins the dock, and through the folded rest, one layer per document may carry
++  `filter: url()` over the two plates, on the 12.0.0 register only, where the dock samples
++  nothing. WebKit paints that layer on the page's thread, so the fold's translates under
++  it are painted there too. Its licence is `restraint.md`'s Motion rule ("Overshoot and
++  goo belong to the spatial morphs he ruled"). The filter is on only from a close's first
++  frame through the folded rest, and its cost per frame is read before it ships.
++
++The toast's vanish (`.glass-vaporize`) drives its blur from registered properties on the
++overlay's exit clock (`dissolve.css:60-72`). It answers the owner's ask that the
++notification's "vaporizing and dissolving effect" be re-deployed in glass (`dissolve.css:4`),
++and it crosses `restraint.md`'s "Transform and opacity only". Which of the two stands is
++the owner's open question, and P5 does not reach the vanish until he rules.
+ 
+ ## P6 — PRM keeps the fade, drops the transform
+ 
+@@ -249,23 +256,28 @@ web.dev guidance). A drag or gesture still FUNCTIONS under PRM — the physics i
+ gesture works (the PRM-safe-by-construction principle).
+ 
+ A fill's length, such as a progress line's reveal, is an effect, not a body's travel.
+-Under reduced motion it keeps a tween of 150 ms or less on an ease-out, and the universal
+-carve lets it through. A transform that is a state's only sign of place dips: it fades out
+-where it is, lands while hidden, and fades in, 100 ms each way. A choice's mark fades
+-across. (The BM study's choice 8 A, ratified 2026-11-23, O-426.)
++Under reduced motion it keeps a tween on an ease-out: 100 to 150 ms on the compositor, 167
++to 200 ms on the page's thread (P0a's 30 fps line). A transform that is a state's only
++sign of place dips: it fades out where it is, lands while hidden, and fades in, 100 ms
++each way. A choice's mark fades across. A reduced form a part keeps survives the
++reduced-motion rule only as an `!important` declaration in `components`, named in the
++part's own stylesheet (the carve below). (The BM study's choice 8 A, ratified 2026-11-23,
++O-426.)
+ 
+ The discipline is SINGLE-SOURCED at the library seam, not re-declared per recipe:
+ 
+-- **The universal carve** is `a11y-overrides.css` — `@media (prefers-reduced-motion:
+-  reduce) *:not([data-allow-motion])` restricts `transition-property` to the non-spatial
+-  set (`opacity, color, background-color, border-color, box-shadow`) and snaps animation
+-  durations, so EVERY transform transition is stripped library-wide by construction. The
+-  `data-allow-motion` attribute is the narrow opt-OUT for a control whose whole purpose IS
+-  the animation (the `DarkModeToggle` glyph: under reduced motion its rays and its night
+-  crossfade on the glyph's own 200 ms clock and its colour still tweens; the clock is
+-  200 ms because the crossfade runs on the page's thread, and P0a's 30 fps line asks such
+-  a leg for 167 ms or more; O-428) — and PRM still overrides even that (accessibility is
+-  absolute).
++- **The universal carve** is `a11y-overrides.css`. From 11.1.1, under
++  `prefers-reduced-motion: reduce`, a rule in its own last layer (`reduced-motion`) sets
++  every element's `transition-duration` to 0 and snaps its animations to their end, and it
++  mints no `transition-property`. It loses to anything unlayered or `!important`, so a
++  site's own fade keeps its clock, and a glass fade that must survive is a carve: an
++  `!important` declaration in `components` (the reveal, the Toast's dissolve, the Vue fade
++  classes). `[data-allow-motion]` is not carved here: a user who asks for reduced motion
++  outranks a per-element allowance (accessibility is absolute). The attribute does one
++  other job: it keeps an element's own transition through the theme flip's
++  `html.no-transition`. The `DarkModeToggle`'s glyph does not move under reduced motion:
++  its change rides the theme's one crossfade, an opacity change on the compositor of
++  150 ms (O-428; O-353's ruling on the theme flip).
+ - **The recipe-local carve** is `transitions.css` — the Vue `<Transition>` classes
+   (`fade-slide`/`dialog-scale`/`pop`/`dropdown`/`pane-swap`/`metric-swap`/`dock-in`) carry
+   their OWN `@media (prefers-reduced-motion: reduce)` block that keeps opacity and zeroes
+diff --git a/restraint.md b/restraint.md
+index eb2152f..71503bb 100644
+--- a/restraint.md
++++ b/restraint.md
+@@ -215,11 +215,13 @@ once, as the mark's colour leg. A window with what it reveals counts as one shap
+ crossfade's two legs count as one. When a press opens a panel, the control's held fill
+ waits for the panel to land, so the press stays at two.
+ 
+-Counted so, these run over two, each by an order or as today: the dock's fold, 3, and an
++Counted so, these run over two, each by a ruling named here: the dock's fold, 3, and an
+ open with its seat's split, 5 (choice 19 B's own figures); a dialog's open and its leave,
+-3 each, as today; the dark-mode toggle's tap, 3, its rays, its night and its colour
+-(O-428); a slider with both a knob and a readout, 3 on a press (O-426). Nothing else
+-does.
++3 each, the veil being the third leg (choice 12 B, Q22); the dark-mode toggle's tap, 3,
++its rays, its night and its colour (O-428); a slider with both a knob and a readout, 3 on
++a press (O-426). Nothing else does. A part that runs over two carries its count in its own
++source as `data-motion-count`, so a check reads the part and not this paragraph; a count
++not named here goes to the owner before it is built.
+ 
+ Nodes or wrappers added for a motion: 0. The one exception is the dock's fusion layer and
+ the seat's plate inside it: two nodes, `aria-hidden` and inert, mounted only on a dock

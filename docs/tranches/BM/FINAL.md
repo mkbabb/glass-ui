@@ -1,6 +1,6 @@
 # BM — the close
 
-A skeleton, written at formation (2026-11-24). The close seat fills every cell from a reading it takes at the close, never from a status word. A cell that has no reading says so and names what is owed.
+A skeleton, written at formation (2026-11-24) and amended by BM part 3's fold (2026-11-27). The close seat fills every cell from a reading it takes at the close, never from a status word. A cell that has no reading says so and names what is owed.
 
 | field | value |
 |---|---|
@@ -14,8 +14,8 @@ A skeleton, written at formation (2026-11-24). The close seat fills every cell f
 | Release | Number | Tag and commit | Provenance run | BM's waves in it | Sites told (date) |
 |---|---|---|---|---|---|
 | the dock-redesign minor | | | | BM-1, BM-2 | |
-| BM's parts minor | | | | BM-3 to BM-8, BM-13 | |
-| 12.0.0 | 12.0.0 | | | BM-9 to BM-12 | |
+| BM's parts minor | | | | BM-3, BM-4 (with BM-3's step 2), BM-5, BM-6, BM-7, BM-13, BM-14, BM-15 | |
+| 12.0.0 | 12.0.0 | | | BM-9, BM-10, BM-11 (with BM-8's window), BM-12 | |
 
 ## 2 The waves
 
@@ -29,11 +29,13 @@ A skeleton, written at formation (2026-11-24). The close seat fills every cell f
 | BM-5 | | | | |
 | BM-6 | | | | |
 | BM-7 | | | | |
-| BM-8 | | | | |
 | BM-13 | | | | |
+| BM-14 | | | | |
+| BM-15 | | | | |
 | BM-R1 | | | | |
 | BM-9 | | | | |
 | BM-10 | | | | |
+| BM-8 (inside BM-11) | | | | |
 | BM-11 | | | | |
 | BM-12 | | | | |
 | BM-R2 | | | | |
@@ -44,15 +46,26 @@ Each read at the close on the shipped library, in the engines it names, with the
 
 | Gate | Reading | Engines | Command | Evidence | Holds |
 |---|---|---|---|---|---|
-| G-1 the single curves | | built sheet | | | |
+| G-1 the single curves, and no entrance, control or reading register past its target | | built sheet; the G-2 run | | | |
 | G-2 the compositor's properties | | Chromium, Playwright WebKit | | | |
-| G-3 the counts | | Chromium, Playwright WebKit | | | |
-| G-4 each site's entry | see §4 | each site's build | | | |
-| G-5 Reduce Motion | | Chromium, Playwright WebKit | | | |
+| G-3 the counts (`data-motion-count` where over two) | | Chromium, Playwright WebKit | | | |
+| G-4 each site's entry (a reading) | see §4 | each site's own check | | | |
+| G-5 nothing in one frame, Reduce Motion off and on | | Chromium, Playwright WebKit | | | |
 | G-6 the 12.0.0 dock samples nothing | | Chromium, Playwright WebKit | | | |
-| G-7 the goo's close | | Playwright WebKit, Busy page on (an indication) | | | |
+| G-7 the goo's filter on only while it must be | | Chromium, Playwright WebKit | | | |
+
+Readings beside the gates, each with its command and evidence:
+
+| Reading | Value | Engines | Evidence |
+|---|---|---|---|
+| Each spring token's distance from its row's closed form (BM-3) | | built sheet | |
+| The goo's neck: frames joined on an open and on a close at 60 Hz (BM-12; five or more, or the wave held) | | Chromium, Playwright WebKit | |
+| The goo's frame gaps over a close, Busy page on, with and without the filter (BM-12) | | Playwright WebKit; Safari's Web Inspector if one came | |
+| The theme's crossfade: intermediate frames of the ground and body text, each direction, `disable-transitions` on and off, Reduce Motion (BM-1) | | Chromium, Playwright WebKit | |
 
 ## 4 Each site at each candidate: G-4, and daraksha's occasion mode
+
+Each cell is the site's own budget check at the candidate (G-4, a reading), with the census of the names and stylesheet paths it imports.
 
 | Site | Bound | The dock-redesign minor | BM's parts minor | 12.0.0 | Ref read |
 |---|---|---|---|---|---|
@@ -87,8 +100,10 @@ Each question its message asked, with the answer and its date, or "no answer; th
 
 | Question (OPEN §1) | His word, with its date, or the form that shipped |
 |---|---|
-| O-1, `--ease-cartoon-punch`'s overshoot on controls | |
+| O-1, `--ease-cartoon-punch`'s overshoot on controls | Closed on `restraint.md`'s check and P2 by BM part 3's fold: BM-3 moved the token's control and entrance readers onto `present`. Tell him, with the readers moved; he may reverse it |
 | O-2, the toast's vanish | |
+
+Defaults chosen in the tranche that he sees with their candidate: the discrete slider (BM-14), the Blob's body (BM-15), and the theme's crossfade with `disableTransitions` on (BM-1, O-353's ruling, flagged then as his to reverse).
 
 ## 7 Readings that arrived
 
