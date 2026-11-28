@@ -8,7 +8,7 @@ Glass now numbers its minors in the order they ship, so I'll name each release b
 
 ## The minor that brings the dock redesign
 
-The DarkModeToggle in the deck's dock (`src/deck/DeckView.vue:164`) and on the home page (`src/views/HomeView.vue:27`) gets its new face, in colour: a warm sun draws its rays in under its disc while a cool night slides across to carve the crescent, together over 200 ms. Its hover becomes the plate the dock's controls use, growing out from just inside the button, and a press is answered by the glyph itself. A theme change becomes one 200 ms crossfade of the whole page, so a deck changes theme as one picture on the projector; with Reduce Motion on the glyph stays still and the crossfade runs 150 ms. The same minor brings a small round dock of its own for a control, placed in a corner on the main dock's baseline, which a deck could use for its toggle if you'd like (my first question).
+The DarkModeToggle in the deck's dock (`src/deck/DeckView.vue:164`) and on the home page (`src/views/HomeView.vue:27`) gets its new face, in colour: a warm sun draws its rays in under its disc while a cool night slides across to carve the crescent, together over 200 ms. Its hover becomes a plate growing out from just inside the button, and a press is answered by the glyph itself. A theme change becomes one 200 ms crossfade of the whole page, so a deck changes theme as one picture on the projector; with Reduce Motion on the glyph stays still and the crossfade runs 150 ms. The same minor brings a small round dock of its own for a control, placed in a corner on the main dock's baseline, which a deck could use for its toggle if you'd like (my first question).
 
 ## The minor with the new springs and menus
 

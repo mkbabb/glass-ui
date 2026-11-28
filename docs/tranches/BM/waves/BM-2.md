@@ -2,14 +2,14 @@
 
 | field | value |
 |---|---|
-| release | the dock-redesign minor (BL's W-I.8, with W-B.17's plate) |
+| release | the dock-redesign minor (BL's W-I.8, with W-B.17's plate) for the two rungs, the plates that ship there and the on-mark attribute. The dock's own seats take the plate only in the release that puts `DockControl` on `.plate`, which BL places in 12.0.0 (`W-B.17.md:513`, `W-I.8.md:36`; `W-B.17.md:534` leaves the dock's per-control fills at "11.2.0 or 12.0.0"); BM.md §8 asks BL to place it in the dock-redesign minor |
 | status | planned |
 | rests on | choice 5, C: recommended by the study's final pass, and it ships under the owner's ratification (IN O-426) unless he sends another letter (D§6.2; D§14.1 item 1; A10-4, B10-13) |
 | DESIGN | §6.2; with §5.1 (the press), §7.3 (the seat's plate) and §10.6 |
 | starts from | W-B.17's `src/styles/glass/plate.css` on `bl/intent/proto`, and its two tokens, `src/styles/tokens/color-radius.css:156-157` there (`--fill-hover: 0.05`, `--fill-selected: 0.12`) |
 | page | P10-plate, letter C (repaired by the pages seat: strengths by `opacity` over one fill, the glyph still, a still of each letter) |
 | gates | G-2, G-3, G-5; G-4's reading on the dock-redesign minor's candidate |
-| depends on | W-B.17's plate in the same minor; BL's row for the on-mark attribute (BM.md §8) |
+| depends on | W-B.17's plate in the same minor; BL's row for the on-mark attribute (BM.md §8); for the seat cells, BL's placement of the dock's controls on the plate |
 
 ## What it builds
 
@@ -18,12 +18,12 @@ The plate is W-B.17's: one flat fill on the control's own `::before`, at one str
 - **Two rungs.** The light strength (hover) is 6.5 % of the control's tone in light and 5 % in dark. The full strength (on: current, open, pressed) is 10 %. They are `--fill-hover` with a dark value and `--fill-selected`. There is no third rung: a press on a control already on is answered by choice 9's shrink, or in a dock by the dock's own 2 % layer.
 - **The tone.** A tinted seat's plate takes its own tone (`--plate-tone`), and its glyph keeps its colour. A hover then runs two legs, the plate's fade and its growth (W-B.17 R-3), and a hovered glyph never outshines the current seat (law 10).
 - **No drawn shape.** No outline or ring answers a hover (restraint, Shading).
-- **The on-mark attribute.** The plate reads one attribute, BL's row, with which a control whose glyph is its on-mark keeps only its hover and focus answers: no on fill from `aria-pressed`, no press tone and no shrink. It lifts three paints from such a control, not one: W-B.17's on-list (`plate.css`, "On, held", which takes `[aria-pressed="true"]`); the dock's own active paint, `background: var(--dock-active-bg)` on `.dock-icon-button[aria-pressed="true"]` (`src/components/dock/styles/controls/icon-button.css:207` on `release/11.1.1`, `:198` on `v11.1.0`), where `--dock-control-active-bg` is the foreground at 14 % in dark (`R111` `tokens/dark-arm.css:301`); and the rest light's selector, which takes `[aria-pressed="true"]` on `.dock-icon-button` (`R111` `styles/glass/material.css:350-375`, which 11.1.2 keeps). Its first reader is BM-1's toggle. fourier's own toggle (`web/src/components/layout/DarkModeToggle.vue:36-39` on fourier `origin/master`, a `DockControl`, which renders `.dock-icon-button glass-specular-track`, with `:aria-pressed="isDark"`) is a second: on 11.1.0 it already rests filled and lit in dark, which its own comment (`:28-30`) does not expect. Its message says so and asks it to set the attribute.
+- **The on-mark attribute.** The plate reads one attribute, BL's row, with which a control whose glyph is its on-mark keeps only its hover and focus answers: no on fill from `aria-pressed`, no press tone and no shrink. It lifts three paints from such a control, not one: W-B.17's on-list (`plate.css`, "On, held", which takes `[aria-pressed="true"]`); the dock's whole active block on `.dock-icon-button[aria-pressed="true"]`, its `background`, `color`, `scale`, `border` and `box-shadow` together (`src/components/dock/styles/controls/icon-button.css:207-212` on `release/11.1.1`, `:198-203` on `v11.1.0`, `:192-197` on `v11.0.2`), where `--dock-control-active-bg` is the foreground at 14 % in dark (`R111` `tokens/dark-arm.css:301`); and the rest light's selector, which takes `[aria-pressed="true"]` on `.dock-icon-button` (`R111` `styles/glass/material.css:350-375`, which 11.1.2 keeps). Its first reader is BM-1's toggle. Two site toggles are `DockControl`s with `aria-pressed` and rest in dark with the dock's active block today: fourier's (`web/src/components/layout/DarkModeToggle.vue:36-39` on fourier `origin/master`, `:aria-pressed="isDark"`, lit as well, since `DockControl` renders `.dock-icon-button glass-specular-track`), which its own comment (`:28-30`) does not expect, and daraksha's `ThemeControl` (`src/shell/ThemeControl.vue:37`, `:aria-pressed="pressed"`, inside the theme seat's `GlassDock`, `src/shell/SiteDock.vue:283`, on glass 11.0.2). Their messages say so and ask each to set the attribute, or to keep its filled rest.
 - **The six other readers.** `--fill-hover` and `--fill-selected` are also read by Button, Card, the Configurator, SortableList, Timeline and the control bit (`git grep` on `bl/intent/proto`: `components/button/styles.css`, `components/card/styles.css`, `components/configurator/styles.css`, `components/sortable-list/styles.css`, `components/timeline/Timeline.vue`, `styles/glass/control-bit.css`). They move with the ladder, and the strip shows each one before and after. Card derives a third value from the two (`card/styles.css:189` on `bl/intent/proto`, `--fill-hover + --fill-selected`), which falls from 0.17 to 0.165 in light and 0.15 in dark, and every selected state falls from 0.12 to 0.10. "No third rung" holds for the plate; for these readers the proof reads contrast.
 
 ## Inputs folded
 
-- **The specular rest light** (S112, the pointer-light section; IN O-431). 11.1.2 takes the pointer-following light off every surface and keeps a state's rest light "until the dock redesign shows selection by fill steps". BM-2's full rung is that fill step. BM writes no specular rule: the rest light's removal is the redesign's, and BM-2's strip (the current seat and an on Switch at 10 % with the rest light off) is what that removal reads.
+- **The specular rest light** (S112, the pointer-light section; IN O-431). 11.1.2 takes the pointer-following light off every surface and keeps a state's rest light "until the dock redesign shows selection by fill steps". BM-2's full rung is that fill step. BM adds one exemption to the rest light's selector, for the on-mark attribute, and writes no other specular rule: the rest light's removal is the redesign's, and BM-2's strip (the current seat and an on Switch at 10 % with the rest light off) is what that removal reads.
 - **The one-level colour rule** (IN O-436 (1)). The tone is the seat's own token at one `opacity`; no plate token is a `color-mix()` of mixed tokens. daraksha's occasion-mode crash was this fault with a site's own mix inside one of glass's (BM.md §10). The plate never mixes its tone: it carries it at one `opacity`, so a site that sets the tone to a mix of its own stays one level deep. daraksha is asked to run its `e2e/veil-webkit.spec.ts` on the minor's candidate.
 
 ## Bytes
@@ -32,20 +32,20 @@ Two token values and one dark value, with no new rule (`study/pass-10/ledger/led
 
 ## Proof
 
-In headless Chromium and Playwright WebKit, through `guarded`, on P10-plate's C and on glass's demo dock (Home current, then three tinted seats):
+In headless Chromium and Playwright WebKit, through `guarded`, on P10-plate's C and on glass's demo. In the dock-redesign minor the cells run on the plates that ship there (the toggle, W-B.17's 11.2.0 list, the six other readers) and on the on-mark attribute; the cells on the dock's seats (Home current, then three tinted seats) run in the release that puts the dock's controls on the plate:
 
 - each strength drawn by `opacity` over one fill: one computed `background-color` on the plate across rest, hover, on and press, and only `opacity` changing;
 - a hover runs two legs at most (the fade and the growth from four fifths), and a tinted seat's glyph keeps its computed `color` on hover;
 - the hovered seat against the dock ground at 1.1 or more in every cell of BL's `design/dock/wi8/MEASURE-9.md` S4 grid, read once on the build (a proof reading, not a gate);
-- the toggle and fourier's toggle in dark: no on fill and no rest light. fourier's toggle is filmed first at `v11.1.0`, where it reads RED (filled and lit), then with the attribute;
-- Card's derived value and SortableList's selected state at the new rungs: 3:1 or more against their ground where the fill is the only carrier (`color-radius.css:149-154`), a reading, light and dark;
+- the toggle, fourier's toggle and a `DockControl` in daraksha's shape in dark: no on fill, no active scale, border or shadow, and no rest light. fourier's toggle is filmed first at `v11.1.0`, where it reads RED (filled and lit), then with the attribute;
+- Card's derived value and SortableList's selected state at the new rungs, a reading, light and dark. A fill of the foreground at 10 % cannot reach 3:1: glass's own register records a selected tab at 1.032:1 on the 0.12 rung (`bl/intent/proto` `color-radius.css:149-154`), and expects about the same here. The reading names, for each, whether a stroke or a glyph co-carries the state (the register's rule: where the fill is the sole carrier, 3:1 against the unselected sibling); a state the fill alone carries goes to BL, whose W-B.17 owns those readers, and no rung is raised for it;
 - the six other readers' strip, light and dark, 390 and 1440;
 - under forced colours the plate draws nothing of its own; under Reduce Motion the hover is the fade alone, an `!important` carve in `plate.css`;
 - G-2, G-3 and G-5 in both modes.
 
 ## Sites it serves
 
-Every dock site: atlas, value.js, daraksha, fourier, keyframes, gaggle and Home Assistant, and slides once it moves to 11. None changes anything; fourier sets the on-mark attribute on its own toggle.
+Every dock site: atlas, value.js, daraksha, fourier, keyframes, gaggle and Home Assistant, and slides once it moves to 11. None changes anything; fourier and daraksha are asked to set the on-mark attribute on their own toggles.
 
 ## Not this wave's
 

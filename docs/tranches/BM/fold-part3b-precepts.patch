@@ -1,0 +1,110 @@
+diff --git a/affordance-map.md b/affordance-map.md
+index 241bb51..f45e0ed 100644
+--- a/affordance-map.md
++++ b/affordance-map.md
+@@ -178,8 +178,8 @@ the SFC template + the CVA `index.ts`).
+ | **Button** (solid/destructive/link/secondary/outline/ghost) | ui/button | ✓ `scale-hover` | — (opaque, no glass-tier `::before`) | ✓ `.tap-squish` `:active` + `useSpringPress` | — | ✓ `.focus-ring` | `index.ts` `transition-control`; the gleam is glass-tier-only (recorded) |
+ | **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock-controls/icon-button.css` |
+ | **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock-controls/triggers.css`·`tab-button.css` |
+-| **DarkModeToggle** | custom/dock | ✓ the plate (`W-B.17`) on hover and focus, growing from four fifths | — | — (the glyph's change is the press's answer: no press tone, no held fill from `aria-pressed`, no shrink) | — | ✓ `.focus-ring` and the plate's fill | the glyph (O-428): a warm sun whose rays draw in under its disc and a cool night that slides across to carve the crescent; the rays, the night and the colour on one 200 ms clock; `--toggle-tone` on an ancestor draws it in one ink |
+-| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ each option's own fill at the plate's light strength | — | ✓ the pressed option's fill takes the press tone; nothing shrinks | — (`:draggable` is no longer read from the BM tranche's parts minor and leaves in 12.0.0: no site sets it) | ✓ roving-tabindex; arrow keys fade the mark across | the one mark: a capsule at its option's size moved by `translate` alone; no lift, no stretch (choices 15 A, 16 A); equal options (17 A); keys fade it (18 C) |
++| **DarkModeToggle** | custom/dock | ✓ the plate (`W-B.17`) on hover and focus, growing from four fifths | — | — (the glyph's change is the press's answer: no press tone, no held fill from `aria-pressed`, no shrink) | — | ✓ `.focus-ring` and the plate's fill | the glyph (O-428): a warm sun whose rays draw in under its disc and a cool night that slides across to carve the crescent; the rays, the night and the colour on one 200 ms clock, the colour on a curve that trails the shapes' (colour waits for shape, `motion-canon.md` P0a); `--toggle-tone` on an ancestor draws it in one ink |
++| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ each option's own fill at the plate's light strength | — | ✓ the pressed option's fill takes the press tone, by the plate's `opacity` on the press row's clock (about 100 ms each way); nothing shrinks | ✓ `:draggable` keeps today's drag, on today's indicator, until 12.0.0 removes it (no site sets it; a meaning that changes goes in a major) | ✓ roving-tabindex; arrow keys fade the mark across | the one mark: a capsule at its option's size moved by `translate` alone; no lift, no stretch (choices 15 A, 16 A); equal options (17 A); keys fade it (18 C) |
+ | **SegmentedTabs underline indicator** (variant="underline") | ui/tabs | — (a hairline does not lift) | — | — (a hairline does not squish) | — | ✓ roving-tabindex | the ink mark SLIDES on `--spring-snappy` (recorded — the paper material) |
+ | **menu row** (Dropdown/Context/Select/Combobox/Command items) | ui/dropdown-menu, ui/context-menu, ui/select, ui/combobox, ui/command | ✓ `--menu-row-lift` -1px on `--spring-smooth` | — (a row is quiet — gleam reserved for the trigger) | — (select-on-click, no squish) | — | ✓ `data-highlighted` + `.focus-ring` | `menu.css` (the lift rides `--spring-smooth`, co-timed with the bg tint) |
+ | **Card** (:pressable, default-OFF opt-in) | ui/card | ✓ (opt-in `cartoon-surface` hover-lift) | ✓ `v-specular` (gated) | ✓ `useLiquidPress` `--card-press-t` → `.glass-press` | — | ✓ `.focus-ring` | `Card.vue`·`cards.css`·`useLiquidPress.ts` (Button #1, Card #2 of `useSpringPress`) |
+@@ -188,7 +188,7 @@ the SFC template + the CVA `index.ts`).
+ | **Radio** (RadioGroupItem) | ui/radio-group | ✓ `transition-control` | — (too small) | ✓ `.tap-squish` `:active` | — | ✓ `.focus-ring` (role=radio) | `RadioGroupItem.vue` (`tap-squish focus-ring`) |
+ | **Toggle** | ui/toggle | ✓ quiet glass hover fill | — (a small chip) | ✓ `.tap-squish` `active:scale-95` | — | ✓ `.focus-ring` | `toggle/index.ts` (`transition-control` + `.tap-squish`) |
+ | **ToggleGroupItem** (variant="card") | ui/toggle-group | ✓ tile hover | — | ✓ `.tap-squish` | — | ✓ `.focus-ring` (role=radio single-arm) | `toggle-group/` |
+-| **Slider** (thumbless by default, O-408) | ui/slider | ✓ under a resting mouse, after a 120 ms dwell, the track's own ground grows out by g/2 and returns on the same 200 ms clock | — | ✓ a press or Tab grows the ground by g (8 px, at most two thirds of the band); a knob, where a site asks for one, grows by `scale` | ✓ the track drag; on a coarse pointer no value until 10 px of intent along the track, and a tap sets the value at its release (11.1.2) | ✓ a 2 px ring at the grown ground's edge, shown on Tab | the expanded view kept and refined after the ChatGPT app (O-426); the grown ground takes no pointer, so the root's box is the hit region in every state |
++| **Slider** (thumbless by default where it has a fill, O-408; the spectrum, whose ramp is the track, keeps a mark of its value) | ui/slider | ✓ under a resting mouse, after a 120 ms dwell, the track's own ground grows out by g/2 and returns on the same 200 ms clock | — | ✓ a press or Tab grows the ground by g (8 px, at most two thirds of the band); a knob, where a site asks for one, grows by `scale` | ✓ the track drag; on a coarse pointer no value until 10 px of intent along the track, and a tap sets the value at its release (11.1.2) | ✓ a 2 px ring at the grown ground's edge, shown on Tab | the expanded view kept and refined after the ChatGPT app (O-426); the grown ground takes no pointer, so the root's box is the hit region in every state |
+ | **DockLayerGroup switcher rail** | custom/dock | ✓ chip hover | — (a rail chip is small) | — (switch-on-click) | ✓ `:draggable` pull-to-switch (`useDragMorph`, #2) | ✓ roving-tabindex | `DockLayerGroup.vue` |
+ | **AccordionTrigger** (clickable header) | ui/accordion | ✓ `transition-control` hover | — | ✓ `.tap-squish` `:active` | — | ✓ `.focus-ring` | `AccordionTrigger.vue` (`tap-squish focus-ring transition-control`); the content REVEAL is the surface-bloom |
+ | **CollapsibleTrigger** (clickable header) | ui/collapsible | ✓ `transition-control` hover | — | ✓ `.tap-squish` `:active` | — | ✓ `.focus-ring` | `CollapsibleTrigger.vue` (`tap-squish focus-ring transition-control`); the content REVEAL is the surface-bloom (the AccordionTrigger twin) |
+diff --git a/motion-canon.md b/motion-canon.md
+index 0dd4907..d30d324 100644
+--- a/motion-canon.md
++++ b/motion-canon.md
+@@ -259,34 +259,43 @@ A fill's length, such as a progress line's reveal, is an effect, not a body's tr
+ Under reduced motion it keeps a tween on an ease-out: 100 to 150 ms on the compositor, 167
+ to 200 ms on the page's thread (P0a's 30 fps line). A transform that is a state's only
+ sign of place dips: it fades out where it is, lands while hidden, and fades in, 100 ms
+-each way. A choice's mark fades across. A reduced form a part keeps survives the
+-reduced-motion rule only as an `!important` declaration in `components`, named in the
+-part's own stylesheet (the carve below). (The BM study's choice 8 A, ratified 2026-11-23,
++each way. A choice's mark fades across. (The BM study's choice 8 A, ratified 2026-11-23,
+ O-426.)
+ 
+ The discipline is SINGLE-SOURCED at the library seam, not re-declared per recipe:
+ 
+-- **The universal carve** is `a11y-overrides.css`. From 11.1.1, under
+-  `prefers-reduced-motion: reduce`, a rule in its own last layer (`reduced-motion`) sets
+-  every element's `transition-duration` to 0 and snaps its animations to their end, and it
+-  mints no `transition-property`. It loses to anything unlayered or `!important`, so a
+-  site's own fade keeps its clock, and a glass fade that must survive is a carve: an
+-  `!important` declaration in `components` (the reveal, the Toast's dissolve, the Vue fade
+-  classes). `[data-allow-motion]` is not carved here: a user who asks for reduced motion
+-  outranks a per-element allowance (accessibility is absolute). The attribute does one
+-  other job: it keeps an element's own transition through the theme flip's
+-  `html.no-transition`. The `DarkModeToggle`'s glyph does not move under reduced motion:
+-  its change rides the theme's one crossfade, an opacity change on the compositor of
+-  150 ms (O-428; O-353's ruling on the theme flip).
++- **The universal rule** is `a11y-overrides.css`. Under `prefers-reduced-motion: reduce`,
++  opacity and colour transitions keep a clock of 150 ms or less; transform, translate,
++  scale, size and filter transitions and every non-ambient animation stop at their end
++  state, while the element's opacity fade still runs; ambient loops stop. The rule carries
++  no `!important` that a consumer cannot override from unlayered CSS, so a site's own fade
++  keeps its clock. (O-350, the orchestrator's ruling on this precept, placed for 11.1.1
++  and flagged to the owner as his to reverse.) `[data-allow-motion]` is not carved here:
++  a user who asks for reduced motion outranks a per-element allowance (accessibility is
++  absolute). The attribute does one other job: it keeps an element's own transition
++  through the theme flip's `html.no-transition`. The `DarkModeToggle`'s glyph does not
++  move under reduced motion: its change rides the theme's one crossfade, an opacity
++  change on the compositor of 150 ms (O-428; O-353's ruling on the theme flip).
++- **What 11.1.1 ships falls short of it.** 11.1.1 built the rule's last clause and not its
++  first: its rule, in its own last layer, runs every transition on a zero clock ("the
++  instant fallback", `a11y-overrides.css:6`), and `view-transition.css` sets
++  `animation: none !important` on every view-transition pseudo, so every fade no part
++  carves is a cut. Both are shortfalls of the rule above, not its mechanism. The BM
++  tranche's springs wave (BM-3) builds the rule in its parts minor unless BL's 11.1.2
++  builds it first. Until it ships, a glass fade that must survive is a carve: an
++  `!important` declaration in `components`, named in the part's own stylesheet (the
++  reveal, the Toast's dissolve, the Vue fade classes). After it, a carve stays only for a
++  form the rule cannot express (a fill's length, a dip, the theme's crossfade).
+ - **The recipe-local carve** is `transitions.css` — the Vue `<Transition>` classes
+   (`fade-slide`/`dialog-scale`/`pop`/`dropdown`/`pane-swap`/`metric-swap`/`dock-in`) carry
+   their OWN `@media (prefers-reduced-motion: reduce)` block that keeps opacity and zeroes
+   transform, because a `<Transition>`-class transition is authored with explicit legs the
+   global property-reset shape complements rather than fully replaces.
+ 
+-Enforced by `proof:no-layout-animation`'s PRM-carve assertion: the universal carve exists
+-and restricts `transition-property` to the non-spatial channels, AND the recipe-local
+-keep-fade/drop-transform reference exists — the discipline cannot silently regress.
++Enforced by a reduced-motion frame reading over every part a motion check visits: each
++fade runs 150 ms or less and nothing travels, so a part that still cuts shows up; AND by
++`proof:no-layout-animation`'s assertion that the recipe-local keep-fade/drop-transform
++reference exists — the discipline cannot silently regress.
+ 
+ ## P7 — the ONE source + the ONE clock + the sanctioned off-spine SET
+ 
+@@ -319,8 +328,8 @@ spring leg reads its OWN clock through the named token.
+ **The curve each token carries (the BM study, ratified 2026-11-23, O-426; choice 4 B).**
+ The `--spring-*` tokens are generated from `SPRING_PRESETS` as the closest single
+ `cubic-bezier()` that leaves rest at no speed and, on every row but panel, never passes
+-its target (within 2.65 % of the former `linear()`). Panel's curve passes it by no more
+-than its own row's overshoot, 4.21 %, and eases only the spatial morphs the owner ruled.
++its target. Panel's curve passes it by no more than its own row's overshoot, 4.21 %, and
++glass reads it for no entrance; the token stays public for a site's own spatial morph.
+ Every entrance rides a row that does not pass its target. A settle that carries a speed
+ is played as compositor keyframes that keyframes.js samples from the same row, and a
+ retarget samples again from the spring's own state. keyframes.js computes; the browser
+@@ -416,7 +425,7 @@ Two facts the canon RECORDS so a future agent does not "fix" a correct thing:
+   labels + the SIZE/MORPH row this doc re-states) + the per-spring duration clock (P4).
+ - `src/styles/transitions.css` — the coupled-fade enter recipes (P2/P3) + the recipe-local
+   PRM carve (P6).
+-- `src/styles/utilities/a11y-overrides.css` — the universal PRM carve (P6).
++- `src/styles/utilities/a11y-overrides.css` — the universal reduced-motion rule (P6).
+ - `src/composables/motion/useLiquidFlex.ts` — the `sizeStyle` settled-footprint contract
+   (P5, the SIZESTYLE-LATENT note).
+ - `scripts/proof-no-layout-animation.mjs` — the compositor-only enforcement (P5) across the

@@ -1,4 +1,4 @@
-# BM-8: the capsule window in 11.x, conditional
+# BM-8: the capsule window, built inside BM-11 in 12.0.0
 
 | field | value |
 |---|---|

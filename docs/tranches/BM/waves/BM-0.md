@@ -3,7 +3,7 @@
 | field | value |
 |---|---|
 | release | none: docs, before every wave |
-| status | complete, unjudged: landed on precepts branch `bm/precepts-wip` at `afe49d9`, which descends from `origin/main` (`51edb59`) and from the branch's pushed head (`8e54c07`). BM part 3's fold amended it as a patch, `docs/tranches/BM/fold-part3-precepts.patch` (made on `afe49d9`, not committed). Nothing is pushed and precepts `main` is unchanged. The orchestrator applies the patch on the branch and commits it, then, once the amendments are judged, fast-forwards precepts `main` to the branch, pushes both, and bumps the submodule in glass |
+| status | complete, unjudged: on precepts branch `bm/precepts-wip`, which descends from `origin/main` (`51edb59`). `afe49d9` landed the amendments; BM part 3's first fold amended them, committed as `d58c980` (it matches `fold-part3-precepts.patch` line for line) and pushed (`origin/bm/precepts-wip` is `d58c980`). The second fold's amendments are `docs/tranches/BM/fold-part3b-precepts.patch`, made on `d58c980` and not committed. Precepts `main` is unchanged at `51edb59`. The orchestrator applies the second patch on the branch and commits it, then, once the amendments are judged, fast-forwards precepts `main` to the branch, pushes both, and bumps the submodule in glass |
 | DESIGN | §12 |
 | starts from | `study/pass-10/precepts.md`, as amended by the final fold |
 | rests on | the owner's ratification of 2026-11-23 (IN O-426), his order on the toggle (IN O-428), O-171 (the menu's grow), choice 24 C (the goo) |
@@ -19,7 +19,7 @@ The seat resumed on 2026-11-27 fetched again (`origin/main` still `51edb59`) and
 - `afe49d9` lands the amendments as they stood in the working tree: `8e54c07`'s edits with the 2026-11-25 corrections below. Its tree was checked equal to the working tree, file for file, before the ref moved.
 - The branch ref moved from `8e54c07` to `afe49d9` with its old value checked, and the three files on `main` were then returned to `main`'s head, so precepts `main` is clean at `51edb59` and the amendments live only on the branch.
 
-Nothing was pushed. `origin/bm/precepts-wip` is still `8e54c07`, and `afe49d9` descends from it, so pushing the branch is a fast-forward. `afe49d9` also descends from `origin/main`, so `git -C docs/precepts merge --ff-only bm/precepts-wip` on `main` lands it. `git -C docs/precepts diff origin/main bm/precepts-wip` shows the amendments whole.
+Nothing was pushed by that seat. The first fold's corrections were since committed on the branch as `d58c980` and pushed, a fast-forward from `8e54c07`. `afe49d9` also descends from `origin/main`, so `git -C docs/precepts merge --ff-only bm/precepts-wip` on `main` lands it. `git -C docs/precepts diff origin/main bm/precepts-wip` shows the amendments whole.
 
 ## What it builds
 
@@ -72,10 +72,19 @@ The two critics of BM part 3 read the diff (`git -C docs/precepts diff origin/ma
 
 ## What BM part 3's fold amended
 
-`docs/tranches/BM/fold-part3-precepts.patch`, made on `afe49d9` (`git -C docs/precepts apply` on the branch). Each change answers an objection in `fold-part3.md`:
+`docs/tranches/BM/fold-part3-precepts.patch`, made on `afe49d9` and committed on the branch as `d58c980`. Each change answers an objection in `fold-part3.md`:
 
 - **`motion-canon.md`.** P0a's "How long" table: a page-thread leg on hover (a colour, a glyph's strokes) runs 167 to 200 ms. The 30 fps line loses its sentence on the share of a leg's travel and cites law 7 as pass 10 and the final fold wrote it on the ratified defaults. P3 names the menu's grow as the order that stands past "every entrance pairs opacity with scale or translate". P5's first order names menus and selects (a popover enters by P3), cites O-171 for the grow and choice 10 C for its clip and thread, and each order is known by its part's own selector. The fusion layer's licence says when its filter is on and that its cost is read before it ships. The toast's vanish cites the owner's ask (`dissolve.css:4`) and the restraint line it crosses, left to him. P6: a reduced fill's length runs 100 to 150 ms on the compositor and 167 to 200 ms on the page's thread; a reduced form survives only as an `!important` carve in `components`; the universal carve is described as 11.1.1 has it (`data-allow-motion` is not carved under reduced motion); the toggle's glyph rides the theme's one crossfade under reduced motion.
 - **`restraint.md`.** The counts over two each name their ruling (a dialog's three by choice 12 B, Q22; "as today" struck); a part that runs over two carries `data-motion-count`; a count not named goes to the owner before it is built.
 - **`affordance-map.md`.** The toggle's plate grows from four fifths on hover and focus, in the plate section and its row. The SegmentedTabs pill's drag cell: `:draggable` is no longer read and leaves in 12.0.0. The rows' note adds the DockLayerGroup switcher's departure in 12.0.0.
+
+The patch's added lines pass `rg -P -i -f docs/tranches/BL/driver/register-lint.pattern` with no hit.
+
+## What BM part 3's second fold amended
+
+`docs/tranches/BM/fold-part3b-precepts.patch`, made on `d58c980` in a scratch worktree (`git apply --check` passes there). Each change answers an objection in `fold-part3b.md`:
+
+- **`motion-canon.md`.** P6's universal rule states O-350's ruling as the law: under reduced motion, opacity and colour transitions keep a clock of 150 ms or less, and transform, translate, scale, size and filter transitions and every non-ambient animation stop. 11.1.1's zero clock ("the instant fallback") and `view-transition.css`'s `animation: none !important` are named as shortfalls, with BM-3 as their cure unless BL's 11.1.2 builds the rule first; until then a glass fade that must survive is a carve, and after it a carve stays only for a form the rule cannot express. The enforcement paragraph no longer says the carve restricts `transition-property`: a reduced-motion frame reading over every part a motion check visits enforces it. P7 loses the fit figure "within 2.65 % of the former `linear()`", and panel's sentence says glass reads it for no entrance, the token staying public for a site's own morph. The file list names the rule.
+- **`affordance-map.md`.** The DarkModeToggle's colour trails its shapes inside the 200 ms. The SegmentedTabs pill's press tone runs on the plate's `opacity` on the press row's clock, and `:draggable` keeps today's drag on today's indicator until 12.0.0. The Slider is thumbless by default where it has a fill, and the spectrum keeps a mark of its value.
 
 The patch's added lines pass `rg -P -i -f docs/tranches/BL/driver/register-lint.pattern` with no hit.
