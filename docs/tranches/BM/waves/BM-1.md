@@ -76,3 +76,7 @@ Not reached: dns-analysis (its own `frontend/src/components/layout/DarkModeToggl
 ## Not this wave's
 
 The theme's own corner dock (W-I.8's R-12, the same minor); the goo that joins a seat to its dock (BM-12, 12.0.0); 11.1.2's toggle fixes (the press stall, the reduced-motion cuts, the fade of the words); P6's reduced-motion rule for the rest of glass (BM-3).
+
+## Site answers (2026-11-27)
+
+atlas (`answers/atlas-2026-11-27.md`): atlas sets `--toggle-tone` to its ink and drops its own toggle label in the same change.

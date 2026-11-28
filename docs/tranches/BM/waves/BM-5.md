@@ -78,3 +78,7 @@ gaggle and slides mount no Slider.
 ## Not this wave's
 
 The touch intent itself (11.1.2); BL's slider build and removals (W-B.18); the loupe, which stays removed (BL's R-13); a stepped slider's travel, a step at each boundary crossed (BL's R-9 leg; choice 22 B; D§8.1); the discrete form (BM-14, on this wave's sheet); LF-18's thumb rung (BL's).
+
+## Site answers (2026-11-27)
+
+atlas (`answers/atlas-2026-11-27.md`): the growth adds nothing to an ancestor scroller's scrollable width in either engine, read on atlas's Filters body at 390 and 1440 before the candidate; the wave names the element that grows for atlas's box-identity suite; a two-value slider keeps its knobs by default, so the thumbless default is for single-value sliders with a fill.
